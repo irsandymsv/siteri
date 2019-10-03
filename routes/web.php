@@ -15,7 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/tes', function()
-{
-	return view('layout.template');
+Route::get('/akademik', function(){
+	return view('akademik.dashboard');
 });
