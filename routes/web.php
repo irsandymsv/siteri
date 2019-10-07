@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/akademik', function(){
-	return view('akademik.dashboard');
+Route::prefix('akademik')->name('akademik.')->group(function (){
+	Route::redirect('/', '/	akademik/dashboard');
+	Route::get('/dashboard', 'akademikController@dashboard')->name('dashboard');
 });
