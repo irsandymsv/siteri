@@ -12,7 +12,7 @@
 	    <ul class="treeview-menu">
 	      <li><a href="#">Buat Baru</a></li>
 	      <li><a href="{{route('akademik.skripsi.create')}}">SK Pembimbing</a></li>
-	      <li><a href="#">SK penguji</a></li>
+	      <li><a href="{{ route('akademik.skripsi.index') }}">Lihat Semua</a></li>
 	    </ul>
 	</li>
 
@@ -24,8 +24,7 @@
 	    </a>
 	    <ul class="treeview-menu">
 	      <li><a href="#">Buat Baru</a></li>
-	      <li><a href="#">SK Pembimbing</a></li>
-	      <li><a href="#">SK Penguji</a></li>
+	      <li><a href="#">Lihat Semua</a></li>
 	    </ul>
 	</li>
 @endsection

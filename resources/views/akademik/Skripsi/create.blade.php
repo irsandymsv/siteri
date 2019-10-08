@@ -16,7 +16,7 @@
               <table id="" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>Nama Mahasiswa</th>
+                  <th contenteditable>Nama Mahasiswa</th>
                   <th>Nim</th>
                   <th>Jurusan</th>
                   <th>Judul</th>
