@@ -11,17 +11,25 @@ use App\sk_akademik;
 use App\detail_sk;
 use App\penguji;
 use App\pembimbing;
+use App\Http\Controllers\Controller;
 
 class SkSkripsiController extends Controller
 {
+
     public function index()
     {
     	return view('akademik.Skripsi.index');
     }
 
-    public function create(){
+    public function create(Request $request){
+        $old_data = [];
+        if (count($request->old()) > 0) {
+            // dd($request->old()['nama']);
+            $old_data = $request->old();
+        }     
+
 		// $jurusan= bagian::where('is_jurusan',1)->get();
-		$jurusan = array(
+    	$jurusan = array(
     		'si' => "Sistem Informasi",
     		'ti' => "Teknologi Informasi",
     		'if' => "Informatika"
@@ -37,15 +45,17 @@ class SkSkripsiController extends Controller
     		'6' => "Januar", 
     	);
 
+
         return view('akademik.skripsi.create-form', [
         	'jurusan' => $jurusan,
-        	'dosen' => $dosen
+        	'dosen' => $dosen,
+            'old_data' => $old_data
         ]);
     }
 
     public function store(Request $request)
     {
-		dd($request);
+		// dd($request);
 		$this->validate($request, [
 			"nama"    => "required|array",
 			"nama.*"  => "required|string|max:40",
@@ -53,6 +63,8 @@ class SkSkripsiController extends Controller
 			"nim.*" => "required|string|max:20",
 			"jurusan" => "required|array",
 			"jurusan.*" => "required",
+			"judul" => "required|array",
+			"judul.*" => "required",
 			"pembimbing_utama" => "required|array",
 			"pembimbing_utama.*" => "required",
 			"pembimbing_pendamping" => "required|array",
@@ -96,5 +108,6 @@ class SkSkripsiController extends Controller
 		} catch(Exception $e){
 			return redirect()->route('skripsi.create')->with('error',$e->getMessage());
 		}
+
     }
 }
