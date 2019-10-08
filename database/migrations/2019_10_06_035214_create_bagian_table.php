@@ -16,6 +16,7 @@ class CreateBagianTable extends Migration
         Schema::create('bagian', function (Blueprint $table) {
             $table->increments('id');
             $table->string('bagian', 30);
+            $table->tinyInteger('is_jurusan')->length(1)->nullable();
         });
     }
 

@@ -16,13 +16,13 @@ class CreateDetailSkTable extends Migration
         Schema::create('detail_sk', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('id_sk_akademik');
-            $table->string('nama_mhs');
+            $table->string('nama_mhs')->length(40);
             $table->string('nim', 20);
-            $table->unsignedTinyInteger('id_jurusan');
+            $table->unsignedTinyInteger('id_bagian');
             $table->string('judul');
 
             $table->foreign('id_sk_akademik')->references('id')->on('sk_akademik')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('id_jurusan')->references('id')->on('jurusan')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_bagian')->references('id')->on('bagian')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

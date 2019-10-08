@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateJurusanTable extends Migration
+class AddForeignKeysToSkAkademikTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateJurusanTable extends Migration
      */
     public function up()
     {
-        Schema::create('jurusan', function (Blueprint $table) {
-            $table->tinyIncrements('id');
-            $table->string('jurusan', 30);
+        Schema::table('sk_akademik', function (Blueprint $table) {
+            $table->foreign('id_status_sk_akademik')->references('id')->on('status_sk_akademik')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -26,6 +25,8 @@ class CreateJurusanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jurusan');
+        Schema::table('sk_akademik', function (Blueprint $table) {
+            //
+        });
     }
 }

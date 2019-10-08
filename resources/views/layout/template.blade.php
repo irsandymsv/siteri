@@ -338,6 +338,8 @@ desired effect
 <!-- DataTables -->
 <script src="/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!--- mindmup-Editabletables -->
+<script src="/js/mindmup-editabletable.js"></script>
 <!-- AdminLTE App -->
 <script src="/adminlte/dist/js/adminlte.min.js"></script>
 <!-- page script -->
@@ -345,6 +347,12 @@ desired effect
   $(function () {
     $('#dataTable').DataTable()
   })
+
+  $('#SkripsiPembimbing').editableTableWidget();
+</script>
+
+<script>
+
 </script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

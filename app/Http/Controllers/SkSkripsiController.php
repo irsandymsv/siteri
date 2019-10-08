@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 class SkSkripsiController extends Controller
 {
-    public function createPembimbing(){
+    public function create(){
+        
         return view('akademik.skripsi.create');
     }
 }

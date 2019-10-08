@@ -16,8 +16,8 @@ class CreatePengujiTable extends Migration
         Schema::create('penguji', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('id_detail_sk');
-            $table->string('id_penguji_utama');
-            $table->string('id_penguji_pendamping');
+            $table->string('id_penguji_utama')->length(25);
+            $table->string('id_penguji_pendamping')->length(25);
 
             $table->foreign('id_detail_sk')->references('id')->on('detail_sk')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_penguji_utama')->references('no_pegawai')->on('users')->onDelete('cascade')->onUpdate('cascade');

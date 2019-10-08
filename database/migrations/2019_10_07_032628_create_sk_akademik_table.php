@@ -17,7 +17,7 @@ class CreateSkAkademikTable extends Migration
             $table->increments('id');
             $table->unsignedTinyInteger('id_tipe_sk');
             $table->string('jenis', 30);
-            $table->string('status', 100);
+            $table->unsignedInteger('id_status_sk_akademik');
             $table->boolean('verif_ktu')->default(false);
             $table->boolean('verif_dekan')->default(false);
             $table->timestamps();
