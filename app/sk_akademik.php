@@ -11,7 +11,7 @@ class sk_akademik extends Model
      *
      * @var string
      */
-    protected $table = 'laporan';
+    protected $table = 'sk_akademik';
 
     /**
      * Indicates if the model should be timestamped.

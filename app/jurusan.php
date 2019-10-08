@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class pembimbing extends Model
+class jurusan extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'pembimbing';
+    protected $table = 'jurusan';
 
     /**
      * Indicates if the model should be timestamped.
@@ -30,16 +30,6 @@ class pembimbing extends Model
 
     public function detail_sk()
     {
-    	return $this->belongsTo('App\detail_sk', 'id_detail_sk');
-    }
-
-    public function pembimbing_utama()
-    {
-    	return $this->belongsTo('App\Users', 'id_pembimbing_utama', 'no_pegawai');
-    }
-
-    public function pembimbing_pendamping()
-    {
-    	return $this->belongsTo('App\Users', 'id_pembimbing_pendamping', 'no_pegawai');
+    	return $this->hasMany('App\detail_sk', 'id_jurusan');
     }
 }

@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::prefix('akademik')->name('akademik.')->group(function (){
-	Route::redirect('/', '/	akademik/dashboard');
+	Route::redirect('/', '/akademik/dashboard');
 	Route::get('/dashboard', 'akademikController@dashboard')->name('dashboard');
 	Route::get('/skripsi/create','SkSkripsiController@create')->name('skripsi.create');
 });
