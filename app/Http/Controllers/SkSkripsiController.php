@@ -2,27 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Exception;
+use App\bagian;
+use App\User;
+use App\sk_akademik;
+use App\detail_sk;
+use App\penguji;
+use App\pembimbing;
 
 class SkSkripsiController extends Controller
 {
-    public function create(){
-        
-        return view('akademik.skripsi.create');
-    }
-
     public function index()
     {
     	return view('akademik.Skripsi.index');
     }
 
     public function create(){
-    	$jurusan = array(
+		// $jurusan= bagian::where('is_jurusan',1)->get();
+		$jurusan = array(
     		'si' => "Sistem Informasi",
     		'ti' => "Teknologi Informasi",
     		'if' => "Informatika"
-    	);
+		);
 
+		// $dosen = user::where('is_dosen', 1)->get();
     	$dosen = array(
     		'1' => "Saiful Bukhori",
     		'2' => "Anang Hermansyah",
@@ -40,6 +45,56 @@ class SkSkripsiController extends Controller
 
     public function store(Request $request)
     {
-    	
+		dd($request);
+		$this->validate($request, [
+			"nama"    => "required|array",
+			"nama.*"  => "required|string|max:40",
+			"nim" => "required|array",
+			"nim.*" => "required|string|max:20",
+			"jurusan" => "required|array",
+			"jurusan.*" => "required",
+			"pembimbing_utama" => "required|array",
+			"pembimbing_utama.*" => "required",
+			"pembimbing_pendamping" => "required|array",
+			"pembimbing_pendamping.*" => "required",
+			"penguji_utama" => "required|array",
+			"penguji_utama.*" => "required",
+			"penguji_pendamping" => "required|array",
+			"penguji_pendamping.*" => "required",
+		]);
+
+		try{
+			$sk_akademik = sk_akademik::create([
+				'id_tipe_sk' => 0,
+				'id_status_akademik' => $request->status,
+				'id_user' => $request->id_user
+			]);
+			// $sk_akademik = sk_akademik::where('id_user', $request->id_user)->order_by('created_at', 'desc')->first();
+			for($i=0;$i< count($request->nama);$i++){
+				$detail_sk = detail_sk::create([
+					'id_sk_akademik' => $sk_akademik->id,
+					'nama_mhs' => $request->nama[$i],
+					'nim' =>$request->nim[$i],
+					'id_bagian' => $request->jurusan[$i],
+					'judul' => $request->judul[$i],
+				]);
+				// $id_user = $request->id_user;
+				// $detail_sk = detail_sk::with(['sk_akademik' => function ($query) use ($id_user){
+				// 	$query->where('id_user', $id_user);
+				// }])->order_by('id', 'desc')->first();
+				pembimbing::create([
+					'id_detail_sk' => $detail_sk->id,
+					'id_pembimbing_utama' => $request->id_pembimbing_utama,
+					'id_pembimbing_pendamping' => $request->id_pembimbing_pendamping,
+				]);
+				penguji::create([
+					'id_detail_sk' => $detail_sk->id,
+					'id_penguji_utama' => $request->id_penguji_utama,
+					'id_penguji_pendamping' => $request->id_penguji_pendamping,
+				]);
+			}
+		} catch(Exception $e){
+			return redirect()->route('skripsi.create')->with('error',$e->getMessage());
+		}
     }
 }

@@ -27,19 +27,18 @@ class pembimbing extends Model
      */
     protected $guarded = ['id'];
 
-
     public function detail_sk()
     {
-    	return $this->belongsTo('App\detail_sk', 'id_detail_sk');
+        return $this->belongsTo('App\detail_sk','id_detail_sk');
     }
 
     public function pembimbing_utama()
     {
-    	return $this->belongsTo('App\Users', 'id_pembimbing_utama', 'no_pegawai');
+        return $this->belongsTo('App\User', 'id_pembimbing_utama');
     }
 
     public function pembimbing_pendamping()
     {
-    	return $this->belongsTo('App\Users', 'id_pembimbing_pendamping', 'no_pegawai');
+        return $this->belongsTo('App\User', 'id_pembimbing_pendamping');
     }
 }

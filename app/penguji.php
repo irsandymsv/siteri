@@ -27,15 +27,6 @@ class penguji extends Model
      */
     protected $guarded = ['id'];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'id_detail_sk', 'id_penguji_utama', 'id_penguji_pendamping'
-    ];
-
     public function detail_sk()
     {
         return $this->belongsTo('App\detail_sk', 'id_detail_sk');

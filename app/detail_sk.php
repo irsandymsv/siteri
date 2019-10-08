@@ -21,11 +21,13 @@ class detail_sk extends Model
     public $timestamps = false;
 
     /**
-     * The attributes that aren't mass assignable.
+     * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'id_sk_akademik', 'nama_mhs', 'nim', 'id_bagian','judul'
+    ];
 
 
     public function sk_akademik()

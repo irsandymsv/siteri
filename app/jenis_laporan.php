@@ -27,15 +27,6 @@ class jenis_laporan extends Model
      */
     protected $guarded = ['id'];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'jenis'
-    ];
-
     public function laporan()
     {
         return $this->hasMany('App\laporan','id_laporan');

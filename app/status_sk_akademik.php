@@ -27,15 +27,6 @@ class status_sk_akademik extends Model
      */
     protected $guarded = ['id'];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'status'
-    ];
-
     public function sk_akademik()
     {
         return $this->hasMany('App\sk_akademik','id_status_sk_akademik');

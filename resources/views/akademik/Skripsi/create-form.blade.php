@@ -17,7 +17,6 @@
             		<button type="submit" class="btn btn-success">Simpan dan Kirim</button>	
             	  </div>
 	            </div>
-
 	            <div class="box-body">
 	            	<form action="{{ route('akademik.skripsi.store') }}" method="POST">
 	            		@csrf
@@ -37,7 +36,7 @@
 				            	</thead>
 				            	<tbody>
 
-				            		<tr id="1">
+				            		<tr id="1" >
 				            			<td>
 				            				1
 				            			</td>
@@ -46,8 +45,8 @@
 				            				<input type="text" name="nama[]" class="form-control">
 				            			</td>
 
-				            			<td>
-				            				<input type="text" name="nim[]" class="form-control">
+				            			<td lass="has-error">
+											<input type="text" name="nim[]" class="form-control ">
 				            			</td>
 
 				            			<td>
