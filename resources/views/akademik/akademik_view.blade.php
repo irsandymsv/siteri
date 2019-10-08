@@ -11,7 +11,7 @@
 	    </a>
 	    <ul class="treeview-menu">
 	      <li><a href="#">Buat Baru</a></li>
-	      <li><a href="#">SK Pembimbing</a></li>
+	      <li><a href="{{route('akademik.skripsi.create.pembimbing')}}">SK Pembimbing</a></li>
 	      <li><a href="#">SK penguji</a></li>
 	    </ul>
 	</li>
