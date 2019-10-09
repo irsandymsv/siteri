@@ -23,7 +23,7 @@
       		<div class="box box-primary">
 	            <form action="{{ route('akademik.skripsi.update', $sk_akademik->id) }}" method="POST">
 	            	<div class="box-header">
-		              <h3 class="box-title">Buat SK Skripsi</h3>
+		              <h3 class="box-title">Ubah SK Skripsi</h3>
 
 		              <div class="form-group" style="float: right;">
 		            	<button type="submit" class="btn bg-purple">Simpan Sebagai Draft</button> 
@@ -166,6 +166,13 @@
 				            			
 				            		@else
 				            			@foreach($detail_sk as $item)
+				            			<input type="hidden" name="id_detail_sk[]" value="{{$item->id}}">
+				            			<input type="hidden" name="delete_detail_sk[]" id="del_detail_{{$item->id}}" value="0">
+				            			<input type="hidden" name="id_pembimbing_utama[]" value="{{$item->pembimbing->pembimbing_utama->no_pegawai}}">
+				            			<input type="hidden" name="id_pembimbing_pendamping[]" value="{{$item->pembimbing->pembimbing_pendamping->no_pegawai}}">
+				            			<input type="hidden" name="id_penguji_utama[]" value="{{$item->penguji->penguji_utama->no_pegawai}}">
+				            			<input type="hidden" name="id_penguji_pendamping[]" value="{{$item->penguji->penguji_pendamping->no_pegawai}}">
+
 			            				<tr id="1">
 					            			<td>
 					            				<input type="text" name="nama[]" class="form-control" value="{{$item->nama_mhs}}">
@@ -225,7 +232,7 @@
 					            			</td>
 
 					            			<td>
-					            				<button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
+					            				<button class="btn btn-danger" id="{{$item->id}}" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
 					            			</td>
 					            		</tr>
 				            			@endforeach
@@ -295,6 +302,7 @@
 			var new_id = parseInt(last_id) + 1;
 			$("#tbl-data").find('tbody').append(`
 				<tr id="`+new_id+`">
+					<input type="hidden" name="id_detail_sk[]" value="0">
         			<td>
         				<input type="text" name="nama[]" class="form-control">
         			</td>
@@ -365,8 +373,9 @@
 		function del_row() {
 			$('button[name="delete_data"]').click(function(event) {
 				var jml_tr = $("tbody tr").length;
+				var id_detail = $(this).attr('id');
 				if (jml_tr > 1) {
-					var tr_id = $(this).parents("tr").attr('id');
+					$("input#del_detail_"+id_detail).val("1");
 					$(this).parents("tr").remove();
 				}
 				data_count();
