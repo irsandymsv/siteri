@@ -138,6 +138,5 @@ class SkSkripsiController extends Controller
 	public function destroy($id){
 		sk_akademik::where('id',$id);
 		return redirect()->route('skripsi.index')->with('success','Data Berhasil Dihapus');
-		
 	}
 }
