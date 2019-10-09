@@ -22,7 +22,7 @@ class CreateDetailSkTable extends Migration
             $table->string('judul');
 
             $table->foreign('id_sk_akademik')->references('id')->on('sk_akademik')->onDelete('cascade');
-            $table->foreign('id_bagian')->references('id')->on('bagian')->onDelete('set null');
+            $table->foreign('id_bagian')->references('id')->on('bagian')->onDelete('set  null');
         });
     }
 
