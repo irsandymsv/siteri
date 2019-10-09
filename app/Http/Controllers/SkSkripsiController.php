@@ -20,22 +20,22 @@ class SkSkripsiController extends Controller
     }
 
     public function create(){
-		// $jurusan= bagian::where('is_jurusan',1)->get();
-		$jurusan = array(
-    		'si' => "Sistem Informasi",
-    		'ti' => "Teknologi Informasi",
-    		'if' => "Informatika"
-		);
+		$jurusan= bagian::where('is_jurusan',1)->get();
+		// $jurusan = array(
+    	// 	'si' => "Sistem Informasi",
+    	// 	'ti' => "Teknologi Informasi",
+    	// 	'if' => "Informatika"
+		// );
 
-		// $dosen = user::where('is_dosen', 1)->get();
-    	$dosen = array(
-    		'1' => "Saiful Bukhori",
-    		'2' => "Anang Hermansyah",
-    		'3' => "Windy",
-    		'4' => "Beny Prasetyo",
-    		'5' => "Slamin",
-    		'6' => "Januar", 
-    	);
+		$dosen = user::where('is_dosen', 1)->get();
+    	// $dosen = array(
+    	// 	'1' => "Saiful Bukhori",
+    	// 	'2' => "Anang Hermansyah",
+    	// 	'3' => "Windy",
+    	// 	'4' => "Beny Prasetyo",
+    	// 	'5' => "Slamin",
+    	// 	'6' => "Januar", 
+    	// );
 
         return view('akademik.skripsi.create-form', [
         	'jurusan' => $jurusan,
@@ -45,7 +45,7 @@ class SkSkripsiController extends Controller
 
     public function store(Request $request)
     {
-		dd($request);
+		// dd($request);
 		$this->validate($request, [
 			"nama"    => "required|array",
 			"nama.*"  => "required|string|max:40",
@@ -92,6 +92,8 @@ class SkSkripsiController extends Controller
 					'id_penguji_utama' => $request->id_penguji_utama,
 					'id_penguji_pendamping' => $request->id_penguji_pendamping,
 				]);
+
+				return redirect()->route('skripsi.create')->with('success','Data Berhasil Ditambahkan');
 			}
 		} catch(Exception $e){
 			return redirect()->route('skripsi.create')->with('error',$e->getMessage());

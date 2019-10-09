@@ -18,7 +18,7 @@ class CreateDetailSkTable extends Migration
             $table->unsignedInteger('id_sk_akademik');
             $table->string('nama_mhs')->length(40);
             $table->string('nim', 20);
-            $table->unsignedTinyInteger('id_bagian');
+            $table->unsignedInteger('id_bagian');
             $table->string('judul');
 
             $table->foreign('id_sk_akademik')->references('id')->on('sk_akademik')->onDelete('cascade')->onUpdate('cascade');
