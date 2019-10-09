@@ -121,8 +121,9 @@ class SkSkripsiController extends Controller
 	
 	public function edit($id){
 		// try{
+			// $sk_akademik = sk_akademik::where('id',$id)->get();
 		// 	$detail_sk = detail_sk::with('pembimbing,penguji')->where('id_sk_akademik')->get();
-		// 	return view('akademik.Skripsi.edit',['detail_sk'=>$detail_sk]);
+		// 	return view('akademik.Skripsi.edit',['detail_sk'=>$detail_sk,'sk_akademik'=>$sk_akademik]);
 		// }catch(Exception $e){
 			// return redirect()->route('skripsi.index')->with('error',$e->getMessage());
 		// }
