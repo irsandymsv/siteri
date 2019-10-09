@@ -170,6 +170,7 @@ class SkSkripsiController extends Controller
 	}
 
 	public function update(Request $request, $id){
+		// dd($request);
 		$this->validate($request, [
 			"nama"    => "required|array",
 			"nama.*"  => "required|string|max:40",

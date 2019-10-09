@@ -363,7 +363,7 @@
 			$('button[name="delete_data"]').click(function(event) {
 				var jml_tr = $("tbody tr").length;
 				if (jml_tr > 1) {
-					var tr_id = $(this).parents("tr").attr('id');
+					// var tr_id = $(this).parents("tr").attr('id');
 					$(this).parents("tr").remove();
 				}
 				data_count();
