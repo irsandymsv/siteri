@@ -18,7 +18,13 @@ class SkSkripsiController extends Controller
 
     public function index()
     {
-    	return view('akademik.Skripsi.index');
+		// try{
+		// 	$sk_akademik = sk_akademik::all();
+		// 	return view('akademik.Skripsi.index', ['sk_akademik' => $sk_akademik]);
+		// }catch(Exception $e){
+				return view('akademik.Skripsi.index');
+		// }
+		
     }
 
     public function create(Request $request){
@@ -111,5 +117,18 @@ class SkSkripsiController extends Controller
 			return redirect()->route('skripsi.create')->with('error',$e->getMessage());
 		}
 
-    }
+	}
+	
+	public function edit($id){
+		// try{
+		// 	$detail_sk = detail_sk::with('pembimbing,penguji')->where('id_sk_akademik')->get();
+		// 	return view('akademik.Skripsi.edit',['detail_sk'=>$detail_sk]);
+		// }catch(Exception $e){
+			return redirect()->route('skripsi.index');
+		// }
+	}
+
+	public function update(Request $request, $id){
+
+	}
 }

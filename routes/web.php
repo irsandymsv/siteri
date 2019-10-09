@@ -22,4 +22,5 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
 	Route::get('/skripsi', 'SkSkripsiController@index')->name('skripsi.index');
 	Route::get('/skripsi/create','SkSkripsiController@create')->name('skripsi.create');
 	Route::post('/skripsi', 'SkSkripsiController@store')->name('skripsi.store');
+	Route::get('/skripsi/{id_sk_akademik}','SkSkripsiController@edit')->name('skripsi.edit');
 });
