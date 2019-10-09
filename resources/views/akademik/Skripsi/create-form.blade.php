@@ -5,26 +5,30 @@
 @endsection
 
 @section('content')
+{{-- @php
+	dd($dosen);
+@endphp --}}
 	<div class="row">
       	<div class="col-xs-12">
-      		<div class="box box-warning">
-      			<div class="box-header">
-	              <h3 class="box-title">Buat SK Skripsi</h3>
+      		<div class="box box-primary">
+	            <form action="{{ route('akademik.skripsi.store') }}" method="POST">
+	            	<div class="box-header">
+		              <h3 class="box-title">Buat SK Skripsi</h3>
 
-	              <div class="form-group" style="float: right;">
-            		<button type="submit" class="btn btn-warning">Simpan Sebagai Draft</button> 
-            		&ensp;
-            		<button type="submit" class="btn btn-success">Simpan dan Kirim</button>	
-            	  </div>
-	            </div>
-	            <div class="box-body">
-	            	<form action="{{ route('akademik.skripsi.store') }}" method="POST">
+		              <div class="form-group" style="float: right;">
+		            	<button type="submit" class="btn bg-purple">Simpan Sebagai Draft</button> 
+		            		&ensp;
+		            	<button type="submit" class="btn btn-success">Simpan dan Kirim</button>	
+		              </div>
+		            </div>
+	            	
+	            	<div class="box-body">
 	            		@csrf
 		            	<div class="table-responsive">
+		            		<h5>Total Data = <span class="data_count"></span></h5>
 		            		<table id="tbl-data" class="table table-bordered table-hover">
 			            		<thead>
 				            		<tr>
-				            			<th>No</th>
 				            			<th>Nama Mahasiswa</th>
 				            			<th>NIM</th>
 				            			<th>Jurusan</th>
@@ -34,87 +38,212 @@
 				            			<th>X</th>
 				            		</tr>
 				            	</thead>
+
 				            	<tbody>
+				            		@if($errors->any())
 
-				            		<tr id="1" >
-				            			<td>
-				            				1
-				            			</td>
+				            			@foreach($old_data['nama'] as $i => $val)
+				            				@php $id = $i+1 @endphp
+				            				<tr id="{{$id}}">
+						            			<td>
+						            				<input type="text" name="nama[]" class="form-control" value="{{old('nama')[$i]}}">
+						            				@error('nama.'.$i)
+											          	<span class="invalid-feedback" role="alert" style="color: red;">
+											                <strong>{{ $message }}</strong>
+											            </span>
+											    	@enderror
+						            			</td>
 
-				            			<td>
-				            				<input type="text" name="nama[]" class="form-control">
-				            			</td>
+						            			<td>
+						            				<input type="text" name="nim[]" class="form-control" value="{{old('nim')[$i]}}">
+						            				@error('nim.'.$i)
+											          	<span class="invalid-feedback" role="alert" style="color: red;">
+											                <strong>{{ $message }}</strong>
+											            </span>
+											    	@enderror
+						            			</td>
 
-				            			<td lass="has-error">
-											<input type="text" name="nim[]" class="form-control ">
-				            			</td>
+						            			<td>
+						            				<select name="jurusan[]" class="form-control">
+						            					<option value="">-Pilih Jurusan-</option>
+						            					@foreach($jurusan as $j)
+						            						<option value="{{$j->id}}" {{ (old('jurusan')[$i] == $j->id ? 'selected': '') }}>{{$j->bagian}}</option>
+						            					@endforeach
+						            				</select>
+						            				@error('jurusan.'.$i)
+											          	<span class="invalid-feedback" role="alert" style="color: red;">
+											                <strong>{{ $message }}</strong>
+											            </span>
+											    	@enderror
+						            			</td>
 
-				            			<td>
-				            				<select name="jurusan[]" class="form-control">
-				            					<option>-Pilih Jurusan-</option>
-				            					@foreach($jurusan as $index => $value)
-				            						<option value="{{$index}}">{{$value}}</option>
-				            					@endforeach
-				            				</select>
-				            			</td>
+						            			<td>
+						            				<textarea class="form-control" rows="3" name="judul[]">{{old('judul')[$i]}}</textarea>
+						            				@error('judul.'.$i)
+											          	<span class="invalid-feedback" role="alert" style="color: red;">
+											                <strong>{{ $message }}</strong>
+											            </span>
+											    	@enderror
+						            			</td>
 
-				            			<td>
-				            				<textarea class="form-control" rows="3" name="judul[]"></textarea>
-				            			</td>
+						            			<td>
+						            				<label for="pembimbing_utama">Utama</label>
+						            				<select name="pembimbing_utama[]" class="form-control">
+						            					<option value="">-Pilih-</option>
+						            					@foreach($dosen as $d)
+						            						<option value="{{$d->id}}" {{ (old('pembimbing_utama')[$i] == $d->id ? 'selected': '') }}>{{$val}}</option>
+						            					@endforeach
+						            				</select>
+						            				@error('pembimbing_utama.'.$i)
+											          	<span class="invalid-feedback" role="alert" style="color: red;">
+											                <strong>{{ $message }}</strong>
+											            </span>
+											    	@enderror
 
-				            			<td>
-				            				<label for="pembimbing_utama">Utama</label>
-				            				<select name="pembimbing_utama[]" class="form-control">
-				            					@foreach($dosen as $index => $value)
-				            						<option value="{{$index}}">{{$value}}</option>
-				            					@endforeach
-				            				</select>
+						            				<label for="pembimbing_pendamping">Pendamping</label>
+						            				<select name="pembimbing_pendamping[]" class="form-control">
+						            					<option value="">-Pilih-</option>
+						            					@foreach($dosen as $index => $val)
+						            						<option value="{{$index}}" {{ (old('pembimbing_pendamping')[$i] == $index ? 'selected': '') }}>{{$val}}</option>
+						            					@endforeach
+						            				</select>
+						            				@error('pembimbing_pendamping.'.$i)
+											          	<span class="invalid-feedback" role="alert" style="color: red;">
+											                <strong>{{ $message }}</strong>
+											            </span>
+											    	@enderror
+						            			</td>
 
-				            				<label for="pembimbing_pendamping">Pendamping</label>
-				            				<select name="pembimbing_pendamping[]" class="form-control">
-				            					@foreach($dosen as $index => $value)
-				            						<option value="{{$index}}">{{$value}}</option>
-				            					@endforeach
-				            				</select>
-				            			</td>
+						            			<td>
+						            				<label for="penguji_utama">Utama</label>
+						            				<select name="penguji_utama[]" class="form-control">
+						            					<option value="">-Pilih-</option>
+						            					@foreach($dosen as $index => $val)
+						            						<option value="{{$index}}" {{ (old('penguji_utama')[$i] == $index ? 'selected': '') }}>{{$val}}</option>
+						            					@endforeach
+						            				</select>
+						            				@error('penguji_utama.'.$i)
+											          	<span class="invalid-feedback" role="alert" style="color: red;">
+											                <strong>{{ $message }}</strong>
+											            </span>
+											    	@enderror
 
-				            			<td>
-				            				<label for="penguji_utama">Utama</label>
-				            				<select name="penguji_utama[]" class="form-control">
-				            					@foreach($dosen as $index => $value)
-				            						<option value="{{$index}}">{{$value}}</option>
-				            					@endforeach
-				            				</select>
+						            				<label for="penguji_pendamping">pendamping</label>
+						            				<select name="penguji_pendamping[]" class="form-control">
+						            					<option value="">-Pilih-</option>
+						            					@foreach($dosen as $index => $val)
+						            						<option value="{{$index}}" {{ (old('penguji_pendamping')[$i] == $index ? 'selected': '') }}>{{$val}}</option>
+						            					@endforeach
+						            				</select>
+						            				@error('penguji_pendamping.'.$i)
+											          	<span class="invalid-feedback" role="alert" style="color: red;">
+											                <strong>{{ $message }}</strong>
+											            </span>
+											    	@enderror
+						            			</td>
 
-				            				<label for="penguji_pendamping">pendamping</label>
-				            				<select name="penguji_pendamping[]" class="form-control">
-				            					@foreach($dosen as $index => $value)
-				            						<option value="{{$index}}">{{$value}}</option>
-				            					@endforeach
-				            				</select>
-				            			</td>
+						            			<td>
+						            				<button class="btn btn-danger" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
+						            			</td>
+						            		</tr>
+				            			@endforeach
+				            			
+				            		@else
+				            			
+				            			<tr id="1">
+					            			<td>
+					            				<input type="text" name="nama[]" class="form-control">
+					            			</td>
 
-				            			<td>
-				            				<button class="btn btn-danger" name="delete_data"><i class="fa fa-trash"></i></button>
-				            			</td>
-				            		</tr>
+					            			<td>
+					            				<input type="text" name="nim[]" class="form-control">
+					            			</td>
 
+					            			<td>
+					            				<select name="jurusan[]" class="form-control">
+					            					<option value="">-Pilih Jurusan-</option>
+					            					@foreach($jurusan as $j)
+					            						<option value="{{$j->id}}">{{$j->bagian}}</option>
+					            					@endforeach
+					            				</select>
+					            			</td>
+
+					            			<td>
+					            				<textarea class="form-control" rows="3" name="judul[]"></textarea>
+					            			</td>
+
+					            			<td>
+					            				<label for="pembimbing_utama">Utama</label>
+					            				<select name="pembimbing_utama[]" class="form-control">
+					            					<option value="">-Pilih-</option>
+					            					@foreach($dosen as $d)
+					            						<option value="{{$d->id}}">{{$d->nama}}</option>
+					            					@endforeach
+					            				</select>
+
+					            				<label for="pembimbing_pendamping">Pendamping</label>
+					            				<select name="pembimbing_pendamping[]" class="form-control">
+					            					<option value="">-Pilih-</option>
+					            					@foreach($dosen as $d)
+					            						<option value="{{$d->id}}">{{$d->nama}}</option>
+					            					@endforeach
+					            				</select>
+					            			</td>
+
+					            			<td>
+					            				<label for="penguji_utama">Utama</label>
+					            				<select name="penguji_utama[]" class="form-control">
+					            					<option value="">-Pilih-</option>
+					            					@foreach($dosen as $d)
+					            						<option value="{{$d->id}}">{{$d->nama}}</option>
+					            					@endforeach
+					            				</select>
+
+					            				<label for="penguji_pendamping">pendamping</label>
+					            				<select name="penguji_pendamping[]" class="form-control">
+					            					<option value="">-Pilih-</option>
+					            					@foreach($dosen as $d)
+					            						<option value="{{$d->id}}">{{$d->nama}}</option>
+					            					@endforeach
+					            				</select>
+					            			</td>
+
+					            			<td>
+					            				<button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
+					            			</td>
+					            		</tr>
+
+				            		@endif
 				            	</tbody>
+
+				            	<tfoot>
+				            		<tr>
+				            			<th>Nama Mahasiswa</th>
+				            			<th>NIM</th>
+				            			<th>Jurusan</th>
+				            			<th>Judul</th>
+				            			<th>Pembimbing</th>
+				            			<th>Penguji</th>
+				            			<th>X</th>
+				            		</tr>
+				            	</tfoot>
 				            </table>
+		            		
+		            		<h5>Total Data = <span class="data_count"></span></h5>	
 		            	</div>
 
-		            	<button id="addRow" type="button" class="btn btn-primary">Tambah</button>
+		            	<button id="addRow" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</button>
 		            	<br><br>
 
 		            	<input type="hidden" name="status" value="">
 		            	<div class="form-group" style="float: right;">
-		            		<button type="submit" id="simpan_draf" class="btn btn-warning">Simpan Sebagai Draft</button> &ensp;
+		            		<button type="submit" id="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button> &ensp;
 		            		<button type="submit" id="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>	
 		            	</div>
 		            	
-	            	</form>
-	            </div>
-      		</div>
+	            	</div>
+      			</div>
+	        </form>
       	</div>
 	</div>
 @endsection
@@ -122,6 +251,7 @@
 @section('script')
 <script type="text/javascript">
 	$(function() {
+
 		var jurusan = @json($jurusan);
 		var dosen = @json($dosen);
 
@@ -147,8 +277,6 @@
 			var new_id = parseInt(last_id) + 1;
 			$("#tbl-data").find('tbody').append(`
 				<tr id="`+new_id+`">
-					<td>`+new_id+`</td>
-
         			<td>
         				<input type="text" name="nama[]" class="form-control">
         			</td>
@@ -159,7 +287,7 @@
 
         			<td>
         				<select name="jurusan[]" class="form-control">
-        					<option>-Pilih Jurusan-</option>
+        					<option value="">-Pilih Jurusan-</option>
         					
         				</select>
         			</td>
@@ -171,29 +299,29 @@
         			<td>
         				<label for="pembimbing_utama">Utama</label>
         				<select name="pembimbing_utama[]" class="form-control">
-        					
+        					<option value="">-Pilih-</option>
         				</select>
 
         				<label for="pembimbing_pendamping">Pendamping</label>
         				<select name="pembimbing_pendamping[]" class="form-control">
-        					
+        					<option value="">-Pilih-</option>
         				</select>
         			</td>
 
         			<td>
         				<label for="penguji_utama">Utama</label>
         				<select name="penguji_utama[]" class="form-control">
-        					
+        					<option value="">-Pilih-</option>
         				</select>
 
         				<label for="penguji_pendamping">pendamping</label>
         				<select name="penguji_pendamping[]" class="form-control">
-        					
+        					<option value="">-Pilih-</option>
         				</select>
         			</td>
 
         			<td>
-        				<button class="btn btn-danger" name="delete_data"><i class="fa fa-trash"></i></button>
+        				<button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
         			</td>
 				</tr>
 			`);
@@ -210,16 +338,27 @@
 			})
 
 			del_row();
+			data_count();
 		});
 
 		del_row();
 
 		function del_row() {
 			$('button[name="delete_data"]').click(function(event) {
-				var tr_id = $(this).parents("tr").attr('id');
+				var jml_tr = $("tbody tr").length;
+				if (jml_tr > 1) {
+					var tr_id = $(this).parents("tr").attr('id');
+					$(this).parents("tr").remove();
+				}
+				data_count();
+			});
+		}
 
-				$(this).parents("tr").remove();
-			});	
+		data_count();
+
+		function data_count() {
+			var count = $("tbody tr").length;
+			$(".data_count").text(count);
 		}
 		
 	})
