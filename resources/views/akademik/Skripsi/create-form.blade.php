@@ -4,6 +4,15 @@
 	SK Skripsi
 @endsection
 
+@section('css_link')
+	<link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
+	<style type="text/css">
+		th{
+			text-align: center;
+		}
+	</style>
+@endsection
+
 @section('content')
 	<div class="row">
       	<div class="col-xs-12">
@@ -63,8 +72,8 @@
 						            			<td>
 						            				<select name="jurusan[]" class="form-control">
 						            					<option value="">-Pilih Jurusan-</option>
-						            					@foreach($jurusan as $j)
-						            						<option value="{{$j->id}}" {{ (old('jurusan')[$i] == $j->id ? 'selected': '') }}>{{$j->bagian}}</option>
+						            					@foreach($jurusan as $val)
+						            						<option value="{{$val->id}}" {{ (old('jurusan')[$i] == $val->id ? 'selected': '') }}>{{$val->bagian}}</option>
 						            					@endforeach
 						            				</select>
 						            				@error('jurusan.'.$i)
@@ -84,11 +93,11 @@
 						            			</td>
 
 						            			<td>
-						            				<label for="pembimbing_utama">Utama</label>
-						            				<select name="pembimbing_utama[]" class="form-control">
+						            				<h5><b>Utama</b></h5>
+						            				<select name="pembimbing_utama[]" class="form-control select2" style="width: 100%;">
 						            					<option value="">-Pilih-</option>
-						            					@foreach($dosen as $d)
-						            						<option value="{{$d->id}}" {{ (old('pembimbing_utama')[$i] == $d->id ? 'selected': '') }}>{{$val}}</option>
+						            					@foreach($dosen as $val)
+						            						<option value="{{$val->no_pegawai}}" {{ (old('pembimbing_utama')[$i] == $val->no_pegawai ? 'selected': '') }}>{{$val->nama}}</option>
 						            					@endforeach
 						            				</select>
 						            				@error('pembimbing_utama.'.$i)
@@ -97,11 +106,11 @@
 											            </span>
 											    	@enderror
 
-						            				<label for="pembimbing_pendamping">Pendamping</label>
-						            				<select name="pembimbing_pendamping[]" class="form-control">
+						            				<h5><b>Pendamping</b></h5>
+						            				<select name="pembimbing_pendamping[]" class="form-control select2" style="width: 100%;">
 						            					<option value="">-Pilih-</option>
-						            					@foreach($dosen as $index => $val)
-						            						<option value="{{$index}}" {{ (old('pembimbing_pendamping')[$i] == $index ? 'selected': '') }}>{{$val}}</option>
+						            					@foreach($dosen as $val)
+						            						<option value="{{$val->no_pegawai}}" {{ (old('pembimbing_pendamping')[$i] == $val->no_pegawai ? 'selected': '') }}>{{$val->nama}}</option>
 						            					@endforeach
 						            				</select>
 						            				@error('pembimbing_pendamping.'.$i)
@@ -112,11 +121,11 @@
 						            			</td>
 
 						            			<td>
-						            				<label for="penguji_utama">Utama</label>
-						            				<select name="penguji_utama[]" class="form-control">
+						            				<h5><b>Utama</b></h5>
+						            				<select name="penguji_utama[]" class="form-control select2" style="width: 100%;">
 						            					<option value="">-Pilih-</option>
-						            					@foreach($dosen as $index => $val)
-						            						<option value="{{$index}}" {{ (old('penguji_utama')[$i] == $index ? 'selected': '') }}>{{$val}}</option>
+						            					@foreach($dosen as $val)
+						            						<option value="{{$val->no_pegawai}}" {{ (old('penguji_utama')[$i] == $val->no_pegawai ? 'selected': '') }}>{{$val->nama}}</option>
 						            					@endforeach
 						            				</select>
 						            				@error('penguji_utama.'.$i)
@@ -125,11 +134,11 @@
 											            </span>
 											    	@enderror
 
-						            				<label for="penguji_pendamping">pendamping</label>
-						            				<select name="penguji_pendamping[]" class="form-control">
+						            				<h5><b>pendamping</b></h5>
+						            				<select name="penguji_pendamping[]" class="form-control select2" style="width: 100%;">
 						            					<option value="">-Pilih-</option>
-						            					@foreach($dosen as $index => $val)
-						            						<option value="{{$index}}" {{ (old('penguji_pendamping')[$i] == $index ? 'selected': '') }}>{{$val}}</option>
+						            					@foreach($dosen as $val)
+						            						<option value="{{$val->no_pegawai}}" {{ (old('penguji_pendamping')[$i] == $val->no_pegawai ? 'selected': '') }}>{{$val->nama}}</option>
 						            					@endforeach
 						            				</select>
 						            				@error('penguji_pendamping.'.$i)
@@ -140,7 +149,7 @@
 						            			</td>
 
 						            			<td>
-						            				<button class="btn btn-danger" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
+						            				<button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
 						            			</td>
 						            		</tr>
 				            			@endforeach
@@ -159,8 +168,8 @@
 					            			<td>
 					            				<select name="jurusan[]" class="form-control">
 					            					<option value="">-Pilih Jurusan-</option>
-					            					@foreach($jurusan as $j)
-					            						<option value="{{$j->id}}">{{$j->bagian}}</option>
+					            					@foreach($jurusan as $val)
+					            						<option value="{{$val->id}}">{{$val->bagian}}</option>
 					            					@endforeach
 					            				</select>
 					            			</td>
@@ -170,37 +179,37 @@
 					            			</td>
 
 					            			<td>
-					            				<label for="pembimbing_utama">Utama</label>
-					            				<select name="pembimbing_utama[]" class="form-control">
+					            				<h5><b>Utama</b></h5>
+					            				<select name="pembimbing_utama[]" class="form-control select2" style="width: 100%;">
 					            					<option value="">-Pilih-</option>
-					            					@foreach($dosen as $d)
-					            						<option value="{{$d->id}}">{{$d->nama}}</option>
+					            					@foreach($dosen as $val)
+					            						<option value="{{$val->no_pegawai}}">{{$val->nama}}</option>
 					            					@endforeach
 					            				</select>
 
-					            				<label for="pembimbing_pendamping">Pendamping</label>
-					            				<select name="pembimbing_pendamping[]" class="form-control">
+					            				<h5><b>Pendamping</b></h5>
+					            				<select name="pembimbing_pendamping[]" class="form-control select2" style="width: 100%;">
 					            					<option value="">-Pilih-</option>
-					            					@foreach($dosen as $d)
-					            						<option value="{{$d->id}}">{{$d->nama}}</option>
+					            					@foreach($dosen as $val)
+					            						<option value="{{$val->no_pegawai}}">{{$val->nama}}</option>
 					            					@endforeach
 					            				</select>
 					            			</td>
 
 					            			<td>
-					            				<label for="penguji_utama">Utama</label>
-					            				<select name="penguji_utama[]" class="form-control">
+					            				<h5><b>Utama</b></h5>
+					            				<select name="penguji_utama[]" class="form-control select2" style="width: 100%;">
 					            					<option value="">-Pilih-</option>
-					            					@foreach($dosen as $d)
-					            						<option value="{{$d->id}}">{{$d->nama}}</option>
+					            					@foreach($dosen as $val)
+					            						<option value="{{$val->no_pegawai}}">{{$val->nama}}</option>
 					            					@endforeach
 					            				</select>
 
-					            				<label for="penguji_pendamping">pendamping</label>
-					            				<select name="penguji_pendamping[]" class="form-control">
+					            				<h5><b>pendamping</b></h5>
+					            				<select name="penguji_pendamping[]" class="form-control select2" style="width: 100%;">
 					            					<option value="">-Pilih-</option>
-					            					@foreach($dosen as $d)
-					            						<option value="{{$d->id}}">{{$d->nama}}</option>
+					            					@foreach($dosen as $val)
+					            						<option value="{{$val->no_pegawai}}">{{$val->nama}}</option>
 					            					@endforeach
 					            				</select>
 					            			</td>
@@ -246,8 +255,10 @@
 @endsection
 
 @section('script')
+<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
 <script type="text/javascript">
 	$(function() {
+		$('.select2').select2()
 
 		var jurusan = @json($jurusan);
 		var dosen = @json($dosen);
@@ -294,25 +305,25 @@
         			</td>
 
         			<td>
-        				<label for="pembimbing_utama">Utama</label>
-        				<select name="pembimbing_utama[]" class="form-control">
+        				<h5><b>Utama</b></h5>
+        				<select name="pembimbing_utama[]" class="form-control select2" style="width: 100%;">
         					<option value="">-Pilih-</option>
         				</select>
 
-        				<label for="pembimbing_pendamping">Pendamping</label>
-        				<select name="pembimbing_pendamping[]" class="form-control">
+        				<h5><b>Pendamping</b></h5>
+        				<select name="pembimbing_pendamping[]" class="form-control select2" style="width: 100%;">
         					<option value="">-Pilih-</option>
         				</select>
         			</td>
 
         			<td>
-        				<label for="penguji_utama">Utama</label>
-        				<select name="penguji_utama[]" class="form-control">
+        				<h5><b>Utama</b></h5>
+        				<select name="penguji_utama[]" class="form-control select2" style="width: 100%;">
         					<option value="">-Pilih-</option>
         				</select>
 
-        				<label for="penguji_pendamping">pendamping</label>
-        				<select name="penguji_pendamping[]" class="form-control">
+        				<h5><b>Pendamping</b></h5>
+        				<select name="penguji_pendamping[]" class="form-control select2" style="width: 100%;">
         					<option value="">-Pilih-</option>
         				</select>
         			</td>
@@ -324,18 +335,19 @@
 			`);
 
 			$.each(jurusan, function(index, val) {
-				$("tr#"+new_id).find('select[name="jurusan[]"]').append(`<option value="`+index+`">`+val+`</option>`);
+				$("tr#"+new_id).find('select[name="jurusan[]"]').append(`<option value="`+val.id+`">`+val.bagian+`</option>`);
 			})
 
 			$.each(dosen, function(index, val) {
-				$("tr#"+new_id).find('select[name="pembimbing_utama[]"]').append(`<option value="`+index+`">`+val+`</option>`);
-				$("tr#"+new_id).find('select[name="pembimbing_pendamping[]"]').append(`<option value="`+index+`">`+val+`</option>`);
-				$("tr#"+new_id).find('select[name="penguji_utama[]"]').append(`<option value="`+index+`">`+val+`</option>`);
-				$("tr#"+new_id).find('select[name="penguji_pendamping[]"]').append(`<option value="`+index+`">`+val+`</option>`);
+				$("tr#"+new_id).find('select[name="pembimbing_utama[]"]').append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+				$("tr#"+new_id).find('select[name="pembimbing_pendamping[]"]').append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+				$("tr#"+new_id).find('select[name="penguji_utama[]"]').append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+				$("tr#"+new_id).find('select[name="penguji_pendamping[]"]').append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
 			})
 
 			del_row();
 			data_count();
+			$('.select2').select2()
 		});
 
 		del_row();
