@@ -10,6 +10,17 @@ Data SK Skripsi
 			padding: 8px;
 			overflow: hidden;
 		}
+
+		.tbl_row{
+			display: table;
+			width: 100%;
+			border-bottom: 0.1px solid lightgrey;
+			margin-top: 5px;
+		}
+
+		/*.tbl_row div{
+			display: table-cell;
+		}*/
 	</style>
 @endsection
 
@@ -87,14 +98,16 @@ Data SK Skripsi
       			<div class="box-header">
 	              <h3 class="box-title">Data SK Skripsi</h3>
 
-	              <div class="form-group" style="float: right;">
-	            	<a href="{{ route('akademik.skripsi.edit', $data->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
-	              </div>
+	              @if($sk_akademik->verif_dekan == 0)
+		              <div class="form-group" style="float: right;">
+		            	<a href="{{ route('akademik.skripsi.edit', $sk_akademik->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+		              </div>
+	              @endif
 	            </div>
 
 	            <div class="box-body">
 	            	<div class="table-responsive">
-	            		<table id="dataTable" class="table table-bordered table-hovered">
+	            		<table id="dataTable" class="table table-bordered table-hover">
 		            		<thead>
 			            		<tr>
 			            			<th>Nama Mahasiswa</th>
@@ -106,13 +119,39 @@ Data SK Skripsi
 			            		</tr>
 			            	</thead>
 			            	<tbody>
-			            		
+			            		@foreach($detail_sk as $item)
+		            			<tr>
+		            				<td>{{$item->nama_mhs}}</td>
+		            				<td>{{$item->nim}}</td>
+		            				<td>{{$item->bagian->bagian}}</td>
+		            				<td>{{$item->judul}}</td>
+		            				<td >
+		            					<div class="tbl_row">
+	            							1. {{$item->pembimbing->pembimbing_utama->nama}}
+	            						</div>
+	            						<div class="tbl_row">
+	            							2. {{$item->pembimbing->pembimbing_pendamping->nama}}
+	            						</div>	
+		            				</td>
+		            				<td>
+		            					<div class="tbl_row">
+		            						1. {{$item->penguji->penguji_utama->nama}}	
+		            					</div>
+		            					<div class="tbl_row">
+		            						2. {{$item->penguji->penguji_pendamping->nama}}	
+		            					</div>
+		            				</td>
+		            			</tr>
+			            		@endforeach
 			            	</tbody>
 			            </table>
 
-			            <div class="form-group" style="float: right;">
-			            	<a href="{{ route('akademik.skripsi.edit', $data->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
-			            </div>
+			            @if($sk_akademik->verif_dekan == 0)
+			              <br>
+			              <div class="form-group" style="float: right;">
+			            	<a href="{{ route('akademik.skripsi.edit', $sk_akademik->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+			              </div>
+		              	@endif
 	            	</div>
 	            </div>
       		</div>
@@ -123,7 +162,7 @@ Data SK Skripsi
 
 @section('script')
 <script type="text/javascript">
-	var status = @json($data->status);
+	var status = @json($sk_akademik->id_status_sk_akademik);
 	for (var i = status; i > 0; i--) {
 		$("#progres_"+i).children('i').removeClass('bg-grey').addClass('bg-green fa-check');
 	}
