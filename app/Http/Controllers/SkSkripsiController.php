@@ -12,6 +12,7 @@ use App\detail_sk;
 use App\penguji;
 use App\pembimbing;
 use App\Http\Controllers\Controller;
+use App\status_sk_akademik;
 
 class SkSkripsiController extends Controller
 {
@@ -118,7 +119,7 @@ class SkSkripsiController extends Controller
 		$sk_akademik = sk_akademik::find($id);
 		$detail_sk = detail_sk::where('id_sk_akademik', $id)
 		->with([
-			'bagian',
+			'bagian','status_sk_akademik',
 			'pembimbing.pembimbing_utama:no_pegawai,nama',
 			'pembimbing.pembimbing_pendamping:no_pegawai,nama',
 			'penguji.penguji_utama:no_pegawai,nama',
@@ -194,7 +195,9 @@ class SkSkripsiController extends Controller
 			]);
 			for($i = 0;$i<count($request->nama);$i++){
 				if($request->id_detail_sk[$i] != 0){
-					if($request->delete != 0){
+					if($request->delete_detail_sk == 0){
+						detail_sk::where('id', $request->id_detail_sk[$i])->delete();
+					} else{
 						$detail_sk = detail_sk::update([
 							'nama_mhs' => $request->nama[$i],
 							'nim' => $request->nim[$i],
@@ -211,8 +214,6 @@ class SkSkripsiController extends Controller
 							'id_penguji_utama' => $request->penguji_utama[$i],
 							'id_penguji_pendamping' => $request->penguji_pendamping[$i],
 						]);
-					} else{
-						detail_sk::where('id',$request->id_detail_sk[$i])->delete();
 					}	
 
 				}elseif ($request->id_detail_sk[$i] == 0){
