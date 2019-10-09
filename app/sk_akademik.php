@@ -25,9 +25,17 @@ class sk_akademik extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'id_status_akademik', 'id_tipe_sk'
-    ];
+    // protected $fillable = [
+    //     'id_status_sk_akademik', 'id_tipe_sk'
+    // ];
+
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = ['id'];
+    
 
     public function tipe_sk()
     {

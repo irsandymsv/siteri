@@ -22,8 +22,8 @@ class SkSkripsiController extends Controller
 		// 	$sk_akademik = sk_akademik::all();
 		// 	return view('akademik.Skripsi.index', ['sk_akademik' => $sk_akademik]);
 		// }catch(Exception $e){
-				return view('akademik.Skripsi.index');
 		// }
+		return view('akademik.Skripsi.index');
 		
     }
 
@@ -61,7 +61,7 @@ class SkSkripsiController extends Controller
 
     public function store(Request $request)
     {
-		// dd($request);
+		// dd($request->status);
 		$this->validate($request, [
 			"nama"    => "required|array",
 			"nama.*"  => "required|string|max:40",
@@ -83,16 +83,15 @@ class SkSkripsiController extends Controller
 
 		try{
 			$sk_akademik = sk_akademik::create([
-				'id_tipe_sk' => 0,
-				'id_status_akademik' => $request->status,
-				'id_user' => $request->id_user
+				'id_tipe_sk' => 1,
+				'id_status_sk_akademik' => $request->status
 			]);
 			// $sk_akademik = sk_akademik::where('id_user', $request->id_user)->order_by('created_at', 'desc')->first();
 			for($i=0;$i< count($request->nama);$i++){
 				$detail_sk = detail_sk::create([
 					'id_sk_akademik' => $sk_akademik->id,
 					'nama_mhs' => $request->nama[$i],
-					'nim' =>$request->nim[$i],
+					'nim' => $request->nim[$i],
 					'id_bagian' => $request->jurusan[$i],
 					'judul' => $request->judul[$i],
 				]);
@@ -102,32 +101,48 @@ class SkSkripsiController extends Controller
 				// }])->order_by('id', 'desc')->first();
 				pembimbing::create([
 					'id_detail_sk' => $detail_sk->id,
-					'id_pembimbing_utama' => $request->id_pembimbing_utama,
-					'id_pembimbing_pendamping' => $request->id_pembimbing_pendamping,
+					'id_pembimbing_utama' => $request->pembimbing_utama[$i],
+					'id_pembimbing_pendamping' => $request->pembimbing_pendamping[$i],
 				]);
 				penguji::create([
 					'id_detail_sk' => $detail_sk->id,
-					'id_penguji_utama' => $request->id_penguji_utama,
-					'id_penguji_pendamping' => $request->id_penguji_pendamping,
+					'id_penguji_utama' => $request->penguji_utama[$i],
+					'id_penguji_pendamping' => $request->penguji_pendamping[$i],
 				]);
 
-				return redirect()->route('skripsi.create')->with('success','Data Berhasil Ditambahkan');
 			}
+
+			return redirect()->route('akademik.skripsi.index')->with('success','Data Berhasil Ditambahkan');
 		} catch(Exception $e){
-			return redirect()->route('skripsi.create')->with('error',$e->getMessage());
+			return redirect()->route('akademik.skripsi.create')->with('error',$e->getMessage());
 		}
 
 	}
+
+	public function show($id)
+	{
+		$data = new detail_sk();
+		$data->id = $id;
+		$data->status = 2;
+		return view('akademik.Skripsi.show', [
+			"data" => $data
+		]);
+	}
 	
 	public function edit($id){
-		// try{
-		// 	$detail_sk = detail_sk::with('pembimbing,penguji')->where('id_sk_akademik')->get();
-		// 	return view('akademik.Skripsi.edit',['detail_sk'=>$detail_sk]);
-		// }catch(Exception $e){
-			// return redirect()->route('skripsi.index')->with('error',$e->getMessage());
-		// }
+		try{
+			$jurusan= bagian::where('is_jurusan',1)->get();
+			$dosen = user::where('is_dosen', 1)->get();
+			$detail_sk = detail_sk::with('pembimbing,penguji')->where('id_sk_akademik', $id)->get();
 
-		return view('akademik.skripsi.index');
+			return view('akademik.Skripsi.edit',[
+				'detail_sk'=>$detail_sk,
+				'jurusan' => $jurusan,
+				'dosen' => $dosen
+			]);
+		}catch(Exception $e){
+			return redirect()->route('skripsi.index')->with('error',$e->getMessage());
+		}
 	}
 
 	public function update(Request $request, $id){
