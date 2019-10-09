@@ -21,7 +21,7 @@
 	<div class="row">
       	<div class="col-xs-12">
       		<div class="box box-primary">
-	            <form action="{{ route('akademik.skripsi.store') }}" method="POST">
+	            <form action="{{ route('akademik.skripsi.update', $sk_akademik->id) }}" method="POST">
 	            	<div class="box-header">
 		              <h3 class="box-title">Buat SK Skripsi</h3>
 
@@ -34,6 +34,12 @@
 	            	
 	            	<div class="box-body">
 	            		@csrf
+	            		@method('PUT')
+	            		<h4>
+	            			Tanggal SK : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}} &ensp;
+	            			Status : {{$sk_akademik->status_sk_akademik->status}}
+	            		</h4>
+
 		            	<div class="table-responsive">
 		            		<h5>Total Data = <span class="data_count"></span></h5>
 		            		<table id="tbl-data" class="table table-bordered table-hover">
@@ -166,20 +172,20 @@
 					            			</td>
 
 					            			<td>
-					            				<input type="text" name="nim[]" class="form-control">
+					            				<input type="text" name="nim[]" class="form-control" value="{{$item->nim}}">
 					            			</td>
 
 					            			<td>
 					            				<select name="jurusan[]" class="form-control">
 					            					<option value="">-Pilih Jurusan-</option>
 					            					@foreach($jurusan as $val)
-					            						<option value="{{$val->id}}">{{$val->bagian}}</option>
+					            						<option value="{{$val->id}}" {{($item->bagian->id == $val->id? 'selected':'')}}>{{$val->bagian}}</option>
 					            					@endforeach
 					            				</select>
 					            			</td>
 
 					            			<td>
-					            				<textarea class="form-control" rows="3" name="judul[]"></textarea>
+					            				<textarea class="form-control" rows="3" name="judul[]">{{$item->judul}}</textarea>
 					            			</td>
 
 					            			<td>
@@ -187,7 +193,7 @@
 					            				<select name="pembimbing_utama[]" class="form-control select2" style="width: 100%;">
 					            					<option value="">-Pilih-</option>
 					            					@foreach($dosen as $val)
-					            						<option value="{{$val->no_pegawai}}">{{$val->nama}}</option>
+					            						<option value="{{$val->no_pegawai}}" {{($item->pembimbing->pembimbing_utama->no_pegawai == $val->no_pegawai? 'selected':'')}}>{{$val->nama}}</option>
 					            					@endforeach
 					            				</select>
 
@@ -195,7 +201,7 @@
 					            				<select name="pembimbing_pendamping[]" class="form-control select2" style="width: 100%;">
 					            					<option value="">-Pilih-</option>
 					            					@foreach($dosen as $val)
-					            						<option value="{{$val->no_pegawai}}">{{$val->nama}}</option>
+					            						<option value="{{$val->no_pegawai}}" {{($item->pembimbing->pembimbing_pendamping->no_pegawai == $val->no_pegawai? 'selected':'')}}>{{$val->nama}}</option>
 					            					@endforeach
 					            				</select>
 					            			</td>
@@ -205,7 +211,7 @@
 					            				<select name="penguji_utama[]" class="form-control select2" style="width: 100%;">
 					            					<option value="">-Pilih-</option>
 					            					@foreach($dosen as $val)
-					            						<option value="{{$val->no_pegawai}}">{{$val->nama}}</option>
+					            						<option value="{{$val->no_pegawai}}" {{($item->penguji->penguji_utama->no_pegawai == $val->no_pegawai? 'selected':'')}}>{{$val->nama}}</option>
 					            					@endforeach
 					            				</select>
 
@@ -213,7 +219,7 @@
 					            				<select name="penguji_pendamping[]" class="form-control select2" style="width: 100%;">
 					            					<option value="">-Pilih-</option>
 					            					@foreach($dosen as $val)
-					            						<option value="{{$val->no_pegawai}}">{{$val->nama}}</option>
+					            						<option value="{{$val->no_pegawai}}" {{($item->penguji->penguji_pendamping->no_pegawai == $val->no_pegawai? 'selected':'')}}>{{$val->nama}}</option>
 					            					@endforeach
 					            				</select>
 					            			</td>
@@ -256,4 +262,124 @@
 	        </form>
       	</div>
 	</div>
+@endsection
+
+@section('script')
+<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('.select2').select2()
+
+		var jurusan = @json($jurusan);
+		var dosen = @json($dosen);
+
+		$("#simpan_draf").click(function(event) {
+			event.preventDefault();
+			$("input[name='status']").val(1);
+			$('form').trigger('submit');
+		});
+
+		$("#simpan_kirim").click(function(event) {
+			event.preventDefault();
+			$("input[name='status']").val(2);
+			$('form').trigger('submit');
+		});
+
+		$('button#addRow').click(function(event) {
+			if ($("#tbl-data tbody tr").length) {
+				var last_id = $("#tbl-data tbody tr:last-child").attr('id');
+			}else{
+				var last_id = 0;
+			}
+			// console.log(last_id);
+			var new_id = parseInt(last_id) + 1;
+			$("#tbl-data").find('tbody').append(`
+				<tr id="`+new_id+`">
+        			<td>
+        				<input type="text" name="nama[]" class="form-control">
+        			</td>
+
+        			<td>
+        				<input type="text" name="nim[]" class="form-control">
+        			</td>
+
+        			<td>
+        				<select name="jurusan[]" class="form-control">
+        					<option value="">-Pilih Jurusan-</option>
+        					
+        				</select>
+        			</td>
+
+        			<td>
+        				<textarea class="form-control" rows="3" name="judul[]"></textarea>
+        			</td>
+
+        			<td>
+        				<h5><b>Utama</b></h5>
+        				<select name="pembimbing_utama[]" class="form-control select2" style="width: 100%;">
+        					<option value="">-Pilih-</option>
+        				</select>
+
+        				<h5><b>Pendamping</b></h5>
+        				<select name="pembimbing_pendamping[]" class="form-control select2" style="width: 100%;">
+        					<option value="">-Pilih-</option>
+        				</select>
+        			</td>
+
+        			<td>
+        				<h5><b>Utama</b></h5>
+        				<select name="penguji_utama[]" class="form-control select2" style="width: 100%;">
+        					<option value="">-Pilih-</option>
+        				</select>
+
+        				<h5><b>Pendamping</b></h5>
+        				<select name="penguji_pendamping[]" class="form-control select2" style="width: 100%;">
+        					<option value="">-Pilih-</option>
+        				</select>
+        			</td>
+
+        			<td>
+        				<button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
+        			</td>
+				</tr>
+			`);
+
+			$.each(jurusan, function(index, val) {
+				$("tr#"+new_id).find('select[name="jurusan[]"]').append(`<option value="`+val.id+`">`+val.bagian+`</option>`);
+			})
+
+			$.each(dosen, function(index, val) {
+				$("tr#"+new_id).find('select[name="pembimbing_utama[]"]').append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+				$("tr#"+new_id).find('select[name="pembimbing_pendamping[]"]').append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+				$("tr#"+new_id).find('select[name="penguji_utama[]"]').append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+				$("tr#"+new_id).find('select[name="penguji_pendamping[]"]').append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+			})
+
+			del_row();
+			data_count();
+			$('.select2').select2()
+		});
+
+		del_row();
+
+		function del_row() {
+			$('button[name="delete_data"]').click(function(event) {
+				var jml_tr = $("tbody tr").length;
+				if (jml_tr > 1) {
+					var tr_id = $(this).parents("tr").attr('id');
+					$(this).parents("tr").remove();
+				}
+				data_count();
+			});
+		}
+
+		data_count();
+
+		function data_count() {
+			var count = $("tbody tr").length;
+			$(".data_count").text(count);
+		}
+		
+	})
+</script>
 @endsection

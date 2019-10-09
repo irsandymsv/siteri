@@ -35,18 +35,18 @@ class detail_sk extends Model
     	return $this->belongsTo('App\sk_akademik', 'id_sk_akademik');
     }
 
-    public function jurusan()
+    public function bagian()
     {
-    	return $this->belongsTo('App\jurusan', 'id_jurusan');
+    	return $this->belongsTo('App\bagian', 'id_bagian')->where('is_jurusan', 1);
     }
 
     public function pembimbing()
     {
-    	return $this->hasMany('App\pembimbing', 'id_detail_sk');
+    	return $this->hasOne('App\pembimbing', 'id_detail_sk');
     }
 
     public function penguji()
     {
-    	return $this->hasMany('App\penguji', 'id_detail_sk');
+    	return $this->hasOne('App\penguji', 'id_detail_sk');
     }
 }
