@@ -17,9 +17,9 @@ class CreateFileLaporanTable extends Migration
             $table->increments('id');
             $table->string('filename');
             $table->string('dir');
-            $table->unsignedInteger('id_laporan');
+            $table->unsignedInteger('id_laporan')->nullable();
 
-            $table->foreign('id_laporan')->references('id')->on('laporan')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_laporan')->references('id')->on('laporan')->onDelete('set null');
         });
     }
 

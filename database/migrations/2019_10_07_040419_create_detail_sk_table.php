@@ -15,14 +15,14 @@ class CreateDetailSkTable extends Migration
     {
         Schema::create('detail_sk', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('id_sk_akademik');
+            $table->unsignedInteger('id_sk_akademik')->nullable();
             $table->string('nama_mhs')->length(40);
             $table->string('nim', 20);
-            $table->unsignedInteger('id_bagian');
+            $table->unsignedInteger('id_bagian')->nullable();
             $table->string('judul');
 
-            $table->foreign('id_sk_akademik')->references('id')->on('sk_akademik')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('id_bagian')->references('id')->on('bagian')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_sk_akademik')->references('id')->on('sk_akademik')->onDelete('cascade');
+            $table->foreign('id_bagian')->references('id')->on('bagian')->onDelete('set_null');
         });
     }
 

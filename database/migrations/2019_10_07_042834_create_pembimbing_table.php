@@ -16,12 +16,12 @@ class CreatePembimbingTable extends Migration
         Schema::create('pembimbing', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('id_detail_sk');
-            $table->string('id_pembimbing_utama')->length(25);
-            $table->string('id_pembimbing_pendamping')->length(25);
+            $table->string('id_pembimbing_utama')->length(25)->nullable();
+            $table->string('id_pembimbing_pendamping')->length(25)->nullable();
 
             $table->foreign('id_detail_sk')->references('id')->on('detail_sk')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('id_pembimbing_utama')->references('no_pegawai')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('id_pembimbing_pendamping')->references('no_pegawai')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_pembimbing_utama')->references('no_pegawai')->on('users')->onDelete('set null');
+            $table->foreign('id_pembimbing_pendamping')->references('no_pegawai')->on('users')->onDelete('set null');
         });
     }
 
