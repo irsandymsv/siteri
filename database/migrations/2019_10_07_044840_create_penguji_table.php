@@ -20,8 +20,8 @@ class CreatePengujiTable extends Migration
             $table->string('id_penguji_pendamping')->length(25)->nullable();
 
             $table->foreign('id_detail_sk')->references('id')->on('detail_sk')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('id_penguji_utama')->references('no_pegawai')->on('users')->onDelete('set_null');
-            $table->foreign('id_penguji_pendamping')->references('no_pegawai')->on('users')->onDelete('set_null');
+            $table->foreign('id_penguji_utama')->references('no_pegawai')->on('users')->onDelete('set null');
+            $table->foreign('id_penguji_pendamping')->references('no_pegawai')->on('users')->onDelete('set null');
         });
     }
 
