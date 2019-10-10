@@ -94,16 +94,10 @@ class SkSkripsiController extends Controller
 					'nim' => $request->nim[$i],
 					'id_bagian' => $request->jurusan[$i],
 					'judul' => $request->judul[$i],
-				]);
-				pembimbing::create([
-					'id_detail_sk' => $detail_sk->id,
 					'id_pembimbing_utama' => $request->pembimbing_utama[$i],
 					'id_pembimbing_pendamping' => $request->pembimbing_pendamping[$i],
-				]);
-				penguji::create([
-					'id_detail_sk' => $detail_sk->id,
 					'id_penguji_utama' => $request->penguji_utama[$i],
-					'id_penguji_pendamping' => $request->penguji_pendamping[$i],
+					'id_penguji_pendamping' => $request->penguji_pendamping[$i]
 				]);
 			}
 
@@ -119,11 +113,15 @@ class SkSkripsiController extends Controller
 		$sk_akademik = sk_akademik::find($id);
 		$detail_sk = detail_sk::where('id_sk_akademik', $id)
 		->with([
-			'bagian','status_sk_akademik',
-			'pembimbing.pembimbing_utama:no_pegawai,nama',
-			'pembimbing.pembimbing_pendamping:no_pegawai,nama',
-			'penguji.penguji_utama:no_pegawai,nama',
-			'penguji.penguji_pendamping:no_pegawai,nama'
+			'bagian','status_sk_akademik', 
+			'penguji_utama',
+			'penguji_pendamping',
+			'pembimbing_utama', 
+			'pembimbing_pendamping',
+			// 'pembimbing.pembimbing_utama:no_pegawai,nama',
+			// 'pembimbing.pembimbing_pendamping:no_pegawai,nama',
+			// 'penguji.penguji_utama:no_pegawai,nama',
+			// 'penguji.penguji_pendamping:no_pegawai,nama'
 		])->get();
 		// dd($detail_sk);
 		return view('akademik.Skripsi.show', [
@@ -146,10 +144,14 @@ class SkSkripsiController extends Controller
 			$detail_sk = detail_sk::where('id_sk_akademik', $id)
 			->with([
 				'bagian',
-				'pembimbing.pembimbing_utama:no_pegawai,nama',
-				'pembimbing.pembimbing_pendamping:no_pegawai,nama',
-				'penguji.penguji_utama:no_pegawai,nama',
-				'penguji.penguji_pendamping:no_pegawai,nama'
+				'penguji_utama',
+				'penguji_pendamping',
+				'pembimbing_utama',
+				'pembimbing_pendamping',
+				// 'pembimbing.pembimbing_utama:no_pegawai,nama',
+				// 'pembimbing.pembimbing_pendamping:no_pegawai,nama',
+				// 'penguji.penguji_utama:no_pegawai,nama',
+				// 'penguji.penguji_pendamping:no_pegawai,nama'
 			])->get();
 
 			return view('akademik.Skripsi.edit',[
@@ -176,14 +178,14 @@ class SkSkripsiController extends Controller
 				"jurusan.*" => "required",
 				"judul" => "required|array",
 				"judul.*" => "required",
-				"id_pembimbing" => "required|array",
-				"id_pembimbing.*" => "required",
+				// "id_pembimbing" => "required|array",
+				// "id_pembimbing.*" => "required",
 				"pembimbing_utama" => "required|array",
 				"pembimbing_utama.*" => "required",
 				"pembimbing_pendamping" => "required|array",
 				"pembimbing_pendamping.*" => "required",
-				"id_penguji" => "required|array",
-				"id_penguji.*" => "required",
+				// "id_penguji" => "required|array",
+				// "id_penguji.*" => "required",
 				"penguji_utama" => "required|array",
 				"penguji_utama.*" => "required",
 				"penguji_pendamping" => "required|array",
@@ -200,7 +202,7 @@ class SkSkripsiController extends Controller
 					// echo('||detele = '.$request->delete_detail_sk[$i].'|| ');
 					// echo ($request->delete_detail_sk[$i] == 1);
 					if($request->delete_detail_sk[$i] == 1){
-						echo('delete');
+						// echo('delete');
 						// echo ($request->id_detail_sk[$i]);
 						detail_sk::where('id', $request->id_detail_sk[$i])->delete();
 					} else{
@@ -210,16 +212,10 @@ class SkSkripsiController extends Controller
 							'nim' => $request->nim[$i],
 							'id_bagian' => $request->jurusan[$i],
 							'judul' => $request->judul[$i],
-						]);
-						pembimbing::where('id',$request->id_pembimbing[$i])->update([
-							'id_detail_sk' => $request->id_detail_sk[$i],
 							'id_pembimbing_utama' => $request->pembimbing_utama[$i],
 							'id_pembimbing_pendamping' => $request->pembimbing_pendamping[$i],
-						]);
-						penguji::where('id', $request->id_penguji[$i])->update([
-							'id_detail_sk' => $request->id_detail_sk[$i],
 							'id_penguji_utama' => $request->penguji_utama[$i],
-							'id_penguji_pendamping' => $request->penguji_pendamping[$i],
+							'id_penguji_pendamping' => $request->penguji_pendamping[$i]
 						]);
 					}	
 
@@ -230,17 +226,10 @@ class SkSkripsiController extends Controller
 						'nim' => $request->nim[$i],
 						'id_bagian' => $request->jurusan[$i],
 						'judul' => $request->judul[$i],
-					]);
-
-					pembimbing::create([
-						'id_detail_sk' => $detail_sk->id,
 						'id_pembimbing_utama' => $request->pembimbing_utama[$i],
 						'id_pembimbing_pendamping' => $request->pembimbing_pendamping[$i],
-					]);
-					penguji::create([
-						'id_detail_sk' => $detail_sk->id,
 						'id_penguji_utama' => $request->penguji_utama[$i],
-						'id_penguji_pendamping' => $request->penguji_pendamping[$i],
+						'id_penguji_pendamping' => $request->penguji_pendamping[$i]
 					]);
 				}else{
 					dd($request->id_detail_sk[$i]);

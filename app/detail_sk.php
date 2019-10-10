@@ -40,13 +40,23 @@ class detail_sk extends Model
     	return $this->belongsTo('App\bagian', 'id_bagian')->where('is_jurusan', 1);
     }
 
-    public function pembimbing()
+    public function penguji_utama()
     {
-    	return $this->hasOne('App\pembimbing', 'id_detail_sk');
+        return $this->belongsTo('App\User', 'id_penguji_utama');
     }
 
-    public function penguji()
+    public function penguji_pendamping()
     {
-    	return $this->hasOne('App\penguji', 'id_detail_sk');
+        return $this->belongsTo('App\User', 'id_penguji_pendamping');
+    }
+
+    public function pembimbing_utama()
+    {
+        return $this->belongsTo('App\User', 'id_pembimbing_utama');
+    }
+
+    public function pembimbing_pendamping()
+    {
+        return $this->belongsTo('App\User', 'id_pembimbing_pendamping');
     }
 }
