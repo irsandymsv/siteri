@@ -274,6 +274,8 @@
 	        </form>
       	</div>
 	</div>
+	@php
+	@endphp
 @endsection
 
 @section('script')
@@ -293,7 +295,9 @@
 			$("input[name='status']").val(2);
 			$('form').trigger('submit');
 		});
+		// console.log(dosen);
 		$('button#addRow').click(function(event) {
+
 			if ($("#tbl-data tbody tr").length) {
 				var last_id = $("#tbl-data tbody tr:last-child").attr('id');
 			}else{
@@ -348,6 +352,7 @@
 			$.each(jurusan, function(index, val) {
 				$("tr#"+new_id).find('select[name="jurusan[]"]').append(`<option value="`+val.id+`">`+val.bagian+`</option>`);
 			})
+			
 			$.each(dosen, function(index, val) {
 				$("tr#"+new_id).find('select[name="pembimbing_utama[]"]').append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
 				$("tr#"+new_id).find('select[name="pembimbing_pendamping[]"]').append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);

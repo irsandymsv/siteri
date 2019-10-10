@@ -16,42 +16,32 @@ use App\status_sk_akademik;
 
 class SkSkripsiController extends Controller
 {
-
-    public function index()
-    {
-		try{
-
-			$sk_akademik = sk_akademik::whereHas('tipe_sk',function($query){
-											$query->where('id',1);})
-										->with(['tipe_sk','status_sk_akademik'])
-										->orderBy('created_at', 'desc')
-										->get();
+	public function index()
+	{
+		try {
+			$sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])->orderBy('created_at', 'desc')->get();
 			return view('akademik.Skripsi.index', ['sk_akademik' => $sk_akademik]);
-		}catch(Exception $e){
+		} catch (Exception $e) {
 			return view('akademik.Skripsi.index');
 		}
-		
-    }
-
-    public function create(Request $request){
-        $old_data = [];
-        if (count($request->old()) > 0) {
-            // dd($request->old()['nama']);
-            $old_data = $request->old();
-        }     
-
-		$jurusan= bagian::where('is_jurusan',1)->get();
+	}
+	public function create(Request $request)
+	{
+		$old_data = [];
+		if (count($request->old()) > 0) {
+			// dd($request->old()['nama']);
+			$old_data = $request->old();
+		}
+		$jurusan = bagian::where('is_jurusan', 1)->get();
 		$dosen = user::where('is_dosen', 1)->get();
-
-        return view('akademik.skripsi.create-form', [
-        	'jurusan' => $jurusan,
-        	'dosen' => $dosen,
-            'old_data' => $old_data
-        ]);
-    }
-
-    public function store(Request $request)
-    {
+		return view('akademik.skripsi.create-form', [
+			'jurusan' => $jurusan,
+			'dosen' => $dosen,
+			'old_data' => $old_data
+		]);
+	}
+	public function store(Request $request)
+	{
 		// dd($request->status);
 		$this->validate($request, [
 			"nama"    => "required|array",
@@ -71,13 +61,12 @@ class SkSkripsiController extends Controller
 			"penguji_pendamping" => "required|array",
 			"penguji_pendamping.*" => "required",
 		]);
-
-		try{
+		try {
 			$sk_akademik = sk_akademik::create([
 				'id_tipe_sk' => 1,
 				'id_status_sk_akademik' => $request->status
 			]);
-			for($i=0;$i< count($request->nama);$i++){
+			for ($i = 0; $i < count($request->nama); $i++) {
 				$detail_sk = detail_sk::create([
 					'id_sk_akademik' => $sk_akademik->id,
 					'nama_mhs' => $request->nama[$i],
@@ -90,44 +79,15 @@ class SkSkripsiController extends Controller
 					'id_penguji_pendamping' => $request->penguji_pendamping[$i]
 				]);
 			}
-
-			return redirect()->route('akademik.skripsi.show', $sk_akademik->id)->with('success','Data Berhasil Ditambahkan');
-		} catch(Exception $e){
-			return redirect()->route('akademik.skripsi.create')->with('error',$e->getMessage());
+			return redirect()->route('akademik.skripsi.show', $sk_akademik->id)->with('success', 'Data Berhasil Ditambahkan');
+		} catch (Exception $e) {
+			return redirect()->route('akademik.skripsi.create')->with('error', $e->getMessage());
 		}
-
 	}
-
 	public function show($id)
 	{
 		$sk_akademik = sk_akademik::find($id);
 		$detail_sk = detail_sk::where('id_sk_akademik', $id)
-		->with([
-			'bagian', 
-			'penguji_utama:no_pegawai,nama',
-			'penguji_pendamping:no_pegawai,nama',
-			'pembimbing_utama:no_pegawai,nama', 
-			'pembimbing_pendamping:no_pegawai,nama'
-		])->get();
-		// dd($detail_sk);
-		return view('akademik.Skripsi.show', [
-			'sk_akademik' => $sk_akademik,
-			'detail_sk' => $detail_sk
-		]);
-	}
-	
-	public function edit(Request $request, $id){
-		$old_data = [];
-        if (count($request->old()) > 0) {
-            // dd($request->old()['nama']);
-            $old_data = $request->old();
-        } 
-
-		try{
-			$jurusan= bagian::where('is_jurusan',1)->get();
-			$dosen = user::where('is_dosen', 1)->get();
-			$sk_akademik = sk_akademik::find($id);
-			$detail_sk = detail_sk::where('id_sk_akademik', $id)
 			->with([
 				'bagian',
 				'penguji_utama:no_pegawai,nama',
@@ -135,20 +95,45 @@ class SkSkripsiController extends Controller
 				'pembimbing_utama:no_pegawai,nama',
 				'pembimbing_pendamping:no_pegawai,nama'
 			])->get();
+		// dd($detail_sk);
+		return view('akademik.Skripsi.show', [
+			'sk_akademik' => $sk_akademik,
+			'detail_sk' => $detail_sk
+		]);
+	}
 
-			return view('akademik.Skripsi.edit',[
+	public function edit(Request $request, $id)
+	{
+		$old_data = [];
+		if (count($request->old()) > 0) {
+			// dd($request->old()['nama']);
+			$old_data = $request->old();
+		}
+		try {
+			$jurusan = bagian::where('is_jurusan', 1)->get();
+			$dosen = user::where('is_dosen', 1)->get();
+			$sk_akademik = sk_akademik::find($id);
+			$detail_sk = detail_sk::where('id_sk_akademik', $id)
+				->with([
+					'bagian',
+					'penguji_utama:no_pegawai,nama',
+					'penguji_pendamping:no_pegawai,nama',
+					'pembimbing_utama:no_pegawai,nama',
+					'pembimbing_pendamping:no_pegawai,nama'
+				])->get();
+			return view('akademik.Skripsi.edit', [
 				'sk_akademik' => $sk_akademik,
-				'detail_sk'=> $detail_sk,
+				'detail_sk' => $detail_sk,
 				'jurusan' => $jurusan,
 				'dosen' => $dosen,
 				'old_data' => $old_data
 			]);
-		}catch(Exception $e){
-			return redirect()->route('akademik.skripsi.index')->with('error',$e->getMessage());
+		} catch (Exception $e) {
+			return redirect()->route('akademik.skripsi.index')->with('error', $e->getMessage());
 		}
 	}
-
-	public function update(Request $request, $id){
+	public function update(Request $request, $id)
+	{
 		// dd($request);
 		$this->validate($request, [
 			"id_detail_sk" => "required|array",
@@ -174,23 +159,21 @@ class SkSkripsiController extends Controller
 			"penguji_pendamping" => "required|array",
 			"penguji_pendamping.*" => "required",
 		]);
-		
+
 		try {
-			$sk_akademik = sk_akademik::where('id',$id)->update([
+			$sk_akademik = sk_akademik::where('id', $id)->update([
 				'id_status_sk_akademik' => $request->status
 			]);
-			
-			for($i = 0;$i<count($request->id_detail_sk);$i++){
-				if($request->id_detail_sk[$i] != 0){
+
+			for ($i = 0; $i < count($request->id_detail_sk); $i++) {
+				if ($request->id_detail_sk[$i] != 0) {
 					// echo('||detele = '.$request->delete_detail_sk[$i].'|| ');
 					// echo ($request->delete_detail_sk[$i] == 1);
-					if($request->delete_detail_sk[$i] == 1){
+					if ($request->delete_detail_sk[$i] == 1) {
 						// echo('delete');
 						detail_sk::where('id', $request->id_detail_sk[$i])->delete();
 						continue;
-					} 
-					else{
-
+					} else {
 						$detail_sk = detail_sk::where('id', $request->id_detail_sk[$i])->update([
 							'nama_mhs' => $request->nama[$i],
 							'nim' => $request->nim[$i],
@@ -201,11 +184,9 @@ class SkSkripsiController extends Controller
 							'id_penguji_utama' => $request->penguji_utama[$i],
 							'id_penguji_pendamping' => $request->penguji_pendamping[$i]
 						]);
-
-					}	
-				}
-				else{
-					// echo "new data,iterasi= ".$i."<br>";
+					}
+				} else {
+					echo "new data,iterasi= " . $i . "<br>";
 					$detail_sk = detail_sk::create([
 						'id_sk_akademik' => $id,
 						'nama_mhs' => $request->nama[$i],
@@ -222,22 +203,17 @@ class SkSkripsiController extends Controller
 				// 	dd($request->id_detail_sk[$i]);
 				// 	//enek kejanggalan lek mlebu kene
 				// }
-
 			}
-
-			return redirect()->route('akademik.skripsi.show', $id)->with('success','Data Berhasil Diedit');
-
-		}catch(Exception $e){
+			return redirect()->route('akademik.skripsi.show', $id)->with('success', 'Data Berhasil Diedit');
+		} catch (Exception $e) {
 			return redirect()->route('akademik.skripsi.index')->with('error', $e->getMessage());
 		}
 	}
-
-	public function destroy($id = null){
-		if(!is_null($id)){
+	public function destroy($id = null)
+	{
+		if (!is_null($id)) {
 			sk_akademik::find($id)->delete();
 			echo 'Data SK Berhasil Dihapus';
 		}
-		
 	}
-	
 }
