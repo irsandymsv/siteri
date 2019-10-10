@@ -9,6 +9,11 @@
 @endsection
 
 @section('content')
+<h1>{{session('error')}}</h1>
+@php
+Session::forget('error');
+// dd($errors->all());
+@endphp
 	<div class="row">
       	<div class="col-xs-12">
       		<div class="box box-success">

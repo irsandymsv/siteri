@@ -18,6 +18,9 @@
 @endsection
 
 @section('content')
+{{-- @php
+	dd($errors->all());
+@endphp --}}
 	<div class="row">
       	<div class="col-xs-12">
       		<div class="box box-primary">
@@ -166,7 +169,9 @@
 				            			
 				            		@else
 				            			@foreach($detail_sk as $item)
-				            			<input type="hidden" name="id_detail_sk[]" value="{{$item->id}}">
+										<input type="hidden" name="id_detail_sk[]" value="{{$item->id}}">
+										<input type="hidden" name="id_pembimbing[]" value="{{$item->pembimbing->id}}">
+										<input type="hidden" name="id_penguji[]" value="{{$item->penguji->id}}">
 				            			<input type="hidden" name="delete_detail_sk[]" id="del_detail_{{$item->id}}" value="0">
 				            			<input type="hidden" name="id_pembimbing_utama[]" value="{{$item->pembimbing->pembimbing_utama->no_pegawai}}">
 				            			<input type="hidden" name="id_pembimbing_pendamping[]" value="{{$item->pembimbing->pembimbing_pendamping->no_pegawai}}">
@@ -347,6 +352,7 @@
         			</td>
 
         			<td>
+						 
         				<button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
         			</td>
 				</tr>
