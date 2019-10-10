@@ -19,10 +19,14 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
 	Route::redirect('/', '/akademik/dashboard');
 	Route::get('/dashboard', 'akademikController@dashboard')->name('dashboard');
 
-	Route::get('/skripsi', 'SkSkripsiController@index')->name('skripsi.index');
+	Route::get('/skripsi/{tipe}', 'SkSkripsiController@index')->name('skripsi.index');
 	Route::get('/skripsi/create','SkSkripsiController@create')->name('skripsi.create');
-	Route::post('/skripsi', 'SkSkripsiController@store')->name('skripsi.store');
+	Route::post('/skripsi/{tipe}', 'SkSkripsiController@store')->name('skripsi.store');
 	Route::get('/skripsi/{id_sk_akademik}', 'SkSkripsiController@show')->name('skripsi.show');
 	Route::get('/skripsi/{id_sk_akademik}/edit','SkSkripsiController@edit')->name('skripsi.edit');
 	Route::put('/skripsi/{id_sk_akademik}/update','SkSkripsiController@update')->name('skripsi.update');
+
+	Route::get('/sempro', 'SkSemproController@index')->name('sempro.index');
+	Route::get('/sempro/create', 'SkSemproController@create')->name('sempro.create');
+	Route::post('/sempro', 'SkSemproController@store')->name('sempro.store');
 });

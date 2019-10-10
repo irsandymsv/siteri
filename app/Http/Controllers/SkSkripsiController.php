@@ -17,10 +17,15 @@ use App\status_sk_akademik;
 class SkSkripsiController extends Controller
 {
 
-    public function index()
+    public function index($tipe)
     {
 		try{
-			$sk_akademik = sk_akademik::with(['tipe_sk','status_sk_akademik'])->orderBy('created_at', 'desc')->get();
+
+			$sk_akademik = sk_akademik::whereHas('tipe_sk',function($query){
+											$query->where('id',$tipe);})
+										->with(['tipe_sk','status_sk_akademik'])
+										->orderBy('created_at', 'desc')
+										->get();
 			return view('akademik.Skripsi.index', ['sk_akademik' => $sk_akademik]);
 		}catch(Exception $e){
 			return view('akademik.Skripsi.index');
@@ -248,4 +253,5 @@ class SkSkripsiController extends Controller
 		sk_akademik::where('id',$id);
 		return redirect()->route('akademik.skripsi.index')->with('success','Data Berhasil Dihapus');
 	}
+	
 }
