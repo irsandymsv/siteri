@@ -156,7 +156,92 @@ class SkSemproController extends Controller
                 'old_data' => $old_data
             ]);
         } catch (Exception $e) {
-            return redirect()->route('akademik.skripsi.index')->with('error', $e->getMessage());
+            return redirect()->route('akademik.sempro.index')->with('error', $e->getMessage());
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        // dd($request);
+        $this->validate($request, [
+            "id_detail_sk" => "required|array",
+            "id_detail_sk.*" => "required",
+            "nama"    => "required|array",
+            "nama.*"  => "required|string|max:40",
+            "nim" => "required|array",
+            "nim.*" => "required|string|max:20",
+            "jurusan" => "required|array",
+            "jurusan.*" => "required",
+            "judul" => "required|array",
+            "judul.*" => "required",
+            // "id_pembimbing" => "required|array",
+            // "id_pembimbing.*" => "required",
+            "pembimbing_utama" => "required|array",
+            "pembimbing_utama.*" => "required",
+            "pembimbing_pendamping" => "required|array",
+            "pembimbing_pendamping.*" => "required",
+            // "id_penguji" => "required|array",
+            // "id_penguji.*" => "required",
+            "penguji_utama" => "required|array",
+            "penguji_utama.*" => "required",
+            "penguji_pendamping" => "required|array",
+            "penguji_pendamping.*" => "required",
+        ]);
+
+        try {
+            $sk_akademik = sk_akademik::where('id', $id)->update([
+                'id_status_sk_akademik' => $request->status
+            ]);
+
+            for ($i = 0; $i < count($request->id_detail_sk); $i++) {
+                if ($request->id_detail_sk[$i] != 0) {
+                    // echo('||detele = '.$request->delete_detail_sk[$i].'|| ');
+                    // echo ($request->delete_detail_sk[$i] == 1);
+                    if ($request->delete_detail_sk[$i] == 1) {
+                        // echo('delete');
+                        detail_sk::where('id', $request->id_detail_sk[$i])->delete();
+                        continue;
+                    } else {
+                        $detail_sk = detail_sk::where('id', $request->id_detail_sk[$i])->update([
+                            'nama_mhs' => $request->nama[$i],
+                            'nim' => $request->nim[$i],
+                            'id_bagian' => $request->jurusan[$i],
+                            'judul' => $request->judul[$i],
+                            'id_pembimbing_utama' => $request->pembimbing_utama[$i],
+                            'id_pembimbing_pendamping' => $request->pembimbing_pendamping[$i],
+                            'id_penguji_utama' => $request->penguji_utama[$i],
+                            'id_penguji_pendamping' => $request->penguji_pendamping[$i]
+                        ]);
+                    }
+                } else {
+                    echo "new data,iterasi= " . $i . "<br>";
+                    $detail_sk = detail_sk::create([
+                        'id_sk_akademik' => $id,
+                        'nama_mhs' => $request->nama[$i],
+                        'nim' => $request->nim[$i],
+                        'id_bagian' => $request->jurusan[$i],
+                        'judul' => $request->judul[$i],
+                        'id_pembimbing_utama' => $request->pembimbing_utama[$i],
+                        'id_pembimbing_pendamping' => $request->pembimbing_pendamping[$i],
+                        'id_penguji_utama' => $request->penguji_utama[$i],
+                        'id_penguji_pendamping' => $request->penguji_pendamping[$i]
+                    ]);
+                }
+                // else{
+                // 	dd($request->id_detail_sk[$i]);
+                // 	//enek kejanggalan lek mlebu kene
+                // }
+            }
+            return redirect()->route('akademik.sempro.show', $id)->with('success', 'Data Berhasil Diedit');
+        } catch (Exception $e) {
+            return redirect()->route('akademik.sempro.index')->with('error', $e->getMessage());
+        }
+    }
+    public function destroy($id = null)
+    {
+        if (!is_null($id)) {
+            sk_akademik::find($id)->delete();
+            echo 'Data SK Berhasil Dihapus';
         }
     }
 }

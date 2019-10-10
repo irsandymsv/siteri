@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Exception;
 use App\bagian;
@@ -19,7 +20,10 @@ class SkSkripsiController extends Controller
 	public function index()
 	{
 		try {
-			$sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])->orderBy('created_at', 'desc')->get();
+			$sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
+										->whereHas('tipe_sk',function (Builder $query){
+												$query->where('id',1);
+										})->orderBy('created_at', 'desc')->get();
 			return view('akademik.Skripsi.index', ['sk_akademik' => $sk_akademik]);
 		} catch (Exception $e) {
 			return view('akademik.Skripsi.index');

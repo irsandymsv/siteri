@@ -22,8 +22,8 @@
 	        </span>
 	    </a>
 	    <ul class="treeview-menu">
-	      <li><a href="#">Buat Baru</a></li>
-	      <li><a href="#">Lihat Semua</a></li>
+	      <li><a href="{{route('akademik.sempro.create')}}">Buat Baru</a></li>
+	      <li><a href="{{ route('akademik.sempro.index') }}">Lihat Semua</a></li>
 	    </ul>
 	</li>
 @endsection
