@@ -25,9 +25,16 @@ class detail_sk extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'id_sk_akademik', 'nama_mhs', 'nim', 'id_bagian','judul'
-    ];
+    // protected $fillable = [
+    //     'id_sk_akademik', 'nama_mhs', 'nim', 'id_bagian','judul'
+    // ];
+
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = ['id'];
 
 
     public function sk_akademik()

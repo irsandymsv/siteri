@@ -170,13 +170,13 @@
 				            		@else
 				            			@foreach($detail_sk as $item)
 										<input type="hidden" name="id_detail_sk[]" value="{{$item->id}}">
-										<input type="hidden" name="id_pembimbing[]" value="{{$item->pembimbing->id}}">
-										<input type="hidden" name="id_penguji[]" value="{{$item->penguji->id}}">
+										{{-- <input type="hidden" name="id_pembimbing[]" value="{{$item->pembimbing->id}}">
+										<input type="hidden" name="id_penguji[]" value="{{$item->penguji->id}}"> --}}
 				            			<input type="hidden" name="delete_detail_sk[]" id="del_detail_{{$item->id}}" value="0">
-				            			<input type="hidden" name="id_pembimbing_utama[]" value="{{$item->pembimbing->pembimbing_utama->no_pegawai}}">
-				            			<input type="hidden" name="id_pembimbing_pendamping[]" value="{{$item->pembimbing->pembimbing_pendamping->no_pegawai}}">
-				            			<input type="hidden" name="id_penguji_utama[]" value="{{$item->penguji->penguji_utama->no_pegawai}}">
-				            			<input type="hidden" name="id_penguji_pendamping[]" value="{{$item->penguji->penguji_pendamping->no_pegawai}}">
+				            			<input type="hidden" name="id_pembimbing_utama[]" value="{{$item->pembimbing_utama->no_pegawai}}">
+				            			<input type="hidden" name="id_pembimbing_pendamping[]" value="{{$item->pembimbing_pendamping->no_pegawai}}">
+				            			<input type="hidden" name="id_penguji_utama[]" value="{{$item->penguji_utama->no_pegawai}}">
+				            			<input type="hidden" name="id_penguji_pendamping[]" value="{{$item->penguji_pendamping->no_pegawai}}">
 
 			            				<tr id="1">
 					            			<td>
@@ -205,7 +205,7 @@
 					            				<select name="pembimbing_utama[]" class="form-control select2" style="width: 100%;">
 					            					<option value="">-Pilih-</option>
 					            					@foreach($dosen as $val)
-					            						<option value="{{$val->no_pegawai}}" {{($item->pembimbing->pembimbing_utama->no_pegawai == $val->no_pegawai? 'selected':'')}}>{{$val->nama}}</option>
+					            						<option value="{{$val->no_pegawai}}" {{($item->pembimbing_utama->no_pegawai == $val->no_pegawai? 'selected':'')}}>{{$val->nama}}</option>
 					            					@endforeach
 					            				</select>
 
@@ -213,7 +213,7 @@
 					            				<select name="pembimbing_pendamping[]" class="form-control select2" style="width: 100%;">
 					            					<option value="">-Pilih-</option>
 					            					@foreach($dosen as $val)
-					            						<option value="{{$val->no_pegawai}}" {{($item->pembimbing->pembimbing_pendamping->no_pegawai == $val->no_pegawai? 'selected':'')}}>{{$val->nama}}</option>
+					            						<option value="{{$val->no_pegawai}}" {{($item->pembimbing_pendamping->no_pegawai == $val->no_pegawai? 'selected':'')}}>{{$val->nama}}</option>
 					            					@endforeach
 					            				</select>
 					            			</td>
@@ -223,7 +223,7 @@
 					            				<select name="penguji_utama[]" class="form-control select2" style="width: 100%;">
 					            					<option value="">-Pilih-</option>
 					            					@foreach($dosen as $val)
-					            						<option value="{{$val->no_pegawai}}" {{($item->penguji->penguji_utama->no_pegawai == $val->no_pegawai? 'selected':'')}}>{{$val->nama}}</option>
+					            						<option value="{{$val->no_pegawai}}" {{($item->penguji_utama->no_pegawai == $val->no_pegawai? 'selected':'')}}>{{$val->nama}}</option>
 					            					@endforeach
 					            				</select>
 
@@ -231,7 +231,7 @@
 					            				<select name="penguji_pendamping[]" class="form-control select2" style="width: 100%;">
 					            					<option value="">-Pilih-</option>
 					            					@foreach($dosen as $val)
-					            						<option value="{{$val->no_pegawai}}" {{($item->penguji->penguji_pendamping->no_pegawai == $val->no_pegawai? 'selected':'')}}>{{$val->nama}}</option>
+					            						<option value="{{$val->no_pegawai}}" {{($item->penguji_pendamping->no_pegawai == $val->no_pegawai? 'selected':'')}}>{{$val->nama}}</option>
 					            					@endforeach
 					            				</select>
 					            			</td>
@@ -382,7 +382,7 @@
 				var id_detail = $(this).attr('id');
 				if (jml_tr > 1) {
 					$("input#del_detail_"+id_detail).val("1");
-					$(this).parents("tr").remove();
+					$(this).parents("tr").hide();
 				}
 				data_count();
 			});
