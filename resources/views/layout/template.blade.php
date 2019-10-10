@@ -347,7 +347,9 @@ desired effect
 <!-- page script -->
 <script>
   $(function () {
-    $('#dataTable').DataTable()
+    $('#dataTable').DataTable({
+      order: []
+    })
   })
 
   $('#SkripsiPembimbing').editableTableWidget();

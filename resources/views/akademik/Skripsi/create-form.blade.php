@@ -37,7 +37,7 @@
 		            	<div class="table-responsive">
 		            		<h5>Total Data = <span class="data_count"></span></h5>
 		            		@if(session()->has('error'))
-		            			<p>{{session('error')}}</p>
+		            			<p style="color: red;">{{session('error')}}</p>
 		            		@endif
 		            		<table id="tbl-data" class="table table-bordered table-hover">
 			            		<thead>
