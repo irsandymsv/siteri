@@ -178,7 +178,7 @@
 				            			<input type="hidden" name="id_penguji_utama[]" value="{{$item->penguji_utama->no_pegawai}}">
 				            			<input type="hidden" name="id_penguji_pendamping[]" value="{{$item->penguji_pendamping->no_pegawai}}">
 
-			            				<tr id="1">
+			            				<tr id="{{$item->id}}" class="data_db">
 					            			<td>
 					            				<input type="text" name="nama[]" class="form-control" value="{{$item->nama_mhs}}">
 					            			</td>
@@ -306,7 +306,7 @@
 			// console.log(last_id);
 			var new_id = parseInt(last_id) + 1;
 			$("#tbl-data").find('tbody').append(`
-				<tr id="`+new_id+`">
+				<tr id="`+new_id+`" class="new_data">
 					<input type="hidden" name="id_detail_sk[]" value="0">
         			<td>
         				<input type="text" name="nama[]" class="form-control">
@@ -370,7 +370,14 @@
 				var id_detail = $(this).attr('id');
 				if (jml_tr > 1) {
 					$("input#del_detail_"+id_detail).val("1");
-					$(this).parents("tr").hide();
+
+					var class_tr = $(this).parents("tr").attr('class');
+					if($(this).parents("tr").attr('class') == "new_data"){
+						$(this).parents("tr").remove();
+					}
+					else{
+						$(this).parents("tr").hide();
+					}
 				}
 				data_count();
 			});
