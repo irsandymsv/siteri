@@ -239,4 +239,41 @@ class SkSemproController extends Controller
             echo 'Data SK Berhasil Dihapus';
         }
     }
+
+    public function ktu_index_sempro()
+    {
+        $sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
+        ->whereHas('tipe_sk', function(Builder $query){ 
+            $query->where('tipe', 'SK Sempro'); 
+        })
+        ->whereHas('status_sk_akademik', function(Builder $query){ 
+            $query->where('status', 'Dikirim'); 
+        })
+        ->get();
+
+        return view('ktu.SK_view.sk_index', [
+            'sk_akademik' => $sk_akademik,
+            'tipe' => 'sk sempro'
+        ]);
+    }
+
+    public function ktu_show($id)
+    {
+        $sk_akademik = sk_akademik::find($id);
+        $detail_sk = detail_sk::where('id_sk_akademik', $id)
+            ->with([
+                'bagian',
+                'penguji_utama:no_pegawai,nama',
+                'penguji_pendamping:no_pegawai,nama',
+                'pembimbing_utama:no_pegawai,nama',
+                'pembimbing_pendamping:no_pegawai,nama'
+            ])->get();
+        // dd($detail_sk);
+        return view('ktu.SK_view.sk_show', [
+            'sk_akademik' => $sk_akademik,
+            'detail_sk' => $detail_sk,
+            'tipe' => "sk sempro",
+            'auth' => 'ktu'
+        ]);
+    }
 }

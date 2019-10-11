@@ -34,9 +34,9 @@
 		              <h3 class="box-title">{{ ( $tipe == "sk skripsi"? "Buat SK Skripsi" : "Buat SK Sempro" ) }}</h3>
 
 		              <div class="form-group" style="float: right;">
-		            	<button type="submit" class="btn bg-purple">Simpan Sebagai Draft</button> 
+		            	<button type="submit" name="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button> 
 		            		&ensp;
-		            	<button type="submit" class="btn btn-success">Simpan dan Kirim</button>	
+		            	<button type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>	
 		              </div>
 		            </div>
 	            	
@@ -258,8 +258,8 @@
 
 		            	<input type="hidden" name="status" value="">
 		            	<div class="form-group" style="float: right;">
-		            		<button type="submit" id="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button> &ensp;
-		            		<button type="submit" id="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>	
+		            		<button type="submit" name="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button> &ensp;
+		            		<button type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>	
 		            	</div>
 		            	
 	            	</div>
@@ -278,13 +278,13 @@
 		var jurusan = @json($jurusan);
 		var dosen = @json($dosen);
 
-		$("#simpan_draf").click(function(event) {
+		$("button[name='simpan_draf']").click(function(event) {
 			event.preventDefault();
 			$("input[name='status']").val(1);
 			$('form').trigger('submit');
 		});
 
-		$("#simpan_kirim").click(function(event) {
+		$("button[name='simpan_kirim']").click(function(event) {
 			event.preventDefault();
 			$("input[name='status']").val(2);
 			$('form').trigger('submit');

@@ -1,4 +1,4 @@
-@extends('akademik.akademik_view')
+@extends('ktu.ktu_view')
 
 @section('page_title')
 	@if($tipe == "sk skripsi")
@@ -12,7 +12,7 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<style type="text/css">
-		#success_delete{
+		#success_verif{
 			 position: fixed;
 			 display: none; 
 			 width: 20%; 
@@ -45,10 +45,6 @@
       		<div class="box box-success">
       			<div class="box-header">
 	              <h3 class="box-title">Daftar SK {{ ($tipe == "sk skripsi"? 'Skripsi' : 'Sempro') }}</h3>
-	            
-	              <div style="float: right;">
-	            	<a href="{{ ($tipe == "sk skripsi"? route('akademik.skripsi.create') : route('akademik.sempro.create')) }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat SK Baru</a>
-	              </div>
 	            </div>
 
 	            <div class="box-body">
@@ -61,7 +57,7 @@
 			            			<th>Status</th>
 			            			<th>Verifikasi KTU</th>
 			            			<th>Verifikasi Dekan</th>
-			            			<th>Pilihan</th>
+			            			<th>Aksi</th>
 			            		</tr>
 			            	</thead>
 			            	<tbody>
@@ -92,19 +88,8 @@
 			            					@endif
 			            				</td>
 			            				<td>
-			            					@if($tipe == "sk skripsi")
-			            						<a href="{{ route('akademik.skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
-				            					@if($item->verif_dekan == 0)
-				            					<a href="{{ route('akademik.skripsi.edit', $item->id) }}" class="btn btn-warning" title="Ubah SK"><i class="fa fa-edit"></i></a>
-				            					@endif
-							              	@else
-							              		<a href="{{ route('akademik.sempro.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
-				            					@if($item->verif_dekan == 0)
-				            					<a href="{{ route('akademik.sempro.edit', $item->id) }}" class="btn btn-warning" title="Ubah SK"><i class="fa fa-edit"></i></a>
-				            					@endif
-							              	@endif
-
-			            					<a href="#" class="btn btn-danger" id="{{ $item->id }}" name="delete_sk" title="Hapus SK" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+			            					<a href="{{ route('ktu.sk-skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+			            					{{-- <a href="#" class="btn btn-success" id="{{ $item->id }}" name="verif_sk" title="Setujui SK" data-toggle="modal" data-target="#modal-success"><i class="fa fa-check"></i></a> --}}
 			            				</td>
 			            			</tr>
 			            		@endforeach
@@ -116,24 +101,24 @@
       	</div>
 	</div>
 
-	<div id="success_delete">
+	<div id="success_verif">
         <h4><i class="icon fa fa-check"></i>  <span></span></h4>
     </div>
 
-	<div class="modal modal-danger fade" id="modal-delete">
+	<div class="modal modal-success fade" id="modal-success">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Konfirmasi Penghapusan</h4>
+            <h4 class="modal-title">Konfirmasi persetujuan</h4>
           </div>
           <div class="modal-body">
-            <p>Apakah anda yakin ingin menghapus data SK ini?</p>
+            <p>Apakah anda yakin ingin menyetujui SK ini?</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Batal</button>           
-			<button type="button" id="hapusBtn" data-dismiss="modal" class="btn btn-outline">Hapus SK</button>
+			<button type="button" id="verifBtn" data-dismiss="modal" class="btn btn-outline">Setujui</button>
           </div>
         </div>
         <!-- /.modal-content -->
@@ -147,18 +132,11 @@
 		$(function() {
 			$('#tbl_data1').DataTable()
 
-			$("a[name='delete_sk']").click(function(event) {
+			$("a[name='verif_sk']").click(function(event) {
 				event.preventDefault();
 				var id_sk = $(this).attr('id');
-
-				@if($tipe == "sk skripsi")
-				var url_del = "{{route('akademik.skripsi.destroy')}}" + '/' + id_sk;					
-				@else
-				var url_del = "{{route('akademik.sempro.destroy')}}" + '/' + id_sk;
-				@endif
-				console.log(url_del);
 				
-				$('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
+				$('div.modal-footer').off().on('click', '#verifBtn', function(event) {
 					$.ajaxSetup({
 					    headers: {
 					        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -166,17 +144,17 @@
 					});
 
 					$.ajax({
-						url: url_del,
+						url: '',
 						type: 'POST',
 						// dataType: '',
-						data: {_method: 'DELETE'},
+						data: {_method: 'PUT'},
 					})
 					.done(function(hasil) {
 						console.log("success");
-						$("tr#sk_"+id_sk).hide();
-						$("#success_delete").show();
-						$("#success_delete").find('span').html(hasil);
-						$("#success_delete").fadeOut(1800);
+						// $("tr#sk_"+id_sk).hide();
+						$("#success_verif").show();
+						$("#success_verif").find('span').html(hasil);
+						$("#success_verif").fadeOut(1800);
 					})
 					.fail(function() {
 						console.log("error");

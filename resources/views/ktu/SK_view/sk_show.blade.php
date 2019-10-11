@@ -1,4 +1,4 @@
-@extends('akademik.akademik_view')
+@extends('ktu.ktu_view')
 
 @section('page_title')
 	@if($tipe == "sk skripsi")
@@ -21,6 +21,10 @@
 			border-bottom: 0.1px solid lightgrey;
 			margin-top: 5px;			
 		}
+
+		#tgl_sk{
+			margin-top: 15px;
+		}
 	</style>
 @endsection
 
@@ -34,7 +38,7 @@
 
 @section('content')
 	
-	<div class="row">
+	{{-- <div class="row">
 		<div class="col-xs-12">
       		<div class="box box-success">
       			<div class="box-header">
@@ -94,7 +98,7 @@
 	            </div>
       		</div>
       	</div>
-	</div>
+	</div> --}}
 
 	<div class="row">
 		<div class="col-xs-12">
@@ -104,9 +108,27 @@
 
 	              @if($sk_akademik->verif_dekan == 0)
 		              <div class="form-group" style="float: right;">
-		              	<a href="{{ ($tipe == "sk skripsi"? route('akademik.skripsi.edit', $sk_akademik->id) : route('akademik.sempro.edit', $sk_akademik->id)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+		              	<form method="post" action="{{ route('ktu.sk-skripsi.verif', $sk_akademik->id) }}">
+		              		@csrf
+		              		@method('put')
+		              		<input type="hidden" name="verif_ktu" value="{{$sk_akademik->id_status_sk_akademik}}">
+		              		<button type="submit" name="setuju_btn" class="btn btn-success"><i class="fa fa-check"></i> Setujui</button>	
+		              		<button type="submit" name="tarik_btn" class="btn btn-danger"><i class="fa fa-close"></i> Tarik SK</button>
+		              	</form>
 		              </div>
 	              @endif
+	              <div id="tgl_sk">
+	              	<h5><b>Tanggal Dibuat</b> : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
+
+	              	@if($sk_akademik->verif_ktu == 0) 
+						<b>Belum Diverifikasi</b>
+					@elseif($sk_akademik->verif_ktu == 2) 
+						<label class="label bg-red">Butuh Revisi</label>
+					@else
+						<label class="label bg-green">Sudah Diverifikasi</label>
+					@endif
+	              	
+	              </div>
 	            </div>
 
 	            <div class="box-body">
@@ -152,8 +174,14 @@
 
 			            @if($sk_akademik->verif_dekan == 0)
 			              <br>
-			              <div class="form-group" style="float: right;">
-			            	<a href="{{ ($tipe == "sk skripsi"? route('akademik.skripsi.edit', $sk_akademik->id) : route('akademik.sempro.edit', $sk_akademik->id)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+			               <div class="form-group" style="float: right;">
+			              	<form method="post" action="{{ route('ktu.sk-skripsi.verif', $sk_akademik->id) }}">
+			              		@csrf
+			              		@method('put')
+			              		<input type="hidden" name="verif_ktu" value="{{$sk_akademik->id_status_sk_akademik}}">
+			              		<button type="submit" name="setuju_btn" class="btn btn-success"><i class="fa fa-check"></i> Setujui</button>	
+			              		<button type="submit" name="tarik_btn" class="btn btn-danger"><i class="fa fa-close"></i> Tarik SK</button>
+			              	</form>
 			              </div>
 		              	@endif
 	            	</div>
@@ -170,5 +198,17 @@
 	for (var i = status; i > 0; i--) {
 		$("#progres_"+i).children('i').removeClass('bg-grey').addClass('bg-green fa-check');
 	}
+
+	$("button[name='setuju_btn']").click(function(event) {
+		event.preventDefault();
+		$("input[name='verif_ktu']").val(1);
+		$(this).parents("form").trigger('submit');
+	});
+
+	$("button[name='tarik_btn']").click(function(event) {
+		event.preventDefault();
+		$("input[name='verif_ktu']").val(2);
+		$(this).parents("form").trigger('submit');
+	});
 </script>
 @endsection

@@ -14,6 +14,7 @@ use App\penguji;
 use App\pembimbing;
 use App\Http\Controllers\Controller;
 use App\status_sk_akademik;
+use App\tipe_sk;
 
 class SkSkripsiController extends Controller
 {
@@ -203,7 +204,6 @@ class SkSkripsiController extends Controller
 						]);
 					}
 				} else {
-					echo "new data,iterasi= " . $i . "<br>";
 					$detail_sk = detail_sk::create([
 						'id_sk_akademik' => $id,
 						'nama_mhs' => $request->nama[$i],
@@ -233,5 +233,53 @@ class SkSkripsiController extends Controller
 			sk_akademik::find($id)->delete();
 			echo 'Data SK Berhasil Dihapus';
 		}
+	}
+
+	public function ktu_index_skripsi()
+	{
+		$sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
+		->whereHas('tipe_sk', function(Builder $query){ 
+			$query->where('tipe', 'SK Skripsi'); 
+		})
+		->whereHas('status_sk_akademik', function(Builder $query){ 
+			$query->where('status', 'Dikirim'); 
+		})
+		->get();
+
+		return view('ktu.SK_view.sk_index', [
+			'sk_akademik' => $sk_akademik,
+			'tipe' => 'sk skripsi'
+		]);
+	}
+
+	public function ktu_show($id)
+	{
+		$sk_akademik = sk_akademik::find($id);
+		$detail_sk = detail_sk::where('id_sk_akademik', $id)
+			->with([
+				'bagian',
+				'penguji_utama:no_pegawai,nama',
+				'penguji_pendamping:no_pegawai,nama',
+				'pembimbing_utama:no_pegawai,nama',
+				'pembimbing_pendamping:no_pegawai,nama'
+			])->get();
+		// dd($detail_sk);
+		return view('ktu.SK_view.sk_show', [
+			'sk_akademik' => $sk_akademik,
+			'detail_sk' => $detail_sk,
+			'tipe' => "sk skripsi"
+		]);
+	}
+
+	public function ktu_verif(Request $request, $id)
+	{
+		// dd($request);
+		$sk_akademik = sk_akademik::find($id);
+		$sk_akademik->verif_ktu = $request->verif_ktu;
+		if($request->verif_ktu == 2){
+			$sk_akademik->id_status_sk_akademik = 1;
+		}
+		$sk_akademik->save();
+		return redirect()->route('ktu.sk-skripsi.index');
 	}
 }
