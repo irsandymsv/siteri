@@ -279,6 +279,9 @@ class SkSkripsiController extends Controller
 		if($request->verif_ktu == 2){
 			$sk_akademik->id_status_sk_akademik = 1;
 		}
+		else if ($request->verif_ktu == 1) {
+			$sk_akademik->id_status_sk_akademik = 3;
+		}
 		$sk_akademik->save();
 		return redirect()->route('ktu.sk-skripsi.index');
 	}
