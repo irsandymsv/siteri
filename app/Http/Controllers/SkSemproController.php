@@ -3,6 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
+use Exception;
+use App\bagian;
+use App\User;
+use App\sk_akademik;
+use App\detail_sk;
+use App\penguji;
+use App\pembimbing;
+use App\Http\Controllers\Controller;
+use App\status_sk_akademik;
 
 class SkSemproController extends Controller
 {
@@ -15,9 +25,13 @@ class SkSemproController extends Controller
                 ->with(['tipe_sk', 'status_sk_akademik'])
                 ->orderBy('created_at', 'desc')
                 ->get();
-            return view('akademik.sempro.index', ['sk_akademik' => $sk_akademik]);
+
+            return view('akademik.SK_view.index', [
+                'sk_akademik' => $sk_akademik,
+                'tipe' => "sk sempro"
+            ]);
         } catch (Exception $e) {
-            return view('akademik.sempro.index');
+            return view('akademik.SK_view.index');
         }
     }
 
@@ -30,27 +44,13 @@ class SkSemproController extends Controller
         }
 
         $jurusan = bagian::where('is_jurusan', 1)->get();
-        // $jurusan = array(
-        // 	'si' => "Sistem Informasi",
-        // 	'ti' => "Teknologi Informasi",
-        // 	'if' => "Informatika"
-        // );
-
         $dosen = user::where('is_dosen', 1)->get();
-        // $dosen = array(
-        // 	'1' => "Saiful Bukhori",
-        // 	'2' => "Anang Hermansyah",
-        // 	'3' => "Windy",
-        // 	'4' => "Beny Prasetyo",
-        // 	'5' => "Slamin",
-        // 	'6' => "Januar", 
-        // );
 
-
-        return view('akademik.sempro.create-form', [
+        return view('akademik.SK_view.create-form', [
             'jurusan' => $jurusan,
             'dosen' => $dosen,
-            'old_data' => $old_data
+            'old_data' => $old_data,
+            'tipe' => "sk sempro"
         ]);
     }
 
@@ -95,7 +95,7 @@ class SkSemproController extends Controller
                 ]);
             }
 
-            return redirect()->route('akademik.sempro.index')->with('success', 'Data Berhasil Ditambahkan');
+            return redirect()->route('akademik.sempro.show', $sk_akademik->id)->with('success', 'Data Berhasil Ditambahkan');
         } catch (Exception $e) {
             return redirect()->route('akademik.sempro.create')->with('error', $e->getMessage());
         }
@@ -106,20 +106,17 @@ class SkSemproController extends Controller
         $sk_akademik = sk_akademik::find($id);
         $detail_sk = detail_sk::where('id_sk_akademik', $id)
             ->with([
-                'bagian', 'status_sk_akademik',
-                'penguji_utama',
-                'penguji_pendamping',
-                'pembimbing_utama',
-                'pembimbing_pendamping',
-                // 'pembimbing.pembimbing_utama:no_pegawai,nama',
-                // 'pembimbing.pembimbing_pendamping:no_pegawai,nama',
-                // 'penguji.penguji_utama:no_pegawai,nama',
-                // 'penguji.penguji_pendamping:no_pegawai,nama'
+                'bagian',
+                'penguji_utama:no_pegawai,nama',
+                'penguji_pendamping:no_pegawai,nama',
+                'pembimbing_utama:no_pegawai,nama',
+                'pembimbing_pendamping:no_pegawai,nama'
             ])->get();
         // dd($detail_sk);
-        return view('akademik.Skripsi.show', [
+        return view('akademik.SK_view.show', [
             'sk_akademik' => $sk_akademik,
-            'detail_sk' => $detail_sk
+            'detail_sk' => $detail_sk,
+            'tipe' => "sk sempro"
         ]);
     }
 
@@ -138,22 +135,19 @@ class SkSemproController extends Controller
             $detail_sk = detail_sk::where('id_sk_akademik', $id)
                 ->with([
                     'bagian',
-                    'penguji_utama',
-                    'penguji_pendamping',
-                    'pembimbing_utama',
-                    'pembimbing_pendamping',
-                    // 'pembimbing.pembimbing_utama:no_pegawai,nama',
-                    // 'pembimbing.pembimbing_pendamping:no_pegawai,nama',
-                    // 'penguji.penguji_utama:no_pegawai,nama',
-                    // 'penguji.penguji_pendamping:no_pegawai,nama'
+                    'penguji_utama:no_pegawai,nama',
+                    'penguji_pendamping:no_pegawai,nama',
+                    'pembimbing_utama:no_pegawai,nama',
+                    'pembimbing_pendamping:no_pegawai,nama'
                 ])->get();
 
-            return view('akademik.Skripsi.edit', [
+            return view('akademik.SK_view.edit', [
                 'sk_akademik' => $sk_akademik,
                 'detail_sk' => $detail_sk,
                 'jurusan' => $jurusan,
                 'dosen' => $dosen,
-                'old_data' => $old_data
+                'old_data' => $old_data,
+                'tipe' => "sk sempro"
             ]);
         } catch (Exception $e) {
             return redirect()->route('akademik.sempro.index')->with('error', $e->getMessage());
@@ -237,6 +231,7 @@ class SkSemproController extends Controller
             return redirect()->route('akademik.sempro.index')->with('error', $e->getMessage());
         }
     }
+
     public function destroy($id = null)
     {
         if (!is_null($id)) {

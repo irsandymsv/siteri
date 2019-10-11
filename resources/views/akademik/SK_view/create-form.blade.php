@@ -1,11 +1,19 @@
 @extends('akademik.akademik_view')
 
 @section('page_title')
-	Buat SK Skripsi baru
+	@if($tipe == "sk skripsi")
+		Buat SK skripsi Baru
+	@else
+		Buat SK Sempro baru
+	@endif
 @endsection
 
 @section('judul_header')
-	SK Skripsi
+	@if($tipe == "sk skripsi")
+		SK Skripsi
+	@else
+		SK Sempro
+	@endif
 @endsection
 
 @section('css_link')
@@ -21,9 +29,9 @@
 	<div class="row">
       	<div class="col-xs-12">
       		<div class="box box-primary">
-	            <form action="{{ route('akademik.skripsi.store') }}" method="POST">
+	            <form action="{{ ( $tipe == "sk skripsi"? route('akademik.skripsi.store') : route('akademik.sempro.store') ) }}" method="POST">
 	            	<div class="box-header">
-		              <h3 class="box-title">Buat SK Skripsi</h3>
+		              <h3 class="box-title">{{ ( $tipe == "sk skripsi"? "Buat SK Skripsi" : "Buat SK Sempro" ) }}</h3>
 
 		              <div class="form-group" style="float: right;">
 		            	<button type="submit" class="btn bg-purple">Simpan Sebagai Draft</button> 

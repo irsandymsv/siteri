@@ -27,11 +27,11 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
 	Route::put('/skripsi/{id_sk_akademik}/update','SkSkripsiController@update')->name('skripsi.update');
 	Route::delete('/skripsi/delete/{id_sk_akademik?}', 'SkSkripsiController@destroy')->name('skripsi.destroy');
 
-	Route::get('/sempro', 'SkSkripsiController@index')->name('sempro.index');
-	Route::get('/sempro/create', 'SkSkripsiController@create')->name('sempro.create');
-	Route::post('/sempro', 'SkSkripsiController@store')->name('sempro.store');
-	Route::get('/sempro/{id_sk_akademik}', 'SkSkripsiController@show')->name('sempro.show');
-	Route::get('/sempro/{id_sk_akademik}/edit', 'SkSkripsiController@edit')->name('sempro.edit');
-	Route::put('/sempro/{id_sk_akademik}/update', 'SkSkripsiController@update')->name('sempro.update');
-	Route::delete('/sempro/delete/{id_sk_akademik?}', 'SkSkripsiController@destroy')->name('sempro.destroy');
+	Route::get('/sempro', 'SkSemproController@index')->name('sempro.index');
+	Route::get('/sempro/create', 'SkSemproController@create')->name('sempro.create');
+	Route::post('/sempro', 'SkSemproController@store')->name('sempro.store');
+	Route::get('/sempro/{id_sk_akademik}', 'SkSemproController@show')->name('sempro.show');
+	Route::get('/sempro/{id_sk_akademik}/edit', 'SkSemproController@edit')->name('sempro.edit');
+	Route::put('/sempro/{id_sk_akademik}/update', 'SkSemproController@update')->name('sempro.update');
+	Route::delete('/sempro/delete/{id_sk_akademik?}', 'SkSemproController@destroy')->name('sempro.destroy');
 });

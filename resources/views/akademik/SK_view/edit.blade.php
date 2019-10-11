@@ -1,7 +1,11 @@
 @extends('akademik.akademik_view')
 
 @section('page_title')
-	Ubah SK Skripsi
+	@if($tipe == "sk skripsi")
+		ubah SK skripsi
+	@else
+		Ubah SK Sempro
+	@endif
 @endsection
 
 @section('css_link')
@@ -14,7 +18,11 @@
 @endsection
 
 @section('judul_header')
-	Ubah SK Skripsi 
+	@if($tipe == "sk skripsi")
+		SK Skripsi
+	@else
+		SK Sempro
+	@endif
 @endsection
 
 @section('content')
@@ -24,9 +32,9 @@
 	<div class="row">
       	<div class="col-xs-12">
       		<div class="box box-primary">
-	            <form action="{{ route('akademik.skripsi.update', $sk_akademik->id) }}" method="POST">
+	            <form action="{{ ( $tipe == "sk skripsi"? route('akademik.skripsi.update', $sk_akademik->id) : route('akademik.sempro.update', $sk_akademik->id) ) }}" method="POST">
 	            	<div class="box-header">
-		              <h3 class="box-title">Ubah SK Skripsi</h3>
+		              <h3 class="box-title">Ubah SK {{ ($tipe == "sk skripsi"? "Skripsi" : "Sempro") }}</h3>
 
 		              <div class="form-group" style="float: right;">
 		            	<button type="submit" class="btn bg-purple">Simpan Sebagai Draft</button> 
@@ -39,8 +47,8 @@
 	            		@csrf
 	            		@method('PUT')
 	            		<h4>
-	            			Tanggal SK : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}} &ensp;
-	            			Status : {{$sk_akademik->status_sk_akademik->status}}
+	            			<b>Tanggal SK</b> : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}} &ensp;
+	            			<b>Status</b> : {{$sk_akademik->status_sk_akademik->status}}
 	            		</h4>
 
 		            	<div class="table-responsive">

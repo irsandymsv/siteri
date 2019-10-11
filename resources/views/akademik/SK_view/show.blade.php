@@ -1,7 +1,11 @@
 @extends('akademik.akademik_view')
 
 @section('page_title')
-Data SK Skripsi
+	@if($tipe == "sk skripsi")
+		Detail SK skripsi
+	@else
+		Detail SK Sempro
+	@endif
 @endsection
 
 @section('css_link')
@@ -21,7 +25,11 @@ Data SK Skripsi
 @endsection
 
 @section('judul_header')
-	Detail SK Skripsi 
+	@if($tipe == "sk skripsi")
+		SK Skripsi
+	@else
+		SK Sempro
+	@endif
 @endsection
 
 @section('content')
@@ -30,7 +38,7 @@ Data SK Skripsi
 		<div class="col-xs-12">
       		<div class="box box-success">
       			<div class="box-header">
-	              <h3 class="box-title">Progress SK Skripsi Ini</h3>
+	              <h3 class="box-title">Progress SK {{ ($tipe == "sk skripsi"? "Skripsi" : "Sempro") }} Ini</h3>
 
 	              <div class="box-tools pull-right">
 	                <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -41,7 +49,7 @@ Data SK Skripsi
 	            </div>
 
 	            <div class="box-body">
-	            	<h5>Tanggal Dibuat : 09 Oktober 2019</h5>
+	            	<h5>Tanggal Dibuat : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
 	            	<h5>Progres :</h5>
 	            	<div class="proges_wrap">
 	            		<div class="progres_card">
@@ -96,7 +104,7 @@ Data SK Skripsi
 
 	              @if($sk_akademik->verif_dekan == 0)
 		              <div class="form-group" style="float: right;">
-		            	<a href="{{ route('akademik.skripsi.edit', $sk_akademik->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+		            	<a href="{{ ($tipe == "sk skripsi"? route('akademik.skripsi.edit', $sk_akademik->id) : route('akademik.sempro.edit', $sk_akademik->id)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
 		              </div>
 	              @endif
 	            </div>
@@ -145,7 +153,7 @@ Data SK Skripsi
 			            @if($sk_akademik->verif_dekan == 0)
 			              <br>
 			              <div class="form-group" style="float: right;">
-			            	<a href="{{ route('akademik.skripsi.edit', $sk_akademik->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+			            	<a href="{{ ($tipe == "sk skripsi"? route('akademik.skripsi.edit', $sk_akademik->id) : route('akademik.sempro.edit', $sk_akademik->id)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
 			              </div>
 		              	@endif
 	            	</div>

@@ -1,7 +1,11 @@
 @extends('akademik.akademik_view')
 
 @section('page_title')
-	Daftar Semua SK skripsi
+	@if($tipe == "sk skripsi")
+		Daftar Semua SK skripsi
+	@else
+		Daftar Semua SK Sempro
+	@endif
 @endsection
 
 @section('css_link')
@@ -13,9 +17,9 @@
 			 display: none; 
 			 width: 20%; 
 			 text-align: center;
-			 top: 13%;
+			 top: 15%;
 			 left: 40%;
-			 padding: 15px;
+			 padding: 13px;
 			 background-color: rgba(0, 0, 0, 0.7);
 			 color: white;
 		}
@@ -23,7 +27,11 @@
 @endsection
 
 @section('judul_header')
-	SK Skripsi
+	@if($tipe == "sk skripsi")
+		SK Skripsi
+	@else
+		SK Sempro
+	@endif
 @endsection
 
 @section('content')
@@ -36,10 +44,10 @@
       	<div class="col-xs-12">
       		<div class="box box-success">
       			<div class="box-header">
-	              <h3 class="box-title">Daftar SK Skripsi</h3>
+	              <h3 class="box-title">Daftar SK {{ ($tipe == "sk skripsi"? 'Skripsi' : 'Sempro') }}</h3>
 	            
 	              <div style="float: right;">
-	            	<a href="{{ route('akademik.skripsi.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat SK Baru</a>
+	            	<a href="{{ ($tipe == "sk skripsi"? route('akademik.skripsi.create') : route('akademik.sempro.create')) }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat SK Baru</a>
 	              </div>
 	            </div>
 
@@ -80,10 +88,18 @@
 			            					@endif
 			            				</td>
 			            				<td>
-			            					<a href="{{ route('akademik.skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
-			            					@if($item->verif_dekan == 0)
-			            					<a href="{{ route('akademik.skripsi.edit', $item->id) }}" class="btn btn-warning" title="Ubah SK"><i class="fa fa-edit"></i></a>
-			            					@endif
+			            					@if($tipe == "sk skripsi")
+			            						<a href="{{ route('akademik.skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+				            					@if($item->verif_dekan == 0)
+				            					<a href="{{ route('akademik.skripsi.edit', $item->id) }}" class="btn btn-warning" title="Ubah SK"><i class="fa fa-edit"></i></a>
+				            					@endif
+							              	@else
+							              		<a href="{{ route('akademik.sempro.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+				            					@if($item->verif_dekan == 0)
+				            					<a href="{{ route('akademik.sempro.edit', $item->id) }}" class="btn btn-warning" title="Ubah SK"><i class="fa fa-edit"></i></a>
+				            					@endif
+							              	@endif
+
 			            					<a href="#" class="btn btn-danger" id="{{ $item->id }}" name="delete_sk" title="Hapus SK" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
 			            				</td>
 			            			</tr>
@@ -130,7 +146,12 @@
 			$("a[name='delete_sk']").click(function(event) {
 				event.preventDefault();
 				var id_sk = $(this).attr('id');
-				var url_del = "{{route('akademik.skripsi.destroy')}}" + '/' + id_sk;
+
+				@if($tipe == "sk skripsi")
+				var url_del = "{{route('akademik.skripsi.destroy')}}" + '/' + id_sk;					
+				@else
+				var url_del = "{{route('akademik.sempro.destroy')}}" + '/' + id_sk;
+				@endif
 				console.log(url_del);
 				
 				$('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
