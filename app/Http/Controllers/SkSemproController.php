@@ -23,7 +23,7 @@ class SkSemproController extends Controller
                 $query->where('id', 2);
             })
                 ->with(['tipe_sk', 'status_sk_akademik'])
-                ->orderBy('created_at', 'desc')
+                ->orderBy('updated_at', 'desc')
                 ->get();
 
             return view('akademik.SK_view.index', [
@@ -183,8 +183,18 @@ class SkSemproController extends Controller
         ]);
 
         try {
+            $sk = sk_akademik::find($id);
+            $verif_ktu = $sk->verif_ktu;
+            $verif_dekan = $sk->verif_dekan;
+            if($request->status == 2){
+                $verif_ktu = 0;
+                $verif_dekan = 0;
+            }
+
             $sk_akademik = sk_akademik::where('id', $id)->update([
-                'id_status_sk_akademik' => $request->status
+                'id_status_sk_akademik' => $request->status,
+                'verif_ktu' => $verif_ktu,
+                'verif_dekan' => $verif_dekan
             ]);
 
             for ($i = 0; $i < count($request->id_detail_sk); $i++) {
@@ -240,6 +250,8 @@ class SkSemproController extends Controller
         }
     }
 
+
+    //KTU
     public function ktu_index_sempro()
     {
         $sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
@@ -247,8 +259,9 @@ class SkSemproController extends Controller
             $query->where('tipe', 'SK Sempro'); 
         })
         ->whereHas('status_sk_akademik', function(Builder $query){ 
-            $query->where('status', 'Dikirim'); 
+            $query->whereIn('status', ['Dikirim', 'Disetujui KTU', 'Disetujui Dekan']); 
         })
+        ->orderBy('updated_at', 'desc')
         ->get();
 
         return view('ktu.SK_view.sk_index', [
@@ -272,8 +285,79 @@ class SkSemproController extends Controller
         return view('ktu.SK_view.sk_show', [
             'sk_akademik' => $sk_akademik,
             'detail_sk' => $detail_sk,
-            'tipe' => "sk sempro",
-            'auth' => 'ktu'
+            'tipe' => "sk sempro"
         ]);
+    }
+
+    public function ktu_verif(Request $request, $id)
+    {
+        // dd($request);
+        $sk_akademik = sk_akademik::find($id);
+        $sk_akademik->verif_ktu = $request->verif_ktu;
+        if($request->verif_ktu == 2){
+            $sk_akademik->id_status_sk_akademik = 1;
+            $sk_akademik->save();
+            return redirect()->route('ktu.sk-sempro.index')->with("verif_ktu", 'SK berhasil ditarik, status kembali menjadi "Draft"');
+        }
+        else if ($request->verif_ktu == 1) {
+            $sk_akademik->id_status_sk_akademik = 3;
+            $sk_akademik->save();
+            return redirect()->route('ktu.sk-sempro.index')->with('verif_ktu', 'verifikasi SK berhasil, status SK saat ini "Disetujui KTU"');
+        }
+    }
+
+
+    //DEKAN
+    public function dekan_index_skripsi()
+    {
+        $sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
+        ->whereHas('tipe_sk', function(Builder $query){ 
+            $query->where('tipe', 'SK Sempro'); 
+        })
+        ->whereHas('status_sk_akademik', function(Builder $query){ 
+            $query->whereIn('status', ['Disetujui KTU', 'Disetujui Dekan']); 
+        })
+        ->orderBy('updated_at', 'desc')
+        ->get();
+
+        return view('dekan.SK_view.sk_index', [
+            'sk_akademik' => $sk_akademik,
+            'tipe' => 'sk sempro'
+        ]);
+    }
+
+    public function dekan_show($id)
+    {
+        $sk_akademik = sk_akademik::find($id);
+        $detail_sk = detail_sk::where('id_sk_akademik', $id)
+            ->with([
+                'bagian',
+                'penguji_utama:no_pegawai,nama',
+                'penguji_pendamping:no_pegawai,nama',
+                'pembimbing_utama:no_pegawai,nama',
+                'pembimbing_pendamping:no_pegawai,nama'
+            ])->get();
+        // dd($detail_sk);
+        return view('dekan.SK_view.sk_show', [
+            'sk_akademik' => $sk_akademik,
+            'detail_sk' => $detail_sk,
+            'tipe' => "sk sempro"
+        ]);
+    }
+
+    public function dekan_verif(Request $request, $id)
+    {
+        $sk_akademik = sk_akademik::find($id);
+        $sk_akademik->verif_dekan = $request->verif_dekan;
+        if($request->verif_dekan == 2){
+            $sk_akademik->id_status_sk_akademik = 1;
+            $sk_akademik->save();
+            return redirect()->route('dekan.sk-sempro.index')->with("verif_dekan", 'SK berhasil ditarik, status kembali menjadi "Draft"');
+        }
+        else if ($request->verif_dekan == 1) {
+            $sk_akademik->id_status_sk_akademik = 4;
+            $sk_akademik->save();
+            return redirect()->route('dekan.sk-sempro.index')->with('verif_dekan', 'verifikasi SK berhasil, status SK saat ini "Disetujui Dekan"');
+        }
     }
 }

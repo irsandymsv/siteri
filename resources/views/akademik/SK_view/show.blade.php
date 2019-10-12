@@ -39,6 +39,15 @@
       		<div class="box box-success">
       			<div class="box-header">
 	              <h3 class="box-title">Progress SK {{ ($tipe == "sk skripsi"? "Skripsi" : "Sempro") }} Ini</h3>
+              	  <span style="margin-left: 5px;">
+	            	@if($sk_akademik->verif_ktu == 2) 
+						<label class="label bg-red">Butuh Revisi (KTU)</label>
+					@elseif($sk_akademik->verif_dekan == 2) 
+						Dekan: <label class="label bg-red">Butuh Revisi (Dekan)</label>
+					@else
+					@endif
+				  </span>
+	          	  
 
 	              <div class="box-tools pull-right">
 	                <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -50,6 +59,7 @@
 
 	            <div class="box-body">
 	            	<h5>Tanggal Dibuat : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
+	            	
 	            	<h5>Progres :</h5>
 	            	<div class="proges_wrap">
 	            		<div class="progres_card">
@@ -102,7 +112,7 @@
       			<div class="box-header">
 	              <h3 class="box-title">Data SK Skripsi</h3>
 
-	              @if($sk_akademik->verif_dekan == 0)
+	              @if($sk_akademik->verif_dekan != 1)
 		              <div class="form-group" style="float: right;">
 		              	<a href="{{ ($tipe == "sk skripsi"? route('akademik.skripsi.edit', $sk_akademik->id) : route('akademik.sempro.edit', $sk_akademik->id)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
 		              </div>
@@ -150,7 +160,7 @@
 			            	</tbody>
 			            </table>
 
-			            @if($sk_akademik->verif_dekan == 0)
+			            @if($sk_akademik->verif_dekan != 1)
 			              <br>
 			              <div class="form-group" style="float: right;">
 			            	<a href="{{ ($tipe == "sk skripsi"? route('akademik.skripsi.edit', $sk_akademik->id) : route('akademik.sempro.edit', $sk_akademik->id)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>

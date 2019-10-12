@@ -1,4 +1,4 @@
-@extends('ktu.ktu_view')
+@extends('dekan.dekan_view')
 
 @section('page_title')
 	@if($tipe == "sk skripsi")
@@ -108,10 +108,10 @@
 
 	              @if($sk_akademik->verif_dekan != 1)
 		              <div class="form-group" style="float: right;">
-		              	<form method="post" action="{{ ( $tipe == "sk skripsi"? route('ktu.sk-skripsi.verif', $sk_akademik->id) : route('ktu.sk-sempro.verif', $sk_akademik->id) ) }}">
+		              	<form method="post" action="{{ ( $tipe == "sk skripsi"? route('dekan.sk-skripsi.verif', $sk_akademik->id) : route('dekan.sk-sempro.verif', $sk_akademik->id) ) }}">
 		              		@csrf
 		              		@method('put')
-		              		<input type="hidden" name="verif_ktu" value="{{$sk_akademik->verif_ktu}}">
+		              		<input type="hidden" name="verif_dekan" value="{{$sk_akademik->verif_dekan}}">
 		              		<button type="submit" name="setuju_btn" class="btn btn-success"><i class="fa fa-check"></i> Setujui</button>
 		              		<button type="submit" name="tarik_btn" class="btn btn-danger"><i class="fa fa-close"></i> Tarik SK</button>
 		              	</form>
@@ -120,9 +120,9 @@
 	              <div id="tgl_sk">
 	              	<h5><b>Tanggal Dibuat</b> : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
 
-	              	@if($sk_akademik->verif_ktu == 0)
+	              	@if($sk_akademik->verif_dekan == 0)
 						<b>Belum Diverifikasi</b>
-					@elseif($sk_akademik->verif_ktu == 2) 
+					@elseif($sk_akademik->verif_dekan == 2) 
 						<label class="label bg-red">Butuh Revisi</label>
 					@else
 						<label class="label bg-green">Sudah Diverifikasi</label>
@@ -175,10 +175,10 @@
 			            @if($sk_akademik->verif_dekan != 1)
 			              <br>
 			               <div class="form-group" style="float: right;">
-			              	<form method="post" action="{{ ( $tipe == "sk skripsi"? route('ktu.sk-skripsi.verif', $sk_akademik->id) : route('ktu.sk-sempro.verif', $sk_akademik->id) ) }}">
+			              	<form method="post" action="{{ ( $tipe == "sk skripsi"? route('dekan.sk-skripsi.verif', $sk_akademik->id) : route('dekan.sk-sempro.verif', $sk_akademik->id) ) }}">
 			              		@csrf
 			              		@method('put')
-			              		<input type="hidden" name="verif_ktu" value="{{$sk_akademik->verif_ktu}}">
+			              		<input type="hidden" name="verif_dekan" value="{{$sk_akademik->id_status_sk_akademik}}">
 			              		<button type="submit" name="setuju_btn" class="btn btn-success"><i class="fa fa-check"></i> Setujui</button>	
 			              		<button type="submit" name="tarik_btn" class="btn btn-danger"><i class="fa fa-close"></i> Tarik SK</button>
 			              	</form>
@@ -201,13 +201,13 @@
 
 	$("button[name='setuju_btn']").click(function(event) {
 		event.preventDefault();
-		$("input[name='verif_ktu']").val(1);
+		$("input[name='verif_dekan']").val(1);
 		$(this).parents("form").trigger('submit');
 	});
 
 	$("button[name='tarik_btn']").click(function(event) {
 		event.preventDefault();
-		$("input[name='verif_ktu']").val(2);
+		$("input[name='verif_dekan']").val(2);
 		$(this).parents("form").trigger('submit');
 	});
 </script>

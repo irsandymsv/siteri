@@ -45,9 +45,22 @@
       		<div class="box box-success">
       			<div class="box-header">
 	              <h3 class="box-title">Daftar SK {{ ($tipe == "sk skripsi"? 'Skripsi' : 'Sempro') }}</h3>
+
+	              @if(session()->has('verif_ktu'))
+	              <div class="alert alert-info alert-dismissible" style="width: 35%; margin: auto;">
+	                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	                <h4><i class="icon fa fa-info"></i> Berhasil</h4>
+		            {{session('verif_ktu')}}
+		          </div>
+		          @endif 
+
+		          @php 
+		          	Session::forget('verif_ktu'); 
+		          @endphp
 	            </div>
 
 	            <div class="box-body">
+	            	
 	            	<div class="table-responsive">
 	            		<table id="tbl_data1" class="table table-bordered table-hovered">
 		            		<thead>
@@ -88,7 +101,11 @@
 			            					@endif
 			            				</td>
 			            				<td>
+			            					@if($tipe == "sk skripsi")
 			            					<a href="{{ route('ktu.sk-skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+			            					@else
+			            					<a href="{{ route('ktu.sk-sempro.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+			            					@endif
 			            					{{-- <a href="#" class="btn btn-success" id="{{ $item->id }}" name="verif_sk" title="Setujui SK" data-toggle="modal" data-target="#modal-success"><i class="fa fa-check"></i></a> --}}
 			            				</td>
 			            			</tr>

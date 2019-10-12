@@ -16,8 +16,8 @@ Route::get('/', function () {
 });
 
 Route::prefix('akademik')->name('akademik.')->group(function (){
-	Route::redirect('/', '/akademik/dashboard');
-	Route::get('/dashboard', 'akademikController@dashboard')->name('dashboard');
+	// Route::redirect('/', '/akademik/dashboard');
+	Route::get('/', 'akademikController@dashboard')->name('dashboard');
 
 	Route::get('/skripsi', 'SkSkripsiController@index')->name('skripsi.index');
 	Route::get('/skripsi/create','SkSkripsiController@create')->name('skripsi.create');
@@ -47,4 +47,21 @@ Route::prefix('ktu')->name('ktu.')->group(function ()
 
 	Route::get('/sk-sempro', 'SkSemproController@ktu_index_sempro')->name('sk-sempro.index');
 	Route::get('/sk-sempro/{id_sk_akademik}', 'SkSemproController@ktu_show')->name('sk-sempro.show');
+	Route::put('/sk-sempro/verif/{id_sk_akademik}', 'SkSemproController@ktu_verif')->name('sk-sempro.verif');
+
+});
+
+Route::prefix('dekan')->name('dekan.')->group(function()
+{
+	Route::get('/', function()
+	{
+		return view('dekan.dashboard');
+	});
+	Route::get('/sk-skripsi', 'SkSkripsiController@dekan_index_skripsi')->name('sk-skripsi.index');
+	Route::get('/sk-skripsi/{id_sk_akademik}', 'SkSkripsiController@dekan_show')->name('sk-skripsi.show');
+	Route::put('/sk-skripsi/verif/{id_sk_akademik}', 'SkSkripsiController@dekan_verif')->name('sk-skripsi.verif');
+
+	Route::get('/sk-sempro', 'SkSemproController@dekan_index_skripsi')->name('sk-sempro.index');
+	Route::get('/sk-sempro/{id_sk_akademik}', 'SkSemproController@dekan_show')->name('sk-sempro.show');
+	Route::put('/sk-sempro/verif/{id_sk_akademik}', 'SkSemproController@dekan_verif')->name('sk-sempro.verif');
 });
