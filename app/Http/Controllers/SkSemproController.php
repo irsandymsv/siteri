@@ -273,6 +273,11 @@ class SkSemproController extends Controller
     public function ktu_show($id)
     {
         $sk_akademik = sk_akademik::find($id);
+        $status = $sk_akademik->status_sk_akademik->status;
+        if($status == "Draft"){
+            return redirect()->route('ktu.sk-sempro.index');
+        }
+
         $detail_sk = detail_sk::where('id_sk_akademik', $id)
             ->with([
                 'bagian',
@@ -295,12 +300,18 @@ class SkSemproController extends Controller
         $sk_akademik = sk_akademik::find($id);
         $sk_akademik->verif_ktu = $request->verif_ktu;
         if($request->verif_ktu == 2){
+            $request->validate([
+                'pesan_revisi' => 'required|string'
+            ]);
+
             $sk_akademik->id_status_sk_akademik = 1;
+            $sk_akademik->pesan_revisi = $request->pesan_revisi;
             $sk_akademik->save();
             return redirect()->route('ktu.sk-sempro.index')->with("verif_ktu", 'SK berhasil ditarik, status kembali menjadi "Draft"');
         }
         else if ($request->verif_ktu == 1) {
             $sk_akademik->id_status_sk_akademik = 3;
+            $sk_akademik->pesan_revisi = null;
             $sk_akademik->save();
             return redirect()->route('ktu.sk-sempro.index')->with('verif_ktu', 'verifikasi SK berhasil, status SK saat ini "Disetujui KTU"');
         }
@@ -329,6 +340,12 @@ class SkSemproController extends Controller
     public function dekan_show($id)
     {
         $sk_akademik = sk_akademik::find($id);
+        $status = $sk_akademik->status_sk_akademik->status;
+        if($status != "Disetujui KTU" && $status != "Disetujui Dekan"){
+            return redirect()->route('dekan.sk-sempro.index');
+        }
+
+        $sk_akademik = sk_akademik::find($id);
         $detail_sk = detail_sk::where('id_sk_akademik', $id)
             ->with([
                 'bagian',
@@ -350,12 +367,18 @@ class SkSemproController extends Controller
         $sk_akademik = sk_akademik::find($id);
         $sk_akademik->verif_dekan = $request->verif_dekan;
         if($request->verif_dekan == 2){
+            $request->validate([
+                'pesan_revisi' => 'required|string'
+            ]);
+
             $sk_akademik->id_status_sk_akademik = 1;
+            $sk_akademik->pesan_revisi = $request->pesan_revisi;
             $sk_akademik->save();
             return redirect()->route('dekan.sk-sempro.index')->with("verif_dekan", 'SK berhasil ditarik, status kembali menjadi "Draft"');
         }
         else if ($request->verif_dekan == 1) {
             $sk_akademik->id_status_sk_akademik = 4;
+            $sk_akademik->pesan_revisi = null;
             $sk_akademik->save();
             return redirect()->route('dekan.sk-sempro.index')->with('verif_dekan', 'verifikasi SK berhasil, status SK saat ini "Disetujui Dekan"');
         }

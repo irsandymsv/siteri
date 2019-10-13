@@ -113,7 +113,7 @@
 		              		@method('put')
 		              		<input type="hidden" name="verif_dekan" value="{{$sk_akademik->verif_dekan}}">
 		              		<button type="submit" name="setuju_btn" class="btn btn-success"><i class="fa fa-check"></i> Setujui</button>
-		              		<button type="submit" name="tarik_btn" class="btn btn-danger"><i class="fa fa-close"></i> Tarik SK</button>
+		              		<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-tarik-sk"><i class="fa fa-close"></i> Tarik SK</button>
 		              	</form>
 		              </div>
 	              @endif
@@ -180,7 +180,7 @@
 			              		@method('put')
 			              		<input type="hidden" name="verif_dekan" value="{{$sk_akademik->id_status_sk_akademik}}">
 			              		<button type="submit" name="setuju_btn" class="btn btn-success"><i class="fa fa-check"></i> Setujui</button>	
-			              		<button type="submit" name="tarik_btn" class="btn btn-danger"><i class="fa fa-close"></i> Tarik SK</button>
+			              		<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-tarik-sk"><i class="fa fa-close"></i> Tarik SK</button>
 			              	</form>
 			              </div>
 		              	@endif
@@ -190,10 +190,45 @@
       	</div>
 	</div>
 
+	<div class="modal fade" id="modal-tarik-sk">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-red">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Pesan Penarikan SK</h4>
+          </div>
+          <form method="post" action="{{ ( $tipe == "sk skripsi"? route('dekan.sk-skripsi.verif', $sk_akademik->id) : route('dekan.sk-sempro.verif', $sk_akademik->id) ) }}">
+          	@csrf
+          	@method('PUT')
+	          <div class="modal-body">
+	            <label for="pesan_revisi">Masukkan Pesan Revisi</label>
+	            <textarea name="pesan_revisi" id="pesan_revisi" class="form-control">{{old('pesan_revisi')}}</textarea>
+	            <input type="hidden" name="verif_dekan" value="{{$sk_akademik->verif_dekan}}">
+
+	            @error('pesan_revisi')
+	            	<p style="color: red;">{{ $message }}</p>
+	            @enderror
+	          </div>
+	          <div class="modal-footer">
+	            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>           
+				<button type="submit" name="tarik_btn" class="btn btn-danger">Tarik SK</button>
+	          </div>
+      	  </form>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+
 @endsection
 
 @section('script')
 <script type="text/javascript">
+	@error('pesan_revisi')
+		$("#modal-tarik-sk").modal("show");
+	@enderror
+	
 	var status = @json($sk_akademik->id_status_sk_akademik);
 	for (var i = status; i > 0; i--) {
 		$("#progres_"+i).children('i').removeClass('bg-grey').addClass('bg-green fa-check');

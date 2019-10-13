@@ -15,7 +15,7 @@
 		#success_verif{
 			 position: fixed;
 			 display: none; 
-			 width: 20%; 
+			 width: 25%; 
 			 text-align: center;
 			 top: 15%;
 			 left: 40%;

@@ -20,6 +20,7 @@ class CreateSkAkademikTable extends Migration
             // $table->string('id_user', 25);
             $table->boolean('verif_ktu')->default(false);
             $table->boolean('verif_dekan')->default(false);
+            $table->text('pesan_revisi')->nullable();
             $table->timestamps();
 
             $table->foreign('id_tipe_sk')->references('id')->on('tipe_sk')->onDelete('set null');

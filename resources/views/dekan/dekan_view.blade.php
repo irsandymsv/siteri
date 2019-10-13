@@ -1,7 +1,7 @@
 @extends('layout.template')
 
 @section('side_menu')
-	<li class="active"><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+	<li class="active"><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard Dekan</span></a></li>
 
 	<li class="treeview">
 	    <a href="#"><i class="fa fa-link"></i> <span>SK Akademik</span>
