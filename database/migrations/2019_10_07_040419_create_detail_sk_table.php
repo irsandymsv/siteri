@@ -16,6 +16,7 @@ class CreateDetailSkTable extends Migration
         Schema::create('detail_sk', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('id_sk_akademik')->nullable();
+            $table->unsignedInteger('id_sk_honor')->nullable();
             $table->string('nama_mhs')->length(40);
             $table->string('nim', 20);
             $table->unsignedInteger('id_bagian')->nullable();
