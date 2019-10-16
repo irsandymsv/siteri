@@ -65,3 +65,15 @@ Route::prefix('dekan')->name('dekan.')->group(function()
 	Route::get('/sk-sempro/{id_sk_akademik}', 'SkSemproController@dekan_show')->name('sk-sempro.show');
 	Route::put('/sk-sempro/verif/{id_sk_akademik}', 'SkSemproController@dekan_verif')->name('sk-sempro.verif');
 });
+
+Route::prefix('keuangan')->name('keuangan.')->group(function()
+{
+	Route::get('/', function() {
+	    return view('keuangan.dashboard');
+	});
+
+	Route::get('/honor-skripsi/', 'honorSkripsiController@index')->name('honor-skripsi.index');
+	Route::get('/honor-skripsi/pilih-sk', 'honorSkripsiController@pilih_sk')->name('honor-skripsi.pilih-sk');
+	Route::get('/honor-skripsi/create/{id_sk_akademik}', 'honorSkripsiController@create')->name('honor-skripsi.create');
+
+});

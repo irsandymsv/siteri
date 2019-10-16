@@ -54,12 +54,12 @@
 	              <h3 class="box-title">Progress SK {{ ($tipe == "sk skripsi"? "Skripsi" : "Sempro") }} Ini</h3>
               	  <span style="margin-left: 5px;">
 	            	@if($sk_akademik->verif_ktu == 2) 
-						<label class="label bg-red">Butuh Revisi (KTU)</label>
-					@elseif($sk_akademik->verif_dekan == 2) 
-						Dekan: <label class="label bg-red">Butuh Revisi (Dekan)</label>
-					@else
-					@endif
-				  </span>
+							<label class="label bg-red">Butuh Revisi (KTU)</label>
+						@elseif($sk_akademik->verif_dekan == 2) 
+							<label class="label bg-red">Butuh Revisi (Dekan)</label>
+						@else
+						@endif
+					  </span>
 	          	  
 
 	              <div class="box-tools pull-right">

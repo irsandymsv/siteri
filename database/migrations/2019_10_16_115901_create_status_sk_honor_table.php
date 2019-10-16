@@ -14,7 +14,7 @@ class CreateStatusSkHonorTable extends Migration
     public function up()
     {
         Schema::create('status_sk_honor', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('status')->length(100);
         });
     }

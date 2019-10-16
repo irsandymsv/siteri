@@ -10,8 +10,6 @@ use App\bagian;
 use App\User;
 use App\sk_akademik;
 use App\detail_sk;
-use App\penguji;
-use App\pembimbing;
 use App\Http\Controllers\Controller;
 use App\status_sk_akademik;
 use App\tipe_sk;
