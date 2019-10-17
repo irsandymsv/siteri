@@ -1,7 +1,7 @@
 @extends('akademik.akademik_view')
 
 @section('page_title')
-	@if($tipe == "sk skripsi")
+	@if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
 		Detail SK skripsi
 	@else
 		Detail SK Sempro
@@ -9,6 +9,7 @@
 @endsection
 
 @section('css_link')
+	<link rel="stylesheet" type="text/css" href="/css/btn_backTop.css">
 	<style type="text/css">
 		.proges_wrap{
 			padding: 8px;
@@ -38,7 +39,7 @@
 @endsection
 
 @section('judul_header')
-	@if($tipe == "sk skripsi")
+	@if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
 		SK Skripsi
 	@else
 		SK Sempro
@@ -46,12 +47,13 @@
 @endsection
 
 @section('content')
+   <button id="back_top" class="btn bg-black" title="Kembali ke Atas"><i class="fa fa-arrow-up"></i></button>
 	
 	<div class="row">
 		<div class="col-xs-12">
       		<div class="box box-success">
       			<div class="box-header">
-	              <h3 class="box-title">Progress SK {{ ($tipe == "sk skripsi"? "Skripsi" : "Sempro") }} Ini</h3>
+	              <h3 class="box-title">Progress SK {{ ($sk_akademik->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }} Ini</h3>
               	  <span style="margin-left: 5px;">
 	            	@if($sk_akademik->verif_ktu == 2) 
 							<label class="label bg-red">Butuh Revisi (KTU)</label>
@@ -132,11 +134,11 @@
 		<div class="col-xs-12">
       		<div class="box box-primary">
       			<div class="box-header">
-	              <h3 class="box-title">Data SK Skripsi</h3>
+	              <h3 class="box-title">Data SK {{ ($sk_akademik->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
 
 	              @if($sk_akademik->verif_dekan != 1)
 		              <div class="form-group" style="float: right;">
-		              	<a href="{{ ($tipe == "sk skripsi"? route('akademik.skripsi.edit', $sk_akademik->id) : route('akademik.sempro.edit', $sk_akademik->id)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+		              	<a href="{{ ($sk_akademik->tipe_sk->tipe == "SK Skripsi"? route('akademik.skripsi.edit', $sk_akademik->id) : route('akademik.sempro.edit', $sk_akademik->id)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
 		              </div>
 	              @endif
 	            </div>
@@ -151,7 +153,13 @@
 			            			<th>Jurusan</th>
 			            			<th>Judul</th>
 			            			<th>Pembimbing</th>
-			            			<th>Penguji</th>
+			            			<th>
+			            				@if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
+			            					Penguji
+			            				@else
+			            					Pembahas
+			            				@endif
+			            			</th>
 			            		</tr>
 			            	</thead>
 			            	<tbody>
@@ -186,7 +194,7 @@
 	            	 @if($sk_akademik->verif_dekan != 1)
 		              <br>
 		              <div class="form-group" style="float: right;">
-		            	<a href="{{ ($tipe == "sk skripsi"? route('akademik.skripsi.edit', $sk_akademik->id) : route('akademik.sempro.edit', $sk_akademik->id)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+		            	<a href="{{ ($sk_akademik->tipe_sk->tipe == "SK Skripsi"? route('akademik.skripsi.edit', $sk_akademik->id) : route('akademik.sempro.edit', $sk_akademik->id)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
 		              </div>
 	              	@endif
 	            </div>
@@ -197,6 +205,7 @@
 @endsection
 
 @section('script')
+<script src="/js/btn_backTop.js"></script>
 <script type="text/javascript">
 	var status = @json($sk_akademik->id_status_sk_akademik);
 	for (var i = status; i > 0; i--) {

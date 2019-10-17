@@ -14,12 +14,12 @@
 	      <div class="box box-primary">
             <div class="box-header">
                <h3 class="box-title">Pilih SK Akademik</h3>
-               <p>Pilih SK akademik di bawah ini yang ingin dibuatkan daftar honorarium</p>
+               <p>Pilih SK {{ ($sk_akademik[0]->tipe_sk->tipe == 'SK Skripsi'? "Skripsi" : "Sempro") }} di bawah ini yang ingin dibuatkan daftar honorarium</p>
             </div>
 
             <div class="box-body">
                <div class="table-responsive">
-                  <table id="dataTable" class="table table-bordered table-hovered">
+                  <table id="table_data1" class="table table-bordered table-hovered">
                      <thead>
                         <tr>
                            <th>No</th>
@@ -48,7 +48,7 @@
                               	@if(is_null($item->detail_sk[0]->id_sk_honor))
                                  <a href="{{route('keuangan.honor-skripsi.create', $item->id)}}" class="btn btn-success" title="Lihat daftar honor yang berdasarkan SK ini">Buat Daftar Honor</a>
                               	@else
-                                 <a href="#" class="btn btn-primary" title="Lihat daftar honor yang berdasarkan SK ini">Lihat Daftar Honor</a>
+                                 <a href="{{ route('keuangan.honor-skripsi.show', $item->detail_sk[0]->id_sk_honor) }}" class="btn btn-primary" title="Lihat daftar honor yang berdasarkan SK ini">Lihat Daftar Honor</a>
                               	@endif
                               </td>
                            </tr>

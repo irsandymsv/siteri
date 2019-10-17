@@ -1,7 +1,7 @@
 @extends('keuangan.keuangan_view')
 
 @section('page_title')
-	Buat Honorarium SK Skripsi
+	Ubah Honorarium SK {{($sk_honor->tipe_sk->tipe == "SK Skripsi")? "Skripsi" : "Sempro"}}
 @endsection
 
 @section('css_link')
@@ -27,20 +27,20 @@
 @endsection
 
 @section('judul_header')
-	Honorarium Pembimbing Skripsi
+	Honorarium Pembimbing {{($sk_honor->tipe_sk->tipe == "SK Skripsi")? "Skripsi" : "Sempro"}}
 @endsection
 
 @section('content')
 <button id="back_top" type="button" class="btn bg-black"><i class="fa fa-arrow-up"></i></button>
 
-<form method="POST" action="{{route("keuangan.honor-skripsi.store")}}">
+<form method="POST" action="#">
    @csrf
    <input type="hidden" name="status">
    <div class="row">
       <div class="col-xs-12" id="top_title">
             <div class="box box-success">
                <div class="box-header">
-                  <h3 class="box-title">Buat Honorarium SK Skripsi</h3>
+                  <h3 class="box-title">Ubah Honorarium SK {{($sk_honor->tipe_sk->tipe == "SK Skripsi")? "Skripsi" : "Sempro"}}</h3>
 
                   <div class="box-tools pull-right">
                    <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -51,8 +51,11 @@
                </div>
 
                <div class="box-body">
-                  <h4><b>Informasi SK:</b></h3>
-                  <p>Tanggal SK : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</p>
+                  <h4><b>Informasi Daftar Honor:</b></h3>
+                  <p>Tanggal Dibuat : {{Carbon\Carbon::parse($sk_honor->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</p>
+                  <p>
+                     Tanggal SK {{($sk_honor->tipe_sk->tipe == "SK Skripsi")? "Skripsi" : "Sempro"}} : {{Carbon\Carbon::parse($sk_honor->detail_sk[0]->sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}
+                  </p>
                   <button class="btn bg-purple" name="simpan_draf">Simpan Sebagai Draft</button>
                   <button class="btn btn-success" name="simpan_kirim">Simpan dan Kirim</button>
                </div>
@@ -64,8 +67,9 @@
       <div class="col-xs-12">
          <div class="box box-primary">
             <div class="box-header">
-               <h3 class="box-title">Buat Daftar Honor Pembimbing Skripsi</h3>
-               <input type="hidden" name="id_sk_akademik" value="{{$sk_akademik->id}}">
+               <h3 class="box-title">Ubah Buat Daftar Honor Pembimbing Skripsi</h3>
+               <input type="hidden" name="id_sk_honor" value="{{$sk_honor->id}}">
+               <input type="hidden" name="id_sk_akademik" value="{{$sk_honor->detail_sk[0]->sk_akademik->id}}">
                <div class="box-tools pull-right">
                   <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
                   </button>
@@ -76,12 +80,12 @@
             <div class="box-body form-group">
                <div class="input_honor">
                   <label for="honor_pembimbing">Masukkan jumlah uang honorarium: Rp </label>
-                  <input type="number" name="honor_pembimbing" id="honor_pembimbing" >
+                  <input type="number" name="honor_pembimbing" id="honor_pembimbing" value="{{ $sk_honor->honor_pembimbing }}">
                   <button type="button" id="btn_honor_pembimbing" class="btn btn-default">Ok</button>
                   {{-- <span class="help-block absolute" >Help block with error</span> --}}
                </div>
                <div class="table-responsive">
-                  <table id="table_data1" class="table table-bordered table-striped">
+                  <table id="dataTable2" class="table table-bordered table-striped">
                      <thead>
                         <tr>
                            <th>No</th>
@@ -97,7 +101,7 @@
 
                      <tbody id="tbl_pembimbing">
                         @php $no = 0; @endphp
-                        @foreach($detail_sk as $item)
+                        @foreach($sk_honor->detail_sk as $item)
                            <tr id="{{$no+=1}}">
                               <td>{{$no}}</td>
                               <td>{{$item->pembimbing_utama->nama}}</td>
@@ -108,10 +112,19 @@
                               </td>
                               <td>{{$item->pembimbing_utama->golongan->golongan}}</td>
                               <td>
-                                 Rp <input type="number" name="honorarium_pembimbing[]" class="pembimbingHonor" id="pembimbing_{{$no}}" min="0">
+                                 Rp <input type="number" name="honorarium_pembimbing[]" class="pembimbingHonor" id="pembimbing_{{$no}}" min="0" value="{{ $sk_honor->honor_pembimbing }}">
                               </td>
-                              <td class="pph" id="pph_{{$no}}">Rp &ensp; <span></span></td>
-                              <td class="penerimaan" id="penerimaan_{{$no}}">Rp &ensp; <span></span></td>
+                              <td class="pph" id="pph_{{$no}}">Rp &ensp; 
+                                 <span>
+                                    @php
+                                       $pph = ($item->pembimbing_utama->golongan->pph * $sk_honor->honor_pembimbing)/100;
+                                    @endphp
+                                    {{ $pph }}
+                                 </span>
+                              </td>
+                              <td class="penerimaan" id="penerimaan_{{$no}}">Rp &ensp; 
+                                 <span>{{ $sk_honor->honor_pembimbing - $pph }}</span>
+                              </td>
                            </tr>
 
                            <tr id="{{$no+=1}}">
@@ -120,10 +133,19 @@
                               <td>{{$item->pembimbing_pendamping->npwp}}</td>
                               <td>{{$item->pembimbing_pendamping->golongan->golongan}}</td>
                               <td>
-                                 Rp <input type="number" name="honorarium_pembimbing[]" class="pembimbingHonor" id="pembimbing_{{$no}}" min="0">
+                                 Rp <input type="number" name="honorarium_pembimbing[]" class="pembimbingHonor" id="pembimbing_{{$no}}" min="0" value="{{ $sk_honor->honor_pembimbing }}">
                               </td>
-                              <td class="pph" id="pph_{{$no}}">Rp &ensp; <span></span></td>
-                              <td class="penerimaan" id="penerimaan_{{$no}}">Rp &ensp; <span></span></td>
+                              <td class="pph" id="pph_{{$no}}">Rp &ensp; 
+                                 <span>
+                                    @php
+                                       $pph = ($item->pembimbing_pendamping->golongan->pph * $sk_honor->honor_pembimbing)/100;
+                                    @endphp
+                                    {{ $pph }}
+                                 </span>
+                              </td>
+                              <td class="penerimaan" id="penerimaan_{{$no}}">Rp &ensp; 
+                                 <span>{{ $sk_honor->honor_pembimbing - $pph }}</span>
+                              </td>
                            </tr>
                         @endforeach
                      </tbody>
@@ -138,7 +160,7 @@
    	<div class="col-xs-12">
    		<div class="box box-danger">
    			<div class="box-header">
-   				<h3 class="box-title">Buat Daftar Honor Penguji Skripsi</h3>
+   				<h3 class="box-title">Ubah Daftar Honor Penguji Skripsi</h3>
 
                <div class="box-tools pull-right">
                      <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -151,11 +173,11 @@
    			<div class="box-body">
                <div class="input_honor">
                   <label for="honor_penguji">Masukkan jumlah uang honorarium: Rp </label>
-                  <input type="number" name="honor_penguji" id="honor_penguji">
+                  <input type="number" name="honor_penguji" id="honor_penguji" value="{{ $sk_honor->honor_penguji }}">
                   <button type="button" id="btn_honor_penguji" class="btn btn-default">Ok</button>
                </div>
                <div class="table-responsive">
-                  <table id="table_data2" class="table table-bordered table-striped">
+                  <table id="dataTable2" class="table table-bordered table-striped">
                      <thead>
                         <tr>
                            <th>No</th>
@@ -171,7 +193,7 @@
 
                      <tbody id="tbl_penguji">
                         @php $no = 0; @endphp
-                        @foreach($detail_sk as $item)
+                        @foreach($sk_honor->detail_sk as $item)
                            <tr id="{{$no+=1}}">
                               <td>{{$no}}</td>
                               <td>{{$item->penguji_utama->nama}}</td>
@@ -182,10 +204,19 @@
                               </td>
                               <td>{{$item->penguji_utama->golongan->golongan}} {{$item->penguji_utama->golongan->pph}}</td>
                               <td>
-                                 Rp <input type="number" name="honorarium_penguji[]" class="pengujiHonor" id="penguji_{{$no}}" min="0">
+                                 Rp <input type="number" name="honorarium_penguji[]" class="pengujiHonor" id="penguji_{{$no}}" min="0" value="{{ $sk_honor->honor_penguji }}">
                               </td>
-                              <td class="pph" id="pph_{{$no}}">Rp &ensp; <span></span></td>
-                              <td class="penerimaan" id="penerimaan_{{$no}}">Rp &ensp; <span></span></td>
+                              <td class="pph" id="pph_{{$no}}">Rp &ensp; 
+                                 <span>
+                                    @php
+                                       $pph = ($item->penguji_utama->golongan->pph * $sk_honor->honor_penguji)/100;
+                                    @endphp
+                                    {{ $pph }}
+                                 </span>
+                              </td>
+                              <td class="penerimaan" id="penerimaan_{{$no}}">Rp &ensp; 
+                                 <span>{{ $sk_honor->honor_penguji - $pph }}</span>
+                              </td>
                            </tr>
 
                            <tr id="{{$no+=1}}">
@@ -194,10 +225,19 @@
                               <td>{{$item->penguji_pendamping->npwp}}</td>
                               <td>{{$item->penguji_pendamping->golongan->golongan}} {{$item->penguji_pendamping->golongan->pph}}</td>
                               <td>
-                                 Rp <input type="number" name="honorarium_penguji[]" class="pengujiHonor" id="penguji_{{$no}}" min="0">
+                                 Rp <input type="number" name="honorarium_penguji[]" class="pengujiHonor" id="penguji_{{$no}}" min="0" value="{{ $sk_honor->honor_penguji }}">
                               </td>
-                              <td class="pph" id="pph_{{$no}}">Rp &ensp; <span></span></td>
-                              <td class="penerimaan" id="penerimaan_{{$no}}">Rp &ensp; <span></span></td>
+                              <td class="pph" id="pph_{{$no}}">Rp &ensp; 
+                                 <span>
+                                    @php
+                                       $pph = ($item->penguji_pendamping->golongan->pph * $sk_honor->honor_penguji)/100;
+                                    @endphp
+                                    {{ $pph }}
+                                 </span>
+                              </td>
+                              <td class="penerimaan" id="penerimaan_{{$no}}">Rp &ensp; 
+                                 <span>{{ $sk_honor->honor_penguji - $pph }}</span>
+                              </td>
                            </tr>
                         @endforeach
                      </tbody>
@@ -222,6 +262,10 @@
 @section('script')
    <script src="/js/btn_backTop.js"></script>
    <script type="text/javascript">
+      $("#back_top").on('click', function(e) {
+        e.preventDefault();
+        $('html, body').animate({scrollTop:0}, '500');
+      });
 
       $("button[name='simpan_draf']").click(function(event) {
          event.preventDefault();
@@ -235,7 +279,7 @@
          $('form').trigger('submit');
       });
 
-      var detail_sk = @json($detail_sk);
+      var detail_sk = @json($sk_honor->detail_sk);
       // console.log(detail_sk);
 
       $("#btn_honor_pembimbing").click(function(event) {
@@ -273,7 +317,7 @@
             $("#tbl_penguji").find("#penerimaan_"+no).children('span').text(penerimaan1);
 
             no+=1;
-            var pph2 =( honor * val.penguji_pendamping.golongan.pph)/100;
+            var pph2 = (honor * val.penguji_pendamping.golongan.pph)/100;
             var penerimaan2 = honor - pph2;
             $("#tbl_penguji").find("#pph_"+no).children('span').text(pph2);
             $("#tbl_penguji").find("#penerimaan_"+no).children('span').text(penerimaan2);

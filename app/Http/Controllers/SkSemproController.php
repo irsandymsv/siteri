@@ -25,8 +25,7 @@ class SkSemproController extends Controller
                 ->get();
 
             return view('akademik.SK_view.index', [
-                'sk_akademik' => $sk_akademik,
-                'tipe' => "sk sempro"
+                'sk_akademik' => $sk_akademik
             ]);
         } catch (Exception $e) {
             return view('akademik.SK_view.index');
@@ -113,8 +112,7 @@ class SkSemproController extends Controller
         // dd($detail_sk);
         return view('akademik.SK_view.show', [
             'sk_akademik' => $sk_akademik,
-            'detail_sk' => $detail_sk,
-            'tipe' => "sk sempro"
+            'detail_sk' => $detail_sk
         ]);
     }
 
@@ -144,8 +142,7 @@ class SkSemproController extends Controller
                 'detail_sk' => $detail_sk,
                 'jurusan' => $jurusan,
                 'dosen' => $dosen,
-                'old_data' => $old_data,
-                'tipe' => "sk sempro"
+                'old_data' => $old_data
             ]);
         } catch (Exception $e) {
             return redirect()->route('akademik.sempro.index')->with('error', $e->getMessage());
@@ -263,8 +260,7 @@ class SkSemproController extends Controller
         ->get();
 
         return view('ktu.SK_view.sk_index', [
-            'sk_akademik' => $sk_akademik,
-            'tipe' => 'sk sempro'
+            'sk_akademik' => $sk_akademik
         ]);
     }
 
@@ -287,8 +283,7 @@ class SkSemproController extends Controller
         // dd($detail_sk);
         return view('ktu.SK_view.sk_show', [
             'sk_akademik' => $sk_akademik,
-            'detail_sk' => $detail_sk,
-            'tipe' => "sk sempro"
+            'detail_sk' => $detail_sk
         ]);
     }
 
@@ -330,8 +325,7 @@ class SkSemproController extends Controller
         ->get();
 
         return view('dekan.SK_view.sk_index', [
-            'sk_akademik' => $sk_akademik,
-            'tipe' => 'sk sempro'
+            'sk_akademik' => $sk_akademik
         ]);
     }
 
@@ -355,8 +349,7 @@ class SkSemproController extends Controller
         // dd($detail_sk);
         return view('dekan.SK_view.sk_show', [
             'sk_akademik' => $sk_akademik,
-            'detail_sk' => $detail_sk,
-            'tipe' => "sk sempro"
+            'detail_sk' => $detail_sk
         ]);
     }
 

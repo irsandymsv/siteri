@@ -55,7 +55,13 @@
 				            			<th>Jurusan</th>
 				            			<th>Judul</th>
 				            			<th>Pembimbing</th>
-				            			<th>Penguji</th>
+				            			<th>
+				            				@if($tipe == "sk skripsi")
+				            					Penguji
+				            				@else
+				            					Pembahas
+				            				@endif
+				            			</th>
 				            			<th>X</th>
 				            		</tr>
 				            	</thead>

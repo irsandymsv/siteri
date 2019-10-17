@@ -1,7 +1,7 @@
 @extends('ktu.ktu_view')
 
 @section('page_title')
-	@if($tipe == "sk skripsi")
+	@if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
 		Detail SK skripsi
 	@else
 		Detail SK Sempro
@@ -29,7 +29,7 @@
 @endsection
 
 @section('judul_header')
-	@if($tipe == "sk skripsi")
+	@if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
 		SK Skripsi
 	@else
 		SK Sempro
@@ -42,7 +42,7 @@
 		<div class="col-xs-12">
       		<div class="box box-success">
       			<div class="box-header">
-	              <h3 class="box-title">Progress SK {{ ($tipe == "sk skripsi"? "Skripsi" : "Sempro") }} Ini</h3>
+	              <h3 class="box-title">Progress SK {{ ($sk_akademik->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }} Ini</h3>
 
 	              <div class="box-tools pull-right">
 	                <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -104,11 +104,11 @@
 		<div class="col-xs-12">
       		<div class="box box-primary">
       			<div class="box-header">
-	              <h3 class="box-title">Data SK {{ ($tipe == "sk skripsi"? "Skripsi" : "Sempro") }} </h3>
+	              <h3 class="box-title">Data SK {{ ($sk_akademik->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }} </h3>
 
 	              @if($sk_akademik->verif_dekan != 1)
 		              <div class="form-group" style="float: right;">
-		              	<form method="post" action="{{ ( $tipe == "sk skripsi"? route('ktu.sk-skripsi.verif', $sk_akademik->id) : route('ktu.sk-sempro.verif', $sk_akademik->id) ) }}">
+		              	<form method="post" action="{{ ( $sk_akademik->tipe_sk->tipe == "SK Skripsi"? route('ktu.sk-skripsi.verif', $sk_akademik->id) : route('ktu.sk-sempro.verif', $sk_akademik->id) ) }}">
 		              		@csrf
 		              		@method('put')
 		              		<input type="hidden" name="verif_ktu" value="{{$sk_akademik->verif_ktu}}">
@@ -145,7 +145,13 @@
 			            			<th>Jurusan</th>
 			            			<th>Judul</th>
 			            			<th>Pembimbing</th>
-			            			<th>Penguji</th>
+			            			<th>
+			            				@if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
+			            					Penguji
+			            				@else
+			            					Pembahas
+			            				@endif
+			            			</th>
 			            		</tr>
 			            	</thead>
 			            	<tbody>
@@ -179,7 +185,7 @@
 			            @if($sk_akademik->verif_dekan != 1)
 			              <br>
 			               <div class="form-group" style="float: right;">
-			              	<form method="post" action="{{ ( $tipe == "sk skripsi"? route('ktu.sk-skripsi.verif', $sk_akademik->id) : route('ktu.sk-sempro.verif', $sk_akademik->id) ) }}">
+			              	<form method="post" action="{{ ( $sk_akademik->tipe_sk->tipe == "SK Skripsi"? route('ktu.sk-skripsi.verif', $sk_akademik->id) : route('ktu.sk-sempro.verif', $sk_akademik->id) ) }}">
 			              		@csrf
 			              		@method('put')
 			              		<input type="hidden" name="verif_ktu" value="{{$sk_akademik->verif_ktu}}">
@@ -202,7 +208,7 @@
               <span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Pesan Penarikan SK</h4>
           </div>
-          <form method="post" action="{{ ( $tipe == "sk skripsi"? route('ktu.sk-skripsi.verif', $sk_akademik->id) : route('ktu.sk-sempro.verif', $sk_akademik->id) ) }}">
+          <form method="post" action="{{ ( $sk_akademik->tipe_sk->tipe == "SK Skripsi"? route('ktu.sk-skripsi.verif', $sk_akademik->id) : route('ktu.sk-sempro.verif', $sk_akademik->id) ) }}">
           	@csrf
           	@method('PUT')
 	          <div class="modal-body">

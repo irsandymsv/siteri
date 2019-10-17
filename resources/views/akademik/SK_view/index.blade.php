@@ -1,7 +1,7 @@
 @extends('akademik.akademik_view')
 
 @section('page_title')
-	@if($tipe == "sk skripsi")
+	@if($sk_akademik[0]->tipe_sk->tipe == "SK Skripsi")
 		Daftar Semua SK skripsi
 	@else
 		Daftar Semua SK Sempro
@@ -27,7 +27,7 @@
 @endsection
 
 @section('judul_header')
-	@if($tipe == "sk skripsi")
+	@if($sk_akademik[0]->tipe_sk->tipe == "SK Skripsi")
 		SK Skripsi
 	@else
 		SK Sempro
@@ -44,10 +44,10 @@
    	<div class="col-xs-12">
    		<div class="box box-success">
    			<div class="box-header">
-              <h3 class="box-title">Daftar SK {{ ($tipe == "sk skripsi"? 'Skripsi' : 'Sempro') }}</h3>
+              <h3 class="box-title">Daftar SK {{ ($sk_akademik[0]->tipe_sk->tipe == "SK Skripsi"? 'Skripsi' : 'Sempro') }}</h3>
             
               <div style="float: right;">
-            	<a href="{{ ($tipe == "sk skripsi"? route('akademik.skripsi.create') : route('akademik.sempro.create')) }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat SK Baru</a>
+            	<a href="{{ ($sk_akademik[0]->tipe_sk->tipe == "SK Skripsi"? route('akademik.skripsi.create') : route('akademik.sempro.create')) }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat SK Baru</a>
               </div>
             </div>
 
@@ -92,7 +92,7 @@
 		            					@endif
 		            				</td>
 		            				<td>
-		            					@if($tipe == "sk skripsi")
+		            					@if($item->tipe_sk->tipe == "SK Skripsi")
 		            						<a href="{{ route('akademik.skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
 			            					@if($item->verif_dekan != 1)
 			            					<a href="{{ route('akademik.skripsi.edit', $item->id) }}" class="btn btn-warning" title="Ubah SK"><i class="fa fa-edit"></i></a>
@@ -153,7 +153,7 @@
 				event.preventDefault();
 				var id_sk = $(this).attr('id');
 
-				@if($tipe == "sk skripsi")
+				@if($sk_akademik[0]->tipe_sk->tipe == "SK Skripsi")
 				var url_del = "{{route('akademik.skripsi.destroy')}}" + '/' + id_sk;					
 				@else
 				var url_del = "{{route('akademik.sempro.destroy')}}" + '/' + id_sk;

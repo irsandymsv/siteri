@@ -1,7 +1,7 @@
 @extends('akademik.akademik_view')
 
 @section('page_title')
-	@if($tipe == "sk skripsi")
+	@if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
 		ubah SK skripsi
 	@else
 		Ubah SK Sempro
@@ -18,7 +18,7 @@
 @endsection
 
 @section('judul_header')
-	@if($tipe == "sk skripsi")
+	@if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
 		SK Skripsi
 	@else
 		SK Sempro
@@ -32,9 +32,9 @@
 	<div class="row">
       	<div class="col-xs-12">
       		<div class="box box-primary">
-	            <form action="{{ ( $tipe == "sk skripsi"? route('akademik.skripsi.update', $sk_akademik->id) : route('akademik.sempro.update', $sk_akademik->id) ) }}" method="POST">
+	            <form action="{{ ( $sk_akademik->tipe_sk->tipe == "SK Skripsi"? route('akademik.skripsi.update', $sk_akademik->id) : route('akademik.sempro.update', $sk_akademik->id) ) }}" method="POST">
 	            	<div class="box-header">
-		              <h3 class="box-title">Ubah SK {{ ($tipe == "sk skripsi"? "Skripsi" : "Sempro") }}</h3>
+		              <h3 class="box-title">Ubah SK {{ ($sk_akademik->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
 
 		              <div class="form-group" style="float: right;">
 		            	<button type="submit" name="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button> 
@@ -61,7 +61,13 @@
 				            			<th>Jurusan</th>
 				            			<th>Judul</th>
 				            			<th>Pembimbing</th>
-				            			<th>Penguji</th>
+				            			<th>
+				            				@if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
+				            					Penguji
+				            				@else
+				            					Pembahas
+				            				@endif
+				            			</th>
 				            			<th>X</th>
 				            		</tr>
 				            	</thead>
@@ -259,7 +265,13 @@
 				            			<th>Jurusan</th>
 				            			<th>Judul</th>
 				            			<th>Pembimbing</th>
-				            			<th>Penguji</th>
+				            			<th>
+				            				@if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
+				            					Penguji
+				            				@else
+				            					Pembahas
+				            				@endif
+				            			</th>
 				            			<th>X</th>
 				            		</tr>
 				            	</tfoot>

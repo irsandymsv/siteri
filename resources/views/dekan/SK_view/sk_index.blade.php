@@ -1,7 +1,7 @@
 @extends('dekan.dekan_view')
 
 @section('page_title')
-	@if($tipe == "sk skripsi")
+	@if($sk_akademik[0]->tipe_sk->tipe == "SK Skripsi")
 		Daftar Semua SK skripsi
 	@else
 		Daftar Semua SK Sempro
@@ -27,7 +27,7 @@
 @endsection
 
 @section('judul_header')
-	@if($tipe == "sk skripsi")
+	@if($sk_akademik[0]->tipe_sk->tipe == "SK Skripsi")
 		SK Skripsi
 	@else
 		SK Sempro
@@ -44,7 +44,7 @@
       	<div class="col-xs-12">
       		<div class="box box-success">
       			<div class="box-header">
-	              <h3 class="box-title">Daftar SK {{ ($tipe == "sk skripsi"? 'Skripsi' : 'Sempro') }}</h3>
+	              <h3 class="box-title">Daftar SK {{ ($sk_akademik[0]->tipe_sk->tipe == "SK Skripsi"? 'Skripsi' : 'Sempro') }}</h3>
 
 	              @if(session()->has('verif_dekan'))
 	              <div class="alert alert-info alert-dismissible" style="width: 35%; margin: auto;">
@@ -101,7 +101,7 @@
 			            					@endif
 			            				</td>
 			            				<td>
-			            					@if($tipe == "sk skripsi")
+			            					@if($sk_akademik[0]->tipe_sk->tipe == "SK Skripsi")
 			            					<a href="{{ route('dekan.sk-skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
 			            					@else
 			            					<a href="{{ route('dekan.sk-sempro.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>

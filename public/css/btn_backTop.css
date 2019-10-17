@@ -1,0 +1,11 @@
+#back_top{
+   display: block;
+   position: fixed;
+   font-size: 18px;
+   outline: none;
+   bottom: 20px;
+   right: 20px;
+   z-index: 99;
+   padding: 12px 15px;
+   border-radius: 5px;
+}

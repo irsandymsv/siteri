@@ -26,8 +26,7 @@ class SkSkripsiController extends Controller
 			// dd($sk_akademik);
 
 			return view('akademik.SK_view.index', [
-				'sk_akademik' => $sk_akademik,
-				'tipe' => "sk skripsi"
+				'sk_akademik' => $sk_akademik
 			]);
 		} catch (Exception $e) {
 			return view('akademik.SK_view.index');
@@ -110,8 +109,7 @@ class SkSkripsiController extends Controller
 		// dd($detail_sk);
 		return view('akademik.SK_view.show', [
 			'sk_akademik' => $sk_akademik,
-			'detail_sk' => $detail_sk,
-			'tipe' => "sk skripsi"
+			'detail_sk' => $detail_sk
 		]);
 	}
 
@@ -140,8 +138,7 @@ class SkSkripsiController extends Controller
 				'detail_sk' => $detail_sk,
 				'jurusan' => $jurusan,
 				'dosen' => $dosen,
-				'old_data' => $old_data,
-				'tipe' => "sk skripsi"
+				'old_data' => $old_data
 			]);
 		} catch (Exception $e) {
 			return redirect()->route('akademik.SK_view.index')->with('error', $e->getMessage());
@@ -258,8 +255,7 @@ class SkSkripsiController extends Controller
 		->get();
 
 		return view('ktu.SK_view.sk_index', [
-			'sk_akademik' => $sk_akademik,
-			'tipe' => 'sk skripsi'
+			'sk_akademik' => $sk_akademik
 		]);
 	}
 
@@ -326,8 +322,7 @@ class SkSkripsiController extends Controller
 		->get();
 
 		return view('dekan.SK_view.sk_index', [
-			'sk_akademik' => $sk_akademik,
-			'tipe' => 'sk skripsi'
+			'sk_akademik' => $sk_akademik
 		]);
 	}
 
@@ -350,8 +345,7 @@ class SkSkripsiController extends Controller
 		// dd($detail_sk);
 		return view('dekan.SK_view.sk_show', [
 			'sk_akademik' => $sk_akademik,
-			'detail_sk' => $detail_sk,
-			'tipe' => "sk skripsi"
+			'detail_sk' => $detail_sk
 		]);
 	}
 
