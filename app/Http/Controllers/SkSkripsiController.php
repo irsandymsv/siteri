@@ -249,10 +249,10 @@ class SkSkripsiController extends Controller
 	{
 		$sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
 		->whereHas('tipe_sk', function(Builder $query){ 
-			$query->where('tipe', 'SK Skripsi'); 
+			$query->where('id', 1); 
 		})
 		->whereHas('status_sk_akademik', function(Builder $query){ 
-			$query->whereIn('status', ['Dikirim', 'Disetujui KTU', 'Disetujui Dekan']); 
+			$query->whereIn('id', [1,2,3]); 
 		})
 		->orderBy('updated_at', 'desc')
 		->get();
@@ -317,10 +317,10 @@ class SkSkripsiController extends Controller
 	{
 		$sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
 		->whereHas('tipe_sk', function(Builder $query){ 
-			$query->where('tipe', 'SK Skripsi'); 
+			$query->where('id', 1); 
 		})
 		->whereHas('status_sk_akademik', function(Builder $query){ 
-			$query->whereIn('status', ['Disetujui KTU', 'Disetujui Dekan']); 
+			$query->whereIn('id', [2,3]); 
 		})
 		->orderBy('updated_at', 'desc')
 		->get();
@@ -334,8 +334,8 @@ class SkSkripsiController extends Controller
 	public function dekan_show($id)
 	{
 		$sk_akademik = sk_akademik::find($id);
-		$status = $sk_akademik->status_sk_akademik->status;
-		if($status != "Disetujui KTU" && $status != "Disetujui Dekan"){
+		$status = $sk_akademik->status_sk_akademik;
+		if($status->id != 2 && $status->id != 3){
 			return redirect()->route('dekan.sk-skripsi.index');
 		}
 

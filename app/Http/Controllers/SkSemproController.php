@@ -254,10 +254,10 @@ class SkSemproController extends Controller
     {
         $sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
         ->whereHas('tipe_sk', function(Builder $query){ 
-            $query->where('tipe', 'SK Sempro'); 
+            $query->where('id', 2); 
         })
         ->whereHas('status_sk_akademik', function(Builder $query){ 
-            $query->whereIn('status', ['Dikirim', 'Disetujui KTU', 'Disetujui Dekan']); 
+            $query->whereIn('id', [1,2,3]); 
         })
         ->orderBy('updated_at', 'desc')
         ->get();
@@ -321,10 +321,10 @@ class SkSemproController extends Controller
     {
         $sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
         ->whereHas('tipe_sk', function(Builder $query){ 
-            $query->where('tipe', 'SK Sempro'); 
+            $query->where('id', 2); 
         })
         ->whereHas('status_sk_akademik', function(Builder $query){ 
-            $query->whereIn('status', ['Disetujui KTU', 'Disetujui Dekan']); 
+            $query->whereIn('id', [2,3]); 
         })
         ->orderBy('updated_at', 'desc')
         ->get();

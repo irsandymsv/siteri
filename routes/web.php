@@ -75,5 +75,7 @@ Route::prefix('keuangan')->name('keuangan.')->group(function()
 	Route::get('/honor-skripsi/', 'honorSkripsiController@index')->name('honor-skripsi.index');
 	Route::get('/honor-skripsi/pilih-sk', 'honorSkripsiController@pilih_sk')->name('honor-skripsi.pilih-sk');
 	Route::get('/honor-skripsi/create/{id_sk_akademik}', 'honorSkripsiController@create')->name('honor-skripsi.create');
+	Route::post('/honor-skripsi/store', 'honorSkripsiController@store')->name('honor-skripsi.store');
+	Route::get('/honor-skripsi/show/{id_sk_honor}','honorSkripsiController@show')->name('honor-skripsi.show');
 
 });

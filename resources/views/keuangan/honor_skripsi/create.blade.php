@@ -17,6 +17,11 @@
       table th{
          text-align: center;
       }
+
+      /* .absolute{
+         top: 0px;
+         right: -250px;
+      } */
    </style>
 @endsection
 
@@ -25,14 +30,14 @@
 @endsection
 
 @section('content')
-<form method="POST" action="#">
+<form method="POST" action="{{route("keuangan.honor-skripsi.store")}}">
    @csrf
    <div class="row">
       <div class="col-xs-12">
          <div class="box box-primary">
             <div class="box-header">
                <h3 class="box-title">Buat Daftar Honor Pembimbing Skripsi</h3>
-
+               <input type="hidden" name="id_sk_akademik" value="{{$sk_akademik->id}}">
                <div class="box-tools pull-right">
                   <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
                   </button>
@@ -40,12 +45,12 @@
                   </button>
                </div>
             </div>
-
-            <div class="box-body">
+            <div class="box-body form-group">
                <div class="input_honor">
                   <label for="honor_pembimbing">Masukkan jumlah uang honorarium: Rp </label>
-                  <input type="number" name="honor_pembimbing" id="honor_pembimbing">
+                  <input type="number" name="honor_pembimbing" id="honor_pembimbing" >
                   <button type="button" id="btn_honor_pembimbing" class="btn btn-default">Ok</button>
+                  {{-- <span class="help-block absolute" >Help block with error</span> --}}
                </div>
                <div class="table-responsive">
                   <table id="table_data1" class="table table-bordered table-striped">
@@ -174,6 +179,15 @@
    		</div>
    	</div>
    </div>
+   <div class="row">
+      <div class="col-xs-12">
+         <input type="hidden" name="status" value="">
+         <div class="form-group" style="float: right;">
+		      	<button type="submit" name="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button> &ensp;
+		      	<button type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>	
+		   </div>
+      </div>
+   </div>
 </form>
 @endsection
 
@@ -181,6 +195,17 @@
    <script type="text/javascript">
       var detail_sk = @json($detail_sk);
       // console.log(detail_sk);
+      $("button[name='simpan_draf']").click(function(event) {
+			event.preventDefault();
+			$("input[name='status']").val(1);
+			$('form').trigger('submit');
+		});
+
+		$("button[name='simpan_kirim']").click(function(event) {
+			event.preventDefault();
+			$("input[name='status']").val(2);
+			$('form').trigger('submit');
+		});
 
       $("#btn_honor_pembimbing").click(function(event) {
          var honor = $("#honor_pembimbing").val();
@@ -190,13 +215,13 @@
          $.each(detail_sk, function(index, val){
             // console.log(val.penguji_pendamping.nama +" "+ val.penguji_pendamping.golongan.pph);
             no+=1;
-            var pph1 = honor * val.pembimbing_utama.golongan.pph;
+            var pph1 = honor * val.pembimbing_utama.golongan.pph/100;
             var penerimaan1 = honor - pph1;
             $("#tbl_pembimbing").find("#pph_"+no).children('span').text(pph1);
             $("#tbl_pembimbing").find("#penerimaan_"+no).children('span').text(penerimaan1);
 
             no+=1;
-            var pph2 = honor * val.pembimbing_pendamping.golongan.pph;
+            var pph2 = honor * val.pembimbing_pendamping.golongan.pph/100;
             var penerimaan2 = honor - pph2;
             $("#tbl_pembimbing").find("#pph_"+no).children('span').text(pph2);
             $("#tbl_pembimbing").find("#penerimaan_"+no).children('span').text(penerimaan2);
@@ -211,13 +236,13 @@
          $.each(detail_sk, function(index, val){
             // console.log(val.penguji_pendamping.nama +" "+ val.penguji_pendamping.golongan.pph);
             no+=1;
-            var pph1 = honor * val.penguji_utama.golongan.pph;
+            var pph1 = honor * val.penguji_utama.golongan.pph/100;
             var penerimaan1 = honor - pph1;
             $("#tbl_penguji").find("#pph_"+no).children('span').text(pph1);
             $("#tbl_penguji").find("#penerimaan_"+no).children('span').text(penerimaan1);
 
             no+=1;
-            var pph2 = honor * val.penguji_pendamping.golongan.pph;
+            var pph2 = honor * val.penguji_pendamping.golongan.pph/100;
             var penerimaan2 = honor - pph2;
             $("#tbl_penguji").find("#pph_"+no).children('span').text(pph2);
             $("#tbl_penguji").find("#penerimaan_"+no).children('span').text(penerimaan2);

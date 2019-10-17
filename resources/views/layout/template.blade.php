@@ -346,11 +346,8 @@ desired effect
 <script src="/adminlte/dist/js/adminlte.min.js"></script>
 <!-- page script -->
 <script>
-  $(function () {
-    $('#dataTable').DataTable({
-      order: []
+  $('#table_data1').DataTable({
     })
-  })
 
   $('#SkripsiPembimbing').editableTableWidget();
 </script>

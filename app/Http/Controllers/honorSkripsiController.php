@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 use App\sk_akademik;
 use App\detail_sk;
+use App\sk_honor;
+use Exception;
 
 class honorSkripsiController extends Controller
 {
@@ -20,12 +22,13 @@ class honorSkripsiController extends Controller
         $sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik', 'detail_sk'])
         ->whereHas('tipe_sk', function(Builder $query)
         {
-            $query->where('tipe', 'SK Skripsi');
+            $query->where('id', 1);
         })
-        ->whereHas('status_sk_akademik', function(Builder $query)
+        ->whereHas('detail_sk',function(Builder $query)
         {
-            $query->where('status', 'Disetujui Dekan');
+            $query->whereNull('id_sk_honor');
         })
+        ->where('verif_dekan',1)
         ->orderBy('created_at', 'desc')->get();
         
     	return view('keuangan.honor_skripsi.pilih_sk', [
@@ -47,5 +50,29 @@ class honorSkripsiController extends Controller
             'sk_akademik' => $sk_akademik,
             'detail_sk' => $detail_sk
         ]);
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request,[
+            'honor_pembimbing' => 'required',
+            'honor_penguji' => 'required',
+        ]);
+
+        try{
+            $sk_honor=sk_honor::create([
+                'id_tipe_sk' => 3,
+                'id_status_sk_honor' => $request->status,
+                'honor_pembimbing' => $request->honor_pembimbing,
+                'honor_penguji' => $request->honor_penguji
+            ]);
+            detail_sk::where('id_sk_akademik',$request->id_sk_akademik)
+                    ->update([
+                        'id_sk_honor' => $sk_honor->id
+                    ]);
+            return redirect()->route('keuangan.honor-skripsi.pilih-sk')->with('success', 'Data Berhasil Dibuat'); 
+        }catch(Exception $e){
+            return redirect()->route('keuangan/')->with('error', $e->getMessage()); 
+        }
     }
 }
