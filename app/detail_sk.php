@@ -66,4 +66,9 @@ class detail_sk extends Model
     {
         return $this->belongsTo('App\User', 'id_pembimbing_pendamping');
     }
+
+    public function sk_honor()
+    {
+        return $this->belongsTo('App\sk_honor', 'id_sk_honor');
+    }
 }
