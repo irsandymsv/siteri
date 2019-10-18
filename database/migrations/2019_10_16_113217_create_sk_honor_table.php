@@ -27,7 +27,6 @@ class CreateSkHonorTable extends Migration
             $table->timestamps();
 
             $table->foreign('id_tipe_sk')->references('id')->on('tipe_sk')->onDelete('set null');
-
         });
     }
 

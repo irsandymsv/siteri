@@ -84,12 +84,12 @@
                                     @endif
                                  </td>
                                  <td>
-                                    @if ($item->tipe_sk->tipe == "SK Skripsi")
+                                    {{-- @if ($item->tipe_sk->id == 1) --}}
                                        <a href="{{ route('keuangan.honor-skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
-                                       @if ($item->verif_dekan != 1)
+                                       {{-- @if ($item->verif_dekan != 1) --}}
                                           <a href="{{ route('keuangan.honor-skripsi.edit', $item->id) }}" class="btn btn-warning" title="Lihat Detail"><i class="fa fa-edit"></i></a>
-                                       @endif
-                                    @endif
+                                       {{-- @endif --}}
+                                    {{-- @endif --}}
                                  </td>
                               </tr>
                            @endforeach

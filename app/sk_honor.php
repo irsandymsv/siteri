@@ -39,6 +39,6 @@ class sk_honor extends Model
 
     public function detail_sk()
     {
-        return $this->hasMany('App\detail_sk', 'id_sk_akademik');
+        return $this->hasMany('App\detail_sk', 'id_sk_honor');
     }
 }

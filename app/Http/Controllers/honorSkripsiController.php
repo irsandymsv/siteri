@@ -29,10 +29,10 @@ class honorSkripsiController extends Controller
         {
             $query->where('id', 1);
         })
-        // ->whereHas('detail_sk',function(Builder $query)
-        // {
-        //     $query->whereNull('id_sk_honor');
-        // })
+        ->whereHas('detail_sk',function(Builder $query)
+        {
+            $query->whereNull('id_sk_honor');
+        })
         ->where('verif_dekan',1)
         ->orderBy('created_at', 'desc')->get();
         // dd($sk_akademik);
@@ -132,5 +132,27 @@ class honorSkripsiController extends Controller
         return  view('keuangan.honor_skripsi.edit', [
             'sk_honor' => $sk_honor
         ]);
+    }
+
+    public function update(Request $request, $id_sk_honor)
+    {
+        $this->validate($request, [
+            'honor_pembimbing' => 'required',
+            'honor_penguji' => 'required',
+        ]);
+
+        try{
+            sk_honor::where('id',$id_sk_honor)->update([
+                'id_status_sk_honor' => $request->status,
+                'honor_pembimbing' => $request->honor_pembimbing,
+                'honor_penguji' => $request->honor_penguji
+            ]);
+
+            return redirect()->route('keuangan.honor-skripsi.show',$id_sk_honor)->with('success','Data Berhasil Dirubah');
+        }catch(Exception $e){
+            return redirect()->route('keuangan.honor-skripsi.edit', $id_sk_honor)->with('error', $e->getMessage());
+        }
+
+
     }
 }

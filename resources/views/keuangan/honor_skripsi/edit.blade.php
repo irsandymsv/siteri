@@ -33,8 +33,9 @@
 @section('content')
 <button id="back_top" type="button" class="btn bg-black"><i class="fa fa-arrow-up"></i></button>
 
-<form method="POST" action="#">
+<form method="POST" action="{{route('keuangan.honor-skripsi.update',$sk_honor->id)}}">
    @csrf
+   @method('PUT')
    <input type="hidden" name="status">
    <div class="row">
       <div class="col-xs-12" id="top_title">
