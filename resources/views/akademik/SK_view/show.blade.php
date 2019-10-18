@@ -19,7 +19,11 @@
 		}
 
 		.revisi_wrap{
-        margin-top: 5px;
+        padding: 5px;
+      }
+
+      .revisi_wrap h4{
+      	color: red;
       }
 	</style>
 @endsection
@@ -86,7 +90,7 @@
 
          			@if(!is_null($sk_akademik->pesan_revisi))
          			<div class="revisi_wrap">
-            			<h5><b>Pesan Revisi</b> : </h5>
+            			<h4><b>Pesan Revisi</b> : </h4>
          				<p>"{{ $sk_akademik->pesan_revisi }}"</p>
          			</div>
          			@endif

@@ -16,7 +16,11 @@
       }
 
       .revisi_wrap{
-        margin-top: 5px;
+        padding: 5px;
+      }
+
+      .revisi_wrap h4{
+        color: red;
       }
    </style>
 @endsection
@@ -33,6 +37,17 @@
             <div class="box box-success">
                <div class="box-header">
                   <h3 class="box-title">Honorarium SK {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
+                  <span style="margin-left: 5px;">
+                    @if($sk_honor->verif_kebag_keuangan == 2)
+                    <label class="label bg-red">Butuh Revisi (BPP)</label>
+                    @elseif($sk_honor->verif_ktu == 2) 
+                    <label class="label bg-red">Butuh Revisi (KTU)</label>
+                    @elseif($sk_honor->verif_wadek2 == 2) 
+                    <label class="label bg-red">Butuh Revisi (Wadek 2)</label>
+                    @elseif($sk_honor->verif_dekan == 2) 
+                    <label class="label bg-red">Butuh Revisi (Dekan)</label>
+                    @endif
+                  </span>
 
                   <div class="box-tools pull-right">
                    <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -84,7 +99,7 @@
                     
                   @if(!is_null($sk_honor->pesan_revisi))
                     <div class="revisi_wrap">
-                     <h5><b>Pesan Revisi</b> : </h5>
+                     <h4><b>Pesan Revisi</b> : </h4>
                      <p>"{{ $sk_honor->pesan_revisi }}"</p>
                     </div>
                   @endif

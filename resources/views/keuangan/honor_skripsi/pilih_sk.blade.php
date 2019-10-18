@@ -53,7 +53,7 @@
                         </tbody>
                      </table> 
                   @else
-                     <div class="alert alert-info alert-dismissible">
+                     <div class="alert alert-warning alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         <h4><i class="icon fa fa-info"></i> Maaf</h4>
                            Belum ada SK Skripsi Baru Saat Ini

@@ -76,18 +76,18 @@ Route::prefix('keuangan')->name('keuangan.')->group(function()
 	Route::get('/honor-skripsi/pilih-sk', 'honorSkripsiController@pilih_sk')->name('honor-skripsi.pilih-sk');
 	Route::get('/honor-skripsi/create/{id_sk_akademik}', 'honorSkripsiController@create')->name('honor-skripsi.create');
 	Route::post('/honor-skripsi/store', 'honorSkripsiController@store')->name('honor-skripsi.store');
-	Route::get('/honor-skripsi/show/{id_sk_honor}','honorSkripsiController@show')->name('honor-skripsi.show');
-	Route::get('/honor-skripsi/show/{id_sk_honor}/edit','honorSkripsiController@edit')->name('honor-skripsi.edit');
-	Route::put('/honor-skripsi/show/{id_sk_honor}/update','honorSkripsiController@update')->name('honor-skripsi.update');
+	Route::get('/honor-skripsi/{id_sk_honor}','honorSkripsiController@show')->name('honor-skripsi.show');
+	Route::get('/honor-skripsi/{id_sk_honor}/edit','honorSkripsiController@edit')->name('honor-skripsi.edit');
+	Route::put('/honor-skripsi/{id_sk_honor}/update','honorSkripsiController@update')->name('honor-skripsi.update');
 	Route::delete('/honor-skripsi/delete/{id_sk_honor?}', 'honorSkripsiController@destroy')->name('honor-skripsi.destroy');
 
 	Route::get('/honor-sempro/', 'honorSemproController@index')->name('honor-sempro.index');
 	Route::get('/honor-sempro/pilih-sk', 'honorSemproController@pilih_sk')->name('honor-sempro.pilih-sk');
 	Route::get('/honor-sempro/create/{id_sk_akademik}', 'honorSemproController@create')->name('honor-sempro.create');
 	Route::post('/honor-sempro/store', 'honorSemproController@store')->name('honor-sempro.store');
-	Route::get('/honor-sempro/show/{id_sk_honor}', 'honorSemproController@show')->name('honor-sempro.show');
-	Route::get('/honor-sempro/show/{id_sk_honor}/edit', 'honorSemproController@edit')->name('honor-sempro.edit');
-	Route::put('/honor-sempro/show/{id_sk_honor}/update', 'honorSemproController@update')->name('honor-sempro.update');
+	Route::get('/honor-sempro/{id_sk_honor}', 'honorSemproController@show')->name('honor-sempro.show');
+	Route::get('/honor-sempro/{id_sk_honor}/edit', 'honorSemproController@edit')->name('honor-sempro.edit');
+	Route::put('/honor-sempro/{id_sk_honor}/update', 'honorSemproController@update')->name('honor-sempro.update');
 	Route::delete('/honor-sempro/delete/{id_sk_honor?}', 'honorSemproController@destroy')->name('honor-sempro.destroy');
 
 });
@@ -97,4 +97,12 @@ Route::prefix('bpp')->name('bpp.')->group(function()
 	Route::get('/', function() {
 	    return view('bpp.dashboard');
 	});
+	Route::get('/honor-skripsi', 'honorSkripsiController@bpp_index')->name('honor-skripsi.index');
+	Route::get('/honor-skripsi/{id_sk_honor}', 'honorSkripsiController@bpp_show')->name('honor-skripsi.show');
+	Route::put('/honor-skripsi/verif/{id_sk_honor}', 'honorSkripsiController@bpp_verif')->name('honor-skripsi.verif');
+
+	Route::get('/honor-sempro', 'honorSemproController@bpp_index')->name('honor-sempro.index');
+	Route::get('/honor-sempro/{id_sk_honor}', 'honorSemproController@bpp_show')->name('honor-sempro.show');
+	Route::put('/honor-sempro/verif/{id_sk_honor}', 'honorSemproController@bpp_verif')->name('honor-sempro.verif');
+
 });

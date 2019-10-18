@@ -105,11 +105,11 @@
       	</div>
 	</div>
 
-	<div id="success_verif" class="pop_up_info">
-        <h4><i class="icon fa fa-check"></i>  <span></span></h4>
-    </div>
+	{{-- <div id="success_verif" class="pop_up_info">
+		<h4><i class="icon fa fa-check"></i>  <span></span></h4>
+   </div> --}}
 
-	<div class="modal modal-success fade" id="modal-success">
+	{{-- <div class="modal modal-success fade" id="modal-success">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -128,7 +128,7 @@
         <!-- /.modal-content -->
       </div>
       <!-- /.modal-dialog -->
-    </div>
+   </div> --}}
 @endsection
 
 @section('script')

@@ -108,8 +108,7 @@ class honorSkripsiController extends Controller
         ->first();
         // dd($sk_honor);
         return  view('keuangan.honor_skripsi.show', [
-            'sk_honor' => $sk_honor,
-            'tipe' => 'SK Skripsi'
+            'sk_honor' => $sk_honor
         ]);
     }
 
@@ -149,10 +148,26 @@ class honorSkripsiController extends Controller
         ]);
 
         try{
+            $sk_honor = sk_honor::find($id_sk_honor);
+            $verif_bpp = $sk_honor->verif_kebag_keuangan;
+            $verif_ktu = $sk_honor->verif_ktu;
+            $verif_wadek2 = $sk_honor->verif_wadek2;
+            $verif_dekan = $sk_honor->verif_dekan;
+            if ($request->status == 2) {
+                $verif_bpp = 0;
+                $verif_ktu = 0;
+                $verif_wadek2 = 0;
+                $verif_dekan = 0;
+            }
+            
             sk_honor::where('id',$id_sk_honor)->update([
                 'id_status_sk_honor' => $request->status,
                 'honor_pembimbing' => $request->honor_pembimbing,
-                'honor_penguji' => $request->honor_penguji
+                'honor_penguji' => $request->honor_penguji,
+                'verif_kebag_keuangan' => $verif_bpp,
+                'verif_ktu' => $verif_ktu,
+                'verif_wadek2' => $verif_wadek2,
+                'verif_dekan' => $verif_dekan
             ]);
 
             return redirect()->route('keuangan.honor-skripsi.show',$id_sk_honor)->with('success','Data Berhasil Dirubah');
@@ -169,11 +184,58 @@ class honorSkripsiController extends Controller
         }
     }
 
+    public function bpp_index()
+    {
+        $sk_honor = sk_honor::where('id_tipe_sk', 1)
+        ->orderBy('updated_at', 'desc')
+        ->with(['tipe_sk', 'status_sk_honor'])
+        ->whereHas('status_sk_honor', function(Builder $query){ 
+            $query->whereIn('id', [2,3,4,5,6]); 
+        })->get();
+
+        // dd($sk_honor);
+        return view('bpp.honor_sk.honor_index', [
+            'sk_honor' => $sk_honor,
+            'tipe' => 'SK Skripsi'
+        ]);
+    }
+
+    public function bpp_show($id_sk_honor)
+    {
+        $sk_honor = sk_honor::where('id', $id_sk_honor)
+        ->with([
+            'tipe_sk',
+            'status_sk_honor',
+            'detail_sk.pembimbing_utama:no_pegawai,nama,id_golongan',
+            'detail_sk.pembimbing_utama.golongan',
+
+            'detail_sk.pembimbing_pendamping:no_pegawai,nama,id_golongan', 
+            'detail_sk.pembimbing_pendamping.golongan',
+
+            'detail_sk.penguji_utama:no_pegawai,nama,id_golongan',
+            'detail_sk.penguji_utama.golongan',
+
+            'detail_sk.penguji_pendamping:no_pegawai,nama,id_golongan',
+            'detail_sk.penguji_pendamping.golongan',
+        ])
+        ->first();
+        // dd($sk_honor);
+
+        if($sk_honor->id_status_sk_honor == 1){
+            return redirect()->route('bpp.honor-skripsi.index');
+        }
+        else{
+            return  view('bpp.honor_sk.honor_show', [
+                'sk_honor' => $sk_honor
+            ]);    
+        }
+    }
+
     public function bpp_verif(Request $request, $id)
     {
         // dd($request);
         $sk_honor = sk_honor::find($id);
-        $sk_honor->verif_kabag_keuangan = $request->verif_bpp;
+        $sk_honor->verif_kebag_keuangan = $request->verif_bpp;
         if ($request->verif_bpp == 2) {
             $request->validate([
                 'pesan_revisi' => 'required|string'
@@ -182,12 +244,12 @@ class honorSkripsiController extends Controller
             $sk_honor->id_status_sk_honor = 1;
             $sk_honor->pesan_revisi = $request->pesan_revisi;
             $sk_honor->save();
-            return redirect()->route('bpp.sk-honor-skripsi.index')->with("verif_bpp", 'SK berhasil ditarik, status kembali menjadi "Draft"');
+            return redirect()->route('bpp.honor-skripsi.index')->with("verif_bpp", 'Honorarium berhasil ditarik, status kembali menjadi "Draft"');
         } else if ($request->verif_bpp == 1) {
             $sk_honor->id_status_sk_honor = 3;
             $sk_honor->pesan_revisi = null;
             $sk_honor->save();
-            return redirect()->route('bpp.sk-honor-skripsi.index')->with('verif_bpp', 'verifikasi SK berhasil, status SK saat ini "Disetujui BPP"');
+            return redirect()->route('bpp.honor-skripsi.index')->with('verif_bpp', 'verifikasi honorarium berhasil, status honorarium saat ini "Disetujui BPP"');
         }
     }
     

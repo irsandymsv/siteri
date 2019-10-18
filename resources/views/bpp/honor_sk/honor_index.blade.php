@@ -19,6 +19,18 @@
          <div class="box box-success">
             <div class="box-header">
                <h3 class="box-title">Daftar Honorarium {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
+
+               @if(session()->has('verif_bpp'))
+                  <div class="alert alert-info alert-dismissible" style="width: 35%; margin: auto;">
+                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                     <h4><i class="icon fa fa-info"></i> Berhasil</h4>
+                     {{session('verif_bpp')}}
+                  </div>
+               @endif 
+
+               @php
+                  Session::forget('verif_bpp'); 
+               @endphp
             </div>
 
             <div class="box-body">
@@ -84,9 +96,9 @@
                               </td>
                               <td>
                                  @if ($item->tipe_sk->tipe == "SK Skripsi")
-                                    <a href="#" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ route('bpp.honor-skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
                                  @else
-                                    <a href="#" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ route('bpp.honor-sempro.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
                                  @endif
                               </td>
                            </tr>

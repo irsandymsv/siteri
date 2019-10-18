@@ -46,21 +46,22 @@
                   <p>Tanggal SK : {{Carbon\Carbon::parse($sk_honor->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</p>
                   <p>Sesuai : SK Dekan No...</p>
                     
-                  @if(!is_null($sk_honor->pesan_revisi))
-                    <div class="revisi_wrap">
-                     <h5><b>Pesan Revisi</b> : </h5>
-                     <p>"{{ $sk_honor->pesan_revisi }}"</p>
-                    </div>
+                  @if($sk_honor->verif_kebag_keuangan == 0)
+                  <b>Belum Diverifikasi</b>
+                  @elseif($sk_honor->verif_kebag_keuangan == 2) 
+                    <label class="label bg-red">Butuh Revisi</label>
+                  @else
+                    <label class="label bg-green">Sudah Diverifikasi</label>
                   @endif
 
                   @if($sk_honor->verif_dekan != 1)
                      <div class="form-group" style="float: right;">
-                        <form method="post" action="{{ ( $sk_honor->tipe_sk->tipe == "SK Skripsi"? '' : '' ) }}">
+                        <form method="post" action="{{ ( $sk_honor->tipe_sk->tipe == "SK Skripsi"? route('bpp.honor-skripsi.verif', $sk_honor->id) : route('bpp.honor-sempro.verif', $sk_honor->id) ) }}">
                            @csrf
                            @method('put')
-                           <input type="hidden" name="verif_kebag_keuangan" value="{{$sk_honor->verif_kebag_keuangan}}">
+                           <input type="hidden" name="verif_bpp" value="{{$sk_honor->verif_kebag_keuangan}}">
                            <button type="submit" name="setuju_btn" class="btn btn-success"><i class="fa fa-check"></i> Setujui</button>
-                           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-tarik-sk"><i class="fa fa-close"></i> Tarik SK</button>
+                           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-tarik-sk"><i class="fa fa-close"></i> Tarik</button>
                         </form>
                      </div>
                   @endif
@@ -175,7 +176,7 @@
                        <tr>
                           <th>No</th>
                           <th>
-                           {{ ($tipe == "SK Skripsi"? "Penguji" : "Pembahas") }} I/II
+                           {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Penguji" : "Pembahas") }} I/II
                          </th>
                           <th>NPWP</th>
                           <th>Nama Mahasiswa/NIM</th>
@@ -245,12 +246,12 @@
       <div class="col-xs-12">
          @if($sk_honor->verif_dekan != 1)
             <div class="form-group" style="float: right;">
-               <form method="post" action="{{ ( $sk_honor->tipe_sk->tipe == "SK Skripsi"? '' : '' ) }}">
+               <form method="post" action="{{ ( $sk_honor->tipe_sk->tipe == "SK Skripsi"? route('bpp.honor-skripsi.verif', $sk_honor->id) : route('bpp.honor-sempro.verif', $sk_honor->id) ) }}">
                   @csrf
                   @method('put')
-                  <input type="hidden" name="verif_kebag_keuangan" value="{{$sk_honor->verif_kebag_keuangan}}">
+                  <input type="hidden" name="verif_bpp" value="{{$sk_honor->verif_kebag_keuangan}}">
                   <button type="submit" name="setuju_btn" class="btn btn-success"><i class="fa fa-check"></i> Setujui</button>
-                  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-tarik-sk"><i class="fa fa-close"></i> Tarik SK</button>
+                  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-tarik-sk"><i class="fa fa-close"></i> Tarik</button>
                </form>
             </div>
          @endif
@@ -265,14 +266,14 @@
                <span aria-hidden="true">&times;</span></button>
                <h4 class="modal-title">Pesan Penarikan Honorarium</h4>
             </div>
-            <form method="post" action="{{ ( $sk_honor->tipe_sk->tipe == "SK Skripsi"? '' : '' ) }}">
+            <form method="post" action="{{ ( $sk_honor->tipe_sk->tipe == "SK Skripsi"? route('bpp.honor-skripsi.verif', $sk_honor->id) : route('bpp.honor-sempro.verif', $sk_honor->id) ) }}">
                @csrf
                @method('PUT')
 
                <div class="modal-body">
                   <label for="pesan_revisi">Masukkan Pesan Revisi</label>
                   <textarea name="pesan_revisi" id="pesan_revisi" class="form-control">{{old('pesan_revisi')}}</textarea>
-                  <input type="hidden" name="verif_kebag_keuangan" value="{{$sk_honor->verif_kebag_keuangan}}">
+                  <input type="hidden" name="verif_bpp" value="{{$sk_honor->verif_kebag_keuangan}}">
 
                   @error('pesan_revisi')
                      <p style="color: red;">{{ $message }}</p>
@@ -281,7 +282,7 @@
 
                <div class="modal-footer">
                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>           
-                  <button type="submit" name="tarik_btn" class="btn btn-danger">Tarik SK</button>
+                  <button type="submit" name="tarik_btn" class="btn btn-danger">Tarik</button>
                </div>
             </form>
          </div>
@@ -294,16 +295,20 @@
 @section('script')
    <script src="/js/btn_backTop.js"></script>
    <script type="text/javascript">
-      $("button[name='setuju_btn']").click(function(event) {
-         event.preventDefault();
-         $("input[name='verif_kebag_keuangan']").val(1);
-         $(this).parents("form").trigger('submit');
-      });
+    @error('pesan_revisi')
+      $("#modal-tarik-sk").modal("show");
+    @enderror
+    
+    $("button[name='setuju_btn']").click(function(event) {
+       event.preventDefault();
+       $("input[name='verif_bpp']").val(1);
+       $(this).parents("form").trigger('submit');
+    });
 
-      $("button[name='tarik_btn']").click(function(event) {
-         event.preventDefault();
-         $("input[name='verif_kebag_keuangan']").val(2);
-         $(this).parents("form").trigger('submit');
-      });
+    $("button[name='tarik_btn']").click(function(event) {
+       event.preventDefault();
+       $("input[name='verif_bpp']").val(2);
+       $(this).parents("form").trigger('submit');
+    });
    </script>
 @endsection
