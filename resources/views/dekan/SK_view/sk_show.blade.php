@@ -184,7 +184,7 @@
 			              	<form method="post" action="{{ ( $sk_akademik->tipe_sk->tipe == "SK Skripsi"? route('dekan.sk-skripsi.verif', $sk_akademik->id) : route('dekan.sk-sempro.verif', $sk_akademik->id) ) }}">
 			              		@csrf
 			              		@method('put')
-			              		<input type="hidden" name="verif_dekan" value="{{$sk_akademik->id_status_sk_akademik}}">
+			              		<input type="hidden" name="verif_dekan" value="{{$sk_akademik->verif_dekan}}">
 			              		<button type="submit" name="setuju_btn" class="btn btn-success"><i class="fa fa-check"></i> Setujui</button>	
 			              		<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-tarik-sk"><i class="fa fa-close"></i> Tarik SK</button>
 			              	</form>

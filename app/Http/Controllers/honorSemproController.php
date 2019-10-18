@@ -37,7 +37,7 @@ class honorSemproController extends Controller
             })
             ->where('verif_dekan', 1)
             ->orderBy('created_at', 'desc')->get();
-
+            // dd($sk_akademik);
         return view('keuangan.honor_skripsi.pilih_sk', [
             'sk_akademik' => $sk_akademik,
             'tipe' => 'SK Sempro'
@@ -155,6 +155,14 @@ class honorSemproController extends Controller
             return redirect()->route('keuangan.honor-sempro.show', $id_sk_honor)->with('success', 'Data Berhasil Dirubah');
         } catch (Exception $e) {
             return redirect()->route('keuangan.honor-sempro.edit', $id_sk_honor)->with('error', $e->getMessage());
+        }
+    }
+
+    public function destroy($id = null)
+    {
+        if (!is_null($id)) {
+            sk_honor::find($id)->delete();
+            echo 'Daftar Honor Berhasil Dihapus'; 
         }
     }
 

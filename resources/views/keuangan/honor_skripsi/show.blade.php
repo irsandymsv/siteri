@@ -1,7 +1,7 @@
 @extends('keuangan.keuangan_view')
 
 @section('page_title')
-	Daftar Honorarium SK {{($sk_honor->tipe_sk->tipe == "SK Skripsi")? "Skripsi" : "Sempro"}}
+	Daftar Honorarium SK {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}
 @endsection
 
 @section('css_link')
@@ -22,7 +22,7 @@
 @endsection
 
 @section('judul_header')
-	Honorarium Pembimbing {{($sk_honor->tipe_sk->tipe == "SK Skripsi")? "Skripsi" : "Sempro"}}
+	Honorarium SK {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}
 @endsection
 
 @section('content')
@@ -32,7 +32,7 @@
       <div class="col-xs-12" id="top_title">
             <div class="box box-success">
                <div class="box-header">
-                  <h3 class="box-title">Honorarium SK {{($sk_honor->tipe_sk->tipe == "SK Skripsi")? "Skripsi" : "Sempro"}}</h3>
+                  <h3 class="box-title">Honorarium SK {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
 
                   <div class="box-tools pull-right">
                    <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -44,7 +44,7 @@
 
                <div class="box-body">
                   <div class="form-group" style="float: right;">
-                     <a href="{{ route('keuangan.honor-skripsi.edit', $sk_honor->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+                     <a href="{{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? route('keuangan.honor-skripsi.edit', $sk_honor->id) : route('keuangan.honor-sempro.edit', $sk_honor->id)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
                   </div>
                   <p>Tanggal SK : {{Carbon\Carbon::parse($sk_honor->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</p>
                   <p>Sesuai : SK Dekan No...</p>
@@ -85,7 +85,7 @@
                   @if(!is_null($sk_honor->pesan_revisi))
                     <div class="revisi_wrap">
                      <h5><b>Pesan Revisi</b> : </h5>
-                     <p>"{{ $sk_akademik->pesan_revisi }}"</p>
+                     <p>"{{ $sk_honor->pesan_revisi }}"</p>
                     </div>
                   @endif
                </div>
@@ -97,7 +97,7 @@
       <div class="col-xs-12">
          <div class="box box-primary">
             <div class="box-header">
-               <h3 class="box-title">Daftar Honor Pembimbing {{($sk_honor->tipe_sk->tipe == "SK Skripsi")? "Skripsi" : "Sempro"}}</h3>
+               <h3 class="box-title">Daftar Honor Pembimbing {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
 
                <div class="box-tools pull-right">
                   <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -182,7 +182,7 @@
    	<div class="col-xs-12">
    		<div class="box box-danger">
    			<div class="box-header">
-   				<h3 class="box-title">Daftar Honor Penguji {{($sk_honor->tipe_sk->tipe == "SK Skripsi")? "Skripsi" : "Sempro"}}</h3>
+   				<h3 class="box-title">Daftar Honor {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Penguji Skripsi" : "Pembahas Sempro") }}</h3>
 
                <div class="box-tools pull-right">
                      <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -198,7 +198,9 @@
                      <thead>
                         <tr>
                            <th>No</th>
-                           <th>Penguji I/II</th>
+                           <th>
+                            {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Penguji" : "Pembahas") }} I/II
+                          </th>
                            <th>NPWP</th>
                            <th>Nama Mahasiswa/NIM</th>
                            <th>Gol</th>
@@ -211,29 +213,29 @@
                      <tbody id="tbl_penguji">
                         @php $no = 0; @endphp
                         @foreach($sk_honor->detail_sk as $item)
-                           <tr id="{{$no+=1}}">
-                              <td>{{$no}}</td>
-                              <td>{{$item->penguji_utama->nama}}</td>
-                              <td>{{$item->penguji_utama->npwp}}</td>
-                              <td rowspan="2">
-                                 <p>{{$item->nama_mhs}}</p>
-                                 <p>NIM: {{$item->nim}}</p>
-                              </td>
-                              <td>{{$item->penguji_utama->golongan->golongan}}</td>
-                              <td id="penguji_{{$no}}" class="pengujiHonor">Rp &ensp; 
-                                 <span>{{ $sk_honor->honor_penguji }}</span></td>
-                              <td class="pph" id="pph_{{$no}}">Rp &ensp; 
-                                 <span>
-                                    @php
-                                       $pph = ($item->penguji_utama->golongan->pph * $sk_honor->honor_penguji)/100;
-                                    @endphp
-                                    {{ $pph }}
-                                 </span>
-                              </td>
-                              <td class="penerimaan" id="penerimaan_{{$no}}">Rp &ensp; 
-                                 <span>{{ $sk_honor->honor_penguji - $pph }}</span>
-                              </td>
-                           </tr>
+                          <tr id="{{$no+=1}}">
+                            <td>{{$no}}</td>
+                            <td>{{$item->penguji_utama->nama}}</td>
+                            <td>{{$item->penguji_utama->npwp}}</td>
+                            <td rowspan="2">
+                               <p>{{$item->nama_mhs}}</p>
+                               <p>NIM: {{$item->nim}}</p>
+                            </td>
+                            <td>{{$item->penguji_utama->golongan->golongan}}</td>
+                            <td id="penguji_{{$no}}" class="pengujiHonor">Rp &ensp; 
+                               <span>{{ $sk_honor->honor_penguji }}</span></td>
+                            <td class="pph" id="pph_{{$no}}">Rp &ensp; 
+                               <span>
+                                  @php
+                                     $pph = ($item->penguji_utama->golongan->pph * $sk_honor->honor_penguji)/100;
+                                  @endphp
+                                  {{ $pph }}
+                               </span>
+                            </td>
+                            <td class="penerimaan" id="penerimaan_{{$no}}">Rp &ensp; 
+                               <span>{{ $sk_honor->honor_penguji - $pph }}</span>
+                            </td>
+                          </tr>
 
                            <tr id="{{$no+=1}}">
                               <td>{{$no}}</td>

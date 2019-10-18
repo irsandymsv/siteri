@@ -88,4 +88,13 @@ Route::prefix('keuangan')->name('keuangan.')->group(function()
 	Route::get('/honor-sempro/show/{id_sk_honor}', 'honorSemproController@show')->name('honor-sempro.show');
 	Route::get('/honor-sempro/show/{id_sk_honor}/edit', 'honorSemproController@edit')->name('honor-sempro.edit');
 	Route::put('/honor-sempro/show/{id_sk_honor}/update', 'honorSemproController@update')->name('honor-sempro.update');
+	Route::delete('/honor-sempro/delete/{id_sk_honor?}', 'honorSemproController@destroy')->name('honor-sempro.destroy');
+
+});
+
+Route::prefix('bpp')->name('bpp.')->group(function()
+{
+	Route::get('/', function() {
+	    return view('bpp.dashboard');
+	});
 });

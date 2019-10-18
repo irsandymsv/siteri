@@ -1,7 +1,7 @@
 @extends('keuangan.keuangan_view')
 
 @section('page_title')
-	Ubah Honorarium SK {{($sk_honor->tipe_sk->tipe == "SK Skripsi")? "Skripsi" : "Sempro"}}
+	Ubah Honorarium SK {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}
 @endsection
 
 @section('css_link')
@@ -27,13 +27,13 @@
 @endsection
 
 @section('judul_header')
-	Honorarium Pembimbing {{($sk_honor->tipe_sk->tipe == "SK Skripsi")? "Skripsi" : "Sempro"}}
+	Honorarium SK {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}
 @endsection
 
 @section('content')
 <button id="back_top" type="button" class="btn bg-black"><i class="fa fa-arrow-up"></i></button>
 
-<form method="POST" action="{{route('keuangan.honor-skripsi.update',$sk_honor->id)}}">
+<form method="POST" action="{{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? route('keuangan.honor-skripsi.update',$sk_honor->id) : route('keuangan.honor-sempro.update',$sk_honor->id)) }}">
    @csrf
    @method('PUT')
    <input type="hidden" name="status">
@@ -41,7 +41,7 @@
       <div class="col-xs-12" id="top_title">
             <div class="box box-success">
                <div class="box-header">
-                  <h3 class="box-title">Ubah Honorarium SK {{($sk_honor->tipe_sk->tipe == "SK Skripsi")? "Skripsi" : "Sempro"}}</h3>
+                  <h3 class="box-title">Ubah Honorarium SK {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
 
                   <div class="box-tools pull-right">
                    <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -68,9 +68,10 @@
       <div class="col-xs-12">
          <div class="box box-primary">
             <div class="box-header">
-               <h3 class="box-title">Ubah Buat Daftar Honor Pembimbing Skripsi</h3>
+               <h3 class="box-title">Ubah Daftar Honor Pembimbing {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
                <input type="hidden" name="id_sk_honor" value="{{$sk_honor->id}}">
                <input type="hidden" name="id_sk_akademik" value="{{$sk_honor->detail_sk[0]->sk_akademik->id}}">
+
                <div class="box-tools pull-right">
                   <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
                   </button>
@@ -83,8 +84,13 @@
                   <label for="honor_pembimbing">Masukkan jumlah uang honorarium: Rp </label>
                   <input type="number" name="honor_pembimbing" id="honor_pembimbing" value="{{ $sk_honor->honor_pembimbing }}">
                   <button type="button" id="btn_honor_pembimbing" class="btn btn-default">Ok</button>
-                  {{-- <span class="help-block absolute" >Help block with error</span> --}}
                </div>
+               @error('honor_pembimbing')
+                  <span class="invalid-feedback" role="alert" style="color: red;">
+                      <strong>{{ $message }}</strong>
+                  </span>
+               @enderror
+
                <div class="table-responsive">
                   <table id="dataTable2" class="table table-bordered table-striped">
                      <thead>
@@ -161,7 +167,7 @@
    	<div class="col-xs-12">
    		<div class="box box-danger">
    			<div class="box-header">
-   				<h3 class="box-title">Ubah Daftar Honor Penguji Skripsi</h3>
+   				<h3 class="box-title">Ubah Daftar Honor {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "penguji Skripsi" : "Pembahas Sempro") }}</h3>
 
                <div class="box-tools pull-right">
                      <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -177,12 +183,18 @@
                   <input type="number" name="honor_penguji" id="honor_penguji" value="{{ $sk_honor->honor_penguji }}">
                   <button type="button" id="btn_honor_penguji" class="btn btn-default">Ok</button>
                </div>
+               @error('honor_penguji')
+                  <span class="invalid-feedback" role="alert" style="color: red;">
+                      <strong>{{ $message }}</strong>
+                  </span>
+               @enderror
+               
                <div class="table-responsive">
                   <table id="dataTable2" class="table table-bordered table-striped">
                      <thead>
                         <tr>
                            <th>No</th>
-                           <th>Penguji I/II</th>
+                           <th> {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Penguji" : "Pembahas") }} I/II</th>
                            <th>NPWP</th>
                            <th>Nama Mahasiswa/NIM</th>
                            <th>Gol</th>

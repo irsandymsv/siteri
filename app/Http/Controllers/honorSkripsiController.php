@@ -108,7 +108,8 @@ class honorSkripsiController extends Controller
         ->first();
         // dd($sk_honor);
         return  view('keuangan.honor_skripsi.show', [
-            'sk_honor' => $sk_honor
+            'sk_honor' => $sk_honor,
+            'tipe' => 'SK Skripsi'
         ]);
     }
 
@@ -160,11 +161,11 @@ class honorSkripsiController extends Controller
         }
     }
 
-    public function destroy($id_sk_honor = null)
+    public function destroy($id = null)
     {
-        if (!is_null($id_sk_honor)) {
-            sk_honor::find($id_sk_honor)->delete();
-            echo 'Daftar Honor Berhasil Dihapus'; 
+        if (!is_null($id)) {
+            sk_honor::find($id)->delete();
+            echo 'Daftar Honor Berhasil Dihapus';
         }
     }
 

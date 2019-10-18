@@ -1,7 +1,7 @@
 @extends('keuangan.keuangan_view')
 
 @section('page_title')
-      Daftar Honorarium Skripsi
+      Daftar Honorarium {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}
 @endsection
 
 @section('css_link')
@@ -10,7 +10,7 @@
 @endsection
 
 @section('judul_header')
-      Honorarium Skripsi
+      Honorarium {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}
 @endsection
 
 @section('content')     
@@ -18,10 +18,10 @@
       <div class="col-xs-12">
          <div class="box box-success">
             <div class="box-header">
-               <h3 class="box-title">Daftar Honorarium Skripsi</h3>
+               <h3 class="box-title">Daftar Honorarium {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
 
                <div style="float: right;">
-                  <a href="{{route('keuangan.honor-skripsi.pilih-sk')}}" class="btn btn-primary"><i class="fa fa-plus"></i>  Buat Dartar Honor</a>
+                  <a href="{{ ($tipe == "SK Skripsi"? route('keuangan.honor-skripsi.pilih-sk') : route('keuangan.honor-sempro.pilih-sk') ) }}" class="btn btn-primary"><i class="fa fa-plus"></i>  Buat Dartar Honor</a>
                </div>
             </div>
 
@@ -90,12 +90,17 @@
                                  @if ($item->tipe_sk->tipe == "SK Skripsi")
                                     <a href="{{ route('keuangan.honor-skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
                                     @if ($item->verif_dekan != 1)
-                                       <a href="{{ route('keuangan.honor-skripsi.edit', $item->id) }}" class="btn btn-warning" title="Lihat Detail"><i class="fa fa-edit"></i></a>
+                                       <a href="{{ route('keuangan.honor-skripsi.edit', $item->id) }}" class="btn btn-warning" title="Ubah Daftar Honor"><i class="fa fa-edit"></i></a>
+                                    @endif
+                                 @else
+                                    <a href="{{ route('keuangan.honor-sempro.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+                                    @if ($item->verif_dekan != 1)
+                                       <a href="{{ route('keuangan.honor-sempro.edit', $item->id) }}" class="btn btn-warning" title="Ubah Daftar Honor"><i class="fa fa-edit"></i></a>
                                     @endif
                                  @endif
 
-                                 @if ($item->tipe_sk->tipe == "SK Skripsi")
-                                    <a href="#" class="btn btn-danger" name="delete_honor" id="{{ $item->id }}" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                 @if ($item->verif_dekan != 1)
+                                    <a href="#" class="btn btn-danger" name="delete_honor" id="{{ $item->id }}" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash" title="Hapus Daftar Honor"></i></a>
                                  @endif
                               </td>
                            </tr>
@@ -140,10 +145,10 @@
          event.preventDefault();
          var id_sk = $(this).attr('id');
 
-         @if($sk_honor[0]->tipe_sk->tipe == "SK Skripsi")
+         @if($tipe == "SK Skripsi")
          var url_del = "{{route('keuangan.honor-skripsi.destroy')}}" + '/' + id_sk;             
          @else
-         // var url_del = "{{route('akademik.sempro.destroy')}}" + '/' + id_sk;
+         var url_del = "{{route('keuangan.honor-sempro.destroy')}}" + '/' + id_sk;
          @endif
          console.log(url_del);
          
