@@ -76,9 +76,9 @@ class honorSkripsiController extends Controller
                     ->update([
                         'id_sk_honor' => $sk_honor->id
                     ]);
-            return redirect()->route('keuangan.honor-skripsi.pilih-sk')->with('success', 'Data Berhasil Dibuat'); 
+            return redirect()->route('keuangan.honor-skripsi.show', $sk_honor->id)->with('success', 'Data Berhasil Dibuat'); 
         }catch(Exception $e){
-            return redirect()->route('keuangan/')->with('error', $e->getMessage()); 
+            return redirect()->route('keuangan.honor-skripsi.pilih-sk')->with('error', $e->getMessage()); 
         }
     }
 
@@ -152,7 +152,13 @@ class honorSkripsiController extends Controller
         }catch(Exception $e){
             return redirect()->route('keuangan.honor-skripsi.edit', $id_sk_honor)->with('error', $e->getMessage());
         }
+    }
 
-
+    public function destroy($id_sk_honor = null)
+    {
+        if (!is_null($id_sk_honor)) {
+            sk_honor::find($id_sk_honor)->delete();
+            echo 'Daftar Honor Berhasil Dihapus';
+        }
     }
 }

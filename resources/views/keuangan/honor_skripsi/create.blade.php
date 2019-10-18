@@ -5,7 +5,7 @@
 @endsection
 
 @section('css_link')
-   <link rel="stylesheet" type="text/css" href="/css/btn_backTop.css">
+   <link rel="stylesheet" type="text/css" href="/css/custom_style.css">
    <style type="text/css">
       #btn_honor_pembimbing, #btn_honor_penguji{
          margin-left: 8px;

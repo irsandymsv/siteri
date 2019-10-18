@@ -26,7 +26,8 @@ class SkSkripsiController extends Controller
 			// dd($sk_akademik);
 
 			return view('akademik.SK_view.index', [
-				'sk_akademik' => $sk_akademik
+				'sk_akademik' => $sk_akademik,
+				'tipe' => "SK Skripsi"
 			]);
 		} catch (Exception $e) {
 			return view('akademik.SK_view.index');
@@ -249,13 +250,14 @@ class SkSkripsiController extends Controller
 			$query->where('id', 1); 
 		})
 		->whereHas('status_sk_akademik', function(Builder $query){ 
-			$query->whereIn('id', [1,2,3]); 
+			$query->whereIn('id', [2,3,4]); 
 		})
 		->orderBy('updated_at', 'desc')
 		->get();
 
 		return view('ktu.SK_view.sk_index', [
-			'sk_akademik' => $sk_akademik
+			'sk_akademik' => $sk_akademik,
+			'tipe' => "SK Skripsi"
 		]);
 	}
 
@@ -278,8 +280,7 @@ class SkSkripsiController extends Controller
 		// dd($detail_sk);
 		return view('ktu.SK_view.sk_show', [
 			'sk_akademik' => $sk_akademik,
-			'detail_sk' => $detail_sk,
-			'tipe' => "sk skripsi"
+			'detail_sk' => $detail_sk
 		]);
 	}
 
@@ -316,13 +317,14 @@ class SkSkripsiController extends Controller
 			$query->where('id', 1); 
 		})
 		->whereHas('status_sk_akademik', function(Builder $query){ 
-			$query->whereIn('id', [2,3]); 
+			$query->whereIn('id', [3,4]); 
 		})
 		->orderBy('updated_at', 'desc')
 		->get();
-
+		// dd($sk_akademik);
 		return view('dekan.SK_view.sk_index', [
-			'sk_akademik' => $sk_akademik
+			'sk_akademik' => $sk_akademik,
+			'tipe' => "SK Skripsi"
 		]);
 	}
 

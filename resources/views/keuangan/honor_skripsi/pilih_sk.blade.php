@@ -23,7 +23,7 @@
 
             <div class="box-body">
                <div class="table-responsive">
-                  @if (is_null($sk_akademik))
+                  @if (!is_null($sk_akademik))
                      <table id="table_data1" class="table table-bordered table-hovered">
                         <thead>
                            <tr>
@@ -61,10 +61,10 @@
                         </tbody>
                      </table> 
                   @else
-                     <div class="alert alert-warning alert-dismissible">
+                     <div class="alert alert-info alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <h4><i class="icon fa fa-warning"></i> Maaf</h4>
-                           Data SK Skripsi Tidak Ditemukan
+                        <h4><i class="icon fa fa-info"></i> Maaf</h4>
+                           Belum ada SK Skripsi Baru Saat Ini
                      </div>
                   @endif
                </div>

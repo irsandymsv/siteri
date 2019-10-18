@@ -118,21 +118,21 @@
 		              </div>
 	              @endif
 	              <div id="tgl_sk">
-	              	<h5><b>Tanggal Dibuat</b> : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
+	              		<h5><b>Tanggal Dibuat</b> : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
 
-	              	@if($sk_akademik->verif_ktu == 0)
-						<b>Belum Diverifikasi</b>
-					@elseif($sk_akademik->verif_ktu == 2) 
-						<label class="label bg-red">Butuh Revisi</label>
-					@else
-						<label class="label bg-green">Sudah Diverifikasi</label>
-					@endif
+		              	@if($sk_akademik->verif_ktu == 0)
+							<b>Belum Diverifikasi</b>
+							@elseif($sk_akademik->verif_ktu == 2) 
+							<label class="label bg-red">Butuh Revisi</label>
+							@else
+							<label class="label bg-green">Sudah Diverifikasi</label>
+							@endif
 	              </div>
 
-	              @if(!is_null($sk_akademik->pesan_revisi))
-        			<h5><b>Pesan Revisi</b> : </h5>
-    				<p>"{{ $sk_akademik->pesan_revisi }}"</p>
-    			@endif
+	              	@if(!is_null($sk_akademik->pesan_revisi))
+		        			<h5><b>Pesan Revisi</b> : </h5>
+		    				<p>"{{ $sk_akademik->pesan_revisi }}"</p>
+		    			@endif
 	            </div>
 
 	            <div class="box-body">
@@ -183,7 +183,7 @@
 			            </table>
 
 			            @if($sk_akademik->verif_dekan != 1)
-			              <br>
+			              	<br>
 			               <div class="form-group" style="float: right;">
 			              	<form method="post" action="{{ ( $sk_akademik->tipe_sk->tipe == "SK Skripsi"? route('ktu.sk-skripsi.verif', $sk_akademik->id) : route('ktu.sk-sempro.verif', $sk_akademik->id) ) }}">
 			              		@csrf

@@ -1,7 +1,7 @@
 @extends('ktu.ktu_view')
 
 @section('page_title')
-	@if($sk_akademik[0]->tipe_sk->tipe == "SK Skripsi")
+	@if($tipe == "SK Skripsi")
 		Daftar Semua SK skripsi
 	@else
 		Daftar Semua SK Sempro
@@ -10,24 +10,11 @@
 
 @section('css_link')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-
-	<style type="text/css">
-		#success_verif{
-			 position: fixed;
-			 display: none; 
-			 width: 25%; 
-			 text-align: center;
-			 top: 15%;
-			 left: 40%;
-			 padding: 13px;
-			 background-color: rgba(0, 0, 0, 0.7);
-			 color: white;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
 @endsection
 
 @section('judul_header')
-	@if($sk_akademik[0]->tipe_sk->tipe == "SK Skripsi")
+	@if($tipe == "SK Skripsi")
 		SK Skripsi
 	@else
 		SK Sempro
@@ -44,7 +31,7 @@
       	<div class="col-xs-12">
       		<div class="box box-success">
       			<div class="box-header">
-	              <h3 class="box-title">Daftar SK {{ ($sk_akademik[0]->tipe_sk->tipe == "SK Skripsi"? 'Skripsi' : 'Sempro') }}</h3>
+	              <h3 class="box-title">Daftar SK {{ ($tipe == "SK Skripsi"? 'Skripsi' : 'Sempro') }}</h3>
 
 	              @if(session()->has('verif_ktu'))
 	              <div class="alert alert-info alert-dismissible" style="width: 35%; margin: auto;">
@@ -101,7 +88,7 @@
 			            					@endif
 			            				</td>
 			            				<td>
-			            					@if($item->tipe_sk->tipe == "SK Skripsi")
+			            					@if($tipe == "SK Skripsi")
 			            					<a href="{{ route('ktu.sk-skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
 			            					@else
 			            					<a href="{{ route('ktu.sk-sempro.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
@@ -118,7 +105,7 @@
       	</div>
 	</div>
 
-	<div id="success_verif">
+	<div id="success_verif" class="pop_up_info">
         <h4><i class="icon fa fa-check"></i>  <span></span></h4>
     </div>
 

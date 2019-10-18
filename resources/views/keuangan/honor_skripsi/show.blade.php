@@ -5,7 +5,7 @@
 @endsection
 
 @section('css_link')
-   <link rel="stylesheet" type="text/css" href="/css/btn_backTop.css">
+   <link rel="stylesheet" type="text/css" href="/css/custom_style.css">
    <style type="text/css">
       table{
          font-size: 16px;
@@ -15,32 +15,8 @@
          text-align: center;
       }
 
-      .proges_wrap{
-         padding: 8px;
-         overflow: hidden;
-      }
-
-      .half-content{
-         float: left;
-         width: 45%;
-         padding: 5px;
-         margin-right: 10px;
-      }
-
-      /*.half-content:first-child{
-         border-right: 0.5px solid #ccc;
-      }*/
-
-      .half-content_wrap:after{
-         content: '';
-         display: table;
-         clear: both;
-      }
-
-      @media screen and (max-width: 600px){
-         .half-content{
-            width: 100%;
-         }
+      .revisi_wrap{
+        margin-top: 5px;
       }
    </style>
 @endsection
@@ -70,77 +46,48 @@
                   <div class="form-group" style="float: right;">
                      <a href="{{ route('keuangan.honor-skripsi.edit', $sk_honor->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
                   </div>
+                  <p>Tanggal SK : {{Carbon\Carbon::parse($sk_honor->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</p>
+                  <p>Sesuai : SK Dekan No...</p>
 
-                  <div class="half-content_wrap">
-                     <div class="half-content">
-                        <p>Tanggal SK : {{Carbon\Carbon::parse($sk_honor->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</p>
-                        <p>Sesuai : SK Dekan No...</p>
+                  <h4><b>Progres Daftar Honor ini: </b></h4>
+                  <div class="tl_wrap">
+                    <div class="item_tl" id="progres_1">
+                      <div><i></i></div>
+                      <h4>Disimpan</h4>
+                    </div>
 
-                        <h4><b>Progres Daftar Honor ini: </b></h4>
-                        <div class="proges_wrap">
-                           <div class="progres_card">
-                              <ul class="timeline">
-                                 <!-- timeline item -->
-                                 <li id="progres_1">
-                                   <i class="fa bg-grey"></i>
+                    <div class="item_tl" id="progres_2">
+                      <div><i></i></div>
+                      <h4>Dikirim</h4>
+                    </div>
 
-                                   <div class="timeline-item">
-                                     <h3 class="timeline-header">SK Disimpan</h3>
-                                   </div>
-                                 </li>
+                    <div class="item_tl" id="progres_3">
+                      <div><i></i></div>
+                      <h4>Disetujui BPP</h4>
+                    </div>
 
-                                 <li id="progres_2">
-                                   <i class="fa bg-grey"></i>
+                    <div class="item_tl" id="progres_4">
+                      <div><i></i></div>
+                      <h4>Disetujui KTU</h4>
+                    </div>
 
-                                   <div class="timeline-item">
-                                     <h3 class="timeline-header">SK Telah Dikirim</h3>
-                                   </div>
-                                 </li>
+                    <div class="item_tl" id="progres_5">
+                      <div><i></i></div>
+                      <h4>Disetujui Wadek 2</h4>
+                    </div>
 
-                                 <li id="progres_3">
-                                   <i class="fa bg-grey"></i>
-
-                                   <div class="timeline-item">
-                                     <h3 class="timeline-header">SK Telah Disetujui BPP</h3>
-                                   </div>
-                                 </li>
-
-                                 <li id="progres_4">
-                                   <i class="fa bg-grey"></i>
-
-                                   <div class="timeline-item">
-                                     <h3 class="timeline-header">SK Telah Disetujui KTU</h3>
-                                   </div>
-                                 </li>
-
-                                 <li id="progres_6">
-                                   <i class="fa bg-grey"></i>
-
-                                   <div class="timeline-item">
-                                     <h3 class="timeline-header">SK Telah Disetujui Wadek 2</h3>
-                                   </div>
-                                 </li>
-
-                                 <li id="progres_6">
-                                   <i class="fa bg-grey"></i>
-
-                                   <div class="timeline-item">
-                                     <h3 class="timeline-header">SK Telah Disetujui Dekan</h3>
-                                   </div>
-                                 </li>
-                                 <!-- END timeline item -->
-                               </ul>
-                           </div>
-                        </div>
-                     </div>
-
-                     <div class="half-content">
-                        @if(!is_null($sk_honor->pesan_revisi))
-                           <h5><b>Pesan Revisi</b> : </h5>
-                           <p>"{{ $sk_akademik->pesan_revisi }}"</p>
-                        @endif
-                     </div>
+                    <div class="item_tl" id="progres_6">
+                      <div><i></i></div>
+                      <h4>Disetujui Dekan</h4>
+                    </div>
                   </div>
+                    
+                  @if(!is_null($sk_honor->pesan_revisi))
+                    <div class="revisi_wrap">
+                     <h5><b>Pesan Revisi</b> : </h5>
+                     <p>"{{ $sk_akademik->pesan_revisi }}"</p>
+                    </div>
+                  @endif
                </div>
             </div>
       </div>
@@ -322,7 +269,8 @@
    <script type="text/javascript">
       var status = @json($sk_honor->id_status_sk_honor);
       for (var i = status; i > 0; i--) {
-         $("#progres_"+i).children('i').removeClass('bg-grey').addClass('bg-green fa-check');
+         $("#progres_"+i).addClass('verified');
+         $("#progres_"+i).find('i').addClass('fa fa-check');
       }
 
       // var detail_sk = @json($sk_honor->detail_sk);

@@ -61,7 +61,7 @@ Route::prefix('dekan')->name('dekan.')->group(function()
 	Route::get('/sk-skripsi/{id_sk_akademik}', 'SkSkripsiController@dekan_show')->name('sk-skripsi.show');
 	Route::put('/sk-skripsi/verif/{id_sk_akademik}', 'SkSkripsiController@dekan_verif')->name('sk-skripsi.verif');
 
-	Route::get('/sk-sempro', 'SkSemproController@dekan_index_skripsi')->name('sk-sempro.index');
+	Route::get('/sk-sempro', 'SkSemproController@dekan_index_sempro')->name('sk-sempro.index');
 	Route::get('/sk-sempro/{id_sk_akademik}', 'SkSemproController@dekan_show')->name('sk-sempro.show');
 	Route::put('/sk-sempro/verif/{id_sk_akademik}', 'SkSemproController@dekan_verif')->name('sk-sempro.verif');
 });
@@ -79,4 +79,5 @@ Route::prefix('keuangan')->name('keuangan.')->group(function()
 	Route::get('/honor-skripsi/show/{id_sk_honor}','honorSkripsiController@show')->name('honor-skripsi.show');
 	Route::get('/honor-skripsi/show/{id_sk_honor}/edit','honorSkripsiController@edit')->name('honor-skripsi.edit');
 	Route::put('/honor-skripsi/show/{id_sk_honor}/update','honorSkripsiController@update')->name('honor-skripsi.update');
+	Route::delete('/honor-skripsi/delete/{id_sk_honor?}', 'honorSkripsiController@destroy')->name('honor-skripsi.destroy');
 });
