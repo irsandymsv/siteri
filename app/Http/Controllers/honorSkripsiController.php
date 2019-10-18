@@ -156,4 +156,92 @@ class honorSkripsiController extends Controller
             return redirect()->route('keuangan.honor-skripsi.edit', $id_sk_honor)->with('error', $e->getMessage());
         }
     }
+
+    public function bpp_verif(Request $request, $id)
+    {
+        // dd($request);
+        $sk_honor = sk_honor::find($id);
+        $sk_honor->verif_kabag_keuangan = $request->verif_bpp;
+        if ($request->verif_bpp == 2) {
+            $request->validate([
+                'pesan_revisi' => 'required|string'
+            ]);
+
+            $sk_honor->id_status_sk_honor = 1;
+            $sk_honor->pesan_revisi = $request->pesan_revisi;
+            $sk_honor->save();
+            return redirect()->route('bpp.sk-honor-skripsi.index')->with("verif_bpp", 'SK berhasil ditarik, status kembali menjadi "Draft"');
+        } else if ($request->verif_bpp == 1) {
+            $sk_honor->id_status_sk_honor = 3;
+            $sk_honor->pesan_revisi = null;
+            $sk_honor->save();
+            return redirect()->route('bpp.sk-honor-skripsi.index')->with('verif_bpp', 'verifikasi SK berhasil, status SK saat ini "Disetujui BPP"');
+        }
+    }
+    
+    public function ktu_verif(Request $request, $id)
+    {
+        // dd($request);
+        $sk_honor = sk_honor::find($id);
+        $sk_honor->verif_ktu = $request->verif_ktu;
+        if ($request->verif_ktu == 2) {
+            $request->validate([
+                'pesan_revisi' => 'required|string'
+            ]);
+
+            $sk_honor->id_status_sk_honor = 1;
+            $sk_honor->pesan_revisi = $request->pesan_revisi;
+            $sk_honor->save();
+            return redirect()->route('ktu.sk-honor-skripsi.index')->with("verif_ktu", 'SK berhasil ditarik, status kembali menjadi "Draft"');
+        } else if ($request->verif_ktu == 1) {
+            $sk_honor->id_status_sk_honor = 4;
+            $sk_honor->pesan_revisi = null;
+            $sk_honor->save();
+            return redirect()->route('ktu.sk-honor-skripsi.index')->with('verif_ktu', 'verifikasi SK berhasil, status SK saat ini "Disetujui KTU"');
+        }
+    }
+
+    public function wadek2_verif(Request $request, $id)
+    {
+        // dd($request);
+        $sk_honor = sk_akademik::find($id);
+        $sk_honor->verif_wadek2 = $request->verif_wadek2;
+        if ($request->verif_wadek2 == 2) {
+            $request->validate([
+                'pesan_revisi' => 'required|string'
+            ]);
+
+            $sk_honor->id_status_sk_honor = 1;
+            $sk_honor->pesan_revisi = $request->pesan_revisi;
+            $sk_honor->save();
+            return redirect()->route('dekan.sk-honor-skripsi.index')->with("verif_wadek2", 'SK berhasil ditarik, status kembali menjadi "Draft"');
+        } else if ($request->verif_wadek2 == 1) {
+            $sk_honor->id_status_sk_honor = 5;
+            $sk_honor->pesan_revisi = null;
+            $sk_honor->save();
+            return redirect()->route('dekan.sk-honor-skripsi.index')->with('verif_wadek2', 'verifikasi SK berhasil, status SK saat ini "Disetujui Wakil Dekan 2"');
+        }
+    }
+
+    public function dekan_verif(Request $request, $id)
+    {
+        // dd($request);
+        $sk_honor = sk_akademik::find($id);
+        $sk_honor->verif_dekan = $request->verif_dekan;
+        if ($request->verif_dekan == 2) {
+            $request->validate([
+                'pesan_revisi' => 'required|string'
+            ]);
+
+            $sk_honor->id_status_sk_honor = 1;
+            $sk_honor->pesan_revisi = $request->pesan_revisi;
+            $sk_honor->save();
+            return redirect()->route('dekan.sk-honor-skripsi.index')->with("verif_dekan", 'SK berhasil ditarik, status kembali menjadi "Draft"');
+        } else if ($request->verif_dekan == 1) {
+            $sk_honor->id_status_sk_honor = 6;
+            $sk_honor->pesan_revisi = null;
+            $sk_honor->save();
+            return redirect()->route('dekan.sk-honor-skripsi.index')->with('verif_dekan', 'verifikasi SK berhasil, status SK saat ini "Disetujui Dekan"');
+        }
+    }
 }
