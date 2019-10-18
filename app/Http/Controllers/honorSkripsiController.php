@@ -16,6 +16,9 @@ class honorSkripsiController extends Controller
     {
         $sk_honor = sk_honor::orderBy('created_at', 'desc')
         ->with(['status_sk_honor', 'tipe_sk'])
+        ->whereHas('tipe_sk',function(Builder $query){
+            $query->where('id',1);
+        })
         ->get();
     	return view('keuangan.honor_skripsi.index', [
             'sk_honor' => $sk_honor
@@ -152,7 +155,5 @@ class honorSkripsiController extends Controller
         }catch(Exception $e){
             return redirect()->route('keuangan.honor-skripsi.edit', $id_sk_honor)->with('error', $e->getMessage());
         }
-
-
     }
 }
