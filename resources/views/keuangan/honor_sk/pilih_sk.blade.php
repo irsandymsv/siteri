@@ -56,7 +56,7 @@
                      <div class="alert alert-warning alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         <h4><i class="icon fa fa-info"></i> Maaf</h4>
-                           Belum ada SK Skripsi Baru Saat Ini
+                           Belum ada SK {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }} Baru Saat Ini
                      </div>
                   @endif
                </div>

@@ -112,7 +112,10 @@
 		              		@csrf
 		              		@method('put')
 		              		<input type="hidden" name="verif_ktu" value="{{$sk_akademik->verif_ktu}}">
-		              		<button type="submit" name="setuju_btn" class="btn btn-success"><i class="fa fa-check"></i> Setujui</button>
+
+		              		@if ($sk_akademik->verif_ktu != 1)
+		              			<button type="submit" name="setuju_btn" class="btn btn-success"><i class="fa fa-check"></i> Setujui</button>
+		              		@endif
 		              		<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-tarik-sk"><i class="fa fa-close"></i> Tarik SK</button>
 		              	</form>
 		              </div>
@@ -189,7 +192,10 @@
 			              		@csrf
 			              		@method('put')
 			              		<input type="hidden" name="verif_ktu" value="{{$sk_akademik->verif_ktu}}">
-			              		<button type="submit" name="setuju_btn" class="btn btn-success"><i class="fa fa-check"></i> Setujui</button>	
+
+			              		@if ($sk_akademik->verif_ktu != 1)
+			              			<button type="submit" name="setuju_btn" class="btn btn-success"><i class="fa fa-check"></i> Setujui</button>
+			              		@endif
 			              		<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-tarik-sk"><i class="fa fa-close"></i> Tarik SK</button>
 			              	</form>
 			              </div>
