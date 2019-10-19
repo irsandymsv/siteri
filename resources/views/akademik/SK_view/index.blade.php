@@ -1,7 +1,7 @@
 @extends('akademik.akademik_view')
 
 @section('page_title')
-	@if($sk_akademik[0]->tipe_sk->tipe == "SK Skripsi")
+	@if($tipe == "SK Skripsi")
 		Daftar Semua SK skripsi
 	@else
 		Daftar Semua SK Sempro
@@ -10,24 +10,11 @@
 
 @section('css_link')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-
-	<style type="text/css">
-		#success_delete{
-			 position: fixed;
-			 display: none; 
-			 width: 20%; 
-			 text-align: center;
-			 top: 15%;
-			 left: 40%;
-			 padding: 13px;
-			 background-color: rgba(0, 0, 0, 0.7);
-			 color: white;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
 @endsection
 
 @section('judul_header')
-	@if($sk_akademik[0]->tipe_sk->tipe == "SK Skripsi")
+	@if($tipe == "SK Skripsi")
 		SK Skripsi
 	@else
 		SK Sempro
@@ -44,10 +31,10 @@
    	<div class="col-xs-12">
    		<div class="box box-success">
    			<div class="box-header">
-              <h3 class="box-title">Daftar SK {{ ($sk_akademik[0]->tipe_sk->tipe == "SK Skripsi"? 'Skripsi' : 'Sempro') }}</h3>
+              <h3 class="box-title">Daftar SK {{ ($tipe == "SK Skripsi"? 'Skripsi' : 'Sempro') }}</h3>
             
               <div style="float: right;">
-            	<a href="{{ ($sk_akademik[0]->tipe_sk->tipe == "SK Skripsi"? route('akademik.skripsi.create') : route('akademik.sempro.create')) }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat SK Baru</a>
+            	<a href="{{ ($tipe == "SK Skripsi"? route('akademik.skripsi.create') : route('akademik.sempro.create')) }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat SK Baru</a>
               </div>
             </div>
 
@@ -92,7 +79,7 @@
 		            					@endif
 		            				</td>
 		            				<td>
-		            					@if($item->tipe_sk->tipe == "SK Skripsi")
+		            					@if($tipe == "SK Skripsi")
 		            						<a href="{{ route('akademik.skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
 			            					@if($item->verif_dekan != 1)
 			            					<a href="{{ route('akademik.skripsi.edit', $item->id) }}" class="btn btn-warning" title="Ubah SK"><i class="fa fa-edit"></i></a>
@@ -118,7 +105,7 @@
    	</div>
 	</div>
 
-	<div id="success_delete">
+	<div id="success_delete" class="pop_up_info">
         <h4><i class="icon fa fa-check"></i>  <span></span></h4>
     </div>
 
@@ -153,7 +140,7 @@
 				event.preventDefault();
 				var id_sk = $(this).attr('id');
 
-				@if($sk_akademik[0]->tipe_sk->tipe == "SK Skripsi")
+				@if($tipe == "SK Skripsi")
 				var url_del = "{{route('akademik.skripsi.destroy')}}" + '/' + id_sk;					
 				@else
 				var url_del = "{{route('akademik.sempro.destroy')}}" + '/' + id_sk;

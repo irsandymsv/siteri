@@ -104,9 +104,9 @@
 		<div class="col-xs-12">
       		<div class="box box-primary">
       			<div class="box-header">
-	              <h3 class="box-title">Data SK {{ ($sk_akademik->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }} </h3>
+      				<h3 class="box-title">Data SK {{ ($sk_akademik->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }} </h3>
 
-	              @if($sk_akademik->verif_dekan != 1)
+		            @if($sk_akademik->verif_dekan != 1)
 		              <div class="form-group" style="float: right;">
 		              	<form method="post" action="{{ ( $sk_akademik->tipe_sk->tipe == "SK Skripsi"? route('dekan.sk-skripsi.verif', $sk_akademik->id) : route('dekan.sk-sempro.verif', $sk_akademik->id) ) }}">
 		              		@csrf
@@ -116,19 +116,19 @@
 		              		<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-tarik-sk"><i class="fa fa-close"></i> Tarik SK</button>
 		              	</form>
 		              </div>
-	              @endif
-	              <div id="tgl_sk">
-	              	<h5><b>Tanggal Dibuat</b> : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
+		            @endif
+		            
+	              	<div id="tgl_sk">
+	              		<h5><b>Tanggal Dibuat</b> : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
 
-	              	@if($sk_akademik->verif_dekan == 0)
-						<b>Belum Diverifikasi</b>
-					@elseif($sk_akademik->verif_dekan == 2) 
-						<label class="label bg-red">Butuh Revisi</label>
-					@else
-						<label class="label bg-green">Sudah Diverifikasi</label>
-					@endif
-	              	
-	              </div>
+		              	@if($sk_akademik->verif_dekan == 0)
+							<b>Belum Diverifikasi</b>
+							@elseif($sk_akademik->verif_dekan == 2) 
+								<label class="label bg-red">Butuh Revisi</label>
+							@else
+								<label class="label bg-green">Sudah Diverifikasi</label>
+							@endif
+	              	</div>
 	            </div>
 
 	            <div class="box-body">
@@ -184,7 +184,7 @@
 			              	<form method="post" action="{{ ( $sk_akademik->tipe_sk->tipe == "SK Skripsi"? route('dekan.sk-skripsi.verif', $sk_akademik->id) : route('dekan.sk-sempro.verif', $sk_akademik->id) ) }}">
 			              		@csrf
 			              		@method('put')
-			              		<input type="hidden" name="verif_dekan" value="{{$sk_akademik->id_status_sk_akademik}}">
+			              		<input type="hidden" name="verif_dekan" value="{{$sk_akademik->verif_dekan}}">
 			              		<button type="submit" name="setuju_btn" class="btn btn-success"><i class="fa fa-check"></i> Setujui</button>	
 			              		<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-tarik-sk"><i class="fa fa-close"></i> Tarik SK</button>
 			              	</form>

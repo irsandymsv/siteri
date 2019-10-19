@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
+
+use App\sk_akademik;
+use App\detail_sk;
+use App\sk_honor;
 
 class honorSemproController extends Controller
 {
@@ -14,8 +19,10 @@ class honorSemproController extends Controller
                 $query->where('id', 2);
             })
             ->get();
-        return view('keuangan.honor_sempro.index', [
-            'sk_honor' => $sk_honor
+
+        return view('keuangan.honor_skripsi.index', [
+            'sk_honor' => $sk_honor,
+            'tipe' => 'SK Sempro'
         ]);
     }
 
@@ -30,9 +37,10 @@ class honorSemproController extends Controller
             })
             ->where('verif_dekan', 1)
             ->orderBy('created_at', 'desc')->get();
-        return view('keuangan.honor_sempro.pilih_sk', [
+            // dd($sk_akademik);
+        return view('keuangan.honor_skripsi.pilih_sk', [
             'sk_akademik' => $sk_akademik,
-            'tipe' => 'sk skripsi'
+            'tipe' => 'SK Sempro'
         ]);
     }
 
@@ -46,9 +54,10 @@ class honorSemproController extends Controller
             'penguji_pendamping:no_pegawai,nama,npwp,id_golongan', 'penguji_pendamping.golongan',
         ])->get();
         // dd($detail_sk);
-        return view('keuangan.honor_sempro.create', [
+        return view('keuangan.honor_skripsi.create', [
             'sk_akademik' => $sk_akademik,
-            'detail_sk' => $detail_sk
+            'detail_sk' => $detail_sk,
+            'tipe' => 'SK Sempro'
         ]);
     }
 
@@ -70,9 +79,9 @@ class honorSemproController extends Controller
                 ->update([
                     'id_sk_honor' => $sk_honor->id
                 ]);
-            return redirect()->route('keuangan.honor-sempro.pilih-sk')->with('success', 'Data Berhasil Dibuat');
+            return redirect()->route('keuangan.honor-sempro.show', $sk_honor->id)->with('success', 'Data Berhasil Dibuat');
         } catch (Exception $e) {
-            return redirect()->route('keuangan/')->with('error', $e->getMessage());
+            return redirect()->route('keuangan.honor-sempro.index')->with('error', $e->getMessage());
         }
     }
 
@@ -96,7 +105,7 @@ class honorSemproController extends Controller
             ])
             ->first();
         // dd($sk_honor);
-        return  view('keuangan.honor_sempro.show', [
+        return  view('keuangan.honor_skripsi.show', [
             'sk_honor' => $sk_honor
         ]);
     }
@@ -123,8 +132,9 @@ class honorSemproController extends Controller
             ])
             ->first();
         // dd($sk_honor);
-        return  view('keuangan.honor_sempro.edit', [
-            'sk_honor' => $sk_honor
+        return  view('keuangan.honor_skripsi.edit', [
+            'sk_honor' => $sk_honor,
+            'tipe' => 'SK Sempro'
         ]);
     }
 
@@ -136,10 +146,26 @@ class honorSemproController extends Controller
         ]);
 
         try {
+            $sk_honor = sk_honor::find($id_sk_honor);
+            $verif_bpp = $sk_honor->verif_kebag_keuangan;
+            $verif_ktu = $sk_honor->verif_ktu;
+            $verif_wadek2 = $sk_honor->verif_wadek2;
+            $verif_dekan = $sk_honor->verif_dekan;
+            if ($request->status == 2) {
+                $verif_bpp = 0;
+                $verif_ktu = 0;
+                $verif_wadek2 = 0;
+                $verif_dekan = 0;
+            }
+
             sk_honor::where('id', $id_sk_honor)->update([
                 'id_status_sk_honor' => $request->status,
                 'honor_pembimbing' => $request->honor_pembimbing,
-                'honor_penguji' => $request->honor_penguji
+                'honor_penguji' => $request->honor_penguji,
+                'verif_kebag_keuangan' => $verif_bpp,
+                'verif_ktu' => $verif_ktu,
+                'verif_wadek2' => $verif_wadek2,
+                'verif_dekan' => $verif_dekan
             ]);
 
             return redirect()->route('keuangan.honor-sempro.show', $id_sk_honor)->with('success', 'Data Berhasil Dirubah');
@@ -148,11 +174,66 @@ class honorSemproController extends Controller
         }
     }
 
+    public function destroy($id = null)
+    {
+        if (!is_null($id)) {
+            sk_honor::find($id)->delete();
+            echo 'Daftar Honor Berhasil Dihapus'; 
+        }
+    }
+
+    public function bpp_index()
+    {
+        $sk_honor = sk_honor::where('id_tipe_sk', 2)
+        ->orderBy('updated_at', 'desc')
+        ->with(['tipe_sk', 'status_sk_honor'])
+        ->whereHas('status_sk_honor', function(Builder $query){ 
+            $query->whereIn('id', [2,3,4,5,6]); 
+        })->get();
+
+        // dd($sk_honor);
+        return view('bpp.honor_sk.honor_index', [
+            'sk_honor' => $sk_honor,
+            'tipe' => 'SK Sempro'
+        ]);
+    }
+
+    public function bpp_show($id_sk_honor)
+    {
+        $sk_honor = sk_honor::where('id', $id_sk_honor)
+        ->with([
+            'tipe_sk',
+            'status_sk_honor',
+            'detail_sk.pembimbing_utama:no_pegawai,nama,id_golongan',
+            'detail_sk.pembimbing_utama.golongan',
+
+            'detail_sk.pembimbing_pendamping:no_pegawai,nama,id_golongan', 
+            'detail_sk.pembimbing_pendamping.golongan',
+
+            'detail_sk.penguji_utama:no_pegawai,nama,id_golongan',
+            'detail_sk.penguji_utama.golongan',
+
+            'detail_sk.penguji_pendamping:no_pegawai,nama,id_golongan',
+            'detail_sk.penguji_pendamping.golongan',
+        ])
+        ->first();
+        // dd($sk_honor);
+
+        if($sk_honor->id_status_sk_honor == 1){
+            return redirect()->route('bpp.honor-skripsi.index');
+        }
+        else{
+            return  view('bpp.honor_sk.honor_show', [
+                'sk_honor' => $sk_honor
+            ]);    
+        }
+    }
+
     public function bpp_verif(Request $request, $id)
     {
         // dd($request);
         $sk_honor = sk_honor::find($id);
-        $sk_honor->verif_kabag_keuangan = $request->verif_bpp;
+        $sk_honor->verif_kebag_keuangan = $request->verif_bpp;
         if ($request->verif_bpp == 2) {
             $request->validate([
                 'pesan_revisi' => 'required|string'
@@ -161,12 +242,12 @@ class honorSemproController extends Controller
             $sk_honor->id_status_sk_honor = 1;
             $sk_honor->pesan_revisi = $request->pesan_revisi;
             $sk_honor->save();
-            return redirect()->route('bpp.sk-honor-sempro.index')->with("verif_bpp", 'SK berhasil ditarik, status kembali menjadi "Draft"');
+            return redirect()->route('bpp.honor-sempro.index')->with("verif_bpp", 'Honorarium berhasil ditarik, status kembali menjadi "Draft"');
         } else if ($request->verif_bpp == 1) {
             $sk_honor->id_status_sk_honor = 3;
             $sk_honor->pesan_revisi = null;
             $sk_honor->save();
-            return redirect()->route('bpp.sk-honor-sempro.index')->with('verif_bpp', 'verifikasi SK berhasil, status SK saat ini "Disetujui BPP"');
+            return redirect()->route('bpp.honor-sempro.index')->with('verif_bpp', 'verifikasi Honorarium berhasil, status SK saat ini "Disetujui BPP"');
         }
     }
 

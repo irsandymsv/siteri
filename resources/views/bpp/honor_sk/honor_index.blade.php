@@ -1,4 +1,4 @@
-@extends('keuangan.keuangan_view')
+@extends('bpp.bpp_view')
 
 @section('page_title')
       Daftar Honorarium {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}
@@ -20,9 +20,17 @@
             <div class="box-header">
                <h3 class="box-title">Daftar Honorarium {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
 
-               <div style="float: right;">
-                  <a href="{{ ($tipe == "SK Skripsi"? route('keuangan.honor-skripsi.pilih-sk') : route('keuangan.honor-sempro.pilih-sk') ) }}" class="btn btn-primary"><i class="fa fa-plus"></i>  Buat Dartar Honor</a>
-               </div>
+               @if(session()->has('verif_bpp'))
+                  <div class="alert alert-info alert-dismissible" style="width: 35%; margin: auto;">
+                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                     <h4><i class="icon fa fa-info"></i> Berhasil</h4>
+                     {{session('verif_bpp')}}
+                  </div>
+               @endif 
+
+               @php
+                  Session::forget('verif_bpp'); 
+               @endphp
             </div>
 
             <div class="box-body">
@@ -88,19 +96,9 @@
                               </td>
                               <td>
                                  @if ($item->tipe_sk->tipe == "SK Skripsi")
-                                    <a href="{{ route('keuangan.honor-skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
-                                    @if ($item->verif_dekan != 1)
-                                       <a href="{{ route('keuangan.honor-skripsi.edit', $item->id) }}" class="btn btn-warning" title="Ubah Daftar Honor"><i class="fa fa-edit"></i></a>
-                                    @endif
+                                    <a href="{{ route('bpp.honor-skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
                                  @else
-                                    <a href="{{ route('keuangan.honor-sempro.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
-                                    @if ($item->verif_dekan != 1)
-                                       <a href="{{ route('keuangan.honor-sempro.edit', $item->id) }}" class="btn btn-warning" title="Ubah Daftar Honor"><i class="fa fa-edit"></i></a>
-                                    @endif
-                                 @endif
-
-                                 @if ($item->verif_dekan != 1)
-                                    <a href="#" class="btn btn-danger" name="delete_honor" id="{{ $item->id }}" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash" title="Hapus Daftar Honor"></i></a>
+                                    <a href="{{ route('bpp.honor-sempro.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
                                  @endif
                               </td>
                            </tr>
@@ -112,71 +110,10 @@
          </div>
       </div>
    </div>
-
-   <div id="success_delete" class="pop_up_info">
-        <h4><i class="icon fa fa-check"></i>  <span></span></h4>
-   </div>
-
-   <div class="modal modal-danger fade" id="modal-delete">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Konfirmasi Penghapusan</h4>
-          </div>
-          <div class="modal-body">
-            <p>Apakah anda yakin ingin menghapus darfat honor ini?</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Batal</button>           
-         <button type="button" id="hapusBtn" data-dismiss="modal" class="btn btn-outline">Hapus</button>
-          </div>
-        </div>
-        <!-- /.modal-content -->
-      </div>
-      <!-- /.modal-dialog -->
-   </div>
 @endsection
 
 @section('script')
    <script type="text/javascript">
-      $("a[name='delete_honor']").click(function(event) {
-         event.preventDefault();
-         var id_sk = $(this).attr('id');
-
-         @if($tipe == "SK Skripsi")
-         var url_del = "{{route('keuangan.honor-skripsi.destroy')}}" + '/' + id_sk;             
-         @else
-         var url_del = "{{route('keuangan.honor-sempro.destroy')}}" + '/' + id_sk;
-         @endif
-         console.log(url_del);
-         
-         $('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $.ajax({
-               url: url_del,
-               type: 'POST',
-               // dataType: '',
-               data: {_method: 'DELETE'},
-            })
-            .done(function(hasil) {
-               console.log("success");
-               $("tr#sk_"+id_sk).hide();
-               $("#success_delete").show();
-               $("#success_delete").find('span').html(hasil);
-               $("#success_delete").fadeOut(1800);
-            })
-            .fail(function() {
-               console.log("error");
-            });
-         });
       
-      });
    </script>
 @endsection  

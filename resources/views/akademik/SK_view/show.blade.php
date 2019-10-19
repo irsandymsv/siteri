@@ -9,13 +9,8 @@
 @endsection
 
 @section('css_link')
-	<link rel="stylesheet" type="text/css" href="/css/btn_backTop.css">
+	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
 	<style type="text/css">
-		.proges_wrap{
-			padding: 8px;
-			overflow: hidden;
-		}
-
 		.tbl_row{
 			display: table;
 			width: 100%;
@@ -23,18 +18,13 @@
 			margin-top: 5px;			
 		}
 
-		.half-content{
-			float: left;
-			width: 45%;
-			padding: 5px;
-			margin-right: 10px;
-		}
+		.revisi_wrap{
+        padding: 5px;
+      }
 
-		@media screen and (max-width: 600px){
-			.half-content{
-				width: 100%;
-			}
-		}
+      .revisi_wrap h4{
+      	color: red;
+      }
 	</style>
 @endsection
 
@@ -73,57 +63,37 @@
 	            </div>
 
 	            <div class="box-body">
-	            	<div class="half-content">
-	            		<h5><b>Tanggal Dibuat</b> : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
-	            	
-		            	<h5><b>Progres</b> :</h5>
-		            	<div class="proges_wrap">
-		            		<div class="progres_card">
-		            			<ul class="timeline">
-						            <!-- timeline item -->
-						            <li id="progres_1">
-						              <i class="fa bg-grey"></i>
+            		<h5><b>Tanggal Dibuat</b> : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
+            	
+	            	<h5><b>Progres</b> :</h5>
+	            	<div class="tl_wrap">
+	            	  <div class="item_tl" id="progres_1">
+	            	    <div><i class="fa fa-check"></i></div>
+	            	    <h4>Disimpan</h4>
+	            	  </div>
 
-						              <div class="timeline-item">
-						                <h3 class="timeline-header">SK Disimpan</h3>
-						              </div>
-						            </li>
+	            	  <div class="item_tl" id="progres_2">
+	            	    <div><i></i></div>
+	            	    <h4>Dikirim</h4>
+	            	  </div>
 
-						            <li id="progres_2">
-						              <i class="fa bg-grey"></i>
+	            	  <div class="item_tl" id="progres_3">
+	            	    <div><i></i></div>
+	            	    <h4>Disetujui KTU</h4>
+	            	  </div>
 
-						              <div class="timeline-item">
-						                <h3 class="timeline-header">SK Telah Dikirim</h3>
-						              </div>
-						            </li>
-
-						            <li id="progres_3">
-						              <i class="fa bg-grey"></i>
-
-						              <div class="timeline-item">
-						                <h3 class="timeline-header">SK Telah Disetujui KTU</h3>
-						              </div>
-						            </li>
-
-						            <li id="progres_4">
-						              <i class="fa bg-grey"></i>
-
-						              <div class="timeline-item">
-						                <h3 class="timeline-header">SK Telah Disetujui Dekan</h3>
-						              </div>
-						            </li>
-						            <!-- END timeline item -->
-						          </ul>
-		            		</div>
-		            	</div>
+	            	  <div class="item_tl" id="progres_4">
+	            	    <div><i></i></div>
+	            	    <h4>Disetujui Dekan</h4>
+	            	  </div>
 	            	</div>
 
-	            	<div class="half-content">
-            			@if(!is_null($sk_akademik->pesan_revisi))
-	            			<h5><b>Pesan Revisi</b> : </h5>
-            				<p>"{{ $sk_akademik->pesan_revisi }}"</p>
-            			@endif
-	            	</div>
+         			@if(!is_null($sk_akademik->pesan_revisi))
+         			<div class="revisi_wrap">
+            			<h4><b>Pesan Revisi</b> : </h4>
+         				<p>"{{ $sk_akademik->pesan_revisi }}"</p>
+         			</div>
+         			@endif
 	            	
 	            </div>
       		</div>
@@ -209,7 +179,9 @@
 <script type="text/javascript">
 	var status = @json($sk_akademik->id_status_sk_akademik);
 	for (var i = status; i > 0; i--) {
-		$("#progres_"+i).children('i').removeClass('bg-grey').addClass('bg-green fa-check');
+		// $("#progres_"+i).children('i').removeClass('bg-grey').addClass('bg-green fa-check');
+		$("#progres_"+i).addClass('verified');
+      $("#progres_"+i).find('i').addClass('fa fa-check');
 	}
 </script>
 @endsection

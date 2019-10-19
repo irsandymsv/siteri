@@ -22,8 +22,8 @@
 	        </span>
 	    </a>
 	    <ul class="treeview-menu">
-	      <li><a href="#">Buat Baru</a></li>
-	      <li><a href="#">Lihat Semua</a></li>
+	      <li><a href="{{ route('keuangan.honor-sempro.pilih-sk') }}">SK Sempro</a></li>
+	      <li><a href="{{ route('keuangan.honor-sempro.index') }}">Lihat Semua</a></li>
 	    </ul>
 	</li>
 @endsection

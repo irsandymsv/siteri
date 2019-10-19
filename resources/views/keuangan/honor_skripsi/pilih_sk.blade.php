@@ -5,7 +5,7 @@
 @endsection
 
 @section('judul_header')
-	Honorarium SK Skripsi
+	Honorarium SK {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}
 @endsection
 
 @section('content')
@@ -14,16 +14,12 @@
 	      <div class="box box-primary">
             <div class="box-header">
                <h3 class="box-title">Pilih SK Akademik</h3>
-               @if(is_null($sk_akademik))
-               <p>Pilih SK {{ ($sk_akademik[0]->tipe_sk->tipe == 'SK Skripsi'? "Skripsi" : "Sempro") }} di bawah ini yang ingin dibuatkan daftar honorarium</p>
-               @else
-               <p>Pilih SK yang ada di bawah ini yang ingin dibuatkan daftar honorarium</p>
-               @endif
+               <p>Pilih SK {{ ($tipe == 'SK Skripsi'? "Skripsi" : "Sempro") }} di bawah ini yang ingin dibuatkan daftar honorarium</p>
             </div>
 
             <div class="box-body">
                <div class="table-responsive">
-                  @if (is_null($sk_akademik))
+                  @if ($sk_akademik->isNotEmpty())
                      <table id="table_data1" class="table table-bordered table-hovered">
                         <thead>
                            <tr>
@@ -50,11 +46,7 @@
                               	   @endif
                                  </td>
                                  <td>
-                              	   @if(is_null($item->detail_sk[0]->id_sk_honor))
-                                    <a href="{{route('keuangan.honor-skripsi.create', $item->id)}}" class="btn btn-success" title="Lihat daftar honor yang berdasarkan SK ini">Buat Daftar Honor</a>
-                              	   @else
-                                    <a href="{{ route('keuangan.honor-skripsi.show', $item->detail_sk[0]->id_sk_honor) }}" class="btn btn-primary" title="Lihat daftar honor yang berdasarkan SK ini">Lihat Daftar Honor</a>
-                              	   @endif
+                                    <a href="{{ ($tipe == "SK Skripsi"? route('keuangan.honor-skripsi.create', $item->id) : route('keuangan.honor-sempro.create', $item->id)) }}" class="btn btn-success" title="Buat daftar honor berdasarkan SK ini">Buat Daftar Honor</a>
                                  </td>
                               </tr>
                            @endforeach
@@ -63,8 +55,8 @@
                   @else
                      <div class="alert alert-warning alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <h4><i class="icon fa fa-warning"></i> Maaf</h4>
-                           Data SK Skripsi Tidak Ditemukan
+                        <h4><i class="icon fa fa-info"></i> Maaf</h4>
+                           Belum ada SK Skripsi Baru Saat Ini
                      </div>
                   @endif
                </div>

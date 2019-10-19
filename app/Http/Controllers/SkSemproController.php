@@ -25,7 +25,8 @@ class SkSemproController extends Controller
                 ->get();
 
             return view('akademik.SK_view.index', [
-                'sk_akademik' => $sk_akademik
+                'sk_akademik' => $sk_akademik,
+                'tipe' => "SK Sempro"
             ]);
         } catch (Exception $e) {
             return view('akademik.SK_view.index');
@@ -254,13 +255,14 @@ class SkSemproController extends Controller
             $query->where('id', 2); 
         })
         ->whereHas('status_sk_akademik', function(Builder $query){ 
-            $query->whereIn('id', [1,2,3]); 
+            $query->whereIn('id', [2,3,4]); 
         })
         ->orderBy('updated_at', 'desc')
         ->get();
 
         return view('ktu.SK_view.sk_index', [
-            'sk_akademik' => $sk_akademik
+            'sk_akademik' => $sk_akademik,
+            'tipe' => "SK Sempro"
         ]);
     }
 
@@ -312,20 +314,21 @@ class SkSemproController extends Controller
 
 
     //DEKAN
-    public function dekan_index_skripsi()
+    public function dekan_index_sempro()
     {
         $sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
         ->whereHas('tipe_sk', function(Builder $query){ 
             $query->where('id', 2); 
         })
-        ->whereHas('status_sk_akademik', function(Builder $query){ 
-            $query->whereIn('id', [2,3]); 
+        ->whereHas('status_sk_akademik', function(Builder $query){
+            $query->whereIn('id', [3,4]); 
         })
         ->orderBy('updated_at', 'desc')
         ->get();
 
         return view('dekan.SK_view.sk_index', [
-            'sk_akademik' => $sk_akademik
+            'sk_akademik' => $sk_akademik,
+            'tipe' => "SK Sempro"
         ]);
     }
 
