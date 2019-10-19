@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> --}}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style type="text/css">
         html{
-            font-size: 6pt;
+            font-size: 9pt;
         }
+
+        .font-sm{
+            font-size: 60%;
+        }
+
         .table-bordered{
+            width: 100%;
             border-collapse: collapse;
             border: 1px solid black;
         }
+
+        .table-bordered td,tr,th{
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+        
     </style>
 </head>
 
@@ -35,6 +48,7 @@
                 </td>
             </tr>
         </table>
+        <br>
         <table class="table table-bordered" style="margin-top:5px">
             <thead>
                 <tr>
@@ -49,14 +63,18 @@
                     <th>Tanda Tangan</th>
                 </tr>
             </thead>
-            
             <tbody id="tbl_pembimbing">
-                @php $no = 0; @endphp  
+                @php $no = 0; $a = 1;$b = 1; @endphp  
                 @foreach($sk_honor->detail_sk as $item)
-                <tr id="{{$no+=1}}">
+                @if ($no+1 == 4*$a-1)
+                @php $a+=1; @endphp 
+                <tr id="{{$no+=1}}"  style="background-color: #bbb;">
+                @else
+                <tr id="{{$no+=1}}">   
+                @endif
                     <td>{{$no}}</td>
                     <td>{{$item->pembimbing_utama->nama}}</td>
-                    <td>{{$item->pembimbing_utama->npwp}}</td>
+                    <td class="font-sm">{{$item->pembimbing_utama->npwp}}</td>
                     <td rowspan="2">
                         <p>{{$item->nama_mhs}}</p>
                         <p>NIM: {{$item->nim}}</p>
@@ -65,7 +83,7 @@
                     <td id="pembimbing_{{$no}}" class="pembimbingHonor">Rp &nbsp;
                         <span>{{ $sk_honor->honor_pembimbing }}</span>
                     </td>
-                    <td class="pph" id="pph_{{$no}}">Rp &nbsp;; 
+                    <td class="pph" id="pph_{{$no}}">Rp &nbsp; 
                         <span>
                             @php
                             $pph = ($item->pembimbing_utama->golongan->pph * $sk_honor->honor_pembimbing)/100;
@@ -81,7 +99,12 @@
                     </td>
                 </tr>
                 
-                <tr id="{{$no+=1}}">
+                @if ($no+1 == 4*$b)
+                @php $b+=1; @endphp 
+                <tr id="{{$no+=1}}"  style="background-color: #bbb;">
+                @else
+                <tr id="{{$no+=1}}">   
+                @endif
                     <td>{{$no}}</td>
                     <td>{{$item->pembimbing_pendamping->nama}}</td>
                     <td>{{$item->pembimbing_pendamping->npwp}}</td>
@@ -103,6 +126,18 @@
                     </td>
                 </tr>
                 @endforeach
+                <tr>   
+                    <td>n</td>
+                    <td>Dosen ke-n</td>
+                    <td>123456789012345</td>
+                    <td>4b</td>
+                    <td>Rp &nbsp; <span>100000</span></td>
+                    <td>Rp &nbsp; <span>1000</span></td>
+                    <td>Rp &nbsp; <span>199000</span></td>
+                    <td>
+                        N.
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

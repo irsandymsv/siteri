@@ -131,12 +131,9 @@ class honorSkripsiController extends Controller
                 'detail_sk.penguji_pendamping.golongan',
             ])
             ->first();
-
-        // return  view('keuangan.honor_skripsi.pdf', [
-        //     'sk_honor' => $sk_honor
-        // ]);
-        $pdf = PDF::loadview('keuangan.honor_skripsi.pdf', ['sk_honor' => $sk_honor]);
-        return $pdf->download('sk-honor-pdf');
+        return view('keuangan.honor_skripsi.pdf', ['sk_honor' => $sk_honor]);    
+        // $pdf = PDF::loadview('keuangan.honor_skripsi.pdf', ['sk_honor' => $sk_honor]);
+        // return $pdf->download('sk-honor');
     }
 
     public function edit($id_sk_honor)

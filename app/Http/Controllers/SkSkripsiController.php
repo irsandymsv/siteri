@@ -114,6 +114,27 @@ class SkSkripsiController extends Controller
 		]);
 	}
 
+	public function cetak_pdf($id)
+	{
+		$sk_akademik = sk_akademik::find($id);
+		$detail_sk = detail_sk::where('id_sk_akademik', $id)
+			->with([
+				'bagian',
+				'penguji_utama:no_pegawai,nama',
+				'penguji_pendamping:no_pegawai,nama',
+				'pembimbing_utama:no_pegawai,nama',
+				'pembimbing_pendamping:no_pegawai,nama'
+			])->get();
+		// dd($detail_sk);
+		// return view('akademik.SK_view.show', [
+		// 	'sk_akademik' => $sk_akademik,
+		// 	'detail_sk' => $detail_sk
+		// ]);
+
+		$pdf = PDF::loadview('akademik.SK_view.pdf', ['sk_akademik' => $sk_akademik,'detail_sk' => $detail_sk]);
+		return $pdf->download('sk-skripsi');
+	}
+
 	public function edit(Request $request, $id)
 	{
 		$old_data = [];
@@ -284,6 +305,8 @@ class SkSkripsiController extends Controller
 		]);
 	}
 
+	
+
 	public function ktu_verif(Request $request, $id)
 	{
 		// dd($request);
@@ -373,4 +396,5 @@ class SkSkripsiController extends Controller
 			return redirect()->route('dekan.sk-skripsi.index')->with('verif_dekan', 'verifikasi SK berhasil, status SK saat ini "Disetujui Dekan"');
 		}
 	}
+
 }
