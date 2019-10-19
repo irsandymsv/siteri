@@ -1,4 +1,4 @@
-@extends('bpp.bpp_view')
+@extends('ktu.ktu_view')
 
 @section('page_title')
       Daftar Honorarium {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}
@@ -20,16 +20,16 @@
             <div class="box-header">
                <h3 class="box-title">Daftar Honorarium {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
 
-               @if(session()->has('verif_bpp'))
+               @if(session()->has('verif_ktu'))
                   <div class="alert alert-info alert-dismissible" style="width: 35%; margin: auto;">
                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                      <h4><i class="icon fa fa-info"></i> Berhasil</h4>
-                     {{session('verif_bpp')}}
+                     {{session('verif_ktu')}}
                   </div>
                @endif 
 
                @php
-                  Session::forget('verif_bpp'); 
+                  Session::forget('verif_ktu'); 
                @endphp
             </div>
 
@@ -96,9 +96,9 @@
                               </td>
                               <td>
                                  @if ($item->tipe_sk->tipe == "SK Skripsi")
-                                    <a href="{{ route('bpp.honor-skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ route('ktu.honor-skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
                                  @else
-                                    <a href="{{ route('bpp.honor-sempro.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ route('ktu.honor-sempro.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
                                  @endif
                               </td>
                            </tr>
