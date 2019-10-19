@@ -69,6 +69,7 @@
                <div class="box-body">
                   <div class="form-group" style="float: right;">
                      <a href="{{ route('keuangan.honor-skripsi.edit', $sk_honor->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+                     <a href="{{ route('keuangan.honor-skripsi.cetak', $sk_honor->id) }}" class="btn btn-info"><i class="fa fa-edit"></i> Cetak</a>
                   </div>
 
                   <div class="half-content_wrap">

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\sk_akademik;
 use App\detail_sk;
 use App\sk_honor;
+use PDF;
 use Exception;
 
 class honorSkripsiController extends Controller
@@ -108,6 +109,32 @@ class honorSkripsiController extends Controller
         return  view('keuangan.honor_skripsi.show', [
             'sk_honor' => $sk_honor
         ]);
+    }
+
+    public function cetak_pdf($id_sk_honor)
+    {
+        $sk_honor = sk_honor::where('id', $id_sk_honor)
+            ->with([
+                'tipe_sk',
+                'detail_sk.pembimbing_utama:no_pegawai,nama,id_golongan',
+                'detail_sk.pembimbing_utama.golongan',
+
+                'detail_sk.pembimbing_pendamping:no_pegawai,nama,id_golongan',
+                'detail_sk.pembimbing_pendamping.golongan',
+
+                'detail_sk.penguji_utama:no_pegawai,nama,id_golongan',
+                'detail_sk.penguji_utama.golongan',
+
+                'detail_sk.penguji_pendamping:no_pegawai,nama,id_golongan',
+                'detail_sk.penguji_pendamping.golongan',
+            ])
+            ->first();
+
+        // return  view('keuangan.honor_skripsi.pdf', [
+        //     'sk_honor' => $sk_honor
+        // ]);
+        $pdf = PDF::loadview('keuangan.honor_skripsi.pdf', ['sk_honor' => $sk_honor]);
+        return $pdf->download('sk-honor-pdf');
     }
 
     public function edit($id_sk_honor)
