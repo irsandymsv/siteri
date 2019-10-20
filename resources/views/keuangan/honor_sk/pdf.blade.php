@@ -126,18 +126,6 @@
                     </td>
                 </tr>
                 @endforeach
-                <tr>   
-                    <td>n</td>
-                    <td>Dosen ke-n</td>
-                    <td>123456789012345</td>
-                    <td>4b</td>
-                    <td>Rp &nbsp; <span>100000</span></td>
-                    <td>Rp &nbsp; <span>1000</span></td>
-                    <td>Rp &nbsp; <span>199000</span></td>
-                    <td>
-                        N.
-                    </td>
-                </tr>
             </tbody>
         </table>
     </div>

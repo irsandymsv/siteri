@@ -102,6 +102,9 @@
                                  @if ($item->verif_dekan != 1)
                                     <a href="#" class="btn btn-danger" name="delete_honor" id="{{ $item->id }}" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash" title="Hapus Daftar Honor"></i></a>
                                  @endif
+                                 @if ($item->verif_dekan == 1)
+                                    <a href="{{ route('keuangan.honor-skripsi.cetak', $item->id) }}" class="btn btn-info" title="Cetak Daftar Honor"><i class="fa fa-print"></i></a>
+                                 @endif
                               </td>
                            </tr>
                         @endforeach

@@ -118,31 +118,22 @@ class honorSkripsiController extends Controller
         $sk_honor = sk_honor::where('id', $id_sk_honor)
             ->with([
                 'tipe_sk',
-                'detail_sk.pembimbing_utama:no_pegawai,nama,id_golongan',
+                'detail_sk.pembimbing_utama:no_pegawai,nama,npwp,id_golongan',
                 'detail_sk.pembimbing_utama.golongan',
 
-                'detail_sk.pembimbing_pendamping:no_pegawai,nama,id_golongan',
+                'detail_sk.pembimbing_pendamping:no_pegawai,nama,npwp,id_golongan',
                 'detail_sk.pembimbing_pendamping.golongan',
 
-                'detail_sk.penguji_utama:no_pegawai,nama,id_golongan',
+                'detail_sk.penguji_utama:no_pegawai,nama,npwp,id_golongan',
                 'detail_sk.penguji_utama.golongan',
 
-                'detail_sk.penguji_pendamping:no_pegawai,nama,id_golongan',
+                'detail_sk.penguji_pendamping:no_pegawai,nama,npwp,id_golongan',
                 'detail_sk.penguji_pendamping.golongan',
             ])
             ->first();
-<<<<<<< HEAD
-        return view('keuangan.honor_skripsi.pdf', ['sk_honor' => $sk_honor]);    
-        // $pdf = PDF::loadview('keuangan.honor_skripsi.pdf', ['sk_honor' => $sk_honor]);
-        // return $pdf->download('sk-honor');
-=======
-
-        // return  view('keuangan.honor_sk.pdf', [
-        //     'sk_honor' => $sk_honor
-        // ]);
-        $pdf = PDF::loadview('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor]);
-        return $pdf->download('sk-honor-pdf');
->>>>>>> 7a24a0aa18c628a2c2e8e72e165e56d82d521d71
+        // return view('keuangan.honor_skripsi.pdf', ['sk_honor' => $sk_honor]);    
+        $pdf = PDF::loadview('keuangan.honor_skripsi.pdf', ['sk_honor' => $sk_honor]);
+        return $pdf->download('sk-honor');
     }
 
     public function edit($id_sk_honor)
@@ -151,16 +142,16 @@ class honorSkripsiController extends Controller
         ->with([
             'tipe_sk',
             'status_sk_honor',
-            'detail_sk.pembimbing_utama:no_pegawai,nama,id_golongan',
+            'detail_sk.pembimbing_utama:no_pegawai,nama,npwp,id_golongan',
             'detail_sk.pembimbing_utama.golongan',
 
-            'detail_sk.pembimbing_pendamping:no_pegawai,nama,id_golongan', 
+            'detail_sk.pembimbing_pendamping:no_pegawai,nama,npwp,id_golongan', 
             'detail_sk.pembimbing_pendamping.golongan',
 
-            'detail_sk.penguji_utama:no_pegawai,nama,id_golongan',
+            'detail_sk.penguji_utama:no_pegawai,nama,npwp,id_golongan',
             'detail_sk.penguji_utama.golongan',
 
-            'detail_sk.penguji_pendamping:no_pegawai,nama,id_golongan',
+            'detail_sk.penguji_pendamping:no_pegawai,npwp,nama,id_golongan',
             'detail_sk.penguji_pendamping.golongan',
 
             'detail_sk.sk_akademik'

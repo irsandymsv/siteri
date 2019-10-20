@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use PDF;
 use Exception;
 use App\bagian;
 use App\User;
@@ -114,7 +115,7 @@ class SkSkripsiController extends Controller
 		]);
 	}
 
-	public function cetak_pdf($id)
+	public function cetak($id)
 	{
 		$sk_akademik = sk_akademik::find($id);
 		$detail_sk = detail_sk::where('id_sk_akademik', $id)
@@ -125,13 +126,8 @@ class SkSkripsiController extends Controller
 				'pembimbing_utama:no_pegawai,nama',
 				'pembimbing_pendamping:no_pegawai,nama'
 			])->get();
-		// dd($detail_sk);
-		// return view('akademik.SK_view.show', [
-		// 	'sk_akademik' => $sk_akademik,
-		// 	'detail_sk' => $detail_sk
-		// ]);
 
-		$pdf = PDF::loadview('akademik.SK_view.pdf', ['sk_akademik' => $sk_akademik,'detail_sk' => $detail_sk]);
+		$pdf = PDF::loadview('akademik.SK_view.pdf', ['sk_akademik' => $sk_akademik,'detail_sk' => $detail_sk])->setPaper('a4', 'landscape')->setWarnings(false);
 		return $pdf->download('sk-skripsi');
 	}
 

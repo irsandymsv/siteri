@@ -61,11 +61,15 @@
 	                </button>
 	              </div>
 	            </div>
-
+				
+					
+				
 	            <div class="box-body">
+					@if ($sk_akademik->verif_dekan == 1)
 					<div class="form-group" style="float: right;">
-                     <a href="{{ route('akademik.skripsi.cetak', $sk_akademik->id) }}" class="btn btn-info"><i class="fa fa-edit"></i> Cetak</a>
-                  </div>
+                    	<a href="{{ route('akademik.skripsi.cetak', $sk_akademik->id) }}" class="btn btn-info"><i class="fa fa-print"></i> Cetak</a>
+					</div>
+					  @endif
             		<h5><b>Tanggal Dibuat</b> : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
             	
 	            	<h5><b>Progres</b> :</h5>
