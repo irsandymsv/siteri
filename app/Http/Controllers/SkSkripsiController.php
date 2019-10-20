@@ -14,6 +14,7 @@ use App\detail_sk;
 use App\Http\Controllers\Controller;
 use App\status_sk_akademik;
 use App\tipe_sk;
+use Carbon\Carbon;
 
 class SkSkripsiController extends Controller
 {
@@ -127,8 +128,10 @@ class SkSkripsiController extends Controller
 				'pembimbing_pendamping:no_pegawai,nama'
 			])->get();
 
+		$tipe = $sk_akademik->tipe_sk->tipe;
+		$tgl = Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y');
 		$pdf = PDF::loadview('akademik.SK_view.pdf', ['sk_akademik' => $sk_akademik,'detail_sk' => $detail_sk])->setPaper('a4', 'landscape')->setWarnings(false);
-		return $pdf->download('sk-skripsi');
+		return $pdf->download($tipe." ".$tgl);
 	}
 
 	public function edit(Request $request, $id)

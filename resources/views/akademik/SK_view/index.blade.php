@@ -96,7 +96,7 @@
 										@endif
 										
 										@if ($item->verif_dekan == 1)
-                    						<a href="{{ route('akademik.skripsi.cetak', $item->id) }}" id="{{ $item->id }}" name="cetak_sk" class="btn btn-info" title="Cetak SK"><i class="fa fa-print"></i></a>
+                    					<a href="{{ route('akademik.skripsi.cetak', $item->id) }}" id="{{ $item->id }}" name="cetak_sk" class="btn btn-info" title="Cetak SK"><i class="fa fa-print"></i></a>
 					  					@endif
 		            				</td>
 		            			</tr>

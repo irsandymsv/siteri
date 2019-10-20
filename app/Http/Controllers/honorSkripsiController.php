@@ -10,6 +10,7 @@ use App\detail_sk;
 use App\sk_honor;
 use PDF;
 use Exception;
+use Carbon\Carbon;
 
 class honorSkripsiController extends Controller
 {
@@ -94,16 +95,16 @@ class honorSkripsiController extends Controller
         ->with([
             'tipe_sk',
             'status_sk_honor',
-            'detail_sk.pembimbing_utama:no_pegawai,nama,id_golongan',
+            'detail_sk.pembimbing_utama:no_pegawai,nama,npwp,id_golongan',
             'detail_sk.pembimbing_utama.golongan',
 
-            'detail_sk.pembimbing_pendamping:no_pegawai,nama,id_golongan', 
+            'detail_sk.pembimbing_pendamping:no_pegawai,nama,npwp,id_golongan', 
             'detail_sk.pembimbing_pendamping.golongan',
 
-            'detail_sk.penguji_utama:no_pegawai,nama,id_golongan',
+            'detail_sk.penguji_utama:no_pegawai,nama,npwp,id_golongan',
             'detail_sk.penguji_utama.golongan',
 
-            'detail_sk.penguji_pendamping:no_pegawai,nama,id_golongan',
+            'detail_sk.penguji_pendamping:no_pegawai,nama,npwp,id_golongan',
             'detail_sk.penguji_pendamping.golongan',
         ])
         ->first();
@@ -131,9 +132,12 @@ class honorSkripsiController extends Controller
                 'detail_sk.penguji_pendamping.golongan',
             ])
             ->first();
-        // return view('keuangan.honor_skripsi.pdf', ['sk_honor' => $sk_honor]);    
-        $pdf = PDF::loadview('keuangan.honor_skripsi.pdf', ['sk_honor' => $sk_honor]);
-        return $pdf->download('sk-honor');
+        // return view('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor]);
+        $tipe = $sk_honor->tipe_sk->tipe;
+        $tgl = Carbon::parse($sk_honor->created_at)->locale('id_ID')->isoFormat('D MMMM Y');
+
+        $pdf = PDF::loadview('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor]);
+        return $pdf->download("Honor ".$tipe." ".$tgl);
     }
 
     public function edit($id_sk_honor)

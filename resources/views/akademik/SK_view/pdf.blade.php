@@ -26,7 +26,14 @@
             border-collapse: collapse;
             border: 1px solid black;
         }
+
+        .table-bordered tbody tr td:first-child{
+            text-align: center;
+        }
         
+        thead th{
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -62,32 +69,36 @@
         <table class="table table-bordered" style="margin-top:5px">
             <thead>
 			    <tr>
+                    <th>No</th>
 			        <th>Nama Mahasiswa</th>
 			        <th>NIM</th>
 			        <th>Jurusan</th>
 			        <th>Judul</th>
-			        <th>Pembimbing</th>
+			        <th>Pembimbing I/II</th>
 			    </tr>
 			</thead>
-			    <tbody>
-			        @foreach($detail_sk as $item)
-		            <tr>
-		            	<td>{{$item->nama_mhs}}</td>
-		            	<td>{{$item->nim}}</td>
-		            	<td>{{$item->bagian->bagian}}</td>
-		            	<td>{{$item->judul}}</td>
-		            	<td >
-		            		<div class="tbl_row">
-	            				1. {{$item->pembimbing_utama->nama}}
-	            			</div>
-	            			<div class="tbl_row">
-	            				2. {{$item->pembimbing_pendamping->nama}}
-	            			</div>	
-		            	</td>
-		            </tr>
+		    <tbody>
+                @php $no = 0; @endphp
+		        @foreach($detail_sk as $item)
+	            <tr>
+                    <td>{{ $no+=1 }}</td>
+	            	<td>{{$item->nama_mhs}}</td>
+	            	<td>{{$item->nim}}</td>
+	            	<td>{{$item->bagian->bagian}}</td>
+	            	<td>{{$item->judul}}</td>
+	            	<td >
+	            		<div class="tbl_row">
+            				1. {{$item->pembimbing_utama->nama}}
+            			</div>
+            			<div class="tbl_row">
+            				2. {{$item->pembimbing_pendamping->nama}}
+            			</div>	
+	            	</td>
+	            </tr>
                 @endforeach
             </tbody>
         </table>
+
         <div class="page-break"></div>
         <table cellpadding="0" cellspacing="0">
             <tr>
@@ -113,11 +124,11 @@
                 <td valign="top">
                     : Penetapan Dosen  
                     @if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
-			            	Penguji
+			            	Penguji Skripsi
 			            @else
-			            	Pembahas
+			            	Pembahas Seminar Proposal
 			            @endif
-                    Skripsi Mahasiswa Fakultas Ilmu Komputer Universitas Jember Tahun Akademik ...../.....
+                     Mahasiswa Fakultas Ilmu Komputer Universitas Jember Tahun Akademik ...../.....
                 </td>
             </tr>
         </table>
@@ -125,35 +136,38 @@
         <table class="table table-bordered" style="margin-top:5px">
             <thead>
 			    <tr>
+                    <th>No</th>
 			        <th>Nama Mahasiswa</th>
 			        <th>NIM</th>
 			        <th>Jurusan</th>
 			        <th>Judul</th>
 			        <th>
 			            @if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
-			            	Penguji
+			            	Penguji I/II
 			            @else
-			            	Pembahas
+			            	Pembahas I/II
 			            @endif
 			        </th>
 			    </tr>
 			</thead>
-			    <tbody>
-			        @foreach($detail_sk as $item)
-		            <tr>
-		            	<td>{{$item->nama_mhs}}</td>
-		            	<td>{{$item->nim}}</td>
-		            	<td>{{$item->bagian->bagian}}</td>
-		            	<td>{{$item->judul}}</td>
-		                <td>
-		            		<div class="tbl_row">
-		            			1. {{$item->penguji_utama->nama}}	
-		            		</div>
-		            		<div class="tbl_row">
-		            			2. {{$item->penguji_pendamping->nama}}	
-		            		</div>
-		            	</td>
-		            </tr>
+		    <tbody>
+                @php $no = 0; @endphp
+		        @foreach($detail_sk as $item)
+	            <tr>
+                    <td>{{ $no+=1 }}</td>
+	            	<td>{{$item->nama_mhs}}</td>
+	            	<td>{{$item->nim}}</td>
+	            	<td>{{$item->bagian->bagian}}</td>
+	            	<td>{{$item->judul}}</td>
+	                <td>
+	            		<div class="tbl_row">
+	            			1. {{$item->penguji_utama->nama}}	
+	            		</div>
+	            		<div class="tbl_row">
+	            			2. {{$item->penguji_pendamping->nama}}	
+	            		</div>
+	            	</td>
+	            </tr>
                 @endforeach
             </tbody>
         </table>
