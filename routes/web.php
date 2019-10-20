@@ -19,3 +19,6 @@ Route::get('/tes', function()
 {
 	return view('layout.template');
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
