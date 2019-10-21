@@ -100,4 +100,29 @@ class User extends Authenticatable
         return $this->belongsTo('App\jabatan', 'id_jabatan');
     }
 
+    public function laporan()
+    {
+        return $this->hasMany('App\laporan','id_user');
+    }
+
+    public function pembimbing_utama()
+    {
+        return $this->hasMany('App\detail_sk', 'id_pembimbing_utama');
+    }
+
+    public function pembimbing_pendamping()
+    {
+        return $this->hasMany('App\detail_sk', 'id_pembimbing_pendamping');
+    }
+
+    public function penguji_utama()
+    {
+        return $this->hasMany('App\detail_sk', 'id_penguji_utama');
+    }
+
+    public function penguji_pendamping()
+    {
+        return $this->hasMany('App\detail_sk', 'id_penguji_pendamping');
+    }
+
 }

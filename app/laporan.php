@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class bagian extends Model
+class laporan extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'bagian';
+    protected $table = 'laporan';
 
     /**
      * Indicates if the model should be timestamped.
@@ -25,17 +25,20 @@ class bagian extends Model
      *
      * @var array
      */
-    protected $guarded = ['id']; 
+    protected $guarded = ['id'];
 
+    public function jenis_laporan()
+    {
+        return $this->belongsTo('App\jenis_laporan', 'id_jenis');
+    }
 
     public function user()
     {
-        return $this->hasMany('App\User', 'id_bagian');
+        return $this->belongsTo('App\User', 'id_user');
     }
 
-    public function detail_sk()
+    public function file_laporan()
     {
-        return $this->hasMany('App\detail_sk', 'id_bagian');
+        return $this->hasMany('App\file_laporan','id_laporan');
     }
-
 }

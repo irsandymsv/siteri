@@ -20,11 +20,12 @@ class CreateUsersTable extends Migration
             $table->string('nama', 40);
             $table->string('npwp', 15)->nullable();
             $table->string('bpjs', 13)->nullable();
-            $table->unsignedInteger('id_jabatan');
-            $table->unsignedInteger('id_bagian');
-            $table->unsignedInteger('id_pangkat');
-            $table->unsignedInteger('id_golongan');
-            $table->unsignedInteger('id_fungsional');
+            $table->tinyInteger('is_dosen')->length(1)->nullable();
+            $table->unsignedInteger('id_jabatan')->nullable();
+            $table->unsignedInteger('id_bagian')->nullable();
+            $table->unsignedInteger('id_pangkat')->nullable();
+            $table->unsignedInteger('id_golongan')->nullable();
+            $table->unsignedInteger('id_fungsional')->nullable();
             $table->rememberToken();
             
             // $table->bigIncrements('id');

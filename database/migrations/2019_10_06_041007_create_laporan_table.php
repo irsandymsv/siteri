@@ -15,11 +15,11 @@ class CreateLaporanTable extends Migration
     {
         Schema::create('laporan', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('id_jenis');
-            $table->string('id_user', 25);
+            $table->unsignedInteger('id_jenis')->nullable();
+            $table->string('id_user', 25)->nullable();
 
-            $table->foreign('id_jenis')->references('id')->on('jenis_laporan')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('id_user')->references('no_pegawai')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_jenis')->references('id')->on('jenis_laporan')->onDelete('set null');
+            $table->foreign('id_user')->references('no_pegawai')->on('users')->onDelete('set null');
         });
     }
 

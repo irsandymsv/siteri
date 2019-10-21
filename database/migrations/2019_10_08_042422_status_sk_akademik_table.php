@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFileLaporanTable extends Migration
+class StatusSkAkademikTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateFileLaporanTable extends Migration
      */
     public function up()
     {
-        Schema::create('file_laporan', function (Blueprint $table) {
+        Schema::create('status_sk_akademik', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('filename');
-            $table->string('dir');
-            $table->unsignedInteger('id_laporan')->nullable();
-
-            $table->foreign('id_laporan')->references('id')->on('laporan')->onDelete('set null');
+            $table->string('status')->length(100);
         });
     }
 
@@ -30,6 +26,6 @@ class CreateFileLaporanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('file_laporan');
+        Schema::dropIfExists('status_sk_akademik');
     }
 }
