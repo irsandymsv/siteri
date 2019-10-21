@@ -110,7 +110,7 @@
       			<div class="box-header">
 	              <h3 class="box-title">Data SK {{ ($sk_akademik->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
 
-	              @if($sk_akademik->verif_dekan != 1)
+	              @if($sk_akademik->verif_ktu != 1)
 		              <div class="form-group" style="float: right;">
 		              	<a href="{{ ($sk_akademik->tipe_sk->tipe == "SK Skripsi"? route('akademik.skripsi.edit', $sk_akademik->id) : route('akademik.sempro.edit', $sk_akademik->id)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
 		              </div>
@@ -165,7 +165,7 @@
 			            </table> 
 	            	</div>
 	            	
-	            	 @if($sk_akademik->verif_dekan != 1)
+	            	 @if($sk_akademik->verif_ktu != 1)
 		              <br>
 		              <div class="form-group" style="float: right;">
 		            	<a href="{{ ($sk_akademik->tipe_sk->tipe == "SK Skripsi"? route('akademik.skripsi.edit', $sk_akademik->id) : route('akademik.sempro.edit', $sk_akademik->id)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>

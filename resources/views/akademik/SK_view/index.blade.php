@@ -81,12 +81,12 @@
 		            				<td>
 		            					@if($tipe == "SK Skripsi")
 		            						<a href="{{ route('akademik.skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
-			            					@if($item->verif_dekan != 1)
+			            					@if($item->verif_ktu != 1)
 			            					<a href="{{ route('akademik.skripsi.edit', $item->id) }}" class="btn btn-warning" title="Ubah SK"><i class="fa fa-edit"></i></a>
 			            					@endif
 						              	@else
 						              		<a href="{{ route('akademik.sempro.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
-			            					@if($item->verif_dekan != 1)
+			            					@if($item->verif_ktu != 1)
 			            					<a href="{{ route('akademik.sempro.edit', $item->id) }}" class="btn btn-warning" title="Ubah SK"><i class="fa fa-edit"></i></a>
 			            					@endif
 						              	@endif

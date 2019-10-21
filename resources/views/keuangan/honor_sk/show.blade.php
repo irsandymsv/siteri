@@ -68,7 +68,7 @@
 
             <div class="box-body">
                <div class="form-group" style="float: right;">
-                  @if($sk_honor->verif_dekan != 1) 
+                  @if($sk_honor->verif_kebag_keuangan != 1) 
                      <a href="{{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? route('keuangan.honor-skripsi.edit', $sk_honor->id) : route('keuangan.honor-sempro.edit', $sk_honor->id)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
                   @endif
                   
