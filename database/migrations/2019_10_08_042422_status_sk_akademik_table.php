@@ -26,6 +26,6 @@ class StatusSkAkademikTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('status_sk_akademik');
     }
 }

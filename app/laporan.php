@@ -27,15 +27,6 @@ class laporan extends Model
      */
     protected $guarded = ['id'];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'id_jenis','id_user'
-    ];
-
     public function jenis_laporan()
     {
         return $this->belongsTo('App\jenis_laporan', 'id_jenis');

@@ -1,7 +1,7 @@
-@extends('layout.template')
+@extends('layouts.template')
 
 @section('side_menu')
-	<li class="active"><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+	<li class="active"><a href="{{route('akademik.dashboard')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
 
 	<li class="treeview">
 	    <a href="#"><i class="fa fa-link"></i> <span>SK Skripsi</span>
@@ -10,9 +10,8 @@
 	        </span>
 	    </a>
 	    <ul class="treeview-menu">
-	      <li><a href="#">Buat Baru</a></li>
-	      <li><a href="{{route('akademik.skripsi.create')}}">SK Pembimbing</a></li>
-	      <li><a href="#">SK penguji</a></li>
+	      <li><a href="{{route('akademik.skripsi.create')}}">Buat Baru</a></li>
+	      <li><a href="{{ route('akademik.skripsi.index') }}">Lihat Semua</a></li>
 	    </ul>
 	</li>
 
@@ -23,9 +22,8 @@
 	        </span>
 	    </a>
 	    <ul class="treeview-menu">
-	      <li><a href="#">Buat Baru</a></li>
-	      <li><a href="#">SK Pembimbing</a></li>
-	      <li><a href="#">SK Penguji</a></li>
+	      <li><a href="{{route('akademik.sempro.create')}}">Buat Baru</a></li>
+	      <li><a href="{{ route('akademik.sempro.index') }}">Lihat Semua</a></li>
 	    </ul>
 	</li>
 @endsection

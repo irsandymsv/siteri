@@ -14,7 +14,7 @@ class AddForeignKeysToSkAkademikTable extends Migration
     public function up()
     {
         Schema::table('sk_akademik', function (Blueprint $table) {
-            $table->foreign('id_status_sk_akademik')->references('id')->on('status_sk_akademik')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_status_sk_akademik')->references('id')->on('status_sk_akademik')->onDelete('set null');
         });
     }
 
@@ -26,7 +26,7 @@ class AddForeignKeysToSkAkademikTable extends Migration
     public function down()
     {
         Schema::table('sk_akademik', function (Blueprint $table) {
-            //
+            $table->dropForeign('sk_akademik_id_status_sk_akademik_foreign');
         });
     }
 }

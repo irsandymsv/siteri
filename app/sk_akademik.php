@@ -21,20 +21,21 @@ class sk_akademik extends Model
     public $timestamps = true;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    // protected $fillable = [
+    //     'id_status_sk_akademik', 'id_tipe_sk'
+    // ];
+
+    /**
      * The attributes that aren't mass assignable.
      *
      * @var array
      */
     protected $guarded = ['id'];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'id_tipe_sk', 'jenis', 'id_status_sk_akademik', 'verif_ktu', 'verif_dekan'
-    ];
+    
 
     public function tipe_sk()
     {

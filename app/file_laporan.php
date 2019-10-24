@@ -27,15 +27,6 @@ class file_laporan extends Model
      */
     protected $guarded = ['id'];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'filename', 'dir', 'id_laporan'
-    ];
-
     public function laporan(){
         return $this->belongsTo('App\laporan','id_laporan');
     }
