@@ -88,6 +88,7 @@
             <div class="box-header">
                <h3 class="box-title">Buat Daftar Honor Pembimbing {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
                <input type="hidden" name="id_sk_akademik" value="{{$sk_akademik->id}}">
+               <input type="hidden" name="no_surat" value="{{$sk_akademik->no_surat}}">
 
                <div class="box-tools pull-right">
                   <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>

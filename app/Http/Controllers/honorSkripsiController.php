@@ -77,6 +77,7 @@ class honorSkripsiController extends Controller
             $sk_honor=sk_honor::create([
                 'id_tipe_sk' => 1, //tipe SK Skripsi
                 'id_status_sk_honor' => $request->status,
+                'no_surat' => $request->no_surat,
                 'honor_pembimbing1' => $request->honor_pembimbing1,
                 'honor_pembimbing2' => $request->honor_pembimbing2,
                 'honor_penguji' => $request->honor_penguji
@@ -137,8 +138,7 @@ class honorSkripsiController extends Controller
         // return view('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor]);
         $tipe = $sk_honor->tipe_sk->tipe;
         $tgl = Carbon::parse($sk_honor->created_at)->locale('id_ID')->isoFormat('D MMMM Y');
-
-        $pdf = PDF::loadview('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor]);
+        $pdf = PDF::loadview('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor,'tgl' => $tgl]);
         return $pdf->download("Honor ".$tipe." ".$tgl);
     }
 

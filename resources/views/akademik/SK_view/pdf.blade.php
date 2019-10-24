@@ -45,7 +45,7 @@
                     Nomor 
                 </td>
                 <td valign="top">
-                    : .........
+                    : {{$sk_akademik->no_surat}}/UN 25.1.15/SP/.......
                 </td>
             </tr>
             <tr>
@@ -106,7 +106,7 @@
                     Nomor 
                 </td>
                 <td valign="top">
-                    : .........
+                    : {{$sk_akademik->no_surat}}/UN 25.1.15/SP/.......
                 </td>
             </tr>
             <tr>

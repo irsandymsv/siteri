@@ -73,11 +73,13 @@ class SkSkripsiController extends Controller
 			"penguji_utama.*" => "required",
 			"penguji_pendamping" => "required|array",
 			"penguji_pendamping.*" => "required",
+			"no_surat" => "required"
 		]);
 		try {
 			$sk_akademik = sk_akademik::create([
 				'id_tipe_sk' => 1,
-				'id_status_sk_akademik' => $request->status
+				'id_status_sk_akademik' => $request->status,
+				'no_surat' => $request->no_surat
 			]);
 			for ($i = 0; $i < count($request->nama); $i++) {
 				$detail_sk = detail_sk::create([
@@ -130,7 +132,7 @@ class SkSkripsiController extends Controller
 
 		$tipe = $sk_akademik->tipe_sk->tipe;
 		$tgl = Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y');
-		$pdf = PDF::loadview('akademik.SK_view.pdf', ['sk_akademik' => $sk_akademik,'detail_sk' => $detail_sk])->setPaper('a4', 'landscape')->setWarnings(false);
+		$pdf = PDF::loadview('akademik.SK_view.pdf', ['sk_akademik' => $sk_akademik,'detail_sk' => $detail_sk,'tgl'=>$tgl])->setPaper('a4', 'landscape')->setWarnings(false);
 		return $pdf->download($tipe." ".$tgl);
 	}
 
@@ -180,14 +182,10 @@ class SkSkripsiController extends Controller
 			"jurusan.*" => "required",
 			"judul" => "required|array",
 			"judul.*" => "required",
-			// "id_pembimbing" => "required|array",
-			// "id_pembimbing.*" => "required",
 			"pembimbing_utama" => "required|array",
 			"pembimbing_utama.*" => "required",
 			"pembimbing_pendamping" => "required|array",
 			"pembimbing_pendamping.*" => "required",
-			// "id_penguji" => "required|array",
-			// "id_penguji.*" => "required",
 			"penguji_utama" => "required|array",
 			"penguji_utama.*" => "required",
 			"penguji_pendamping" => "required|array",
@@ -206,15 +204,13 @@ class SkSkripsiController extends Controller
 			$sk_akademik = sk_akademik::where('id', $id)->update([
 				'id_status_sk_akademik' => $request->status,
 				'verif_ktu' => $verif_ktu,
-				'verif_dekan' => $verif_dekan
+				'verif_dekan' => $verif_dekan,
+				'no_surat' => $request->no_surat
 			]);
 
 			for ($i = 0; $i < count($request->id_detail_sk); $i++) {
 				if ($request->id_detail_sk[$i] != 0) {
-					// echo('||detele = '.$request->delete_detail_sk[$i].'|| ');
-					// echo ($request->delete_detail_sk[$i] == 1);
 					if ($request->delete_detail_sk[$i] == 1) {
-						// echo('delete');
 						detail_sk::where('id', $request->id_detail_sk[$i])->delete();
 						continue;
 					} else {
@@ -242,10 +238,6 @@ class SkSkripsiController extends Controller
 						'id_penguji_pendamping' => $request->penguji_pendamping[$i]
 					]);
 				}
-				// else{
-				// 	dd($request->id_detail_sk[$i]);
-				// 	//enek kejanggalan lek mlebu kene
-				// }
 			}
 			return redirect()->route('akademik.skripsi.show', $id)->with('success', 'Data Berhasil Diedit');
 		} catch (Exception $e) {
@@ -297,7 +289,6 @@ class SkSkripsiController extends Controller
 				'pembimbing_utama:no_pegawai,nama',
 				'pembimbing_pendamping:no_pegawai,nama'
 			])->get();
-		// dd($detail_sk);
 		return view('ktu.SK_view.sk_show', [
 			'sk_akademik' => $sk_akademik,
 			'detail_sk' => $detail_sk
@@ -308,7 +299,6 @@ class SkSkripsiController extends Controller
 
 	public function ktu_verif(Request $request, $id)
 	{
-		// dd($request);
 		$sk_akademik = sk_akademik::find($id);
 		$sk_akademik->verif_ktu = $request->verif_ktu;
 		if($request->verif_ktu == 2){

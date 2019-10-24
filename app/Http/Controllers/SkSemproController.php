@@ -11,6 +11,7 @@ use App\sk_akademik;
 use App\detail_sk;
 use App\Http\Controllers\Controller;
 use App\status_sk_akademik;
+use Carbon\Carbon;
 
 class SkSemproController extends Controller
 {
@@ -72,12 +73,14 @@ class SkSemproController extends Controller
             "penguji_utama.*" => "required",
             "penguji_pendamping" => "required|array",
             "penguji_pendamping.*" => "required",
+            "no_surat" => "required"
         ]);
 
         try {
             $sk_akademik = sk_akademik::create([
                 'id_tipe_sk' => 2,
-                'id_status_sk_akademik' => $request->status
+                'id_status_sk_akademik' => $request->status,
+                'no_surat' => $request->no_surat
             ]);
             for ($i = 0; $i < count($request->nama); $i++) {
                 $detail_sk = detail_sk::create([
@@ -164,18 +167,15 @@ class SkSemproController extends Controller
             "jurusan.*" => "required",
             "judul" => "required|array",
             "judul.*" => "required",
-            // "id_pembimbing" => "required|array",
-            // "id_pembimbing.*" => "required",
             "pembimbing_utama" => "required|array",
             "pembimbing_utama.*" => "required",
             "pembimbing_pendamping" => "required|array",
             "pembimbing_pendamping.*" => "required",
-            // "id_penguji" => "required|array",
-            // "id_penguji.*" => "required",
             "penguji_utama" => "required|array",
             "penguji_utama.*" => "required",
             "penguji_pendamping" => "required|array",
             "penguji_pendamping.*" => "required",
+            "no_surat" => "required"
         ]);
 
         try {
@@ -190,15 +190,13 @@ class SkSemproController extends Controller
             $sk_akademik = sk_akademik::where('id', $id)->update([
                 'id_status_sk_akademik' => $request->status,
                 'verif_ktu' => $verif_ktu,
-                'verif_dekan' => $verif_dekan
+                'verif_dekan' => $verif_dekan,
+                'no_surat' => $request->no_surat
             ]);
 
             for ($i = 0; $i < count($request->id_detail_sk); $i++) {
                 if ($request->id_detail_sk[$i] != 0) {
-                    // echo('||detele = '.$request->delete_detail_sk[$i].'|| ');
-                    // echo ($request->delete_detail_sk[$i] == 1);
                     if ($request->delete_detail_sk[$i] == 1) {
-                        // echo('delete');
                         detail_sk::where('id', $request->id_detail_sk[$i])->delete();
                         continue;
                     } else {
@@ -227,10 +225,6 @@ class SkSemproController extends Controller
                         'id_penguji_pendamping' => $request->penguji_pendamping[$i]
                     ]);
                 }
-                // else{
-                // 	dd($request->id_detail_sk[$i]);
-                // 	//enek kejanggalan lek mlebu kene
-                // }
             }
             return redirect()->route('akademik.sempro.show', $id)->with('success', 'Data Berhasil Diedit');
         } catch (Exception $e) {
