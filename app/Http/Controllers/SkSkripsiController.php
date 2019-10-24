@@ -135,10 +135,10 @@ class SkSkripsiController extends Controller
 		$tanggal = new Carbon($sk_akademik->created_at);
 		$tahun = $tanggal->year; 
 
-		$awalSemester = Carbon::create($tanggal->year, 1, 15);
-		$akhirSemester = Carbon::create($tanggal->year, 7, 31);
+		$awalSemester = Carbon::create($tahun, 1, 15);
+		$akhirSemester = Carbon::create($tahun, 7, 31);
 		if($tanggal->isBetween($awalSemester, $akhirSemester)){
-			$tahun2 = $tanggal->year->subYear();
+			$tahun2 = $tanggal->subYear();
 			$tahun2 = $tahun2->year;
 			$pdf = PDF::loadview('akademik.SK_view.pdf', ['sk_akademik' => $sk_akademik, 'detail_sk' => $detail_sk, 'tahun' => $tahun2, 'tahun2' => $tahun,'thn_asli'=> $tahun])->setPaper('a4', 'landscape')->setWarnings(false);
 		}else{

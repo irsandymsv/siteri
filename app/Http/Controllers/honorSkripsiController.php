@@ -141,14 +141,14 @@ class honorSkripsiController extends Controller
         $tanggal = new Carbon($sk_akademik->created_at);
         $tahun = $tanggal->year;
 
-        $awalSemester = Carbon::create($tanggal->year, 1, 15);
-        $akhirSemester = Carbon::create($tanggal->year, 7, 31);
+        $awalSemester = Carbon::create($tahun, 1, 15);
+        $akhirSemester = Carbon::create($tahun, 7, 31);
         if ($tanggal->isBetween($awalSemester, $akhirSemester)) {
-            $tahun2 = $tanggal->year->subYear();
+            $tahun2 = $tanggal->subYear();
             $tahun2 = $tahun2->year;
             $pdf = PDF::loadview('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor,'tahun' => $tahun2,'tahun2' => $tahun,'thn_asli' => $tahun]);
         }else{
-            $tahun2 = $tanggal->year->addYear();
+            $tahun2 = $tanggal->addYear();
             $tahun2 = $tahun2->year;
             $pdf = PDF::loadview('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor, 'tahun' => $tahun2, 'tahun2' => $tahun, 'thn_asli' => $tahun]);
         }
