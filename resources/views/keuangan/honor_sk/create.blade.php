@@ -73,6 +73,7 @@
 
                <div class="box-body">
                   <h4><b>Informasi SK:</b></h3>
+                  <p>Nomor SK: </p>
                   <p>Tanggal SK : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</p>
                   <button class="btn bg-purple" name="simpan_draf">Simpan Sebagai Draft</button>
                   <button class="btn btn-success" name="simpan_kirim">Simpan dan Kirim</button>
@@ -99,9 +100,9 @@
                <table id="tbl_add_honor_pembimbing">
                   <tr>
                      <td><label for="honor_pembimbing">Honor Pembimbing I: Rp </label></td>
-                     <td><input type="number" name="honor_pembimbing_1" id="honor_pembimbing_1" placeholder="Masukkan jumlah honor"></td>
+                     <td><input type="number" name="honor_pembimbing1" id="honor_pembimbing1" placeholder="Masukkan jumlah honor"></td>
 
-                     @error('honor_pembimbing_1')
+                     @error('honor_pembimbing1')
                         <span class="invalid-feedback" role="alert" style="color: red;">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -111,13 +112,13 @@
                   <tr>
                      <td><label for="honor_pembimbing">Honor Pembimbing II: Rp </label></td>
                      <td>
-                        <input type="number" name="honor_pembimbing_2" id="honor_pembimbing_2" placeholder="Masukkan jumlah honor">
+                        <input type="number" name="honor_pembimbing2" id="honor_pembimbing2" placeholder="Masukkan jumlah honor">
                      </td>
                      <td>
                         <button type="button" id="btn_honor_pembimbing" class="btn btn-primary">Ok</button>
                      </td>
 
-                     @error('honor_pembimbing_2')
+                     @error('honor_pembimbing2')
                         <span class="invalid-feedback" role="alert" style="color: red;">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -309,8 +310,8 @@
       // console.log(detail_sk);
 
       $("#btn_honor_pembimbing").click(function(event) {
-         var honor_1 = $("#honor_pembimbing_1").val();
-         var honor_2 = $("#honor_pembimbing_2").val();
+         var honor_1 = $("#honor_pembimbing1").val();
+         var honor_2 = $("#honor_pembimbing2").val();
          
          $(".pembimbingHonor_1").children("span").text(formatRupiah(honor_1));
          $(".pembimbingHonor_2").children("span").text(formatRupiah(honor_2));

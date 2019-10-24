@@ -24,8 +24,8 @@
                         <thead>
                            <tr>
                               <th>No</th>
+                              <th>Nomor SK</th>
                               <th>Tanggal Dibuat</th>
-                              <th>Daftar Honor</th>
                               <th>Opsi</th>
                            </tr>
                         </thead>
@@ -35,15 +35,9 @@
                            @foreach($sk_akademik as $item)
                               <tr>
                                  <td>{{$no+=1}}</td>
+                                 <td>-nomor sk-</td>
                                  <td>
                                  	{{Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}
-                                 </td>
-                                 <td>
-                              	   @if(is_null($item->detail_sk[0]->id_sk_honor))
-                              		   Tidak Ada
-                              	   @else
-                              		   Ada
-                              	   @endif
                                  </td>
                                  <td>
                                     <a href="{{ ($tipe == "SK Skripsi"? route('keuangan.honor-skripsi.create', $item->id) : route('keuangan.honor-sempro.create', $item->id)) }}" class="btn btn-success" title="Buat daftar honor berdasarkan SK ini">Buat Daftar Honor</a>

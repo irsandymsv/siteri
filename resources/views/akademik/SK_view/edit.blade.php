@@ -14,6 +14,15 @@
 		th{
 			text-align: center;
 		}
+
+		#no-surat-form{
+			width: 60%;
+			font-size: 16px;
+		}
+
+		#no-surat-form input{
+			width: 15%;
+		}
 	</style>
 @endsection
 
@@ -37,19 +46,28 @@
 		              <h3 class="box-title">Ubah SK {{ ($sk_akademik->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
 
 		              <div class="form-group" style="float: right;">
+		              	<a href="{{ ( $sk_akademik->tipe_sk->tipe == "SK Skripsi"? route('akademik.skripsi.show', $sk_akademik->id) : route('akademik.sempro.show', $sk_akademik->id) ) }}" class="btn btn-default">Batal</a> &ensp;
 		            	<button type="submit" name="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button> 
 		            		&ensp;
 		            	<button type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>	
 		              </div>
+
+		              <h4>
+		              	<b>Tanggal SK</b> : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}} &ensp;
+		              	<b>Status</b> : {{$sk_akademik->status_sk_akademik->status}}
+		              </h4>
 		            </div>
 	            	
 	            	<div class="box-body">
 	            		@csrf
 	            		@method('PUT')
-	            		<h4>
-	            			<b>Tanggal SK</b> : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}} &ensp;
-	            			<b>Status</b> : {{$sk_akademik->status_sk_akademik->status}}
-	            		</h4>
+	            		
+
+	            		<div class="form-group" id="no-surat-form">
+	            			<label for="no_surat">Nomor Surat: </label>
+	            			<input type="text" name="no_surat">
+	            			<span><b>/UN 25.1.15/SP/{{Carbon\Carbon::today()->year}}</b></span>
+	            		</div>
 
 		            	<div class="table-responsive">
 		            		<h5>Total Data = <span class="data_count"></span></h5>
@@ -285,6 +303,7 @@
 
 		            	<input type="hidden" name="status" value="">
 		            	<div class="form-group" style="float: right;">
+		            		<a href="{{ ( $sk_akademik->tipe_sk->tipe == "SK Skripsi"? route('akademik.skripsi.show', $sk_akademik->id) : route('akademik.sempro.show', $sk_akademik->id) ) }}" class="btn btn-default">Batal</a>&ensp;
 		            		<button type="submit" name="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button> &ensp;
 		            		<button type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>	
 		            	</div>

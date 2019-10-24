@@ -44,6 +44,7 @@
 	            		<thead>
 		            		<tr>
 		            			<th>No</th>
+		            			<th>Nomor SK</th>
 		            			<th>Tanggal Dibuat</th>
 		            			<th>Status</th>
 		            			<th>Verifikasi KTU</th>
@@ -56,6 +57,7 @@
 		            		@foreach($sk_akademik as $item)
 		            			<tr id="sk_{{$item->id}}">
 		            				<td>{{$no+=1}}</td>
+		            				<td>-nomor sk-</td>
 		            				<td>
 		            					{{Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}
 		            				</td>
