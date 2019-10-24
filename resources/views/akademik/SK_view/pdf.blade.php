@@ -45,7 +45,7 @@
                     Nomor 
                 </td>
                 <td valign="top">
-                    : {{$sk_akademik->no_surat}}/UN 25.1.15/SP/.......
+                    : {{$sk_akademik->no_surat}}/UN 25.1.15/SP/{{$thn_asli}}
                 </td>
             </tr>
             <tr>
@@ -61,7 +61,7 @@
                     Tentang
                 </td>
                 <td valign="top">
-                    : Penetapan Dosen Pembimbing Skripsi Mahasiswa Fakultas Ilmu Komputer Universitas Jember Tahun Akademik ...../.....
+                : Penetapan Dosen Pembimbing Skripsi Mahasiswa Fakultas Ilmu Komputer Universitas Jember Tahun Akademik {{$tahun}}/{{$tahun2}}
                 </td>
             </tr>
         </table>
@@ -106,7 +106,7 @@
                     Nomor 
                 </td>
                 <td valign="top">
-                    : {{$sk_akademik->no_surat}}/UN 25.1.15/SP/.......
+                    : {{$sk_akademik->no_surat}}/UN 25.1.15/SP/{{$thn_asli}}
                 </td>
             </tr>
             <tr>
@@ -128,7 +128,7 @@
 			            @else
 			            	Pembahas Seminar Proposal
 			            @endif
-                     Mahasiswa Fakultas Ilmu Komputer Universitas Jember Tahun Akademik ...../.....
+                     Mahasiswa Fakultas Ilmu Komputer Universitas Jember Tahun Akademik {{$tahun}}/{{$tahun2}}
                 </td>
             </tr>
         </table>

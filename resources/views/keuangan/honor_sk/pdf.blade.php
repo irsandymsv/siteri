@@ -60,7 +60,7 @@
                 </td>
                 <td valign="top">
                     : Honorarium Dosen Pembimbing Skripsi Mahasiswa Fak.Ilmu Komputer Universitas<br>&nbsp;
-                    Jember T.A ......... Di Lingkungan Fakultas Ilmu Komputer Universitas Jember
+                    Jember T.A {{$tahun}}/{{$tahun2}} Di Lingkungan Fakultas Ilmu Komputer Universitas Jember
                 </td>
             </tr>
             <tr>
@@ -68,7 +68,7 @@
                     SESUAI
                 </td>
                 <td valign="top">
-                : SK Dekan Fak. Ilmu Komputer UNEJ {{$sk_honor->no_surat}}/UN 25.1.15/SP/.........<br>&nbsp;
+                : SK Dekan Fak. Ilmu Komputer UNEJ {{$sk_honor->no_surat}}/UN 25.1.15/SP/{{$thn_asli}}<br>&nbsp;
                     Tanggal ...............
                 </td>
             </tr>
@@ -196,7 +196,7 @@
                         Pembahas Seminar Proposal
                     @endif
                     Mahasiswa Fak.Ilmu Komputer Universitas<br>&nbsp;
-                    Jember T.A ......... Di Lingkungan Fakultas Ilmu Komputer Universitas Jember
+                    Jember T.A {{$tahun}}/{{$tahun2}} Di Lingkungan Fakultas Ilmu Komputer Universitas Jember
                 </td>
             </tr>
             <tr>
@@ -204,7 +204,7 @@
                     SESUAI
                 </td>
                 <td valign="top">
-                    : SK Dekan Fak. Ilmu Komputer UNEJ {{$sk_honor->no_surat}}/UN 25.1.15/SP/.......<br>&nbsp;
+                    : SK Dekan Fak. Ilmu Komputer UNEJ {{$sk_honor->no_surat}}/UN 25.1.15/SP/{{$thn_asli}}<br>&nbsp;
                     Tanggal ...............
                 </td>
             </tr>

@@ -138,7 +138,20 @@ class honorSkripsiController extends Controller
         // return view('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor]);
         $tipe = $sk_honor->tipe_sk->tipe;
         $tgl = Carbon::parse($sk_honor->created_at)->locale('id_ID')->isoFormat('D MMMM Y');
-        $pdf = PDF::loadview('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor,'tgl' => $tgl]);
+        $tanggal = new Carbon($sk_akademik->created_at);
+        $tahun = $tanggal->year;
+
+        $awalSemester = Carbon::create($tanggal->year, 1, 15);
+        $akhirSemester = Carbon::create($tanggal->year, 7, 31);
+        if ($tanggal->isBetween($awalSemester, $akhirSemester)) {
+            $tahun2 = $tanggal->year->subYear();
+            $tahun2 = $tahun2->year;
+            $pdf = PDF::loadview('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor,'tahun' => $tahun2,'tahun2' => $tahun,'thn_asli' => $tahun]);
+        }else{
+            $tahun2 = $tanggal->year->addYear();
+            $tahun2 = $tahun2->year;
+            $pdf = PDF::loadview('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor, 'tahun' => $tahun2, 'tahun2' => $tahun, 'thn_asli' => $tahun]);
+        }
         return $pdf->download("Honor ".$tipe." ".$tgl);
     }
 

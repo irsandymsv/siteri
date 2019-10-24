@@ -132,8 +132,23 @@ class SkSkripsiController extends Controller
 
 		$tipe = $sk_akademik->tipe_sk->tipe;
 		$tgl = Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y');
-		$pdf = PDF::loadview('akademik.SK_view.pdf', ['sk_akademik' => $sk_akademik,'detail_sk' => $detail_sk,'tgl'=>$tgl])->setPaper('a4', 'landscape')->setWarnings(false);
-		return $pdf->download($tipe." ".$tgl);
+		$tanggal = new Carbon($sk_akademik->created_at);
+		$tahun = $tanggal->year; 
+
+		$awalSemester = Carbon::create($tanggal->year, 1, 15);
+		$akhirSemester = Carbon::create($tanggal->year, 7, 31);
+		if($tanggal->isBetween($awalSemester, $akhirSemester)){
+			$tahun2 = $tanggal->year->subYear();
+			$tahun2 = $tahun2->year;
+			$pdf = PDF::loadview('akademik.SK_view.pdf', ['sk_akademik' => $sk_akademik, 'detail_sk' => $detail_sk, 'tahun' => $tahun2, 'tahun2' => $tahun,'thn_asli'=> $tahun])->setPaper('a4', 'landscape')->setWarnings(false);
+		}else{
+			$tahun2 = $tanggal->addYear();
+			$tahun2 = $tahun2->year;
+			$pdf = PDF::loadview('akademik.SK_view.pdf', ['sk_akademik' => $sk_akademik, 'detail_sk' => $detail_sk, 'tahun' => $tahun, 'tahun2' => $tahun2,'thn_asli' => $tahun])->setPaper('a4', 'landscape')->setWarnings(false);
+		}
+		return $pdf->download($tipe . " " . $tgl);
+		
+		
 	}
 
 	public function edit(Request $request, $id)
