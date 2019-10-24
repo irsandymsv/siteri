@@ -17,7 +17,8 @@ class CreateSkHonorTable extends Migration
             $table->increments('id');
             $table->unsignedTinyInteger('id_tipe_sk')->nullable();
             $table->unsignedInteger('id_status_sk_honor')->nullable();
-            $table->unsignedBigInteger('honor_pembimbing');
+            $table->unsignedBigInteger('honor_pembimbing1');
+            $table->unsignedBigInteger('honor_pembimbing2');
             $table->unsignedBigInteger('honor_penguji');
             $table->boolean('verif_ktu')->default(false);
             $table->boolean('verif_kebag_keuangan')->default(false);

@@ -108,19 +108,19 @@
                         <p>NIM: {{$item->nim}}</p>
                     </td>
                     <td>{{$item->pembimbing_utama->golongan->golongan}}</td>
-                    <td id="pembimbing_{{$no}}" class="pembimbingHonor">Rp <span>{{ number_format($sk_honor->honor_pembimbing, 0, ",", ".") }}</span>
+                    <td id="pembimbing_{{$no}}" class="pembimbingHonor">Rp <span>{{ number_format($sk_honor->honor_pembimbing1, 0, ",", ".") }}</span>
                     </td>
                     <td class="pph" id="pph_{{$no}}">Rp 
                         <span>
                             @php
-                            $pph = ($item->pembimbing_utama->golongan->pph * $sk_honor->honor_pembimbing)/100;
+                            $pph = ($item->pembimbing_utama->golongan->pph * $sk_honor->honor_pembimbing1)/100;
                             @endphp
                             {{ number_format($pph, 0, ",", ".") }}
                         </span>
                     </td>
                     <td class="penerimaan" id="penerimaan_{{$no}}">Rp
                         @php
-                            $penerimaan = $sk_honor->honor_pembimbing - $pph;
+                            $penerimaan = $sk_honor->honor_pembimbing1 - $pph;
                         @endphp
                         <span>{{ number_format($penerimaan, 0, ",", ".") }}</span>
                     </td>
@@ -129,7 +129,7 @@
                     </td>
 
                     @php
-                       $total_honor+=$sk_honor->honor_pembimbing;
+                       $total_honor+=$sk_honor->honor_pembimbing1;
                        $total_pph+=$pph;
                        $total_penerimaan+=$penerimaan;
                     @endphp
@@ -145,18 +145,18 @@
                     <td>{{$item->pembimbing_pendamping->nama}}</td>
                     <td class="font-sm">{{$item->pembimbing_pendamping->npwp}}</td>
                     <td>{{$item->pembimbing_pendamping->golongan->golongan}}</td>
-                    <td id="pembimbing_{{$no}}" class="pembimbingHonor">Rp <span>{{ number_format($sk_honor->honor_pembimbing, 0, ",", ".") }}</span></td>
+                    <td id="pembimbing_{{$no}}" class="pembimbingHonor">Rp <span>{{ number_format($sk_honor->honor_pembimbing2, 0, ",", ".") }}</span></td>
                     <td class="pph" id="pph_{{$no}}">Rp
                         <span>
                             @php
-                            $pph =( $item->pembimbing_pendamping->golongan->pph * $sk_honor->honor_pembimbing)/100;
+                            $pph =( $item->pembimbing_pendamping->golongan->pph * $sk_honor->honor_pembimbing2)/100;
                             @endphp
                             {{ number_format($pph, 0, ",", ".") }}
                         </span>
                     </td>
                     <td class="penerimaan" id="penerimaan_{{$no}}">Rp 
                         @php
-                            $penerimaan = $sk_honor->honor_pembimbing - $pph;
+                            $penerimaan = $sk_honor->honor_pembimbing2 - $pph;
                         @endphp
                         <span>{{ number_format($penerimaan, 0, ",", ".") }}</span>
                     </td>
@@ -165,7 +165,7 @@
                     </td>
 
                     @php
-                       $total_honor+=$sk_honor->honor_pembimbing;
+                       $total_honor+=$sk_honor->honor_pembimbing2;
                        $total_pph+=$pph;
                        $total_penerimaan+=$penerimaan;
                     @endphp

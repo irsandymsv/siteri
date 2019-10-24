@@ -68,7 +68,8 @@ class honorSkripsiController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'honor_pembimbing' => 'required',
+            'honor_pembimbing_1' => 'required',
+            'honor_pembimbing_2' => 'required',
             'honor_penguji' => 'required',
         ]);
 
@@ -76,7 +77,8 @@ class honorSkripsiController extends Controller
             $sk_honor=sk_honor::create([
                 'id_tipe_sk' => 1, //tipe SK Skripsi
                 'id_status_sk_honor' => $request->status,
-                'honor_pembimbing' => $request->honor_pembimbing,
+                'honor_pembimbing1' => $request->honor_pembimbing_1,
+                'honor_pembimbing2' => $request->honor_pembimbing_2,
                 'honor_penguji' => $request->honor_penguji
             ]);
             detail_sk::where('id_sk_akademik',$request->id_sk_akademik)
@@ -171,7 +173,8 @@ class honorSkripsiController extends Controller
     public function update(Request $request, $id_sk_honor)
     {
         $this->validate($request, [
-            'honor_pembimbing' => 'required',
+            'honor_pembimbing_1' => 'required',
+            'honor_pembimbing_2' => 'required',
             'honor_penguji' => 'required',
         ]);
 
@@ -185,12 +188,13 @@ class honorSkripsiController extends Controller
                 $verif_bpp = 0;
                 $verif_ktu = 0;
                 $verif_wadek2 = 0;
-                $verif_dekan = 0;
+                $verif_dekan = 0; 
             }
             
             sk_honor::where('id',$id_sk_honor)->update([
                 'id_status_sk_honor' => $request->status,
-                'honor_pembimbing' => $request->honor_pembimbing,
+                'honor_pembimbing1' => $request->honor_pembimbing_1,
+                'honor_pembimbing2' => $request->honor_pembimbing_2,
                 'honor_penguji' => $request->honor_penguji,
                 'verif_kebag_keuangan' => $verif_bpp,
                 'verif_ktu' => $verif_ktu,
