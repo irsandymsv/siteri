@@ -62,7 +62,6 @@
 	            </div>
 				
 	            <div class="box-body">
-	            	<h5><b>Nomor Surat</b> : ...</h5>
 						@if ($sk_akademik->verif_dekan == 1)
 							<div class="form-group" style="float: right;">
 		                    	<a href="{{ route('akademik.skripsi.cetak', $sk_akademik->id) }}" class="btn btn-info"><i class="fa fa-print"></i> Cetak</a>
