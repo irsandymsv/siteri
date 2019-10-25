@@ -88,6 +88,7 @@
                <h3 class="box-title">Ubah Daftar Honor Pembimbing {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
                <input type="hidden" name="id_sk_honor" value="{{$sk_honor->id}}">
                <input type="hidden" name="id_sk_akademik" value="{{$sk_honor->detail_sk[0]->sk_akademik->id}}">
+               {{-- <input type="hidden" name="no_surat" value="{{$sk_akademik->no_surat}}"> --}}
 
                <div class="box-tools pull-right">
                   <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>

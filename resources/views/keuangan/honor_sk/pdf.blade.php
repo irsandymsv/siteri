@@ -68,7 +68,7 @@
                     SESUAI
                 </td>
                 <td valign="top">
-                : SK Dekan Fak. Ilmu Komputer UNEJ {{$sk_honor->no_surat}}/UN 25.1.15/SP/{{$thn_asli}}<br>&nbsp;
+                : SK Dekan Fak. Ilmu Komputer UNEJ {{$sk_honor->detail_sk[0]->sk_akademik->no_surat}}/UN 25.1.15/SP/{{$thn_asli}}<br>&nbsp;
                     Tanggal ...............
                 </td>
             </tr>
@@ -204,7 +204,7 @@
                     SESUAI
                 </td>
                 <td valign="top">
-                    : SK Dekan Fak. Ilmu Komputer UNEJ {{$sk_honor->no_surat}}/UN 25.1.15/SP/{{$thn_asli}}<br>&nbsp;
+                    : SK Dekan Fak. Ilmu Komputer UNEJ {{$sk_honor->detail_sk[0]->sk_akademik->no_surat}}/UN 25.1.15/SP/{{$thn_asli}}<br>&nbsp;
                     Tanggal ...............
                 </td>
             </tr>

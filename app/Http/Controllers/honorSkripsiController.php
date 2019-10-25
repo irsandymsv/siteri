@@ -121,6 +121,7 @@ class honorSkripsiController extends Controller
         $sk_honor = sk_honor::where('id', $id_sk_honor)
             ->with([
                 'tipe_sk',
+                'detail_sk.sk_akademik',
                 'detail_sk.pembimbing_utama:no_pegawai,nama,npwp,id_golongan',
                 'detail_sk.pembimbing_utama.golongan',
 
