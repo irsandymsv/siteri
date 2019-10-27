@@ -70,6 +70,9 @@
 
                <div class="box-body">
                   <h4><b>Informasi Daftar Honor:</b></h3>
+                  <p>
+                     Nomor SK : {{ $sk_honor->detail_sk[0]->sk_akademik->no_surat }}/UN 25.1.15/SP/{{Carbon\Carbon::parse($sk_honor->detail_sk[0]->sk_akademik->created_at)->year}}
+                  </p>
                   <p>Tanggal Dibuat : {{Carbon\Carbon::parse($sk_honor->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</p>
                   <p>
                      Tanggal SK {{($sk_honor->tipe_sk->tipe == "SK Skripsi")? "Skripsi" : "Sempro"}} : {{Carbon\Carbon::parse($sk_honor->detail_sk[0]->sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}
@@ -101,9 +104,9 @@
                <table id="tbl_add_honor_pembimbing">
                   <tr>
                      <td><label for="honor_pembimbing">Honor Pembimbing I: Rp </label></td>
-                     <td><input type="number" name="honor_pembimbing_1" id="honor_pembimbing_1" placeholder="Masukkan jumlah honor" value="{{ $sk_honor->honor_pembimbing }}"></td>
+                     <td><input type="number" name="honor_pembimbing1" id="honor_pembimbing1" placeholder="Masukkan jumlah honor" value="{{ $sk_honor->honor_pembimbing1 }}"></td>
 
-                     @error('honor_pembimbing_1')
+                     @error('honor_pembimbing1')
                         <span class="invalid-feedback" role="alert" style="color: red;">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -113,13 +116,13 @@
                   <tr>
                      <td><label for="honor_pembimbing">Honor Pembimbing II: Rp </label></td>
                      <td>
-                        <input type="number" name="honor_pembimbing_2" id="honor_pembimbing_2" placeholder="Masukkan jumlah honor" value="{{ $sk_honor->honor_pembimbing }}">
+                        <input type="number" name="honor_pembimbing2" id="honor_pembimbing2" placeholder="Masukkan jumlah honor" value="{{ $sk_honor->honor_pembimbing2 }}">
                      </td>
                      <td>
-                        <button type="button" id="btn_honor_pembimbing" class="btn btn-default">Ok</button>
+                        <button type="button" id="btn_honor_pembimbing" class="btn btn-primary">Ok</button>
                      </td>
 
-                     @error('honor_pembimbing_2')
+                     @error('honor_pembimbing2')
                         <span class="invalid-feedback" role="alert" style="color: red;">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -161,23 +164,23 @@
                               </td>
                               <td>{{$item->pembimbing_utama->golongan->golongan}}</td>
                               <td class="pembimbingHonor_1">Rp
-                                  <span>{{ number_format($sk_honor->honor_pembimbing, 0, ",", ".") }}</span>
+                                  <span>{{ number_format($sk_honor->honor_pembimbing1, 0, ",", ".") }}</span>
                               </td>
                               <td class="pph" id="pph_{{$no}}">Rp &ensp; 
                                  <span>
                                     @php
-                                       $pph = ($item->pembimbing_utama->golongan->pph * $sk_honor->honor_pembimbing)/100;
+                                       $pph = ($item->pembimbing_utama->golongan->pph * $sk_honor->honor_pembimbing1)/100;
                                     @endphp
                                     {{ number_format($pph, 0, ",", ".") }}
                                  </span>
                               </td>
                               <td class="penerimaan" id="penerimaan_{{$no}}">Rp &ensp;
-                              @php $penerimaan = $sk_honor->honor_pembimbing - $pph @endphp 
+                              @php $penerimaan = $sk_honor->honor_pembimbing1 - $pph @endphp 
                                  <span>{{ number_format($penerimaan, 0, ",", ".") }}</span>
                               </td>
 
                               @php
-                                 $total_honor+=$sk_honor->honor_pembimbing;
+                                 $total_honor+=$sk_honor->honor_pembimbing1;
                                  $total_pph+=$pph;
                                  $total_penerimaan+=$penerimaan;
                               @endphp
@@ -189,23 +192,23 @@
                               <td>{{$item->pembimbing_pendamping->npwp}}</td>
                               <td>{{$item->pembimbing_pendamping->golongan->golongan}}</td>
                               <td class="pembimbingHonor_2">Rp 
-                                 <span>{{ number_format($sk_honor->honor_pembimbing, 0, ",", ".") }}</span>
+                                 <span>{{ number_format($sk_honor->honor_pembimbing2, 0, ",", ".") }}</span>
                               </td>
                               <td class="pph" id="pph_{{$no}}">Rp &ensp; 
                                  <span>
                                     @php
-                                       $pph = ($item->pembimbing_pendamping->golongan->pph * $sk_honor->honor_pembimbing)/100;
+                                       $pph = ($item->pembimbing_pendamping->golongan->pph * $sk_honor->honor_pembimbing2)/100;
                                     @endphp
                                     {{ number_format($pph, 0, ",", ".") }}
                                  </span>
                               </td>
                               <td class="penerimaan" id="penerimaan_{{$no}}">Rp &ensp;
-                                 @php $penerimaan = $sk_honor->honor_pembimbing - $pph @endphp 
+                                 @php $penerimaan = $sk_honor->honor_pembimbing2 - $pph @endphp 
                                  <span>{{ number_format($penerimaan, 0, ",", ".") }}</span>
                               </td>
 
                               @php
-                                 $total_honor+=$sk_honor->honor_pembimbing;
+                                 $total_honor+=$sk_honor->honor_pembimbing2;
                                  $total_pph+=$pph;
                                  $total_penerimaan+=$penerimaan;
                               @endphp
@@ -245,7 +248,7 @@
                <div class="input_honor">
                   <label for="honor_penguji">Honor {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Penguji" : "Pembahas") }}: Rp </label>
                   <input type="number" name="honor_penguji" id="honor_penguji" value="{{ $sk_honor->honor_penguji }}">
-                  <button type="button" id="btn_honor_penguji" class="btn btn-default">Ok</button>
+                  <button type="button" id="btn_honor_penguji" class="btn btn-primary">Ok</button>
                </div>
                @error('honor_penguji')
                   <span class="invalid-feedback" role="alert" style="color: red;">
@@ -382,8 +385,8 @@
       // console.log(detail_sk);
 
       $("#btn_honor_pembimbing").click(function(event) {
-         var honor_1 = $("#honor_pembimbing_1").val();
-         var honor_2 = $("#honor_pembimbing_2").val();
+         var honor_1 = $("#honor_pembimbing1").val();
+         var honor_2 = $("#honor_pembimbing2").val();
 
          $(".pembimbingHonor_1").children("span").text(formatRupiah(honor_1));
          $(".pembimbingHonor_2").children("span").text(formatRupiah(honor_2));

@@ -51,6 +51,11 @@
 	            			<b>Status</b> : {{$sk_akademik->status_sk_akademik->status}}
 	            		</h4>
 
+	            		<div class="form" id="input_no_surat">
+	            			<label for="no_surat"><b>No Surat : </b></label>
+	            			<input type="text" name="no_surat" id="no_surat" value="{{ $sk_akademik->no_surat }}">
+	            			<span>/UN 25.1.15/SP/{{Carbon\Carbon::parse($sk_akademik->created_at)->year}}</span>
+	            		</div>
 		            	<div class="table-responsive">
 		            		<h5>Total Data = <span class="data_count"></span></h5>
 		            		<table id="tbl-data" class="table table-bordered table-hover">

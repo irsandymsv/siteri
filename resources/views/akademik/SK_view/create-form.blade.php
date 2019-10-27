@@ -22,6 +22,15 @@
 		th{
 			text-align: center;
 		}
+
+		#input_no_surat{
+			width: 50%;
+			font-size: 15px;
+		}
+
+		#input_no_surat input{
+			width: 15%;
+		}
 	</style>
 @endsection
 
@@ -42,6 +51,11 @@
 	            	
 	            	<div class="box-body">
 	            		@csrf
+	            		<div class="form" id="input_no_surat">
+	            			<label for="no_surat"><b>No Surat : </b></label>
+	            			<input type="text" name="no_surat" id="no_surat">
+	            			<span>/UN 25.1.15/SP/{{Carbon\Carbon::today()->year}}</span>
+	            		</div>
 		            	<div class="table-responsive">
 		            		<h5>Total Data = <span class="data_count"></span></h5>
 		            		@if(session()->has('error'))

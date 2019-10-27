@@ -74,7 +74,6 @@ class honorSemproController extends Controller
             $sk_honor = sk_honor::create([
                 'id_tipe_sk' => 2, //tipe SK Sempro
                 'id_status_sk_honor' => $request->status,
-                'no_surat' => $request->no_surat,
                 'honor_pembimbing1' => $request->honor_pembimbing1,
                 'honor_pembimbing2' => $request->honor_pembimbing2,
                 'honor_penguji' => $request->honor_penguji

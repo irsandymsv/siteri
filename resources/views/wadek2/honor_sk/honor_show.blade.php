@@ -44,7 +44,7 @@
 
                <div class="box-body">
                   <p>Tanggal SK : {{Carbon\Carbon::parse($sk_honor->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</p>
-                  <p>Sesuai : SK Dekan No...</p>
+                  <p>Sesuai SK Dekan: {{ $sk_honor->detail_sk[0]->sk_akademik->no_surat }}/UN 25.1.15/SP/{{Carbon\Carbon::parse($sk_honor->detail_sk[0]->sk_akademik->created_at)->year}}</p>
                     
                   @if($sk_honor->verif_wadek2 == 0)
                   <b>Belum Diverifikasi</b>
@@ -116,18 +116,18 @@
                               </td>
                               <td>{{$item->pembimbing_utama->golongan->golongan}}</td>
                               <td id="pembimbing_{{$no}}" class="pembimbingHonor">Rp &ensp; 
-                                 <span>{{ $sk_honor->honor_pembimbing }}</span>
+                                 <span>{{ $sk_honor->honor_pembimbing1 }}</span>
                               </td>
                               <td class="pph" id="pph_{{$no}}">Rp &ensp; 
                                  <span>
                                     @php
-                                       $pph = ($item->pembimbing_utama->golongan->pph * $sk_honor->honor_pembimbing)/100;
+                                       $pph = ($item->pembimbing_utama->golongan->pph * $sk_honor->honor_pembimbing1)/100;
                                     @endphp
                                     {{ $pph }}
                                  </span>
                               </td>
                               <td class="penerimaan" id="penerimaan_{{$no}}">Rp &ensp; 
-                                 <span>{{ $sk_honor->honor_pembimbing - $pph }}</span>
+                                 <span>{{ $sk_honor->honor_pembimbing1 - $pph }}</span>
                               </td>
                            </tr>
 
@@ -136,17 +136,17 @@
                                <td>{{$item->pembimbing_pendamping->nama}}</td>
                               <td>{{$item->pembimbing_pendamping->npwp}}</td>
                               <td>{{$item->pembimbing_pendamping->golongan->golongan}}</td>
-                              <td id="pembimbing_{{$no}}" class="pembimbingHonor">Rp &ensp; <span>{{ $sk_honor->honor_pembimbing }}</span></td>
+                              <td id="pembimbing_{{$no}}" class="pembimbingHonor">Rp &ensp; <span>{{ $sk_honor->honor_pembimbing2 }}</span></td>
                               <td class="pph" id="pph_{{$no}}">Rp &ensp; 
                                  <span>
                                     @php
-                                       $pph =( $item->pembimbing_pendamping->golongan->pph * $sk_honor->honor_pembimbing)/100;
+                                       $pph =( $item->pembimbing_pendamping->golongan->pph * $sk_honor->honor_pembimbing2)/100;
                                     @endphp
                                     {{ $pph }}
                                  </span>
                               </td>
                               <td class="penerimaan" id="penerimaan_{{$no}}">Rp &ensp; 
-                                 <span>{{ $sk_honor->honor_pembimbing - $pph }}</span>
+                                 <span>{{ $sk_honor->honor_pembimbing2 - $pph }}</span>
                               </td>
                            </tr>
                         @endforeach

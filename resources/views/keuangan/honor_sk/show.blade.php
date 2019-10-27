@@ -77,7 +77,7 @@
                   @endif
                </div>
                <p>Tanggal SK : {{Carbon\Carbon::parse($sk_honor->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</p>
-               <p>Sesuai : SK Dekan No...</p>
+               <p>Sesuai SK Dekan: {{ $sk_honor->detail_sk[0]->sk_akademik->no_surat }}/UN 25.1.15/SP/{{Carbon\Carbon::parse($sk_honor->detail_sk[0]->sk_akademik->created_at)->year}}</p>
 
                <h4><b>Progres Daftar Honor ini: </b></h4>
                <div class="tl_wrap">
@@ -168,12 +168,12 @@
                               </td>
                               <td>{{$item->pembimbing_utama->golongan->golongan}}</td>
                               <td id="pembimbing_{{$no}}" class="pembimbingHonor">Rp 
-                                 <span>{{ number_format($sk_honor->honor_pembimbing, 0, ",", ".") }}</span>
+                                 <span>{{ number_format($sk_honor->honor_pembimbing1, 0, ",", ".") }}</span>
                               </td>
                               <td class="pph" id="pph_{{$no}}">Rp 
                                  <span>
                                     @php
-                                       $pph = ($item->pembimbing_utama->golongan->pph * $sk_honor->honor_pembimbing)/100;
+                                       $pph = ($item->pembimbing_utama->golongan->pph * $sk_honor->honor_pembimbing1)/100;
                                     @endphp
                                     {{ number_format($pph, 0, ",", ".") }}
                                  </span>
@@ -181,14 +181,14 @@
                               <td class="penerimaan" id="penerimaan_{{$no}}">Rp 
                                  <span>
                                     @php
-                                       $penerimaan = $sk_honor->honor_pembimbing - $pph;
+                                       $penerimaan = $sk_honor->honor_pembimbing1 - $pph;
                                     @endphp
                                     {{ number_format($penerimaan, 0, ",", ".") }}
                                  </span>
                               </td>
 
                               @php
-                                 $total_honor+=$sk_honor->honor_pembimbing;
+                                 $total_honor+=$sk_honor->honor_pembimbing1;
                                  $total_pph+=$pph;
                                  $total_penerimaan+=$penerimaan;
                               @endphp
@@ -200,11 +200,11 @@
                               <td>{{$item->pembimbing_pendamping->npwp}}</td>
                               <td>{{$item->pembimbing_pendamping->golongan->golongan}}</td>
                               <td id="pembimbing_{{$no}}" class="pembimbingHonor">Rp  
-                                 <span>{{ number_format($sk_honor->honor_pembimbing, 0, ",", ".") }}</span></td>
+                                 <span>{{ number_format($sk_honor->honor_pembimbing2, 0, ",", ".") }}</span></td>
                               <td class="pph" id="pph_{{$no}}">Rp 
                                  <span>
                                     @php
-                                       $pph =( $item->pembimbing_pendamping->golongan->pph * $sk_honor->honor_pembimbing)/100;
+                                       $pph =( $item->pembimbing_pendamping->golongan->pph * $sk_honor->honor_pembimbing2)/100;
                                     @endphp
                                     {{ number_format($pph, 0, ",", ".") }}
                                  </span>
@@ -212,14 +212,14 @@
                               <td class="penerimaan" id="penerimaan_{{$no}}">Rp 
                                  <span>
                                     @php
-                                       $penerimaan = $sk_honor->honor_pembimbing - $pph;
+                                       $penerimaan = $sk_honor->honor_pembimbing2 - $pph;
                                     @endphp
                                     {{ number_format($penerimaan, 0, ",", ".") }}
                                  </span>
                               </td>
 
                               @php
-                                 $total_honor+=$sk_honor->honor_pembimbing;
+                                 $total_honor+=$sk_honor->honor_pembimbing2;
                                  $total_pph+=$pph;
                                  $total_penerimaan+=$penerimaan;
                               @endphp
