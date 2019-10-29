@@ -1,8 +1,12 @@
 @extends('perlengkapan.perlengkapan_view')
 
-@section('page_title', 'Pengadaan')
+@section('page_title', 'Laporan Inventaris')
 
-@section('judul_header', 'Pengadaan')
+@section('css_link')
+
+@endsection
+
+@section('judul_header', 'Laporan Inventaris')
 
 @section('content')
 
@@ -106,5 +110,15 @@
 @endsection
 
 @section('script')
+<script type="text/javascript">
+    $(function() {
+        $('#inventaris').DataTable();
 
+        $("a[name='hapus_laporan']").click(function(event) {
+                event.preventDefault();
+                var id_lap = $(this).attr('id');
+
+            });
+        });
+</script>
 @endsection

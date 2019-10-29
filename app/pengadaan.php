@@ -26,10 +26,4 @@ class pengadaan extends Model
      * @var array
      */
     protected $guarded = ['id'];
-
-    public function barang()
-    {
-        return $this->hasMany('App\detail_barang','id_barang');
-    }
-
 }

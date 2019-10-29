@@ -1,8 +1,8 @@
 @extends('perlengkapan.perlengkapan_view')
 
-@section('page_title', 'Pengadaan')
+@section('page_title', 'Inventaris')
 
-@section('judul_header', 'Pengadaan')
+@section('judul_header', 'Inventaris')
 
 @section('content')
 
@@ -11,4 +11,3 @@
 @section('script')
 
 @endsection
-
