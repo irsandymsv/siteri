@@ -26,6 +26,12 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
 	// Route::redirect('/', '/akademik/dashboard');
 	Route::get('/', 'akademikController@dashboard')->name('dashboard');
 
+	//Route Surat Tugas Pembimbing
+	Route::get('/surat-tugas-pembimbing', 'sutgasPembimbingController@index')->name("sutgas-pembimbing.index");
+	Route::get('/surat-tugas-pembimbing/create', 'sutgasPembimbingController@create')->name("sutgas-pembimbing.create");
+	Route::post('/surat-tugas-pembimbing/store', 'sutgasPembimbingController@store')->name("sutgas-pembimbing.store");
+
+
 	Route::get('/skripsi', 'SkSkripsiController@index')->name('skripsi.index');
 	Route::get('/skripsi/create','SkSkripsiController@create')->name('skripsi.create');
 	Route::post('/skripsi', 'SkSkripsiController@store')->name('skripsi.store');

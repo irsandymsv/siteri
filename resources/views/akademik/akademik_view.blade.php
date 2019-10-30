@@ -4,6 +4,18 @@
 	<li class="active"><a href="{{route('akademik.dashboard')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
 
 	<li class="treeview">
+	    <a href="#"><i class="fa fa-link"></i> <span>Surat Tugas Pembimbing</span>
+	      <span class="pull-right-container">
+	          <i class="fa fa-angle-left pull-right"></i>
+	        </span>
+	    </a>
+	    <ul class="treeview-menu">
+	      <li><a href="{{route('akademik.sutgas-pembimbing.create')}}">Buat Baru</a></li>
+	      <li><a href="{{ route('akademik.sutgas-pembimbing.index') }}">Lihat Semua</a></li>
+	    </ul>
+	</li>
+
+	<li class="treeview">
 	    <a href="#"><i class="fa fa-link"></i> <span>SK Skripsi</span>
 	      <span class="pull-right-container">
 	          <i class="fa fa-angle-left pull-right"></i>
