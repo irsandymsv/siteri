@@ -1,8 +1,8 @@
 @extends('perlengkapan.perlengkapan_view')
 
-@section('page_title', 'Pengadaan')
+@section('page_title', 'Laporan Pengadaan')
 
-@section('judul_header', 'Pengadaan')
+@section('judul_header', 'Laporan Pengadaan')
 
 @section('content')
 
@@ -10,28 +10,28 @@
     <div class="col-xs-12">
         <div class="box box-success">
             <div class="box-header">
-                <h3 class="box-title">Laporan Inventaris</h3>
+                <h3 class="box-title">Laporan Pengadaan</h3>
 
                 <div style="float: right;">
-                    <a href="{{ route('perlengkapan.inventaris.create') }}" class="btn btn-primary"><i
+                    <a href="{{ route('perlengkapan.pengadaan.create') }}" class="btn btn-primary"><i
                             class="fa fa-plus"></i> Buat Laporan</a>
                 </div>
             </div>
 
             <div class="box-body">
                 <div class="table-responsive">
-                    <table id="inventaris" class="table table-bordered table-hovered">
+                    <table id="pengadaan" class="table table-bordered table-hovered">
                         <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal Dibuat</th>
                                 <th>Nama Barang</th>
-                                <th style="width:226px">Spesifikasi</th>
+                                <th>Spesifikasi</th>
                                 <th>Jumlah</th>
                                 <th>Harga Satuan</th>
                                 <th>Total</th>
                                 <th>Status</th>
-                                <th>Opsi</th>
+                                <th style="width:99.8px">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,11 +42,11 @@
                                 <td>
                                     {{Carbon\Carbon::parse($item->dibuat)->locale('id_ID')->isoFormat('D MMMM Y')}}
                                 </td>
-                                <td>{{$item->kategori}}</td>
-                                <td>{{$item->spesifikasi_barang}}</td>
+                                <td>{{$item->nama_barang}}</td>
+                                <td>{{$item->spesifikasi}}</td>
                                 <td>{{$item->jumlah}}</td>
-                                <td>{{$item->harga_satuan}}</td>
-                                <td>{{$item->jumlah * $item->harga_satuan}}</td>
+                                <td>Rp {{$item->harga}}</td>
+                                <td>Rp {{$item->jumlah * $item->harga}}</td>
                                 <td>
                                     @if($item->verif_wadek2 == 0)
                                     Belum Diverifikasi
@@ -55,10 +55,10 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('perlengkapan.inventaris.show', $item->id) }}"
+                                    <a href="{{ route('perlengkapan.pengadaan.show', $item->id) }}"
                                         class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
                                     @if($item->verif_wadek2 != 1)
-                                    <a href="{{ route('perlengkapan.inventaris.edit', $item->id) }}"
+                                    <a href="{{ route('perlengkapan.pengadaan.edit', $item->id) }}"
                                         class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
                                     @endif
                                     @if($item->verif_wadek2 != 1)
@@ -91,7 +91,7 @@
                 <h4 class="modal-title">Konfirmasi Pembatalan</h4>
             </div>
             <div class="modal-body">
-                <p>Apakah anda yakin ingin membatalkan inventaris ini?</p>
+                <p>Apakah anda yakin ingin membatalkan pengadaan ini?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Tidak</button>
@@ -106,5 +106,11 @@
 @endsection
 
 @section('script')
+
+<script>
+    $(function(){
+        $('#pengadaan').DataTable();
+    });
+</script>
 
 @endsection

@@ -143,4 +143,5 @@ Route::prefix('perlengkapan')->name('perlengkapan.')->group(function () {
     });
     Route::resource('inventaris', 'inventarisController');
     Route::get('/inventaris/barang/{id}', array('as' => 'barang.ajax', 'uses' => 'inventarisController@barangAjax'));
+    Route::resource('pengadaan', 'pengadaanController');
 });

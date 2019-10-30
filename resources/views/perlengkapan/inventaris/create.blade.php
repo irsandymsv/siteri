@@ -90,11 +90,11 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Barang</th>
-                            <th style="width:226px">Spesifikasi</th>
+                            <th>Spesifikasi</th>
                             <th>Jumlah</th>
                             <th>Harga Satuan</th>
                             <th>Total</th>
-                            <th>Opsi</th>
+                            <th style="width:99.8px">Opsi</th>
                         </tr>
                     </thead>
                     <tbody>

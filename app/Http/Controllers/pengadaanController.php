@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\pengadaan;
 
 class pengadaanController extends Controller
 {
@@ -13,7 +15,11 @@ class pengadaanController extends Controller
      */
     public function index()
     {
-        //
+        $db = pengadaan::all();
+        // dd($db);
+        return view('perlengkapan.pengadaan.index', [
+            'laporan'  => $db
+        ]);
     }
 
     /**
@@ -23,7 +29,7 @@ class pengadaanController extends Controller
      */
     public function create()
     {
-        //
+        return view('perlengkapan.pengadaan.create');
     }
 
     /**

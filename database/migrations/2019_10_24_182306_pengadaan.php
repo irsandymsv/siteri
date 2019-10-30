@@ -15,7 +15,9 @@ class Pengadaan extends Migration
     {
         Schema::create('pengadaan', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('id_barang');
+            $table->string('nama_barang');
+            $table->string('spesifikasi');
+            $table->integer('harga');
             $table->integer('jumlah');
             $table->boolean('verif_wadek2')->default(false);
             $table->timestamp('dibuat');
