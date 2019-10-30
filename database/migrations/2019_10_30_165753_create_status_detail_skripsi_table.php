@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTipeSkTable extends Migration
+class CreateStatusDetailSkripsiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateTipeSkTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipe_sk', function (Blueprint $table) {
-            $table->tinyIncrements('id');
-            $table->string('tipe', 50);
+        Schema::create('status_detail_skripsi', function (Blueprint $table) {
+            $table->smallIncrements('id');
+            $table->string('status')->length(25);
         });
     }
 
@@ -26,6 +26,6 @@ class CreateTipeSkTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipe_sk');
+        Schema::dropIfExists('status_detail_skripsi');
     }
 }

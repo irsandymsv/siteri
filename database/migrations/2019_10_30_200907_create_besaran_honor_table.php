@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class StatusSkAkademikTable extends Migration
+class CreateBesaranHonorTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class StatusSkAkademikTable extends Migration
      */
     public function up()
     {
-        Schema::create('status_sk_akademik', function (Blueprint $table) {
+        Schema::create('besaran_honor', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('status')->length(100);
+            $table->string('nama_honor')->length('30');
         });
     }
 
@@ -26,6 +26,6 @@ class StatusSkAkademikTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('status_sk_akademik');
+        Schema::dropIfExists('besaran_honor');
     }
 }

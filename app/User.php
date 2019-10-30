@@ -107,22 +107,32 @@ class User extends Authenticatable
 
     public function pembimbing_utama()
     {
-        return $this->hasMany('App\detail_sk', 'id_pembimbing_utama');
+        return $this->hasMany('App\detail_skripsi', 'id_pembimbing_utama');
     }
 
     public function pembimbing_pendamping()
     {
-        return $this->hasMany('App\detail_sk', 'id_pembimbing_pendamping');
+        return $this->hasMany('App\detail_skripsi', 'id_pembimbing_pendamping');
     }
 
     public function penguji_utama()
     {
-        return $this->hasMany('App\detail_sk', 'id_penguji_utama');
+        return $this->hasMany('App\detail_skripsi', 'id_penguji_utama');
     }
 
     public function penguji_pendamping()
     {
-        return $this->hasMany('App\detail_sk', 'id_penguji_pendamping');
+        return $this->hasMany('App\detail_skripsi', 'id_penguji_pendamping');
+    }
+
+    public function pembahas1()
+    {
+        return $this->hasMany('App\detail_skripsi', 'id_pembahas1');
+    }
+
+    public function pembahas2()
+    {
+        return $this->hasMany('App\detail_skripsi', 'id_pembahas2');
     }
 
 }

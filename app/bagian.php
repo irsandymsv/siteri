@@ -25,7 +25,7 @@ class bagian extends Model
      *
      * @var array
      */
-    protected $guarded = ['id']; 
+    protected $guarded = ['id'];
 
 
     public function user()
@@ -36,6 +36,11 @@ class bagian extends Model
     public function detail_sk()
     {
         return $this->hasMany('App\detail_sk', 'id_bagian');
+    }
+
+    public function mahasiswa()
+    {
+        return $this->hasMany('App\mahasiswa','id_bagian');
     }
 
 }

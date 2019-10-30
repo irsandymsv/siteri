@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStatusSkHonorTable extends Migration
+class CreateStatusSkTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateStatusSkHonorTable extends Migration
      */
     public function up()
     {
-        Schema::create('status_sk_honor', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('status')->length(100);
+        Schema::create('status_sk', function (Blueprint $table) {
+            $table->smallIncrements('id');
+            $table->string('status')->length(25);
         });
     }
 
@@ -26,6 +26,6 @@ class CreateStatusSkHonorTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('status_sk_honor');
+        Schema::dropIfExists('status_sk');
     }
 }

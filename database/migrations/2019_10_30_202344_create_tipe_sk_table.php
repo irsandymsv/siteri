@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddForeignKeysToDetailSk extends Migration
+class CreateTipeSkTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddForeignKeysToDetailSk extends Migration
      */
     public function up()
     {
-        Schema::table('detail_sk', function (Blueprint $table) {
-            $table->foreign('id_sk_honor')->references('id')->on('sk_honor')->onDelete('set null');
+        Schema::create('tipe_sk', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('tipe_sk')->length(25);
         });
     }
 
@@ -25,8 +26,6 @@ class AddForeignKeysToDetailSk extends Migration
      */
     public function down()
     {
-        Schema::table('detail_sk', function (Blueprint $table) {
-            $table->dropForeign('detail_sk_id_sk_honor_foreign');
-        });
+        Schema::dropIfExists('tipe_sk');
     }
 }
