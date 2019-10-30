@@ -31,6 +31,9 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
 	Route::get('/surat-tugas-pembimbing/create', 'sutgasPembimbingController@create')->name("sutgas-pembimbing.create");
 	Route::post('/surat-tugas-pembimbing/store', 'sutgasPembimbingController@store')->name("sutgas-pembimbing.store");
 
+	Route::get('/newSempro', 'sutgasPembimbingController@newSempro');
+	Route::post('/storeSempro', 'sutgasPembimbingController@storeSempro')->name("storeSempro");
+
 
 	Route::get('/skripsi', 'SkSkripsiController@index')->name('skripsi.index');
 	Route::get('/skripsi/create','SkSkripsiController@create')->name('skripsi.create');

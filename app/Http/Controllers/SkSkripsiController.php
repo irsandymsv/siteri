@@ -111,7 +111,7 @@ class SkSkripsiController extends Controller
 				'pembimbing_utama:no_pegawai,nama',
 				'pembimbing_pendamping:no_pegawai,nama'
 			])->get();
-		// dd($detail_sk);
+		// dd($sk_akademik->created_at);
 		return view('akademik.SK_view.show', [
 			'sk_akademik' => $sk_akademik,
 			'detail_sk' => $detail_sk
