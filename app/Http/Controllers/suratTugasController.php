@@ -19,6 +19,7 @@ class suratTugasController extends Controller
 
         detail_skripsi::insert([
             'nim' => $request->input('nim'),
+            'judul' => $request->input('judul'),
             'id_surat_tugas_pembimbing' => $surat_tugas->id,
             'id_pembimbing_utama' => $request->input('id_pembimbing_utama'),
             'id_pembimbing_pendamping' => $request->input('id_pembimbing_pendamping'),
