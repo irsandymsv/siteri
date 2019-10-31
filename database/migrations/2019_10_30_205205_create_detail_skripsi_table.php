@@ -27,7 +27,6 @@ class CreateDetailSkripsiTable extends Migration
             $table->string('id_pembahas2')->length(25)->nullable();
             $table->UnsignedInteger('id_keris')->nullable();
             $table->UnsignedInteger('id_sk_honor')->nullable();
-            $table->UnsignedSmallInteger('id_status_detail_skripsi')->nullable();
             $table->UnsignedInteger('id_surat_tugas_pembimbing')->nullable();
             $table->UnsignedInteger('id_surat_tugas_pembahas')->nullable();
             $table->UnsignedInteger('id_surat_tugas_penguji')->nullable();
@@ -43,7 +42,6 @@ class CreateDetailSkripsiTable extends Migration
             $table->foreign('id_pembahas2')->references('no_pegawai')->on('users')->onDelete('set null');
             $table->foreign('id_keris')->references('id')->on('keris')->onDelete('set null');
             $table->foreign('id_sk_honor')->references('id')->on('sk_honor')->onDelete('set null');
-            $table->foreign('id_status_detail_skripsi')->references('id')->on('status_detail_skripsi')->onDelete('set null');
             $table->foreign('id_surat_tugas_pembimbing')->references('id')->on('surat_tugas')->onDelete('set null');
             $table->foreign('id_surat_tugas_pembahas')->references('id')->on('surat_tugas')->onDelete('set null');
             $table->foreign('id_surat_tugas_penguji')->references('id')->on('surat_tugas')->onDelete('set null');

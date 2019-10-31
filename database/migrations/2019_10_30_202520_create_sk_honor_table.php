@@ -21,6 +21,9 @@ class CreateSkHonorTable extends Migration
             $table->unsignedInteger('id_honor_pembimbing2')->nullable();
             $table->unsignedInteger('id_honor_penguji')->nullable();
             $table->unsignedInteger('id_honor_pembahas')->nullable();
+            $table->tinyInteger('verif_bpp')->nullable();
+            $table->tinyInteger('verif_ktu')->nullable();
+            $table->tinyInteger('verif_wadek2')->nullable();
             $table->timestamps();
 
             $table->foreign('id_tipe_sk')->references('id')->on('tipe_sk')->onDelete('set null');

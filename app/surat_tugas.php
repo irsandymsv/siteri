@@ -15,6 +15,11 @@ class surat_tugas extends Model
        return $this->belongsTo('App\tipe_surat_tugas','id_tipe_surat_tugas');
    }
 
+   public function status_surat_tugas()
+   {
+       return $this->belongsTo('App\status_surat_tugas','id_status_surat_tugas');
+   }
+
     public function surat_tugas_pembimbing()
     {
         return $this->hasMany('App\detail_skripsi', 'id_surat_tugas_pembimbing');

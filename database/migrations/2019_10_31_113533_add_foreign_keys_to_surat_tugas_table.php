@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStatusDetailSkripsiTable extends Migration
+class AddForeignKeysToSuratTugasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateStatusDetailSkripsiTable extends Migration
      */
     public function up()
     {
-        Schema::create('status_detail_skripsi', function (Blueprint $table) {
-            $table->smallIncrements('id');
-            $table->string('status')->length(25);
+        Schema::table('surat_tugas', function (Blueprint $table) {
+            $table->foreign('id_status_surat_tugas')->references('id')->on('status_surat_tugas')->onDelete('set null');
         });
     }
 
@@ -26,6 +25,8 @@ class CreateStatusDetailSkripsiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('status_detail_skripsi');
+        Schema::table('surat_tugas', function (Blueprint $table) {
+            //
+        });
     }
 }

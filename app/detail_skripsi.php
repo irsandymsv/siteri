@@ -65,11 +65,6 @@ class detail_skripsi extends Model
         return $this->belongsTo('App\sk_honor', 'id_sk_honor');
     }
 
-    public function status_detail_skripsi()
-    {
-        return $this->belongsTo('App\status_detail_skripsi', 'id_status_detail_skripsi');
-    }
-
     public function surat_tugas_pembimbing()
     {
         return $this->belongsTo('App\surat_tugas', 'id_surat_tugas_pembimbing');
