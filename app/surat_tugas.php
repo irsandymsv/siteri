@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class surat_tugas extends Model
 {
    protected $table = "surat_tugas";
-   public $timestamps = False;
+   // public $timestamps = False;
    protected $guarded = ['id'];
 
    public function tipe_surat_tugas()
@@ -22,16 +22,16 @@ class surat_tugas extends Model
 
     public function surat_tugas_pembimbing()
     {
-        return $this->hasMany('App\detail_skripsi', 'id_surat_tugas_pembimbing');
+        return $this->hasOne('App\detail_skripsi', 'id_surat_tugas_pembimbing');
     }
 
     public function surat_tugas_pembahas()
     {
-        return $this->hasMany('App\detail_skripsi', 'id_surat_tugas_pembahas');
+        return $this->hasOne('App\detail_skripsi', 'id_surat_tugas_pembahas');
     }
 
     public function surat_tugas_penguji()
     {
-        return $this->hasMany('App\detail_skripsi', 'id_surat_tugas_penguji');
+        return $this->hasOne('App\detail_skripsi', 'id_surat_tugas_penguji');
     }
 }

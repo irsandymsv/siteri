@@ -12,7 +12,7 @@ class detail_skripsi extends Model
 
     public function mahasiswa()
     {
-        return $this->hasOne('App\mahasiswa', 'nim');
+        return $this->belongsTo('App\mahasiswa', 'nim');
     }
 
     public function sk_sempro()

@@ -1,7 +1,7 @@
 @extends('akademik.akademik_view')
 
 @section('page_title')
-	Surat Tugas Pembimbing
+	Surat Tugas Pembimbing Skripsi
 @endsection
 
 @section('css_link')
@@ -10,7 +10,7 @@
 @endsection
 
 @section('judul_header')
-	Surat Tugas Pembimbing
+	Surat Tugas Pembimbing Skripsi
 @endsection
 
 @section('content')
@@ -18,7 +18,7 @@
    	<div class="col-xs-12">
    		<div class="box box-success">
    			<div class="box-header">
-              <h3 class="box-title">Daftar Surat Tugas Pembimbing</h3>
+              <h3 class="box-title">Daftar Surat Tugas Pembimbing Skripsi</h3>
             
               <div style="float: right;">
             	<a href="{{ route('akademik.sutgas-pembimbing.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Surat Tugas</a>
@@ -32,13 +32,38 @@
 		            		<tr>
 		            			<th>No</th>
 		            			<th>No Surat</th>
-		            			<th>NIM</th>
+		            			<th>Status</th>
 		            			<th>Nama Mahasiswa</th>
+		            			<th>Verifikasi KTU</th>
 		            			<th>Tanggal Dibuat</th>
 		            			<th>Pilihan</th>
 		            		</tr>
 		            	</thead>
 		            	<tbody>
+		            		@foreach ($surat_tugas as $item)
+		            			<tr>
+		            				<td>{{ $loop->index + 1 }}</td>
+		            				<td>
+		            					{{ $item->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($item->created_at)->year }}
+		            				</td>
+		            				<td>{{ $item->status_surat_tugas->status }}</td>
+		            				<td>{{ $item->surat_tugas_pembimbing->mahasiswa->nama }}</td>
+		            				<td>
+		            					@if ($item->verif_ktu == null)
+		            						Belum Diverifikasi
+		            					@elseif($item->verif_ktu == 2)
+		            						<label class="label bg-red">Butuh Revisi</label>
+		            					@else
+		            						<label class="label bg-green">Sudah Diverifikasi</label>
+		            					@endif
+		            				</td>
+		            				<td>{{ Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
+		            				<td>
+		            					<a href="{{ route('akademik.sutgas-pembimbing.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+		            					<a href="{{ route('akademik.sutgas-pembimbing.edit', $item->id) }}" class="btn btn-warning" title="Ubah Surat Tugas"><i class="fa fa-edit"></i></a>
+		            				</td>
+		            			</tr>
+		            		@endforeach
 		            	</tbody>
 		            </table>
             	</div>
