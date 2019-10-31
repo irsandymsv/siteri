@@ -30,7 +30,7 @@
 			float: right;
 			margin-right: 20px;
 		}
-	</style>	
+	</style>
 @endsection
 
 @section('judul_header')
@@ -48,7 +48,7 @@
             <form action="{{ route('akademik.sutgas-pembimbing.store') }}" method="post">
                <div class="box-body">
             		@csrf
-            		
+
             		<div class="form-group">
             			<label for="no_surat">No Surat</label><br>
             			<input type="text" name="no_surat" id="no_surat">
@@ -60,7 +60,6 @@
                         </span>
                      @enderror
             		</div>
-
             		<div class="row">
             			<div class="col-lg-6">
             				<div class="form-group">
@@ -150,11 +149,11 @@
                <div class="box-footer">
                   <div id="btn_group">
                      <a href="{{ route('akademik.sutgas-pembimbing.index') }}" class="btn btn-default">Batal</a> &ensp;
-                     <button type="submit" class="btn btn-primary">Submit</button>  
+                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                </div>
             </form>
-            
+
    		</div>
    	</div>
 	</div>
