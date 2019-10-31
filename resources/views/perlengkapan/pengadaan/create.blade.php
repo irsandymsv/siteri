@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
-            <form action="{{ route('perlengkapan.inventaris.store') }}" method="POST">
+            <form method="POST">
                 <div class="box-header">
                     <h3 class="box-title">Buat Laporan Inventaris</h3>
                 </div>
@@ -30,7 +30,7 @@
                             </thead>
 
                             <tbody>
-                                <tr id="1">
+                                <tr>
 
                                     <td>
                                         <input id="nama_barang" type="text" name="nama_barang" class="form-control">
@@ -45,7 +45,7 @@
                                     </td>
 
                                     <td>
-                                        <input id="harga" type="text" class="form-control harga"></input>
+                                        <input id="harga" type="text" class="form-control harga">
                                     </td>
 
                                     <td>
@@ -58,10 +58,11 @@
                         <h5>Total Data = <span class="data_count"></span></h5>
                     </div>
 
-                    <button id="addRow" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</button>
+                    <button id="tambah" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</button>
                     <br><br>
                     <div class="form-group" style="float: right;">
-                        <button type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>
+                        <button id="submit" type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan
+                            Kirim</button>
                     </div>
                 </div>
         </div>
@@ -87,7 +88,7 @@
                             <th style="width:99.8px">Opsi</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbody">
                     </tbody>
                 </table>
             </div>
@@ -98,5 +99,85 @@
 @endsection
 
 @section('script')
+
+<script>
+    $(function(){
+
+        $('#jumlah, #harga').on('input', function(){
+            $('#total').empty();
+            jumlah = $('#jumlah').val();
+            harga = $('#harga').val();
+            $('#total').append('Rp ' + jumlah * harga);
+        });
+
+        $('#tambah').click(function(event) {
+            nama = $('#nama_barang').val();
+            spesifikasi = $('#spesifikasi').val();
+            jumlah = $('#jumlah').val();
+            harga = $('#harga').val();
+            total = $('#total').html();
+            data = $('#tbody tr').length;
+            $('#tbody').append(`
+                <tr>
+                    <td>
+                        ` + ++data + `
+                    </td>
+
+                    <td>
+                        ` + nama + `
+                    </td>
+
+                    <td>
+                        ` + spesifikasi + `
+                    </td>
+
+                    <td>
+                        ` + jumlah + `
+                    </td>
+
+                    <td>
+                        ` + harga + `
+                    </td>
+
+                    <td>
+                        ` + total + `
+                    </td>
+                </tr>
+            `);
+
+            $('#nama_barang').val('');
+            $('#spesifikasi').val('');
+            $('#jumlah').val('');
+            $('#harga').val('');
+            $('#total').html('');
+
+        });
+
+        $('#submit').click(function(event){
+            event.preventDefault();
+            table = $('#tbody tr');
+            data = [];
+            data.push({
+                "_token": $('meta[name="csrf-token"]').attr('content')
+            });
+            $.each(table, function(index, val){
+                // val = val + '';
+                vall = $(val).text().split(/\s+/);
+                vall.shift();
+                vall.shift();
+                vall.pop();
+                data.push(vall);
+            });
+            console.log(data);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.post('{{ route("perlengkapan.inventaris.store") }}', $.param(data));
+        });
+    });
+
+</script>
 
 @endsection
