@@ -11,6 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(tipe_surat_tugas_table_seeder::class);
+        $this->call([
+            // tipe_surat_tugas_table_seeder::class,
+            tipe_sk_table_seeder::class,
+            status_sk_table_seeder::class,
+            status_sk_honor_table_seeder::class,
+        ]);
     }
 }
