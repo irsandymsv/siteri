@@ -67,8 +67,8 @@
                            <label for="nim">NIM Mahasiswa</label><br>
                            <select id="nim" name="nim" class="form-control select2">
             				  		<option value="">-- Pilih NIM --</option>
-            				  		@foreach ($dosen as $item)
-            							<option value="{{ $item->no_pegawai }}">{{ $item->no_pegawai }}</option>
+            				  		@foreach ($mahasiswa as $item)
+            							<option value="{{ $item->nim }}">{{ $item->nim }}</option>
             						@endforeach
             				   </select>
 
@@ -87,6 +87,22 @@
             				</div>
             			</div>
             		</div>
+
+                  <div class="form-group">
+                     <label for="id_keris">Keris</label><br>
+                     <select id="id_keris" name="id_keris" class="form-control select2">
+                        <option value="">-- Pilih Keris --</option>
+                        @foreach ($keris as $item)
+                           <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endforeach
+                     </select>
+
+                     @error('id_keris')
+                        <span class="invalid-feedback" role="alert" style="color: red;">
+                           <strong>{{ $message }}</strong>
+                        </span>
+                     @enderror
+                  </div>
 
             		<div class="form-group">
             			<label for="judul">Judul Skripsi</label>
@@ -148,13 +164,13 @@
 	<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
 	<script type="text/javascript">
 		$('.select2').select2();
-		var dosen = @json($dosen);
+		var mahasiswa = @json($mahasiswa);
 
 		$("select[name='nim']").change(function(event) {
 			var nim = $(this).val();
 			var nama = "";
-			$.each(dosen, function(index, val) {
-				 if(nim == val.no_pegawai){
+			$.each(mahasiswa, function(index, val) {
+				 if(nim == val.nim){
 				 	nama = val.nama;
 				 	return false;
 				 }

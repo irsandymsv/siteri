@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\surat_tugas;
 use PDF;
 use App\User;
+use App\keris;
+use App\mahasiswa;
 
 //Surat Tugas Pembimbing Controller
 class sutgasPembimbingController extends Controller
@@ -23,9 +25,13 @@ class sutgasPembimbingController extends Controller
 
 	public function create()
 	{
+		$mahasiswa = mahasiswa::all();
 		$dosen = user::where('is_dosen', 1)->get();
+		$keris = keris::all();
 		return view('akademik.sutgas_pembimbing.create', [
-			'dosen' => $dosen
+			'dosen' => $dosen,
+			'keris' => $keris,
+			'mahasiswa' => $mahasiswa
 		]);
 	}
 
@@ -39,11 +45,22 @@ class sutgasPembimbingController extends Controller
         return view('akademik.sutgas_pembimbing.show');
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public function newSempro()
 	{
 		$dosen = user::where('is_dosen', 1)->get();
 		return view('akademik.sk.create', [
-			'dosen' => $dosen
+			'dosen' => $dosen,
 		]);
 	}
 
