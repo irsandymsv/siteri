@@ -32,6 +32,8 @@
 		            		<tr>
 		            			<th>No</th>
 		            			<th>No Surat</th>
+		            			<th>NIM</th>
+		            			<th>Nama Mahasiswa</th>
 		            			<th>Tanggal Dibuat</th>
 		            			<th>Pilihan</th>
 		            		</tr>
