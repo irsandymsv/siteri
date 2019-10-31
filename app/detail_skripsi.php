@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class detail_skripsi extends Model
 {
     protected $table = "detail_skripsi";
-    protected $timestamps = FALSE;
+    public $timestamps = FALSE;
     protected $guarded = ['id'];
 
     public function mahasiswa()

@@ -8,7 +8,7 @@ class mahasiswa extends Model
 {
     protected $table = "mahasiswa";
     protected $primaryKey = "nim";
-    protected $timestamps = "false";
+    public $timestamps = "false";
     public $incrementing = false;
 
     public function bagian(){

@@ -17,7 +17,6 @@ class CreateMahasiswaTable extends Migration
             $table->string('nim')->length(14)->primary();
             $table->unsignedInteger('id_bagian')->nullable();
             $table->string('nama')->length('60');
-            $table->timestamps();
 
             $table->foreign('id_bagian')->references('id')->on('bagian')->onDelete('set null');
         });

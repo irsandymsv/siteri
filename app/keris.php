@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class keris extends Model
 {
     protected $table = "keris";
-    protected $timestamps ="false";
+    public $timestamps ="false";
     protected $guarded = ['id'];
 
     public function detail_skripsi()

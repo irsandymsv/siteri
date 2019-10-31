@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class status_sk extends Model
 {
     protected $table = "status_sk";
-    protected $timestamps = FALSE;
+    public $timestamps = FALSE;
     protected $guarded = ['id'];
 
     public function sk_sempro()

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class surat_tugas extends Model
 {
    protected $table = "surat_tugas";
-   protected $timestamps = False;
+   public $timestamps = False;
    protected $guarded = ['id'];
 
    public function tipe_surat_tugas()

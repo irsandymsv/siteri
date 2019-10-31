@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class sk_honor extends Model
 {
     protected $table = "sk_honor";
-    protected $timestamps = TRUE;
+    public $timestamps = TRUE;
 
     public function tipe_sk()
     {

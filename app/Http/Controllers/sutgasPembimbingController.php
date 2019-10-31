@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\surat_tugas;
 use PDF;
 use App\User;
 
@@ -11,8 +12,12 @@ class sutgasPembimbingController extends Controller
 {
     public function index()
 	{
-		return view('akademik.sutgas_pembimbing.index', [
-			
+        // $surat_tugas = surat_tugas::with('tipe_surat_tugas')
+        //     ->whereHas('tipe_surat_tugas',function(Builder $query){
+        //         $query->where('tipe_surat','Surat Tugas Pembimbing');
+        //     })->get();
+        return view('akademik.sutgas_pembimbing.index', [
+            // '$surat_tugas' => $surat_tugas
 		]);
 	}
 
@@ -26,12 +31,12 @@ class sutgasPembimbingController extends Controller
 
 	public function store(Request $request)
 	{
-		
+
 	}
 
 	public function show()
 	{
-		return view('akademik.sutgas_pembimbing.show');
+        return view('akademik.sutgas_pembimbing.show');
 	}
 
 	public function newSempro()

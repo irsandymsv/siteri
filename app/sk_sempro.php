@@ -8,7 +8,7 @@ class sk_sempro extends Model
 {
     protected $table = "sk_sempro";
     protected $primaryKey = "no_surat";
-    protected $timestamps = TRUE;
+    public $timestamps = TRUE;
     protected $incrementing = FALSE;
 
     public function status_sk()

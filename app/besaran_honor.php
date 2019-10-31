@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class besaran_honor extends Model
 {
     protected $table = "besaran_honor";
-    protected $timestamps = FALSE;
+    public $timestamps = FALSE;
     protected $guarded = ['id'];
 
     public function histori_besaran_honor()

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class status_detail_skripsi_table extends Model
 {
     protected $table = "status_sk";
-    protected $timestamps = FALSE;
+    public $timestamps = FALSE;
     protected $guarded = ['id'];
 
     public function detail_skripsi()
