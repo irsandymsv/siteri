@@ -33,4 +33,17 @@ class sutgasPembimbingController extends Controller
 	{
 		return view('akademik.sutgas_pembimbing.show');
 	}
+
+	public function newSempro()
+	{
+		$dosen = user::where('is_dosen', 1)->get();
+		return view('akademik.sk.create', [
+			'dosen' => $dosen
+		]);
+	}
+
+	public function storeSempro(Request $request)
+	{
+		dd($request->all());
+	}
 }

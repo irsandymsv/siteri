@@ -345,15 +345,11 @@ desired effect
 <!-- AdminLTE App -->
 <script src="/adminlte/dist/js/adminlte.min.js"></script>
 <!-- page script -->
-<script>
+<script type="text/javascript">
   $('#table_data1').DataTable({
     })
 
   $('#SkripsiPembimbing').editableTableWidget();
-</script>
-
-<script>
-
 </script>
 
 @yield('script')
