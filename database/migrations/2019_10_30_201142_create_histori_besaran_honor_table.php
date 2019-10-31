@@ -15,7 +15,7 @@ class CreateHistoriBesaranHonorTable extends Migration
     {
         Schema::create('histori_besaran_honor', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('id_besaran_honor')->nullabel();
+            $table->unsignedInteger('id_besaran_honor')->nullable();
             $table->unsignedBigInteger('jumlah_honor');
             $table->timestamps();
 

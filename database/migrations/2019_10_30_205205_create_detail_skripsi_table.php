@@ -16,7 +16,7 @@ class CreateDetailSkripsiTable extends Migration
         Schema::create('detail_skripsi', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('judul')->length(150)->nullable();
-            $table->string('nim')->length(13)->nullable();
+            $table->string('nim')->length(14)->nullable();
             $table->string('id_sk_sempro')->length(25)->nullable();
             $table->string('id_sk_skripsi')->length(25)->nullable();
             $table->string('id_pembimbing_utama')->length(25)->nullable();
@@ -32,7 +32,7 @@ class CreateDetailSkripsiTable extends Migration
             $table->UnsignedInteger('id_surat_tugas_pembahas')->nullable();
             $table->UnsignedInteger('id_surat_tugas_penguji')->nullable();
 
-            $table->foreign('nim')->references('id')->on('mahasiswa')->onDelete('set null');
+            $table->foreign('nim')->references('nim')->on('mahasiswa')->onDelete('set null');
             $table->foreign('id_sk_sempro')->references('no_surat')->on('sk_sempro')->onDelete('set null');
             $table->foreign('id_sk_skripsi')->references('no_surat')->on('sk_skripsi')->onDelete('set null');
             $table->foreign('id_pembimbing_utama')->references('no_pegawai')->on('users')->onDelete('set null');

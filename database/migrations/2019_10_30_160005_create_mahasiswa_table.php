@@ -15,7 +15,7 @@ class CreateMahasiswaTable extends Migration
     {
         Schema::create('mahasiswa', function (Blueprint $table) {
             $table->string('nim')->length(14)->primary();
-            $table->unsignedInteger('id_bagian');
+            $table->unsignedInteger('id_bagian')->nullable();
             $table->string('nama')->length('60');
             $table->timestamps();
 

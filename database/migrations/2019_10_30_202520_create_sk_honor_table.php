@@ -15,7 +15,7 @@ class CreateSkHonorTable extends Migration
     {
         Schema::create('sk_honor', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedSmallInteger('id_tipe_sk')->nullable();
+            $table->unsignedInteger('id_tipe_sk')->nullable();
             $table->unsignedSmallInteger('id_status_sk_honor')->nullable();
             $table->unsignedInteger('id_honor_pembimbing1')->nullable();
             $table->unsignedInteger('id_honor_pembimbing2')->nullable();

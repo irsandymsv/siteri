@@ -15,7 +15,7 @@ class CreateSuratTugasTable extends Migration
     {
         Schema::create('surat_tugas', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger("id_tipe_surat_tugas");
+            $table->unsignedInteger("id_tipe_surat_tugas")->nullable();
             $table->string('no_surat')->length(25);
             $table->timestamps();
 
