@@ -36,4 +36,11 @@ class suratTugasController extends Controller
             $nama_id_dosen2 => $request->input($nama_id_dosen1),
         ]);
     }
+
+    protected function verif($surat_tugas, int $id_status_surat_tugas, $pesan_revisi)
+    {
+        $surat_tugas->id_status_surat_tugas = $id_status_surat_tugas;
+        $surat_tugas->pesan_revisi = $pesan_revisi;
+        return $surat_tugas;
+    }
 }

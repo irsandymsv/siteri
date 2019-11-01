@@ -43,7 +43,7 @@ class sutgasPengujiController extends sutgasPengujiController
             $this->update_sutgas($request, 3, $request->status, $id);
             $this->update_detail_skripsi(
                 $request,
-                $surat_tugas->id,
+                $id,
                 'id_surat_tugas_penguji',
                 'id_penguji_utama',
                 'iid_penguji_pendamping'

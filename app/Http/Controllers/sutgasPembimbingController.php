@@ -29,7 +29,7 @@ class sutgasPembimbingController extends suratTugasController
 
 	public function create()
 	{
-      $mahasiswa = mahasiswa::doesntHave('detail_skripsi')->get();
+        $mahasiswa = mahasiswa::doesntHave('detail_skripsi')->get();
 		$dosen = user::where('is_dosen', 1)->get();
 		$keris = keris::all();
 		return view('akademik.sutgas_pembimbing.create', [
@@ -182,19 +182,16 @@ class sutgasPembimbingController extends suratTugasController
 			$request->validate([
 				'pesan_revisi' => 'required|string'
 			]);
-
-			$surat_tugas->id_status_surat_tugas = 1;
-			$surat_tugas->pesan_revisi = $request->pesan_revisi;
+            $surat_tugas = $this->verif($surat_tugas, 1, $request->pesan_revisi);
 			$surat_tugas->save();
 			return redirect()->route('ktu.sutgas_akademik.index')->with("verif_ktu", 'Surat tugas berhasil ditarik, status kembali menjadi "Draft"');
 		}
 		else if ($request->verif_ktu == 1) {
-			$surat_tugas->id_status_surat_tugas = 3;
-			$surat_tugas->pesan_revisi = null;
+            $surat_tugas = $this->verif($surat_tugas,3,null);
 			$surat_tugas->save();
 			return redirect()->route('ktu.sutgas_akademik.show', $id)->with('verif_ktu', 'verifikasi surat tugas berhasil, status surat tugas saat ini "Disetujui KTU"');
 		}
-	}
+    }
 
 	public function newSempro()
 	{

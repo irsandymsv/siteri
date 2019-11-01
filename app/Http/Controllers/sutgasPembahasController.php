@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 class sutgasPembahasController extends suratTugasController
 {
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -40,10 +41,10 @@ class sutgasPembahasController extends suratTugasController
             'status' => 'required'
         ]);
         try {
-            $surat_tugas = $this->update_sutgas($request, 2, $request->status, $id);
+            $this->update_sutgas($request, 2, $request->status, $id);
             $this->update_detail_skripsi(
                 $request,
-                $surat_tugas->id,
+                $id,
                 'id_surat_tugas_pembahas',
                 'id_pembahas1',
                 'id_pembahas2'

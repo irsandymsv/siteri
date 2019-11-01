@@ -40,7 +40,7 @@
       }
 
       #body_surat{
-         text-align: justify-all; 
+         text-align: justify-all;
       }
 
       .top-title{
@@ -69,7 +69,7 @@
       .ttd-right{
          float: right;
       }
-	</style>	
+	</style>
 @endsection
 
 @section('judul_header')
@@ -90,10 +90,10 @@
                      <h4><i class="icon fa fa-check"></i> Berhasil</h4>
                      {{session('verif_ktu')}}
                   </div>
-               @endif 
+               @endif
 
-               @php 
-                  Session::forget('verif_ktu'); 
+               @php
+                  Session::forget('verif_ktu');
                @endphp
             </div>
 
@@ -108,7 +108,7 @@
                      <span class="header_16">KEMENTERIAN RISET, TEKNOLOGI, DAN PENDIDIKAN TINGGI</span><br>
                      <span class="header_16">UNIVERSITAS JEMBER</span><br>
                      <span class="header_16">FAKULTAS ILMU KOMPUTER</span>
-                     
+
                      <br>
 
                      <span>Jalan Kalimantan No. 37 Kampus Tegal Boto Jember 68121</span><br>
@@ -215,7 +215,7 @@
                   </form>
                @endif
             </div>
-            
+
    		</div>
    	</div>
 	</div>
@@ -240,7 +240,7 @@
                @enderror
              </div>
              <div class="modal-footer">
-               <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>           
+               <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
             <button type="submit" name="tarik_btn" class="btn btn-danger">Tarik</button>
              </div>
            </form>
