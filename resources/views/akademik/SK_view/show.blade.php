@@ -21,10 +21,6 @@
 		.revisi_wrap{
         padding: 5px;
       }
-
-      .revisi_wrap h4{
-      	color: red;
-      }
 	</style>
 @endsection
 

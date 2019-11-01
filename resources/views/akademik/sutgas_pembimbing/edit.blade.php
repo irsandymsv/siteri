@@ -34,7 +34,7 @@
 @endsection
 
 @section('judul_header')
-	Ubah Tugas Pembimbing
+	Surat Tugas Pembimbing
 @endsection
 
 @section('content')
@@ -42,7 +42,10 @@
    	<div class="col-xs-12">
    		<div class="box box-primary">
    			<div class="box-header">
-              <h3 class="box-title">Ubah Surat Tugas Pembimbing</h3>
+               <h3 class="box-title">Ubah Surat Tugas Pembimbing</h3>
+
+               <br><br>
+               <h4>Status surat tugas : {{ $surat_tugas->status_surat_tugas->status }}</h4>
             </div>
             <div class="col-xs-12">
                 @if (session('success'))
@@ -55,6 +58,7 @@
                 Session::forget('success');
                 @endphp
                 @endif
+                
                 @if (session('error'))
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -174,7 +178,7 @@
 
                <div class="box-footer">
                   <input type="hidden" name="status" value="">
-                  <a href="{{ route('akademik.sutgas-pembimbing.show', $surat_tugas->id) }}" class="btn btn-default">Batal</a> &ensp;
+                  <a href="{{ route('akademik.sutgas-pembimbing.show', $surat_tugas->id) }}" class="btn btn-default">Kembali</a> &ensp;
 
                   <div id="btn_group">
                      {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}

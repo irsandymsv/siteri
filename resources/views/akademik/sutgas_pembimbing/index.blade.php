@@ -49,7 +49,7 @@
 		            				<td>{{ $item->status_surat_tugas->status }}</td>
 		            				<td>{{ $item->surat_tugas_pembimbing->mahasiswa->nama }}</td>
 		            				<td>
-		            					@if ($item->verif_ktu == null)
+		            					@if ($item->verif_ktu == 0)
 		            						Belum Diverifikasi
 		            					@elseif($item->verif_ktu == 2)
 		            						<label class="label bg-red">Butuh Revisi</label>

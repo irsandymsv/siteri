@@ -22,12 +22,15 @@
    border-radius: 5px;
 }
 
+.revisi_wrap h4{
+  color: red;
+}
 
 /*Horizontal Timeline*/
 .tl_wrap{
   white-space:nowrap;
   overflow-x: auto;
-  padding:20px;
+  padding:10px;
   position:relative;
 }
 

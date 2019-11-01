@@ -9,7 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
 	<style type="text/css">
 		.table-responsive{
-         width: 85%;
+         width: 90%;
          margin: auto;
          font-size: 15px;
       }
@@ -30,7 +30,51 @@
    	<div class="col-xs-12">
    		<div class="box box-primary">
    			<div class="box-header">
-              <h3 class="box-title">Detail Surat Tugas Pembimbing</h3>
+               <h3 class="box-title">Detail Surat Tugas Pembimbing</h3>
+               
+               @if($surat_tugas->verif_ktu == 2)
+                  <label class="label bg-red">Butuh Revisi</label>
+               @endif
+
+               <div style="float: right;">
+                  <a href="{{ route("akademik.sutgas-pembimbing.cetak", $surat_tugas->id) }}" class="btn bg-teal"><i class="fa fa-print"></i> Download PDF</a>
+               </div>
+
+               <h5><b>Progres</b> :</h5>
+               <div class="tl_wrap">
+                  <div class="item_tl" id="progres_1">
+                     <div><i class="fa fa-check"></i></div>
+                     <h4>Disimpan</h4>
+                  </div>
+
+                  <div class="item_tl" id="progres_2">
+                     <div><i></i></div>
+                     <h4>Dikirim</h4>
+                  </div>
+
+                  <div class="item_tl" id="progres_3">
+                     <div><i></i></div>
+                     <h4>Disetujui KTU</h4>
+                  </div>
+               </div>
+
+               @if(!is_null($surat_tugas->pesan_revisi))
+               <div class="revisi_wrap">
+                  <h4><b>Pesan Revisi</b> : </h4>
+                  <p>"{{ $surat_tugas->pesan_revisi }}"</p>
+               </div>
+               @endif
+
+               @if (session('success'))
+               <div class="alert alert-success alert-dismissible">
+                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                   <h4><i class="icon fa fa-check"></i> Sukses</h4>
+                   {{session('success')}}
+               </div>
+               @php
+               Session::forget('success');
+               @endphp
+               @endif
             </div>
 
             <div class="box-body">
@@ -107,5 +151,12 @@
 @endsection
 
 @section('script')
-
+   <script type="text/javascript">
+      var status = @json($surat_tugas->id_status_surat_tugas);
+      for (var i = status; i > 0; i--) {
+         // $("#progres_"+i).children('i').removeClass('bg-grey').addClass('bg-green fa-check');
+         $("#progres_"+i).addClass('verified');
+         $("#progres_"+i).find('i').addClass('fa fa-check');
+      }
+   </script>
 @endsection
