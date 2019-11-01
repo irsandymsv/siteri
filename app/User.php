@@ -80,7 +80,7 @@ class User extends Authenticatable
         return $this->belongsTo('App\bagian', 'id_bagian');
     }
 
-    public function fugnsional()
+    public function fungsional()
     {
         return $this->belongsTo('App\fungsional', 'id_fungsional');
     }
