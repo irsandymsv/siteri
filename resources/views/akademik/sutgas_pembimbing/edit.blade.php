@@ -30,7 +30,7 @@
 			float: right;
 			margin-right: 20px;
 		}
-	</style>	
+	</style>
 @endsection
 
 @section('judul_header')
@@ -44,11 +44,32 @@
    			<div class="box-header">
               <h3 class="box-title">Ubah Surat Tugas Pembimbing</h3>
             </div>
-
-            <form action="#" method="post">
+            <div class="col-xs-12">
+                @if (session('success'))
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-check"></i> Sukses</h4>
+                    {{session('success')}}
+                </div>
+                @php
+                Session::forget('success');
+                @endphp
+                @endif
+                @if (session('error'))
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-ban"></i>Error</h4>
+                    {{session('error')}}
+                @php
+                Session::forget('error');
+                @endphp
+                @endif
+            </div>
+            <form action="{{route('akademik.sutgas-pembimbing.update',$surat_tugas->id)}}" method="post">
                <div class="box-body">
                   @csrf
                   @method('PUT')
+                  <input type="hidden" name="id_detail_skripsi" value="{{$surat_tugas->surat_tugas_pembimbing->id}}">
                   <div class="form-group">
                      <label for="no_surat">No Surat</label><br>
                      <input type="text" name="no_surat" id="no_surat" value="{{ $surat_tugas->no_surat }}">
@@ -60,7 +81,6 @@
                         </span>
                      @enderror
                   </div>
-
                   <div class="row">
                      <div class="col-lg-6">
                         <div class="form-group">
@@ -105,7 +125,6 @@
                         </span>
                      @enderror
                   </div>
-
                   <div class="form-group">
                      <label for="judul">Judul Skripsi</label>
                      <textarea name="judul" id="judul" class="form-control" rows="3">{{ $surat_tugas->surat_tugas_pembimbing->judul }}</textarea>
@@ -164,7 +183,7 @@
                   </div>
                </div>
             </form>
-            
+
    		</div>
    	</div>
 	</div>
@@ -174,7 +193,7 @@
 	<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
 	<script type="text/javascript">
 		$('.select2').select2();
-      
+
       $("button[name='simpan_draf']").click(function(event) {
          event.preventDefault();
          $("input[name='status']").val(1);

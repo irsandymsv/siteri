@@ -8,7 +8,7 @@ use App\detail_skripsi;
 
 class suratTugasController extends Controller
 {
-    public function store_sutgas(Request $request, int $id_tipe_surat_tugas, int $id_status_surat_tugas)
+    protected function store_sutgas(Request $request, int $id_tipe_surat_tugas, int $id_status_surat_tugas)
     {
 
         $surat_tugas =  surat_tugas::create([
@@ -26,4 +26,24 @@ class suratTugasController extends Controller
             'id_keris' => $request->input('id_keris')
         ]);
     }
+
+    protected function update_sutgas(Request $request, int $id_tipe_surat_tugas, int $id_status_surat_tugas, int $id)
+    {
+        surat_tugas::where('id',$id)->update([
+            'no_surat' => $request->input('no_surat'),
+            'id_tipe_surat_tugas' => $id_tipe_surat_tugas,
+            'id_status_surat_tugas' => $id_status_surat_tugas
+        ]);
+
+        detail_skripsi::where('id',$request->input('id_detail_skripsi'))->update([
+            'nim' => $request->input('nim'),
+            'judul' => $request->input('judul'),
+            'id_surat_tugas_pembimbing' => $id,
+            'id_pembimbing_utama' => $request->input('id_pembimbing_utama'),
+            'id_pembimbing_pendamping' => $request->input('id_pembimbing_pendamping'),
+            'id_keris' => $request->input('id_keris')
+        ]);
+
+    }
+
 }

@@ -53,7 +53,6 @@ class sutgasPembimbingController extends suratTugasController
             $this->store_sutgas($request,1,$request->status);
             return redirect()->route('akademik.sutgas-pembimbing.index')->with('success', 'Data Surat Tugas Berhasil Ditambahkan');
         }catch(Exception $e){
-            dd($e->getMessage());
             return redirect()->route('akademik.sutgas-pembimbing.create')->with('error', $e->getMessage());
         }
 	}
@@ -86,7 +85,7 @@ class sutgasPembimbingController extends suratTugasController
 			"surat_tugas_pembimbing.pembimbing_pendamping:no_pegawai,nama"
 		])->first();
 
-      $mahasiswa = mahasiswa::doesntHave('detail_skripsi')->orWhere("nim", $surat_tugas->surat_tugas_pembimbing->nim)->get();
+        $mahasiswa = mahasiswa::doesntHave('detail_skripsi')->orWhere("nim", $surat_tugas->surat_tugas_pembimbing->nim)->get();
       // dd($mahasiswa);
 		$dosen = user::where('is_dosen', 1)->get();
 		$keris = keris::all();
@@ -97,13 +96,26 @@ class sutgasPembimbingController extends suratTugasController
 			'dosen' => $dosen,
 			'keris' => $keris
 		]);
-	}
+    }
 
-
-
-
-
-
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'nim' => 'required',
+            'no_surat' => 'required',
+            'judul' => 'required',
+            'id_keris' => 'required',
+            'id_pembimbing_utama' => 'required',
+            'id_pembimbing_pendamping' => 'required'
+        ]);
+        try {
+            $this->update_sutgas($request, 1, $request->status,$id);
+            return redirect()->route('akademik.sutgas-pembimbing.edit',$id)->with('success', 'Data Surat Tugas Berhasil Dirubah');
+        } catch (Exception $e) {
+            dd($e->getMessage());
+            return redirect()->route('akademik.sutgas-pembimbing.edit', $id)->with('error', $e->getMessage());
+        }
+    }
 
 
 	public function ktu_index()

@@ -44,7 +44,27 @@
    			<div class="box-header">
               <h3 class="box-title">Buat Surat Tugas Pembimbing</h3>
             </div>
-
+            <div class="col-xs-12">
+                @if (session('success'))
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-check"></i> Sukses</h4>
+                    {{session('success')}}
+                </div>
+                @php
+                Session::forget('success');
+                @endphp
+                @endif
+                @if (session('error'))
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-ban"></i>Error</h4>
+                    {{session('error')}}
+                @php
+                Session::forget('error');
+                @endphp
+                @endif
+            </div>
             <form action="{{ route('akademik.sutgas-pembimbing.store') }}" method="post">
                <div class="box-body">
             		@csrf

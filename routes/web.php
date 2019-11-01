@@ -31,7 +31,8 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
 	Route::get('/surat-tugas-pembimbing/create', 'sutgasPembimbingController@create')->name("sutgas-pembimbing.create");
 	Route::post('/surat-tugas-pembimbing/store', 'sutgasPembimbingController@store')->name("sutgas-pembimbing.store");
 	Route::get('/surat-tugas-pembimbing/{id}', 'sutgasPembimbingController@show')->name("sutgas-pembimbing.show");
-	Route::get('/surat-tugas-pembimbing/{id}/edit', 'sutgasPembimbingController@edit')->name("sutgas-pembimbing.edit");
+    Route::get('/surat-tugas-pembimbing/{id}/edit', 'sutgasPembimbingController@edit')->name("sutgas-pembimbing.edit");
+    Route::put('/surat-tugas-pembimbing/{id}/update', 'sutgasPembimbingController@update')->name("sutgas-pembimbing.update");
 
 	Route::get('/newSempro', 'sutgasPembimbingController@newSempro');
 	Route::post('/storeSempro', 'sutgasPembimbingController@storeSempro')->name("storeSempro");
@@ -63,7 +64,7 @@ Route::prefix('ktu')->name('ktu.')->group(function ()
 
 	Route::get('/surat-tugas-pembimbing', 'sutgasPembimbingController@ktu_index')->name('sutgas-pembimbing.index');
 	Route::get('/surat-tugas-pembimbing/{id}', 'sutgasPembimbingController@ktu_show')->name("sutgas-pembimbing.show");
-	
+
 	Route::get('/sk-skripsi', 'SkSkripsiController@ktu_index_skripsi')->name('sk-skripsi.index');
 	Route::get('/sk-skripsi/{id_sk_akademik}', 'SkSkripsiController@ktu_show')->name('sk-skripsi.show');
 	Route::put('/sk-skripsi/verif/{id_sk_akademik}', 'SkSkripsiController@ktu_verif')->name('sk-skripsi.verif');
@@ -119,7 +120,7 @@ Route::prefix('keuangan')->name('keuangan.')->group(function()
 	Route::put('/honor-skripsi/show/{id_sk_honor}/update','honorSkripsiController@update')->name('honor-skripsi.update');
 	Route::delete('/honor-skripsi/delete/{id_sk_honor?}', 'honorSkripsiController@destroy')->name('honor-skripsi.destroy');
 	Route::get('/honor-skripsi/show/{id_sk_honor}/cetak-pdf', 'honorSkripsiController@cetak_pdf')->name('honor-skripsi.cetak');
-	
+
 	Route::get('/honor-sempro/', 'honorSemproController@index')->name('honor-sempro.index');
 	Route::get('/honor-sempro/pilih-sk', 'honorSemproController@pilih_sk')->name('honor-sempro.pilih-sk');
 	Route::get('/honor-sempro/create/{id_sk_akademik}', 'honorSemproController@create')->name('honor-sempro.create');
