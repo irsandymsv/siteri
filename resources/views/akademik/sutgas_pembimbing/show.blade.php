@@ -36,9 +36,11 @@
                   <label class="label bg-red">Butuh Revisi</label>
                @endif
 
-               <div style="float: right;">
-                  <a href="{{ route("akademik.sutgas-pembimbing.cetak", $surat_tugas->id) }}" class="btn bg-teal"><i class="fa fa-print"></i> Download PDF</a>
-               </div>
+               @if ($surat_tugas->verif_ktu == 1)
+                  <div style="float: right;">
+                     <a href="{{ route("akademik.sutgas-pembimbing.cetak", $surat_tugas->id) }}" class="btn bg-teal"><i class="fa fa-print"></i> Download PDF</a>
+                  </div>
+               @endif
 
                <h5><b>Progres</b> :</h5>
                <div class="tl_wrap">
