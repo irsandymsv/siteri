@@ -29,6 +29,7 @@
            		</h3>
             	
               	@if(session()->has('verif_ktu'))
+              	<br>
               	<div class="alert alert-info alert-dismissible" style="width: 80%; margin: auto;">
                	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                	<h4><i class="icon fa fa-info"></i> Berhasil</h4>

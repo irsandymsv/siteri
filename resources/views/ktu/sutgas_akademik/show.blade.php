@@ -81,7 +81,15 @@
    	<div class="col-xs-12">
    		<div class="box box-primary">
    			<div class="box-header">
-               <h3 class="box-title">Detail Surat Tugas Pembimbing</h3>
+               <h3 class="box-title">Detail Surat Tugas Pembimbing</h3><br>
+               Status:
+               @if ($surat_tugas->verif_ktu == 0)
+                  Belum Diverifikasi
+               @elseif($surat_tugas->verif_ktu == 2)
+                  <label class="label bg-red">Butuh Revisi</label>
+               @else
+                  <label class="label bg-green">Sudah Diverifikasi</label>
+               @endif
 
                @if(session()->has('verif_ktu'))
                   <br><br>

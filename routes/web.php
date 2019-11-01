@@ -33,6 +33,7 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
 	Route::get('/surat-tugas-pembimbing/{id}', 'sutgasPembimbingController@show')->name("sutgas-pembimbing.show");
     Route::get('/surat-tugas-pembimbing/{id}/edit', 'sutgasPembimbingController@edit')->name("sutgas-pembimbing.edit");
     Route::put('/surat-tugas-pembimbing/{id}/update', 'sutgasPembimbingController@update')->name("sutgas-pembimbing.update");
+    Route::get('/surat-tugas-pembimbing/{id}/cetak', 'sutgasPembimbingController@cetak_pdf')->name("sutgas-pembimbing.cetak");
 
 	Route::get('/newSempro', 'sutgasPembimbingController@newSempro');
 	Route::post('/storeSempro', 'sutgasPembimbingController@storeSempro')->name("storeSempro");

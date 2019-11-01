@@ -50,16 +50,8 @@ class sutgasPembimbingController extends suratTugasController
             'id_pembimbing_pendamping' => 'required'
         ]);
         try{
-            $surat_tugas = $this->store_sutgas($request,1,$request->status);
-            detail_skripsi::insert([
-                'nim' => $request->input('nim'),
-                'judul' => $request->input('judul'),
-                'id_surat_tugas_pembimbing' => $surat_tugas->id,
-                'id_pembimbing_utama' => $request->input('id_pembimbing_utama'),
-                'id_pembimbing_pendamping' => $request->input('id_pembimbing_pendamping'),
-                'id_keris' => $request->input('id_keris')
-            ]);
-            return redirect()->route('akademik.sutgas-pembimbing.index')->with('success', 'Data Surat Tugas Berhasil Ditambahkan');
+            $id_baru = $this->store_sutgas($request,1,$request->status);
+            return redirect()->route('akademik.sutgas-pembimbing.show', $id_baru)->with('success', 'Data Surat Tugas Berhasil Ditambahkan');
         }catch(Exception $e){
             return redirect()->route('akademik.sutgas-pembimbing.create')->with('error', $e->getMessage());
         }
@@ -118,19 +110,34 @@ class sutgasPembimbingController extends suratTugasController
         ]);
         try {
             $this->update_sutgas($request, 1, $request->status,$id);
-            detail_skripsi::where('id', $request->input('id_detail_skripsi'))->update([
-                'nim' => $request->input('nim'),
-                'judul' => $request->input('judul'),
-                'id_surat_tugas_pembimbing' => $id,
-                'id_pembimbing_utama' => $request->input('id_pembimbing_utama'),
-                'id_pembimbing_pendamping' => $request->input('id_pembimbing_pendamping'),
-                'id_keris' => $request->input('id_keris')
-            ]);
-            return redirect()->route('akademik.sutgas-pembimbing.edit',$id)->with('success', 'Data Surat Tugas Berhasil Dirubah');
+            return redirect()->route('akademik.sutgas-pembimbing.show',$id)->with('success', 'Data Surat Tugas Berhasil Diubah');
         } catch (Exception $e) {
             dd($e->getMessage());
             return redirect()->route('akademik.sutgas-pembimbing.edit', $id)->with('error', $e->getMessage());
         }
+    }
+
+    public function cetak_pdf($id)
+    {
+    	$surat_tugas = surat_tugas::where('id', $id)
+    	->with([
+    		"surat_tugas_pembimbing",
+    		"surat_tugas_pembimbing.mahasiswa",
+    		"surat_tugas_pembimbing.keris",
+    		"surat_tugas_pembimbing.pembimbing_utama:no_pegawai,nama,id_fungsional",
+    		"surat_tugas_pembimbing.pembimbing_utama.fungsional",
+    		"surat_tugas_pembimbing.pembimbing_pendamping:no_pegawai,nama,id_fungsional",
+    		"surat_tugas_pembimbing.pembimbing_pendamping.fungsional"
+    	])->first();
+    	$dekan = User::with("jabatan")
+    	->wherehas("jabatan", function (Builder $query){
+    		$query->where("jabatan", "Dekan");
+    	})->first();
+
+    	// return view('akademik.sutgas_pembimbing.pdf', ['surat_tugas' => $surat_tugas, 'dekan' => $dekan]);
+
+    	$pdf = PDF::loadview('akademik.sutgas_pembimbing.pdf', ['surat_tugas' => $surat_tugas, 'dekan' => $dekan])->setPaper('a4', 'portrait')->setWarnings(false);
+    	return $pdf->download("Sutgas_Pembimbing-" . $surat_tugas->no_surat);
     }
 
 
@@ -141,9 +148,9 @@ class sutgasPembimbingController extends suratTugasController
 		        $query->where('tipe_surat','Surat Tugas Pembimbing');
 		    })
 		    ->whereHas('status_surat_tugas', function (Builder $query){
-		    	$query->where('status', 'Dikirim');
+		    	$query->whereIn('status', ['Dikirim', 'Disetujui KTU']);
 		    })
-		    ->orderBy('created_at', 'desc')->get();
+		    ->orderBy('updated_at', 'desc')->get();
 
 		return view('ktu.sutgas_akademik.index', [
 			'surat_tugas' => $surat_tugas,
@@ -184,12 +191,12 @@ class sutgasPembimbingController extends suratTugasController
 			]);
             $surat_tugas = $this->verif($surat_tugas, 1, $request->pesan_revisi);
 			$surat_tugas->save();
-			return redirect()->route('ktu.sutgas_akademik.index')->with("verif_ktu", 'Surat tugas berhasil ditarik, status kembali menjadi "Draft"');
+			return redirect()->route('ktu.sutgas-pembimbing.index')->with("verif_ktu", 'Surat tugas berhasil ditarik, status kembali menjadi "Draft"');
 		}
 		else if ($request->verif_ktu == 1) {
             $surat_tugas = $this->verif($surat_tugas,3,null);
 			$surat_tugas->save();
-			return redirect()->route('ktu.sutgas_akademik.show', $id)->with('verif_ktu', 'verifikasi surat tugas berhasil, status surat tugas saat ini "Disetujui KTU"');
+			return redirect()->route('ktu.sutgas-pembimbing.show', $id)->with('verif_ktu', 'verifikasi surat tugas berhasil, status surat tugas saat ini "Disetujui KTU"');
 		}
     }
 
