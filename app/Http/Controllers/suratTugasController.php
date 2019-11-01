@@ -16,15 +16,7 @@ class suratTugasController extends Controller
             'id_tipe_surat_tugas' => $id_tipe_surat_tugas,
             'id_status_surat_tugas' => $id_status_surat_tugas
         ]);
-
-        detail_skripsi::insert([
-            'nim' => $request->input('nim'),
-            'judul' => $request->input('judul'),
-            'id_surat_tugas_pembimbing' => $surat_tugas->id,
-            'id_pembimbing_utama' => $request->input('id_pembimbing_utama'),
-            'id_pembimbing_pendamping' => $request->input('id_pembimbing_pendamping'),
-            'id_keris' => $request->input('id_keris')
-        ]);
+        return $surat_tugas;
     }
 
     protected function update_sutgas(Request $request, int $id_tipe_surat_tugas, int $id_status_surat_tugas, int $id)
@@ -34,16 +26,6 @@ class suratTugasController extends Controller
             'id_tipe_surat_tugas' => $id_tipe_surat_tugas,
             'id_status_surat_tugas' => $id_status_surat_tugas
         ]);
-
-        detail_skripsi::where('id',$request->input('id_detail_skripsi'))->update([
-            'nim' => $request->input('nim'),
-            'judul' => $request->input('judul'),
-            'id_surat_tugas_pembimbing' => $id,
-            'id_pembimbing_utama' => $request->input('id_pembimbing_utama'),
-            'id_pembimbing_pendamping' => $request->input('id_pembimbing_pendamping'),
-            'id_keris' => $request->input('id_keris')
-        ]);
-
     }
 
 }

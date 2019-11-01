@@ -50,7 +50,15 @@ class sutgasPembimbingController extends suratTugasController
             'id_pembimbing_pendamping' => 'required'
         ]);
         try{
-            $this->store_sutgas($request,1,$request->status);
+            $surat_tugas = $this->store_sutgas($request,1,$request->status);
+            detail_skripsi::insert([
+                'nim' => $request->input('nim'),
+                'judul' => $request->input('judul'),
+                'id_surat_tugas_pembimbing' => $surat_tugas->id,
+                'id_pembimbing_utama' => $request->input('id_pembimbing_utama'),
+                'id_pembimbing_pendamping' => $request->input('id_pembimbing_pendamping'),
+                'id_keris' => $request->input('id_keris')
+            ]);
             return redirect()->route('akademik.sutgas-pembimbing.index')->with('success', 'Data Surat Tugas Berhasil Ditambahkan');
         }catch(Exception $e){
             return redirect()->route('akademik.sutgas-pembimbing.create')->with('error', $e->getMessage());
@@ -110,6 +118,14 @@ class sutgasPembimbingController extends suratTugasController
         ]);
         try {
             $this->update_sutgas($request, 1, $request->status,$id);
+            detail_skripsi::where('id', $request->input('id_detail_skripsi'))->update([
+                'nim' => $request->input('nim'),
+                'judul' => $request->input('judul'),
+                'id_surat_tugas_pembimbing' => $id,
+                'id_pembimbing_utama' => $request->input('id_pembimbing_utama'),
+                'id_pembimbing_pendamping' => $request->input('id_pembimbing_pendamping'),
+                'id_keris' => $request->input('id_keris')
+            ]);
             return redirect()->route('akademik.sutgas-pembimbing.edit',$id)->with('success', 'Data Surat Tugas Berhasil Dirubah');
         } catch (Exception $e) {
             dd($e->getMessage());
