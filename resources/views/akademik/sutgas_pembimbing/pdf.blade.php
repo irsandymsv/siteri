@@ -4,7 +4,11 @@
 	<title></title>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<style type="text/css">
+    <style type="text/css">
+        .html{
+            display: inline-block;
+        }
+
 		.box-body{
 		   /*width: 60%;*/
 		   margin: auto;
@@ -32,12 +36,13 @@
 
 		#keterangan_kop{
 		   width: 85%;
-		   float: left;
+           padding-left: 100px;
+		   /* float: left; */
 		   text-align: center;
 		}
 
 		#body_surat{
-		   text-align: justify-all; 
+		   text-align: justify-all;
 		}
 
 		.top-title{
@@ -86,7 +91,7 @@
          </div>
       </div>
 
-      <div id="body_surat">
+      <div id="body_surat" class="margin-body">
          <p class="top-title">
             <span class="judul_surat">SURAT TUGAS</span><br>
             <span>Nomor: {{ $surat_tugas->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($surat_tugas->created_at)->year }}</span>

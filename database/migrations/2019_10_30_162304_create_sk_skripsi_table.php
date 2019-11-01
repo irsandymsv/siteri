@@ -19,7 +19,7 @@ class CreateSkSkripsiTable extends Migration
             $table->date('tgl_sk_pembimbing')->nullable();
             $table->date('tgl_sk_penguji')->nullable();
             $table->tinyInteger('verif_ktu')->nullable();
-            $table->string('pesan_revisi')->nullable();
+            $table->text("pesan_revisi")->nullable();
             $table->timestamps();
 
             $table->foreign('id_status_sk')->references('id')->on('status_sk')->onDelete('set null');

@@ -19,7 +19,7 @@ class CreateSuratTugasTable extends Migration
             $table->unsignedInteger("id_status_surat_tugas")->nullable();
             $table->string('no_surat')->length(25);
             $table->tinyInteger('verif_ktu')->default(0);
-            $table->string("pesan_revisi")->nullable();
+            $table->text("pesan_revisi")->nullable();
             $table->timestamps();
 
             $table->foreign('id_tipe_surat_tugas')->references('id')->on('tipe_surat_tugas')->onDelete('set null');
