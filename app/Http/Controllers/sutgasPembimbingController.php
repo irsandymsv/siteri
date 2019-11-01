@@ -158,13 +158,42 @@ class sutgasPembimbingController extends suratTugasController
 			"surat_tugas_pembimbing",
 			"surat_tugas_pembimbing.mahasiswa",
 			"surat_tugas_pembimbing.keris",
-			"surat_tugas_pembimbing.pembimbing_utama:no_pegawai,nama",
-			"surat_tugas_pembimbing.pembimbing_pendamping:no_pegawai,nama"
+			"surat_tugas_pembimbing.pembimbing_utama:no_pegawai,nama,id_fungsional",
+			"surat_tugas_pembimbing.pembimbing_utama.fungsional",
+			"surat_tugas_pembimbing.pembimbing_pendamping:no_pegawai,nama,id_fungsional",
+			"surat_tugas_pembimbing.pembimbing_pendamping.fungsional"
 		])->first();
+		$dekan = User::with("jabatan")
+		->wherehas("jabatan", function (Builder $query){
+			$query->where("jabatan", "Dekan");
+		})->first();
 		// dd($surat_tugas);
       return view('ktu.sutgas_akademik.show', [
-      	'surat_tugas' => $surat_tugas
+      	'surat_tugas' => $surat_tugas,
+      	'dekan' => $dekan
       ]);
+	}
+
+	public function ktu_verif(Request $request, $id)
+	{
+		$surat_tugas = surat_tugas::find($id);
+		$surat_tugas->verif_ktu = $request->verif_ktu;
+		if($request->verif_ktu == 2){
+			$request->validate([
+				'pesan_revisi' => 'required|string'
+			]);
+
+			$surat_tugas->id_status_surat_tugas = 1;
+			$surat_tugas->pesan_revisi = $request->pesan_revisi;
+			$surat_tugas->save();
+			return redirect()->route('ktu.sutgas_akademik.index')->with("verif_ktu", 'Surat tugas berhasil ditarik, status kembali menjadi "Draft"');
+		}
+		else if ($request->verif_ktu == 1) {
+			$surat_tugas->id_status_surat_tugas = 3;
+			$surat_tugas->pesan_revisi = null;
+			$surat_tugas->save();
+			return redirect()->route('ktu.sutgas_akademik.show', $id)->with('verif_ktu', 'verifikasi surat tugas berhasil, status surat tugas saat ini "Disetujui KTU"');
+		}
 	}
 
 	public function newSempro()

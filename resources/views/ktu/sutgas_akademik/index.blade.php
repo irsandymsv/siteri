@@ -1,4 +1,4 @@
-@extends('akademik.akademik_view')
+@extends('ktu.ktu_view')
 
 @section('page_title')
 	@if ($tipe == "surat tugas pembimbing")
@@ -27,7 +27,18 @@
 							Daftar Surat Tugas Pembimbing Skripsi
 						@endif
            		</h3>
-            
+            	
+              	@if(session()->has('verif_ktu'))
+              	<div class="alert alert-info alert-dismissible" style="width: 80%; margin: auto;">
+               	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+               	<h4><i class="icon fa fa-info"></i> Berhasil</h4>
+	           		{{session('verif_ktu')}}
+	          	</div>
+	          	@endif 
+
+	          	@php 
+	          		Session::forget('verif_ktu'); 
+	          	@endphp
             </div>
 
             <div class="box-body">

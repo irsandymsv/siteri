@@ -64,6 +64,7 @@ Route::prefix('ktu')->name('ktu.')->group(function ()
 
 	Route::get('/surat-tugas-pembimbing', 'sutgasPembimbingController@ktu_index')->name('sutgas-pembimbing.index');
 	Route::get('/surat-tugas-pembimbing/{id}', 'sutgasPembimbingController@ktu_show')->name("sutgas-pembimbing.show");
+	Route::put('/surat-tugas-pembimbing/verif/{id}', 'sutgasPembimbingController@ktu_verif')->name("sutgas-pembimbing.verif");
 
 	Route::get('/sk-skripsi', 'SkSkripsiController@ktu_index_skripsi')->name('sk-skripsi.index');
 	Route::get('/sk-skripsi/{id_sk_akademik}', 'SkSkripsiController@ktu_show')->name('sk-skripsi.show');
