@@ -10,38 +10,43 @@
         }
 
 		.box-body{
-		   /*width: 60%;*/
 		   margin: auto;
 		   font-family: 'Times New Roman';
-		   font-size: 12px;
-		   padding: 50px;
-		   /*border: 1px solid black;*/
+		   font-size: 12pt;
+		   margin-top: 0;
+         margin-bottom: 1pt;
+         margin-left: 0.8cm;
+         margin-right: 0.8cm; 
 		}
 
 		#kop_surat{
-		   padding: 5px;
-		   /*overflow: hidden;*/
 		   border-bottom: 3px solid black;
+		   /*padding: 5px;*/
+		   /*overflow: hidden;*/
 		}
 
 		#logo{
 		   float: left;
-		   width: 15%;
+		   width: 14%;
 		}
 
 		#logo img{
 		   width: 100%;
 		   height: auto;
+         margin-top: 10pt;
 		}
 
 		#keterangan_kop{
-		   width: 85%;
-           padding-left: 100px;
-		   /* float: left; */
 		   text-align: center;
+         margin-left: 70px;
+         padding-bottom: 5pt;
+		   /*width: 90%;*/
+		   /* float: left; */
 		}
 
 		#body_surat{
+         margin-left: 0.3cm;
+         margin-right: 0.3cm; 
 		   text-align: justify-all;
 		}
 
@@ -51,9 +56,10 @@
 		}
 
 		.judul_surat{
-		   font-size: 14px;
+		   font-size: 14pt;
 		   text-decoration: underline;
 		   font-weight: bold;
+         letter-spacing: 1.5pt;
 		}
 
 		#detail_table tr td:first-child{
@@ -61,7 +67,7 @@
 		}
 
 		.header_14{
-		   font-size: 14px;
+		   font-size: 14pt;
 		}
 
 		.underline{
@@ -138,7 +144,7 @@
                <td>: <b>Pembimbing Pendamping</b></td>
             </tr>
 
-            <tr><td><br></td></tr>
+            <tr><td colspan="2"><br></td></tr>
             <tr><td colspan="2">untuk membimbing skripsi mahasiswa:</td></tr>
             <tr>
                <td>Nama</td>
@@ -166,7 +172,7 @@
             Jember, {{ Carbon\Carbon::parse($surat_tugas->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }} <br>
             Dekan,
             <br><br><br><br>
-            <span>{{ $dekan->nama }}</span><br>
+            <span style="text-transform: uppercase;">{{ $dekan->nama }}</span><br>
             <span>NIP. {{ $dekan->no_pegawai }}</span>
          </div>
 

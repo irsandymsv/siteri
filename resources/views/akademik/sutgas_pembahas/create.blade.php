@@ -1,7 +1,7 @@
 @extends('akademik.akademik_view')
 
 @section('page_title')
-	Buat Surat Tugas Pembimbing Skripsi
+	Buat Surat Tugas Pembahas Sempro
 @endsection
 
 @section('css_link')
@@ -34,7 +34,7 @@
 @endsection
 
 @section('judul_header')
-	Surat Tugas Pembimbing Skripsi
+	Surat Tugas pembahas Sempro
 @endsection
 
 @section('content')
@@ -42,7 +42,7 @@
    	<div class="col-xs-12">
    		<div class="box box-primary">
    			<div class="box-header">
-               <h3 class="box-title">Buat Surat Tugas Pembimbing Skripsi</h3>
+               <h3 class="box-title">Buat Surat Tugas Pembahas Sempro</h3>
 
                <br><br>
                @if (session('success'))
@@ -69,7 +69,7 @@
                @endif
             </div>
 
-            <form action="{{ route('akademik.sutgas-pembimbing.store') }}" method="post">
+            <form action="{{ route('akademik.sutgas-pembahas.store') }}" method="post">
                <div class="box-body">
             		@csrf
 
@@ -113,47 +113,18 @@
             			</div>
             		</div>
 
-                  <div class="form-group">
-                     <label for="id_keris">Keris</label><br>
-                     <select id="id_keris" name="id_keris" class="form-control select2">
-                        <option value="">-- Pilih Keris --</option>
-                        @foreach ($keris as $item)
-                           <option value="{{ $item->id }}" {{ ($item->id == old('id_keris')? 'selected' : '') }}>
-                              {{ $item->nama }}
-                           </option>
-                        @endforeach
-                     </select>
-
-                     @error('id_keris')
-                        <span class="invalid-feedback" role="alert" style="color: red;">
-                           <strong>{{ $message }}</strong>
-                        </span>
-                     @enderror
-                  </div>
-
             		<div class="form-group">
-            			<label for="judul">Judul Skripsi</label>
-            			<textarea name="judul" id="judul" class="form-control" rows="3">{{ old('judul') }}</textarea>
-
-                     @error('judul')
-                        <span class="invalid-feedback" role="alert" style="color: red;">
-                           <strong>{{ $message }}</strong>
-                        </span>
-                     @enderror
-            		</div>
-
-            		<div class="form-group">
-            			<label for="pembimbing_utama">Pembimbing Utama</label><br>
-            			<select name="id_pembimbing_utama" id="id_pembimbing_utama" class="form-control select2">
-            				<option value="">Pilih Pembimbing Utama</option>
+            			<label for="id_pembahas1">Pembahas 1</label><br>
+            			<select name="id_pembahas1" id="id_pembahas1" class="form-control select2">
+            				<option value="">Pilih Pembahas 1</option>
             				@foreach ($dosen as $item)
-            					<option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == old('id_pembimbing_utama')? 'selected' : '') }}>
+            					<option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == old('id_pembahas1')? 'selected' : '') }}>
                               {{ $item->nama }}
                            </option>
             				@endforeach
             			</select>
 
-                     @error('id_pembimbing_utama')
+                     @error('id_pembahas1')
                         <span class="invalid-feedback" role="alert" style="color: red;">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -161,17 +132,17 @@
             		</div>
 
             		<div class="form-group">
-            			<label for="pembimbing_pendamping">Pembimbing Pendamping</label><br>
-            			<select name="id_pembimbing_pendamping" id="id_pembimbing_pendamping" class="form-control select2">
-            				<option value="">Pilih Pembimbing Pendamping</option>
+            			<label for="id_pembahas2">Pembahas 2</label><br>
+            			<select name="id_pembahas2" id="id_pembahas2" class="form-control select2">
+            				<option value="">Pilih Pembahas 2</option>
             				@foreach ($dosen as $item)
-            					<option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == old('id_pembimbing_pendamping')? 'selected' : '') }}>
+            					<option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == old('id_pembahas2')? 'selected' : '') }}>
                               {{ $item->nama }}
                            </option>
             				@endforeach
             			</select>
 
-                     @error('id_pembimbing_pendamping')
+                     @error('id_pembahas2')
                         <span class="invalid-feedback" role="alert" style="color: red;">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -181,7 +152,7 @@
 
                <div class="box-footer">
                   <input type="hidden" name="status" value="">
-                  <a href="{{ route('akademik.sutgas-pembimbing.index') }}" class="btn btn-default">Batal</a> &ensp;
+                  <a href="{{ route('akademik.sutgas-pembahas.index') }}" class="btn btn-default">Batal</a> &ensp;
 
                   <div id="btn_group">
                      {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}

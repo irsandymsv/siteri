@@ -1,7 +1,7 @@
 @extends('akademik.akademik_view')
 
 @section('page_title')
-	Surat Tugas Pembimbing Skripsi
+	Surat Tugas Pembahas Sempro
 @endsection
 
 @section('css_link')
@@ -10,7 +10,7 @@
 @endsection
 
 @section('judul_header')
-	Surat Tugas Pembimbing Skripsi
+	Surat Tugas Pembahas Sempro
 @endsection
 
 @section('content')
@@ -18,10 +18,10 @@
    	<div class="col-xs-12">
    		<div class="box box-success">
    			<div class="box-header">
-              <h3 class="box-title">Daftar Surat Tugas Pembimbing Skripsi</h3>
+              <h3 class="box-title">Daftar Surat Tugas Pembahas Sempro</h3>
             
               <div style="float: right;">
-            	<a href="{{ route('akademik.sutgas-pembimbing.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Surat Tugas</a>
+            	<a href="{{ route('akademik.sutgas-pembahas.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Surat Tugas</a>
               </div>
             </div>
 
@@ -59,8 +59,8 @@
 		            				</td>
 		            				<td>{{ Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
 		            				<td>
-		            					<a href="{{ route('akademik.sutgas-pembimbing.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
-		            					<a href="{{ route('akademik.sutgas-pembimbing.edit', $item->id) }}" class="btn btn-warning" title="Ubah Surat Tugas"><i class="fa fa-edit"></i></a>
+		            					<a href="{{ route('akademik.sutgas-pembahas.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+		            					<a href="{{ route('akademik.sutgas-pembahas.edit', $item->id) }}" class="btn btn-warning" title="Ubah Surat Tugas"><i class="fa fa-edit"></i></a>
 		            					
 		            					@if ($item->verif_ktu == 1)
 		            					<a href="{{ route("akademik.sutgas-pembimbing.cetak", $item->id) }}" class="btn bg-teal"><i class="fa fa-print"></i></a>

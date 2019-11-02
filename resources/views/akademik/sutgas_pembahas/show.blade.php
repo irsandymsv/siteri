@@ -1,7 +1,7 @@
 @extends('akademik.akademik_view')
 
 @section('page_title')
-	Detail Surat Tugas Pembimbing Skripsi
+	Detail Surat Tugas pembahas Sempro
 @endsection
 
 @section('css_link')
@@ -22,7 +22,7 @@
 @endsection
 
 @section('judul_header')
-	Surat Tugas Pembimbing Skripsi
+	Surat Tugas Pembahas Sempro
 @endsection
 
 @section('content')
@@ -30,7 +30,7 @@
    	<div class="col-xs-12">
    		<div class="box box-primary">
    			<div class="box-header">
-               <h3 class="box-title">Detail Surat Tugas Pembimbing Skripsi</h3>
+               <h3 class="box-title">Detail Surat Tugas Pembahas Sempro</h3>
                
                @if($surat_tugas->verif_ktu == 2)
                   <label class="label bg-red">Butuh Revisi</label>
@@ -38,7 +38,7 @@
 
                @if ($surat_tugas->verif_ktu == 1)
                   <div style="float: right;">
-                     <a href="{{ route("akademik.sutgas-pembimbing.cetak", $surat_tugas->id) }}" class="btn bg-teal"><i class="fa fa-print"></i> Download PDF</a>
+                     <a href="{{ route("akademik.sutgas-pembahas.cetak", $surat_tugas->id) }}" class="btn bg-teal"><i class="fa fa-print"></i> Download PDF</a>
                   </div>
                @endif
 
@@ -93,45 +93,45 @@
                      </tr>
 
                      <tr>
-                        <td>Pembimbing Utama</td>
+                        <td>Pembahas 1</td>
                         <td>
-                           <p>{{ $surat_tugas->surat_tugas_pembimbing->pembimbing_utama->nama }}</p>
-                           <p>{{ $surat_tugas->surat_tugas_pembimbing->pembimbing_utama->no_pegawai }}</p>
+                           <p>{{ $surat_tugas->surat_tugas_pembahas->pembahas1->nama }}</p>
+                           <p>{{ $surat_tugas->surat_tugas_pembahas->pembahas1->no_pegawai }}</p>
                         </td>
                      </tr>
 
                      <tr>
-                        <td>Pembimbing Pendamping</td>
+                        <td>pembahas 2</td>
                         <td>
-                           <p>{{ $surat_tugas->surat_tugas_pembimbing->pembimbing_pendamping->nama }}</p>
-                           <p>{{ $surat_tugas->surat_tugas_pembimbing->pembimbing_pendamping->no_pegawai }}</p>
+                           <p>{{ $surat_tugas->surat_tugas_pembahas->pembahas2->nama }}</p>
+                           <p>{{ $surat_tugas->surat_tugas_pembahas->pembahas2->no_pegawai }}</p>
                         </td>
                      </tr>
 
                      <tr>
                         <td>Keris</td>
-                        <td>{{ $surat_tugas->surat_tugas_pembimbing->keris->nama }}</td>
+                        <td>{{ $surat_tugas->surat_tugas_pembahas->keris->nama }}</td>
                      </tr>
 
                      <tr>
                         <td>Nama Mahasiswa</td>
-                        <td>{{ $surat_tugas->surat_tugas_pembimbing->mahasiswa->nama }}</td>
+                        <td>{{ $surat_tugas->surat_tugas_pembahas->mahasiswa->nama }}</td>
                      </tr>
 
                      <tr>
                         <td>NIM</td>
-                        <td>{{ $surat_tugas->surat_tugas_pembimbing->nim }}</td>
+                        <td>{{ $surat_tugas->surat_tugas_pembahas->nim }}</td>
                      </tr>
 
                      <tr>
                         <td>Program Studi</td>
-                        <td>{{ $surat_tugas->surat_tugas_pembimbing->mahasiswa->bagian->bagian }}</td>
+                        <td>{{ $surat_tugas->surat_tugas_pembahas->mahasiswa->bagian->bagian }}</td>
                      </tr>
 
                      <tr>
                         <td>Judul</td>
                         <td>
-                           {{ $surat_tugas->surat_tugas_pembimbing->judul }}
+                           {{ $surat_tugas->surat_tugas_pembahas->judul }}
                         </td>
                      </tr>
 
@@ -144,7 +144,7 @@
             </div>
 
             <div class="box-footer">
-               <a href="{{ route('akademik.sutgas-pembimbing.edit', $surat_tugas->id) }}" class="btn btn-warning">Ubah</a> &ensp;   
+               <a href="{{ route('akademik.sutgas-pembahas.edit', $surat_tugas->id) }}" class="btn btn-warning">Ubah</a> &ensp;   
             </div>
             
    		</div>

@@ -31,9 +31,19 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
 	Route::get('/surat-tugas-pembimbing/create', 'sutgasPembimbingController@create')->name("sutgas-pembimbing.create");
 	Route::post('/surat-tugas-pembimbing/store', 'sutgasPembimbingController@store')->name("sutgas-pembimbing.store");
 	Route::get('/surat-tugas-pembimbing/{id}', 'sutgasPembimbingController@show')->name("sutgas-pembimbing.show");
-    Route::get('/surat-tugas-pembimbing/{id}/edit', 'sutgasPembimbingController@edit')->name("sutgas-pembimbing.edit");
-    Route::put('/surat-tugas-pembimbing/{id}/update', 'sutgasPembimbingController@update')->name("sutgas-pembimbing.update");
-    Route::get('/surat-tugas-pembimbing/{id}/cetak', 'sutgasPembimbingController@cetak_pdf')->name("sutgas-pembimbing.cetak");
+   Route::get('/surat-tugas-pembimbing/{id}/edit', 'sutgasPembimbingController@edit')->name("sutgas-pembimbing.edit");
+   Route::put('/surat-tugas-pembimbing/{id}/update', 'sutgasPembimbingController@update')->name("sutgas-pembimbing.update");
+   Route::get('/surat-tugas-pembimbing/{id}/cetak', 'sutgasPembimbingController@cetak_pdf')->name("sutgas-pembimbing.cetak");
+
+   //Route Surat Tugas Pembahas
+   Route::get('/surat-tugas-pembahas', 'sutgasPembahasController@index')->name("sutgas-pembahas.index");
+   Route::get('/surat-tugas-pembahas/create', 'sutgasPembahasController@create')->name("sutgas-pembahas.create");
+   Route::post('/surat-tugas-pembahas/store', 'sutgasPembimbingController@store')->name("sutgas-pembahas.store");
+   Route::get('/surat-tugas-pembahas/{id}', 'sutgasPembahasController@show')->name("sutgas-pembahas.show");
+   Route::get('/surat-tugas-pembahas/{id}/edit', 'sutgasPembahasController@edit')->name("sutgas-pembahas.edit");
+   Route::put('/surat-tugas-pembahas/{id}/update', 'sutgasPembahasController@update')->name("sutgas-pembahas.update");
+   Route::get('/surat-tugas-pembahas/{id}/cetak', 'sutgasPembahasController@cetak_pdf')->name("sutgas-pembahas.cetak");
+
 
 	Route::get('/newSempro', 'sutgasPembimbingController@newSempro');
 	Route::post('/storeSempro', 'sutgasPembimbingController@storeSempro')->name("storeSempro");

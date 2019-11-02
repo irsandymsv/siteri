@@ -17,19 +17,19 @@ class sutgasPembimbingController extends suratTugasController
 {
     public function index()
 	{
-        $surat_tugas = surat_tugas::with(['tipe_surat_tugas', 'status_surat_tugas', 'surat_tugas_pembimbing', 'surat_tugas_pembimbing.mahasiswa'])
+      $surat_tugas = surat_tugas::with(['tipe_surat_tugas', 'status_surat_tugas', 'surat_tugas_pembimbing', 'surat_tugas_pembimbing.mahasiswa'])
             ->whereHas('tipe_surat_tugas',function(Builder $query){
                 $query->where('tipe_surat','Surat Tugas Pembimbing');
             })->orderBy('created_at', 'desc')->get();
             // dd($surat_tugas);
-        return view('akademik.sutgas_pembimbing.index', [
+      return view('akademik.sutgas_pembimbing.index', [
             'surat_tugas' => $surat_tugas
 		]);
 	}
 
 	public function create()
 	{
-        $mahasiswa = mahasiswa::doesntHave('detail_skripsi')->get();
+      $mahasiswa = mahasiswa::doesntHave('detail_skripsi')->get();
 		$dosen = user::where('is_dosen', 1)->get();
 		$keris = keris::all();
 		return view('akademik.sutgas_pembimbing.create', [
@@ -140,7 +140,7 @@ class sutgasPembimbingController extends suratTugasController
     	return $pdf->download("Sutgas_Pembimbing-" . $surat_tugas->no_surat);
     }
 
-
+    //KTU
 	public function ktu_index()
 	{
 		$surat_tugas = surat_tugas::with(['tipe_surat_tugas', 'status_surat_tugas', 'surat_tugas_pembimbing', 'surat_tugas_pembimbing.mahasiswa'])
@@ -177,7 +177,8 @@ class sutgasPembimbingController extends suratTugasController
 		// dd($surat_tugas);
       return view('ktu.sutgas_akademik.show', [
       	'surat_tugas' => $surat_tugas,
-      	'dekan' => $dekan
+      	'dekan' => $dekan,
+			'tipe' => 'surat tugas pembimbing'
       ]);
 	}
 
