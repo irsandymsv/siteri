@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class pengadaan extends Model
+class laporan_pengadaan extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'pengadaan';
+    protected $table = 'laporan_pengadaan';
 
     /**
      * Indicates if the model should be timestamped.
@@ -25,5 +25,5 @@ class pengadaan extends Model
      *
      * @var array
      */
-    protected $guarded = ['id'];
+    protected $guarded = ['id', 'dibuat'];
 }

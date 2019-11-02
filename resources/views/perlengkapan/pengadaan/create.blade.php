@@ -4,69 +4,83 @@
 
 @section('judul_header', 'Buat Pengadaan')
 
+@section('css_link')
+<style type="text/css">
+    .hidden {
+        display: none important !;
+    }
+</style>
+@endsection
+
 @section('content')
 
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
-            <form method="POST">
-                <div class="box-header">
-                    <h3 class="box-title">Buat Laporan Inventaris</h3>
+            <div class="box-header">
+                <h3 class="box-title">Buat Laporan Pengadaan</h3>
+            </div>
+
+            <div class="box-body">
+                {!! Form::open(['route' => 'perlengkapan.pengadaan.store', 'id'=>'form']) !!}
+                <div id="isiForm" class="table-responsive">
+                    <h5>Total Data = <span class="data_count">0</span></h5>
+                    <table id="tbl-data" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nama Barang</th>
+                                <th>Spesifikasi</th>
+                                <th>Jumlah</th>
+                                <th>Satuan</th>
+                                <th>Harga Satuan</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="inputan">
+                            <tr>
+                                <td>
+                                    {!! Form::text('nama_barang', null, ['class' => 'form-control', 'id' =>
+                                    'nama_barang']) !!}
+                                </td>
+
+                                <td>
+                                    {!! Form::text('spesifikasi', null, ['class' => 'form-control', 'id' =>
+                                    'spesifikasi']) !!}
+                                </td>
+
+                                <td>
+                                    {!! Form::text('jumlah', null, ['class' => 'form-control', 'id' => 'jumlah'])
+                                    !!}
+                                </td>
+
+                                <td>
+                                    {!! Form::select('satuan', $satuan, null, ['class' => 'form-control', 'id' =>
+                                    'satuan'])!!}
+                                </td>
+
+                                <td>
+                                    {!! Form::text('harga', null, ['class' => 'form-control', 'id' => 'harga']) !!}
+                                </td>
+
+                                <td>
+                                    {!! Form::label(null , null, ['class' => 'control-label', 'id' => 'total'])
+                                    !!}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h5>Total Data = <span class="data_count">0</span></h5>
                 </div>
-
-                <div class="box-body">
-                    @csrf
-                    <div class="table-responsive">
-                        <h5>Total Data = <span class="data_count"></span></h5>
-                        <table id="tbl-data" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Nama Barang</th>
-                                    <th>Spesifikasi</th>
-                                    <th>Jumlah</th>
-                                    <th>Harga Satuan</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr>
-
-                                    <td>
-                                        <input id="nama_barang" type="text" name="nama_barang" class="form-control">
-                                    </td>
-
-                                    <td>
-                                        <input id="spesifikasi" type="text" name="spesifikasi" class="form-control">
-                                    </td>
-
-                                    <td>
-                                        <input id="jumlah" type="text" name="jumlah" class="form-control">
-                                    </td>
-
-                                    <td>
-                                        <input id="harga" type="text" class="form-control harga">
-                                    </td>
-
-                                    <td>
-                                        <label id="total" for="total" class="form-control total"></label>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <h5>Total Data = <span class="data_count"></span></h5>
-                    </div>
-
-                    <button id="tambah" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</button>
-                    <br><br>
-                    <div class="form-group" style="float: right;">
-                        <button id="submit" type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan
-                            Kirim</button>
-                    </div>
+                <button id="tambah" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</button>
+                <br><br>
+                <div class="form-group" style="float: right;">
+                    {!! Form::submit('Simpan dan Kirim', [ 'class'=>'btn btn-success', 'id' => 'submit']) !!}
                 </div>
+                {!! Form::close() !!}
+            </div>
         </div>
-        </form>
     </div>
 </div>
 
@@ -76,7 +90,7 @@
     <div class="col-xs-12">
         <div class="box box-success">
             <div class="table-responsive">
-                <table id="inventaris" class="table table-bordered table-hovered">
+                <table id="pengadaan" class="table table-bordered table-hovered">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -114,11 +128,12 @@
             nama = $('#nama_barang').val();
             spesifikasi = $('#spesifikasi').val();
             jumlah = $('#jumlah').val();
+            satuan = $('#satuan').val();
             harga = $('#harga').val();
             total = $('#total').html();
             data = $('#tbody tr').length;
             $('#tbody').append(`
-                <tr>
+                <tr id="data">
                     <td>
                         ` + ++data + `
                     </td>
@@ -135,12 +150,20 @@
                         ` + jumlah + `
                     </td>
 
+                    <td class="hidden">
+                        ` + ++satuan + `
+                    </td>
+
                     <td>
                         ` + harga + `
                     </td>
 
                     <td>
                         ` + total + `
+                    </td>
+
+                    <td>
+                        OPSI
                     </td>
                 </tr>
             `);
@@ -150,31 +173,30 @@
             $('#jumlah').val('');
             $('#harga').val('');
             $('#total').html('');
+			$(".data_count").text(data);
 
         });
 
         $('#submit').click(function(event){
-            event.preventDefault();
+            // event.preventDefault();
             table = $('#tbody tr');
             data = [];
-            data.push({
-                "_token": $('meta[name="csrf-token"]').attr('content')
-            });
+            length = ($('#data td').length - (3 * $('#tbody tr').length))/$('#tbody tr').length;
             $.each(table, function(index, val){
                 // val = val + '';
                 vall = $(val).text().split(/\s+/);
                 vall.shift();
                 vall.shift();
                 vall.pop();
+                vall.pop();
+                vall.pop();
+                vall.splice($.inArray("Rp", vall),1);
                 data.push(vall);
             });
             console.log(data);
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.post('{{ route("perlengkapan.inventaris.store") }}', $.param(data));
+            $('#isiForm').empty();
+            $('#isiForm').append(`<input type="hidden" name="data" value="` + data + `">`);
+            $('#isiForm').append(`<input type="hidden" name="length" value="` + length + `">`);
         });
     });
 

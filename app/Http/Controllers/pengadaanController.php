@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\laporan_pengadaan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\pengadaan;
+use App\satuan;
 
 class pengadaanController extends Controller
 {
@@ -29,7 +32,9 @@ class pengadaanController extends Controller
      */
     public function create()
     {
-        return view('perlengkapan.pengadaan.create');
+        $satuan = satuan::all()->pluck('satuan');
+        // dd($satuan);
+        return view('perlengkapan.pengadaan.create', ["satuan" => $satuan]);
     }
 
     /**
@@ -40,7 +45,28 @@ class pengadaanController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $data = $request->data;
+        $data = explode(",", $data);
+        // dd($request->length);
+        $data = array_chunk($data, $request->length);
+        // dd($data);
+
+        $idLaporan = laporan_pengadaan::all()->pluck('id')->last() + 1;
+        laporan_pengadaan::create();
+
+        foreach ($data as $key => $value) {
+            array_push($value, $idLaporan);
+            pengadaan::create([
+                'nama_barang'   => $value[0],
+                'spesifikasi'   => $value[1],
+                'jumlah'        => $value[2],
+                'id_satuan'     => $value[3],
+                'harga'         => $value[4],
+                'id_laporan'    => $value[5]
+            ]);
+        }
+        // dd($value);
+        return redirect()->route('perlengkapan.pengadaan.index');
     }
 
     /**
@@ -86,5 +112,16 @@ class pengadaanController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function validator($data)
+    {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $this->validator($value);
+            } else {
+                //
+            }
+        }
     }
 }

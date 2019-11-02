@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Pengadaan extends Migration
+class LaporanPengadaan extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class Pengadaan extends Migration
      */
     public function up()
     {
-        Schema::create('pengadaan', function (Blueprint $table) {
+        Schema::create('laporan_pengadaan', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama_barang');
-            $table->string('spesifikasi');
-            $table->integer('jumlah');
-            $table->unsignedInteger('id_satuan');
-            $table->integer('harga');
-            $table->unsignedInteger('id_laporan');
+            $table->boolean('verif_wadek2')->default(false);
+            $table->timestamp('dibuat');
         });
     }
 
@@ -31,6 +27,6 @@ class Pengadaan extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pengadaan');
+        Schema::dropIfExists('laporan_pengadaan');
     }
 }
