@@ -1,7 +1,7 @@
 @extends('ktu.ktu_view')
 
 @section('page_title')
-	Detail Surat Tugas Pembimbing
+	Detail Surat Tugas Pembimbing Skripsi
 @endsection
 
 @section('css_link')
@@ -73,7 +73,7 @@
 @endsection
 
 @section('judul_header')
-	Surat Tugas Pembimbing
+	Surat Tugas Pembimbing Skripsi
 @endsection
 
 @section('content')
@@ -81,7 +81,7 @@
    	<div class="col-xs-12">
    		<div class="box box-primary">
    			<div class="box-header">
-               <h3 class="box-title">Detail Surat Tugas Pembimbing</h3><br>
+               <h3 class="box-title">Detail Surat Tugas Pembimbing Skripsi</h3><br>
                Status:
                @if ($surat_tugas->verif_ktu == 0)
                   Belum Diverifikasi

@@ -175,7 +175,7 @@ class sutgasPembimbingController extends suratTugasController
 			$query->where("jabatan", "Dekan");
 		})->first();
 		// dd($surat_tugas);
-      return view('ktu.sutgas_akademik.show', [
+      return view('ktu.sutgas_akademik.show_pembimbing', [
       	'surat_tugas' => $surat_tugas,
       	'dekan' => $dekan,
 			'tipe' => 'surat tugas pembimbing'

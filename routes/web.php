@@ -73,9 +73,15 @@ Route::prefix('ktu')->name('ktu.')->group(function ()
 	    return view('ktu.dashboard');
 	});
 
+	//Route Surat Tugas Pembimbing
 	Route::get('/surat-tugas-pembimbing', 'sutgasPembimbingController@ktu_index')->name('sutgas-pembimbing.index');
 	Route::get('/surat-tugas-pembimbing/{id}', 'sutgasPembimbingController@ktu_show')->name("sutgas-pembimbing.show");
 	Route::put('/surat-tugas-pembimbing/verif/{id}', 'sutgasPembimbingController@ktu_verif')->name("sutgas-pembimbing.verif");
+
+	//Route Surat Tugas Pembahas
+	Route::get('/surat-tugas-pembahas', 'sutgasPembahasController@ktu_index')->name('sutgas-pembahas.index');
+	Route::get('/surat-tugas-pembahas/{id}', 'sutgasPembahasController@ktu_show')->name("sutgas-pembahas.show");
+	Route::put('/surat-tugas-pembahas/verif/{id}', 'sutgasPembahasController@ktu_verif')->name("sutgas-pembahas.verif");
 
 	Route::get('/sk-skripsi', 'SkSkripsiController@ktu_index_skripsi')->name('sk-skripsi.index');
 	Route::get('/sk-skripsi/{id_sk_akademik}', 'SkSkripsiController@ktu_show')->name('sk-skripsi.show');
