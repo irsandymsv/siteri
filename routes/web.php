@@ -38,7 +38,7 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
    //Route Surat Tugas Pembahas
    Route::get('/surat-tugas-pembahas', 'sutgasPembahasController@index')->name("sutgas-pembahas.index");
    Route::get('/surat-tugas-pembahas/create', 'sutgasPembahasController@create')->name("sutgas-pembahas.create");
-   Route::post('/surat-tugas-pembahas/store', 'sutgasPembimbingController@store')->name("sutgas-pembahas.store");
+   Route::post('/surat-tugas-pembahas/store', 'sutgasPembahasController@store')->name("sutgas-pembahas.store");
    Route::get('/surat-tugas-pembahas/{id}', 'sutgasPembahasController@show')->name("sutgas-pembahas.show");
    Route::get('/surat-tugas-pembahas/{id}/edit', 'sutgasPembahasController@edit')->name("sutgas-pembahas.edit");
    Route::put('/surat-tugas-pembahas/{id}/update', 'sutgasPembahasController@update')->name("sutgas-pembahas.update");

@@ -11,6 +11,7 @@ use Exception;
 use App\User;
 use App\keris;
 use App\mahasiswa;
+use Carbon\Carbon;
 
 class sutgasPembahasController extends suratTugasController
 {
@@ -42,6 +43,7 @@ class sutgasPembahasController extends suratTugasController
 
     public function store(Request $request)
     {
+        dd($request);
         $this->validate($request, [
             'nim' => 'required',
             'no_surat' => 'required',

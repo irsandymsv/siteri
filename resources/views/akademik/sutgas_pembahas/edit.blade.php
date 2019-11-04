@@ -85,6 +85,7 @@
                         </span>
                      @enderror
                   </div>
+
                   <div class="row">
                      <div class="col-lg-6">
                         <div class="form-group">
@@ -110,6 +111,46 @@
                            <input type="text" name="nama_mhs" id="nama_mhs" class="form-control" readonly="" value="{{ $surat_tugas->surat_tugas_pembahas->mahasiswa->nama }}">
                         </div>
                      </div>
+                  </div>
+
+                  <div class="form-group">
+                     <label for="judul_inggris">Judul Bahasa Inggris Skripsi</label>
+                     <textarea name="judul_inggris" id="judul_inggris" class="form-control" rows="3">{{ $surat_tugas->surat_tugas_pembahas->judul_inggris }}</textarea>
+
+                     @error('judul_inggris')
+                        <span class="invalid-feedback" role="alert" style="color: red;">
+                           <strong>{{ $message }}</strong>
+                        </span>
+                     @enderror
+                  </div>
+
+                  <div class="form-group" style="width: 40%;">
+                     <label for="tanggal">Tanggal-Jam Pelaksanaan</label><br>
+                     <input type="datetime-local" name="tanggal" id="tanggal" class="form-control" value="{{ $surat_tugas->tanggal }}">
+
+                     @error('tanggal')
+                        <span class="invalid-feedback" role="alert" style="color: red;">
+                           <strong>{{ $message }}</strong>
+                        </span>
+                     @enderror
+                  </div>
+
+                  <div class="form-group">
+                     <label for="tanggal">Tempat Pelaksanaan</label><br>
+
+                     <div class="input-group">
+                        <div class="input-group-addon">
+                           Ruang Kuliah :
+                        </div>
+                        <input type="text" name="tanggal" id="tempat" class="form-control" value="{{ $surat_tugas->tempat }}">
+                     </div>
+                     <span><i>Note: Pisahkan nama ruang dengan tanda koma (,) jika ingin memasukkan banyak ruang</i></span>
+
+                     @error('tempat')
+                        <span class="invalid-feedback" role="alert" style="color: red;">
+                           <strong>{{ $message }}</strong>
+                        </span>
+                     @enderror
                   </div>
 
                   <div class="form-group">

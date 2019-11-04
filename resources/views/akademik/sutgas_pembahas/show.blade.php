@@ -93,27 +93,6 @@
                      </tr>
 
                      <tr>
-                        <td>Pembahas 1</td>
-                        <td>
-                           <p>{{ $surat_tugas->surat_tugas_pembahas->pembahas1->nama }}</p>
-                           <p>{{ $surat_tugas->surat_tugas_pembahas->pembahas1->no_pegawai }}</p>
-                        </td>
-                     </tr>
-
-                     <tr>
-                        <td>pembahas 2</td>
-                        <td>
-                           <p>{{ $surat_tugas->surat_tugas_pembahas->pembahas2->nama }}</p>
-                           <p>{{ $surat_tugas->surat_tugas_pembahas->pembahas2->no_pegawai }}</p>
-                        </td>
-                     </tr>
-
-                     <tr>
-                        <td>Keris</td>
-                        <td>{{ $surat_tugas->surat_tugas_pembahas->keris->nama }}</td>
-                     </tr>
-
-                     <tr>
                         <td>Nama Mahasiswa</td>
                         <td>{{ $surat_tugas->surat_tugas_pembahas->mahasiswa->nama }}</td>
                      </tr>
@@ -133,6 +112,44 @@
                         <td>
                            {{ $surat_tugas->surat_tugas_pembahas->judul }}
                         </td>
+                     </tr>
+
+                     <tr>
+                        <td>Judul Inggris</td>
+                        <td>
+                           {{ $surat_tugas->surat_tugas_pembahas->judul_inggris }}
+                        </td>
+                     </tr>
+
+                     <tr>
+                        <td>Pembahas 1</td>
+                        <td>
+                           <p>{{ $surat_tugas->surat_tugas_pembahas->pembahas1->nama }}</p>
+                           <p>{{ $surat_tugas->surat_tugas_pembahas->pembahas1->no_pegawai }}</p>
+                        </td>
+                     </tr>
+
+                     <tr>
+                        <td>pembahas 2</td>
+                        <td>
+                           <p>{{ $surat_tugas->surat_tugas_pembahas->pembahas2->nama }}</p>
+                           <p>{{ $surat_tugas->surat_tugas_pembahas->pembahas2->no_pegawai }}</p>
+                        </td>
+                     </tr>
+
+                     <tr>
+                        <td>Tanggal Sempro</td>
+                        <td>{{ $surat_tugas->tanggal }}</td>
+                     </tr>
+
+                     <tr>
+                        <td>Jam pelaksanaan</td>
+                        <td>{{ Carbon\Carbon::parse($surat_tugas->tanggal)->format("H:i") }} WIB</td>
+                     </tr>
+
+                     <tr>
+                        <td>Tempat Sempro</td>
+                        <td>{{ $surat_tugas->tempat }}</td>
                      </tr>
 
                      <tr>

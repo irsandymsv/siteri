@@ -83,34 +83,75 @@
                         </span>
                      @enderror
             		</div>
-            		<div class="row">
-            			<div class="col-lg-6">
-            				<div class="form-group">
+
+                  <div class="row">
+                     <div class="col-lg-6">
+                        <div class="form-group">
                            <label for="nim">NIM Mahasiswa</label><br>
                            <select id="nim" name="nim" class="form-control select2">
-            				  		<option value="">-- Pilih NIM --</option>
-            				  		@foreach ($mahasiswa as $item)
-            							<option value="{{ $item->nim }}" {{ ($item->nim == old('nim')? 'selected' : '') }}>
+                              <option value="">-- Pilih NIM --</option>
+                              @foreach ($mahasiswa as $item)
+                                 <option value="{{ $item->nim }}" {{ ($item->nim == old('nim')? 'selected' : '') }}>
                                     {{ $item->nim }}
                                  </option>
-            						@endforeach
-            				   </select>
+                              @endforeach
+                           </select>
 
                            @error('nim')
                               <span class="invalid-feedback" role="alert" style="color: red;">
                                  <strong>{{ $message }}</strong>
                               </span>
                            @enderror
-            				</div>
-            			</div>
+                        </div>
+                     </div>
 
-            			<div class="col-lg-6">
-            				<div class="form-group">
-            					<label for="nama_mhs">Nama Mahasiswa</label>
-            					<input type="text" name="nama_mhs" id="nama_mhs" class="form-control" readonly="">
-            				</div>
-            			</div>
-            		</div>
+                     <div class="col-lg-6">
+                        <div class="form-group">
+                           <label for="nama_mhs">Nama Mahasiswa</label>
+                           <input type="text" name="nama_mhs" id="nama_mhs" class="form-control" readonly="">
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="form-group">
+                     <label for="judul_inggris">Judul Bahasa Inggris Skripsi</label>
+                     <textarea name="judul_inggris" id="judul_inggris" class="form-control" rows="3">{{ old('judul_inggris') }}</textarea>
+
+                     @error('judul_inggris')
+                        <span class="invalid-feedback" role="alert" style="color: red;">
+                           <strong>{{ $message }}</strong>
+                        </span>
+                     @enderror
+                  </div>
+
+                  <div class="form-group" style="width: 40%;">
+                     <label for="tanggal">Tanggal-Jam Pelaksanaan</label><br>
+                     <input type="datetime-local" name="tanggal" id="tanggal" class="form-control" value="{{ old('tanggal') }}">
+
+                     @error('tanggal')
+                        <span class="invalid-feedback" role="alert" style="color: red;">
+                           <strong>{{ $message }}</strong>
+                        </span>
+                     @enderror
+                  </div>
+
+                  <div class="form-group">
+                     <label for="tanggal">Tempat Pelaksanaan</label><br>
+
+                     <div class="input-group">
+                        <div class="input-group-addon">
+                           Ruang Kuliah :
+                        </div>
+                        <input type="text" name="tanggal" id="tempat" class="form-control" value="{{ old('tempat') }}">
+                     </div>
+                     <span><i>Note: Pisahkan nama ruang dengan tanda koma (,) jika ingin memasukkan banyak ruang</i></span>
+
+                     @error('tempat')
+                        <span class="invalid-feedback" role="alert" style="color: red;">
+                           <strong>{{ $message }}</strong>
+                        </span>
+                     @enderror
+                  </div>
 
             		<div class="form-group">
             			<label for="id_pembahas1">Pembahas 1</label><br>
