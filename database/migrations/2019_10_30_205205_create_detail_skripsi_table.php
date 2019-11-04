@@ -15,7 +15,8 @@ class CreateDetailSkripsiTable extends Migration
     {
         Schema::create('detail_skripsi', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('judul')->length(150)->nullable();
+            $table->text('judul')->nullable();
+            $table->text('judul_inggris')->nullable();
             $table->string('nim')->length(14)->nullable();
             $table->string('id_sk_sempro')->length(25)->nullable();
             $table->string('id_sk_skripsi')->length(25)->nullable();

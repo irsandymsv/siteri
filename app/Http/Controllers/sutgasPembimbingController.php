@@ -51,6 +51,14 @@ class sutgasPembimbingController extends suratTugasController
         ]);
         try{
             $id_baru = $this->store_sutgas($request,1,$request->status);
+            detail_skripsi::insert([
+                'nim' => $request->input('nim'),
+                'judul' => $request->input('judul'),
+                'id_surat_tugas_pembimbing' => $id_baru,
+                'id_pembimbing_utama' => $request->input('id_pembimbing_utama'),
+                'id_pembimbing_pendamping' => $request->input('id_pembimbing_pendamping'),
+                'id_keris' => $request->input('id_keris')
+            ]);
             return redirect()->route('akademik.sutgas-pembimbing.show', $id_baru)->with('success', 'Data Surat Tugas Berhasil Ditambahkan');
         }catch(Exception $e){
             return redirect()->route('akademik.sutgas-pembimbing.create')->with('error', $e->getMessage());

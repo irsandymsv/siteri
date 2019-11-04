@@ -52,7 +52,7 @@
                    {{session('success')}}
                </div>
                @php
-               // Session::forget('success');
+               Session::forget('success');
                @endphp
 
                @endif
@@ -64,7 +64,7 @@
                </div>
 
                @php
-               // Session::forget('error');
+               Session::forget('error');
                @endphp
                @endif
             </div>
@@ -72,7 +72,6 @@
             <form action="{{ route('akademik.sutgas-pembahas.store') }}" method="post">
                <div class="box-body">
             		@csrf
-
             		<div class="form-group">
             			<label for="no_surat">No Surat</label><br>
             			<input type="text" name="no_surat" id="no_surat" value="{{ old('no_surat') }}">
