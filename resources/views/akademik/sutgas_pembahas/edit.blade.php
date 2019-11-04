@@ -35,7 +35,7 @@
 
 @section('judul_header')
 	Surat Tugas Pembahas Sempro
-@endsection 
+@endsection
 
 @section('content')
 	<div class="row">
@@ -58,7 +58,7 @@
                 Session::forget('success');
                 @endphp
                 @endif
-                
+
                 @if (session('error'))
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -126,7 +126,7 @@
 
                   <div class="form-group" style="width: 40%;">
                      <label for="tanggal">Tanggal-Jam Pelaksanaan</label><br>
-                     <input type="datetime-local" name="tanggal" id="tanggal" class="form-control" value="{{ $surat_tugas->tanggal }}">
+                     <input type="datetime-local" name="tanggal" id="tanggal" class="form-control" value="{{ $tanggal }}">
 
                      @error('tanggal')
                         <span class="invalid-feedback" role="alert" style="color: red;">

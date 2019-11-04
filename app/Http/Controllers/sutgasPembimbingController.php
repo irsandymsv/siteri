@@ -118,6 +118,13 @@ class sutgasPembimbingController extends suratTugasController
         ]);
         try {
             $this->update_sutgas($request, 1, $request->status,$id);
+            detail_skripsi::where('id',$request->input('id_detail_skripsi'))->update([
+                'nim' => $request->input('nim'),
+                'judul' => $request->input('judul'),
+                'id_pembimbing_utama' => $request->input('id_detail_skripsi'),
+                'id_pembimbing_pendamping' => $request->input('id_detail_skripsi')
+            ]);
+
             return redirect()->route('akademik.sutgas-pembimbing.show',$id)->with('success', 'Data Surat Tugas Berhasil Diubah');
         } catch (Exception $e) {
             dd($e->getMessage());

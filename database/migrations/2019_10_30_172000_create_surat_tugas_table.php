@@ -20,7 +20,7 @@ class CreateSuratTugasTable extends Migration
             $table->string('no_surat')->length(25);
             $table->tinyInteger('verif_ktu')->default(0);
             $table->dateTime('tanggal')->nullable();
-            $table->string('tempat')->nullable();
+            $table->string('tempat')->length(50)->nullable();
             $table->text("pesan_revisi")->nullable();
             $table->timestamps();
 
