@@ -3,6 +3,8 @@
 @section('page_title')
 	@if ($tipe == "surat tugas pembimbing")
 		Surat Tugas Pembimbing Skripsi
+	@elseif($tipe == "surat tugas pembahas")
+		Surat Tugas Pembahas Sempro
 	@endif
 @endsection
 
@@ -14,6 +16,8 @@
 @section('judul_header')
 	@if ($tipe == "surat tugas pembimbing")
 		Surat Tugas Pembimbing Skripsi
+	@elseif($tipe == "surat tugas pembahas")
+		Surat Tugas Pembahas Sempro
 	@endif
 @endsection
 
@@ -25,6 +29,8 @@
    				<h3 class="box-title">
               		@if ($tipe == "surat tugas pembimbing")
 							Daftar Surat Tugas Pembimbing Skripsi
+						@elseif($tipe == "surat tugas pembahas")
+							Daftar Surat Tugas Pembahas Sempro
 						@endif
            		</h3>
             	
@@ -76,7 +82,11 @@
 		            				</td>
 		            				<td>{{ Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
 		            				<td>
-		            					<a href="{{ route('ktu.sutgas-pembimbing.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+		            					@if ($tipe = "surat tugas pembimbing")
+		            						<a href="{{ route('ktu.sutgas-pembimbing.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+		            					@elseif($tipe == "surat tugas pembahas")
+		            						<a href="{{ route('ktu.sutgas-pembahas.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+		            					@endif
 		            				</td>
 		            			</tr>
 		            		@endforeach

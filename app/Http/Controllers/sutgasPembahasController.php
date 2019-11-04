@@ -137,7 +137,25 @@ class sutgasPembahasController extends suratTugasController
 
     public function cetak_pdf($id)
     {
+        $surat_tugas = surat_tugas::where('id', $id)
+        ->with([
+            "surat_tugas_pembahas",
+            "surat_tugas_pembahas.mahasiswa",
+            "surat_tugas_pembahas.keris",
+            "surat_tugas_pembahas.pembahas1:no_pegawai,nama,id_fungsional",
+            "surat_tugas_pembahas.pembahas1.fungsional",
+            "surat_tugas_pembahas.pembahas2:no_pegawai,nama,id_fungsional",
+            "surat_tugas_pembahas.pembahas2.fungsional"
+        ])->first();
+        $dekan = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "Dekan");
+        })->first();
 
+        // return view('akademik.sutgas_pembimbing.pdf', ['surat_tugas' => $surat_tugas, 'dekan' => $dekan]);
+
+        $pdf = PDF::loadview('akademik.sutgas_pembahas.pdf', ['surat_tugas' => $surat_tugas, 'dekan' => $dekan])->setPaper('a4', 'portrait')->setWarnings(false);
+        return $pdf->download("Sutgas_Pembahas-" . $surat_tugas->no_surat);
     }
 
     //KTU

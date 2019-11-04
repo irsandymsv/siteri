@@ -11,7 +11,7 @@
 	    </a>
 	    <ul class="treeview-menu">
 	      <li><a href="{{ route('ktu.sutgas-pembimbing.index') }}">Pembimbing Skripsi</a></li>
-	      <li><a href="#">Pembahas Sempro</a></li>
+	      <li><a href="{{ route('ktu.sutgas-pembahas.index') }}">Pembahas Sempro</a></li>
 	      <li><a href="#">penguji Skripsi</a></li>
 	    </ul>
 	</li>
