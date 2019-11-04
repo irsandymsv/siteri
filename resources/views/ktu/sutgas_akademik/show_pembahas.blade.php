@@ -102,7 +102,7 @@
 
                @if(session()->has('verif_ktu'))
                   <br><br>
-                  <div class="alert alert-success alert-dismissible" style="width: 80%; margin: auto;">
+                  <div class="alert alert-success alert-dismissible" style="margin: auto;">
                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                      <h4><i class="icon fa fa-check"></i> Berhasil</h4>
                      {{session('verif_ktu')}}

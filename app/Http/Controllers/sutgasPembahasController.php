@@ -219,4 +219,23 @@ class sutgasPembahasController extends suratTugasController
         'tipe' => 'surat tugas pembahas'
       ]);
     }
+
+    public function ktu_verif(Request $request, $id)
+    {
+        $surat_tugas = surat_tugas::find($id);
+        $surat_tugas->verif_ktu = $request->verif_ktu;
+        if($request->verif_ktu == 2){
+            $request->validate([
+                'pesan_revisi' => 'required|string'
+            ]);
+            $surat_tugas = $this->verif($surat_tugas, 1, $request->pesan_revisi);
+            $surat_tugas->save();
+            return redirect()->route('ktu.sutgas-pembahas.index')->with("verif_ktu", 'Surat tugas berhasil ditarik, status kembali menjadi "Draft"');
+        }
+        else if ($request->verif_ktu == 1) {
+            $surat_tugas = $this->verif($surat_tugas,3,null);
+            $surat_tugas->save();
+            return redirect()->route('ktu.sutgas-pembahas.show', $id)->with('verif_ktu', 'verifikasi surat tugas berhasil, status surat tugas saat ini "Disetujui KTU"');
+        }
+    }
 }
