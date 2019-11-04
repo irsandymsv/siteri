@@ -136,13 +136,13 @@
                   </div>
 
                   <div class="form-group">
-                     <label for="tanggal">Tempat Pelaksanaan</label><br>
+                     <label for="tempat">Tempat Pelaksanaan</label><br>
 
                      <div class="input-group">
                         <div class="input-group-addon">
                            Ruang Kuliah :
                         </div>
-                        <input type="text" name="tanggal" id="tempat" class="form-control" value="{{ $surat_tugas->tempat }}">
+                        <input type="text" name="tempat" id="tempat" class="form-control" value="{{ $surat_tugas->tempat }}">
                      </div>
                      <span><i>Note: Pisahkan nama ruang dengan tanda koma (,) jika ingin memasukkan banyak ruang</i></span>
 
