@@ -19,7 +19,7 @@
    		<div class="box box-success">
    			<div class="box-header">
               <h3 class="box-title">Daftar Surat Tugas Pembahas Sempro</h3>
-            
+
               <div style="float: right;">
             	<a href="{{ route('akademik.sutgas-pembahas.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Surat Tugas</a>
               </div>
@@ -47,7 +47,7 @@
 		            					{{ $item->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($item->created_at)->year }}
 		            				</td>
 		            				<td>{{ $item->status_surat_tugas->status }}</td>
-		            				<td>{{ $item->surat_tugas_pembimbing->mahasiswa->nama }}</td>
+		            				<td>{{ $item->surat_tugas_pembahas->mahasiswa->nama }}</td>
 		            				<td>
 		            					@if ($item->verif_ktu == 0)
 		            						Belum Diverifikasi
@@ -61,7 +61,7 @@
 		            				<td>
 		            					<a href="{{ route('akademik.sutgas-pembahas.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
 		            					<a href="{{ route('akademik.sutgas-pembahas.edit', $item->id) }}" class="btn btn-warning" title="Ubah Surat Tugas"><i class="fa fa-edit"></i></a>
-		            					
+
 		            					@if ($item->verif_ktu == 1)
 		            					<a href="{{ route("akademik.sutgas-pembimbing.cetak", $item->id) }}" class="btn bg-teal"><i class="fa fa-print"></i></a>
 		            					@endif
@@ -92,7 +92,7 @@
             <p>Apakah anda yakin ingin menghapus surat tugas ini?</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Batal</button>           
+            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Batal</button>
 			<button type="button" id="hapusBtn" data-dismiss="modal" class="btn btn-outline">Hapus</button>
           </div>
         </div>
@@ -110,7 +110,7 @@
 				event.preventDefault();
 				var id_sk = $(this).attr('id');
 				var url_del = "";
-				
+
 				$('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
 					$.ajaxSetup({
 					    headers: {
@@ -135,7 +135,7 @@
 						console.log("error");
 					});
 				});
-			
+
 			});
 		})
 	</script>

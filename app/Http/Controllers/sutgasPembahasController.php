@@ -43,10 +43,12 @@ class sutgasPembahasController extends suratTugasController
 
     public function store(Request $request)
     {
-        dd($request);
         $this->validate($request, [
             'nim' => 'required',
             'no_surat' => 'required',
+            'judul_inggris' => 'required',
+            'tanggal' => 'required',
+            'tempat' => 'required',
             'id_pembahas1' => 'required',
             'id_pembahas2' => 'required',
             'status' => 'required'
@@ -93,7 +95,9 @@ class sutgasPembahasController extends suratTugasController
             "surat_tugas_pembahas.pembahas1:no_pegawai,nama",
             "surat_tugas_pembahas.pembahas2:no_pegawai,nama"
         ])->first();
-
+        $t = carbon::parse($surat_tugas->tanggal)->toDateString();
+        $j = carbon::parse($surat_tugas->tanggal)->format('h:i');
+        $tanggal = $t.'T'.$j;
         $mahasiswa = mahasiswa::with('detail_skripsi')
         ->whereHas('detail_skripsi', function(Builder $query)
         {
@@ -108,7 +112,8 @@ class sutgasPembahasController extends suratTugasController
         return view('akademik.sutgas_pembahas.edit', [
             'surat_tugas' => $surat_tugas,
             'mahasiswa' => $mahasiswa,
-            'dosen' => $dosen
+            'dosen' => $dosen,
+            'tanggal' => $tanggal
         ]);
     }
 
@@ -130,6 +135,8 @@ class sutgasPembahasController extends suratTugasController
                 'id_pembahas1',
                 'id_pembahas2'
             );
+
+
             return redirect()->route('akademik.sutgas-pembahas.edit', $id)->with('success', 'Data Surat Tugas Berhasil Dirubah');
         } catch (Exception $e) {
             dd($e->getMessage());
