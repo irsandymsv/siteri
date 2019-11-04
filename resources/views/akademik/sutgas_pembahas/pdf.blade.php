@@ -77,6 +77,11 @@
 		.ttd-right{
 		   float: right;
 		}
+
+      .space_row{
+         padding-top: 10pt;
+         padding-bottom: 10pt;
+      }
 	</style>
 </head>
 <body>
@@ -97,71 +102,125 @@
          </div>
       </div>
 
-      <!-- <div id="body_surat" class="margin-body">
+      <div id="body_surat" class="margin-body">
          <p class="top-title">
             <span class="judul_surat">SURAT TUGAS</span><br>
             <span>Nomor: {{ $surat_tugas->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($surat_tugas->created_at)->year }}</span>
          </p>
 
          <p>
-            Berdasarkan Hasil Evaluasi Komisi Bimbingan Program Studi Sistem Informasi, maka dengan ini Dekan Fakultas Ilmu Komputer menugaskan kepada nama dosen yang tersebut di bawah ini:
+            Berdasarkan Hasil Evaluasi Komisi Bimbingan Tugas Akhir Mahasiswa Fakultas Ilmu Komputer, maka dengan ini Dekan menugaskan kepada nama dosen yang tersebut di bawah ini sebagai Penguji pada Ujian <b>Seminar Proposal</b>:
          </p>
 
          <table id="detail_table">
             <tr>
                <td>Nama</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembimbing->pembimbing_utama->nama }}</td>
-            </tr>
-            <tr>
-               <td>NIP</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembimbing->id_pembimbing_utama }}</td>
-            </tr>
-            <tr>
-               <td>Jabatan</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembimbing->pembimbing_utama->fungsional->jab_fungsional }}</td>
-            </tr>
-            <tr>
-               <td>Sebagai</td>
-               <td>: <b>Pembimbing Utama</b></td>
-            </tr>
-
-            <tr><td colspan="2"><br></td></tr>
-
-            <tr>
-               <td>Nama</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembimbing->pembimbing_pendamping->nama }}</td>
-            </tr>
-            <tr>
-               <td>NIP</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembimbing->id_pembimbing_pendamping }}</td>
-            </tr>
-            <tr>
-               <td>Jabatan</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembimbing->pembimbing_pendamping->fungsional->jab_fungsional }}</td>
-            </tr>
-            <tr>
-               <td>Sebagai</td>
-               <td>: <b>Pembimbing Pendamping</b></td>
-            </tr>
-
-            <tr><td colspan="2"><br></td></tr>
-            <tr><td colspan="2">untuk membimbing skripsi mahasiswa:</td></tr>
-            <tr>
-               <td>Nama</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembimbing->mahasiswa->nama }}</td>
+               <td>: {{ $surat_tugas->surat_tugas_pembahas->mahasiswa->nama }}</td>
             </tr>
             <tr>
                <td>NIM</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembimbing->nim }}</td>
+               <td>: {{ $surat_tugas->surat_tugas_pembahas->nim }}</td>
             </tr>
             <tr>
-               <td>Program Studi</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembimbing->mahasiswa->bagian->bagian }}</td>
+               <td>Progaram Studi</td>
+               <td>: {{ $surat_tugas->surat_tugas_pembahas->mahasiswa->bagian->bagian }}</td>
+            </tr>
+
+            {{-- <tr><td><br></td></tr> --}}
+            <tr>
+               <td class="space_row" colspan="2">Dengan Judul Tugas Akhir:<br></td>
+            </tr>
+
+            <tr>
+               <td>Bhs Indonesia</td>
+               <td>: {{ $surat_tugas->surat_tugas_pembahas->judul }}</td>
             </tr>
             <tr>
-               <td>Dengan Judul</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembimbing->judul }}</td>
+               <td>Bhs Inggris</td>
+               <td>: <i>{{ $surat_tugas->surat_tugas_pembahas->judul_inggris }}</i></td>
             </tr>
+            <tr>
+               <td>Hari/Tanggal</td>
+               <td>: {{ Carbon\Carbon::parse($surat_tugas->tanggal)->locale('id_ID')->isoFormat(', D MMMM Y') }}</td>
+            </tr>
+            <tr>
+               <td>Jam Pelaksanaan</td>
+               <td>: {{ Carbon\Carbon::parse($surat_tugas->tanggal)->format('H:i') }} WIB</td>
+            </tr>
+            <tr>
+               <td>Tempat</td>
+               <td>: Ruang Kuliah {{ $surat_tugas->tempat }}</td>
+            </tr>
+
+            {{-- <tr><td><br></td></tr> --}}
+            <tr>
+               <td class="space_row" colspan="2">Adapun nama-nama dosen penguji dimaksud adalah :</td>
+            </tr>
+
+            <tr>
+               <td colspan="2"><b>Dosen Pembimbing Utama</b></td>
+            </tr>
+            <tr>
+               <td>Nama</td>
+               <td>: {{ $surat_tugas->surat_tugas_pembahas->pembimbing_utama->nama }}</td>
+            </tr>
+            <tr>
+               <td>NIP / NRP</td>
+               <td>: {{ $surat_tugas->surat_tugas_pembahas->id_pembimbing_utama }}</td>
+            </tr>
+            <tr>
+               <td>Jabatan</td>
+               <td>: {{ $surat_tugas->surat_tugas_pembahas->pembimbing_utama->fungsional->jab_fungsional }}</td>
+            </tr>
+
+            <tr>
+               <td colspan="2"><b>Dosen Pembimbing Pendamping</b></td>
+            </tr>
+            <tr>
+               <td>Nama</td>
+               <td>: {{ $surat_tugas->surat_tugas_pembahas->pembimbing_pendamping->nama }}</td>
+            </tr>
+            <tr>
+               <td>NIP / NRP</td>
+               <td>: {{ $surat_tugas->surat_tugas_pembahas->id_pembimbing_pendamping }}</td>
+            </tr>
+            <tr>
+               <td>Jabatan</td>
+               <td>: {{ $surat_tugas->surat_tugas_pembahas->pembimbing_pendamping->fungsional->jab_fungsional }}</td>
+            </tr>
+
+            <tr>
+               <td colspan="2"><b>Dosen Pembahas I</b></td>
+            </tr>
+            <tr>
+               <td>Nama</td>
+               <td>: {{ $surat_tugas->surat_tugas_pembahas->pembahas1->nama }}</td>
+            </tr>
+            <tr>
+               <td>NIP / NRP</td>
+               <td>: {{ $surat_tugas->surat_tugas_pembahas->id_pembahas1 }}</td>
+            </tr>
+            <tr>
+               <td>Jabatan</td>
+               <td>: {{ $surat_tugas->surat_tugas_pembahas->pembahas1->fungsional->jab_fungsional }}</td>
+            </tr>
+
+            <tr>
+               <td colspan="2"><b>Dosen Pembahas II</b></td>
+            </tr>
+            <tr>
+               <td>Nama</td>
+               <td>: {{ $surat_tugas->surat_tugas_pembahas->pembahas2->nama }}</td>
+            </tr>
+            <tr>
+               <td>NIP / NRP</td>
+               <td>: {{ $surat_tugas->surat_tugas_pembahas->id_pembahas2 }}</td>
+            </tr>
+            <tr>
+               <td>Jabatan</td>
+               <td>: {{ $surat_tugas->surat_tugas_pembahas->pembahas2->fungsional->jab_fungsional }}</td>
+            </tr>
+            
          </table>
 
          <br>
@@ -172,16 +231,16 @@
             Jember, {{ Carbon\Carbon::parse($surat_tugas->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }} <br>
             Dekan,
             <br><br><br><br>
-            <span style="text-transform: uppercase;">{{ $dekan->nama }}</span><br>
+            <span style="text-transform: uppercase;"><b>{{ $dekan->nama }}</b></span><br>
             <span>NIP. {{ $dekan->no_pegawai }}</span>
          </div>
 
          <p style="clear: both;">Tembusan: </p>
          <ol>
-            <li>Dosen Pembimbing</li>
-            <li>Mahasiswa yang bersangkutan</li>
+            <li>Dosen Penguji;</li>
+            <li>Mahasiswa yang bersangkutan;</li>
          </ol>
-      </div> -->
+      </div>
    </div>
 </body>
 </html>

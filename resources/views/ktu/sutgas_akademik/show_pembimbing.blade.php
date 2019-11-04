@@ -9,12 +9,14 @@
 	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
 	<style type="text/css">
       .box-body{
-         width: 60%;
+         width: 70%;
          margin: auto;
+         margin-bottom: 20px;
+         margin-top: 20px;
          font-family: 'Times New Roman';
-         font-size: 14px;
-         /*padding: 20px;*/
-         /*border: 1px solid black;*/
+         font-size: 16px;
+         padding: 20px 50px;
+         border: 1px solid black;
       }
 
       #kop_surat{
@@ -25,16 +27,18 @@
 
       #logo{
          float: left;
-         width: 20%;
+         width: 15%;
       }
 
       #logo img{
          width: 100%;
          height: auto;
+         margin-top: 10pt;
+
       }
 
       #keterangan_kop{
-         width: 80%;
+         width: 85%;
          float: left;
          text-align: center;
       }
@@ -49,7 +53,7 @@
       }
 
       .judul_surat{
-         font-size: 16px;
+         font-size: 18px;
          text-decoration: underline;
          font-weight: bold;
       }
@@ -58,8 +62,8 @@
          padding-right: 10px;
       }
 
-      .header_16{
-         font-size: 16px;
+      .header_18{
+         font-size: 18px;
       }
 
       .underline{
@@ -113,9 +117,9 @@
                   </div>
 
                   <div id="keterangan_kop">
-                     <span class="header_16">KEMENTERIAN RISET, TEKNOLOGI, DAN PENDIDIKAN TINGGI</span><br>
-                     <span class="header_16">UNIVERSITAS JEMBER</span><br>
-                     <span class="header_16">FAKULTAS ILMU KOMPUTER</span>
+                     <span class="header_18">KEMENTERIAN RISET, TEKNOLOGI, DAN PENDIDIKAN TINGGI</span><br>
+                     <span class="header_18">UNIVERSITAS JEMBER</span><br>
+                     <span class="header_18">FAKULTAS ILMU KOMPUTER</span>
 
                      <br>
 
@@ -200,7 +204,7 @@
                      Jember, {{ Carbon\Carbon::parse($surat_tugas->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }} <br>
                      Dekan,
                      <br><br><br><br>
-                     <span>{{ $dekan->nama }}</span><br>
+                     <span style="text-transform: uppercase;">{{ $dekan->nama }}</span><br>
                      <span>NIP. {{ $dekan->no_pegawai }}</span>
                   </div>
 

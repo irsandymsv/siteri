@@ -147,7 +147,11 @@ class sutgasPembahasController extends suratTugasController
             "surat_tugas_pembahas.pembahas1:no_pegawai,nama,id_fungsional",
             "surat_tugas_pembahas.pembahas1.fungsional",
             "surat_tugas_pembahas.pembahas2:no_pegawai,nama,id_fungsional",
-            "surat_tugas_pembahas.pembahas2.fungsional"
+            "surat_tugas_pembahas.pembahas2.fungsional",
+            "surat_tugas_pembahas.pembimbing_utama:no_pegawai,nama,id_fungsional",
+            "surat_tugas_pembahas.pembimbing_utama.fungsional",
+            "surat_tugas_pembahas.pembimbing_pendamping:no_pegawai,nama,id_fungsional",
+            "surat_tugas_pembahas.pembimbing_pendamping.fungsional"
         ])->first();
         $dekan = User::with("jabatan")
         ->wherehas("jabatan", function (Builder $query){
@@ -172,6 +176,7 @@ class sutgasPembahasController extends suratTugasController
             })
             ->orderBy('updated_at', 'desc')->get();
 
+        // dd($surat_tugas);
         return view('ktu.sutgas_akademik.index', [
             'surat_tugas' => $surat_tugas,
             'tipe' => 'surat tugas pembahas'
@@ -184,18 +189,24 @@ class sutgasPembahasController extends suratTugasController
         ->with([
             "surat_tugas_pembahas",
             "surat_tugas_pembahas.mahasiswa",
+            "surat_tugas_pembahas.mahasiswa.bagian",
             "surat_tugas_pembahas.keris",
             "surat_tugas_pembahas.pembahas1:no_pegawai,nama,id_fungsional",
             "surat_tugas_pembahas.pembahas1.fungsional",
             "surat_tugas_pembahas.pembahas2:no_pegawai,nama,id_fungsional",
-            "surat_tugas_pembahas.pembahas2.fungsional"
+            "surat_tugas_pembahas.pembahas2.fungsional",
+            "surat_tugas_pembahas.pembimbing_utama:no_pegawai,nama,id_fungsional",
+            "surat_tugas_pembahas.pembimbing_utama.fungsional",
+            "surat_tugas_pembahas.pembimbing_pendamping:no_pegawai,nama,id_fungsional",
+            "surat_tugas_pembahas.pembimbing_pendamping.fungsional"
         ])->first();
+
         $dekan = User::with("jabatan")
         ->wherehas("jabatan", function (Builder $query){
             $query->where("jabatan", "Dekan");
         })->first();
         // dd($surat_tugas);
-      return view('ktu.sutgas_akademik.show', [
+      return view('ktu.sutgas_akademik.show_pembahas', [
         'surat_tugas' => $surat_tugas,
         'dekan' => $dekan,
         'tipe' => 'surat tugas pembahas'

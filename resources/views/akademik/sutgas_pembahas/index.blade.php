@@ -47,7 +47,7 @@
 		            					{{ $item->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($item->created_at)->year }}
 		            				</td>
 		            				<td>{{ $item->status_surat_tugas->status }}</td>
-		            				<td>{{ $item->surat_tugas_pembimbing->mahasiswa->nama }}</td>
+		            				<td>{{ $item->surat_tugas_pembahas->mahasiswa->nama }}</td>
 		            				<td>
 		            					@if ($item->verif_ktu == 0)
 		            						Belum Diverifikasi
@@ -63,7 +63,7 @@
 		            					<a href="{{ route('akademik.sutgas-pembahas.edit', $item->id) }}" class="btn btn-warning" title="Ubah Surat Tugas"><i class="fa fa-edit"></i></a>
 		            					
 		            					@if ($item->verif_ktu == 1)
-		            					<a href="{{ route("akademik.sutgas-pembimbing.cetak", $item->id) }}" class="btn bg-teal"><i class="fa fa-print"></i></a>
+		            					<a href="{{ route("akademik.sutgas-pembahas.cetak", $item->id) }}" class="btn bg-teal"><i class="fa fa-print"></i></a>
 		            					@endif
 		            				</td>
 		            			</tr>

@@ -70,7 +70,13 @@
 		            					{{ $item->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($item->created_at)->year }}
 		            				</td>
 		            				<td>{{ $item->status_surat_tugas->status }}</td>
-		            				<td>{{ $item->surat_tugas_pembimbing->mahasiswa->nama }}</td>
+		            				<td>
+		            					@if ($tipe == "surat tugas pembimbing")
+		            					{{ $item->surat_tugas_pembimbing->mahasiswa->nama }}
+		            					@elseif($tipe == "surat tugas pembahas")
+		            					{{ $item->surat_tugas_pembahas->mahasiswa->nama }}
+		            					@endif
+		            				</td>
 		            				<td>
 		            					@if ($item->verif_ktu == null)
 		            						Belum Diverifikasi
@@ -82,7 +88,7 @@
 		            				</td>
 		            				<td>{{ Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
 		            				<td>
-		            					@if ($tipe = "surat tugas pembimbing")
+		            					@if ($tipe == "surat tugas pembimbing")
 		            						<a href="{{ route('ktu.sutgas-pembimbing.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
 		            					@elseif($tipe == "surat tugas pembahas")
 		            						<a href="{{ route('ktu.sutgas-pembahas.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
