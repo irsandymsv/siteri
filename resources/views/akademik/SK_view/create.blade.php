@@ -75,6 +75,7 @@
 
                   <div class="box-footer">
                      <div class="form-group" style="float: right;">
+                        <input type="hidden" name="status" value="">
                         <button type="submit" name="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button> 
                            &ensp;
                         <button type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>  
