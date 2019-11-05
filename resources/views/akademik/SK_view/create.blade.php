@@ -25,7 +25,7 @@
          border-bottom: 1px solid black;
          width: 100%;
       }
-	</style>	
+	</style>
 @endsection
 
 @section('judul_header')
@@ -43,10 +43,33 @@
       	<div class="col-xs-12">
       		<div class="box box-primary">
       			<div class="box-header">
-                 <h3 class="box-title">Buat SK Sempro</h3>
+                    <br><br>
+                    @if (session('success'))
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-check"></i> Sukses</h4>
+                        {{session('success')}}
+                    </div>
+                    @php
+                    Session::forget('success');
+                    @endphp
+
+                    @endif
+                    @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-ban"></i>Error</h4>
+                        {{session('error')}}
+                    </div>
+
+                    @php
+                    Session::forget('error');
+                    @endphp
+                    @endif
+                    <h3 class="box-title">Buat SK Sempro</h3>
                </div>
 
-                  <div class="box-body">               		
+                  <div class="box-body">
                      <div class="row">
                         <div class="form-group col-md-4">
                            <label for="no_surat">No Surat</label><br>
@@ -70,18 +93,18 @@
                            <input type="date" name="tgl_sempro2" id="tgl_sempro2" class="form-control">
                         </div>
                      </div>
-               		                
+
                   </div>
 
                   <div class="box-footer">
                      <div class="form-group" style="float: right;">
                         <input type="hidden" name="status" value="">
-                        <button type="submit" name="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button> 
+                        <button type="submit" name="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button>
                            &ensp;
-                        <button type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>  
+                        <button type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>
                      </div>
                   </div>
-               
+
       		</div>
       	</div>
    	</div>
@@ -174,7 +197,7 @@
 	<script type="text/javascript">
 		$('.select2').select2();
 		var mahasiswa = @json($mahasiswa);
-      
+
       $("button[name='simpan_draf']").click(function(event) {
          event.preventDefault();
          $("input[name='status']").val(1);
@@ -242,6 +265,6 @@
          var count = $("tbody tr").length;
          $(".data_count").text(count);
       }
-      
+
 	</script>
 @endsection

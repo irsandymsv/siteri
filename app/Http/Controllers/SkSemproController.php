@@ -8,7 +8,7 @@ use Exception;
 use App\bagian;
 use App\User;
 use App\sk_sempro;
-use App\detail_sk;
+use App\detail_skripsi;
 use App\mahasiswa;
 use App\Http\Controllers\Controller;
 use App\status_sk_akademik;
@@ -47,7 +47,6 @@ class SkSemproController extends Controller
                 "detail_skripsi.pembahas2:no_pegawai,nama"
             ])->get();
         }
-        // dd($old_mahasiswa);
 
         $jurusan = bagian::where('is_jurusan', 1)->get();
         $dosen = user::where('is_dosen', 1)->get();
@@ -74,34 +73,29 @@ class SkSemproController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->status);
         $this->validate($request, [
             "no_surat" => "required",
+            'tgl_sempro1' => "required",
+            'tgl_sempro2' => "required",
             "nim" => "required|array",
             "nim.*" => "required|string|max:20"
         ]);
 
         try {
-            $sk_akademik = sk_akademik::create([
-                'id_tipe_sk' => 2,
-                'id_status_sk_akademik' => $request->status,
-                'no_surat' => $request->no_surat
+            $sk_sempro = sk_sempro::create([
+                "no_surat" => $request->input("no_surat"),
+                "tgl_sempro1" => $request->input("tgl_sempro1"),
+                "tgl_sempro2" => $request->input("tgl_sempro2"),
+                "id_status_sk" => $request->input("status")
             ]);
-            for ($i = 0; $i < count($request->nama); $i++) {
-                $detail_sk = detail_sk::create([
-                    'id_sk_akademik' => $sk_akademik->id,
-                    'nama_mhs' => $request->nama[$i],
-                    'nim' => $request->nim[$i],
-                    'id_bagian' => $request->jurusan[$i],
-                    'judul' => $request->judul[$i],
-                    'id_pembimbing_utama' => $request->pembimbing_utama[$i],
-                    'id_pembimbing_pendamping' => $request->pembimbing_pendamping[$i],
-                    'id_penguji_utama' => $request->penguji_utama[$i],
-                    'id_penguji_pendamping' => $request->penguji_pendamping[$i]
+
+            foreach ($request->nim as $nim) {
+                detail_skripsi::where('nim',$nim)->update([
+                    "id_sk_sempro" => $sk_sempro->no_surat
                 ]);
             }
-
-            return redirect()->route('akademik.sempro.show', $sk_akademik->id)->with('success', 'Data Berhasil Ditambahkan');
+            // return redirect()->route('akademik.sempro.show', $sk_sempro->no_surat)->with('success', 'Data Berhasil Ditambahkan');
+            return redirect()->route('akademik.sempro.create')->with('success', 'Data Berhasil Ditambahkan');
         } catch (Exception $e) {
             return redirect()->route('akademik.sempro.create')->with('error', $e->getMessage());
         }
@@ -250,11 +244,11 @@ class SkSemproController extends Controller
     public function ktu_index_sempro()
     {
         $sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
-        ->whereHas('tipe_sk', function(Builder $query){ 
-            $query->where('id', 2); 
+        ->whereHas('tipe_sk', function(Builder $query){
+            $query->where('id', 2);
         })
-        ->whereHas('status_sk_akademik', function(Builder $query){ 
-            $query->whereIn('id', [2,3,4]); 
+        ->whereHas('status_sk_akademik', function(Builder $query){
+            $query->whereIn('id', [2,3,4]);
         })
         ->orderBy('updated_at', 'desc')
         ->get();
@@ -316,11 +310,11 @@ class SkSemproController extends Controller
     public function dekan_index_sempro()
     {
         $sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
-        ->whereHas('tipe_sk', function(Builder $query){ 
-            $query->where('id', 2); 
+        ->whereHas('tipe_sk', function(Builder $query){
+            $query->where('id', 2);
         })
         ->whereHas('status_sk_akademik', function(Builder $query){
-            $query->whereIn('id', [3,4]); 
+            $query->whereIn('id', [3,4]);
         })
         ->orderBy('updated_at', 'desc')
         ->get();
