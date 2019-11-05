@@ -89,12 +89,12 @@
                               <td>
                                  @if ($item->tipe_sk->tipe == "SK Skripsi")
                                     <a href="{{ route('keuangan.honor-skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
-                                    @if ($item->verif_dekan != 1)
+                                    @if ($item->verif_kebag_keuangan != 1)
                                        <a href="{{ route('keuangan.honor-skripsi.edit', $item->id) }}" class="btn btn-warning" title="Ubah Daftar Honor"><i class="fa fa-edit"></i></a>
                                     @endif
                                  @else
                                     <a href="{{ route('keuangan.honor-sempro.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
-                                    @if ($item->verif_dekan != 1)
+                                    @if ($item->verif_kebag_keuangan != 1)
                                        <a href="{{ route('keuangan.honor-sempro.edit', $item->id) }}" class="btn btn-warning" title="Ubah Daftar Honor"><i class="fa fa-edit"></i></a>
                                     @endif
                                  @endif

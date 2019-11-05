@@ -17,7 +17,7 @@ class CreateSkAkademikTable extends Migration
             $table->increments('id');
             $table->unsignedTinyInteger('id_tipe_sk')->nullable();
             $table->unsignedInteger('id_status_sk_akademik')->nullable();
-            // $table->string('id_user', 25);
+            $table->unsignedInteger('no_surat');
             $table->boolean('verif_ktu')->default(false);
             $table->boolean('verif_dekan')->default(false);
             $table->text('pesan_revisi')->nullable();

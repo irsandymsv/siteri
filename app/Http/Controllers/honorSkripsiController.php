@@ -68,7 +68,8 @@ class honorSkripsiController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'honor_pembimbing' => 'required',
+            'honor_pembimbing_1' => 'required',
+            'honor_pembimbing_2' => 'required',
             'honor_penguji' => 'required',
         ]);
 
@@ -76,7 +77,8 @@ class honorSkripsiController extends Controller
             $sk_honor=sk_honor::create([
                 'id_tipe_sk' => 1, //tipe SK Skripsi
                 'id_status_sk_honor' => $request->status,
-                'honor_pembimbing' => $request->honor_pembimbing,
+                'honor_pembimbing1' => $request->honor_pembimbing_1,
+                'honor_pembimbing2' => $request->honor_pembimbing_2,
                 'honor_penguji' => $request->honor_penguji
             ]);
             detail_sk::where('id_sk_akademik',$request->id_sk_akademik)
@@ -119,6 +121,7 @@ class honorSkripsiController extends Controller
         $sk_honor = sk_honor::where('id', $id_sk_honor)
             ->with([
                 'tipe_sk',
+                'detail_sk.sk_akademik',
                 'detail_sk.pembimbing_utama:no_pegawai,nama,npwp,id_golongan',
                 'detail_sk.pembimbing_utama.golongan',
 
@@ -135,8 +138,20 @@ class honorSkripsiController extends Controller
         // return view('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor]);
         $tipe = $sk_honor->tipe_sk->tipe;
         $tgl = Carbon::parse($sk_honor->created_at)->locale('id_ID')->isoFormat('D MMMM Y');
+        $tanggal = new Carbon($sk_akademik->created_at);
+        $tahun = $tanggal->year;
 
-        $pdf = PDF::loadview('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor]);
+        $awalSemester = Carbon::create($tahun, 1, 15);
+        $akhirSemester = Carbon::create($tahun, 7, 31);
+        if ($tanggal->isBetween($awalSemester, $akhirSemester)) {
+            $tahun2 = $tanggal->subYear();
+            $tahun2 = $tahun2->year;
+            $pdf = PDF::loadview('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor,'tahun' => $tahun2,'tahun2' => $tahun,'thn_asli' => $tahun]);
+        }else{
+            $tahun2 = $tanggal->addYear();
+            $tahun2 = $tahun2->year;
+            $pdf = PDF::loadview('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor, 'tahun' => $tahun2, 'tahun2' => $tahun, 'thn_asli' => $tahun]);
+        }
         return $pdf->download("Honor ".$tipe." ".$tgl);
     }
 
@@ -171,7 +186,8 @@ class honorSkripsiController extends Controller
     public function update(Request $request, $id_sk_honor)
     {
         $this->validate($request, [
-            'honor_pembimbing' => 'required',
+            'honor_pembimbing_1' => 'required',
+            'honor_pembimbing_2' => 'required',
             'honor_penguji' => 'required',
         ]);
 
@@ -185,12 +201,13 @@ class honorSkripsiController extends Controller
                 $verif_bpp = 0;
                 $verif_ktu = 0;
                 $verif_wadek2 = 0;
-                $verif_dekan = 0;
+                $verif_dekan = 0; 
             }
             
             sk_honor::where('id',$id_sk_honor)->update([
                 'id_status_sk_honor' => $request->status,
-                'honor_pembimbing' => $request->honor_pembimbing,
+                'honor_pembimbing1' => $request->honor_pembimbing_1,
+                'honor_pembimbing2' => $request->honor_pembimbing_2,
                 'honor_penguji' => $request->honor_penguji,
                 'verif_kebag_keuangan' => $verif_bpp,
                 'verif_ktu' => $verif_ktu,

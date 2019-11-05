@@ -60,7 +60,7 @@
                 </td>
                 <td valign="top">
                     : Honorarium Dosen Pembimbing Skripsi Mahasiswa Fak.Ilmu Komputer Universitas<br>&nbsp;
-                    Jember T.A ......... Di Lingkungan Fakultas Ilmu Komputer Universitas Jember
+                    Jember T.A {{$tahun}}/{{$tahun2}} Di Lingkungan Fakultas Ilmu Komputer Universitas Jember
                 </td>
             </tr>
             <tr>
@@ -68,7 +68,7 @@
                     SESUAI
                 </td>
                 <td valign="top">
-                    : SK Dekan Fak. Ilmu Komputer UNEJ ..............................<br>&nbsp;
+                : SK Dekan Fak. Ilmu Komputer UNEJ {{$sk_honor->detail_sk[0]->sk_akademik->no_surat}}/UN 25.1.15/SP/{{$thn_asli}}<br>&nbsp;
                     Tanggal ...............
                 </td>
             </tr>
@@ -108,19 +108,19 @@
                         <p>NIM: {{$item->nim}}</p>
                     </td>
                     <td>{{$item->pembimbing_utama->golongan->golongan}}</td>
-                    <td id="pembimbing_{{$no}}" class="pembimbingHonor">Rp <span>{{ number_format($sk_honor->honor_pembimbing, 0, ",", ".") }}</span>
+                    <td id="pembimbing_{{$no}}" class="pembimbingHonor">Rp <span>{{ number_format($sk_honor->honor_pembimbing1, 0, ",", ".") }}</span>
                     </td>
                     <td class="pph" id="pph_{{$no}}">Rp 
                         <span>
                             @php
-                            $pph = ($item->pembimbing_utama->golongan->pph * $sk_honor->honor_pembimbing)/100;
+                            $pph = ($item->pembimbing_utama->golongan->pph * $sk_honor->honor_pembimbing1)/100;
                             @endphp
                             {{ number_format($pph, 0, ",", ".") }}
                         </span>
                     </td>
                     <td class="penerimaan" id="penerimaan_{{$no}}">Rp
                         @php
-                            $penerimaan = $sk_honor->honor_pembimbing - $pph;
+                            $penerimaan = $sk_honor->honor_pembimbing1 - $pph;
                         @endphp
                         <span>{{ number_format($penerimaan, 0, ",", ".") }}</span>
                     </td>
@@ -129,7 +129,7 @@
                     </td>
 
                     @php
-                       $total_honor+=$sk_honor->honor_pembimbing;
+                       $total_honor+=$sk_honor->honor_pembimbing1;
                        $total_pph+=$pph;
                        $total_penerimaan+=$penerimaan;
                     @endphp
@@ -145,18 +145,18 @@
                     <td>{{$item->pembimbing_pendamping->nama}}</td>
                     <td class="font-sm">{{$item->pembimbing_pendamping->npwp}}</td>
                     <td>{{$item->pembimbing_pendamping->golongan->golongan}}</td>
-                    <td id="pembimbing_{{$no}}" class="pembimbingHonor">Rp <span>{{ number_format($sk_honor->honor_pembimbing, 0, ",", ".") }}</span></td>
+                    <td id="pembimbing_{{$no}}" class="pembimbingHonor">Rp <span>{{ number_format($sk_honor->honor_pembimbing2, 0, ",", ".") }}</span></td>
                     <td class="pph" id="pph_{{$no}}">Rp
                         <span>
                             @php
-                            $pph =( $item->pembimbing_pendamping->golongan->pph * $sk_honor->honor_pembimbing)/100;
+                            $pph =( $item->pembimbing_pendamping->golongan->pph * $sk_honor->honor_pembimbing2)/100;
                             @endphp
                             {{ number_format($pph, 0, ",", ".") }}
                         </span>
                     </td>
                     <td class="penerimaan" id="penerimaan_{{$no}}">Rp 
                         @php
-                            $penerimaan = $sk_honor->honor_pembimbing - $pph;
+                            $penerimaan = $sk_honor->honor_pembimbing2 - $pph;
                         @endphp
                         <span>{{ number_format($penerimaan, 0, ",", ".") }}</span>
                     </td>
@@ -165,7 +165,7 @@
                     </td>
 
                     @php
-                       $total_honor+=$sk_honor->honor_pembimbing;
+                       $total_honor+=$sk_honor->honor_pembimbing2;
                        $total_pph+=$pph;
                        $total_penerimaan+=$penerimaan;
                     @endphp
@@ -196,7 +196,7 @@
                         Pembahas Seminar Proposal
                     @endif
                     Mahasiswa Fak.Ilmu Komputer Universitas<br>&nbsp;
-                    Jember T.A ......... Di Lingkungan Fakultas Ilmu Komputer Universitas Jember
+                    Jember T.A {{$tahun}}/{{$tahun2}} Di Lingkungan Fakultas Ilmu Komputer Universitas Jember
                 </td>
             </tr>
             <tr>
@@ -204,7 +204,7 @@
                     SESUAI
                 </td>
                 <td valign="top">
-                    : SK Dekan Fak. Ilmu Komputer UNEJ ..............................<br>&nbsp;
+                    : SK Dekan Fak. Ilmu Komputer UNEJ {{$sk_honor->detail_sk[0]->sk_akademik->no_surat}}/UN 25.1.15/SP/{{$thn_asli}}<br>&nbsp;
                     Tanggal ...............
                 </td>
             </tr>
