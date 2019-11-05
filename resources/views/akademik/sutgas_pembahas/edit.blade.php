@@ -156,11 +156,13 @@
                   <div class="form-group">
                      <label for="id_pembahas1">Pembahas 1</label><br>
                      <select name="id_pembahas1" id="id_pembahas1" class="form-control select2">
-                        <option value="">Pilih Pembahas 1</option>
+                        <option value="">--Pilih Pembahas 1--</option>
                         @foreach ($dosen as $item)
-                           <option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == $surat_tugas->surat_tugas_pembahas->pembahas1->no_pegawai? 'selected':'') }}>
+                           @if ($surat_tugas->surat_tugas_pembahas->id_pembimbing_utama != $item->no_pegawai && $surat_tugas->surat_tugas_pembahas->id_pembimbing_pendamping != $item->no_pegawai)
+                              <option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == $surat_tugas->surat_tugas_pembahas->pembahas1->no_pegawai? 'selected':'') }}>
                               {{ $item->nama }}
-                           </option>
+                              </option>   
+                           @endif
                         @endforeach
                      </select>
 
@@ -174,9 +176,11 @@
                   <div class="form-group">
                      <label for="id_pembahas2">Pembahas 2</label><br>
                      <select name="id_pembahas2" id="id_pembahas2" class="form-control select2">
-                        <option value="">Pilih Pembahas 2</option>
+                        <option value="">--Pilih Pembahas 2--</option>
                         @foreach ($dosen as $item)
-                           <option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == $surat_tugas->surat_tugas_pembahas->pembahas2->no_pegawai? 'selected':'') }}>
+                           @if ($surat_tugas->surat_tugas_pembahas->id_pembimbing_utama != $item->no_pegawai && $surat_tugas->surat_tugas_pembahas->id_pembimbing_pendamping != $item->no_pegawai)
+                              <option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == $surat_tugas->surat_tugas_pembahas->pembahas2->no_pegawai? 'selected':'') }}>
+                           @endif
                               {{ $item->nama }}
                            </option>
                         @endforeach
@@ -225,17 +229,35 @@
       });
 
 		var mahasiswa = @json($mahasiswa);
+      var dosen = @json($dosen);
 
 		$("select[name='nim']").change(function(event) {
 			var nim = $(this).val();
 			var nama = "";
+         var id_pembimbing1 = 0;
+         var id_pembimbing2 = 0;
 			$.each(mahasiswa, function(index, val) {
 				 if(nim == val.nim){
 				 	nama = val.nama;
+               id_pembimbing1 = val.detail_skripsi.id_pembimbing_utama;
+               id_pembimbing2 = val.detail_skripsi.id_pembimbing_pendamping;
 				 	return false;
 				 }
 			});
 			$("input[name='nama_mhs']").val(nama);
+         setDosen(id_pembimbing1, id_pembimbing2);
 		});
+
+      function setDosen(id_pembimbing1, id_pembimbing2) {
+         $("select[name='id_pembahas1']").find("option:not(:first-child)").remove();
+         $("select[name='id_pembahas2']").find("option:not(:first-child)").remove();
+
+         $.each(dosen, function(index, val) {
+            if(val.no_pegawai != id_pembimbing1 && val.no_pegawai != id_pembimbing2){
+               $("select[name='id_pembahas1']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+               $("select[name='id_pembahas2']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+            }
+         });
+      }
 	</script>
 @endsection

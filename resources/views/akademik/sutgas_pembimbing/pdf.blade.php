@@ -47,7 +47,7 @@
 		#body_surat{
          margin-left: 0.3cm;
          margin-right: 0.3cm; 
-		   text-align: justify-all;
+		   text-align: justify;
 		}
 
 		.top-title{
@@ -63,7 +63,8 @@
 		}
 
 		#detail_table tr td:first-child{
-		   padding-right: 10px;
+		   padding-right: 20px;
+         vertical-align: top;
 		}
 
 		.header_14{
@@ -103,7 +104,7 @@
             <span>Nomor: {{ $surat_tugas->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($surat_tugas->created_at)->year }}</span>
          </p>
 
-         <p>
+         <p style="margin-bottom: 0pt;">
             Berdasarkan Hasil Evaluasi Komisi Bimbingan Program Studi Sistem Informasi, maka dengan ini Dekan Fakultas Ilmu Komputer menugaskan kepada nama dosen yang tersebut di bawah ini:
          </p>
 
@@ -162,11 +163,10 @@
                <td>Dengan Judul</td>
                <td>: {{ $surat_tugas->surat_tugas_pembimbing->judul }}</td>
             </tr>
+            <tr>
+               <td colspan="2">Demikian surat tugas ini ditetapkan untuk dilaksanakan sebaik-baiknya.</td>
+            </tr>
          </table>
-
-         <br>
-         <p>Demikian surat tugas ini ditetapkan untuk dilaksanakan sebaik-baiknya.</p>
-         <br>
 
          <div class="ttd-right">
             Jember, {{ Carbon\Carbon::parse($surat_tugas->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }} <br>

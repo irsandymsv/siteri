@@ -156,7 +156,7 @@
             		<div class="form-group">
             			<label for="id_pembahas1">Pembahas 1</label><br>
             			<select name="id_pembahas1" id="id_pembahas1" class="form-control select2">
-            				<option value="">Pilih Pembahas 1</option>
+            				<option value="">--Pilih Pembahas 1--</option>
             				@foreach ($dosen as $item)
             					<option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == old('id_pembahas1')? 'selected' : '') }}>
                               {{ $item->nama }}
@@ -174,7 +174,7 @@
             		<div class="form-group">
             			<label for="id_pembahas2">Pembahas 2</label><br>
             			<select name="id_pembahas2" id="id_pembahas2" class="form-control select2">
-            				<option value="">Pilih Pembahas 2</option>
+            				<option value="">--Pilih Pembahas 2--</option>
             				@foreach ($dosen as $item)
             					<option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == old('id_pembahas2')? 'selected' : '') }}>
                               {{ $item->nama }}
@@ -226,30 +226,81 @@
 
       var mahasiswa = @json($mahasiswa);
       var nim_old = @json(old('nim'));
+      var dosen = @json($dosen);
 
       if(nim_old != null){
          var nama = "";
+         var id_pembimbing1 = 0;
+         var id_pembimbing2 = 0;
+         var old_id_pembahas1 = @json(old('id_pembahas1'));
+         var old_id_pembahas2 = @json(old('id_pembahas2'));
+
          console.log('ada gan');
          $.each(mahasiswa, function(index, val) {
              if(nim_old == val.nim){
                nama = val.nama;
+               id_pembimbing1 = val.detail_skripsi.id_pembimbing_utama;
+               id_pembimbing2 = val.detail_skripsi.id_pembimbing_pendamping;
                return false;
              }
          });
 
          $("input[name='nama_mhs']").val(nama);
+         setDosen(id_pembimbing1, id_pembimbing2, old_id_pembahas1, old_id_pembahas2);
       }
 
 		$("select[name='nim']").change(function(event) {
 			var nim = $(this).val();
 			var nama = "";
+         var id_pembimbing1 = 0;
+         var id_pembimbing2 = 0;
 			$.each(mahasiswa, function(index, val) {
 				 if(nim == val.nim){
 				 	nama = val.nama;
+               id_pembimbing1 = val.detail_skripsi.id_pembimbing_utama;
+               id_pembimbing2 = val.detail_skripsi.id_pembimbing_pendamping;
 				 	return false;
 				 }
 			});
+
 			$("input[name='nama_mhs']").val(nama);
+         setDosen(id_pembimbing1, id_pembimbing2);
+         // console.log('pemb1 = '+id_pembimbing1);
+         // console.log('pemb2 = '+id_pembimbing2);
 		});
+
+      function setDosen(id_pembimbing1, id_pembimbing2, old_pembahas1 = null, old_pembahas2 = null) {
+         $("select[name='id_pembahas1']").find("option:not(:first-child)").remove();
+         $("select[name='id_pembahas2']").find("option:not(:first-child)").remove();
+
+         if(old_pembahas1 == null){
+            $.each(dosen, function(index, val) {
+               if(val.no_pegawai != id_pembimbing1 && val.no_pegawai != id_pembimbing2){
+                  $("select[name='id_pembahas1']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+                  $("select[name='id_pembahas2']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+               }
+            });
+         }
+         else{
+            $.each(dosen, function(index, val) {
+               if(val.no_pegawai != id_pembimbing1 && val.no_pegawai != id_pembimbing2){
+                  if(val.no_pegawai == old_pembahas1){
+                     $("select[name='id_pembahas1']").append(`<option value="`+val.no_pegawai+`" selected>`+val.nama+`</option>`);
+                  }
+                  else{
+                     $("select[name='id_pembahas1']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+                  }
+
+                  if (val.no_pegawai == old_pembahas2) {
+                     $("select[name='id_pembahas2']").append(`<option value="`+val.no_pegawai+`" selected>`+val.nama+`</option>`);
+                  }
+                  else{
+                     $("select[name='id_pembahas2']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+                  }
+               }
+            });
+         }
+         
+      }
 	</script>
 @endsection

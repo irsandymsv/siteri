@@ -62,7 +62,7 @@ class sutgasPembahasController extends suratTugasController
                 'id_pembahas1',
                 'id_pembahas2'
             );
-            return redirect()->route('akademik.sutgas-pembahas.index')->with('success', 'Data Surat Tugas Berhasil Ditambahkan');
+            return redirect()->route('akademik.sutgas-pembahas.show', $id_surat)->with('success', 'Data Surat Tugas Berhasil Ditambahkan');
         } catch (Exception $e) {
             return redirect()->route('akademik.sutgas-pembahas.create')->with('error', $e->getMessage());
         }
@@ -137,7 +137,7 @@ class sutgasPembahasController extends suratTugasController
             );
 
 
-            return redirect()->route('akademik.sutgas-pembahas.edit', $id)->with('success', 'Data Surat Tugas Berhasil Dirubah');
+            return redirect()->route('akademik.sutgas-pembahas.show', $id)->with('success', 'Data Surat Tugas Berhasil Dirubah');
         } catch (Exception $e) {
             dd($e->getMessage());
             return redirect()->route('akademik.sutgas-pembahas.edit', $id)->with('error', $e->getMessage());
@@ -167,7 +167,7 @@ class sutgasPembahasController extends suratTugasController
 
         // return view('akademik.sutgas_pembimbing.pdf', ['surat_tugas' => $surat_tugas, 'dekan' => $dekan]);
 
-        $pdf = PDF::loadview('akademik.sutgas_pembahas.pdf', ['surat_tugas' => $surat_tugas, 'dekan' => $dekan])->setPaper('a4', 'portrait')->setWarnings(false);
+        $pdf = PDF::loadview('akademik.sutgas_pembahas.pdf', ['surat_tugas' => $surat_tugas, 'dekan' => $dekan])->setPaper('folio', 'portrait')->setWarnings(false);
         return $pdf->download("Sutgas_Pembahas-" . $surat_tugas->no_surat);
     }
 

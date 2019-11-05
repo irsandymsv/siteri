@@ -144,7 +144,7 @@
                   <div class="form-group">
                      <label for="pembimbing_utama">Pembimbing Utama</label><br>
                      <select name="id_pembimbing_utama" id="id_pembimbing_utama" class="form-control select2">
-                        <option value="">Pilih Pembimbing Utama</option>
+                        <option value="">--Pilih Pembimbing Utama--</option>
                         @foreach ($dosen as $item)
                            <option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == $surat_tugas->surat_tugas_pembimbing->pembimbing_utama->no_pegawai? 'selected':'') }}>
                               {{ $item->nama }}
@@ -162,7 +162,7 @@
                   <div class="form-group">
                      <label for="pembimbing_pendamping">Pembimbing Pendamping</label><br>
                      <select name="id_pembimbing_pendamping" id="id_pembimbing_pendamping" class="form-control select2">
-                        <option value="">Pilih Pembimbing Pendamping</option>
+                        <option value="">--Pilih Pembimbing Pendamping--</option>
                         @foreach ($dosen as $item)
                            <option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == $surat_tugas->surat_tugas_pembimbing->pembimbing_pendamping->no_pegawai? 'selected':'') }}>
                               {{ $item->nama }}

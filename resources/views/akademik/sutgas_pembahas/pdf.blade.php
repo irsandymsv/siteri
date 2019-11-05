@@ -12,9 +12,9 @@
 		.box-body{
 		   margin: auto;
 		   font-family: 'Times New Roman';
-		   font-size: 12pt;
+		   font-size: 11pt;
 		   margin-top: 0;
-         margin-bottom: 1pt;
+         margin-bottom: 0.5pt;
          margin-left: 0.8cm;
          margin-right: 0.8cm; 
 		}
@@ -47,7 +47,7 @@
 		#body_surat{
          margin-left: 0.3cm;
          margin-right: 0.3cm; 
-		   text-align: justify-all;
+		   text-align: justify;
 		}
 
 		.top-title{
@@ -56,14 +56,20 @@
 		}
 
 		.judul_surat{
-		   font-size: 14pt;
+		   font-size: 13pt;
 		   text-decoration: underline;
 		   font-weight: bold;
          letter-spacing: 1.5pt;
 		}
 
+      #detail_table{
+         margin-top: 0;
+         padding-top: 0;
+      }
+
 		#detail_table tr td:first-child{
-		   padding-right: 10px;
+		   padding-right: 3px;
+         vertical-align: top;
 		}
 
 		.header_14{
@@ -79,8 +85,8 @@
 		}
 
       .space_row{
-         padding-top: 10pt;
-         padding-bottom: 10pt;
+         padding-top: 2pt;
+         padding-bottom: 2pt;
       }
 	</style>
 </head>
@@ -108,7 +114,7 @@
             <span>Nomor: {{ $surat_tugas->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($surat_tugas->created_at)->year }}</span>
          </p>
 
-         <p>
+         <p style="margin-bottom: 0pt;">
             Berdasarkan Hasil Evaluasi Komisi Bimbingan Tugas Akhir Mahasiswa Fakultas Ilmu Komputer, maka dengan ini Dekan menugaskan kepada nama dosen yang tersebut di bawah ini sebagai Penguji pada Ujian <b>Seminar Proposal</b>:
          </p>
 
@@ -141,11 +147,11 @@
             </tr>
             <tr>
                <td>Hari/Tanggal</td>
-               <td>: {{ Carbon\Carbon::parse($surat_tugas->tanggal)->locale('id_ID')->isoFormat(', D MMMM Y') }}</td>
+               <td>: {{ Carbon\Carbon::parse($surat_tugas->tanggal)->locale('id_ID')->isoFormat('dddd, D MMMM Y') }}</td>
             </tr>
             <tr>
                <td>Jam Pelaksanaan</td>
-               <td>: {{ Carbon\Carbon::parse($surat_tugas->tanggal)->format('H:i') }} WIB</td>
+               <td>: {{ Carbon\Carbon::parse($surat_tugas->tanggal)->format('H.i') }} WIB</td>
             </tr>
             <tr>
                <td>Tempat</td>
@@ -221,11 +227,10 @@
                <td>: {{ $surat_tugas->surat_tugas_pembahas->pembahas2->fungsional->jab_fungsional }}</td>
             </tr>
             
+            <tr>
+               <td colspan="2">Demikian surat tugas ini ditetapkan untuk dilaksanakan sebaik-baiknya.</td>
+            </tr>
          </table>
-
-         <br>
-         <p>Demikian surat tugas ini ditetapkan untuk dilaksanakan sebaik-baiknya.</p>
-         <br>
 
          <div class="ttd-right">
             Jember, {{ Carbon\Carbon::parse($surat_tugas->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }} <br>

@@ -63,7 +63,7 @@
 		            					<a href="{{ route('akademik.sutgas-pembahas.edit', $item->id) }}" class="btn btn-warning" title="Ubah Surat Tugas"><i class="fa fa-edit"></i></a>
 
 		            					@if ($item->verif_ktu == 1)
-		            					<a href="{{ route("akademik.sutgas-pembahas.cetak", $item->id) }}" class="btn bg-teal"><i class="fa fa-print"></i></a>
+		            					<a href="{{ route("akademik.sutgas-pembahas.cetak", $item->id) }}" class="btn bg-teal" title="Download PDF"><i class="fa fa-print"></i></a>
 		            					@endif
 		            				</td>
 		            			</tr>

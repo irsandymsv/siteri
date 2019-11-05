@@ -59,7 +59,9 @@
       }
 
       #detail_table tr td:first-child{
-         padding-right: 10px;
+         /*padding-right: 10px;*/
+         width: 130px;
+         vertical-align: top;
       }
 
       .header_18{
@@ -173,11 +175,11 @@
                      </tr>
                      <tr>
                         <td>Hari/Tanggal</td>
-                        <td>: {{ Carbon\Carbon::parse($surat_tugas->tanggal)->locale('id_ID')->isoFormat(', D MMMM Y') }}</td>
+                        <td>: {{ Carbon\Carbon::parse($surat_tugas->tanggal)->locale('id_ID')->isoFormat('dddd, D MMMM Y') }}</td>
                      </tr>
                      <tr>
                         <td>Jam Pelaksanaan</td>
-                        <td>: {{ Carbon\Carbon::parse($surat_tugas->tanggal)->format('H:i') }} WIB</td>
+                        <td>: {{ Carbon\Carbon::parse($surat_tugas->tanggal)->format('H.i') }} WIB</td>
                      </tr>
                      <tr>
                         <td>Tempat</td>

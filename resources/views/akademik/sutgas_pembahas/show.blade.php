@@ -63,7 +63,9 @@
                @if(!is_null($surat_tugas->pesan_revisi))
                <div class="revisi_wrap">
                   <h4><b>Pesan Revisi</b> : </h4>
-                  <p>"{{ $surat_tugas->pesan_revisi }}"</p>
+                  <blockquote>
+                     <p>{{ $surat_tugas->pesan_revisi }}</p>
+                  </blockquote>
                </div>
                @endif
 
@@ -139,7 +141,7 @@
 
                      <tr>
                         <td>Tanggal Sempro</td>
-                        <td>{{ $surat_tugas->tanggal }}</td>
+                        <td>{{ Carbon\Carbon::parse($surat_tugas->tanggal)->locale("id_ID")->isoFormat('dddd, D MMMM Y') }}</td>
                      </tr>
 
                      <tr>
@@ -149,7 +151,7 @@
 
                      <tr>
                         <td>Tempat Sempro</td>
-                        <td>{{ $surat_tugas->tempat }}</td>
+                        <td>Ruang Kuliah {{ $surat_tugas->tempat }}</td>
                      </tr>
 
                      <tr>
@@ -161,7 +163,7 @@
             </div>
 
             <div class="box-footer">
-               <a href="{{ route('akademik.sutgas-pembahas.edit', $surat_tugas->id) }}" class="btn btn-warning">Ubah</a> &ensp;   
+               <a href="{{ route('akademik.sutgas-pembahas.edit', $surat_tugas->id) }}" class="btn btn-warning pull-right"><i class="fa fa-edit"></i> Ubah</a> &ensp;   
             </div>
             
    		</div>

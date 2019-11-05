@@ -63,7 +63,9 @@
                @if(!is_null($surat_tugas->pesan_revisi))
                <div class="revisi_wrap">
                   <h4><b>Pesan Revisi</b> : </h4>
-                  <p>"{{ $surat_tugas->pesan_revisi }}"</p>
+                  <blockquote>
+                     <p>{{ $surat_tugas->pesan_revisi }}</p>
+                  </blockquote>
                </div>
                @endif
 
@@ -144,7 +146,7 @@
             </div>
 
             <div class="box-footer">
-               <a href="{{ route('akademik.sutgas-pembimbing.edit', $surat_tugas->id) }}" class="btn btn-warning">Ubah</a> &ensp;   
+               <a href="{{ route('akademik.sutgas-pembimbing.edit', $surat_tugas->id) }}" class="btn btn-warning pull-right"><i class="fa fa-edit"></i> Ubah</a> &ensp;   
             </div>
             
    		</div>
