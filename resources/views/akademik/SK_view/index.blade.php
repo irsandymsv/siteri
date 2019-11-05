@@ -54,14 +54,14 @@
 		            	</thead>
 		            	<tbody>
 		            		@php $no = 0 @endphp
-		            		@foreach($sk_akademik as $item)
+		            		@foreach($sk as $item)
 		            			<tr id="sk_{{$item->id}}">
 		            				<td>{{$no+=1}}</td>
 		            				<td>{{ $item->no_surat }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
 		            				<td>
 		            					{{Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}
 		            				</td>
-		            				<td>{{$item->status_sk_akademik->status}}</td>
+		            				<td>{{$item->status_sk->status}}</td>
 		            				<td>
 		            					@if($item->verif_ktu == 0) 
 		            						Belum Diverifikasi

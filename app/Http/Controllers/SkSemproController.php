@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Exception;
 use App\bagian;
 use App\User;
-use App\sk_akademik;
+use App\sk_sempro;
 use App\detail_sk;
+use App\mahasiswa;
 use App\Http\Controllers\Controller;
 use App\status_sk_akademik;
 use Carbon\Carbon;
@@ -18,15 +19,12 @@ class SkSemproController extends Controller
     public function index()
     {
         try {
-            $sk_akademik = sk_akademik::whereHas('tipe_sk', function ($query) {
-                $query->where('id', 2);
-            })
-                ->with(['tipe_sk', 'status_sk_akademik'])
+            $sk = sk_sempro::with('status_sk')
                 ->orderBy('updated_at', 'desc')
                 ->get();
 
             return view('akademik.SK_view.index', [
-                'sk_akademik' => $sk_akademik,
+                'sk' => $sk,
                 'tipe' => "SK Sempro"
             ]);
         } catch (Exception $e) {
@@ -37,18 +35,39 @@ class SkSemproController extends Controller
     public function create(Request $request)
     {
         $old_data = [];
+        $old_mahasiswa = "";
         if (count($request->old()) > 0) {
-            // dd($request->old()['nama']);
+            // dd($request->old());
             $old_data = $request->old();
+            $old_mahasiswa = mahasiswa::whereIn('nim', $old_data["nim"])
+            ->with([
+                "bagian",
+                "detail_skripsi",
+                "detail_skripsi.pembahas1:no_pegawai,nama",
+                "detail_skripsi.pembahas2:no_pegawai,nama"
+            ])->get();
         }
+        // dd($old_mahasiswa);
 
         $jurusan = bagian::where('is_jurusan', 1)->get();
         $dosen = user::where('is_dosen', 1)->get();
-
-        return view('akademik.SK_view.create-form', [
+        $mahasiswa = mahasiswa::with([
+            "bagian",
+            "detail_skripsi",
+            "detail_skripsi.pembahas1:no_pegawai,nama",
+            "detail_skripsi.pembahas2:no_pegawai,nama"
+        ])
+        ->whereHas("detail_skripsi", function(Builder $query)
+        {
+            $query->where("id_surat_tugas_pembahas", "<>",null);
+        })->get();
+        // dd($mahasiswa);
+        return view('akademik.SK_view.create', [
             'jurusan' => $jurusan,
             'dosen' => $dosen,
+            'mahasiswa' => $mahasiswa,
             'old_data' => $old_data,
+            'old_mahasiswa' => $old_mahasiswa,
             'tipe' => "sk sempro"
         ]);
     }
@@ -57,23 +76,9 @@ class SkSemproController extends Controller
     {
         // dd($request->status);
         $this->validate($request, [
-            "nama"    => "required|array",
-            "nama.*"  => "required|string|max:40",
+            "no_surat" => "required",
             "nim" => "required|array",
-            "nim.*" => "required|string|max:20",
-            "jurusan" => "required|array",
-            "jurusan.*" => "required",
-            "judul" => "required|array",
-            "judul.*" => "required",
-            "pembimbing_utama" => "required|array",
-            "pembimbing_utama.*" => "required",
-            "pembimbing_pendamping" => "required|array",
-            "pembimbing_pendamping.*" => "required",
-            "penguji_utama" => "required|array",
-            "penguji_utama.*" => "required",
-            "penguji_pendamping" => "required|array",
-            "penguji_pendamping.*" => "required",
-            "no_surat" => "required"
+            "nim.*" => "required|string|max:20"
         ]);
 
         try {

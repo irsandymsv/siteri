@@ -9,7 +9,7 @@ class sk_skripsi extends Model
     protected $table = "sk_skripsi";
     protected $primaryKey = "no_surat";
     public $timestamps = TRUE;
-    protected $incrementing = FALSE;
+    public $incrementing = FALSE;
 
     public function status_sk()
     {

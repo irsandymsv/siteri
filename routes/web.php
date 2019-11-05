@@ -58,6 +58,7 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
 	Route::get('/skripsi/{id_sk_akademik}/cetak', 'SkSkripsiController@cetak')->name('skripsi.cetak');
 	Route::delete('/skripsi/delete/{id_sk_akademik?}', 'SkSkripsiController@destroy')->name('skripsi.destroy');
 
+	//Route SK Sempro
 	Route::get('/sempro', 'SkSemproController@index')->name('sempro.index');
 	Route::get('/sempro/create', 'SkSemproController@create')->name('sempro.create');
 	Route::post('/sempro', 'SkSemproController@store')->name('sempro.store');

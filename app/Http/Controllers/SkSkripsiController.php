@@ -45,7 +45,7 @@ class SkSkripsiController extends Controller
 		}
 		$jurusan = bagian::where('is_jurusan', 1)->get();
 		$dosen = user::where('is_dosen', 1)->get();
-		return view('akademik.SK_view.create-form', [
+		return view('akademik.SK_view.create', [
 			'jurusan' => $jurusan,
 			'dosen' => $dosen,
 			'old_data' => $old_data,
