@@ -15,6 +15,7 @@ class AddForeignKeysToSuratTugasTable extends Migration
     {
         Schema::table('surat_tugas', function (Blueprint $table) {
             $table->foreign('id_status_surat_tugas')->references('id')->on('status_surat_tugas')->onDelete('set null');
+            $table->foreign('id_detail_skripsi')->references('id')->on('detail_skripsi')->onDelete('set null');
         });
     }
 
@@ -26,7 +27,9 @@ class AddForeignKeysToSuratTugasTable extends Migration
     public function down()
     {
         Schema::table('surat_tugas', function (Blueprint $table) {
-            //
+            $table->dropForeign('status_surat_tugas_id_status_surat_tugas_foreign');
+            $table->dropForeign('detail_skripsi_id_detail_skripsi_foreign');
+
         });
     }
 }

@@ -20,18 +20,35 @@ class surat_tugas extends Model
        return $this->belongsTo('App\status_surat_tugas','id_status_surat_tugas');
    }
 
-    public function surat_tugas_pembimbing()
+    public function dosen1()
     {
-        return $this->hasOne('App\detail_skripsi', 'id_surat_tugas_pembimbing');
+        return $this->belongsTo('App\User', 'id_dosen1');
     }
 
-    public function surat_tugas_pembahas()
+    public function dosen2()
     {
-        return $this->hasOne('App\detail_skripsi', 'id_surat_tugas_pembahas');
+        return $this->belongsTo('App\User', 'id_dosen2');
     }
 
-    public function surat_tugas_penguji()
+    public function detail_skripsi()
     {
-        return $this->hasOne('App\detail_skripsi', 'id_surat_tugas_penguji');
+        return $this->belongsTo('App\detail_skripsi', 'id_detail_skripsi');
     }
+
+
+
+    // public function surat_tugas_pembimbing()
+    // {
+    //     return $this->hasOne('App\detail_skripsi', 'id_surat_tugas_pembimbing');
+    // }
+
+    // public function surat_tugas_pembahas()
+    // {
+    //     return $this->hasOne('App\detail_skripsi', 'id_surat_tugas_pembahas');
+    // }
+
+    // public function surat_tugas_penguji()
+    // {
+    //     return $this->hasOne('App\detail_skripsi', 'id_surat_tugas_penguji');
+    // }
 }

@@ -7,13 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class detail_skripsi extends Model
 {
     protected $table = "detail_skripsi";
-    public $timestamps = FALSE;
+    public $timestamps = TRUE;
     protected $guarded = ['id'];
-
-    public function mahasiswa()
-    {
-        return $this->belongsTo('App\mahasiswa', 'nim');
-    }
 
     public function sk_sempro()
     {
@@ -23,36 +18,6 @@ class detail_skripsi extends Model
     public function sk_skripsi()
     {
         return $this->belongsTo('App\sk_skripsi', 'id_sk_skripsi');
-    }
-
-    public function pembimbing_utama()
-    {
-        return $this->belongsTo('App\User', 'id_pembimbing_utama');
-    }
-
-    public function pembimbing_pendamping()
-    {
-        return $this->belongsTo('App\User', 'id_pembimbing_pendamping');
-    }
-
-    public function penguji_utama()
-    {
-        return $this->belongsTo('App\User', 'id_penguji_utama');
-    }
-
-    public function penguji_pendamping()
-    {
-        return $this->belongsTo('App\User', 'id_penguji_pendamping');
-    }
-
-    public function pembahas1()
-    {
-        return $this->belongsTo('App\User', 'id_pembahas1');
-    }
-
-    public function pembahas2()
-    {
-        return $this->belongsTo('App\User', 'id_pembahas2');
     }
 
     public function keris()
@@ -65,19 +30,14 @@ class detail_skripsi extends Model
         return $this->belongsTo('App\sk_honor', 'id_sk_honor');
     }
 
-    public function surat_tugas_pembimbing()
+    public function skripsi()
     {
-        return $this->belongsTo('App\surat_tugas', 'id_surat_tugas_pembimbing');
+        return $this->belongsTo('App\skripsi', 'id_skripsi');
     }
 
-    public function surat_tugas_pembahas()
+    public function surat_tugas()
     {
-        return $this->belongsTo('App\surat_tugas', 'id_surat_tugas_pembahas');
-    }
-
-    public function surat_tugas_penguji()
-    {
-        return $this->belongsTo('App\surat_tugas', 'id_surat_tugas_penguji');
+        return $this->hasMany('App\surat_tugas', 'id_detail_skripsi');
     }
 
 }

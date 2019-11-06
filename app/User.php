@@ -105,34 +105,39 @@ class User extends Authenticatable
         return $this->hasMany('App\laporan','id_user');
     }
 
-    public function pembimbing_utama()
+    public function dosen1()
     {
-        return $this->hasMany('App\detail_skripsi', 'id_pembimbing_utama');
+        return $this->hasMany('App\surat_tugas', 'id_dosen1');
     }
 
-    public function pembimbing_pendamping()
+    public function dosen2()
     {
-        return $this->hasMany('App\detail_skripsi', 'id_pembimbing_pendamping');
+        return $this->hasMany('App\surat_tugas', 'id_dosen2');
     }
 
-    public function penguji_utama()
-    {
-        return $this->hasMany('App\detail_skripsi', 'id_penguji_utama');
-    }
+    // public function pembimbing_pendamping()
+    // {
+    //     return $this->hasMany('App\detail_skripsi', 'id_pembimbing_pendamping');
+    // }
 
-    public function penguji_pendamping()
-    {
-        return $this->hasMany('App\detail_skripsi', 'id_penguji_pendamping');
-    }
+    // public function penguji_utama()
+    // {
+    //     return $this->hasMany('App\detail_skripsi', 'id_penguji_utama');
+    // }
 
-    public function pembahas1()
-    {
-        return $this->hasMany('App\detail_skripsi', 'id_pembahas1');
-    }
+    // public function penguji_pendamping()
+    // {
+    //     return $this->hasMany('App\detail_skripsi', 'id_penguji_pendamping');
+    // }
 
-    public function pembahas2()
-    {
-        return $this->hasMany('App\detail_skripsi', 'id_pembahas2');
-    }
+    // public function pembahas1()
+    // {
+    //     return $this->hasMany('App\detail_skripsi', 'id_pembahas1');
+    // }
+
+    // public function pembahas2()
+    // {
+    //     return $this->hasMany('App\detail_skripsi', 'id_pembahas2');
+    // }
 
 }

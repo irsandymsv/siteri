@@ -15,8 +15,8 @@ class mahasiswa extends Model
         return $this->belongsTo('App\bagian','id_bagian');
     }
 
-    public function detail_skripsi()
+    public function skripsi()
     {
-        return $this->hasOne('App\detail_skripsi', 'nim');
+        return $this->hasOne('App\skripsi', 'nim');
     }
 }
