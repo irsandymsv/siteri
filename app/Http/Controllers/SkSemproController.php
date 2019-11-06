@@ -22,7 +22,7 @@ class SkSemproController extends Controller
             $sk = sk_sempro::with('status_sk')
                 ->orderBy('updated_at', 'desc')
                 ->get();
-
+            // dd($sk);
             return view('akademik.SK_view.index', [
                 'sk' => $sk,
                 'tipe' => "SK Sempro"
@@ -36,10 +36,10 @@ class SkSemproController extends Controller
     {
         $old_data = [];
         $old_mahasiswa = "";
-        if (count($request->old()) > 0) {
+        if (array_key_exists('nim', $request->old())) {
             // dd($request->old());
             $old_data = $request->old();
-            $old_mahasiswa = mahasiswa::whereIn('nim', $old_data["nim"])
+            $old_mahasiswa = mahasiswa::whereIn('nim', $request->old()["nim"])
             ->with([
                 "bagian",
                 "detail_skripsi",
@@ -48,7 +48,6 @@ class SkSemproController extends Controller
             ])->get();
         }
 
-        $jurusan = bagian::where('is_jurusan', 1)->get();
         $dosen = user::where('is_dosen', 1)->get();
         $mahasiswa = mahasiswa::with([
             "bagian",
@@ -58,11 +57,13 @@ class SkSemproController extends Controller
         ])
         ->whereHas("detail_skripsi", function(Builder $query)
         {
-            $query->where("id_surat_tugas_pembahas", "<>",null);
+            $query->where([
+                ["id_surat_tugas_pembahas", "<>",null],
+                ["id_sk_sempro", null]
+            ]);
         })->get();
         // dd($mahasiswa);
         return view('akademik.SK_view.create', [
-            'jurusan' => $jurusan,
             'dosen' => $dosen,
             'mahasiswa' => $mahasiswa,
             'old_data' => $old_data,
@@ -103,53 +104,92 @@ class SkSemproController extends Controller
 
     public function show($id)
     {
-        $sk_akademik = sk_akademik::find($id);
-        $detail_sk = detail_sk::where('id_sk_akademik', $id)
+        $sk = sk_sempro::find($id);
+        $detail_skripsi = detail_skripsi::where('id_sk_sempro', $id)
             ->with([
-                'bagian',
-                'penguji_utama:no_pegawai,nama',
-                'penguji_pendamping:no_pegawai,nama',
+                'mahasiswa',
+                'mahasiswa.bagian',
                 'pembimbing_utama:no_pegawai,nama',
-                'pembimbing_pendamping:no_pegawai,nama'
+                'pembimbing_pendamping:no_pegawai,nama',
+                'pembahas1:no_pegawai,nama',
+                'pembahas2:no_pegawai,nama',
             ])->get();
         // dd($detail_sk);
         return view('akademik.SK_view.show', [
-            'sk_akademik' => $sk_akademik,
-            'detail_sk' => $detail_sk
+            'sk' => $sk,
+            'detail_skripsi' => $detail_skripsi,
+            'tipe' => 'sk sempro'
         ]);
     }
 
     public function edit(Request $request, $id)
     {
         $old_data = [];
-        if (count($request->old()) > 0) {
-            // dd($request->old()['nama']);
+        $old_mahasiswa = "";
+        if (array_key_exists('nim', $request->old())) {
+            // dd($request->old());
             $old_data = $request->old();
+            $old_mahasiswa = mahasiswa::whereIn('nim', $request->old()["nim"])
+            ->with([
+                "bagian",
+                "detail_skripsi",
+                "detail_skripsi.pembahas1:no_pegawai,nama",
+                "detail_skripsi.pembahas2:no_pegawai,nama"
+            ])->get();
         }
 
-        try {
-            $jurusan = bagian::where('is_jurusan', 1)->get();
+        // try {
+            $sk = sk_sempro::find($id);
             $dosen = user::where('is_dosen', 1)->get();
-            $sk_akademik = sk_akademik::find($id);
-            $detail_sk = detail_sk::where('id_sk_akademik', $id)
+            $detail_skripsi = detail_skripsi::where('id_sk_sempro', $id)
                 ->with([
-                    'bagian',
-                    'penguji_utama:no_pegawai,nama',
-                    'penguji_pendamping:no_pegawai,nama',
+                    'mahasiswa',
+                    'mahasiswa.bagian',
+                    'pembahas1:no_pegawai,nama',
+                    'pembahas2:no_pegawai,nama',
                     'pembimbing_utama:no_pegawai,nama',
                     'pembimbing_pendamping:no_pegawai,nama'
                 ])->get();
 
+            $mahasiswa = mahasiswa::with([
+                "bagian",
+                "detail_skripsi",
+                "detail_skripsi.pembahas1:no_pegawai,nama",
+                "detail_skripsi.pembahas2:no_pegawai,nama"
+            ])
+            ->whereHas("detail_skripsi", function(Builder $query)
+            {
+                $query->where([
+                    ["id_surat_tugas_pembahas", "<>",null],
+                    ["id_sk_sempro", null]
+                ]);
+            })
+            ->get();
+
+            foreach ($detail_skripsi as $value) {
+                $mhs = mahasiswa::where("nim", $value->nim)->with([
+                    "bagian",
+                    "detail_skripsi",
+                    "detail_skripsi.pembahas1:no_pegawai,nama",
+                    "detail_skripsi.pembahas2:no_pegawai,nama"
+                ])->first();
+                $mahasiswa->push($mhs);
+            }
+
+            // dd($mahasiswa);
             return view('akademik.SK_view.edit', [
-                'sk_akademik' => $sk_akademik,
-                'detail_sk' => $detail_sk,
-                'jurusan' => $jurusan,
+                'sk' => $sk,
+                'detail_skripsi' => $detail_skripsi,
+                'mahasiswa' => $mahasiswa,
                 'dosen' => $dosen,
-                'old_data' => $old_data
+                'old_data' => $old_data,
+                'old_mahasiswa' => $old_mahasiswa,
+                'tipe' => 'sk sempro'
             ]);
-        } catch (Exception $e) {
-            return redirect()->route('akademik.sempro.index')->with('error', $e->getMessage());
-        }
+        // } 
+        // catch (Exception $e) {
+        //     return redirect()->route('akademik.sempro.index')->with('error', $e->getMessage());
+        // }
     }
 
     public function update(Request $request, $id)

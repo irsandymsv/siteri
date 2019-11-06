@@ -21,9 +21,12 @@
          text-align: center;
       }
 
-      .row_separator{
-         border-bottom: 1px solid black;
+      .tbl_row{
+         display: table;
          width: 100%;
+         border-bottom: 0.1px solid lightgrey;
+         margin-top: 10px;
+         margin-bottom: 10px;
       }
 	</style>
 @endsection
@@ -37,12 +40,15 @@
 @endsection
 
 @section('content')
+   <button id="back_top" class="btn bg-black" title="Kembali ke Atas"><i class="fa fa-arrow-up"></i></button>
    <form action="{{ ( $tipe == "sk skripsi"? route('akademik.skripsi.store') : route('akademik.sempro.store') ) }}" method="post">
       @csrf
    	<div class="row">
       	<div class="col-xs-12">
       		<div class="box box-primary">
       			<div class="box-header">
+                  <h3 class="box-title">Buat SK {{ ($tipe == "sk skripsi"? "Skripsi" : "Sempro") }}</h3>
+
                     <br><br>
                     @if (session('success'))
                     <div class="alert alert-success alert-dismissible">
@@ -66,17 +72,17 @@
                     Session::forget('error');
                     @endphp
                     @endif
-                    <h3 class="box-title">Buat SK Sempro</h3>
                </div>
 
                   <div class="box-body">
                      <div class="row">
                         <div class="form-group col-md-4">
                            <label for="no_surat">No Surat</label><br>
-                           <input type="text" name="no_surat" id="no_surat">
+                           <input type="text" name="no_surat" id="no_surat" value="{{ old('no_surat') }}">
                            <span id="format_nomor">/UN25.1.15/SP/{{ Carbon\Carbon::today()->year }}</span>
 
                            @error('no_surat')
+                              <br>
                               <span class="invalid-feedback" role="alert" style="color: red;">
                                  <strong>{{ $message }}</strong>
                               </span>
@@ -85,19 +91,31 @@
 
                         <div class="form-group col-md-4">
                            <label for="tgl_sempro1">Tanggal Sempro 1</label>
-                           <input type="date" name="tgl_sempro1" id="tgl_sempro1" class="form-control">
+                           <input type="date" name="tgl_sempro1" id="tgl_sempro1" class="form-control" value="{{ old('tgl_sempro1') }}">
+
+                           @error('tgl_sempro1')
+                              <span class="invalid-feedback" role="alert" style="color: red;">
+                                 <strong>{{ $message }}</strong>
+                              </span>
+                           @enderror
                         </div>
 
                         <div class="form-group col-md-4">
                            <label for="tgl_sempro2">Tanggal Sempro 2</label>
-                           <input type="date" name="tgl_sempro2" id="tgl_sempro2" class="form-control">
+                           <input type="date" name="tgl_sempro2" id="tgl_sempro2" class="form-control" value="{{ old('tgl_sempro2') }}">
+
+                           @error('tgl_sempro2')
+                              <span class="invalid-feedback" role="alert" style="color: red;">
+                                 <strong>{{ $message }}</strong>
+                              </span>
+                           @enderror
                         </div>
                      </div>
 
                   </div>
 
                   <div class="box-footer">
-                     <div class="form-group" style="float: right;">
+                     <div class="form-group">
                         <input type="hidden" name="status" value="">
                         <button type="submit" name="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button>
                            &ensp;
@@ -123,15 +141,17 @@
                         <label for="nim">Pilih NIM Mahasiswa: </label>
                         <select class="form-control select2" id="pilih_nim">
                            <option value="">--Pilih NIM--</option>
-                           @foreach ($mahasiswa as $item)
-                              @if ($errors->any())
+                           @if (!empty($old_data))
+                              @foreach ($mahasiswa as $item)
                                  @if (!in_array($item->nim, $old_data["nim"]))
                                  <option value="{{ $item->nim }}">{{ $item->nim }}</option>
                                  @endif
-                              @else
+                              @endforeach
+                           @else
+                              @foreach ($mahasiswa as $item)
                                  <option value="{{ $item->nim }}">{{ $item->nim }}</option>
-                              @endif
-                           @endforeach
+                              @endforeach
+                           @endif
                         </select>
                      </div>
 
@@ -149,24 +169,29 @@
                         </thead>
 
                         <tbody>
-                        @if ($errors->any())
+                        @if ($old_mahasiswa != "")
                            @foreach($old_mahasiswa as $index => $val)
-                              <tr class="{{ $index }}">
-                                 <td style="width: 60px;" rowspan="2">
+                              <tr id="{{ $index }}">
+                                 <td style="width: 60px;">
                                     {{ $val->nim }}
                                     <input type="hidden" name="nim[]" value="{{ $val->nim }}">
                                  </td>
-                                 <td rowspan="2">{{ $val->nama }}</td>
-                                 <td rowspan="2">{{ $val->bagian->bagian }}</td>
-                                 <td style="width: 350px;" rowspan="2">{{ $val->detail_skripsi->judul }}</td>
-                                 <td>{{ $val->detail_skripsi->pembahas1->nama }}</td>
-                                 <td rowspan="2">
+                                 <td>{{ $val->nama }}</td>
+                                 <td>{{ $val->bagian->bagian }}</td>
+                                 <td style="width: 350px;" >{{ $val->detail_skripsi->judul }}</td>
+                                 <td>
+                                    <div class="tbl_row">
+                                       1. {{ $val->detail_skripsi->pembahas1->nama }}
+                                    </div>
+                                    <div class="tbl_row">
+                                       2. {{ $val->detail_skripsi->pembahas2->nama }}
+                                    </div>
+                                 </td>
+                                 <td>
                                     <button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
                                  </td>
                               </tr>
-                              <tr class="{{ $index }}">
-                                 <td>{{ $val->detail_skripsi->pembahas2->nama }}</td>
-                              </tr>
+                              
                            @endforeach
                         @endif
                         </tbody>
@@ -193,6 +218,7 @@
 @endsection
 
 @section('script')
+   <script src="/js/btn_backTop.js"></script>
 	<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
 	<script type="text/javascript">
 		$('.select2').select2();
@@ -212,7 +238,7 @@
 
       var no = 0;
       if ($("#tbl-data tbody tr").length) {
-         var kelas = $("#tbl-data tbody tr:last-child").attr('class');
+         var kelas = $("#tbl-data tbody tr:last-child").attr('id');
          no = parseInt(kelas);
       }
 
@@ -222,21 +248,21 @@
              if(nim == val.nim){
                no+=1;
                $("tbody").append(`
-                  <tr class="`+no+`">
-                     <td style="width: 60px;" rowspan="2">
+                  <tr id="`+no+`">
+                     <td style="width: 60px;">
                         `+val.nim+`
                         <input type="hidden" name="nim[]" value="`+val.nim+`">
                      </td>
-                     <td class="nama_mhs" rowspan="2">`+val.nama+`</td>
-                     <td rowspan="2">`+val.bagian.bagian+`</td>
-                     <td style="width: 350px;" rowspan="2">`+val.detail_skripsi.judul+`</td>
-                     <td>`+val.detail_skripsi.pembahas1.nama+`</td>
-                     <td rowspan="2">
+                     <td class="nama_mhs" >`+val.nama+`</td>
+                     <td>`+val.bagian.bagian+`</td>
+                     <td style="width: 350px;" >`+val.detail_skripsi.judul+`</td>
+                     <td>
+                        <div class="tbl_row">1. `+val.detail_skripsi.pembahas1.nama+`</div>
+                        <div class="tbl_row">2. `+val.detail_skripsi.pembahas2.nama+`</div>
+                     </td>
+                     <td>
                         <button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
                      </td>
-                  </tr>
-                  <tr class="`+no+`">
-                     <td>`+val.detail_skripsi.pembahas2.nama+`</td>
                   </tr>
                `);
              }
@@ -255,8 +281,7 @@
             var newOption = new Option(nim, nim, false, false);
             $('#pilih_nim').append(newOption).trigger('change');
 
-            var tr_class = $(this).parents("tr").attr('class');
-            $("tr."+tr_class).remove();
+            var tr_class = $(this).parents("tr").remove();
             data_count();
          });
       }

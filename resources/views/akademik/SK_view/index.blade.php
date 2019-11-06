@@ -48,7 +48,7 @@
 		            			<th>Tanggal Dibuat</th>
 		            			<th>Status</th>
 		            			<th>Verifikasi KTU</th>
-		            			<th>Verifikasi Dekan</th>
+		            			{{-- <th>Verifikasi Dekan</th> --}}
 		            			<th>Pilihan</th>
 		            		</tr>
 		            	</thead>
@@ -71,7 +71,7 @@
 		            						<label class="label bg-green">Sudah Diverifikasi</label>
 		            					@endif
 		            				</td>
-		            				<td>
+		            				{{-- <td>
 		            					@if($item->verif_dekan == 0) 
 		            						Belum Diverifikasi
 		            					@elseif($item->verif_dekan == 2) 
@@ -79,26 +79,26 @@
 		            					@else
 		            						<label class="label bg-green">Sudah Diverifikasi</label>
 		            					@endif
-		            				</td>
+		            				</td> --}}
 		            				<td>
 		            					@if($tipe == "SK Skripsi")
-		            						<a href="{{ route('akademik.skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+		            						<a href="{{ route('akademik.skripsi.show', $item->no_surat) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
 			            					@if($item->verif_ktu != 1)
-			            					<a href="{{ route('akademik.skripsi.edit', $item->id) }}" class="btn btn-warning" title="Ubah SK"><i class="fa fa-edit"></i></a>
+			            					<a href="{{ route('akademik.skripsi.edit', $item->no_surat) }}" class="btn btn-warning" title="Ubah SK"><i class="fa fa-edit"></i></a>
 			            					@endif
 						              	@else
-						              		<a href="{{ route('akademik.sempro.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+						              		<a href="{{ route('akademik.sempro.show', $item->no_surat) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
 			            					@if($item->verif_ktu != 1)
-			            					<a href="{{ route('akademik.sempro.edit', $item->id) }}" class="btn btn-warning" title="Ubah SK"><i class="fa fa-edit"></i></a>
+			            					<a href="{{ route('akademik.sempro.edit', $item->no_surat) }}" class="btn btn-warning" title="Ubah SK"><i class="fa fa-edit"></i></a>
 			            					@endif
 						              	@endif
 
-						              	@if($item->verif_dekan != 1)
-		            					<a href="#" class="btn btn-danger" id="{{ $item->id }}" name="delete_sk" title="Hapus SK" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+						              	@if($item->verif_ktu != 1)
+		            					<a href="#" class="btn btn-danger" id="{{ $item->no_surat }}" name="delete_sk" title="Hapus SK" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
 										@endif
 										
-										@if ($item->verif_dekan == 1)
-                    					<a href="{{ route('akademik.skripsi.cetak', $item->id) }}" id="{{ $item->id }}" name="cetak_sk" class="btn btn-info" title="Cetak SK"><i class="fa fa-print"></i></a>
+										@if ($item->verif_ktu == 1)
+                    					<a href="{{ route('akademik.skripsi.cetak', $item->no_surat) }}" id="{{ $item->id }}" name="cetak_sk" class="btn btn-info" title="Cetak SK"><i class="fa fa-print"></i></a>
 					  					@endif
 		            				</td>
 		            			</tr>

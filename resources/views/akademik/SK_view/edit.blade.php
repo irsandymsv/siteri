@@ -1,420 +1,326 @@
 @extends('akademik.akademik_view')
 
 @section('page_title')
-	@if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
-		ubah SK skripsi
-	@else
-		Ubah SK Sempro
-	@endif
+	@if($tipe == "sk skripsi")
+      Ubah SK skripsi Baru
+   @else
+      Ubah SK Sempro baru
+   @endif
 @endsection
 
 @section('css_link')
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
 	<style type="text/css">
-		th{
-			text-align: center;
-		}
+      table tbody tr td:first-child{
+         /*width: 10%;*/
+      }
+
+      table th {
+         text-align: center;
+      }
+
+      .tbl_row{
+         display: table;
+         width: 100%;
+         border-bottom: 0.1px solid lightgrey;
+         margin-top: 10px;
+         margin-bottom: 10px;
+      }
 	</style>
 @endsection
 
 @section('judul_header')
-	@if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
-		SK Skripsi
-	@else
-		SK Sempro
-	@endif
+	@if($tipe == "sk skripsi")
+      SK Skripsi
+   @else
+      SK Sempro
+   @endif
 @endsection
 
 @section('content')
-{{-- @php
-	dd($errors->all());
-@endphp --}}
-	<div class="row">
+   <button id="back_top" class="btn bg-black" title="Kembali ke Atas"><i class="fa fa-arrow-up"></i></button>
+   <form action="{{ ( $tipe == "sk skripsi"? route('akademik.skripsi.update', $sk->no_surat) : route('akademik.sempro.update', $sk->no_surat) ) }}" method="post">
+      @csrf
+      @method("PUT")
+   	<div class="row">
       	<div class="col-xs-12">
       		<div class="box box-primary">
-	            <form action="{{ ( $sk_akademik->tipe_sk->tipe == "SK Skripsi"? route('akademik.skripsi.update', $sk_akademik->id) : route('akademik.sempro.update', $sk_akademik->id) ) }}" method="POST">
-	            	<div class="box-header">
-		              <h3 class="box-title">Ubah SK {{ ($sk_akademik->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
+      			<div class="box-header">
+                  <h3 class="box-title">Buat SK {{ ($tipe == "sk skripsi"? "Skripsi" : "Sempro") }}</h3>
 
-		              <div class="form-group" style="float: right;">
-		            	<button type="submit" name="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button> 
-		            		&ensp;
-		            	<button type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>	
-		              </div>
-		            </div>
-	            	
-	            	<div class="box-body">
-	            		@csrf
-	            		@method('PUT')
-	            		<h4>
-	            			<b>Tanggal SK</b> : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}} &ensp;
-	            			<b>Status</b> : {{$sk_akademik->status_sk_akademik->status}}
-	            		</h4>
+                    <br><br>
+                    @if (session('success'))
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-check"></i> Sukses</h4>
+                        {{session('success')}}
+                    </div>
+                    @php
+                    Session::forget('success');
+                    @endphp
 
-	            		<div class="form" id="input_no_surat">
-	            			<label for="no_surat"><b>No Surat : </b></label>
-	            			<input type="text" name="no_surat" id="no_surat" value="{{ $sk_akademik->no_surat }}">
-	            			<span>/UN 25.1.15/SP/{{Carbon\Carbon::parse($sk_akademik->created_at)->year}}</span>
-	            		</div>
-		            	<div class="table-responsive">
-		            		<h5>Total Data = <span class="data_count"></span></h5>
-		            		<table id="tbl-data" class="table table-bordered table-hover">
-			            		<thead>
-				            		<tr>
-				            			<th>Nama Mahasiswa</th>
-				            			<th>NIM</th>
-				            			<th>Jurusan</th>
-				            			<th>Judul</th>
-				            			<th>Pembimbing</th>
-				            			<th>
-				            				@if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
-				            					Penguji
-				            				@else
-				            					Pembahas
-				            				@endif
-				            			</th>
-				            			<th>X</th>
-				            		</tr>
-				            	</thead>
+                    @endif
+                    @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-ban"></i>Error</h4>
+                        {{session('error')}}
+                    </div>
 
-				            	<tbody>
-				            		@if($errors->any())
+                    @php
+                    Session::forget('error');
+                    @endphp
+                    @endif
 
-				            			@foreach($old_data['nama'] as $i => $val)
-				            				@php $id = $i+1 @endphp
-				            				<tr id="{{$id}}">
-						            			<td>
-						            				<input type="text" name="nama[]" class="form-control" value="{{old('nama')[$i]}}">
-						            				@error('nama.'.$i)
-											          	<span class="invalid-feedback" role="alert" style="color: red;">
-											                <strong>{{ $message }}</strong>
-											            </span>
-											    	@enderror
-						            			</td>
+               </div>
 
-						            			<td>
-						            				<input type="text" name="nim[]" class="form-control" value="{{old('nim')[$i]}}">
-						            				@error('nim.'.$i)
-											          	<span class="invalid-feedback" role="alert" style="color: red;">
-											                <strong>{{ $message }}</strong>
-											            </span>
-											    	@enderror
-						            			</td>
+                  <div class="box-body">
+                     <div class="row">
+                        <div class="form-group col-md-4">
+                           <label for="no_surat">No Surat</label><br>
+                           <input type="text" name="no_surat" id="no_surat" value="{{ $sk->no_surat }}">
+                           <span id="format_nomor">/UN25.1.15/SP/{{ Carbon\Carbon::today()->year }}</span>
 
-						            			<td>
-						            				<select name="jurusan[]" class="form-control">
-						            					<option value="">-Pilih Jurusan-</option>
-						            					@foreach($jurusan as $val)
-						            						<option value="{{$val->id}}" {{ (old('jurusan')[$i] == $val->id ? 'selected': '') }}>{{$val->bagian}}</option>
-						            					@endforeach
-						            				</select>
-						            				@error('jurusan.'.$i)
-											          	<span class="invalid-feedback" role="alert" style="color: red;">
-											                <strong>{{ $message }}</strong>
-											            </span>
-											    	@enderror
-						            			</td>
+                           @error('no_surat')
+                              <br>
+                              <span class="invalid-feedback" role="alert" style="color: red;">
+                                 <strong>{{ $message }}</strong>
+                              </span>
+                           @enderror
+                        </div>
 
-						            			<td>
-						            				<textarea class="form-control" rows="3" name="judul[]">{{old('judul')[$i]}}</textarea>
-						            				@error('judul.'.$i)
-											          	<span class="invalid-feedback" role="alert" style="color: red;">
-											                <strong>{{ $message }}</strong>
-											            </span>
-											    	@enderror
-						            			</td>
+                        <div class="form-group col-md-4">
+                           <label for="tgl_sempro1">Tanggal Sempro 1</label>
+                           <input type="date" name="tgl_sempro1" id="tgl_sempro1" class="form-control" value="{{ $sk->tgl_sempro1 }}">
 
-						            			<td>
-						            				<h5><b>Utama</b></h5>
-						            				<select name="pembimbing_utama[]" class="form-control select2" style="width: 100%;">
-						            					<option value="">-Pilih-</option>
-						            					@foreach($dosen as $val)
-						            						<option value="{{$val->no_pegawai}}" {{ (old('pembimbing_utama')[$i] == $val->no_pegawai ? 'selected': '') }}>{{$val->nama}}</option>
-						            					@endforeach
-						            				</select>
-						            				@error('pembimbing_utama.'.$i)
-											          	<span class="invalid-feedback" role="alert" style="color: red;">
-											                <strong>{{ $message }}</strong>
-											            </span>
-											    	@enderror
+                           @error('tgl_sempro1')
+                              <span class="invalid-feedback" role="alert" style="color: red;">
+                                 <strong>{{ $message }}</strong>
+                              </span>
+                           @enderror
+                        </div>
 
-						            				<h5><b>Pendamping</b></h5>
-						            				<select name="pembimbing_pendamping[]" class="form-control select2" style="width: 100%;">
-						            					<option value="">-Pilih-</option>
-						            					@foreach($dosen as $val)
-						            						<option value="{{$val->no_pegawai}}" {{ (old('pembimbing_pendamping')[$i] == $val->no_pegawai ? 'selected': '') }}>{{$val->nama}}</option>
-						            					@endforeach
-						            				</select>
-						            				@error('pembimbing_pendamping.'.$i)
-											          	<span class="invalid-feedback" role="alert" style="color: red;">
-											                <strong>{{ $message }}</strong>
-											            </span>
-											    	@enderror
-						            			</td>
+                        <div class="form-group col-md-4">
+                           <label for="tgl_sempro2">Tanggal Sempro 2</label>
+                           <input type="date" name="tgl_sempro2" id="tgl_sempro2" class="form-control" value="{{ $sk->tgl_sempro2 }}">
 
-						            			<td>
-						            				<h5><b>Utama</b></h5>
-						            				<select name="penguji_utama[]" class="form-control select2" style="width: 100%;">
-						            					<option value="">-Pilih-</option>
-						            					@foreach($dosen as $val)
-						            						<option value="{{$val->no_pegawai}}" {{ (old('penguji_utama')[$i] == $val->no_pegawai ? 'selected': '') }}>{{$val->nama}}</option>
-						            					@endforeach
-						            				</select>
-						            				@error('penguji_utama.'.$i)
-											          	<span class="invalid-feedback" role="alert" style="color: red;">
-											                <strong>{{ $message }}</strong>
-											            </span>
-											    	@enderror
+                           @error('tgl_sempro2')
+                              <span class="invalid-feedback" role="alert" style="color: red;">
+                                 <strong>{{ $message }}</strong>
+                              </span>
+                           @enderror
+                        </div>
+                     </div>
 
-						            				<h5><b>pendamping</b></h5>
-						            				<select name="penguji_pendamping[]" class="form-control select2" style="width: 100%;">
-						            					<option value="">-Pilih-</option>
-						            					@foreach($dosen as $val)
-						            						<option value="{{$val->no_pegawai}}" {{ (old('penguji_pendamping')[$i] == $val->no_pegawai ? 'selected': '') }}>{{$val->nama}}</option>
-						            					@endforeach
-						            				</select>
-						            				@error('penguji_pendamping.'.$i)
-											          	<span class="invalid-feedback" role="alert" style="color: red;">
-											                <strong>{{ $message }}</strong>
-											            </span>
-											    	@enderror
-						            			</td>
+                  </div>
 
-						            			<td>
-						            				<button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
-						            			</td>
-						            		</tr>
-				            			@endforeach
-				            			
-				            		@else
-				            			@foreach($detail_sk as $item)
-										<input type="hidden" name="id_detail_sk[]" value="{{$item->id}}">
-										{{-- <input type="hidden" name="id_pembimbing[]" value="{{$item->pembimbing->id}}">
-										<input type="hidden" name="id_penguji[]" value="{{$item->penguji->id}}"> --}}
-				            			<input type="hidden" name="delete_detail_sk[]" id="del_detail_{{$item->id}}" value="0">
-				            			<input type="hidden" name="id_pembimbing_utama[]" value="{{$item->pembimbing_utama->no_pegawai}}">
-				            			<input type="hidden" name="id_pembimbing_pendamping[]" value="{{$item->pembimbing_pendamping->no_pegawai}}">
-				            			<input type="hidden" name="id_penguji_utama[]" value="{{$item->penguji_utama->no_pegawai}}">
-				            			<input type="hidden" name="id_penguji_pendamping[]" value="{{$item->penguji_pendamping->no_pegawai}}">
+                  <div class="box-footer">
+                     <div class="form-group">
+                        <input type="hidden" name="status" value="">
+                        <button type="submit" name="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button>
+                           &ensp;
+                        <button type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>
+                     </div>
+                  </div>
 
-			            				<tr id="{{$item->id}}" class="data_db">
-					            			<td>
-					            				<input type="text" name="nama[]" class="form-control" value="{{$item->nama_mhs}}">
-					            			</td>
-
-					            			<td>
-					            				<input type="text" name="nim[]" class="form-control" value="{{$item->nim}}">
-					            			</td>
-
-					            			<td>
-					            				<select name="jurusan[]" class="form-control">
-					            					<option value="">-Pilih Jurusan-</option>
-					            					@foreach($jurusan as $val)
-					            						<option value="{{$val->id}}" {{($item->bagian->id == $val->id? 'selected':'')}}>{{$val->bagian}}</option>
-					            					@endforeach
-					            				</select>
-					            			</td>
-
-					            			<td>
-					            				<textarea class="form-control" rows="3" name="judul[]">{{$item->judul}}</textarea>
-					            			</td>
-
-					            			<td>
-					            				<h5><b>Utama</b></h5>
-					            				<select name="pembimbing_utama[]" class="form-control select2" style="width: 100%;">
-					            					<option value="">-Pilih-</option>
-					            					@foreach($dosen as $val)
-					            						<option value="{{$val->no_pegawai}}" {{($item->pembimbing_utama->no_pegawai == $val->no_pegawai? 'selected':'')}}>{{$val->nama}}</option>
-					            					@endforeach
-					            				</select>
-
-					            				<h5><b>Pendamping</b></h5>
-					            				<select name="pembimbing_pendamping[]" class="form-control select2" style="width: 100%;">
-					            					<option value="">-Pilih-</option>
-					            					@foreach($dosen as $val)
-					            						<option value="{{$val->no_pegawai}}" {{($item->pembimbing_pendamping->no_pegawai == $val->no_pegawai? 'selected':'')}}>{{$val->nama}}</option>
-					            					@endforeach
-					            				</select>
-					            			</td>
-
-					            			<td>
-					            				<h5><b>Utama</b></h5>
-					            				<select name="penguji_utama[]" class="form-control select2" style="width: 100%;">
-					            					<option value="">-Pilih-</option>
-					            					@foreach($dosen as $val)
-					            						<option value="{{$val->no_pegawai}}" {{($item->penguji_utama->no_pegawai == $val->no_pegawai? 'selected':'')}}>{{$val->nama}}</option>
-					            					@endforeach
-					            				</select>
-
-					            				<h5><b>pendamping</b></h5>
-					            				<select name="penguji_pendamping[]" class="form-control select2" style="width: 100%;">
-					            					<option value="">-Pilih-</option>
-					            					@foreach($dosen as $val)
-					            						<option value="{{$val->no_pegawai}}" {{($item->penguji_pendamping->no_pegawai == $val->no_pegawai? 'selected':'')}}>{{$val->nama}}</option>
-					            					@endforeach
-					            				</select>
-					            			</td>
-
-					            			<td>
-					            				<button class="btn btn-danger" id="{{$item->id}}" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
-					            			</td>
-					            		</tr>
-				            			@endforeach
-				            		@endif
-				            	</tbody>
-
-				            	<tfoot>
-				            		<tr>
-				            			<th>Nama Mahasiswa</th>
-				            			<th>NIM</th>
-				            			<th>Jurusan</th>
-				            			<th>Judul</th>
-				            			<th>Pembimbing</th>
-				            			<th>
-				            				@if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
-				            					Penguji
-				            				@else
-				            					Pembahas
-				            				@endif
-				            			</th>
-				            			<th>X</th>
-				            		</tr>
-				            	</tfoot>
-				            </table>
-		            		
-		            		<h5>Total Data = <span class="data_count"></span></h5>	
-		            	</div>
-
-		            	<button id="addRow" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</button>
-		            	<br><br>
-
-		            	<input type="hidden" name="status" value="">
-		            	<div class="form-group" style="float: right;">
-		            		<button type="submit" name="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button> &ensp;
-		            		<button type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>	
-		            	</div>
-		            	
-	            	</div>
-      			</div>
-	        </form>
+      		</div>
       	</div>
-	</div>
-	@php
-	@endphp
+   	</div>
+
+      <div class="row">
+         <div class="col-xs-12">
+            <div class="box box-default">
+               <div class="box-header">
+                 <h3 class="box-title">Pilih Mahasiswa</h3>
+               </div>
+
+               <div class="box-body">
+                  <div class="table-responsive">
+
+                     <div class="form-group">
+                        <label for="nim">Pilih NIM Mahasiswa: </label>
+                        <select class="form-control select2" id="pilih_nim">
+                           <option value="">--Pilih NIM--</option>
+                           @if (!empty($old_data))
+                              @foreach ($mahasiswa as $item)
+                                 @if (!in_array($item->nim, $old_data["nim"]))
+                                 <option value="{{ $item->nim }}">{{ $item->nim }}</option>
+                                 @endif
+                              @endforeach
+                           @else
+                              @foreach ($mahasiswa as $item)
+                                 @foreach ($detail_skripsi as $detail)
+                                    @continue($item->nim == $detail->nim)
+
+                                    <option value="{{ $item->nim }}">{{ $item->nim }}</option>
+                                 @endforeach
+                              @endforeach
+                           @endif
+                        </select>
+                     </div>
+
+                     <h5>Total Data = <span class="data_count"></span></h5>
+                     <table id="tbl-data" class="table table-bordered">
+                        <thead>
+                           <tr>
+                              <th>NIM</th>
+                              <th>Nama Mahasiswa</th>
+                              <th>Program Studi</th>
+                              <th>Judul Skripsi</th>
+                              <th>Dosen Pembahas</th>
+                              <th>Opsi</th>
+                           </tr>
+                        </thead>
+
+                        <tbody>
+                        @if ($old_mahasiswa != "")
+                           @foreach($old_mahasiswa as $index => $val)
+                              <tr id="{{ $index }}">
+                                 <td style="width: 60px;">
+                                    {{ $val->nim }}
+                                    <input type="hidden" name="nim[]" value="{{ $val->nim }}">
+                                 </td>
+                                 <td>{{ $val->nama }}</td>
+                                 <td>{{ $val->bagian->bagian }}</td>
+                                 <td style="width: 350px;" >{{ $val->detail_skripsi->judul }}</td>
+                                 <td>
+                                    <div class="tbl_row">
+                                       1. {{ $val->detail_skripsi->pembahas1->nama }}
+                                    </div>
+
+                                    <div class="tbl_row">
+                                       2. {{ $val->detail_skripsi->pembahas2->nama }}
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
+                                 </td>
+                              </tr>
+                           @endforeach
+                        @else
+                           @foreach($detail_skripsi as $index => $val)
+                              <tr id="{{ $index }}">
+                                 <td style="width: 60px;">
+                                    {{ $val->nim }}
+                                    <input type="hidden" name="nim[]" value="{{ $val->nim }}">
+                                 </td>
+                                 <td>{{ $val->mahasiswa->nama }}</td>
+                                 <td>{{ $val->mahasiswa->bagian->bagian }}</td>
+                                 <td style="width: 350px;" >{{ $val->judul }}</td>
+                                 <td>
+                                    <div class="tbl_row">
+                                       1. {{ $val->pembahas1->nama }}
+                                    </div>
+
+                                    <div class="tbl_row">
+                                       2. {{ $val->pembahas2->nama }}
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
+                                 </td>
+                              </tr>
+                           @endforeach
+                        @endif
+                        </tbody>
+
+                        <tfoot>
+                           <tr>
+                              <th>NIM</th>
+                              <th>Nama Mahasiswa</th>
+                              <th>Program Studi</th>
+                              <th>Judul Skripsi</th>
+                              <th>Dosen Pembahas</th>
+                              <th>Opsi</th>
+                           </tr>
+                        </tfoot>
+                     </table>
+
+                     <h5>Total Data = <span class="data_count"></span></h5>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </form>
 @endsection
 
 @section('script')
-<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
-<script type="text/javascript">
-	$(function() {
-		$('.select2').select2()
-		var jurusan = @json($jurusan);
-		var dosen = @json($dosen);
+   <script src="/js/btn_backTop.js"></script>
+	<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
+	<script type="text/javascript">
+		$('.select2').select2();
+		var mahasiswa = @json($mahasiswa);
 
-		$("button[name='simpan_draf']").click(function(event) {
-			event.preventDefault();
-			$("input[name='status']").val(1);
-			$('form').trigger('submit');
-		});
+      $("button[name='simpan_draf']").click(function(event) {
+         event.preventDefault();
+         $("input[name='status']").val(1);
+         $('form').trigger('submit');
+      });
 
-		$("button[name='simpan_kirim']").click(function(event) {
-			event.preventDefault();
-			$("input[name='status']").val(2);
-			$('form').trigger('submit');
-		});
-		
-		$('button#addRow').click(function(event) {
+      $("button[name='simpan_kirim']").click(function(event) {
+         event.preventDefault();
+         $("input[name='status']").val(2);
+         $('form').trigger('submit');
+      });
 
-			if ($("#tbl-data tbody tr").length) {
-				var last_id = $("#tbl-data tbody tr:last-child").attr('id');
-			}else{
-				var last_id = 0;
-			}
-			// console.log(last_id);
-			var new_id = parseInt(last_id) + 1;
-			$("#tbl-data").find('tbody').append(`
-				<tr id="`+new_id+`" class="new_data">
-					<input type="hidden" name="id_detail_sk[]" value="0">
-        			<td>
-        				<input type="text" name="nama[]" class="form-control">
-        			</td>
-        			<td>
-        				<input type="text" name="nim[]" class="form-control">
-        			</td>
-        			<td>
-        				<select name="jurusan[]" class="form-control">
-        					<option value="">-Pilih Jurusan-</option>
-        					
-        				</select>
-        			</td>
-        			<td>
-        				<textarea class="form-control" rows="3" name="judul[]"></textarea>
-        			</td>
-        			<td>
-        				<h5><b>Utama</b></h5>
-        				<select name="pembimbing_utama[]" class="form-control select2" style="width: 100%;">
-        					<option value="">-Pilih-</option>
-        				</select>
-        				<h5><b>Pendamping</b></h5>
-        				<select name="pembimbing_pendamping[]" class="form-control select2" style="width: 100%;">
-        					<option value="">-Pilih-</option>
-        				</select>
-        			</td>
-        			<td>
-        				<h5><b>Utama</b></h5>
-        				<select name="penguji_utama[]" class="form-control select2" style="width: 100%;">
-        					<option value="">-Pilih-</option>
-        				</select>
-        				<h5><b>Pendamping</b></h5>
-        				<select name="penguji_pendamping[]" class="form-control select2" style="width: 100%;">
-        					<option value="">-Pilih-</option>
-        				</select>
-        			</td>
-        			<td>
-						 
-        				<button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
-        			</td>
-				</tr>
-			`);
-			$.each(jurusan, function(index, val) {
-				$("tr#"+new_id).find('select[name="jurusan[]"]').append(`<option value="`+val.id+`">`+val.bagian+`</option>`);
-			})
-			
-			$.each(dosen, function(index, val) {
-				$("tr#"+new_id).find('select[name="pembimbing_utama[]"]').append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
-				$("tr#"+new_id).find('select[name="pembimbing_pendamping[]"]').append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
-				$("tr#"+new_id).find('select[name="penguji_utama[]"]').append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
-				$("tr#"+new_id).find('select[name="penguji_pendamping[]"]').append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
-			})
-			del_row();
-			data_count();
-			$('.select2').select2()
-		});
-		del_row();
-		function del_row() {
-			$('button[name="delete_data"]').click(function(event) {
-				var jml_tr = $("tbody tr").length;
-				var id_detail = $(this).attr('id');
-				if (jml_tr > 1) {
-					$("input#del_detail_"+id_detail).val("1");
+      var no = 0;
+      if ($("#tbl-data tbody tr").length) {
+         var kelas = $("#tbl-data tbody tr:last-child").attr('class');
+         no = parseInt(kelas);
+      }
 
-					var class_tr = $(this).parents("tr").attr('class');
-					if($(this).parents("tr").attr('class') == "new_data"){
-						$(this).parents("tr").remove();
-					}
-					else{
-						$(this).parents("tr").hide();
-					}
-				}
-				data_count();
-			});
-		}
-		data_count();
-		function data_count() {
-			var count = $("tbody tr").length;
-			$(".data_count").text(count);
-		}
-		
-	})
-</script>
+      $("#pilih_nim").on("select2:select", function(event) {
+         var nim = $(this).val();
+         $.each(mahasiswa, function(index, val) {
+             if(nim == val.nim){
+               no+=1;
+               $("tbody").append(`
+                  <tr id="`+no+`">
+                     <td style="width: 60px;" >
+                        `+val.nim+`
+                        <input type="hidden" name="nim[]" value="`+val.nim+`">
+                     </td>
+                     <td class="nama_mhs" >`+val.nama+`</td>
+                     <td>`+val.bagian.bagian+`</td>
+                     <td style="width: 350px;" >`+val.detail_skripsi.judul+`</td>
+                     <td>
+                        <div class="tbl_row">1. `+val.detail_skripsi.pembahas1.nama+`</div>
+                        <div class="tbl_row">2. `+val.detail_skripsi.pembahas2.nama+`</div>
+                     </td>
+                     <td >
+                        <button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
+                     </td>
+                  </tr>
+               `);
+             }
+         });
+
+         $(this).find('option[value="'+nim+'"]').remove();
+         data_count();
+         hapus_baris();
+      });
+
+      hapus_baris();
+      function hapus_baris() {
+         $('button[name="delete_data"]').off("click").click(function(event) {
+            console.log("hapus ya");
+            var nim = $(this).parents("tr").find('input[type="hidden"]').val();
+            var newOption = new Option(nim, nim, false, false);
+            $('#pilih_nim').append(newOption).trigger('change');
+
+            var tr_class = $(this).parents("tr").remove();
+            data_count();
+         });
+      }
+
+      data_count();
+      function data_count() {
+         var count = $("tbody tr").length;
+         $(".data_count").text(count);
+      }
+
+	</script>
 @endsection

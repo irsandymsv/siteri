@@ -1,7 +1,7 @@
 @extends('akademik.akademik_view')
 
 @section('page_title')
-	@if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
+	@if($tipe == "SK Skripsi")
 		Detail SK skripsi
 	@else
 		Detail SK Sempro
@@ -25,7 +25,7 @@
 @endsection
 
 @section('judul_header')
-	@if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
+	@if($tipe == "SK Skripsi")
 		SK Skripsi
 	@else
 		SK Sempro
@@ -39,11 +39,11 @@
 		<div class="col-xs-12">
       		<div class="box box-success">
       			<div class="box-header">
-	              <h3 class="box-title">Progress SK {{ ($sk_akademik->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }} Ini</h3>
+	              <h3 class="box-title">Progress SK {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }} Ini</h3>
               	  <span style="margin-left: 5px;">
-	            	@if($sk_akademik->verif_ktu == 2) 
+	            	@if($sk->verif_ktu == 2) 
 							<label class="label bg-red">Butuh Revisi (KTU)</label>
-						@elseif($sk_akademik->verif_dekan == 2) 
+						@elseif($sk->verif_dekan == 2) 
 							<label class="label bg-red">Butuh Revisi (Dekan)</label>
 						@else
 						@endif
@@ -58,14 +58,17 @@
 	            </div>
 				
 	            <div class="box-body">
-						@if ($sk_akademik->verif_dekan == 1)
+						@if ($sk->verif_dekan == 1)
 							<div class="form-group" style="float: right;">
-		                    	<a href="{{ route('akademik.skripsi.cetak', $sk_akademik->id) }}" class="btn btn-info"><i class="fa fa-print"></i> Cetak</a>
+		                    	<a href="{{ route('akademik.skripsi.cetak', $sk->id) }}" class="btn btn-info"><i class="fa fa-print"></i> Cetak</a>
 							</div>
 						@endif
-						<h5><b>Nomor Surat</b> : {{$sk_akademik->no_surat}}/UN 25.1.15/SP/{{Carbon\Carbon::parse($sk_akademik->created_at)->year}}</h5>
-            		<h5><b>Tanggal Dibuat</b> : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
-            	
+						<h5><b>Nomor Surat</b> : {{$sk->no_surat}}/UN 25.1.15/SP/{{Carbon\Carbon::parse($sk->created_at)->year}}</h5>
+            		<h5><b>Tanggal Dibuat</b> : {{Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
+            		<h5><b>Tanggal Sempro 1</b> : {{Carbon\Carbon::parse($sk->tgl_sempro1)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
+            		<h5><b>Tanggal Sempro 2</b> : {{Carbon\Carbon::parse($sk->tgl_sempro2)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
+            		
+            		<br>
 	            	<h5><b>Progres</b> :</h5>
 	            	<div class="tl_wrap">
 	            	  <div class="item_tl" id="progres_1">
@@ -83,16 +86,18 @@
 	            	    <h4>Disetujui KTU</h4>
 	            	  </div>
 
-	            	  <div class="item_tl" id="progres_4">
+	            	  {{-- <div class="item_tl" id="progres_4">
 	            	    <div><i></i></div>
 	            	    <h4>Disetujui Dekan</h4>
-	            	  </div>
+	            	  </div> --}}
 	            	</div>
 
-         			@if(!is_null($sk_akademik->pesan_revisi))
+         			@if(!is_null($sk->pesan_revisi))
          			<div class="revisi_wrap">
             			<h4><b>Pesan Revisi</b> : </h4>
-         				<p>"{{ $sk_akademik->pesan_revisi }}"</p>
+         				<blockquote>
+         					<p>"{{ $sk->pesan_revisi }}"</p>
+         				</blockquote>
          			</div>
          			@endif
 	            	
@@ -105,11 +110,11 @@
 		<div class="col-xs-12">
       		<div class="box box-primary">
       			<div class="box-header">
-	              <h3 class="box-title">Data SK {{ ($sk_akademik->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
+	              <h3 class="box-title">Data SK {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
 
-	              @if($sk_akademik->verif_ktu != 1)
+	              @if($sk->verif_ktu != 1)
 		              <div class="form-group" style="float: right;">
-		              	<a href="{{ ($sk_akademik->tipe_sk->tipe == "SK Skripsi"? route('akademik.skripsi.edit', $sk_akademik->id) : route('akademik.sempro.edit', $sk_akademik->id)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+		              	<a href="{{ ($tipe == "SK Skripsi"? route('akademik.skripsi.edit', $sk->no_surat) : route('akademik.sempro.edit', $sk->no_surat)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
 		              </div>
 	              @endif
 	            </div>
@@ -119,13 +124,14 @@
 	            		<table id="dataTable" class="table table-bordered table-hover">
 		            		<thead>
 			            		<tr>
-			            			<th>Nama Mahasiswa</th>
+			            			<th>No</th>
 			            			<th>NIM</th>
+			            			<th>Nama Mahasiswa</th>
 			            			<th>Jurusan</th>
 			            			<th>Judul</th>
 			            			<th>Pembimbing</th>
 			            			<th>
-			            				@if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
+			            				@if($tipe == "SK Skripsi")
 			            					Penguji
 			            				@else
 			            					Pembahas
@@ -134,11 +140,13 @@
 			            		</tr>
 			            	</thead>
 			            	<tbody>
-			            		@foreach($detail_sk as $item)
+			            		@php $no = 0; @endphp
+			            		@foreach($detail_skripsi as $item)
 		            			<tr>
-		            				<td>{{$item->nama_mhs}}</td>
+		            				<th>{{ $no+=1 }}</th>
 		            				<td>{{$item->nim}}</td>
-		            				<td>{{$item->bagian->bagian}}</td>
+		            				<td>{{$item->mahasiswa->nama}}</td>
+		            				<td>{{$item->mahasiswa->bagian->bagian}}</td>
 		            				<td>{{$item->judul}}</td>
 		            				<td >
 		            					<div class="tbl_row">
@@ -150,10 +158,18 @@
 		            				</td>
 		            				<td>
 		            					<div class="tbl_row">
-		            						1. {{$item->penguji_utama->nama}}	
+		            						@if($tipe == "SK Skripsi")
+		            							1. {{$item->penguji_utama->nama}}
+				            				@else
+				            					1. {{$item->pembahas1->nama}}
+				            				@endif
 		            					</div>
 		            					<div class="tbl_row">
-		            						2. {{$item->penguji_pendamping->nama}}	
+		            						@if($tipe == "SK Skripsi")
+		            							2. {{$item->penguji_pendamping->nama}}
+				            				@else
+				            					2. {{$item->pembahas2->nama}}
+				            				@endif
 		            					</div>
 		            				</td>
 		            			</tr>
@@ -162,10 +178,10 @@
 			            </table> 
 	            	</div>
 	            	
-	            	 @if($sk_akademik->verif_ktu != 1)
+	            	 @if($sk->verif_ktu != 1)
 		              <br>
 		              <div class="form-group" style="float: right;">
-		            	<a href="{{ ($sk_akademik->tipe_sk->tipe == "SK Skripsi"? route('akademik.skripsi.edit', $sk_akademik->id) : route('akademik.sempro.edit', $sk_akademik->id)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+		            	<a href="{{ ($tipe == "SK Skripsi"? route('akademik.skripsi.edit', $sk->no_surat) : route('akademik.sempro.edit', $sk->no_surat)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
 		              </div>
 	              	@endif
 	            </div>
@@ -178,7 +194,7 @@
 @section('script')
 <script src="/js/btn_backTop.js"></script>
 <script type="text/javascript">
-	var status = @json($sk_akademik->id_status_sk_akademik);
+	var status = @json($sk->id_status_sk);
 	for (var i = status; i > 0; i--) {
 		// $("#progres_"+i).children('i').removeClass('bg-grey').addClass('bg-green fa-check');
 		$("#progres_"+i).addClass('verified');

@@ -52,20 +52,20 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
 	Route::get('/skripsi', 'SkSkripsiController@index')->name('skripsi.index');
 	Route::get('/skripsi/create','SkSkripsiController@create')->name('skripsi.create');
 	Route::post('/skripsi', 'SkSkripsiController@store')->name('skripsi.store');
-	Route::get('/skripsi/{id_sk_akademik}', 'SkSkripsiController@show')->name('skripsi.show');
-	Route::get('/skripsi/{id_sk_akademik}/edit','SkSkripsiController@edit')->name('skripsi.edit');
-	Route::put('/skripsi/{id_sk_akademik}/update','SkSkripsiController@update')->name('skripsi.update');
+	Route::get('/skripsi/{id_sk}', 'SkSkripsiController@show')->name('skripsi.show');
+	Route::get('/skripsi/{id_sk}/edit','SkSkripsiController@edit')->name('skripsi.edit');
+	Route::put('/skripsi/{id_sk}/update','SkSkripsiController@update')->name('skripsi.update');
 	Route::get('/skripsi/{id_sk_akademik}/cetak', 'SkSkripsiController@cetak')->name('skripsi.cetak');
-	Route::delete('/skripsi/delete/{id_sk_akademik?}', 'SkSkripsiController@destroy')->name('skripsi.destroy');
+	Route::delete('/skripsi/delete/{id_sk?}', 'SkSkripsiController@destroy')->name('skripsi.destroy');
 
 	//Route SK Sempro
 	Route::get('/sempro', 'SkSemproController@index')->name('sempro.index');
 	Route::get('/sempro/create', 'SkSemproController@create')->name('sempro.create');
 	Route::post('/sempro', 'SkSemproController@store')->name('sempro.store');
-	Route::get('/sempro/{id_sk_akademik}', 'SkSemproController@show')->name('sempro.show');
-	Route::get('/sempro/{id_sk_akademik}/edit', 'SkSemproController@edit')->name('sempro.edit');
-	Route::put('/sempro/{id_sk_akademik}/update', 'SkSemproController@update')->name('sempro.update');
-	Route::delete('/sempro/delete/{id_sk_akademik?}', 'SkSemproController@destroy')->name('sempro.destroy');
+	Route::get('/sempro/{id_sk}', 'SkSemproController@show')->name('sempro.show');
+	Route::get('/sempro/{id_sk}/edit', 'SkSemproController@edit')->name('sempro.edit');
+	Route::put('/sempro/{id_sk}/update', 'SkSemproController@update')->name('sempro.update');
+	Route::delete('/sempro/delete/{id_sk?}', 'SkSemproController@destroy')->name('sempro.destroy');
 });
 
 Route::prefix('ktu')->name('ktu.')->group(function ()
