@@ -47,7 +47,7 @@
 		            					{{ $item->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($item->created_at)->year }}
 		            				</td>
 		            				<td>{{ $item->status_surat_tugas->status }}</td>
-		            				<td>{{ $item->surat_tugas_pembahas->mahasiswa->nama }}</td>
+		            				<td>{{ $item->detail_skripsi->skripsi->mahasiswa->nama }}</td>
 		            				<td>
 		            					@if ($item->verif_ktu == 0)
 		            						Belum Diverifikasi

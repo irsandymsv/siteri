@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\surat_tugas;
 use App\detail_skripsi;
+use App\mahasiswa;
 use Carbon\Carbon;
 
 class suratTugasController extends Controller
@@ -83,5 +84,36 @@ class suratTugasController extends Controller
         $surat_tugas->id_status_surat_tugas = $id_status_surat_tugas;
         $surat_tugas->pesan_revisi = $pesan_revisi;
         return $surat_tugas;
+    }
+
+    public function getPembimbing($nim = null)
+    {
+        if(!is_null($nim)){
+            $pembimbing = array(
+                'dosen1' => "",
+                'dosen2' => ""
+            );
+
+            $mhs = mahasiswa::where('nim', $nim)->with([
+                'skripsi.detail_skripsi.surat_tugas', 
+                'skripsi.detail_skripsi.surat_tugas.dosen1',
+                'skripsi.detail_skripsi.surat_tugas.dosen2',
+                'skripsi.detail_skripsi.surat_tugas.tipe_surat_tugas'
+                'skripsi.detail_skripsi.surat_tugas.status_surat_tugas'
+            ])
+            ->whereHas('skripsi.detail_skripsi.surat_tugas.tipe_surat_tugas', function(Builder $query)
+            {
+                $query->where('tipe_surat', 'Surat tugas pembimbing');
+            })
+            ->whereHas('skripsi.detail_skripsi.surat_tugas.status_surat_tugas', function(Builder $query)
+            {
+                $query->where('status', 'Diverifikasi KTU');
+            })
+            ->max('created_at')->first();
+
+            $pembimbing['dosen1'] = $mhs->skripsi->detail_skripsi->surat_tugas->dosen1;
+            $pembimbing['dosen2'] = $mhs->skripsi->detail_skripsi->surat_tugas->dosen2;
+            return $pembimbing;
+        }
     }
 }

@@ -71,11 +71,12 @@
 		            				</td>
 		            				<td>{{ $item->status_surat_tugas->status }}</td>
 		            				<td>
-		            					@if ($tipe == "surat tugas pembimbing")
+		            					{{ $item->detail_skripsi->skripsi->mahasiswa->nama }}
+		            					{{-- @if ($tipe == "surat tugas pembimbing")
 		            					{{ $item->surat_tugas_pembimbing->mahasiswa->nama }}
 		            					@elseif($tipe == "surat tugas pembahas")
 		            					{{ $item->surat_tugas_pembahas->mahasiswa->nama }}
-		            					@endif
+		            					@endif --}}
 		            				</td>
 		            				<td>
 		            					@if ($item->verif_ktu == null)

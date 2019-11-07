@@ -96,46 +96,46 @@
 
                      <tr>
                         <td>Nama Mahasiswa</td>
-                        <td>{{ $surat_tugas->surat_tugas_pembahas->mahasiswa->nama }}</td>
+                        <td>{{ $surat_tugas->detail_skripsi->skripsi->mahasiswa->nama }}</td>
                      </tr>
 
                      <tr>
                         <td>NIM</td>
-                        <td>{{ $surat_tugas->surat_tugas_pembahas->nim }}</td>
+                        <td>{{ $surat_tugas->detail_skripsi->skripsi->nim }}</td>
                      </tr>
 
                      <tr>
                         <td>Program Studi</td>
-                        <td>{{ $surat_tugas->surat_tugas_pembahas->mahasiswa->bagian->bagian }}</td>
+                        <td>{{ $surat_tugas->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
                      </tr>
 
                      <tr>
                         <td>Judul</td>
                         <td>
-                           {{ $surat_tugas->surat_tugas_pembahas->judul }}
+                           {{ $surat_tugas->detail_skripsi->judul }}
                         </td>
                      </tr>
 
                      <tr>
                         <td>Judul Inggris</td>
                         <td>
-                           {{ $surat_tugas->surat_tugas_pembahas->judul_inggris }}
+                           {{ $surat_tugas->detail_skripsi->judul_inggris }}
                         </td>
                      </tr>
 
                      <tr>
                         <td>Pembahas 1</td>
                         <td>
-                           <p>{{ $surat_tugas->surat_tugas_pembahas->pembahas1->nama }}</p>
-                           <p>{{ $surat_tugas->surat_tugas_pembahas->pembahas1->no_pegawai }}</p>
+                           <p>{{ $surat_tugas->dosen1->nama }}</p>
+                           <p>{{ $surat_tugas->id_dosen1 }}</p>
                         </td>
                      </tr>
 
                      <tr>
                         <td>pembahas 2</td>
                         <td>
-                           <p>{{ $surat_tugas->surat_tugas_pembahas->pembahas2->nama }}</p>
-                           <p>{{ $surat_tugas->surat_tugas_pembahas->pembahas2->no_pegawai }}</p>
+                           <p>{{ $surat_tugas->dosen2->nama }}</p>
+                           <p>{{ $surat_tugas->id_dosen2 }}</p>
                         </td>
                      </tr>
 

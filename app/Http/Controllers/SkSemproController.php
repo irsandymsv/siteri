@@ -58,8 +58,8 @@ class SkSemproController extends Controller
         ->whereHas("detail_skripsi", function(Builder $query)
         {
             $query->where([
-                ["id_surat_tugas_pembahas", "<>",null],
-                ["id_sk_sempro", null]
+                // ["id_surat_tugas_pembahas", "<>",null],
+                ["id_sk_skripsi", null]
             ]);
         })->get();
         // dd($mahasiswa);
@@ -301,24 +301,25 @@ class SkSemproController extends Controller
 
     public function ktu_show($id)
     {
-        $sk_akademik = sk_akademik::find($id);
-        $status = $sk_akademik->status_sk_akademik->status;
+        $sk = sk_sempro::find($id);
+        $status = $sk->status_sk->status;
         if($status == "Draft"){
             return redirect()->route('ktu.sk-sempro.index');
         }
 
-        $detail_sk = detail_sk::where('id_sk_akademik', $id)
+        $detail_skripsi = detail_skripsi::where('id_sk_sempro', $id)
             ->with([
-                'bagian',
-                'penguji_utama:no_pegawai,nama',
-                'penguji_pendamping:no_pegawai,nama',
+                'mahasiswa',
+                'mahasiswa.bagian',
+                'pembahas1:no_pegawai,nama',
+                'pembahas2:no_pegawai,nama',
                 'pembimbing_utama:no_pegawai,nama',
                 'pembimbing_pendamping:no_pegawai,nama'
             ])->get();
-        // dd($detail_sk);
+        // dd($detail_skripsi);
         return view('ktu.SK_view.sk_show', [
-            'sk_akademik' => $sk_akademik,
-            'detail_sk' => $detail_sk
+            'sk' => $sk,
+            'detail_skripsi' => $detail_skripsi
         ]);
     }
 

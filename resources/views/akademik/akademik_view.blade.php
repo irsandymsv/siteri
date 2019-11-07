@@ -3,6 +3,8 @@
 @section('side_menu')
 	<li class="active"><a href="{{route('akademik.dashboard')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
 
+	<li><a href="{{route('akademik.data-skripsi')}}"><i class="fa fa-link"></i> <span>Data Skripsi</span></a></li>
+
 	<li class="treeview">
 	    <a href="#"><i class="fa fa-link"></i> <span>Surat Tugas Pembimbing</span>
 	    	<br><span> Skripsi</span>

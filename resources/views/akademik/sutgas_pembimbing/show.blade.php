@@ -97,43 +97,43 @@
                      <tr>
                         <td>Pembimbing Utama</td>
                         <td>
-                           <p>{{ $surat_tugas->surat_tugas_pembimbing->pembimbing_utama->nama }}</p>
-                           <p>{{ $surat_tugas->surat_tugas_pembimbing->pembimbing_utama->no_pegawai }}</p>
+                           <p>{{ $surat_tugas->dosen1->nama }}</p>
+                           <p>{{ $surat_tugas->dosen1->no_pegawai }}</p>
                         </td>
                      </tr>
 
                      <tr>
                         <td>Pembimbing Pendamping</td>
                         <td>
-                           <p>{{ $surat_tugas->surat_tugas_pembimbing->pembimbing_pendamping->nama }}</p>
-                           <p>{{ $surat_tugas->surat_tugas_pembimbing->pembimbing_pendamping->no_pegawai }}</p>
+                           <p>{{ $surat_tugas->dosen2->nama }}</p>
+                           <p>{{ $surat_tugas->dosen2->no_pegawai }}</p>
                         </td>
                      </tr>
 
                      <tr>
                         <td>Keris</td>
-                        <td>{{ $surat_tugas->surat_tugas_pembimbing->keris->nama }}</td>
+                        <td>{{ $surat_tugas->detail_skripsi->keris->nama }}</td>
                      </tr>
 
                      <tr>
                         <td>Nama Mahasiswa</td>
-                        <td>{{ $surat_tugas->surat_tugas_pembimbing->mahasiswa->nama }}</td>
+                        <td>{{ $surat_tugas->detail_skripsi->skripsi->mahasiswa->nama }}</td>
                      </tr>
 
                      <tr>
                         <td>NIM</td>
-                        <td>{{ $surat_tugas->surat_tugas_pembimbing->nim }}</td>
+                        <td>{{ $surat_tugas->detail_skripsi->skripsi->nim }}</td>
                      </tr>
 
                      <tr>
                         <td>Program Studi</td>
-                        <td>{{ $surat_tugas->surat_tugas_pembimbing->mahasiswa->bagian->bagian }}</td>
+                        <td>{{ $surat_tugas->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
                      </tr>
 
                      <tr>
                         <td>Judul</td>
                         <td>
-                           {{ $surat_tugas->surat_tugas_pembimbing->judul }}
+                           {{ $surat_tugas->detail_skripsi->judul }}
                         </td>
                      </tr>
 
