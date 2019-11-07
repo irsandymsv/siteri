@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class suratTugasController extends Controller
 {
-    protected function store_sutgas(Request $request, int $id_tipe_surat_tugas, int $id_status_surat_tugas)
+    protected function store_sutgas(Request $request, int $id_tipe_surat_tugas, int $id_status_surat_tugas, string $tipe_id_dosen1, string $tipe_id_dosen2)
     {
         if($id_tipe_surat_tugas!=1){
             $surat_tugas =  surat_tugas::create([
@@ -17,13 +17,17 @@ class suratTugasController extends Controller
                 'id_tipe_surat_tugas' => $id_tipe_surat_tugas,
                 'id_status_surat_tugas' => $id_status_surat_tugas,
                 'tanggal' =>carbon::parse($request->input('tanggal')),
-                'tempat'=>$request->input('tempat')
+                'tempat'=>$request->input('tempat'),
+                'id_dosen1' => $request->input($tipe_id_dosen1),
+                'id_dosen2' => $request->input($tipe_id_dosen2)
             ]);
         }else{
             $surat_tugas =  surat_tugas::create([
                 'no_surat' => $request->input('no_surat'),
                 'id_tipe_surat_tugas' => $id_tipe_surat_tugas,
-                'id_status_surat_tugas' => $id_status_surat_tugas
+                'id_status_surat_tugas' => $id_status_surat_tugas,
+                'id_dosen1' => $request->input($tipe_id_dosen1),
+                'id_dosen2' => $request->input($tipe_id_dosen2)
             ]);
         }
         return $surat_tugas->id;
