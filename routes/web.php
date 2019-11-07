@@ -26,6 +26,11 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
 	// Route::redirect('/', '/akademik/dashboard');
 	Route::get('/', 'akademikController@dashboard')->name('dashboard');
 
+	//Route data skripsi
+	Route::get('/data-skripsi', 'skripsiController@index')->name('data-skripsi.index');
+	Route::get('/data-skripsi/{id_skripsi}', 'skripsiController@ubahJudul')->name('data-skripsi.ubah-judul');
+	Route::put('data-skripsi/{id_skripsi}/update', 'skripsiController@updateJudul')->name('data-skripsi.update.judul');
+
 	//Route Surat Tugas Pembimbing
 	Route::get('/surat-tugas-pembimbing', 'sutgasPembimbingController@index')->name("sutgas-pembimbing.index");
 	Route::get('/surat-tugas-pembimbing/create', 'sutgasPembimbingController@create')->name("sutgas-pembimbing.create");
@@ -45,8 +50,7 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
    Route::get('/surat-tugas-pembahas/{id}/cetak', 'sutgasPembahasController@cetak_pdf')->name("sutgas-pembahas.cetak");
 
 
-	Route::get('/newSempro', 'sutgasPembimbingController@newSempro');
-	Route::post('/storeSempro', 'sutgasPembimbingController@storeSempro')->name("storeSempro");
+	Route::get('/getPembimbing/{nim?}', 'suratTugasController@getPembimbing')->name('getPembimbing');
 
 
 	Route::get('/skripsi', 'SkSkripsiController@index')->name('skripsi.index');

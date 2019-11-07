@@ -121,15 +121,15 @@
          <table id="detail_table">
             <tr>
                <td>Nama</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembahas->mahasiswa->nama }}</td>
+               <td>: {{ $surat_tugas->detail_skripsi->skripsi->mahasiswa->nama }}</td>
             </tr>
             <tr>
                <td>NIM</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembahas->nim }}</td>
+               <td>: {{ $surat_tugas->detail_skripsi->skripsi->nim }}</td>
             </tr>
             <tr>
                <td>Progaram Studi</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembahas->mahasiswa->bagian->bagian }}</td>
+               <td>: {{ $surat_tugas->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
             </tr>
 
             {{-- <tr><td><br></td></tr> --}}
@@ -139,11 +139,11 @@
 
             <tr>
                <td>Bhs Indonesia</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembahas->judul }}</td>
+               <td>: {{ $surat_tugas->detail_skripsi->judul }}</td>
             </tr>
             <tr>
                <td>Bhs Inggris</td>
-               <td>: <i>{{ $surat_tugas->surat_tugas_pembahas->judul_inggris }}</i></td>
+               <td>: <i>{{ $surat_tugas->detail_skripsi->judul_inggris }}</i></td>
             </tr>
             <tr>
                <td>Hari/Tanggal</td>
@@ -168,15 +168,15 @@
             </tr>
             <tr>
                <td>Nama</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembahas->pembimbing_utama->nama }}</td>
+               <td>: {{ $sutgas_pembimbing->dosen1->nama }}</td>
             </tr>
             <tr>
                <td>NIP / NRP</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembahas->id_pembimbing_utama }}</td>
+               <td>: {{ $sutgas_pembimbing->id_dosen1 }}</td>
             </tr>
             <tr>
                <td>Jabatan</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembahas->pembimbing_utama->fungsional->jab_fungsional }}</td>
+               <td>: {{ $sutgas_pembimbing->dosen1->fungsional->jab_fungsional }}</td>
             </tr>
 
             <tr>
@@ -184,15 +184,15 @@
             </tr>
             <tr>
                <td>Nama</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembahas->pembimbing_pendamping->nama }}</td>
+               <td>: {{ $sutgas_pembimbing->dosen2->nama }}</td>
             </tr>
             <tr>
                <td>NIP / NRP</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembahas->id_pembimbing_pendamping }}</td>
+               <td>: {{ $ssutgas_pembimbing->id_dosen2 }}</td>
             </tr>
             <tr>
                <td>Jabatan</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembahas->pembimbing_pendamping->fungsional->jab_fungsional }}</td>
+               <td>: {{ $sutgas_pembimbing->dosen2->fungsional->jab_fungsional }}</td>
             </tr>
 
             <tr>
@@ -200,15 +200,15 @@
             </tr>
             <tr>
                <td>Nama</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembahas->pembahas1->nama }}</td>
+               <td>: {{ $surat_tugas->dosen1->nama }}</td>
             </tr>
             <tr>
                <td>NIP / NRP</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembahas->id_pembahas1 }}</td>
+               <td>: {{ $surat_tugas->id_dosen1 }}</td>
             </tr>
             <tr>
                <td>Jabatan</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembahas->pembahas1->fungsional->jab_fungsional }}</td>
+               <td>: {{ $surat_tugas->dosen1->fungsional->jab_fungsional }}</td>
             </tr>
 
             <tr>
@@ -216,15 +216,15 @@
             </tr>
             <tr>
                <td>Nama</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembahas->pembahas2->nama }}</td>
+               <td>: {{ $surat_tugas->dosen2->nama }}</td>
             </tr>
             <tr>
                <td>NIP / NRP</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembahas->id_pembahas2 }}</td>
+               <td>: {{ $surat_tugas->id_dosen2 }}</td>
             </tr>
             <tr>
                <td>Jabatan</td>
-               <td>: {{ $surat_tugas->surat_tugas_pembahas->pembahas2->fungsional->jab_fungsional }}</td>
+               <td>: {{ $surat_tugas->dosen2->fungsional->jab_fungsional }}</td>
             </tr>
             
             <tr>

@@ -19,4 +19,9 @@ class skripsi extends Model
     {
         return $this->hasMany('App\detail_skripsi', 'id_skripsi');
     }
+
+    public function status_skripsi()
+    {
+        return $this->belongsTo('App\status_skripsi', 'id_status_skripsi');
+    }
 }

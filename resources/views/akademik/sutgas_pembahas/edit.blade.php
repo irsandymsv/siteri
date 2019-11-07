@@ -73,7 +73,7 @@
                <div class="box-body">
                   @csrf
                   @method('PUT')
-                  <input type="hidden" name="id_detail_skripsi" value="{{$surat_tugas->surat_tugas_pembahas->id}}">
+                  <input type="hidden" name="id_detail_skripsi" value="{{$surat_tugas->detail_skripsi->id}}">
                   <div class="form-group">
                      <label for="no_surat">No Surat</label><br>
                      <input type="text" name="no_surat" id="no_surat" value="{{ $surat_tugas->no_surat }}">
@@ -93,7 +93,7 @@
                            <select id="nim" name="nim" class="form-control select2">
                               <option value="">-- Pilih NIM --</option>
                               @foreach ($mahasiswa as $item)
-                                 <option value="{{ $item->nim }}" {{ ($item->nim == $surat_tugas->surat_tugas_pembahas->nim? 'selected':'' ) }}>{{ $item->nim }}</option>
+                                 <option value="{{ $item->nim }}" {{ ($item->nim == $surat_tugas->detail_skripsi->skripsi->nim? 'selected':'' ) }}>{{ $item->nim }}</option>
                               @endforeach
                            </select>
 
@@ -108,14 +108,14 @@
                      <div class="col-lg-6">
                         <div class="form-group">
                            <label for="nama_mhs">Nama Mahasiswa</label>
-                           <input type="text" name="nama_mhs" id="nama_mhs" class="form-control" readonly="" value="{{ $surat_tugas->surat_tugas_pembahas->mahasiswa->nama }}">
+                           <input type="text" name="nama_mhs" id="nama_mhs" class="form-control" readonly="" value="{{ $surat_tugas->detail_skripsi->skripsi->mahasiswa->nama }}">
                         </div>
                      </div>
                   </div>
 
                   <div class="form-group">
                      <label for="judul_inggris">Judul Bahasa Inggris Skripsi</label>
-                     <textarea name="judul_inggris" id="judul_inggris" class="form-control" rows="3">{{ $surat_tugas->surat_tugas_pembahas->judul_inggris }}</textarea>
+                     <textarea name="judul_inggris" id="judul_inggris" class="form-control" rows="3">{{ $surat_tugas->detail_skripsi->judul_inggris }}</textarea>
 
                      @error('judul_inggris')
                         <span class="invalid-feedback" role="alert" style="color: red;">
@@ -158,10 +158,12 @@
                      <select name="id_pembahas1" id="id_pembahas1" class="form-control select2">
                         <option value="">--Pilih Pembahas 1--</option>
                         @foreach ($dosen as $item)
-                           @if ($surat_tugas->surat_tugas_pembahas->id_pembimbing_utama != $item->no_pegawai && $surat_tugas->surat_tugas_pembahas->id_pembimbing_pendamping != $item->no_pegawai)
-                              <option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == $surat_tugas->surat_tugas_pembahas->pembahas1->no_pegawai? 'selected':'') }}>
+                           @if ($pembimbing['dosen1']->no_pegawai != $item->no_pegawai && $pembimbing['dosen2']->no_pegawai != $item->no_pegawai)
+
+                              <option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == $surat_tugas->id_dosen1? 'selected':'') }}>
                               {{ $item->nama }}
-                              </option>   
+                              </option>
+
                            @endif
                         @endforeach
                      </select>
@@ -178,11 +180,12 @@
                      <select name="id_pembahas2" id="id_pembahas2" class="form-control select2">
                         <option value="">--Pilih Pembahas 2--</option>
                         @foreach ($dosen as $item)
-                           @if ($surat_tugas->surat_tugas_pembahas->id_pembimbing_utama != $item->no_pegawai && $surat_tugas->surat_tugas_pembahas->id_pembimbing_pendamping != $item->no_pegawai)
-                              <option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == $surat_tugas->surat_tugas_pembahas->pembahas2->no_pegawai? 'selected':'') }}>
-                           @endif
+                           @if ($pembimbing['dosen1']->no_pegawai != $item->no_pegawai && $pembimbing['dosen2']->no_pegawai != $item->no_pegawai)
+
+                              <option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == $surat_tugas->id_dosen2? 'selected':'') }}>
                               {{ $item->nama }}
-                           </option>
+                              </option>
+                           @endif
                         @endforeach
                      </select>
 
@@ -234,18 +237,38 @@
 		$("select[name='nim']").change(function(event) {
 			var nim = $(this).val();
 			var nama = "";
-         var id_pembimbing1 = 0;
-         var id_pembimbing2 = 0;
 			$.each(mahasiswa, function(index, val) {
 				 if(nim == val.nim){
 				 	nama = val.nama;
-               id_pembimbing1 = val.detail_skripsi.id_pembimbing_utama;
-               id_pembimbing2 = val.detail_skripsi.id_pembimbing_pendamping;
+               // id_pembimbing1 = val.detail_skripsi.id_pembimbing_utama;
+               // id_pembimbing2 = val.detail_skripsi.id_pembimbing_pendamping;
 				 	return false;
 				 }
 			});
 			$("input[name='nama_mhs']").val(nama);
-         setDosen(id_pembimbing1, id_pembimbing2);
+
+         // var id_pembimbing1 = 0;
+         // var id_pembimbing2 = 0;
+         var route = "{{ route('akademik.getPembimbing') }}" + "/" + nim;
+         $.ajaxSetup({
+             headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+             }
+         });
+
+         $.ajax({
+            url: route,
+            type: 'GET',
+            // dataType: 'json',
+            // data: {'nim': nim},
+         })
+         .done(function(pembimbing) {
+            console.log("success");
+            setDosen(pembimbing['dosen1'].no_pegawai, pembimbing['dosen2'].no_pegawai);
+         })
+         .fail(function() {
+            console.log("error");
+         });
 		});
 
       function setDosen(id_pembimbing1, id_pembimbing2) {

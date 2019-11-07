@@ -73,7 +73,7 @@
                <div class="box-body">
                   @csrf
                   @method('PUT')
-                  <input type="hidden" name="id_detail_skripsi" value="{{$surat_tugas->surat_tugas_pembimbing->id}}">
+                  <input type="hidden" name="id_detail_skripsi" value="{{$surat_tugas->detail_skripsi->id}}">
                   <div class="form-group">
                      <label for="no_surat">No Surat</label><br>
                      <input type="text" name="no_surat" id="no_surat" value="{{ $surat_tugas->no_surat }}">
@@ -92,7 +92,7 @@
                            <select id="nim" name="nim" class="form-control select2">
                               <option value="">-- Pilih NIM --</option>
                               @foreach ($mahasiswa as $item)
-                                 <option value="{{ $item->nim }}" {{ ($item->nim == $surat_tugas->surat_tugas_pembimbing->nim? 'selected':'' ) }}>{{ $item->nim }}</option>
+                                 <option value="{{ $item->nim }}" {{ ($item->nim == $surat_tugas->detail_skripsi->skripsi->nim? 'selected':'' ) }}>{{ $item->nim }}</option>
                               @endforeach
                            </select>
 
@@ -107,7 +107,7 @@
                      <div class="col-lg-6">
                         <div class="form-group">
                            <label for="nama_mhs">Nama Mahasiswa</label>
-                           <input type="text" name="nama_mhs" id="nama_mhs" class="form-control" readonly="" value="{{ $surat_tugas->surat_tugas_pembimbing->mahasiswa->nama }}">
+                           <input type="text" name="nama_mhs" id="nama_mhs" class="form-control" readonly="" value="{{ $surat_tugas->detail_skripsi->skripsi->mahasiswa->nama }}">
                         </div>
                      </div>
                   </div>
@@ -117,7 +117,7 @@
                      <select id="id_keris" name="id_keris" class="form-control select2">
                         <option value="">-- Pilih Keris --</option>
                         @foreach ($keris as $item)
-                           <option value="{{ $item->id }}" {{ ($item->id == $surat_tugas->surat_tugas_pembimbing->id_keris? 'selected' : '') }}>
+                           <option value="{{ $item->id }}" {{ ($item->id == $surat_tugas->detail_skripsi->id_keris? 'selected' : '') }}>
                               {{ $item->nama }}
                            </option>
                         @endforeach
@@ -132,7 +132,7 @@
 
                   <div class="form-group">
                      <label for="judul">Judul Skripsi</label>
-                     <textarea name="judul" id="judul" class="form-control" rows="3">{{ $surat_tugas->surat_tugas_pembimbing->judul }}</textarea>
+                     <textarea name="judul" id="judul" class="form-control" rows="3">{{ $surat_tugas->detail_skripsi->judul }}</textarea>
                      
                      @error('judul')
                         <span class="invalid-feedback" role="alert" style="color: red;">
@@ -146,7 +146,7 @@
                      <select name="id_pembimbing_utama" id="id_pembimbing_utama" class="form-control select2">
                         <option value="">--Pilih Pembimbing Utama--</option>
                         @foreach ($dosen as $item)
-                           <option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == $surat_tugas->surat_tugas_pembimbing->pembimbing_utama->no_pegawai? 'selected':'') }}>
+                           <option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == $surat_tugas->id_dosen1? 'selected':'') }}>
                               {{ $item->nama }}
                            </option>
                         @endforeach
@@ -164,7 +164,7 @@
                      <select name="id_pembimbing_pendamping" id="id_pembimbing_pendamping" class="form-control select2">
                         <option value="">--Pilih Pembimbing Pendamping--</option>
                         @foreach ($dosen as $item)
-                           <option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == $surat_tugas->surat_tugas_pembimbing->pembimbing_pendamping->no_pegawai? 'selected':'') }}>
+                           <option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == $surat_tugas->id_dosen2? 'selected':'') }}>
                               {{ $item->nama }}
                            </option>
                         @endforeach

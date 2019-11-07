@@ -144,15 +144,15 @@
                   <table id="detail_table">
                      <tr>
                         <td>Nama</td>
-                        <td>: {{ $surat_tugas->surat_tugas_pembimbing->pembimbing_utama->nama }}</td>
+                        <td>: {{ $surat_tugas->dosen1->nama }}</td>
                      </tr>
                      <tr>
                         <td>NIP</td>
-                        <td>: {{ $surat_tugas->surat_tugas_pembimbing->id_pembimbing_utama }}</td>
+                        <td>: {{ $surat_tugas->id_dosen1 }}</td>
                      </tr>
                      <tr>
                         <td>Jabatan</td>
-                        <td>: {{ $surat_tugas->surat_tugas_pembimbing->pembimbing_utama->fungsional->jab_fungsional }}</td>
+                        <td>: {{ $surat_tugas->dosen1->fungsional->jab_fungsional }}</td>
                      </tr>
                      <tr>
                         <td>Sebagai</td>
@@ -163,15 +163,15 @@
 
                      <tr>
                         <td>Nama</td>
-                        <td>: {{ $surat_tugas->surat_tugas_pembimbing->pembimbing_pendamping->nama }}</td>
+                        <td>: {{ $surat_tugas->dosen2->nama }}</td>
                      </tr>
                      <tr>
                         <td>NIP</td>
-                        <td>: {{ $surat_tugas->surat_tugas_pembimbing->id_pembimbing_pendamping }}</td>
+                        <td>: {{ $surat_tugas->id_dosen2 }}</td>
                      </tr>
                      <tr>
                         <td>Jabatan</td>
-                        <td>: {{ $surat_tugas->surat_tugas_pembimbing->pembimbing_pendamping->fungsional->jab_fungsional }}</td>
+                        <td>: {{ $surat_tugas->dosen2->fungsional->jab_fungsional }}</td>
                      </tr>
                      <tr>
                         <td>Sebagai</td>
@@ -182,19 +182,19 @@
                      <tr><td colspan="2">untuk membimbing skripsi mahasiswa:</td></tr>
                      <tr>
                         <td>Nama</td>
-                        <td>: {{ $surat_tugas->surat_tugas_pembimbing->mahasiswa->nama }}</td>
+                        <td>: {{ $surat_tugas->detail_skripsi->skripsi->mahasiswa->nama }}</td>
                      </tr>
                      <tr>
                         <td>NIM</td>
-                        <td>: {{ $surat_tugas->surat_tugas_pembimbing->nim }}</td>
+                        <td>: {{ $surat_tugas->detail_skripsi->skripsi->nim }}</td>
                      </tr>
                      <tr>
                         <td>Program Studi</td>
-                        <td>: {{ $surat_tugas->surat_tugas_pembimbing->mahasiswa->bagian->bagian }}</td>
+                        <td>: {{ $surat_tugas->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
                      </tr>
                      <tr>
                         <td>Dengan Judul</td>
-                        <td>: {{ $surat_tugas->surat_tugas_pembimbing->judul }}</td>
+                        <td>: {{ $surat_tugas->detail_skripsi->judul }}</td>
                      </tr>
                   </table>
 

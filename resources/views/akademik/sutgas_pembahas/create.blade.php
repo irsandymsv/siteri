@@ -239,14 +239,33 @@
          $.each(mahasiswa, function(index, val) {
              if(nim_old == val.nim){
                nama = val.nama;
-               id_pembimbing1 = val.detail_skripsi.id_pembimbing_utama;
-               id_pembimbing2 = val.detail_skripsi.id_pembimbing_pendamping;
+               // id_pembimbing1 = val.detail_skripsi.id_pembimbing_utama;
+               // id_pembimbing2 = val.detail_skripsi.id_pembimbing_pendamping;
                return false;
              }
          });
-
          $("input[name='nama_mhs']").val(nama);
-         setDosen(id_pembimbing1, id_pembimbing2, old_id_pembahas1, old_id_pembahas2);
+
+         var route = "{{ route('akademik.getPembimbing') }}" + "/" + nim_old;
+         $.ajaxSetup({
+             headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+             }
+         });
+
+         $.ajax({
+            url: route,
+            type: 'GET',
+            // dataType: 'json',
+            // data: {'nim': nim},
+         })
+         .done(function(pembimbing) {
+            console.log("success");
+            setDosen(pembimbing['dosen1'].no_pegawai, pembimbing['dosen2'].no_pegawai, old_id_pembahas1, old_id_pembahas2);
+         })
+         .fail(function() {
+            console.log("error");
+         });
       }
 
 		$("select[name='nim']").change(function(event) {
@@ -257,16 +276,34 @@
 			$.each(mahasiswa, function(index, val) {
 				 if(nim == val.nim){
 				 	nama = val.nama;
-               id_pembimbing1 = val.detail_skripsi.id_pembimbing_utama;
-               id_pembimbing2 = val.detail_skripsi.id_pembimbing_pendamping;
+               // id_pembimbing1 = val.detail_skripsi.id_pembimbing_utama;
+               // id_pembimbing2 = val.detail_skripsi.id_pembimbing_pendamping;
 				 	return false;
 				 }
 			});
 
 			$("input[name='nama_mhs']").val(nama);
-         setDosen(id_pembimbing1, id_pembimbing2);
-         // console.log('pemb1 = '+id_pembimbing1);
-         // console.log('pemb2 = '+id_pembimbing2);
+
+         var route = "{{ route('akademik.getPembimbing') }}" + "/" + nim;
+         $.ajaxSetup({
+             headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+             }
+         });
+
+         $.ajax({
+            url: route,
+            type: 'GET',
+            // dataType: 'json',
+            // data: {'nim': nim},
+         })
+         .done(function(pembimbing) {
+            console.log("success");
+            setDosen(pembimbing['dosen1'].no_pegawai, pembimbing['dosen2'].no_pegawai);
+         })
+         .fail(function() {
+            console.log("error");
+         });
 		});
 
       function setDosen(id_pembimbing1, id_pembimbing2, old_pembahas1 = null, old_pembahas2 = null) {

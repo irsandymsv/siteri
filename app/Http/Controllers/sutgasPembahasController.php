@@ -18,7 +18,7 @@ class sutgasPembahasController extends suratTugasController
 
     public function index()
     {
-        $surat_tugas = surat_tugas::with(['tipe_surat_tugas', 'status_surat_tugas', 'surat_tugas_pembahas', 'surat_tugas_pembahas.mahasiswa'])
+        $surat_tugas = surat_tugas::with(['tipe_surat_tugas', 'status_surat_tugas', 'detail_skripsi', 'detail_skripsi.skripsi.mahasiswa'])
             ->whereHas('tipe_surat_tugas',function(Builder $query){
                 $query->where('tipe_surat','Surat Tugas pembahas');
             })->orderBy('created_at', 'desc')->get();
@@ -28,13 +28,10 @@ class sutgasPembahasController extends suratTugasController
 
     public function create()
     {
-        $mahasiswa = mahasiswa::with('detail_skripsi')
-        ->whereHas('detail_skripsi', function(Builder $query)
+        $mahasiswa = mahasiswa::with(['skripsi', 'skripsi.status_skripsi'])
+        ->whereHas('skripsi.status_skripsi', function(Builder $query)
         {
-            $query->where([
-                ['id_surat_tugas_pembimbing', '<>', null],
-                ['id_surat_tugas_pembahas', null]
-            ]);
+            $query->where('status', 'Sudah punya pembimbing');
         })->get();
         $dosen = user::where('is_dosen', 1)->get();
         // dd($mahasiswa);
@@ -73,11 +70,11 @@ class sutgasPembahasController extends suratTugasController
         $surat_tugas = surat_tugas::where('id', $id)
         ->with([
             "status_surat_tugas",
-            "surat_tugas_pembahas",
-            "surat_tugas_pembahas.mahasiswa",
-            "surat_tugas_pembahas.keris",
-            "surat_tugas_pembahas.pembahas1:no_pegawai,nama",
-            "surat_tugas_pembahas.pembahas2:no_pegawai,nama"
+            "detail_skripsi",
+            "detail_skripsi.skripsi.mahasiswa",
+            "detail_skripsi.keris",
+            "dosen1:no_pegawai,nama",
+            "dosen2:no_pegawai,nama"
         ])->first();
         // dd($surat_tugas);
       return view('akademik.sutgas_pembahas.show', [
@@ -89,23 +86,38 @@ class sutgasPembahasController extends suratTugasController
     {
         $surat_tugas = surat_tugas::where('id', $id)
         ->with([
-            "surat_tugas_pembahas",
-            "surat_tugas_pembahas.mahasiswa",
-            "surat_tugas_pembahas.keris",
-            "surat_tugas_pembahas.pembahas1:no_pegawai,nama",
-            "surat_tugas_pembahas.pembahas2:no_pegawai,nama"
+            "detail_skripsi",
+            "detail_skripsi.skripsi.mahasiswa",
+            "detail_skripsi.keris",
+            "dosen1:no_pegawai,nama",
+            "dosen2:no_pegawai,nama"
         ])->first();
+
+        // $sutgas_pembimbing = surat_tugas::with(['detail_skripsi', 'tipe_surat_tugas', 'status_surat_tugas'])
+        // ->wherehas('detail_skripsi', function(Builder $query)
+        // {
+        //     $query->where('id', $surat_tugas->detail_skripsi->id);
+        // })
+        // ->wherehas('tipe_surat_tugas', function(Builder $query)
+        // {
+        //     $query->where('tipe_surat', 'Surat tugas pembimbing');
+        // })
+        // ->wherehas('status_surat_tugas', function(Builder $query)
+        // {
+        //     $query->where('status', 'Diverifikasi KTU');
+        // })
+        // ->max('created_at')->first();
+
+        $pembimbing = $this->getPembimbing($surat_tugas->detail_skripsi->skripsi->nim);
+
         $t = carbon::parse($surat_tugas->tanggal)->toDateString();
         $j = carbon::parse($surat_tugas->tanggal)->format('h:i');
         $tanggal = $t.'T'.$j;
-        $mahasiswa = mahasiswa::with('detail_skripsi')
-        ->whereHas('detail_skripsi', function(Builder $query)
+        $mahasiswa = mahasiswa::with(['skripsi', 'skripsi.status_skripsi'])
+        ->whereHas('skripsi.status_skripsi', function(Builder $query)
         {
-            $query->where([
-                ['id_surat_tugas_pembimbing', '<>', null],
-                ['id_surat_tugas_pembahas', null]
-            ]);
-        })->orWhere("nim", $surat_tugas->surat_tugas_pembahas->nim)->get();
+            $query->where('status', 'Sudah punya pembimbing');
+        })->orWhere("nim", $surat_tugas->detail_skripsi->skripsi->nim)->get();
         $dosen = user::where('is_dosen', 1)->get();
         // dd($mahasiswa);
 
@@ -113,7 +125,8 @@ class sutgasPembahasController extends suratTugasController
             'surat_tugas' => $surat_tugas,
             'mahasiswa' => $mahasiswa,
             'dosen' => $dosen,
-            'tanggal' => $tanggal
+            'tanggal' => $tanggal,
+            'pembimbing' => $pembimbing
         ]);
     }
 
@@ -148,18 +161,32 @@ class sutgasPembahasController extends suratTugasController
     {
         $surat_tugas = surat_tugas::where('id', $id)
         ->with([
-            "surat_tugas_pembahas",
-            "surat_tugas_pembahas.mahasiswa",
-            "surat_tugas_pembahas.keris",
-            "surat_tugas_pembahas.pembahas1:no_pegawai,nama,id_fungsional",
-            "surat_tugas_pembahas.pembahas1.fungsional",
-            "surat_tugas_pembahas.pembahas2:no_pegawai,nama,id_fungsional",
-            "surat_tugas_pembahas.pembahas2.fungsional",
-            "surat_tugas_pembahas.pembimbing_utama:no_pegawai,nama,id_fungsional",
-            "surat_tugas_pembahas.pembimbing_utama.fungsional",
-            "surat_tugas_pembahas.pembimbing_pendamping:no_pegawai,nama,id_fungsional",
-            "surat_tugas_pembahas.pembimbing_pendamping.fungsional"
+            "detail_skripsi",
+            "detail_skripsi.skripsi.mahasiswa",
+            "detail_skripsi.skripsi.mahasiswa.bagian",
+            "detail_skripsi.keris",
+            "dosen1:no_pegawai,nama,id_fungsional",
+            "dosen1.fungsional",
+            "dosen2:no_pegawai,nama,id_fungsional",
+            "dosen2.fungsional"
         ])->first();
+
+        $sutgas_pembimbing = surat_tugas::where('id_detail_skripsi', $surat_tugas->id_detail_skripsi)
+        ->with([
+            "status_surat_tugas",
+            "tipe_surat_tugas",
+            "detail_skripsi",
+            "dosen1:no_pegawai,nama,id_fungsional",
+            "dsoen1.fungsional",
+            "dosen2:no_pegawai,nama,id_fungsional",
+            "dosen2.fungsional"
+        ])
+        ->whereHas('tipe_surat_tugas', function(Builder $query)
+        {
+            $query->where('tipe_surat', 'Surat tugas pembimbing')
+        })
+        ->max('created_at')->first();
+
         $dekan = User::with("jabatan")
         ->wherehas("jabatan", function (Builder $query){
             $query->where("jabatan", "Dekan");
@@ -167,14 +194,18 @@ class sutgasPembahasController extends suratTugasController
 
         // return view('akademik.sutgas_pembimbing.pdf', ['surat_tugas' => $surat_tugas, 'dekan' => $dekan]);
 
-        $pdf = PDF::loadview('akademik.sutgas_pembahas.pdf', ['surat_tugas' => $surat_tugas, 'dekan' => $dekan])->setPaper('folio', 'portrait')->setWarnings(false);
+        $pdf = PDF::loadview('akademik.sutgas_pembahas.pdf', [
+            'surat_tugas' => $surat_tugas,
+            'sutgas_pembimbing' => $sutgas_pembimbing,
+            'dekan' => $dekan
+        ])->setPaper('folio', 'portrait')->setWarnings(false);
         return $pdf->download("Sutgas_Pembahas-" . $surat_tugas->no_surat);
     }
 
     //KTU
     public function ktu_index()
     {
-        $surat_tugas = surat_tugas::with(['tipe_surat_tugas', 'status_surat_tugas', 'surat_tugas_pembahas', 'surat_tugas_pembahas.mahasiswa'])
+        $surat_tugas = surat_tugas::with(['tipe_surat_tugas', 'status_surat_tugas', 'detail_skripsi', 'detail_skripsi.skripsi.mahasiswa'])
             ->whereHas('tipe_surat_tugas',function(Builder $query){
                 $query->where('tipe_surat','Surat Tugas Pembahas');
             })
@@ -194,19 +225,31 @@ class sutgasPembahasController extends suratTugasController
     {
         $surat_tugas = surat_tugas::where('id', $id)
         ->with([
-            "surat_tugas_pembahas",
-            "surat_tugas_pembahas.mahasiswa",
-            "surat_tugas_pembahas.mahasiswa.bagian",
-            "surat_tugas_pembahas.keris",
-            "surat_tugas_pembahas.pembahas1:no_pegawai,nama,id_fungsional",
-            "surat_tugas_pembahas.pembahas1.fungsional",
-            "surat_tugas_pembahas.pembahas2:no_pegawai,nama,id_fungsional",
-            "surat_tugas_pembahas.pembahas2.fungsional",
-            "surat_tugas_pembahas.pembimbing_utama:no_pegawai,nama,id_fungsional",
-            "surat_tugas_pembahas.pembimbing_utama.fungsional",
-            "surat_tugas_pembahas.pembimbing_pendamping:no_pegawai,nama,id_fungsional",
-            "surat_tugas_pembahas.pembimbing_pendamping.fungsional"
+            "detail_skripsi",
+            "detail_skripsi.skripsi.mahasiswa",
+            "detail_skripsi.skripsi.mahasiswa.bagian",
+            "detail_skripsi.keris",
+            "dosen1:no_pegawai,nama,id_fungsional",
+            "dosen1.fungsional",
+            "dosen2:no_pegawai,nama,id_fungsional",
+            "dosen2.fungsional"
         ])->first();
+
+        $sutgas_pembimbing = surat_tugas::where('id_detail_skripsi', $surat_tugas->id_detail_skripsi)
+        ->with([
+            "status_surat_tugas",
+            "tipe_surat_tugas",
+            "detail_skripsi",
+            "dosen1:no_pegawai,nama,id_fungsional",
+            "dsoen1.fungsional",
+            "dosen2:no_pegawai,nama,id_fungsional",
+            "dosen2.fungsional"
+        ])
+        ->whereHas('tipe_surat_tugas', function(Builder $query)
+        {
+            $query->where('tipe_surat', 'Surat tugas pembimbing')
+        })
+        ->max('created_at')->first();
 
         $dekan = User::with("jabatan")
         ->wherehas("jabatan", function (Builder $query){
@@ -215,6 +258,7 @@ class sutgasPembahasController extends suratTugasController
         // dd($surat_tugas);
       return view('ktu.sutgas_akademik.show_pembahas', [
         'surat_tugas' => $surat_tugas,
+        'sutgas_pembimbing' => $sutgas_pembimbing,
         'dekan' => $dekan,
         'tipe' => 'surat tugas pembahas'
       ]);
