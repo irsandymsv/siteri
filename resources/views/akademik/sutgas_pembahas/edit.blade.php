@@ -74,6 +74,8 @@
                   @csrf
                   @method('PUT')
                   <input type="hidden" name="id_detail_skripsi" value="{{$surat_tugas->detail_skripsi->id}}">
+                  <input type="hidden" name="id_skripsi" value="{{$surat_tugas->detail_skripsi->id_skripsi}}">
+                  <input type="hidden" name="original_nim" value="{{$surat_tugas->detail_skripsi->skripsi->nim}}">
                   <div class="form-group">
                      <label for="no_surat">No Surat</label><br>
                      <input type="text" name="no_surat" id="no_surat" value="{{ $surat_tugas->no_surat }}">

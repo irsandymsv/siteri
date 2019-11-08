@@ -151,22 +151,28 @@ class sutgasPembahasController extends suratTugasController
             'no_surat' => 'required',
             'id_pembahas1' => 'required',
             'id_pembahas2' => 'required',
-            'status' => 'required'
+            'status' => 'required',
+            'nim' =>'required'
         ]);
         try {
-            $this->update_sutgas($request, 2, $request->status, $id);
-            $this->update_detail_skripsi(
+            $this->update_sutgas(
                 $request,
+                2,
+                $request->status,
                 $id,
-                'id_surat_tugas_pembahas',
                 'id_pembahas1',
                 'id_pembahas2'
             );
+            detail_skripsi::where('id', $request->input('id_detail_skripsi'))->update([
+                'judul_inggris' => $request->input('judul_inggris')
+            ]);
+            skripsi::where('id', $request->input('id_skripsi'))->update([
+                'nim' => $request->input('nim')
+            ]);
 
 
             return redirect()->route('akademik.sutgas-pembahas.show', $id)->with('success', 'Data Surat Tugas Berhasil Dirubah');
         } catch (Exception $e) {
-            dd($e->getMessage());
             return redirect()->route('akademik.sutgas-pembahas.edit', $id)->with('error', $e->getMessage());
         }
     }
@@ -255,7 +261,7 @@ class sutgasPembahasController extends suratTugasController
             "tipe_surat_tugas",
             "detail_skripsi",
             "dosen1:no_pegawai,nama,id_fungsional",
-            "dsoen1.fungsional",
+            "dosen1.fungsional",
             "dosen2:no_pegawai,nama,id_fungsional",
             "dosen2.fungsional"
         ])
@@ -263,7 +269,7 @@ class sutgasPembahasController extends suratTugasController
         {
             $query->where('tipe_surat', 'Surat tugas pembimbing');
         })
-        ->max('created_at')->first();
+        ->orderBy('created_at','desc')->first();
 
         $dekan = User::with("jabatan")
         ->wherehas("jabatan", function (Builder $query){
