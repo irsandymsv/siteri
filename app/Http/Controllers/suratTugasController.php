@@ -97,25 +97,46 @@ class suratTugasController extends Controller
                 'dosen2' => ""
             );
 
-            $mhs = mahasiswa::where('nim', $nim)->with([
-                'skripsi.detail_skripsi.surat_tugas',
-                'skripsi.detail_skripsi.surat_tugas.dosen1',
-                'skripsi.detail_skripsi.surat_tugas.dosen2',
-                'skripsi.detail_skripsi.surat_tugas.tipe_surat_tugas',
-                'skripsi.detail_skripsi.surat_tugas.status_surat_tugas'
-            ])
-            ->whereHas('skripsi.detail_skripsi.surat_tugas.tipe_surat_tugas', function(Builder $query)
-            {
-                $query->where('tipe_surat', 'Surat tugas pembimbing');
-            })
-            ->whereHas('skripsi.detail_skripsi.surat_tugas.status_surat_tugas', function(Builder $query)
-            {
-                $query->where('status', 'Diverifikasi KTU');
-            })
-            ->max('created_at')->first();
+            $mahasiswa = mahasiswa::where('nim', $nim)->with('skripsi')->first();
 
-            $pembimbing['dosen1'] = $mhs->skripsi->detail_skripsi->surat_tugas->dosen1;
-            $pembimbing['dosen2'] = $mhs->skripsi->detail_skripsi->surat_tugas->dosen2;
+            $detail = detail_skripsi::where('id_skripsi', $mahasiswa->skripsi->id)->orderBy('created_at', 'desc')->first();
+
+            $sutgas_pembimbing = surat_tugas::where('id_detail_skripsi', $detail->id)
+            ->with(['tipe_surat_tugas', 'status_surat_tugas', 'dosen1', 'dosen2'])
+            ->whereHas('tipe_surat_tugas', function(Builder $query)
+            {
+                $query->where('tipe_surat', 'Surat Tugas Pembimbing');
+            })
+            ->whereHas('status_surat_tugas', function(Builder $query)
+            {
+                $query->where('status', 'Disetujui KTU');
+            })
+            ->orderBy('created_at', 'desc')->first();
+
+            // $mhs = mahasiswa::where('nim', $nim)->with([
+            //     'skripsi',
+            //     'skripsi.detail_skripsi' => function($query)
+            //     {
+            //         $query->latest();
+            //     },
+            //     'skripsi.detail_skripsi.surat_tugas',
+            //     'skripsi.detail_skripsi.surat_tugas.dosen1',
+            //     'skripsi.detail_skripsi.surat_tugas.dosen2',
+            //     'skripsi.detail_skripsi.surat_tugas.tipe_surat_tugas',
+            //     'skripsi.detail_skripsi.surat_tugas.status_surat_tugas'
+            // ])
+            // ->whereHas('skripsi.detail_skripsi.surat_tugas.tipe_surat_tugas', function(Builder $query)
+            // {
+            //     $query->where('tipe_surat', 'Surat tugas pembimbing');
+            // })
+            // ->whereHas('skripsi.detail_skripsi.surat_tugas.status_surat_tugas', function(Builder $query)
+            // {
+            //     $query->where('status', 'Disetujui KTU');
+            // })
+            // ->first();
+
+            $pembimbing['dosen1'] = $sutgas_pembimbing->dosen1;
+            $pembimbing['dosen2'] = $sutgas_pembimbing->dosen2;
             return $pembimbing;
         }
     }
