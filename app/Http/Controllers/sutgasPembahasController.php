@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use App\surat_tugas;
 use App\detail_skripsi;
+use App\skripsi;
 use PDF;
 use Exception;
 use App\User;
@@ -51,18 +52,31 @@ class sutgasPembahasController extends suratTugasController
             'status' => 'required'
         ]);
         try {
-            $id_surat = $this->store_sutgas($request, 2, $request->status);
-            $this->update_detail_skripsi(
+            $skripsi = skripsi::select('id')->where('nim',$request->input('nim'))->first();
+            $detail_skripsi = $this->update_detail_skripsi($request,$skripsi->id);
+            $id_baru = $this->store_sutgas(
                 $request,
-                $id_surat,
-                'id_surat_tugas_pembahas',
+                2,
+                $request->status,
+                $detail_skripsi->id,
                 'id_pembahas1',
                 'id_pembahas2'
             );
-            return redirect()->route('akademik.sutgas-pembahas.show', $id_surat)->with('success', 'Data Surat Tugas Berhasil Ditambahkan');
+            return redirect()->route('akademik.sutgas-pembahas.show', $id_baru)->with('success', 'Data Surat Tugas Berhasil Ditambahkan');
         } catch (Exception $e) {
             return redirect()->route('akademik.sutgas-pembahas.create')->with('error', $e->getMessage());
         }
+    }
+
+    private function update_detail_skripsi($request, int $id_skripsi){
+        detail_skripsi::select('id')
+            ->where('id_skripsi', $id_skripsi)
+            ->orderBy('created_at','desc')
+            ->update([
+                'judul_inggris' => $request->input('judul_inggris'),
+        ]);
+        $detail_skripsi = detail_skripsi::where('id_skripsi', $id_skripsi)->orderBy('created_at', 'desc')->first();
+        return $detail_skripsi;
     }
 
     public function show($id)
@@ -183,7 +197,7 @@ class sutgasPembahasController extends suratTugasController
         ])
         ->whereHas('tipe_surat_tugas', function(Builder $query)
         {
-            $query->where('tipe_surat', 'Surat tugas pembimbing')
+            $query->where('tipe_surat', 'Surat tugas pembimbing');
         })
         ->max('created_at')->first();
 
@@ -247,7 +261,7 @@ class sutgasPembahasController extends suratTugasController
         ])
         ->whereHas('tipe_surat_tugas', function(Builder $query)
         {
-            $query->where('tipe_surat', 'Surat tugas pembimbing')
+            $query->where('tipe_surat', 'Surat tugas pembimbing');
         })
         ->max('created_at')->first();
 

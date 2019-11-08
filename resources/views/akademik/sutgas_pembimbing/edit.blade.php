@@ -35,7 +35,7 @@
 
 @section('judul_header')
 	Surat Tugas Pembimbing Skripsi
-@endsection 
+@endsection
 
 @section('content')
 	<div class="row">
@@ -58,7 +58,7 @@
                 Session::forget('success');
                 @endphp
                 @endif
-                
+
                 @if (session('error'))
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -74,6 +74,7 @@
                   @csrf
                   @method('PUT')
                   <input type="hidden" name="id_detail_skripsi" value="{{$surat_tugas->detail_skripsi->id}}">
+                  <input type="hidden" name="id_skripsi" value="{{$surat_tugas->detail_skripsi->id_skripsi}}">
                   <div class="form-group">
                      <label for="no_surat">No Surat</label><br>
                      <input type="text" name="no_surat" id="no_surat" value="{{ $surat_tugas->no_surat }}">
@@ -133,7 +134,7 @@
                   <div class="form-group">
                      <label for="judul">Judul Skripsi</label>
                      <textarea name="judul" id="judul" class="form-control" rows="3">{{ $surat_tugas->detail_skripsi->judul }}</textarea>
-                     
+
                      @error('judul')
                         <span class="invalid-feedback" role="alert" style="color: red;">
                            <strong>{{ $message }}</strong>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use App\surat_tugas;
 use App\detail_skripsi;
+use App\skripsi;
 use PDF;
 use Exception;
 use App\User;
@@ -56,25 +57,22 @@ class sutgasPembimbingController extends suratTugasController
             'id_pembimbing_pendamping' => 'required'
         ]);
         try{
-            skripsi::insert([
+            $skripsi = skripsi::create([
                 'nim' => $request->input('nim'),
             ]);
-            detail_skripsi::insert([
-
+            $detail_skripsi = detail_skripsi::create([
                 'judul' => $request->input('judul'),
-                'id_surat_tugas_pembimbing' => $id_baru,
-                'id_pembimbing_utama' => $request->input('id_pembimbing_utama'),
-                'id_pembimbing_pendamping' => $request->input('id_pembimbing_pendamping'),
+                'id_skripsi' => $skripsi->id,
                 'id_keris' => $request->input('id_keris')
             ]);
             $id_baru = $this->store_sutgas(
                 $request,
                 1,
                 $request->status,
+                $detail_skripsi->id,
                 'id_pembimbing_utama',
                 'id_pembimbing_pendamping'
             );
-
             return redirect()->route('akademik.sutgas-pembimbing.show', $id_baru)->with('success', 'Data Surat Tugas Berhasil Ditambahkan');
         }catch(Exception $e){
             return redirect()->route('akademik.sutgas-pembimbing.create')->with('error', $e->getMessage());
@@ -116,7 +114,7 @@ class sutgasPembimbingController extends suratTugasController
       })->get();
 
       // orWhere("nim", $surat_tugas->detail_skripsi->skripsi->nim)
-      
+
       // dd($mahasiswa);
 		$dosen = user::where('is_dosen', 1)->get();
 		$keris = keris::all();
@@ -140,14 +138,21 @@ class sutgasPembimbingController extends suratTugasController
             'id_pembimbing_pendamping' => 'required'
         ]);
         try {
-            $this->update_sutgas($request, 1, $request->status,$id);
+            $this->update_sutgas(
+                $request,
+                1,
+                $request->status,
+                $id,
+                'id_pembimbing_utama',
+                'id_pembimbing_pendamping'
+            );
             detail_skripsi::where('id',$request->input('id_detail_skripsi'))->update([
-                'nim' => $request->input('nim'),
-                'judul' => $request->input('judul'),
-                'id_pembimbing_utama' => $request->input('id_pembimbing_utama'),
-                'id_pembimbing_pendamping' => $request->input('id_pembimbing_pendamping')
+                'id_keris' => $request->input('id_keris'),
+                'judul' => $request->input('judul')
             ]);
-
+            skripsi::where('id',$request->input('id_skripsi'))->update([
+                'nim' => $request->input('nim')
+            ]);
             return redirect()->route('akademik.sutgas-pembimbing.show',$id)->with('success', 'Data Surat Tugas Berhasil Diubah');
         } catch (Exception $e) {
             dd($e->getMessage());
