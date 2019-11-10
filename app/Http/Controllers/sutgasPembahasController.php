@@ -29,11 +29,12 @@ class sutgasPembahasController extends suratTugasController
 
     public function create()
     {
-        $mahasiswa = mahasiswa::with(['skripsi', 'skripsi.status_skripsi'])
+        $mahasiswa = mahasiswa::with(['skripsi', 'skripsi.status_skripsi', 'skripsi.detail_skripsi','skripsi.detail_skripsi.surat_tugas'])
         ->whereHas('skripsi.status_skripsi', function(Builder $query)
         {
             $query->where('status', 'Sudah punya pembimbing');
-        })->get();
+        })
+        ->get();
         $dosen = user::where('is_dosen', 1)->get();
         // dd($mahasiswa);
         return view('akademik.sutgas_pembahas.create', ['mahasiswa' => $mahasiswa, 'dosen' => $dosen]);
@@ -148,7 +149,8 @@ class sutgasPembahasController extends suratTugasController
         ->whereHas('skripsi.status_skripsi', function(Builder $query)
         {
             $query->where('status', 'Sudah Punya Pembimbing');
-        })->orWhere("nim", $surat_tugas->detail_skripsi->skripsi->nim)->get();
+        })
+        ->orWhere("nim", $surat_tugas->detail_skripsi->skripsi->nim)->get();
         $dosen = user::where('is_dosen', 1)->get();
         // dd($mahasiswa);
 
@@ -166,15 +168,17 @@ class sutgasPembahasController extends suratTugasController
         $this->validate($request, [
             'id_detail_skripsi' => 'required',
             'no_surat' => 'required',
+            'judul_inggris' => 'required',
+            'tanggal' => 'required',
+            'tempat' => 'required',
             'id_pembahas1' => 'required',
             'id_pembahas2' => 'required',
-            'status' => 'required',
             'nim' =>'required'
         ]);
         try {
             if ($request->input('nim') != $request->input('original_nim')) {
                 $skripsi = skripsi::where('nim', $request->input('nim'))->first();
-                $detail_skripsi = detail_skripsi::where('id_skripsi', $skripsi->id)->max('created_at')->first();
+                $detail_skripsi = detail_skripsi::where('id_skripsi', $skripsi->id)->orderBy('created_at','desc')->first();
                 $detail_skripsi->judul_inggris = $request->input('judul_inggris');
                 $detail_skripsi->save();
                 $this->update_sutgas_beda_nim(
@@ -330,12 +334,12 @@ class sutgasPembahasController extends suratTugasController
         else if ($request->verif_ktu == 1) {
             $surat_tugas = $this->verif($surat_tugas,3,null);
             $surat_tugas->save();
-            
+
             $detail = detail_skripsi::where('id', $surat_tugas->id_detail_skripsi)->with('skripsi')->first();
             skripsi::where('id', $detail->id_skripsi)->update([
                 'id_status_skripsi' => 2
             ]);
-            
+
             return redirect()->route('ktu.sutgas-pembahas.show', $id)->with('verif_ktu', 'verifikasi surat tugas berhasil, status surat tugas saat ini "Disetujui KTU"');
         }
     }

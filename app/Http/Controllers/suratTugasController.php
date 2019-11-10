@@ -39,11 +39,6 @@ class suratTugasController extends Controller
 
     protected function update_sutgas(Request $request, int $id_tipe_surat_tugas, int $id_status_surat_tugas, int $id, string $nama_id_dosen1, string $nama_id_dosen2)
     {
-        $sutgas = surat_tugas::find($id);
-        $verif_ktu = $sutgas->verif_ktu;
-        if ($id_status_surat_tugas == 2) {
-            $verif_ktu = 0;
-        }
         if ($id_tipe_surat_tugas != 1) {
             surat_tugas::where('id', $id)->update([
                 'no_surat' => $request->input('no_surat'),
@@ -51,7 +46,7 @@ class suratTugasController extends Controller
                 'id_status_surat_tugas' => $id_status_surat_tugas,
                 'tanggal' => carbon::parse($request->input('tanggal')),
                 'tempat' => $request->input('tempat'),
-                'verif_ktu' => $verif_ktu,
+                'verif_ktu' => $this->cek_verif_ktu($id_status_surat_tugas, $id),
                 'id_dosen1' => $request->input($nama_id_dosen1),
                 'id_dosen2' => $request->input($nama_id_dosen2)
             ]);
@@ -60,7 +55,7 @@ class suratTugasController extends Controller
                 'no_surat' => $request->input('no_surat'),
                 'id_tipe_surat_tugas' => $id_tipe_surat_tugas,
                 'id_status_surat_tugas' => $id_status_surat_tugas,
-                'verif_ktu' => $verif_ktu,
+                'verif_ktu' => $this->cek_verif_ktu($id_status_surat_tugas, $id),
                 'id_dosen1' => $request->input($nama_id_dosen1),
                 'id_dosen2' => $request->input($nama_id_dosen2)
             ]);
@@ -70,17 +65,28 @@ class suratTugasController extends Controller
 
     protected function update_sutgas_beda_nim(Request $request, int $id_tipe_surat_tugas, int $id_status_surat_tugas, int $id, int $id_detail_skripsi, string $nama_id_dosen1, string $nama_id_dosen2)
     {
+
         surat_tugas::where('id', $id)->update([
             'no_surat' => $request->input('no_surat'),
             'id_tipe_surat_tugas' => $id_tipe_surat_tugas,
             'id_status_surat_tugas' => $id_status_surat_tugas,
             'tanggal' => carbon::parse($request->input('tanggal')),
             'tempat' => $request->input('tempat'),
-            'verif_ktu' => $verif_ktu,
+            'verif_ktu' => $this->cek_verif_ktu($id_status_surat_tugas,$id),
             'id_detail_skripsi' => $id_detail_skripsi,
             'id_dosen1' => $request->input($nama_id_dosen1),
             'id_dosen2' => $request->input($nama_id_dosen2)
         ]);
+    }
+
+    protected function cek_verif_ktu(int $id_status_surat_tugas,int $id)
+    {
+        $sutgas = surat_tugas::find($id);
+        $verif_ktu = $sutgas->verif_ktu;
+        if ($id_status_surat_tugas == 2) {
+            $verif_ktu = 0;
+        }
+        return $verif_ktu;
     }
 
     // protected function update_detail_skripsi(Request $request, int $id_surat_tugas, string $nama_id_surat_tugas)
