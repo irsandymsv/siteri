@@ -299,6 +299,7 @@
          })
          .done(function(pembimbing) {
             console.log("success");
+            // console.log(pembimbing);
             setDosen(pembimbing['dosen1'].no_pegawai, pembimbing['dosen2'].no_pegawai);
          })
          .fail(function() {

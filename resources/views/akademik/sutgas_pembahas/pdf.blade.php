@@ -188,7 +188,7 @@
             </tr>
             <tr>
                <td>NIP / NRP</td>
-               <td>: {{ $ssutgas_pembimbing->id_dosen2 }}</td>
+               <td>: {{ $sutgas_pembimbing->id_dosen2 }}</td>
             </tr>
             <tr>
                <td>Jabatan</td>

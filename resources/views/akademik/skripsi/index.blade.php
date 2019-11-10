@@ -5,8 +5,22 @@
 @endsection
 
 @section('css_link')
-	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+	<style type="text/css">
+		.btn-group{
+			width: 100%;
+		}
+
+		/*.btn-group button{
+			width: 100%;
+			text-align: left;
+		}*/
+
+		/*.btn-group button i{
+			float: right;
+		}*/
+
+	</style>
 @endsection
 
 @section('judul_header')
@@ -42,7 +56,7 @@
 		            				<td>{{ $item->status_skripsi->status }}</td>
 		            				<td>
 		            					<div class="btn-group">
-		            						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expand="false">Pilihan <i class="fa fa-caret-down"></i></button>
+		            						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expand="false">Pilih <i class="fa fa-caret-down"></i></button>
 		            						<ul class="dropdown-menu">
 		            							<li>
 		            								<a href="{{ route('akademik.data-skripsi.ubah-judul', $item->id) }}">Ubah Judul</a>

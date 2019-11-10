@@ -128,33 +128,12 @@ class suratTugasController extends Controller
             {
                 $query->where('tipe_surat', 'Surat Tugas Pembimbing');
             })
-            ->whereHas('status_surat_tugas', function(Builder $query)
-            {
-                $query->where('status', 'Disetujui KTU');
-            })
             ->orderBy('created_at', 'desc')->first();
-
-            // $mhs = mahasiswa::where('nim', $nim)->with([
-            //     'skripsi',
-            //     'skripsi.detail_skripsi' => function($query)
-            //     {
-            //         $query->latest();
-            //     },
-            //     'skripsi.detail_skripsi.surat_tugas',
-            //     'skripsi.detail_skripsi.surat_tugas.dosen1',
-            //     'skripsi.detail_skripsi.surat_tugas.dosen2',
-            //     'skripsi.detail_skripsi.surat_tugas.tipe_surat_tugas',
-            //     'skripsi.detail_skripsi.surat_tugas.status_surat_tugas'
-            // ])
-            // ->whereHas('skripsi.detail_skripsi.surat_tugas.tipe_surat_tugas', function(Builder $query)
-            // {
-            //     $query->where('tipe_surat', 'Surat tugas pembimbing');
-            // })
-            // ->whereHas('skripsi.detail_skripsi.surat_tugas.status_surat_tugas', function(Builder $query)
+            
+            // ->whereHas('status_surat_tugas', function(Builder $query)
             // {
             //     $query->where('status', 'Disetujui KTU');
             // })
-            // ->first();
 
             $pembimbing['dosen1'] = $sutgas_pembimbing->dosen1;
             $pembimbing['dosen2'] = $sutgas_pembimbing->dosen2;

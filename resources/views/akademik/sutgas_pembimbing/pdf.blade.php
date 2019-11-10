@@ -63,7 +63,7 @@
 		}
 
 		#detail_table tr td:first-child{
-		   padding-right: 20px;
+		   padding-right: 15px;
          vertical-align: top;
 		}
 
@@ -78,6 +78,11 @@
 		.ttd-right{
 		   float: right;
 		}
+
+      .space_row{
+         padding-top: 7pt;
+         padding-bottom: 7pt;
+      }
 	</style>
 </head>
 <body>
@@ -126,7 +131,7 @@
                <td>: <b>Pembimbing Utama</b></td>
             </tr>
 
-            <tr><td colspan="2"><br></td></tr>
+            <tr><td class="space_row" colspan="2"></td></tr>
 
             <tr>
                <td>Nama</td>
@@ -145,8 +150,8 @@
                <td>: <b>Pembimbing Pendamping</b></td>
             </tr>
 
-            <tr><td colspan="2"><br></td></tr>
-            <tr><td colspan="2">untuk membimbing skripsi mahasiswa:</td></tr>
+            {{-- <tr><td colspan="2"><br></td></tr> --}}
+            <tr><td class="space_row" colspan="2">untuk membimbing skripsi mahasiswa:</td></tr>
             <tr>
                <td>Nama</td>
                <td>: {{ $surat_tugas->detail_skripsi->skripsi->mahasiswa->nama }}</td>
@@ -164,7 +169,7 @@
                <td>: {{ $surat_tugas->detail_skripsi->judul }}</td>
             </tr>
             <tr>
-               <td colspan="2">Demikian surat tugas ini ditetapkan untuk dilaksanakan sebaik-baiknya.</td>
+               <td class="space_row" colspan="2">Demikian surat tugas ini ditetapkan untuk dilaksanakan sebaik-baiknya.</td>
             </tr>
          </table>
 

@@ -216,7 +216,7 @@
                      </tr>
                      <tr>
                         <td>NIP / NRP</td>
-                        <td>: {{ $ssutgas_pembimbing->id_dosen2 }}</td>
+                        <td>: {{ $sutgas_pembimbing->id_dosen2 }}</td>
                      </tr>
                      <tr>
                         <td>Jabatan</td>
@@ -236,7 +236,7 @@
                      </tr>
                      <tr>
                         <td>Jabatan</td>
-                        <td>: {{ $surat_tugas->dsoen1->fungsional->jab_fungsional }}</td>
+                        <td>: {{ $surat_tugas->dosen1->fungsional->jab_fungsional }}</td>
                      </tr>
 
                      <tr>
