@@ -42,13 +42,16 @@
 		            				<td>{{ $item->status_skripsi->status }}</td>
 		            				<td>
 		            					<div class="btn-group">
-		            						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expand="false"></button>
+		            						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expand="false">Pilihan <i class="fa fa-caret-down"></i></button>
 		            						<ul class="dropdown-menu">
 		            							<li>
 		            								<a href="{{ route('akademik.data-skripsi.ubah-judul', $item->id) }}">Ubah Judul</a>
 		            							</li>
 		            							<li>
-		            								<a href="{{ route('akademik.sutgas-pembimbing.create') }}">Ubah Pembimbing</a>
+		            								<a href="{{ route('akademik.data-skripsi.ubah-judul-pembimbing', $item->id) }}">Ubah Judul & Pembimbing</a>
+		            							</li>
+		            							<li>
+		            								<a href="{{ route('akademik.data-skripsi.update-judul', $item->id) }}">Update Judul</a>
 		            							</li>
 		            						</ul>
 		            					</div>

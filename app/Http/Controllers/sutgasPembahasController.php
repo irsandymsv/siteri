@@ -90,9 +90,26 @@ class sutgasPembahasController extends suratTugasController
             "dosen1:no_pegawai,nama",
             "dosen2:no_pegawai,nama"
         ])->first();
-        // dd($surat_tugas);
+
+        $sutgas_pembimbing = surat_tugas::where('id_detail_skripsi', $surat_tugas->id_detail_skripsi)
+        ->with(['dosen1:no_pegawai,nama', 'dosen2:no_pegawai,nama'])
+        ->whereHas('tipe_surat_tugas', function(Builder $query)
+        {
+            $query->where('tipe_surat', 'Surat Tugas pembimbing');
+        })
+        ->wherehas('status_surat_tugas', function(Builder $query)
+        {
+            $query->where('status', 'Disetujui KTU');
+        })->orderBy('created_at')->first();
+
+        $pembimbing = array(
+            'dosen1' => $sutgas_pembimbing->dosen1,
+            'dosen2' => $sutgas_pembimbing->dosen2
+        );
+        // dd($pembimbing);
       return view('akademik.sutgas_pembahas.show', [
-        'surat_tugas' => $surat_tugas
+        'surat_tugas' => $surat_tugas,
+        'pembimbing' =>$pembimbing
       ]);
     }
 
@@ -108,15 +125,15 @@ class sutgasPembahasController extends suratTugasController
         ])->first();
 
         // $sutgas_pembimbing = surat_tugas::with(['detail_skripsi', 'tipe_surat_tugas', 'status_surat_tugas'])
-        // ->wherehas('detail_skripsi', function(Builder $query)
+        // ->whereHas('detail_skripsi', function(Builder $query)
         // {
         //     $query->where('id', $surat_tugas->detail_skripsi->id);
         // })
-        // ->wherehas('tipe_surat_tugas', function(Builder $query)
+        // ->whereHas('tipe_surat_tugas', function(Builder $query)
         // {
         //     $query->where('tipe_surat', 'Surat tugas pembimbing');
         // })
-        // ->wherehas('status_surat_tugas', function(Builder $query)
+        // ->whereHas('status_surat_tugas', function(Builder $query)
         // {
         //     $query->where('status', 'Diverifikasi KTU');
         // })
@@ -299,6 +316,12 @@ class sutgasPembahasController extends suratTugasController
         else if ($request->verif_ktu == 1) {
             $surat_tugas = $this->verif($surat_tugas,3,null);
             $surat_tugas->save();
+            
+            $detail = detail_skripsi::where('id', $surat_tugas->id_detail_skripsi)->with('skripsi')->first();
+            skripsi::where('id', $detail->id_skripsi)->update([
+                'id_status_skripsi' => 2
+            ]);
+            
             return redirect()->route('ktu.sutgas-pembahas.show', $id)->with('verif_ktu', 'verifikasi surat tugas berhasil, status surat tugas saat ini "Disetujui KTU"');
         }
     }

@@ -1,7 +1,7 @@
 @extends('akademik.akademik_view')
 
 @section('page_title')
-	Ubah Judul Skripsi
+	Update Judul Skripsi
 @endsection
 
 @section('css_link')
@@ -32,7 +32,7 @@
 @endsection
 
 @section('judul_header')
-	Ubah Judul Skripsi
+	Update Judul Skripsi
 @endsection
 
 @section('content')
@@ -40,7 +40,7 @@
    	<div class="col-xs-12">
    		<div class="box box-primary">
    			<div class="box-header">
-               <h3 class="box-title">Ubah Judul Skripsi</h3>
+               <h3 class="box-title">Update Judul Skripsi</h3>
 
                <br><br>
                @if (session('success'))
@@ -67,21 +67,10 @@
                @endif
             </div>
 
-            <form action="{{ route('akademik.data-skripsi.ubah-judul.store', $skripsi->id) }}" method="post">
+            <form action="{{ route('akademik.data-skripsi.update-judul.update', $skripsi->id) }}" method="post">
                <div class="box-body">
             		@csrf
-
-                  <div class="form-group">
-                     <label for="no_surat">No Surat</label><br>
-                     <input type="text" name="no_surat" id="no_surat" value="{{ old('no_surat') }}">
-                     <span id="format_nomor">/UN25.1.15/SP/{{ Carbon\Carbon::today()->year }}</span>
-
-                     @error('no_surat')
-                        <span class="invalid-feedback" role="alert" style="color: red;">
-                           <strong>{{ $message }}</strong>
-                        </span>
-                     @enderror
-                  </div>
+                  @method('PUT')
                   
                   <div class="row">
                      <div class="col-lg-6">
@@ -101,7 +90,7 @@
 
                   <div class="form-group">
                      <label for="judul">Judul Skripsi</label>
-                     <textarea name="judul" id="judul" class="form-control" rows="3">{{ old('judul') }}</textarea>
+                     <textarea name="judul" id="judul" class="form-control" rows="3">{{ $detail_skripsi->judul }}</textarea>
 
                      @error('judul')
                         <span class="invalid-feedback" role="alert" style="color: red;">
@@ -112,7 +101,7 @@
 
                   <div class="form-group">
                      <label for="judul_inggris">Judul Bahasa Inggris Skripsi</label>
-                     <textarea name="judul_inggris" id="judul_inggris" class="form-control" rows="3">{{ old('judul_inggris') }}</textarea>
+                     <textarea name="judul_inggris" id="judul_inggris" class="form-control" rows="3">{{ $detail_skripsi->judul_inggris }}</textarea>
 
                      @error('judul_inggris')
                         <span class="invalid-feedback" role="alert" style="color: red;">
