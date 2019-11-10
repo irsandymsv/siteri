@@ -124,7 +124,23 @@
                      </tr>
 
                      <tr>
-                        <td>Pembahas 1</td>
+                        <td>Pembimbing Utama</td>
+                        <td>
+                           <p>{{ $pembimbing['dosen1']->nama }}</p>
+                           <p>{{ $pembimbing['dosen1']->no_pegawai }}</p>
+                        </td>
+                     </tr>
+
+                     <tr>
+                        <td>Pembimbing Pendamping</td>
+                        <td>
+                           <p>{{ $pembimbing['dosen2']->nama }}</p>
+                           <p>{{ $pembimbing['dosen2']->no_pegawai }}</p>
+                        </td>
+                     </tr>
+
+                     <tr>
+                        <td>Pembahas I</td>
                         <td>
                            <p>{{ $surat_tugas->dosen1->nama }}</p>
                            <p>{{ $surat_tugas->id_dosen1 }}</p>
@@ -132,7 +148,7 @@
                      </tr>
 
                      <tr>
-                        <td>pembahas 2</td>
+                        <td>pembahas II</td>
                         <td>
                            <p>{{ $surat_tugas->dosen2->nama }}</p>
                            <p>{{ $surat_tugas->id_dosen2 }}</p>

@@ -51,11 +51,13 @@ class SkSemproController extends Controller
         $dosen = user::where('is_dosen', 1)->get();
         $mahasiswa = mahasiswa::with([
             "bagian",
-            "detail_skripsi",
-            "detail_skripsi.pembahas1:no_pegawai,nama",
-            "detail_skripsi.pembahas2:no_pegawai,nama"
+            "skripsi",
+            "skripsi.status_skripsi",
+            "skripsi.detail_skripsi",
+            "skripsi.detail_skripsi.surat_tugas.dosen1:no_pegawai,nama",
+            "skripsi.detail_skripsi.surat_tugas.dosen2:no_pegawai,nama"
         ])
-        ->whereHas("detail_skripsi", function(Builder $query)
+        ->whereHas("skripsi.status_skripsi", function(Builder $query)
         {
             $query->where([
                 // ["id_surat_tugas_pembahas", "<>",null],

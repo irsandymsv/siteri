@@ -28,8 +28,14 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
 
 	//Route data skripsi
 	Route::get('/data-skripsi', 'skripsiController@index')->name('data-skripsi.index');
-	Route::get('/data-skripsi/{id_skripsi}', 'skripsiController@ubahJudul')->name('data-skripsi.ubah-judul');
-	Route::put('data-skripsi/{id_skripsi}/update', 'skripsiController@updateJudul')->name('data-skripsi.update.judul');
+	Route::get('/data-skripsi/{id_skripsi}/ubah-judul', 'skripsiController@ubahJudul')->name('data-skripsi.ubah-judul');
+	Route::post('/data-skripsi/{id_skripsi}/ubah-judul/store', 'skripsiController@store_ubahJudul')->name('data-skripsi.ubah-judul.store');
+
+	Route::get('/data-skripsi/{id_skripsi}/ubah-judul-pembimbing', 'skripsiController@ubahJudulPembimbing')->name('data-skripsi.ubah-judul-pembimbing');
+	Route::post('/data-skripsi/{id_skripsi}/ubah-judul-pembimbing/store', 'skripsiController@store_ubahJudulPembimbing')->name('data-skripsi.ubah-judul-pembimbing.store');
+	
+	Route::get('data-skripsi/{id_skripsi}/update-judul', 'skripsiController@updateJudul')->name('data-skripsi.update-judul');
+	Route::put('data-skripsi/{id_skripsi}/update-judul/update', 'skripsiController@store_updateJudul')->name('data-skripsi.update-judul.update');
 
 	//Route Surat Tugas Pembimbing
 	Route::get('/surat-tugas-pembimbing', 'sutgasPembimbingController@index')->name("sutgas-pembimbing.index");
