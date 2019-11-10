@@ -138,6 +138,13 @@ class sutgasPembimbingController extends suratTugasController
             'id_pembimbing_pendamping' => 'required'
         ]);
         try {
+            skripsi::where('id', $request->input('id_skripsi'))->update([
+                'nim' => $request->input('nim')
+            ]);
+            detail_skripsi::where('id', $request->input('id_detail_skripsi'))->update([
+                'id_keris' => $request->input('id_keris'),
+                'judul' => $request->input('judul')
+            ]);
             $this->update_sutgas(
                 $request,
                 1,
@@ -146,18 +153,19 @@ class sutgasPembimbingController extends suratTugasController
                 'id_pembimbing_utama',
                 'id_pembimbing_pendamping'
             );
-            detail_skripsi::where('id',$request->input('id_detail_skripsi'))->update([
-                'id_keris' => $request->input('id_keris'),
-                'judul' => $request->input('judul')
-            ]);
-            skripsi::where('id',$request->input('id_skripsi'))->update([
-                'nim' => $request->input('nim')
-            ]);
             return redirect()->route('akademik.sutgas-pembimbing.show',$id)->with('success', 'Data Surat Tugas Berhasil Diubah');
         } catch (Exception $e) {
             dd($e->getMessage());
             return redirect()->route('akademik.sutgas-pembimbing.edit', $id)->with('error', $e->getMessage());
         }
+    }
+
+    private function update_detail_skripsi(Request $request)
+    {
+        detail_skripsi::where('id', $request->input('id_detail_skripsi'))->update([
+            'id_keris' => $request->input('id_keris'),
+            'judul' => $request->input('judul')
+        ]);
     }
 
     public function cetak_pdf($id)

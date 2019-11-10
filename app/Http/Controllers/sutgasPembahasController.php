@@ -75,7 +75,7 @@ class sutgasPembahasController extends suratTugasController
             ->update([
                 'judul_inggris' => $request->input('judul_inggris'),
         ]);
-        $detail_skripsi = detail_skripsi::where('id_skripsi', $id_skripsi)->orderBy('created_at', 'desc')->first();
+        $detail_skripsi = detail_skripsi::where('id_skripsi', $id_skripsi)->orderBy('created_at', 'desc')->first();;
         return $detail_skripsi;
     }
 
@@ -130,7 +130,7 @@ class sutgasPembahasController extends suratTugasController
         $mahasiswa = mahasiswa::with(['skripsi', 'skripsi.status_skripsi'])
         ->whereHas('skripsi.status_skripsi', function(Builder $query)
         {
-            $query->where('status', 'Sudah punya pembimbing');
+            $query->where('status', 'Sudah Punya Pembimbing');
         })->orWhere("nim", $surat_tugas->detail_skripsi->skripsi->nim)->get();
         $dosen = user::where('is_dosen', 1)->get();
         // dd($mahasiswa);
@@ -155,22 +155,36 @@ class sutgasPembahasController extends suratTugasController
             'nim' =>'required'
         ]);
         try {
-            $this->update_sutgas(
-                $request,
-                2,
-                $request->status,
-                $id,
-                'id_pembahas1',
-                'id_pembahas2'
-            );
-            detail_skripsi::where('id', $request->input('id_detail_skripsi'))->update([
-                'judul_inggris' => $request->input('judul_inggris')
-            ]);
-            skripsi::where('id', $request->input('id_skripsi'))->update([
-                'nim' => $request->input('nim')
-            ]);
-
-
+            if ($request->input('nim') != $request->input('original_nim')) {
+                $skripsi = skripsi::where('nim', $request->input('nim'))->first();
+                $detail_skripsi = detail_skripsi::where('id_skripsi', $skripsi->id)->max('created_at')->first();
+                $detail_skripsi->judul_inggris = $request->input('judul_inggris');
+                $detail_skripsi->save();
+                $this->update_sutgas_beda_nim(
+                    $request,
+                    2,
+                    $request->status,
+                    $id,
+                    $detail_skripsi->id,
+                    'id_pembahas1',
+                    'id_pembahas2'
+                );
+                detail_skripsi::where('id', $request->input('id_detail_skripsi'))->update([
+                    'judul_inggris' =>  null
+                ]);
+            }else{
+                $this->update_sutgas(
+                    $request,
+                    2,
+                    $request->status,
+                    $id,
+                    'id_pembahas1',
+                    'id_pembahas2'
+                );
+                detail_skripsi::where('id', $request->input('id_detail_skripsi'))->update([
+                    'judul_inggris' => $request->input('judul_inggris')
+                ]);
+            }
             return redirect()->route('akademik.sutgas-pembahas.show', $id)->with('success', 'Data Surat Tugas Berhasil Dirubah');
         } catch (Exception $e) {
             return redirect()->route('akademik.sutgas-pembahas.edit', $id)->with('error', $e->getMessage());
