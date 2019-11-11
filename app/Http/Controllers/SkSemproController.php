@@ -340,6 +340,18 @@ class SkSemproController extends Controller
         }
     }
 
+    public function editPenetapan()
+    {
+        return view('akademik.SK_view.edit_penetapan', [
+            'tipe' => 'sk sempro'
+        ]);
+    }
+
+    public function updatePenetapan(Request $request)
+    {
+        dd($request->all());
+    }
+
 
     //KTU
     public function ktu_index_sempro()

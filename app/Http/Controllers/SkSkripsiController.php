@@ -268,6 +268,16 @@ class SkSkripsiController extends Controller
 		}
 	}
 
+	public function editPenetapan()
+	{
+	    return view('akademik.SK_view.edit_penetapan');
+	}
+
+	public function updatePenetapan()
+	{
+	    
+	}
+
 
 	//KTU
 	public function ktu_index_skripsi()

@@ -40,6 +40,7 @@
 	    <ul class="treeview-menu">
 	      <li><a href="{{route('akademik.sempro.create')}}">Buat Baru</a></li>
 	      <li><a href="{{ route('akademik.sempro.index') }}">Lihat Semua</a></li>
+	      <li><a href="{{ route('akademik.sempro.edit-penetapan-sk') }}">Ubah Halaman Penetapan</a></li>
 	    </ul>
 	</li>
 
@@ -52,6 +53,7 @@
 	    <ul class="treeview-menu">
 	      <li><a href="{{route('akademik.skripsi.create')}}">Buat Baru</a></li>
 	      <li><a href="{{ route('akademik.skripsi.index') }}">Lihat Semua</a></li>
+	      <li><a href="{{ route('akademik.skripsi.edit-penetapan-sk') }}">Ubah Halaman Penetapan</a></li>
 	    </ul>
 	</li>
 @endsection
