@@ -129,7 +129,9 @@
 			            			<th>Nama Mahasiswa</th>
 			            			<th>Jurusan</th>
 			            			<th>Judul</th>
+			            			@if ($tipe == "sk skripsi")
 			            			<th>Pembimbing</th>
+			            			@endif
 			            			<th>
 			            				@if($tipe == "SK Skripsi")
 			            					Penguji
@@ -144,32 +146,27 @@
 			            		@foreach($detail_skripsi as $item)
 		            			<tr>
 		            				<th>{{ $no+=1 }}</th>
-		            				<td>{{$item->nim}}</td>
-		            				<td>{{$item->mahasiswa->nama}}</td>
-		            				<td>{{$item->mahasiswa->bagian->bagian}}</td>
+		            				<td>{{$item->skripsi->nim}}</td>
+		            				<td>{{$item->skripsi->mahasiswa->nama}}</td>
+		            				<td>{{$item->skripsi->mahasiswa->bagian->bagian}}</td>
 		            				<td>{{$item->judul}}</td>
+		            				@if ($tipe == "SK Skripsi")
 		            				<td >
 		            					<div class="tbl_row">
-	            							1. {{$item->pembimbing_utama->nama}}
+	            							1. {{$item->surat_tugas[0]->dosen1->nama}}
 	            						</div>
 	            						<div class="tbl_row">
-	            							2. {{$item->pembimbing_pendamping->nama}}
+	            							2. {{$item->surat_tugas[0]->dosen2->nama}}
 	            						</div>	
 		            				</td>
+		            				@endif
+		            				
 		            				<td>
 		            					<div class="tbl_row">
-		            						@if($tipe == "SK Skripsi")
-		            							1. {{$item->penguji_utama->nama}}
-				            				@else
-				            					1. {{$item->pembahas1->nama}}
-				            				@endif
+		            						1. {{$item->surat_tugas[0]->dosen1->nama}}
 		            					</div>
 		            					<div class="tbl_row">
-		            						@if($tipe == "SK Skripsi")
-		            							2. {{$item->penguji_pendamping->nama}}
-				            				@else
-				            					2. {{$item->pembahas2->nama}}
-				            				@endif
+		            						2. {{$item->surat_tugas[0]->dosen2->nama}}
 		            					</div>
 		            				</td>
 		            			</tr>

@@ -152,7 +152,7 @@
                            @else
                               @foreach ($mahasiswa as $item)
                                  @foreach ($detail_skripsi as $detail)
-                                    @continue($item->nim == $detail->nim)
+                                    @continue($item->nim == $detail->skripsi->nim)
 
                                     <option value="{{ $item->nim }}">{{ $item->nim }}</option>
                                  @endforeach
@@ -184,14 +184,14 @@
                                  </td>
                                  <td>{{ $val->nama }}</td>
                                  <td>{{ $val->bagian->bagian }}</td>
-                                 <td style="width: 350px;" >{{ $val->detail_skripsi->judul }}</td>
+                                 <td style="width: 350px;" >{{ $val->skripsi->detail_skripsi[0]->judul }}</td>
                                  <td>
                                     <div class="tbl_row">
-                                       1. {{ $val->detail_skripsi->pembahas1->nama }}
+                                       1. {{ $val->skripsi->detail_skripsi[0]->surat_tugas[0]->dosen1->nama }}
                                     </div>
 
                                     <div class="tbl_row">
-                                       2. {{ $val->detail_skripsi->pembahas2->nama }}
+                                       2. {{ $val->skripsi->detail_skripsi[0]->surat_tugas[0]->dosen2->nama }}
                                     </div>
                                  </td>
                                  <td>
@@ -203,19 +203,19 @@
                            @foreach($detail_skripsi as $index => $val)
                               <tr id="{{ $index }}">
                                  <td style="width: 60px;">
-                                    {{ $val->nim }}
-                                    <input type="hidden" name="nim[]" value="{{ $val->nim }}">
+                                    {{ $val->skripsi->nim }}
+                                    <input type="hidden" name="nim[]" value="{{ $val->skripsi->nim }}">
                                  </td>
-                                 <td>{{ $val->mahasiswa->nama }}</td>
-                                 <td>{{ $val->mahasiswa->bagian->bagian }}</td>
+                                 <td>{{ $val->skripsi->mahasiswa->nama }}</td>
+                                 <td>{{ $val->skripsi->mahasiswa->bagian->bagian }}</td>
                                  <td style="width: 350px;" >{{ $val->judul }}</td>
                                  <td>
                                     <div class="tbl_row">
-                                       1. {{ $val->pembahas1->nama }}
+                                       1. {{ $val->surat_tugas[0]->dosen1->nama }}
                                     </div>
 
                                     <div class="tbl_row">
-                                       2. {{ $val->pembahas2->nama }}
+                                       2. {{ $val->surat_tugas[0]->dosen2->nama }}
                                     </div>
                                  </td>
                                  <td>
@@ -285,10 +285,10 @@
                      </td>
                      <td class="nama_mhs" >`+val.nama+`</td>
                      <td>`+val.bagian.bagian+`</td>
-                     <td style="width: 350px;" >`+val.detail_skripsi.judul+`</td>
+                     <td style="width: 350px;" >`+val.skripsi.detail_skripsi[0].judul+`</td>
                      <td>
-                        <div class="tbl_row">1. `+val.detail_skripsi.pembahas1.nama+`</div>
-                        <div class="tbl_row">2. `+val.detail_skripsi.pembahas2.nama+`</div>
+                        <div class="tbl_row">1. `+val.skripsi.detail_skripsi[0].surat_tugas[0].dosen1.nama+`</div>
+                        <div class="tbl_row">2. `+val.skripsi.detail_skripsi[0].surat_tugas[0].dosen2.nama+`</div>
                      </td>
                      <td >
                         <button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>

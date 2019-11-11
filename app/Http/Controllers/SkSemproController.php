@@ -42,9 +42,19 @@ class SkSemproController extends Controller
             $old_mahasiswa = mahasiswa::whereIn('nim', $request->old()["nim"])
             ->with([
                 "bagian",
-                "detail_skripsi",
-                "detail_skripsi.pembahas1:no_pegawai,nama",
-                "detail_skripsi.pembahas2:no_pegawai,nama"
+                "skripsi",
+                "skripsi.status_skripsi",
+                "skripsi.detail_skripsi" => function($query)
+                {
+                    $query->orderBy('created_at', 'desc');
+                },
+                "skripsi.detail_skripsi.surat_tugas" => function($query)
+                {
+                    $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
+                },
+                "skripsi.detail_skripsi.surat_tugas.tipe_surat_tugas",
+                "skripsi.detail_skripsi.surat_tugas.dosen1:no_pegawai,nama",
+                "skripsi.detail_skripsi.surat_tugas.dosen2:no_pegawai,nama"
             ])->get();
         }
 
@@ -53,17 +63,23 @@ class SkSemproController extends Controller
             "bagian",
             "skripsi",
             "skripsi.status_skripsi",
-            "skripsi.detail_skripsi",
+            "skripsi.detail_skripsi" => function($query)
+            {
+                $query->orderBy('created_at', 'desc');
+            },
+            "skripsi.detail_skripsi.surat_tugas" => function($query)
+            {
+                $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
+            },
+            "skripsi.detail_skripsi.surat_tugas.tipe_surat_tugas",
             "skripsi.detail_skripsi.surat_tugas.dosen1:no_pegawai,nama",
             "skripsi.detail_skripsi.surat_tugas.dosen2:no_pegawai,nama"
         ])
         ->whereHas("skripsi.status_skripsi", function(Builder $query)
         {
-            $query->where([
-                // ["id_surat_tugas_pembahas", "<>",null],
-                ["id_sk_skripsi", null]
-            ]);
+            $query->where("status", "Sudah punya pembahas");
         })->get();
+
         // dd($mahasiswa);
         return view('akademik.SK_view.create', [
             'dosen' => $dosen,
@@ -108,14 +124,19 @@ class SkSemproController extends Controller
     {
         $sk = sk_sempro::find($id);
         $detail_skripsi = detail_skripsi::where('id_sk_sempro', $id)
-            ->with([
-                'mahasiswa',
-                'mahasiswa.bagian',
-                'pembimbing_utama:no_pegawai,nama',
-                'pembimbing_pendamping:no_pegawai,nama',
-                'pembahas1:no_pegawai,nama',
-                'pembahas2:no_pegawai,nama',
-            ])->get();
+        ->with([
+            'skripsi',
+            'skripsi.mahasiswa',
+            'skripsi.mahasiswa.bagian',
+            'surat_tugas' => function($query)
+            {
+                $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
+            },
+            'surat_tugas.tipe_surat_tugas',
+            'surat_tugas.dosen1:no_pegawai,nama',
+            'surat_tugas.dosen2:no_pegawai,nama',
+        ])->get();
+
         // dd($detail_sk);
         return view('akademik.SK_view.show', [
             'sk' => $sk,
@@ -134,9 +155,19 @@ class SkSemproController extends Controller
             $old_mahasiswa = mahasiswa::whereIn('nim', $request->old()["nim"])
             ->with([
                 "bagian",
-                "detail_skripsi",
-                "detail_skripsi.pembahas1:no_pegawai,nama",
-                "detail_skripsi.pembahas2:no_pegawai,nama"
+                "skripsi",
+                "skripsi.status_skripsi",
+                "skripsi.detail_skripsi" => function($query)
+                {
+                    $query->orderBy('created_at', 'desc');
+                },
+                "skripsi.detail_skripsi.surat_tugas" => function($query)
+                {
+                    $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
+                },
+                "skripsi.detail_skripsi.surat_tugas.tipe_surat_tugas",
+                "skripsi.detail_skripsi.surat_tugas.dosen1:no_pegawai,nama",
+                "skripsi.detail_skripsi.surat_tugas.dosen2:no_pegawai,nama"
             ])->get();
         }
 
@@ -144,36 +175,64 @@ class SkSemproController extends Controller
             $sk = sk_sempro::find($id);
             $dosen = user::where('is_dosen', 1)->get();
             $detail_skripsi = detail_skripsi::where('id_sk_sempro', $id)
-                ->with([
-                    'mahasiswa',
-                    'mahasiswa.bagian',
-                    'pembahas1:no_pegawai,nama',
-                    'pembahas2:no_pegawai,nama',
-                    'pembimbing_utama:no_pegawai,nama',
-                    'pembimbing_pendamping:no_pegawai,nama'
-                ])->get();
+            ->with([
+                'skripsi',
+                'skripsi.mahasiswa',
+                'skripsi.mahasiswa.bagian',
+                'surat_tugas' => function($query)
+                {
+                    $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
+                },
+                'surat_tugas.tipe_surat_tugas',
+                'surat_tugas.dosen1:no_pegawai,nama',
+                'surat_tugas.dosen2:no_pegawai,nama',
+            ])->get();
 
             $mahasiswa = mahasiswa::with([
                 "bagian",
-                "detail_skripsi",
-                "detail_skripsi.pembahas1:no_pegawai,nama",
-                "detail_skripsi.pembahas2:no_pegawai,nama"
+                "skripsi",
+                "skripsi.status_skripsi",
+                "skripsi.detail_skripsi" => function($query)
+                {
+                    $query->orderBy('created_at', 'desc');
+                },
+                "skripsi.detail_skripsi.surat_tugas" => function($query)
+                {
+                    $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
+                },
+                "skripsi.detail_skripsi.surat_tugas.tipe_surat_tugas",
+                "skripsi.detail_skripsi.surat_tugas.dosen1:no_pegawai,nama",
+                "skripsi.detail_skripsi.surat_tugas.dosen2:no_pegawai,nama"
             ])
-            ->whereHas("detail_skripsi", function(Builder $query)
+            ->whereHas("skripsi.status_skripsi", function(Builder $query)
             {
-                $query->where([
-                    ["id_surat_tugas_pembahas", "<>",null],
-                    ["id_sk_sempro", null]
-                ]);
+                $query->where("status", "Sudah punya pembahas");
             })
             ->get();
-
+            // ->whereHas("detail_skripsi", function(Builder $query)
+            // {
+            //     $query->where([
+            //         ["id_surat_tugas_pembahas", "<>",null],
+            //         ["id_sk_sempro", null]
+            //     ]);
+            // })
+            
             foreach ($detail_skripsi as $value) {
-                $mhs = mahasiswa::where("nim", $value->nim)->with([
+                $mhs = mahasiswa::where("nim", $value->skripsi->nim)->with([
                     "bagian",
-                    "detail_skripsi",
-                    "detail_skripsi.pembahas1:no_pegawai,nama",
-                    "detail_skripsi.pembahas2:no_pegawai,nama"
+                    "skripsi",
+                    "skripsi.status_skripsi",
+                    "skripsi.detail_skripsi" => function($query)
+                    {
+                        $query->orderBy('created_at', 'desc');
+                    },
+                    "skripsi.detail_skripsi.surat_tugas" => function($query)
+                    {
+                        $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
+                    },
+                    "skripsi.detail_skripsi.surat_tugas.tipe_surat_tugas",
+                    "skripsi.detail_skripsi.surat_tugas.dosen1:no_pegawai,nama",
+                    "skripsi.detail_skripsi.surat_tugas.dosen2:no_pegawai,nama"
                 ])->first();
                 $mahasiswa->push($mhs);
             }

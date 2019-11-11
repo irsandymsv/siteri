@@ -178,13 +178,13 @@
                                  </td>
                                  <td>{{ $val->nama }}</td>
                                  <td>{{ $val->bagian->bagian }}</td>
-                                 <td style="width: 350px;" >{{ $val->detail_skripsi->judul }}</td>
+                                 <td style="width: 350px;" >{{ $val->skripsi->detail_skripsi[0]->judul }}</td>
                                  <td>
                                     <div class="tbl_row">
-                                       1. {{ $val->detail_skripsi->pembahas1->nama }}
+                                       1. {{ $val->skripsi->detail_skripsi[0]->surat_tugas[0]->dosen1->nama }}
                                     </div>
                                     <div class="tbl_row">
-                                       2. {{ $val->detail_skripsi->pembahas2->nama }}
+                                       2. {{ $val->skripsi->detail_skripsi[0]->surat_tugas[0]->dosen2->nama }}
                                     </div>
                                  </td>
                                  <td>
@@ -223,6 +223,7 @@
 	<script type="text/javascript">
 		$('.select2').select2();
 		var mahasiswa = @json($mahasiswa);
+      // console.log(mahasiswa[0].skripsi.detail_skripsi);
 
       $("button[name='simpan_draf']").click(function(event) {
          event.preventDefault();
@@ -255,10 +256,10 @@
                      </td>
                      <td class="nama_mhs" >`+val.nama+`</td>
                      <td>`+val.bagian.bagian+`</td>
-                     <td style="width: 350px;" >`+val.detail_skripsi.judul+`</td>
+                     <td style="width: 350px;" >`+val.skripsi.detail_skripsi[0].judul+`</td>
                      <td>
-                        <div class="tbl_row">1. `+val.detail_skripsi.pembahas1.nama+`</div>
-                        <div class="tbl_row">2. `+val.detail_skripsi.pembahas2.nama+`</div>
+                        <div class="tbl_row">1. `+val.skripsi.detail_skripsi[0].surat_tugas[0].dosen1.nama+`</div>
+                        <div class="tbl_row">2. `+val.skripsi.detail_skripsi[0].surat_tugas[0].dosen2.nama+`</div>
                      </td>
                      <td>
                         <button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
