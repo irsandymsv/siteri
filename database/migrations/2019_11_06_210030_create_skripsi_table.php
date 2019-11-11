@@ -16,7 +16,7 @@ class CreateSkripsiTable extends Migration
         Schema::create('skripsi', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nim')->length(14)->nullable();
-            $table->unsignedInteger('id_status_skripsi')->default(1)->nullable();
+            $table->unsignedInteger('id_status_skripsi')->nullable();
 
             $table->foreign('nim')->references('nim')->on('mahasiswa')->onDelete('set null');
             $table->foreign('id_status_skripsi')->references('id')->on('status_skripsi')->onDelete('set null');

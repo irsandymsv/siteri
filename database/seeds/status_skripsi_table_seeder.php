@@ -13,6 +13,7 @@ class status_skripsi_table_seeder extends Seeder
     public function run()
     {
         status_skripsi::insert([
+            ['status' => 'Belum Punya Pembimbing'],
             ['status' => 'Sudah Punya Pembimbing'],
             ['status' => 'Sudah Punya Pembahas'],
             ['status' => 'Sudah Sempro'],

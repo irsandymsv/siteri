@@ -41,7 +41,6 @@
    		<div class="box box-primary">
    			<div class="box-header">
                <h3 class="box-title">Update Judul Skripsi</h3>
-
                <br><br>
                @if (session('success'))
                <div class="alert alert-success alert-dismissible">
@@ -60,23 +59,23 @@
                    <h4><i class="icon fa fa-ban"></i>Error</h4>
                    {{session('error')}}
                </div>
-
                @php
                Session::forget('error');
                @endphp
                @endif
             </div>
 
-            <form action="{{ route('akademik.data-skripsi.update-judul.update', $skripsi->id) }}" method="post">
+            <form action="{{ route('akademik.data-skripsi.update-judul.update', $detail_skripsi->id) }}" method="post">
                <div class="box-body">
             		@csrf
                   @method('PUT')
-                  
+
                   <div class="row">
                      <div class="col-lg-6">
                         <div class="form-group">
+                        <input type="hidden" name="id_skripsi" value="{{$skripsi->id}}">
                            <label for="nim">NIM Mahasiswa</label><br>
-                           <p id="nim">{{ $skripsi->nim }}</p>
+                           <p id="nim" name="nim">{{ $skripsi->nim }}</p>
                         </div>
                      </div>
 
@@ -112,7 +111,6 @@
                </div>
 
                <div class="box-footer">
-                  <input type="hidden" name="status" value="">
                   <a href="{{ route('akademik.data-skripsi.index') }}" class="btn btn-default">Batal</a> &ensp;
 
                   <div id="btn_group">
@@ -128,5 +126,5 @@
 @endsection
 
 @section('script')
-	
+
 @endsection
