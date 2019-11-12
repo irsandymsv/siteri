@@ -151,11 +151,9 @@
                               @endforeach
                            @else
                               @foreach ($mahasiswa as $item)
-                                 @foreach ($detail_skripsi as $detail)
-                                    @continue($item->nim == $detail->skripsi->nim)
-
+                                 @if (!in_array($item->nim, $nim_detail))
                                     <option value="{{ $item->nim }}">{{ $item->nim }}</option>
-                                 @endforeach
+                                 @endif
                               @endforeach
                            @endif
                         </select>
@@ -303,7 +301,7 @@
 
                var status = false;
                $.each(detail_skripsi, function(index2, el) {
-                  if (val.nim == detail_skripsi.skripsi.nim) {
+                  if (val.nim == el.skripsi.nim) {
                      status = true;
                      return false;
                   }
@@ -336,7 +334,7 @@
             $('#pilih_nim').append(newOption).trigger('change');
 
             $.each(detail_skripsi, function(index2, el) {
-               if (nim == detail_skripsi.skripsi.nim) {
+               if (nim == el.skripsi.nim) {
                   $("input[name='"+nim+"']").val(3);
                   return false;
                }

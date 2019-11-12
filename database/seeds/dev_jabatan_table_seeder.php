@@ -14,9 +14,9 @@ class dev_jabatan_table_seeder extends Seeder
     {
         jabatan::insert([
             ['jabatan' => 'Dekan'],
-            ['jabatan' => 'Jabatan 2'],
-            ['jabatan' => 'Jabatan 3'],
-            ['jabatan' => 'Jabatan 4'],
+            ['jabatan' => 'Wakil Dekan 1'],
+            ['jabatan' => 'Wakil Dekan 2'],
+            ['jabatan' => 'Dosen'],
         ]);
     }
 }

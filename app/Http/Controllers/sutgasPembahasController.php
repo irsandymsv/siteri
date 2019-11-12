@@ -260,7 +260,9 @@ class sutgasPembahasController extends suratTugasController
             ->whereHas('status_surat_tugas', function (Builder $query){
                 $query->whereIn('status', ['Dikirim', 'Disetujui KTU']);
             })
-            ->orderBy('updated_at', 'desc')->get();
+            ->orderBy('verif_ktu')
+            ->orderBy('updated_at', 'desc')
+            ->get();
 
         // dd($surat_tugas);
         return view('ktu.sutgas_akademik.index', [

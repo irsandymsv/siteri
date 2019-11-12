@@ -191,6 +191,11 @@ class SkSemproController extends Controller
                 'surat_tugas.dosen2:no_pegawai,nama',
             ])->get();
 
+            $nim_detail = [];
+            foreach ($detail_skripsi as $val) {
+                $nim_detail[] = $val->skripsi->nim;
+            }
+
             $mahasiswa = mahasiswa::with([
                 "bagian",
                 "skripsi",
@@ -220,30 +225,11 @@ class SkSemproController extends Controller
             //     ]);
             // })
 
-            foreach ($detail_skripsi as $value) {
-                $mhs = mahasiswa::where("nim", $value->skripsi->nim)->with([
-                    "bagian",
-                    "skripsi",
-                    "skripsi.status_skripsi",
-                    "skripsi.detail_skripsi" => function($query)
-                    {
-                        $query->orderBy('created_at', 'desc');
-                    },
-                    "skripsi.detail_skripsi.surat_tugas" => function($query)
-                    {
-                        $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
-                    },
-                    "skripsi.detail_skripsi.surat_tugas.tipe_surat_tugas",
-                    "skripsi.detail_skripsi.surat_tugas.dosen1:no_pegawai,nama",
-                    "skripsi.detail_skripsi.surat_tugas.dosen2:no_pegawai,nama"
-                ])->first();
-                $mahasiswa->push($mhs);
-            }
-
-            // dd($mahasiswa);
+            // dd($nim_detail);
             return view('akademik.SK_view.edit', [
                 'sk' => $sk,
                 'detail_skripsi' => $detail_skripsi,
+                'nim_detail' => $nim_detail,
                 'mahasiswa' => $mahasiswa,
                 'dosen' => $dosen,
                 'old_data' => $old_data,
