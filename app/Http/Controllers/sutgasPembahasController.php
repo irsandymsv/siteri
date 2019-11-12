@@ -321,18 +321,13 @@ class sutgasPembahasController extends suratTugasController
             $request->validate([
                 'pesan_revisi' => 'required|string'
             ]);
-            $surat_tugas = $this->verif($surat_tugas, 1, $request->pesan_revisi);
+            $surat_tugas = $this->verif($surat_tugas, 1, $request->pesan_revisi,null);
             $surat_tugas->save();
             return redirect()->route('ktu.sutgas-pembahas.index')->with("verif_ktu", 'Surat tugas berhasil ditarik, status kembali menjadi "Draft"');
         }
         else if ($request->verif_ktu == 1) {
-            $surat_tugas = $this->verif($surat_tugas,3,null);
+            $surat_tugas = $this->verif($surat_tugas,3,null,3);
             $surat_tugas->save();
-
-            $detail = detail_skripsi::where('id', $surat_tugas->id_detail_skripsi)->with('skripsi')->first();
-            skripsi::where('id', $detail->id_skripsi)->update([
-                'id_status_skripsi' => 2
-            ]);
 
             return redirect()->route('ktu.sutgas-pembahas.show', $id)->with('verif_ktu', 'verifikasi surat tugas berhasil, status surat tugas saat ini "Disetujui KTU"');
         }

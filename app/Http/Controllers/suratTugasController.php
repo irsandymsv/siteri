@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\surat_tugas;
 use App\detail_skripsi;
 use App\mahasiswa;
+use App\skripsi;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -103,10 +104,17 @@ class suratTugasController extends Controller
     //     }
     // }
 
-    protected function verif($surat_tugas, int $id_status_surat_tugas, $pesan_revisi)
+    protected function verif($surat_tugas, int $id_status_surat_tugas, $pesan_revisi,$id_status_skripsi)
     {
         $surat_tugas->id_status_surat_tugas = $id_status_surat_tugas;
         $surat_tugas->pesan_revisi = $pesan_revisi;
+        if($id_status_skripsi != null){
+            $skripsi = skripsi::whereHas('detail_skripsi', function (Builder $query) use ($surat_tugas) {
+                $query->where('id', $surat_tugas->id_detail_skripsi);
+            })->update([
+                'id_status_skripsi' => $id_status_skripsi
+            ]);
+        }
         return $surat_tugas;
     }
 
@@ -129,7 +137,7 @@ class suratTugasController extends Controller
                 $query->where('tipe_surat', 'Surat Tugas Pembimbing');
             })
             ->orderBy('created_at', 'desc')->first();
-            
+
             // ->whereHas('status_surat_tugas', function(Builder $query)
             // {
             //     $query->where('status', 'Disetujui KTU');

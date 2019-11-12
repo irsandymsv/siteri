@@ -93,23 +93,26 @@ class SkSemproController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            "no_surat" => "required",
+            "no_surat" => "required|unique:sk_sempro,no_surat",
             'tgl_sempro1' => "required",
             'tgl_sempro2' => "required",
             "nim" => "required|array",
-            "nim.*" => "required|string|max:20"
+            "nim.*" => "required|string"
         ]);
 
         try {
             $sk_sempro = sk_sempro::create([
                 "no_surat" => $request->input("no_surat"),
-                "tgl_sempro1" => $request->input("tgl_sempro1"),
-                "tgl_sempro2" => $request->input("tgl_sempro2"),
+                "tgl_sempro1" => carbon::parse($request->input("tgl_sempro1")),
+                "tgl_sempro2" => carbon::parse($request->input("tgl_sempro2")),
                 "id_status_sk" => $request->input("status")
             ]);
 
             foreach ($request->nim as $nim) {
-                detail_skripsi::where('nim',$nim)->update([
+                detail_skripsi::whereHas('skripsi',function (builder $query) use ($nim){
+                    $query->where('nim',$nim);
+                })->orderBy('created_at','desc')
+                ->update([
                     "id_sk_sempro" => $sk_sempro->no_surat
                 ]);
             }
@@ -216,7 +219,7 @@ class SkSemproController extends Controller
             //         ["id_sk_sempro", null]
             //     ]);
             // })
-            
+
             foreach ($detail_skripsi as $value) {
                 $mhs = mahasiswa::where("nim", $value->skripsi->nim)->with([
                     "bagian",
@@ -247,7 +250,7 @@ class SkSemproController extends Controller
                 'old_mahasiswa' => $old_mahasiswa,
                 'tipe' => 'sk sempro'
             ]);
-        // } 
+        // }
         // catch (Exception $e) {
         //     return redirect()->route('akademik.sempro.index')->with('error', $e->getMessage());
         // }
@@ -263,18 +266,6 @@ class SkSemproController extends Controller
             "nama.*"  => "required|string|max:40",
             "nim" => "required|array",
             "nim.*" => "required|string|max:20",
-            "jurusan" => "required|array",
-            "jurusan.*" => "required",
-            "judul" => "required|array",
-            "judul.*" => "required",
-            "pembimbing_utama" => "required|array",
-            "pembimbing_utama.*" => "required",
-            "pembimbing_pendamping" => "required|array",
-            "pembimbing_pendamping.*" => "required",
-            "penguji_utama" => "required|array",
-            "penguji_utama.*" => "required",
-            "penguji_pendamping" => "required|array",
-            "penguji_pendamping.*" => "required",
             "no_surat" => "required"
         ]);
 

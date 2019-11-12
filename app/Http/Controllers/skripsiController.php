@@ -55,7 +55,7 @@ class skripsiController extends suratTugasController
         ]);
         try{
             skripsi::where('id',$id)->update([
-                'id_status_skripsi' => null
+                'id_status_skripsi' => 1
             ]);
             $detail_skripsi = detail_skripsi::create([
                 'judul' => $request->input('judul'),
