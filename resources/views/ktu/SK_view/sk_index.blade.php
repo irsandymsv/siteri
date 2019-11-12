@@ -62,7 +62,7 @@
 			            	</thead>
 			            	<tbody>
 			            		@php $no = 0 @endphp
-			            		@foreach($sk_akademik as $item)
+			            		@foreach($sk as $item)
 			            			<tr id="sk_{{$item->id}}">
 			            				<td>{{$no+=1}}</td>
 			            				<td>
@@ -89,9 +89,9 @@
 			            				</td>
 			            				<td>
 			            					@if($tipe == "SK Skripsi")
-			            					<a href="{{ route('ktu.sk-skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+			            					<a href="{{ route('ktu.sk-skripsi.show', $item->no_surat) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
 			            					@else
-			            					<a href="{{ route('ktu.sk-sempro.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+			            					<a href="{{ route('ktu.sk-sempro.show', $item->no_surat) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
 			            					@endif
 			            					{{-- <a href="#" class="btn btn-success" id="{{ $item->id }}" name="verif_sk" title="Setujui SK" data-toggle="modal" data-target="#modal-success"><i class="fa fa-check"></i></a> --}}
 			            				</td>

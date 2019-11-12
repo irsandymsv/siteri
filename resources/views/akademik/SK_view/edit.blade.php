@@ -48,7 +48,7 @@
       	<div class="col-xs-12">
       		<div class="box box-primary">
       			<div class="box-header">
-                  <h3 class="box-title">Buat SK {{ ($tipe == "sk skripsi"? "Skripsi" : "Sempro") }}</h3>
+                  <h3 class="box-title">Ubah SK {{ ($tipe == "sk skripsi"? "Skripsi" : "Sempro") }}</h3>
 
                     <br><br>
                     @if (session('success'))
@@ -161,6 +161,10 @@
                         </select>
                      </div>
 
+                     @foreach ($detail_skripsi as $item)
+                        <input type="hidden" name="{{ $item->skripsi->nim }}" value="2">
+                     @endforeach
+
                      <h5>Total Data = <span class="data_count"></span></h5>
                      <table id="tbl-data" class="table table-bordered">
                         <thead>
@@ -253,6 +257,7 @@
 	<script type="text/javascript">
 		$('.select2').select2();
 		var mahasiswa = @json($mahasiswa);
+      var detail_skripsi = @json($detail_skripsi);
 
       $("button[name='simpan_draf']").click(function(event) {
          event.preventDefault();
@@ -275,7 +280,7 @@
       $("#pilih_nim").on("select2:select", function(event) {
          var nim = $(this).val();
          $.each(mahasiswa, function(index, val) {
-             if(nim == val.nim){
+            if(nim == val.nim){
                no+=1;
                $("tbody").append(`
                   <tr id="`+no+`">
@@ -295,7 +300,26 @@
                      </td>
                   </tr>
                `);
-             }
+
+               var status = false;
+               $.each(detail_skripsi, function(index2, el) {
+                  if (val.nim == detail_skripsi.skripsi.nim) {
+                     status = true;
+                     return false;
+                  }
+               });
+
+               if (!status) {
+                  $("tbody tr#"+no+" td:first-child").append(`
+                     <input type="hidden" name="`+val.nim+`" value="1">
+                  `);
+               }
+               else{
+                  $("input[name='"+nim+"']").val(2);
+               }
+
+               return false;
+            }
          });
 
          $(this).find('option[value="'+nim+'"]').remove();
@@ -307,10 +331,16 @@
       function hapus_baris() {
          $('button[name="delete_data"]').off("click").click(function(event) {
             console.log("hapus ya");
-            var nim = $(this).parents("tr").find('input[type="hidden"]').val();
+            var nim = $(this).parents("tr").find('input[name="nim[]"').val();
             var newOption = new Option(nim, nim, false, false);
             $('#pilih_nim').append(newOption).trigger('change');
 
+            $.each(detail_skripsi, function(index2, el) {
+               if (nim == detail_skripsi.skripsi.nim) {
+                  $("input[name='"+nim+"']").val(3);
+                  return false;
+               }
+            });
             var tr_class = $(this).parents("tr").remove();
             data_count();
          });
