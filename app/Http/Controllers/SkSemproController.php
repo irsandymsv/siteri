@@ -233,7 +233,7 @@ class SkSemproController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request->all());
+        // dd($request);
         $this->validate($request, [
             "no_surat" => "required",
             'tgl_sempro1' => "required",
@@ -256,11 +256,11 @@ class SkSemproController extends Controller
                 "tgl_sempro2" => carbon::parse($request->input("tgl_sempro2")),
                 "id_status_sk" => $request->input("status")
             ]);
-            foreach ($request->input('nim') as $nim){
-                if($request->$ == 1 ){
-                    $this->update_id_sk_sempro($nim, $id);
-                }else if($request->input($nim) == 3){
-                    $this->update_id_sk_sempro($nim, null);
+            for($i =0; $i<count($request->nim);$i++){
+                if($request->pilihan_nim[$i] == 1 ){
+                    $this->update_id_sk_sempro($request->nim[$i], $id);
+                }else if($request->pilihan_nim[$i] == 3){
+                    $this->update_id_sk_sempro($request->nim[$i], null);
                 }
             }
             return redirect()->route('akademik.sempro.show', $id)->with('success', 'Data Berhasil Diedit');
@@ -274,7 +274,7 @@ class SkSemproController extends Controller
             $query->where('nim', $nim);
         })->orderBy('created_at', 'desc')->first();
         $detail_skripsi->id_sk_sempro = $id;
-        $detail_skripsi->save;
+        $detail_skripsi->save();
     }
 
     public function destroy($id = null)
