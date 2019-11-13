@@ -247,7 +247,7 @@ class SkSemproController extends Controller
                 "id_status_sk" => $request->input("status")
             ]);
             foreach ($request->input('nim') as $nim){
-                if($request->input() == 1 ){
+                if($request->$ == 1 ){
                     $this->update_id_sk_sempro($nim, $id);
                 }else if($request->input($nim) == 3){
                     $this->update_id_sk_sempro($nim, null);
