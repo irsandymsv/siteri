@@ -246,8 +246,8 @@ class SkSemproController extends Controller
                 "tgl_sempro2" => carbon::parse($request->input("tgl_sempro2")),
                 "id_status_sk" => $request->input("status")
             ]);
-            foreach ($skripsi->nim as $nim){
-                if($request->input($nim) == 1 ){
+            foreach ($request->input('nim') as $nim){
+                if($request->input() == 1 ){
                     $this->update_id_sk_sempro($nim, $id);
                 }else if($request->input($nim) == 3){
                     $this->update_id_sk_sempro($nim, null);
