@@ -28,6 +28,14 @@
          margin-top: 10px;
          margin-bottom: 10px;
       }
+
+      .hide_tr{
+         display: none;
+      }
+
+      .show_tr{
+         display: block;
+      }
 	</style>
 @endsection
 
@@ -145,7 +153,7 @@
                            <option value="">--Pilih NIM--</option>
                            @if (!empty($old_data))
                               @foreach ($mahasiswa as $item)
-                                 @if (!in_array($item->nim, $old_data["nim"]))
+                                 @if (in_array($item->nim, $nim_dihapus) || !in_array($item->nim, $old_data["nim"]))
                                  <option value="{{ $item->nim }}">{{ $item->nim }}</option>
                                  @endif
                               @endforeach
@@ -159,9 +167,9 @@
                         </select>
                      </div>
 
-                     @foreach ($detail_skripsi as $item)
+                     {{-- @foreach ($detail_skripsi as $item)
                         <input type="hidden" name="{{ $item->skripsi->nim }}" value="2">
-                     @endforeach
+                     @endforeach --}}
 
                      <h5>Total Data = <span class="data_count"></span></h5>
                      <table id="tbl-data" class="table table-bordered">
@@ -179,10 +187,14 @@
                         <tbody>
                         @if ($old_mahasiswa != "")
                            @foreach($old_mahasiswa as $index => $val)
-                              <tr id="{{ $index }}">
+
+                              <tr id="{{ $index }}" nim_mhs="{{ $val->nim }}" class="{{ ($old_data['pilihan_nim'][$index] == 3? 'hide_tr':'') }}">
                                  <td style="width: 60px;">
                                     {{ $val->nim }}
                                     <input type="hidden" name="nim[]" value="{{ $val->nim }}">
+                                    @if (in_array($val->nim, $nim_detail))
+                                       <input type="hidden" name="pilihan_nim[]" value="2">
+                                    @endif
                                  </td>
                                  <td>{{ $val->nama }}</td>
                                  <td>{{ $val->bagian->bagian }}</td>
@@ -200,13 +212,15 @@
                                     <button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
                                  </td>
                               </tr>
+
                            @endforeach
                         @else
                            @foreach($detail_skripsi as $index => $val)
-                              <tr id="{{ $index }}">
+                              <tr id="{{ $index }}" nim_mhs="{{ $val->skripsi->nim }}">
                                  <td style="width: 60px;">
                                     {{ $val->skripsi->nim }}
                                     <input type="hidden" name="nim[]" value="{{ $val->skripsi->nim }}">
+                                    <input type="hidden" name="pilihan_nim[]" value="2">
                                  </td>
                                  <td>{{ $val->skripsi->mahasiswa->nama }}</td>
                                  <td>{{ $val->skripsi->mahasiswa->bagian->bagian }}</td>
@@ -256,6 +270,7 @@
 		$('.select2').select2();
 		var mahasiswa = @json($mahasiswa);
       var detail_skripsi = @json($detail_skripsi);
+      var nim_detail = @json($nim_detail)
 
       $("button[name='simpan_draf']").click(function(event) {
          event.preventDefault();
@@ -277,48 +292,56 @@
 
       $("#pilih_nim").on("select2:select", function(event) {
          var nim = $(this).val();
-         $.each(mahasiswa, function(index, val) {
-            if(nim == val.nim){
-               no+=1;
-               $("tbody").append(`
-                  <tr id="`+no+`">
-                     <td style="width: 60px;" >
-                        `+val.nim+`
-                        <input type="hidden" name="nim[]" value="`+val.nim+`">
-                     </td>
-                     <td class="nama_mhs" >`+val.nama+`</td>
-                     <td>`+val.bagian.bagian+`</td>
-                     <td style="width: 350px;" >`+val.skripsi.detail_skripsi[0].judul+`</td>
-                     <td>
-                        <div class="tbl_row">1. `+val.skripsi.detail_skripsi[0].surat_tugas[0].dosen1.nama+`</div>
-                        <div class="tbl_row">2. `+val.skripsi.detail_skripsi[0].surat_tugas[0].dosen2.nama+`</div>
-                     </td>
-                     <td >
-                        <button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
-                     </td>
-                  </tr>
-               `);
 
-               var status = false;
-               $.each(detail_skripsi, function(index2, el) {
-                  if (val.nim == el.skripsi.nim) {
-                     status = true;
-                     return false;
-                  }
-               });
-
-               if (!status) {
-                  $("tbody tr#"+no+" td:first-child").append(`
-                     <input type="hidden" name="`+val.nim+`" value="1">
+         if (nim_detail.indexOf(nim) > -1) {
+            $("tr[nim_mhs='"+nim+"']").removeClass('hide_tr');
+            $("tr[nim_mhs='"+nim+"']").find('input[name="pilihan_nim[]"]').val(2);
+         }
+         else{
+            $.each(mahasiswa, function(index, val) {
+               if(nim == val.nim){
+                  no+=1;
+                  $("tbody").append(`
+                     <tr id="`+no+`" nim_mhs="`+nim+`">
+                        <td style="width: 60px;" >
+                           `+val.nim+`
+                           <input type="hidden" name="nim[]" value="`+val.nim+`">
+                           <input type="hidden" name="pilihan_nim[]" value="1">
+                        </td>
+                        <td class="nama_mhs" >`+val.nama+`</td>
+                        <td>`+val.bagian.bagian+`</td>
+                        <td style="width: 350px;" >`+val.skripsi.detail_skripsi[0].judul+`</td>
+                        <td>
+                           <div class="tbl_row">1. `+val.skripsi.detail_skripsi[0].surat_tugas[0].dosen1.nama+`</div>
+                           <div class="tbl_row">2. `+val.skripsi.detail_skripsi[0].surat_tugas[0].dosen2.nama+`</div>
+                        </td>
+                        <td >
+                           <button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
+                        </td>
+                     </tr>
                   `);
-               }
-               else{
-                  $("input[name='"+nim+"']").val(2);
-               }
 
-               return false;
-            }
-         });
+                  // var status = false;
+                  // $.each(detail_skripsi, function(index2, el) {
+                  //    if (val.nim == el.skripsi.nim) {
+                  //       status = true;
+                  //       return false;
+                  //    }
+                  // });
+
+                  // if (!status) {
+                  //    $("tbody tr#"+no+" td:first-child").append(`
+                  //       <input type="hidden" name="`+val.nim+`" value="1">
+                  //    `);
+                  // }
+                  // else{
+                  //    $("input[name='"+nim+"']").val(2);
+                  // }
+
+                  return false;
+               }
+            });
+         }
 
          $(this).find('option[value="'+nim+'"]').remove();
          data_count();
@@ -333,21 +356,30 @@
             var newOption = new Option(nim, nim, false, false);
             $('#pilih_nim').append(newOption).trigger('change');
 
-            $.each(detail_skripsi, function(index2, el) {
-               if (nim == el.skripsi.nim) {
-                  $("input[name='"+nim+"']").val(3);
-                  return false;
-               }
-            });
-            var tr_class = $(this).parents("tr").remove();
+            if (nim_detail.indexOf(nim) > -1) {
+               $("tr[nim_mhs='"+nim+"']").addClass('hide_tr');
+               $("tr[nim_mhs='"+nim+"']").find('input[name="pilihan_nim[]"]').val(3);
+            }
+            else{
+               var tr_class = $(this).parents("tr").remove();
+            }
             data_count();
+
+            // $.each(detail_skripsi, function(index2, el) {
+            //    if (nim == el.skripsi.nim) {
+            //       $("input[name='"+nim+"']").val(3);
+            //       return false;
+            //    }
+            // });
          });
       }
 
       data_count();
       function data_count() {
-         var count = $("tbody tr").length;
-         $(".data_count").text(count);
+         var all_tr = $("tbody tr").length;
+         var hide_tr = $("tbody tr.hide_tr").length;
+         var jml = all_tr - hide_tr;
+         $(".data_count").text(jml);
       }
 
 	</script>

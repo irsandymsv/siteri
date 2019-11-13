@@ -147,8 +147,9 @@ class SkSemproController extends Controller
     {
         $old_data = [];
         $old_mahasiswa = "";
+        $nim_dihapus = [];
         if (array_key_exists('nim', $request->old())) {
-            // dd($request->old());
+
             $old_data = $request->old();
             $old_mahasiswa = mahasiswa::whereIn('nim', $request->old()["nim"])
             ->with([
@@ -167,6 +168,13 @@ class SkSemproController extends Controller
                 "skripsi.detail_skripsi.surat_tugas.dosen1:no_pegawai,nama",
                 "skripsi.detail_skripsi.surat_tugas.dosen2:no_pegawai,nama"
             ])->get();
+
+            foreach ($old_data["nim"] as $key => $value) {
+                if ($old_data["pilihan_nim"][$key] == 3) {
+                    $nim_dihapus [] = $value;
+                }
+            }
+            // dd($nim_dihapus);
         }
             $sk = sk_sempro::find($id);
             $dosen = user::where('is_dosen', 1)->get();
@@ -218,12 +226,14 @@ class SkSemproController extends Controller
                 'dosen' => $dosen,
                 'old_data' => $old_data,
                 'old_mahasiswa' => $old_mahasiswa,
+                'nim_dihapus' => $nim_dihapus,
                 'tipe' => 'sk sempro'
             ]);
     }
 
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $this->validate($request, [
             "no_surat" => "required",
             'tgl_sempro1' => "required",
