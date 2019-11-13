@@ -109,12 +109,7 @@ class SkSemproController extends Controller
             ]);
 
             foreach ($request->nim as $nim) {
-                detail_skripsi::whereHas('skripsi',function (builder $query) use ($nim){
-                    $query->where('nim',$nim);
-                })->orderBy('created_at','desc')
-                ->update([
-                    "id_sk_sempro" => $sk_sempro->no_surat
-                ]);
+                $this->update_id_sk_sempro($nim, $sk_sempro->no_surat);
             }
             // return redirect()->route('akademik.sempro.show', $sk_sempro->no_surat)->with('success', 'Data Berhasil Ditambahkan');
             return redirect()->route('akademik.sempro.create')->with('success', 'Data Berhasil Ditambahkan');
@@ -173,8 +168,6 @@ class SkSemproController extends Controller
                 "skripsi.detail_skripsi.surat_tugas.dosen2:no_pegawai,nama"
             ])->get();
         }
-
-        // try {
             $sk = sk_sempro::find($id);
             $dosen = user::where('is_dosen', 1)->get();
             $detail_skripsi = detail_skripsi::where('id_sk_sempro', $id)
@@ -217,15 +210,6 @@ class SkSemproController extends Controller
                 $query->where("status", "Sudah punya pembahas");
             })
             ->get();
-            // ->whereHas("detail_skripsi", function(Builder $query)
-            // {
-            //     $query->where([
-            //         ["id_surat_tugas_pembahas", "<>",null],
-            //         ["id_sk_sempro", null]
-            //     ]);
-            // })
-
-            // dd($nim_detail);
             return view('akademik.SK_view.edit', [
                 'sk' => $sk,
                 'detail_skripsi' => $detail_skripsi,
@@ -236,77 +220,51 @@ class SkSemproController extends Controller
                 'old_mahasiswa' => $old_mahasiswa,
                 'tipe' => 'sk sempro'
             ]);
-        // }
-        // catch (Exception $e) {
-        //     return redirect()->route('akademik.sempro.index')->with('error', $e->getMessage());
-        // }
     }
 
     public function update(Request $request, $id)
     {
-        dd($request->all());
         $this->validate($request, [
-            "id_detail_sk" => "required|array",
-            "id_detail_sk.*" => "required",
-            "nama"    => "required|array",
-            "nama.*"  => "required|string|max:40",
+            "no_surat" => "required",
+            'tgl_sempro1' => "required",
+            'tgl_sempro2' => "required",
             "nim" => "required|array",
-            "nim.*" => "required|string|max:20",
-            "no_surat" => "required"
+            "nim.*" => "required|string"
         ]);
 
         try {
-            $sk = sk_akademik::find($id);
+            $sk = sk_sempro::find($id);
             $verif_ktu = $sk->verif_ktu;
             $verif_dekan = $sk->verif_dekan;
             if($request->status == 2){
                 $verif_ktu = 0;
                 $verif_dekan = 0;
             }
-
-            $sk_akademik = sk_akademik::where('id', $id)->update([
-                'id_status_sk_akademik' => $request->status,
-                'verif_ktu' => $verif_ktu,
-                'verif_dekan' => $verif_dekan,
-                'no_surat' => $request->no_surat
+            sk_sempro::where('no_surat', $id)->update([
+                "no_surat" => $request->input("no_surat"),
+                "tgl_sempro1" => carbon::parse($request->input("tgl_sempro1")),
+                "tgl_sempro2" => carbon::parse($request->input("tgl_sempro2")),
+                "id_status_sk" => $request->input("status")
             ]);
-
-            for ($i = 0; $i < count($request->id_detail_sk); $i++) {
-                if ($request->id_detail_sk[$i] != 0) {
-                    if ($request->delete_detail_sk[$i] == 1) {
-                        detail_sk::where('id', $request->id_detail_sk[$i])->delete();
-                        continue;
-                    } else {
-                        $detail_sk = detail_sk::where('id', $request->id_detail_sk[$i])->update([
-                            'nama_mhs' => $request->nama[$i],
-                            'nim' => $request->nim[$i],
-                            'id_bagian' => $request->jurusan[$i],
-                            'judul' => $request->judul[$i],
-                            'id_pembimbing_utama' => $request->pembimbing_utama[$i],
-                            'id_pembimbing_pendamping' => $request->pembimbing_pendamping[$i],
-                            'id_penguji_utama' => $request->penguji_utama[$i],
-                            'id_penguji_pendamping' => $request->penguji_pendamping[$i]
-                        ]);
-                    }
-                } else {
-                    echo "new data,iterasi= " . $i . "<br>";
-                    $detail_sk = detail_sk::create([
-                        'id_sk_akademik' => $id,
-                        'nama_mhs' => $request->nama[$i],
-                        'nim' => $request->nim[$i],
-                        'id_bagian' => $request->jurusan[$i],
-                        'judul' => $request->judul[$i],
-                        'id_pembimbing_utama' => $request->pembimbing_utama[$i],
-                        'id_pembimbing_pendamping' => $request->pembimbing_pendamping[$i],
-                        'id_penguji_utama' => $request->penguji_utama[$i],
-                        'id_penguji_pendamping' => $request->penguji_pendamping[$i]
-                    ]);
+            foreach ($skripsi->nim as $nim){
+                if($request->input($nim) == 1 ){
+                    $this->update_id_sk_sempro($nim, $id);
+                }else if($request->input($nim) == 3){
+                    $this->update_id_sk_sempro($nim, null);
                 }
             }
             return redirect()->route('akademik.sempro.show', $id)->with('success', 'Data Berhasil Diedit');
         } catch (Exception $e) {
-            return redirect()->route('akademik.sempro.index')->with('error', $e->getMessage());
+            return redirect()->route('akademik.sempro.edit', $id)->with('error', $e->getMessage());
         }
+    }
+
+    private function update_id_sk_sempro($nim,$id){
+        $detail_skripsi = detail_skripsi::whereHas('skripsi', function (builder $query) use ($nim) {
+            $query->where('nim', $nim);
+        })->orderBy('created_at', 'desc')->first();
+        $detail_skripsi->id_sk_sempro = $id;
+        $detail_skripsi->save;
     }
 
     public function destroy($id = null)
