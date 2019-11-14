@@ -295,6 +295,7 @@ class SkSemproController extends Controller
 
     public function updatePenetapan(Request $request)
     {
+
         dd($request->all());
     }
 
