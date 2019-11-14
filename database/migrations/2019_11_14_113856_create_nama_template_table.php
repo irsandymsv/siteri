@@ -15,7 +15,7 @@ class CreateNamaTemplateTable extends Migration
     {
         Schema::create('nama_template', function (Blueprint $table) {
             $table->increments('id');
-            $table->name('nama')->length(80);
+            $table->string('nama')->length(30);
         });
     }
 

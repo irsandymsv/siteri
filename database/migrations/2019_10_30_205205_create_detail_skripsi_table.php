@@ -20,14 +20,12 @@ class CreateDetailSkripsiTable extends Migration
             $table->string('id_sk_sempro')->length(25)->nullable();
             $table->string('id_sk_skripsi')->length(25)->nullable();
             $table->UnsignedInteger('id_keris')->nullable();
-            $table->UnsignedInteger('id_sk_honor')->nullable();
             $table->UnsignedInteger('id_skripsi')->nullable();
             $table->timestamps();
 
             $table->foreign('id_sk_sempro')->references('no_surat')->on('sk_sempro')->onDelete('set null');
             $table->foreign('id_sk_skripsi')->references('no_surat')->on('sk_skripsi')->onDelete('set null');
             $table->foreign('id_keris')->references('id')->on('keris')->onDelete('set null');
-            $table->foreign('id_sk_honor')->references('id')->on('sk_honor')->onDelete('set null');
 
         });
     }

@@ -20,6 +20,8 @@ class CreateSkSemproTable extends Migration
             $table->date('tgl_sempro2')->nullable();
             $table->tinyInteger('verif_ktu')->nullable();
             $table->text("pesan_revisi")->nullable();
+            $table->unsignedInteger('id_template')->nullable();
+            $table->UnsignedInteger('id_sk_honor')->nullable();
             $table->timestamps();
 
             $table->foreign('id_status_sk')->references('id')->on('status_sk')->onDelete('set null');
