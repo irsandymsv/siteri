@@ -90,7 +90,7 @@
                <h3 class="box-title">Detail Surat Tugas Pembimbing Skripsi</h3><br>
                Status:
                @if ($surat_tugas->verif_ktu == 0)
-                  Belum Diverifikasi
+                  <b>Belum Diverifikasi</b>
                @elseif($surat_tugas->verif_ktu == 2)
                   <label class="label bg-red">Butuh Revisi</label>
                @else

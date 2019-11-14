@@ -52,9 +52,9 @@
    <form action="{{ ( $tipe == "sk skripsi"? route('akademik.skripsi.update', $sk->no_surat) : route('akademik.sempro.update', $sk->no_surat) ) }}" method="post">
       @csrf
       @method("PUT")
-      @php
-          dd($detail_skripsi);
-      @endphp
+      {{-- @php
+         dd($detail_skripsi); 
+      @endphp --}}
    	<div class="row">
       	<div class="col-xs-12">
       		<div class="box box-primary">

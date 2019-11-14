@@ -95,7 +95,7 @@
                <h3 class="box-title">Detail Surat Tugas Pembahas Sempro</h3><br>
                Status:
                @if ($surat_tugas->verif_ktu == 0)
-                  Belum Diverifikasi
+                  <b>Belum Diverifikasi</b>
                @elseif($surat_tugas->verif_ktu == 2)
                   <label class="label bg-red">Butuh Revisi</label>
                @else
@@ -118,7 +118,6 @@
 
             <div class="box-body">
                <div id="kop_surat">
-
                   <div id="logo">
                      <img src="{{ asset('/image/logo-unej.png') }}">
                   </div>

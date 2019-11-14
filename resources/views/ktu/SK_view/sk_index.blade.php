@@ -34,11 +34,12 @@
 	              <h3 class="box-title">Daftar SK {{ ($tipe == "SK Skripsi"? 'Skripsi' : 'Sempro') }}</h3>
 
 	              @if(session()->has('verif_ktu'))
-	              <div class="alert alert-info alert-dismissible" style="width: 35%; margin: auto;">
-	                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-	                <h4><i class="icon fa fa-info"></i> Berhasil</h4>
-		            {{session('verif_ktu')}}
-		          </div>
+	              <br><br>
+	              	<div class="alert alert-info alert-dismissible" style="margin: auto;">
+	               	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	               	<h4><i class="icon fa fa-info"></i> Berhasil</h4>
+		           		{{session('verif_ktu')}}
+		          	</div>
 		          @endif 
 
 		          @php 
@@ -53,10 +54,11 @@
 		            		<thead>
 			            		<tr>
 			            			<th>No</th>
+			            			<th>Nomor Surat</th>
 			            			<th>Tanggal Dibuat</th>
 			            			<th>Status</th>
 			            			<th>Verifikasi KTU</th>
-			            			<th>Verifikasi Dekan</th>
+			            			{{-- <th>Verifikasi Dekan</th> --}}
 			            			<th>Aksi</th>
 			            		</tr>
 			            	</thead>
@@ -65,10 +67,11 @@
 			            		@foreach($sk as $item)
 			            			<tr id="sk_{{$item->id}}">
 			            				<td>{{$no+=1}}</td>
+			            				<td>{{ $item->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($item->created_at)->year }}</td>
 			            				<td>
 			            					{{Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}
 			            				</td>
-			            				<td>{{$item->status_sk_akademik->status}}</td>
+			            				<td>{{$item->status_sk->status}}</td>
 			            				<td>
 			            					@if($item->verif_ktu == 0) 
 			            						Belum Diverifikasi
@@ -78,7 +81,7 @@
 			            						<label class="label bg-green">Sudah Diverifikasi</label>
 			            					@endif
 			            				</td>
-			            				<td>
+			            				{{-- <td>
 			            					@if($item->verif_dekan == 0) 
 			            						Belum Diverifikasi
 			            					@elseif($item->verif_dekan == 2) 
@@ -86,7 +89,7 @@
 			            					@else
 			            						<label class="label bg-green">Sudah Diverifikasi</label>
 			            					@endif
-			            				</td>
+			            				</td> --}}
 			            				<td>
 			            					@if($tipe == "SK Skripsi")
 			            					<a href="{{ route('ktu.sk-skripsi.show', $item->no_surat) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
