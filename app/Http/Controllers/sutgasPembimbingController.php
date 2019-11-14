@@ -240,7 +240,8 @@ class sutgasPembimbingController extends suratTugasController
 	public function ktu_verif(Request $request, $id)
 	{
 		$surat_tugas = surat_tugas::find($id);
-		$surat_tugas->verif_ktu = $request->verif_ktu;
+        $surat_tugas->verif_ktu = $request->verif_ktu;
+        // isi attribut verif_ktu di variabel surat tugas dengan attribut verif ktu di variable reqeuest
 		if($request->verif_ktu == 2){
 			$request->validate([
 				'pesan_revisi' => 'required|string'

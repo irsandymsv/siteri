@@ -275,6 +275,7 @@ class SkSemproController extends Controller
         })->orderBy('created_at', 'desc')->first();
         $detail_skripsi->id_sk_sempro = $id;
         $detail_skripsi->save();
+
     }
 
     public function destroy($id = null)
