@@ -15,8 +15,10 @@ class CreateTemplateTable extends Migration
     {
         Schema::create('template', function (Blueprint $table) {
             $table->increments('id');
-            $table->
+            $table->unsignedInteger('id_nama_template')->nullable();
             $table->timestamps();
+
+            $table->foreign('id_nama_template')->references('id')->on('nama_template')->onDelete('set null');
         });
     }
 

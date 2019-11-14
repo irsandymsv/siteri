@@ -17,8 +17,19 @@ class sk_sempro extends Model
         return $this->belongsTo('App\status_sk','id_status_sk');
     }
 
+    public function template()
+    {
+        return $this->belongsTo('App\template','id_template');
+    }
+
+    public function sk_honor()
+    {
+        return $this->belongsTo('App\sk_honor', 'id_sk_honor');
+    }
+
     public function detail_skripsi()
     {
         return $this->hasMany('App\detail_skripsi', 'id_sk_sempro');
     }
+
 }
