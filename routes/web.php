@@ -22,6 +22,16 @@ Route::get('/home', 'HomeController@index')->name('home');
 // return view('layout.template');
 // });
 
+Route::prefix('template')->name('template.')->group(function ()
+{
+	Route::get('/', 'templateController@index')->name('index');
+	Route::get('/template/create', 'templateController@create')->name('create');
+	Route::post('/template/store', 'templateController@store')->name('store');
+	// Route::get('/template/{id}', 'templateController@show')->name('template.show');
+	Route::get('/template/{id}/edit', 'templateController@edit')->name('edit');
+	Route::put('/template/{id}/update', 'templateController@update')->name('update');
+});
+
 Route::prefix('akademik')->name('akademik.')->group(function (){
 	// Route::redirect('/', '/akademik/dashboard');
 	Route::get('/', 'akademikController@dashboard')->name('dashboard');
@@ -58,9 +68,7 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
 
 	Route::get('/getPembimbing/{nim?}', 'suratTugasController@getPembimbing')->name('getPembimbing');
 
-	//Route SK Sempro
-	Route::get('/skripsi/edit-penetapan', 'SkSkripsiController@editPenetapan')->name('skripsi.edit-penetapan-sk');
-	Route::put('/skripsi/edit-penetapan/update', 'SkSkripsiController@updatePenetapan')->name('skripsi.update-penetapan-sk');
+	//Route SK Skripsi
 	Route::get('/skripsi', 'SkSkripsiController@index')->name('skripsi.index');
 	Route::get('/skripsi/create','SkSkripsiController@create')->name('skripsi.create');
 	Route::post('/skripsi', 'SkSkripsiController@store')->name('skripsi.store');
@@ -71,9 +79,6 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
 	Route::delete('/skripsi/delete/{id_sk?}', 'SkSkripsiController@destroy')->name('skripsi.destroy');
 
 	//Route SK Sempro
-	Route::get('/sempro/edit-penetapan', 'SkSemproController@editPenetapan')->name('sempro.edit-penetapan-sk');
-	Route::put('/sempro/edit-penetapan/update', 'SkSemproController@updatePenetapan')->name('sempro.update-penetapan-sk');
-	
 	Route::get('/sempro', 'SkSemproController@index')->name('sempro.index');
 	Route::get('/sempro/create', 'SkSemproController@create')->name('sempro.create');
 	Route::post('/sempro', 'SkSemproController@store')->name('sempro.store');
@@ -81,6 +86,14 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
 	Route::get('/sempro/{id_sk}/edit', 'SkSemproController@edit')->name('sempro.edit');
 	Route::put('/sempro/{id_sk}/update', 'SkSemproController@update')->name('sempro.update');
 	Route::delete('/sempro/delete/{id_sk?}', 'SkSemproController@destroy')->name('sempro.destroy');
+
+	//Route Template SK
+	Route::get('/template-sk/', 'templateController@index_sk_akademik')->name('template-sk.index');
+	Route::get('/template-sk/create', 'templateController@create_sk_akademik')->name('template-sk.create');
+	Route::post('/template-sk/store', 'templateController@store_sk_akademik')->name('template-sk.store');
+	Route::get('/template-sk/{id}', 'templateController@show_sk_akademik')->name('template-sk.show');
+	Route::get('/template-sk/{id}/edit', 'templateController@edit_sk_akademik')->name('template-sk.edit');
+	Route::put('/template-sk/{id}/update', 'templateController@update_sk_akademik')->name('template-sk.update');
 });
 
 Route::prefix('ktu')->name('ktu.')->group(function ()

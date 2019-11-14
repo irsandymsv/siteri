@@ -15,7 +15,7 @@
 			display: table;
 			width: 100%;
 			border-bottom: 0.1px solid lightgrey;
-			margin-top: 5px;			
+			margin-top: 5px;
 		}
 
 		.revisi_wrap{

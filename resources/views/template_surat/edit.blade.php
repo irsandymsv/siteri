@@ -1,11 +1,11 @@
-@extends('akademik.akademik_view')
+@extends('layouts.template')
+
+@section('side_menu')
+
+@endsection
 
 @section('page_title')
-	@if($tipe == "sk skripsi")
-      Ubah Halaman Penetapan SK Skripsi
-   @else
-      Ubah Halaman Penetapan SK Sempro
-   @endif
+	Ubah Tipe Template Surat
 @endsection
 
 @section('css_link')
@@ -16,11 +16,7 @@
 @endsection
 
 @section('judul_header')
-	@if($tipe == "sk skripsi")
-      Ubah Halaman Penetapan SK Skripsi
-   @else
-      Ubah Halaman Penetapan SK Sempro
-   @endif
+	Ubah Tipe Template Surat
 @endsection
 
 @section('content')
@@ -29,7 +25,7 @@
       	<div class="col-xs-12">
       		<div class="box box-primary">
       			<div class="box-header">
-                  <h3 class="box-title">Ubah Halaman Penetapan SK {{ ($tipe == "sk skripsi"? "Skripsi" : "Sempro") }}</h3>
+                  <h3 class="box-title">Ubah Tipe Template Surat</h3>
 
                     <br><br>
                     @if (session('success'))
@@ -55,10 +51,13 @@
                     @endphp
                     @endif
                </div>
-                  <form action="{{ ( $tipe == "sk skripsi"? route('akademik.skripsi.update-penetapan-sk') : route('akademik.sempro.update-penetapan-sk') ) }}" method="post">
+                  <form action="{{ route('template.update') }}" method="post">
                      @csrf @method('PUT')
                      <div class="box-body">
-                        <textarea id="editor1" name="isi" rows="20" cols="80"></textarea>
+                        <div class="form-group">
+                           <label for="nama_surat">Nama Tipe Template</label>
+                        </div>
+                        <input type="text" class="form-control" id="nama_surat" name="nama_surat" value="{{ old('nama_surat') }}">
                      </div>
 
                      <div class="box-footer">
