@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Exception;
+use App\nama_template;
+use App\template;
 
 class templateController extends Controller
 {
@@ -18,7 +21,17 @@ class templateController extends Controller
 
     public function store(Request $request)
     {
-    	# code...
+        $this->validate($request, [
+            'nama_surat' => 'required',
+        ]);
+        try {
+            nama_template::insert([
+                'nama_surat' => $request->input('nama_surat'),
+            ]);
+            return redirect()->route('template.create')->with('success', 'Data Berhasil Dibuat');
+        } catch (Exception $e) {
+            return redirect()->route('template.create')->with('error', $e->getMessage());
+        }
     }
 
     // public function show($id)
@@ -33,7 +46,17 @@ class templateController extends Controller
 
     public function update(Request $request, $id)
     {
-    	# code...
+        $this->validate($request, [
+            'nama_surat' => 'required',
+        ]);
+        try {
+            nama_template::insert([
+                'nama_surat' => $request->input('nama_surat'),
+            ]);
+            return redirect()->route('template.edit',$id)->with('success', 'Data Berhasil Dibuat');
+        } catch (Exception $e) {
+            return redirect()->route('template.edit',$id)->with('error', $e->getMessage());
+        }
     }
 
     //SK Akademik
@@ -49,7 +72,19 @@ class templateController extends Controller
 
     public function store_sk_akademik(Request $request)
     {
-        # code...
+        $this->validate($request,[
+            'id_nama_surat' => 'required',
+            'isi' => 'required'
+        ]);
+        try{
+            template::insert([
+                'id_nama_surat' => $request->input('id_nama_surat'),
+                'isi' => $request->input('isi')
+            ]);
+            return redirect()->route('akademik.template-sk.create')->with('success','Data Berhasil Dibuat');
+        }catch(Exception $e){
+            return redirect()->route('akademik.template-sk.create')->with('error', $e->getMessage());
+        }
     }
 
     // public function show_sk_akademik($id)
@@ -64,6 +99,18 @@ class templateController extends Controller
 
     public function update_sk_akademik(Request $request, $id)
     {
-        # code...
+        $this->validate($request, [
+            'id_nama_surat' => 'required',
+            'isi' => 'required'
+        ]);
+        try {
+            template::where('id',$id)->update([
+                'id_nama_surat' => $request->input('id_nama_surat'),
+                'isi' => $request->input('isi')
+            ]);
+            return redirect()->route('akademik.template-sk.edit',$id)->with('success', 'Data Berhasil Dibuat');
+        } catch (Exception $e) {
+            return redirect()->route('akademik.template-sk.edit', $id)->with('error', $e->getMessage());
+        }
     }
 }

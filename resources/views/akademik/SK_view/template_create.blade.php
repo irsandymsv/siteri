@@ -47,7 +47,7 @@
                     @endphp
                     @endif
                </div>
-                  <form action="{{ route('akademik.template-sk.create') }}" method="post">
+                  <form action="{{ route('akademik.template-sk.store') }}" method="post">
                      @csrf
                      <div class="box-body">
                         <div class="form-group" style="width: 30%;">
@@ -66,7 +66,7 @@
       		</div>
       	</div>
    	</div>
-   
+
 @endsection
 
 @section('script')
