@@ -9,6 +9,7 @@ use App\bagian;
 use App\User;
 use App\sk_sempro;
 use App\detail_skripsi;
+use App\skripsi;
 use App\mahasiswa;
 use App\Http\Controllers\Controller;
 use App\status_sk_akademik;
@@ -245,16 +246,17 @@ class SkSemproController extends Controller
         try {
             $sk = sk_sempro::find($id);
             $verif_ktu = $sk->verif_ktu;
-            $verif_dekan = $sk->verif_dekan;
+            // $verif_dekan = $sk->verif_dekan;
             if($request->status == 2){
                 $verif_ktu = 0;
-                $verif_dekan = 0;
+                // $verif_dekan = 0;
             }
             sk_sempro::where('no_surat', $id)->update([
                 "no_surat" => $request->input("no_surat"),
                 "tgl_sempro1" => carbon::parse($request->input("tgl_sempro1")),
                 "tgl_sempro2" => carbon::parse($request->input("tgl_sempro2")),
-                "id_status_sk" => $request->input("status")
+                "id_status_sk" => $request->input("status"),
+                "verif_ktu" => $verif_ktu
             ]);
             for($i =0; $i<count($request->nim);$i++){
                 if($request->pilihan_nim[$i] == 1 ){
@@ -325,22 +327,28 @@ class SkSemproController extends Controller
         }
 
         $detail_skripsi = detail_skripsi::where('id_sk_sempro', $id)
-            ->with([
-                'skripsi',
-                'skripsi.mahasiswa',
-                'skripsi.mahasiswa.bagian',
-                'surat_tugas' => function($query)
-                {
-                    $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
-                },
-                'surat_tugas.tipe_surat_tugas',
-                'surat_tugas.dosen1:no_pegawai,nama',
-                'surat_tugas.dosen2:no_pegawai,nama',
-            ])->get();
+        ->with([
+            'skripsi',
+            'skripsi.mahasiswa',
+            'skripsi.mahasiswa.bagian',
+            'surat_tugas' => function($query)
+            {
+                $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
+            },
+            'surat_tugas.tipe_surat_tugas',
+            'surat_tugas.dosen1:no_pegawai,nama',
+            'surat_tugas.dosen2:no_pegawai,nama',
+        ])->get();
+
+        $dekan = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "Dekan");
+        })->first();
         // dd($detail_skripsi);
-        return view('ktu.SK_view.sk_show', [
+        return view('ktu.SK_view.sk_sempro_show', [
             'sk' => $sk,
-            'detail_skripsi' => $detail_skripsi
+            'detail_skripsi' => $detail_skripsi,
+            'dekan' => $dekan
         ]);
     }
 
@@ -363,7 +371,18 @@ class SkSemproController extends Controller
             $sk->id_status_sk = 3;
             $sk->pesan_revisi = null;
             $sk->save();
-            return redirect()->route('ktu.sk-sempro.index')->with('verif_ktu', 'verifikasi SK berhasil, status SK saat ini "Disetujui KTU"');
+
+            $detail_skripsi = detail_skripsi::where('id_sk_sempro', $id)->get();
+            // dd($detail_skripsi);
+            foreach ($detail_skripsi as $value) {
+                skripsi::whereHas('detail_skripsi', function (Builder $query) use ($value) {
+                    $query->where('id', $value->id);
+                })->update([
+                    'id_status_skripsi' => 4
+                ]);    
+            }
+            
+            return redirect()->route('ktu.sk-sempro.show', $id)->with('verif_ktu', 'verifikasi SK berhasil, status SK saat ini "Disetujui KTU"');
         }
     }
 

@@ -96,7 +96,7 @@
          			<div class="revisi_wrap">
             			<h4><b>Pesan Revisi</b> : </h4>
          				<blockquote>
-         					<p>"{{ $sk->pesan_revisi }}"</p>
+         					<p>{{ $sk->pesan_revisi }}</p>
          				</blockquote>
          			</div>
          			@endif
