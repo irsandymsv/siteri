@@ -320,7 +320,7 @@ class SkSemproController extends Controller
 
     public function ktu_show($id)
     {
-        $sk = sk_sempro::find($id);
+        $sk = sk_sempro::where('no_surat', $id)->with('template')->first();
         $status = $sk->status_sk->status;
         if($status == "Draft"){
             return redirect()->route('ktu.sk-sempro.index');

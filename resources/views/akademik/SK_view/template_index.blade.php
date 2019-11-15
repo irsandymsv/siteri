@@ -31,13 +31,33 @@
 	            		<thead>
 		            		<tr>
 		            			<th>No</th>
-                      <th>Tipe Template</th>
+                           <th>Tipe Template</th>
 		            			<th>Tanggal Dibuat</th>
 		            			<th>Pilihan</th>
 		            		</tr>
 		            	</thead>
 		            	<tbody>
-		            		
+                       @if (!is_null($template_sempro))
+                           <tr>
+                              <td>1</td>
+                              <td>{{$template_sempro->nama_template->nama}}</td>
+                              <td>{{ Carbon\Carbon::parse($template_sempro->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
+                              <td>
+                                 <a href="{{ route('akademik.template-sk.edit', $template_sempro->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                              </td>
+                           </tr>
+                       @endif
+                        
+                       @if (!is_null($template_skripsi))
+                          <tr>
+                             <td>2</td>
+                             <td>{{$template_skripsi->nama_template->nama}}</td>
+                             <td>{{ Carbon\Carbon::parse($template_skripsi->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
+                             <td>
+                                 <a href="{{ route('akademik.template-sk.edit', $template_skripsi->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                              </td>
+                          </tr>
+                       @endif
 		            	</tbody>
 		            </table>
             	</div>

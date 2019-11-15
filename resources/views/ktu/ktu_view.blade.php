@@ -23,8 +23,8 @@
 	        </span>
 	    </a>
 	    <ul class="treeview-menu">
-	      <li><a href="{{ route('ktu.sk-skripsi.index') }}">SK Skripsi</a></li>
 	      <li><a href="{{ route('ktu.sk-sempro.index') }}">SK Sempro</a></li>
+	      <li><a href="{{ route('ktu.sk-skripsi.index') }}">SK Skripsi</a></li>
 	    </ul>
 	</li>
 

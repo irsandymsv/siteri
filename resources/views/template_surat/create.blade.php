@@ -29,35 +29,42 @@
 
                     <br><br>
                     @if (session('success'))
-                    <div class="alert alert-success alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <h4><i class="icon fa fa-check"></i> Sukses</h4>
-                        {{session('success')}}
-                    </div>
-                    @php
-                    Session::forget('success');
-                    @endphp
+                      <div class="alert alert-success alert-dismissible">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                          <h4><i class="icon fa fa-check"></i> Sukses</h4>
+                          {{session('success')}}
+                      </div>
+                      @php
+                      Session::forget('success');
+                      @endphp
 
-                    @endif
-                    @if (session('error'))
-                    <div class="alert alert-danger alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <h4><i class="icon fa fa-ban"></i>Error</h4>
-                        {{session('error')}}
-                    </div>
+                      @endif
+                      @if (session('error'))
+                      <div class="alert alert-danger alert-dismissible">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                          <h4><i class="icon fa fa-ban"></i>Error</h4>
+                          {{session('error')}}
+                      </div>
 
-                    @php
-                    Session::forget('error');
-                    @endphp
+                      @php
+                      Session::forget('error');
+                      @endphp
                     @endif
                </div>
-                  <form action="{{ route('template.create') }}" method="post">
+                  <form action="{{ route('template.store') }}" method="post">
                      @csrf
                      <div class="box-body">
                         <div class="form-group">
-                           <label for="nama_surat">Nama Template</label>
+                           <label for="nama">Nama Template</label>
+                          <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama_surat') }}">
+
+                          @error('nama')
+                             <br>
+                             <span class="invalid-feedback" role="alert" style="color: red;">
+                                <strong>{{ $message }}</strong>
+                             </span>
+                          @enderror
                         </div>
-                        <input type="text" class="form-control" id="nama_surat" name="nama_surat" value="{{ old('nama_surat') }}">
                      </div>
 
                      <div class="box-footer">

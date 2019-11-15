@@ -51,12 +51,30 @@
                      @csrf
                      <div class="box-body">
                         <div class="form-group" style="width: 30%;">
-                           <select name="id_nama_surat" class="form-control">
-                              <option>--Pilih Tipe SK--</option>
+                           <label for="id_nama_template">Pilih Tipe SK</label>
+                           <select name="id_nama_template" name="id_nama_template" class="form-control">
+                              <option value="">--Pilih--</option>
+                              @foreach ($nama_template as $item)
+                                <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                              @endforeach
                            </select>
+
+                           @error('id_nama_template')
+                              <br>
+                              <span class="invalid-feedback" role="alert" style="color: red;">
+                                 <strong>{{ $message }}</strong>
+                              </span>
+                           @enderror
                         </div>
+
                         <br>
                         <textarea id="editor1" name="isi" rows="20" cols="80"></textarea>
+                        @error('isi')
+                           <br>
+                           <span class="invalid-feedback" role="alert" style="color: red;">
+                              <strong>{{ $message }}</strong>
+                           </span>
+                        @enderror
                      </div>
 
                      <div class="box-footer">
@@ -74,7 +92,7 @@
    <script src="/js/btn_backTop.js"></script>
    <script type="text/javascript">
       CKEDITOR.replace('editor1', {
-         height: '400px',
+         height: '500px',
          tabSpaces: 4
        })
    </script>

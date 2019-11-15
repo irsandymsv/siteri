@@ -25,11 +25,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::prefix('template')->name('template.')->group(function ()
 {
 	Route::get('/', 'templateController@index')->name('index');
-	Route::get('/template/create', 'templateController@create')->name('create');
-	Route::post('/template/store', 'templateController@store')->name('store');
+	Route::get('/create', 'templateController@create')->name('create');
+	Route::post('/store', 'templateController@store')->name('store');
 	// Route::get('/template/{id}', 'templateController@show')->name('template.show');
-	Route::get('/template/{id}/edit', 'templateController@edit')->name('edit');
-	Route::put('/template/{id}/update', 'templateController@update')->name('update');
+	Route::get('/{id}/edit', 'templateController@edit')->name('edit');
+	Route::put('/{id}/update', 'templateController@update')->name('update');
 });
 
 Route::prefix('akademik')->name('akademik.')->group(function (){
@@ -177,6 +177,24 @@ Route::prefix('keuangan')->name('keuangan.')->group(function()
 	Route::put('/honor-sempro/{id_sk_honor}/update', 'honorSemproController@update')->name('honor-sempro.update');
 	Route::delete('/honor-sempro/delete/{id_sk_honor?}', 'honorSemproController@destroy')->name('honor-sempro.destroy');
 });
+
+// Route::prefix('honor')->name('honor.')->group(function()
+// {
+// 	//Nama Besaran Honor
+// 	Route::get('/nama-honor', '')->name('nama-honor.index');
+// 	Route::post('/nama-honor/create', '')->name('nama-honor.create');
+// 	Route::get('/nama-honor/store', '')->name('nama-honor.store');
+// 	Route::get('/nama-honor/{id}/edit', '')->name('nama-honor.edit');
+// 	Route::put('/nama-honor/{id}/update', '')->name('nama-honor.update');
+	
+// 	//Histori Besaran Honor
+// 	Route::get('/histori-honor', '')->name('histori-honor.index');
+// 	Route::post('/histori-honor/create', '')->name('histori-honor.create');
+// 	Route::get('/histori-honor/store', '')->name('histori-honor.store');
+// 	Route::get('/histori-honor/{id}/edit', '')->name('histori-honor.edit');
+// 	Route::put('/histori-honor/{id}/update', '')->name('histori-honor.update');
+
+// });
 
 Route::prefix('bpp')->name('bpp.')->group(function()
 {

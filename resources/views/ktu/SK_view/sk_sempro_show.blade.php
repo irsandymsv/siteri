@@ -28,6 +28,11 @@
          border: 1px solid black;
       }
 
+      .landscape{
+      	width: 90%;
+      	padding: 20px 20px;
+      }
+
 		#kop_surat{
 		   padding: 5px;
 		   overflow: hidden;
@@ -87,8 +92,20 @@
 			padding: 0;
 		}
 
+		#isi_template_surat{
+			width: 100%;
+		}
+
+		#isi_template_surat table:nth-child(2) tr:nth-child(6){
+			page-break-after: always;
+		}
+
 		.ttd-right{
          float: right;
+      }
+
+      .right-margin{
+      	margin-right: 60px;
       }
 	</style>
 @endsection
@@ -157,12 +174,12 @@
             	      <span>TAHUN AKADEMIK 2019/2020</span><br>
             	   </p>
 
-            	   <p>
-            	   	
-            	   </p>
+            	   <div id="isi_template_surat">
+            	   	{!! $sk->template->isi !!}
+            	   </div>
 
             	   <div class="ttd-right">
-            	   	<br>
+            	   	{{-- <br> --}}
             	      Jember, {{ Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }} <br>
             	      Dekan,
             	      <br><br><br><br>
@@ -174,39 +191,64 @@
             	   <ol>
             	      <li>Penjabat Wakil Dekan I, II;</li>
             	      <li>Kasubag. Tata Usaha;</li>
+            	   	<span>Fakultas Ilmu Komputer Universitas Jember.</span>
             	   </ol>
-            	   <span>Fakultas Ilmu Komputer Universitas Jember.</span>
-
-            		<table id="detail_table">
-	            		<thead>
-		            		<tr>
-		            			<th>NIM</th>
-		            			<th>Nama Mahasiswa</th>
-		            			<th>Program Studi</th>
-		            			<th>Judul</th>
-		            			<th>Pembahas</th>
-		            		</tr>
-		            	</thead>
-		            	<tbody>
-		            		@foreach($detail_skripsi as $item)
-	            			<tr>
-	            				<td>{{$item->skripsi->nim}}</td>
-	            				<td>{{$item->skripsi->mahasiswa->nama}}</td>
-	            				<td>{{$item->skripsi->mahasiswa->bagian->bagian}}</td>
-	            				<td>{{$item->judul}}</td>
-	            				<td>
-	            					<div class="tbl_row">
-	            						{{ $item->surat_tugas[0]->dosen1->nama }}
-	            					</div>
-	            					<div>
-	            						{{ $item->surat_tugas[0]->dosen2->nama }}	
-	            					</div>
-	            				</td>
-	            			</tr>
-		            		@endforeach
-		            	</tbody>
-		            </table>
             	</div>
+            </div>
+
+            <div class="box-body landscape">
+            	<p>Lampiran Dekan Fakultas Ilmu Komputer Universitas Jember</p>
+            	<table id="tabel_keterangan">
+            		<tr>
+            			<td>Nomor	</td>
+            			<td>: {{ $sk->no_surat }}//UN25.1.15/SP/{{ Carbon\Carbon::parse($sk->created_at)->year }}</td>
+            		</tr>
+            		<tr>
+            			<td>Tanggal	</td>
+            			<td>: {{ Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
+            		</tr>
+            		<tr>
+            			<td>Tentang		</td>
+            			<td>: Penetapan Dosen Pembahas Seminar Porposal Skripsi Mahasiswa Fakultas Ilmu Komputer Jember Tahun Akademik ...</td>
+            		</tr>
+            	</table>
+         		<table id="detail_table">
+            		<thead>
+	            		<tr>
+	            			<th>NIM</th>
+	            			<th>Nama Mahasiswa</th>
+	            			<th>Program Studi</th>
+	            			<th>Judul Skripsi</th>
+	            			<th>Dosen Pembahas</th>
+	            		</tr>
+	            	</thead>
+	            	<tbody>
+	            		@foreach($detail_skripsi as $item)
+            			<tr>
+            				<td>{{$item->skripsi->nim}}</td>
+            				<td>{{$item->skripsi->mahasiswa->nama}}</td>
+            				<td>{{$item->skripsi->mahasiswa->bagian->bagian}}</td>
+            				<td>{{$item->judul}}</td>
+            				<td>
+            					<div class="tbl_row">
+            						{{ $item->surat_tugas[0]->dosen1->nama }}
+            					</div>
+            					<div>
+            						{{ $item->surat_tugas[0]->dosen2->nama }}	
+            					</div>
+            				</td>
+            			</tr>
+	            		@endforeach
+	            	</tbody>
+	            </table>
+
+	            <div class="ttd-right right-margin">
+	            	{{-- <br> --}}
+	               Dekan,
+	               <br><br><br><br>
+	               <span style="text-transform: uppercase;"><b>{{ $dekan->nama }}</b></span><br>
+	               <span>NIP. {{ $dekan->no_pegawai }}</span>
+	            </div>
             </div>
 
             <div class="box-footer">

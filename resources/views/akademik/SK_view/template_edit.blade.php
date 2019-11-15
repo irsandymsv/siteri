@@ -1,11 +1,7 @@
 @extends('akademik.akademik_view')
 
 @section('page_title')
-	@if($tipe == "sk skripsi")
-      Ubah Template SK Skripsi
-   @else
-      Ubah Template SK Sempro
-   @endif
+    Ubah Template SK
 @endsection
 
 @section('css_link')
@@ -16,11 +12,7 @@
 @endsection
 
 @section('judul_header')
-	@if($tipe == "sk skripsi")
-      Ubah Template SK Skripsi
-   @else
-      Ubah Template SK Sempro
-   @endif
+    Ubah Template SK
 @endsection
 
 @section('content')
@@ -29,7 +21,7 @@
       	<div class="col-xs-12">
       		<div class="box box-primary">
       			<div class="box-header">
-                  <h3 class="box-title">Ubah Template SK {{ ($tipe == "sk skripsi"? "Skripsi" : "Sempro") }}</h3>
+                  <h3 class="box-title">Ubah Template SK</h3>
 
                     <br><br>
                     @if (session('success'))
@@ -55,14 +47,35 @@
                     @endphp
                     @endif
                </div>
-                  <form action="{{ ( $tipe == "sk skripsi"? route('akademik.skripsi.update-penetapan-sk') : route('akademik.sempro.update-penetapan-sk') ) }}" method="post">
+                  <form action="{{ route('akademik.template-sk.update', $template->id) }}" method="post">
                      @csrf @method('PUT')
                      <div class="box-body">
                         <div class="form-group">
-                           <p>Tipe Surat</p>
+                           <label for="id_nama_template">Pilih Tipe SK</label>
+                           <select name="id_nama_template" class="form-control">
+                             <option value="">--Pilih--</option>
+                              @foreach ($nama_template as $item)
+                                <option value="{{ $item->id }}" {{ ($item->id == $template->id_nama_template? 'selected':'') }}>{{ $item->nama }}</option>
+                              @endforeach
+                           </select>
+
+                           @error('id_nama_template')
+                              <br>
+                              <span class="invalid-feedback" role="alert" style="color: red;">
+                                 <strong>{{ $message }}</strong>
+                              </span>
+                           @enderror
                         </div>
+
                         <br>
-                        <textarea id="editor1" name="isi" rows="20" cols="80"></textarea>
+                        <textarea id="editor1" name="isi" rows="20" cols="80">{{ $template->isi }}</textarea>
+
+                        @error('isi')
+                           <br>
+                           <span class="invalid-feedback" role="alert" style="color: red;">
+                              <strong>{{ $message }}</strong>
+                           </span>
+                        @enderror
                      </div>
 
                      <div class="box-footer">
@@ -80,7 +93,7 @@
    <script src="/js/btn_backTop.js"></script>
    <script type="text/javascript">
       CKEDITOR.replace('editor1', {
-         height: '400px',
+         height: '500px',
          tabSpaces: 4
        })
    </script>

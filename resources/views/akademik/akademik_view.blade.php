@@ -66,4 +66,16 @@
 	      <li><a href="{{ route('akademik.template-sk.index') }}">Lihat Semua</a></li>
 	    </ul>
 	</li>
+
+	<li class="treeview">
+	    <a href="#"><i class="fa fa-link"></i> <span>Data Nama Template</span>
+	      <span class="pull-right-container">
+	          <i class="fa fa-angle-left pull-right"></i>
+	        </span>
+	    </a>
+	    <ul class="treeview-menu">
+	      <li><a href="{{route('template.create')}}">Buat Baru</a></li>
+	      <li><a href="{{ route('template.index') }}">Lihat Semua</a></li>
+	    </ul>
+	</li>
 @endsection
