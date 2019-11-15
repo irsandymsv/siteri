@@ -1,4 +1,8 @@
-@extends('keuangan.keuangan_view')
+@extends('layouts.template')
+
+@section('side_menu')
+   @include('include.keuangan_menu')
+@endsection
 
 @section('page_title')
       Daftar Honorarium {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}

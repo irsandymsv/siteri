@@ -1,4 +1,8 @@
-@extends('bpp.bpp_view')
+@extends('layouts.template')
+
+@section('side_menu')
+   @include('include.bpp_menu')
+@endsection
 
 @section('page_title')
 	Daftar Honorarium SK {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}

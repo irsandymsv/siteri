@@ -1,4 +1,8 @@
-@extends('akademik.akademik_view')
+@extends('layouts.template')
+
+@section('side_menu')
+   @include('include.akademik_menu')
+@endsection
 
 @section('page_title')
 	Ubah Surat Tugas Pembimbing Skripsi

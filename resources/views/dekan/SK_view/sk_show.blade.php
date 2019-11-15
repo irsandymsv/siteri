@@ -1,4 +1,8 @@
-@extends('dekan.dekan_view')
+@extends('layouts.template')
+
+@section('side_menu')
+   @include('include.dekan_menu')
+@endsection
 
 @section('page_title')
 	@if($sk_akademik->tipe_sk->tipe == "SK Skripsi")
