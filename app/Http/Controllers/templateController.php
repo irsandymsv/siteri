@@ -53,10 +53,10 @@ class templateController extends Controller
             'nama' => 'required',
         ]);
         try {
-            nama_template::insert([
+            nama_template::where('id',$id)->update([
                 'nama' => $request->input('nama'),
             ]);
-            return redirect()->route('template.edit',$id)->with('success', 'Data Berhasil Dibuat');
+            return redirect()->route('template.index')->with('success', 'Data Berhasil Dibuat');
         } catch (Exception $e) {
             return redirect()->route('template.edit',$id)->with('error', $e->getMessage());
         }

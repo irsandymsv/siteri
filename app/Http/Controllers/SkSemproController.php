@@ -106,7 +106,8 @@ class SkSemproController extends Controller
                 "no_surat" => $request->input("no_surat"),
                 "tgl_sempro1" => carbon::parse($request->input("tgl_sempro1")),
                 "tgl_sempro2" => carbon::parse($request->input("tgl_sempro2")),
-                "id_status_sk" => $request->input("status")
+                "id_status_sk" => $request->input("status"),
+                'id_template' => 1
             ]);
 
             foreach ($request->nim as $nim) {
@@ -344,11 +345,12 @@ class SkSemproController extends Controller
         ->wherehas("jabatan", function (Builder $query){
             $query->where("jabatan", "Dekan");
         })->first();
-        // dd($detail_skripsi);
+        $tahun_akademik = $this->get_tahun_akademik($sk->created_at);
         return view('ktu.SK_view.sk_sempro_show', [
             'sk' => $sk,
             'detail_skripsi' => $detail_skripsi,
-            'dekan' => $dekan
+            'dekan' => $dekan,
+            'tahun_akademik' => $tahun_akademik
         ]);
     }
 
@@ -379,9 +381,9 @@ class SkSemproController extends Controller
                     $query->where('id', $value->id);
                 })->update([
                     'id_status_skripsi' => 4
-                ]);    
+                ]);
             }
-            
+
             return redirect()->route('ktu.sk-sempro.show', $id)->with('verif_ktu', 'verifikasi SK berhasil, status SK saat ini "Disetujui KTU"');
         }
     }

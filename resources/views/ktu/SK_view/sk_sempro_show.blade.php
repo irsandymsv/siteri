@@ -14,7 +14,7 @@
 			display: table;
 			width: 100%;
 			border-bottom: 0.1px solid black;
-			margin-top: 5px;			
+			margin-top: 5px;
 		}
 
 		#tgl_sk{
@@ -131,7 +131,7 @@
 
 	              	@if($sk->verif_ktu == 0)
 						<b>Belum Diverifikasi</b>
-						@elseif($sk->verif_ktu == 2) 
+						@elseif($sk->verif_ktu == 2)
 						<label class="label bg-red">Butuh Revisi</label>
 						@else
 						<label class="label bg-green">Sudah Diverifikasi</label>
@@ -173,7 +173,7 @@
             	      <span>DEKAN FAKULTAS ILMU KOMPUTER UNIVERSITAS JEMBER</span><br>
             	      <span>Nomor: {{ $sk->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($sk->created_at)->year }}</span><br>
             	      <small><b>tentang</b></small><br>
-            	      <span>PENETAPAN DOSEN PEMBAHAS SEMINAR PROPOSAL SKRIPSI MAHASISWA</span><br> 
+            	      <span>PENETAPAN DOSEN PEMBAHAS SEMINAR PROPOSAL SKRIPSI MAHASISWA</span><br>
             	      <span>FAKULTAS ILMU KOMPUTER UNIVERSITAS JEMBER</span><br>
             	      <span>TAHUN AKADEMIK 2019/2020</span><br>
             	   </p>
@@ -181,7 +181,7 @@
             	   <div id="isi_template_surat">
             	   	{!! $sk->template->isi !!}
             	   </div>
-
+                   <br>
             	   <div class="ttd-right">
             	   	{{-- <br> --}}
             	      Jember, {{ Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }} <br>
@@ -213,7 +213,7 @@
             		</tr>
             		<tr>
             			<td>Tentang		</td>
-            			<td>: Penetapan Dosen Pembahas Seminar Porposal Skripsi Mahasiswa Fakultas Ilmu Komputer Jember Tahun Akademik ...</td>
+                    <td>: Penetapan Dosen Pembahas Seminar Porposal Skripsi Mahasiswa Fakultas Ilmu Komputer Jember Tahun Akademik {{$tahun_akademik['tahun_awal'].'/'.$tahun_akademik['tahun_akhir']}}</td>
             		</tr>
             	</table>
          		<table id="detail_table">
@@ -238,14 +238,14 @@
             						{{ $item->surat_tugas[0]->dosen1->nama }}
             					</div>
             					<div>
-            						{{ $item->surat_tugas[0]->dosen2->nama }}	
+            						{{ $item->surat_tugas[0]->dosen2->nama }}
             					</div>
             				</td>
             			</tr>
 	            		@endforeach
 	            	</tbody>
 	            </table>
-
+                <br>
 	            <div class="ttd-right right-margin">
 	            	{{-- <br> --}}
 	               Dekan,
@@ -293,7 +293,7 @@
 	            @enderror
 	          </div>
 	          <div class="modal-footer">
-	            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>           
+	            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
 				<button type="submit" name="tarik_btn" class="btn btn-danger">Tarik SK</button>
 	          </div>
       	  </form>
