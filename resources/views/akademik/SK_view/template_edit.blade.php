@@ -83,6 +83,7 @@
                      </div>
 
                      <div class="box-footer">
+                        <a href="{{ route('akademik.template-sk.index') }}" class="btn btn-default">Kembali</a>
                         <button type="submit" name="simpan" class="btn btn-success">Simpan</button>
                      </div>
                   </form>

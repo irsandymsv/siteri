@@ -195,8 +195,8 @@
             	   <ol>
             	      <li>Penjabat Wakil Dekan I, II;</li>
             	      <li>Kasubag. Tata Usaha;</li>
-            	   	<span>Fakultas Ilmu Komputer Universitas Jember.</span>
             	   </ol>
+            	   <span>Fakultas Ilmu Komputer Universitas Jember.</span>
             	</div>
             </div>
 
@@ -213,12 +213,13 @@
             		</tr>
             		<tr>
             			<td>Tentang		</td>
-                    <td>: Penetapan Dosen Pembahas Seminar Porposal Skripsi Mahasiswa Fakultas Ilmu Komputer Jember Tahun Akademik {{$tahun_akademik['tahun_awal'].'/'.$tahun_akademik['tahun_akhir']}}</td>
+                    <td>: Penetapan Dosen Pembahas Seminar Porposal Skripsi Mahasiswa Fakultas Ilmu Komputer Jember Tahun Akademik {{ $tahun_akademik['tahun_awal'].'/'.$tahun_akademik['tahun_akhir'] }}</td>
             		</tr>
             	</table>
          		<table id="detail_table">
             		<thead>
 	            		<tr>
+                        <th>No</th>
 	            			<th>NIM</th>
 	            			<th>Nama Mahasiswa</th>
 	            			<th>Program Studi</th>
@@ -229,6 +230,7 @@
 	            	<tbody>
 	            		@foreach($detail_skripsi as $item)
             			<tr>
+                        <td>{{ $loop->index + 1 }}</td>
             				<td>{{$item->skripsi->nim}}</td>
             				<td>{{$item->skripsi->mahasiswa->nama}}</td>
             				<td>{{$item->skripsi->mahasiswa->bagian->bagian}}</td>
@@ -268,6 +270,7 @@
               		@endif
               	</form>
               	@endif
+               <a href="{{ route('ktu.sk-sempro.index') }}" class="btn btn-default pull-right">Kembali</a>
             </div>
    		</div>
       </div>

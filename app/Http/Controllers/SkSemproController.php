@@ -14,6 +14,7 @@ use App\mahasiswa;
 use App\Http\Controllers\Controller;
 use App\status_sk_akademik;
 use Carbon\Carbon;
+use PDF;
 
 class SkSemproController extends Controller
 {
@@ -289,17 +290,37 @@ class SkSemproController extends Controller
         }
     }
 
-    public function editPenetapan()
+    public function cetak_pdf($id)
     {
-        return view('akademik.SK_view.edit_penetapan', [
-            'tipe' => 'sk sempro'
-        ]);
-    }
+        $sk = sk_sempro::where('no_surat', $id)->with('template')->first();
 
-    public function updatePenetapan(Request $request)
-    {
+        $detail_skripsi = detail_skripsi::where('id_sk_sempro', $id)
+        ->with([
+            'skripsi',
+            'skripsi.mahasiswa',
+            'skripsi.mahasiswa.bagian',
+            'surat_tugas' => function($query)
+            {
+                $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
+            },
+            'surat_tugas.tipe_surat_tugas',
+            'surat_tugas.dosen1:no_pegawai,nama',
+            'surat_tugas.dosen2:no_pegawai,nama',
+        ])->get();
 
-        dd($request->all());
+        $dekan = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "Dekan");
+        })->first();
+        $tahun_akademik = $this->get_tahun_akademik($sk->created_at);
+
+        $pdf = PDF::loadview('akademik.SK_view.pdf', [
+            'sk' => $sk,
+            'detail_skripsi' => $detail_skripsi,
+            'dekan' => $dekan,
+            'tahun_akademik' => $tahun_akademik
+        ])->setPaper('a4', 'portrait')->setWarnings(false);
+        return $pdf->download("SK Sempro-" . $sk->no_surat);
     }
 
 

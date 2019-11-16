@@ -53,20 +53,15 @@
 						@endif
 					  </span>
 	          	  
-	              <div class="box-tools pull-right">
-	                <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
-	                </button>
-	                <button type="button" class="btn btn-default btn-sm" data-widget="remove"><i class="fa fa-times"></i>
-	                </button>
-	              </div>
+	            	<div class="box-tools pull-right">
+	               	<button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+	               	</button>
+	               	<button type="button" class="btn btn-default btn-sm" data-widget="remove"><i class="fa fa-times"></i>
+	               	</button>
+	              	</div>
 	            </div>
 				
 	            <div class="box-body">
-						@if ($sk->verif_dekan == 1)
-							<div class="form-group" style="float: right;">
-		                    	<a href="{{ route('akademik.skripsi.cetak', $sk->id) }}" class="btn btn-info"><i class="fa fa-print"></i> Cetak</a>
-							</div>
-						@endif
 						<h5><b>Nomor Surat</b> : {{$sk->no_surat}}/UN 25.1.15/SP/{{Carbon\Carbon::parse($sk->created_at)->year}}</h5>
             		<h5><b>Tanggal Dibuat</b> : {{Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
             		<h5><b>Tanggal Sempro 1</b> : {{Carbon\Carbon::parse($sk->tgl_sempro1)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
@@ -104,7 +99,15 @@
          				</blockquote>
          			</div>
          			@endif
-	            	
+	            </div>
+
+	            <div class="box-footer">
+	            	<a href="{{ route('akademik.sempro.index') }}" class="btn btn-default">Kembali</a>
+            		@if ($sk->verif_ktu == 1)
+            	   	<div class="pull-right">
+            	      <a href="{{ ($tipe == "SK Skripsi"? '#' : route('akademik.sempro.cetak', $sk->no_surat)) }}" class="btn bg-teal"><i class="fa fa-print"></i> Download PDF</a>
+            	   	</div>
+            		@endif
 	            </div>
       		</div>
       	</div>

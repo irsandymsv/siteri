@@ -183,6 +183,7 @@
             </div>
 
             <div class="box-footer">
+               <a href="{{ route('akademik.sutgas-pembahas.index') }}" class="btn btn-default">Kembali</a>
                <a href="{{ route('akademik.sutgas-pembahas.edit', $surat_tugas->id) }}" class="btn btn-warning pull-right"><i class="fa fa-edit"></i> Ubah</a> &ensp;   
             </div>
             

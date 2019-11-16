@@ -139,7 +139,7 @@ class templateController extends Controller
                 'id_nama_template' => $request->input('id_nama_template'),
                 'isi' => $request->input('isi')
             ]);
-            return redirect()->route('akademik.template-sk.edit',$id)->with('success', 'Data Berhasil Dibuat');
+            return redirect()->route('akademik.template-sk.edit',$id)->with('success', 'Data Berhasil Diubah');
         } catch (Exception $e) {
             return redirect()->route('akademik.template-sk.edit', $id)->with('error', $e->getMessage());
         }

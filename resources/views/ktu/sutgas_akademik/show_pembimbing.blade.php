@@ -92,7 +92,6 @@
    		<div class="box box-primary">
    			<div class="box-header">
                <h3 class="box-title">Detail Surat Tugas Pembimbing Skripsi</h3><br>
-               Status:
                @if ($surat_tugas->verif_ktu == 0)
                   <b>Belum Diverifikasi</b>
                @elseif($surat_tugas->verif_ktu == 2)
@@ -232,6 +231,8 @@
                      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-tarik-sk"><i class="fa fa-close"></i> Tarik Surat</button>
                   </form>
                @endif
+
+               <a href="{{ route('ktu.sutgas-pembimbing.index') }}" class="btn btn-default pull-right">Kembali</a>
             </div>
 
    		</div>

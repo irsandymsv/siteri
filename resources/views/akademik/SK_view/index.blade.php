@@ -57,10 +57,9 @@
 		            		</tr>
 		            	</thead>
 		            	<tbody>
-		            		@php $no = 0 @endphp
 		            		@foreach($sk as $item)
 		            			<tr id="sk_{{$item->id}}">
-		            				<td>{{$no+=1}}</td>
+		            				<td>{{$loop->index + 1}}</td>
 		            				<td>{{ $item->no_surat }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
 		            				<td>
 		            					{{Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}
@@ -102,7 +101,7 @@
 										@endif
 										
 										@if ($item->verif_ktu == 1)
-                    					<a href="{{ route('akademik.skripsi.cetak', $item->no_surat) }}" id="{{ $item->id }}" name="cetak_sk" class="btn btn-info" title="Cetak SK"><i class="fa fa-print"></i></a>
+                    					<a href="{{ ($tipe == "SK Skripsi"? '#' : route('akademik.sempro.cetak', $item->no_surat)) }}" id="{{ $item->id }}" name="cetak_sk" class="btn btn-info" title="Cetak SK"><i class="fa fa-print"></i></a>
 					  					@endif
 		            				</td>
 		            			</tr>
