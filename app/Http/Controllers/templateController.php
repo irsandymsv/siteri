@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Exception;
 use App\nama_template;
 use App\template;
+use carbon\Carbon;
 
 class templateController extends Controller
 {
@@ -104,7 +105,9 @@ class templateController extends Controller
         try{
             template::insert([
                 'id_nama_template' => $request->input('id_nama_template'),
-                'isi' => $request->input('isi')
+                'isi' => $request->input('isi'),
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString()
             ]);
             return redirect()->route('akademik.template-sk.index')->with('success','Data Berhasil Dibuat');
         }catch(Exception $e){

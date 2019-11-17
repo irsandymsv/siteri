@@ -175,7 +175,7 @@
             	      <small><b>tentang</b></small><br>
             	      <span>PENETAPAN DOSEN PEMBAHAS SEMINAR PROPOSAL SKRIPSI MAHASISWA</span><br>
             	      <span>FAKULTAS ILMU KOMPUTER UNIVERSITAS JEMBER</span><br>
-            	      <span>TAHUN AKADEMIK 2019/2020</span><br>
+            	      <span>TAHUN AKADEMIK {{ $tahun_akademik['tahun_awal'].'/'.$tahun_akademik['tahun_akhir'] }}</span><br>
             	   </p>
 
             	   <div id="isi_template_surat">

@@ -37,14 +37,14 @@
             margin-top: 0;
             margin-bottom: 0.5pt;
             margin-left: 0.8cm;
-            margin-right: 0.8cm; 
+            margin-right: 0.8cm;
          }
 
          .landscape{
             margin-top: 0;
             margin-bottom: 0;
             margin-left: 0.5cm;
-            margin-right: 0.5cm; 
+            margin-right: 0.5cm;
             font-size: 12pt;
          }
 
@@ -75,7 +75,7 @@
 
          #body_surat{
             margin-left: 0.3cm;
-            margin-right: 0.3cm; 
+            margin-right: 0.3cm;
             text-align: justify;
          }
 
@@ -125,7 +125,7 @@
          .right-margin{
             margin-right: 60px;
          }
-        
+
          thead th{
             text-align: center;
          }
@@ -158,9 +158,9 @@
             <span>DEKAN FAKULTAS ILMU KOMPUTER UNIVERSITAS JEMBER</span><br>
             <span>Nomor: {{ $sk->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($sk->created_at)->year }}</span><br>
             <small><b>tentang</b></small><br>
-            <span>PENETAPAN DOSEN PEMBAHAS SEMINAR PROPOSAL SKRIPSI MAHASISWA</span><br> 
+            <span>PENETAPAN DOSEN PEMBAHAS SEMINAR PROPOSAL SKRIPSI MAHASISWA</span><br>
             <span>FAKULTAS ILMU KOMPUTER UNIVERSITAS JEMBER</span><br>
-            <span>TAHUN AKADEMIK 2019/2020</span><br>
+            <span>TAHUN AKADEMIK {{ $tahun_akademik['tahun_awal'].'/'.$tahun_akademik['tahun_akhir'] }}</span><br>
          </p>
 
          <div id="isi_template_surat">
@@ -226,7 +226,7 @@
                      {{ $item->surat_tugas[0]->dosen1->nama }}
                   </div>
                   <div>
-                     {{ $item->surat_tugas[0]->dosen2->nama }} 
+                     {{ $item->surat_tugas[0]->dosen2->nama }}
                   </div>
                </td>
             </tr>

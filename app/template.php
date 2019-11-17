@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class template extends Model
 {
     protected $table = "template";
-    // public $timestamps = "false";
+    public $timestamps = true;
     protected $guarded = ['id'];
 
     public function nama_template()
