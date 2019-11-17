@@ -140,7 +140,8 @@ class templateController extends Controller
         try {
             template::where('id',$id)->update([
                 'id_nama_template' => $request->input('id_nama_template'),
-                'isi' => $request->input('isi')
+                'isi' => $request->input('isi'),
+                'updated_at' => Carbon::now()->toDateTimeString()
             ]);
             return redirect()->route('akademik.template-sk.edit',$id)->with('success', 'Data Berhasil Diubah');
         } catch (Exception $e) {
