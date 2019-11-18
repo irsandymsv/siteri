@@ -15,11 +15,11 @@ class CreateHistoriBesaranHonorTable extends Migration
     {
         Schema::create('histori_besaran_honor', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('id_besaran_honor')->nullable();
+            $table->unsignedInteger('id_nama_honor')->nullable();
             $table->unsignedBigInteger('jumlah_honor');
             $table->timestamps();
 
-            $table->foreign('id_besaran_honor')->references('id')->on('besaran_honor')->onDelete('set null');
+            $table->foreign('id_nama_honor')->references('id')->on('nama_honor')->onDelete('set null');
         });
     }
 

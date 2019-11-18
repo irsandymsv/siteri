@@ -15,6 +15,7 @@ use App\Http\Controllers\Controller;
 use App\status_sk_akademik;
 use Carbon\Carbon;
 use PDF;
+use PdfMerger;
 
 class SkSemproController extends Controller
 {
@@ -320,6 +321,14 @@ class SkSemproController extends Controller
             'dekan' => $dekan,
             'tahun_akademik' => $tahun_akademik
         ])->setPaper('a4', 'portrait')->setWarnings(false);
+
+        $pdfCoba = PDF::loadview('akademik.SK_view.pdf', [
+            'sk' => $sk,
+            'detail_skripsi' => $detail_skripsi,
+            'dekan' => $dekan,
+            'tahun_akademik' => $tahun_akademik
+        ])->setPaper('a4', 'portrait')->setWarnings(false);
+
         return $pdf->download("SK Sempro-" . $sk->no_surat);
     }
 
