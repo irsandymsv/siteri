@@ -15,7 +15,6 @@ use App\Http\Controllers\Controller;
 use App\status_sk_akademik;
 use Carbon\Carbon;
 use PDF;
-use PdfMerger;
 
 class SkSemproController extends Controller
 {

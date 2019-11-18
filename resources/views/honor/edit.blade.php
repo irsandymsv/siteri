@@ -1,11 +1,21 @@
 @extends('layouts.template')
 
 @section('side_menu')
-
+  <li class="treeview">
+     <a href="#"><i class="fa fa-link"></i> <span>Nama Honor</span>
+        <span class="pull-right-container">
+           <i class="fa fa-angle-left pull-right"></i>
+        </span>
+     </a>
+     <ul class="treeview-menu">
+        <li><a href="{{ route('honor.create') }}">Buat Baru</a></li>
+        <li><a href="{{ route('honor.index') }}">Lihat Semua</a></li>
+     </ul>
+  </li>
 @endsection
 
 @section('page_title')
-	Buat Nama Template Surat
+	Ubah Besaran Honor
 @endsection
 
 @section('css_link')
@@ -16,7 +26,7 @@
 @endsection
 
 @section('judul_header')
-	Buat Nama Template Surat
+	Ubah Besaran Honor
 @endsection
 
 @section('content')
@@ -25,7 +35,7 @@
       	<div class="col-xs-12">
       		<div class="box box-primary">
       			<div class="box-header">
-                  <h3 class="box-title">Buat Nama Template Surat</h3>
+                  <h3 class="box-title">Ubah Besaran Honor</h3>
 
                     <br><br>
                     @if (session('success'))
@@ -51,24 +61,36 @@
                       @endphp
                     @endif
                </div>
-                  <form action="{{ route('template.store') }}" method="post">
+                  <form action="{{ route('honor.upadte', $honor->id) }}" method="post">
                      @csrf
                      <div class="box-body">
                         <div class="form-group">
-                           <label for="nama">Nama Template</label>
-                          <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama_surat') }}">
+                           <label for="nama_honor">Nama Honor</label>
+                           <input type="text" class="form-control" id="nama_honor" name="nama_honor" value="{{ $honor->nama_honor }}">
 
-                          @error('nama')
-                             <br>
-                             <span class="invalid-feedback" role="alert" style="color: red;">
-                                <strong>{{ $message }}</strong>
-                             </span>
-                          @enderror
+                           @error('nama_honor')
+                              <br>
+                              <span class="invalid-feedback" role="alert" style="color: red;">
+                                 <strong>{{ $message }}</strong>
+                              </span>
+                           @enderror
+                        </div>
+
+                        <div class="form-group">
+                           <label for="jumlah_honor">Besaran Honor</label>
+                           <input type="number" class="form-control" id="jumlah_honor" name="jumlah_honor" value="{{ $honor->histori_besaran_honor[0]->jumlah_honor }}">
+
+                           @error('jumlah_honor')
+                              <br>
+                              <span class="invalid-feedback" role="alert" style="color: red;">
+                                 <strong>{{ $message }}</strong>
+                              </span>
+                           @enderror
                         </div>
                      </div>
 
                      <div class="box-footer">
-                        <a href="{{ route('template.index') }}" class="btn btn-default">Kembali</a>
+                        <a href="{{ route('honor.index') }}" class="btn btn-default">Kembali</a>
                         <button type="submit" name="simpan" class="btn btn-success">Simpan</button>
                      </div>
                   </form>
