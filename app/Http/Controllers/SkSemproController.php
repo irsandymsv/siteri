@@ -15,7 +15,8 @@ use App\Http\Controllers\Controller;
 use App\status_sk_akademik;
 use Carbon\Carbon;
 use PDF;
-use PdfMerger;
+use iio\libmergepdf\Merger;
+use iio\libmergepdf\Pages;
 
 class SkSemproController extends Controller
 {
@@ -104,12 +105,15 @@ class SkSemproController extends Controller
         ]);
 
         try {
+            $template = template::whereHas('nama_template', function (Builder $query){
+                $query->where('nama','SK Sempro');
+            })->sortBy('created_at','desc')->first();
             $sk_sempro = sk_sempro::create([
                 "no_surat" => $request->input("no_surat"),
                 "tgl_sempro1" => carbon::parse($request->input("tgl_sempro1")),
                 "tgl_sempro2" => carbon::parse($request->input("tgl_sempro2")),
                 "id_status_sk" => $request->input("status"),
-                'id_template' => 1
+                'id_template' =>$template->id
             ]);
 
             foreach ($request->nim as $nim) {
@@ -329,7 +333,12 @@ class SkSemproController extends Controller
             'tahun_akademik' => $tahun_akademik
         ])->setPaper('a4', 'portrait')->setWarnings(false);
 
-        return $pdf->download("SK Sempro-" . $sk->no_surat);
+        $merger = new Merger;
+        $merger->addFile($pdf);
+        $merger->addFile($pdfCoba);
+        $createdPdf = $merger->merge();
+
+        return $createdPdf->download("SK Sempro-" . $sk->no_surat);
     }
 
 
