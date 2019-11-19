@@ -15,11 +15,8 @@ use App\Http\Controllers\Controller;
 use App\status_sk_akademik;
 use Carbon\Carbon;
 use PDF;
-<<<<<<< HEAD
 use iio\libmergepdf\Merger;
 use iio\libmergepdf\Pages;
-=======
->>>>>>> 136b00a27aae6f02a4e93faa5c292b652c14fece
 
 class SkSemproController extends Controller
 {

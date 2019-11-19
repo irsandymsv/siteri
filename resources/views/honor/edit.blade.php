@@ -61,8 +61,9 @@
                       @endphp
                     @endif
                </div>
-                  <form action="{{ route('honor.upadte', $honor->id) }}" method="post">
+                  <form action="{{ route('honor.update', $honor->id) }}" method="post">
                      @csrf
+                     @method('PUT')
                      <div class="box-body">
                         <div class="form-group">
                            <label for="nama_honor">Nama Honor</label>

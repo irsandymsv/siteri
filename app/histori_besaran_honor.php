@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class histori_besaran_honor extends Model
 {
     protected $table = "histori_besaran_honor";
-    public $timestamps = FALSE;
+    public $timestamps = TRUE;
 
     public function nama_honor()
     {
