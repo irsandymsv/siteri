@@ -1,11 +1,21 @@
 @extends('layouts.template')
 
 @section('side_menu')
-   @include('include.akademik_menu')
+   <li class="treeview">
+      <a href="#"><i class="fa fa-link"></i> <span>Honor</span>
+         <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+         </span>
+      </a>
+      <ul class="treeview-menu">
+         <li><a href="{{ route('honor.create') }}">Buat Baru</a></li>
+         <li><a href="{{ route('honor.index') }}">Lihat Semua</a></li>
+      </ul>
+   </li>
 @endsection
 
 @section('page_title')
-	Daftar Template SK Akademik
+	Daftar Besaran Honor
 @endsection
 
 @section('css_link')
@@ -14,7 +24,7 @@
 @endsection
 
 @section('judul_header')
-	Template SK Akademik
+	Daftar Besaran Honor
 @endsection
 
 @section('content')
@@ -22,11 +32,25 @@
    	<div class="col-xs-12">
    		<div class="box box-success">
    			<div class="box-header">
-              <h3 class="box-title">Daftar Template SK Akademik</h3>
+              <h3 class="box-title">Daftar Besaran Honor</h3>
 
               <div style="float: right;">
-            	<a href="{{ route('akademik.template-sk.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Template SK</a>
+            	<a href="{{ route('honor.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Besaran Honor</a>
               </div>
+
+              <br><br>
+              @if (session('success'))
+              <div class="alert alert-success alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                  <h4><i class="icon fa fa-check"></i> Sukses</h4>
+                  {{session('success')}}
+              </div>
+
+              @php
+              Session::forget('success');
+              @endphp
+
+              @endif
             </div>
 
             <div class="box-body">
@@ -35,33 +59,22 @@
 	            		<thead>
 		            		<tr>
 		            			<th>No</th>
-                           <th>Tipe Template</th>
-		            			<th>Tanggal Dibuat</th>
+                           <th>Nama Honor</th>
+                           <th>Besaran</th>
 		            			<th>Pilihan</th>
 		            		</tr>
 		            	</thead>
 		            	<tbody>
-                       @if (!is_null($template_sempro))
+		            		@foreach ($honor as $item)
                            <tr>
-                              <td>1</td>
-                              <td>{{$template_sempro->nama_template->nama}}</td>
-                              <td>{{Carbon\Carbon::parse($template_sempro->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</td>
+                              <td>{{ $loop->index+1 }}</td>
+                              <td>{{ $item->nama_honor }}</td>
+                              <td>{{ $item->histori_besaran_honor[0]->jumlah_honor }}</td>
                               <td>
-                                 <a href="{{ route('akademik.template-sk.edit', $template_sempro->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                 <a href="{{ route('honor.edit', $item->id) }}" title="Ubah Data" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                               </td>
                            </tr>
-                       @endif
-                        
-                       @if (!is_null($template_skripsi))
-                          <tr>
-                             <td>2</td>
-                             <td>{{$template_skripsi->nama_template->nama}}</td>
-                             <td>{{ Carbon\Carbon::parse($template_skripsi->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
-                             <td>
-                                 <a href="{{ route('akademik.template-sk.edit', $template_skripsi->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                              </td>
-                          </tr>
-                       @endif
+                        @endforeach
 		            	</tbody>
 		            </table>
             	</div>

@@ -16,7 +16,7 @@ class dev_users_table_seeder extends Seeder
             [
                 'username' => 'dosen1',
                 'password' => 'dosendosen',
-                'no_pegawai' => 196811131994121001,
+                'no_pegawai' => '196811131994121001',
                 'nama' => 'Prof. Dr. Saiful Bukhori, ST., M.Kom',
                 'npwp'=> '1234567890',
                 'bpjs' => '1234567890',
@@ -30,7 +30,7 @@ class dev_users_table_seeder extends Seeder
             [
                 'username' => 'dosen2',
                 'password' => 'dosendosen',
-                'no_pegawai' => 196909281993021001,
+                'no_pegawai' => '196909281993021001',
                 'nama' => 'Drs. Antonius Cahya P, M. App,.Sc., Ph.D',
                 'npwp' => '1234567890',
                 'bpjs' => '1234567890',
@@ -44,7 +44,7 @@ class dev_users_table_seeder extends Seeder
             [
                 'username' => 'dosen3',
                 'password' => 'dosendosen',
-                'no_pegawai' => 198403052010122002,
+                'no_pegawai' => '198403052010122002',
                 'nama' => 'Windi Eka Yulia Retnani, S. Kom., MT',
                 'npwp' => '1234567890',
                 'bpjs' => '1234567890',
@@ -58,7 +58,7 @@ class dev_users_table_seeder extends Seeder
             [
                 'username' => 'dosen4',
                 'password' => 'dosendosen',
-                'no_pegawai' => 196906151997021002,
+                'no_pegawai' => '196906151997021002',
                 'nama' => 'Anang Andrianto, S.T., M.T',
                 'npwp' => '1234567890',
                 'bpjs' => '1234567890',
@@ -72,7 +72,7 @@ class dev_users_table_seeder extends Seeder
             [
                 'username' => 'dosen5',
                 'password' => 'dosendosen',
-                'no_pegawai' => 198410242009122008,
+                'no_pegawai' => '198410242009122008',
                 'nama' => 'Nelly Oktavia Adiwijaya, S.Si., MT',
                 'npwp' => '1234567890',
                 'bpjs' => '1234567890',

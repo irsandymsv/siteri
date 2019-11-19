@@ -179,23 +179,15 @@ Route::prefix('keuangan')->name('keuangan.')->group(function()
 	Route::delete('/honor-sempro/delete/{id_sk_honor?}', 'honorSemproController@destroy')->name('honor-sempro.destroy');
 });
 
-// Route::prefix('honor')->name('honor.')->group(function()
-// {
-// 	//Nama Besaran Honor
-// 	Route::get('/nama-honor', '')->name('nama-honor.index');
-// 	Route::post('/nama-honor/create', '')->name('nama-honor.create');
-// 	Route::get('/nama-honor/store', '')->name('nama-honor.store');
-// 	Route::get('/nama-honor/{id}/edit', '')->name('nama-honor.edit');
-// 	Route::put('/nama-honor/{id}/update', '')->name('nama-honor.update');
-	
-// 	//Histori Besaran Honor
-// 	Route::get('/histori-honor', '')->name('histori-honor.index');
-// 	Route::post('/histori-honor/create', '')->name('histori-honor.create');
-// 	Route::get('/histori-honor/store', '')->name('histori-honor.store');
-// 	Route::get('/histori-honor/{id}/edit', '')->name('histori-honor.edit');
-// 	Route::put('/histori-honor/{id}/update', '')->name('histori-honor.update');
+Route::prefix('honor')->name('honor.')->group(function()
+{
+	Route::get('/', 'honorController@index')->name('index');
+	Route::get('/create', 'honorController@create')->name('create');
+	Route::post('/store', 'honorController@store')->name('store');
+	Route::get('/{id}/edit', 'honorController@edit')->name('edit');
+	Route::put('/{id}/update', 'honorController@update')->name('update');
 
-// });
+});
 
 Route::prefix('bpp')->name('bpp.')->group(function()
 {
