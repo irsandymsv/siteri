@@ -16,6 +16,6 @@ class detail_honor extends Model
     }
 
     public function sk_honor(){
-        return $this->belongsTo('App\sk_honor,id_sk_honor');
+        return $this->belongsTo('App\sk_honor','id_sk_honor');
     }
 }

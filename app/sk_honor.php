@@ -17,16 +17,16 @@ class sk_honor extends Model
 
     public function sk_sempro()
     {
-        return $this->has_many('App\sk_sempro', 'id_sk_honor');
+        return $this->hasOne('App\sk_sempro', 'id_sk_honor');
     }
 
     public function sk_skripsi()
     {
-        return $this->has_many('App\sk_skripsi', 'id_sk_honor');
+        return $this->hasOne('App\sk_skripsi', 'id_sk_honor');
     }
 
     public function detail_honor()
     {
-        return $this->hasMany('App\detail_skripsi','id_sk_honor');
+        return $this->hasMany('App\detail_honor','id_sk_honor');
     }
 }
