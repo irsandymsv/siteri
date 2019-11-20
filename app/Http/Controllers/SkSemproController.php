@@ -11,6 +11,8 @@ use App\sk_sempro;
 use App\detail_skripsi;
 use App\skripsi;
 use App\mahasiswa;
+use App\template;
+use App\nama_template;
 use App\Http\Controllers\Controller;
 use App\status_sk_akademik;
 use Carbon\Carbon;
@@ -107,15 +109,15 @@ class SkSemproController extends Controller
         try {
             $template = template::whereHas('nama_template', function (Builder $query){
                 $query->where('nama','SK Sempro');
-            })->sortBy('created_at','desc')->first();
+            })->orderBy('created_at','desc')->first();
+
             $sk_sempro = sk_sempro::create([
                 "no_surat" => $request->input("no_surat"),
                 "tgl_sempro1" => carbon::parse($request->input("tgl_sempro1")),
                 "tgl_sempro2" => carbon::parse($request->input("tgl_sempro2")),
                 "id_status_sk" => $request->input("status"),
-                'id_template' =>$template->id
+                "id_template" => $template->id
             ]);
-
             foreach ($request->nim as $nim) {
                 $this->update_id_sk_sempro($nim, $sk_sempro->no_surat);
             }

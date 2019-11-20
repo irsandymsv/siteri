@@ -10,7 +10,7 @@ class sk_sempro extends Model
     protected $primaryKey = "no_surat";
     public $timestamps = TRUE;
     public $incrementing = FALSE;
-    protected $fillable = ['no_surat','id_status_sk','tgl_sempro1','tgl_sempro2','verif_ktu','pesan_revisi'];
+    protected $fillable = ['no_surat','id_status_sk','tgl_sempro1','tgl_sempro2','verif_ktu','pesan_revisi','id_template'];
 
     public function status_sk()
     {
