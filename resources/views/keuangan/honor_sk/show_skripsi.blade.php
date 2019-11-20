@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-	Daftar Honorarium SK {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}
+	Daftar Honorarium SK Skripsi
 @endsection
 
 @section('css_link')
@@ -39,7 +39,7 @@
 @endsection
 
 @section('judul_header')
-	Honorarium SK {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}
+	Honorarium SK Skripsi
 @endsection
 
 @section('content')
@@ -49,7 +49,7 @@
       <div class="col-xs-12" id="top_title">
          <div class="box box-success">
             <div class="box-header">
-               <h3 class="box-title">Honorarium SK {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
+               <h3 class="box-title">Honorarium SK Skripsi</h3>
                <span style="margin-left: 5px;">
                  @if($sk_honor->verif_kebag_keuangan == 2)
                  <label class="label bg-red">Butuh Revisi (BPP)</label>

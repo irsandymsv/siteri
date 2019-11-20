@@ -14,15 +14,15 @@ class dev_bagian_table_seeder extends Seeder
     {
         bagian::insert([
             [
-                'bagian' => 'Bagian 1',
+                'bagian' => 'Sistem Informasi',
                 'is_jurusan' => 1
             ],
             [
-                'bagian' => 'Bagian 2',
+                'bagian' => 'Teknologi Informasi',
                 'is_jurusan' => 1
             ],
             [
-                'bagian' => 'Bagian 3',
+                'bagian' => 'Informatika',
                 'is_jurusan' => 1
             ],
             [

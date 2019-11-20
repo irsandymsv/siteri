@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-      Daftar Honorarium {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}
+      Daftar Honorarium SK {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}
 @endsection
 
 @section('css_link')
@@ -14,7 +14,7 @@
 @endsection
 
 @section('judul_header')
-      Honorarium {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}
+      Honorarium SK {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}
 @endsection
 
 @section('content')     
@@ -22,84 +22,114 @@
       <div class="col-xs-12">
          <div class="box box-success">
             <div class="box-header">
-               <h3 class="box-title">Daftar Honorarium {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
+               <h3 class="box-title">Daftar Honorarium SK {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
 
-               <div style="float: right;">
+               {{-- <div style="float: right;">
                   <a href="{{ ($tipe == "SK Skripsi"? route('keuangan.honor-skripsi.pilih-sk') : route('keuangan.honor-sempro.pilih-sk') ) }}" class="btn btn-primary"><i class="fa fa-plus"></i>  Buat Dartar Honor</a>
-               </div>
+               </div> --}}
             </div>
 
             <div class="box-body">
                <div class="table-responsive">
-                  <table id="table_data1" class="table table-bordered table-hovered">
+                  <table id="data_table" class="table table-bordered table-hovered">
                      <thead>
                         <tr>
                            <th>No</th>
-                           <th>Tanggal Dibuat</th>
+                           <th>Nomor SK</th>
+                           <th>Tanggal SK</th>
                            <th>Status</th>
                            <th>Verif BPP</th>
                            <th>Verif KTU</th>
                            <th>Verif Wadek 2</th>
-                           <th>Verif Dekan</th>
-                           <th>Opsi</th>
+                           <th>Pilihan</th>
                         </tr>
                      </thead>
 
                      <tbody>
-                        @php $no=0; @endphp
-                        @foreach ($sk_honor as $item)
+                        @foreach ($sk_sempro as $item)
                            <tr id="sk_{{ $item->id }}">
-                              <td>{{ $no+=1 }}</td>
+                              <td>{{ $loop->index + 1 }}</td>
+                              <td>{{ $item->no_surat }}</td>
                               <td>
                                  {{ Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}
                               </td>
-                              <td>{{ $item->status_sk_honor->status }}</td>
                               <td>
-                                 @if($item->verif_kebag_keuangan == 0) 
-                                    Belum Diverifikasi
-                                 @elseif($item->verif_kebag_keuangan == 2) 
-                                    <label class="label bg-red">Butuh Revisi</label> 
+                                 @if (is_null($item->sk_honor))
+                                    Belum Ada Honor
                                  @else
-                                    <label class="label bg-green">Sudah Diverifikasi</label>
+                                    {{ $item->sk_honor->status_sk_honor->status }}
+                                 @endif
+                                 
+                              </td>
+                              <td>
+                                 @if (is_null($item->sk_honor))
+                                    -
+                                 @else
+                                    @if($item->sk_honor->verif_bpp == 0) 
+                                       Belum Diverifikasi
+                                    @elseif($item->sk_honor->verif_bpp == 2) 
+                                       <label class="label bg-red">Butuh Revisi</label> 
+                                    @else
+                                       <label class="label bg-green">Sudah Diverifikasi</label>
+                                    @endif
+                                 @endif
+                                 
+                              </td>
+                              <td>
+                                 @if (is_null($item->sk_honor))
+                                    -
+                                 @else
+                                    @if($item->sk_honor->verif_ktu == 0) 
+                                       Belum Diverifikasi
+                                    @elseif($item->sk_honor->verif_ktu == 2) 
+                                       <label class="label bg-red">Butuh Revisi</label> 
+                                    @else
+                                       <label class="label bg-green">Sudah Diverifikasi</label>
+                                    @endif
                                  @endif
                               </td>
                               <td>
-                                 @if($item->verif_ktu == 0) 
-                                    Belum Diverifikasi
-                                 @elseif($item->verif_ktu == 2) 
-                                    <label class="label bg-red">Butuh Revisi</label> 
+                                 @if (is_null($item->sk_honor))
+                                    -
                                  @else
-                                    <label class="label bg-green">Sudah Diverifikasi</label>
+                                    @if($item->sk_honor->verif_wadek2 == 0) 
+                                       Belum Diverifikasi
+                                    @elseif($item->sk_honor->verif_wadek2 == 2) 
+                                       <label class="label bg-red">Butuh Revisi</label> 
+                                    @else
+                                       <label class="label bg-green">Sudah Diverifikasi</label>
+                                    @endif
                                  @endif
                               </td>
+                              
                               <td>
-                                 @if($item->verif_wadek2 == 0) 
-                                    Belum Diverifikasi
-                                 @elseif($item->verif_wadek2 == 2) 
-                                    <label class="label bg-red">Butuh Revisi</label> 
-                                 @else
-                                    <label class="label bg-green">Sudah Diverifikasi</label>
-                                 @endif
-                              </td>
-                              <td>
-                                 @if($item->verif_dekan == 0) 
-                                    Belum Diverifikasi
-                                 @elseif($item->verif_dekan == 2) 
-                                    <label class="label bg-red">Butuh Revisi</label> 
-                                 @else
-                                    <label class="label bg-green">Sudah Diverifikasi</label>
-                                 @endif
-                              </td>
-                              <td>
-                                 @if ($item->tipe_sk->tipe == "SK Skripsi")
-                                    <a href="{{ route('keuangan.honor-skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
-                                    @if ($item->verif_kebag_keuangan != 1)
-                                       <a href="{{ route('keuangan.honor-skripsi.edit', $item->id) }}" class="btn btn-warning" title="Ubah Daftar Honor"><i class="fa fa-edit"></i></a>
+                                 @if ($tipe == "SK Skripsi")
+                                    @if (is_null($item->sk_honor))
+                                       <a href="#" class="btn btn-success">Generate</a>
+                                    @else
+                                       <a href="#" class="btn btn-primary">Lihat</a>
+                                       <button class="btn btn-danger" name="delete_honor" id="{{ $item->id }}" data-toggle="modal" data-target="#modal-delete">Hapus</button>
                                     @endif
                                  @else
-                                    <a href="{{ route('keuangan.honor-sempro.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
-                                    @if ($item->verif_kebag_keuangan != 1)
-                                       <a href="{{ route('keuangan.honor-sempro.edit', $item->id) }}" class="btn btn-warning" title="Ubah Daftar Honor"><i class="fa fa-edit"></i></a>
+                                    @if (is_null($item->sk_honor))
+                                       <a href="{{ route('keuangan.honor-sempro.store', $item->no_surat) }}" class="btn btn-success">Generate</a>
+                                    @else
+                                       <a href="{{ route('keuangan.honor-sempro.show', $item->sk_honor->id) }}" class="btn btn-primary">Lihat</a>
+                                       <button class="btn btn-danger" name="delete_honor" id="{{ $item->id }}" data-toggle="modal" data-target="#modal-delete">Hapus</button>
+                                    @endif
+                                 @endif
+                              </td>
+
+                              {{-- <td>
+                                 @if ($tipe == "SK Skripsi")
+                                    <a href="{{ route('keuangan.honor-skripsi.show', $item->sk_honor->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+                                    @if ($item->verif_bpp != 1)
+                                       <a href="{{ route('keuangan.honor-skripsi.edit', $item->sk_honor->id) }}" class="btn btn-warning" title="Ubah Daftar Honor"><i class="fa fa-edit"></i></a>
+                                    @endif
+                                 @else
+                                    <a href="{{ route('keuangan.honor-sempro.show', $item->sk_honor->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+                                    @if ($item->verif_bpp != 1)
+                                       <a href="{{ route('keuangan.honor-sempro.edit', $item->sk_honor->id) }}" class="btn btn-warning" title="Ubah Daftar Honor"><i class="fa fa-edit"></i></a>
                                     @endif
                                  @endif
 
@@ -109,7 +139,7 @@
                                  @if ($item->verif_dekan == 1)
                                     <a href="{{ route('keuangan.honor-skripsi.cetak', $item->id) }}" class="btn btn-info" title="Cetak Daftar Honor"><i class="fa fa-print"></i></a>
                                  @endif
-                              </td>
+                              </td> --}}
                            </tr>
                         @endforeach
                      </tbody>
@@ -148,6 +178,41 @@
 
 @section('script')
    <script type="text/javascript">
+      $(`<tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+         </tr>`).clone(true).appendTo( '#data_table thead' );
+
+      $('#data_table').DataTable({
+         order: [],
+         orderCellsTop: true,
+         initComplete: function () {
+             this.api().columns([3]).every( function () {
+                 var column = this;
+                 var select = $('<select><option value=""></option></select>')
+                     .appendTo( $("#data_table thead tr:eq(1) th").eq(column.index()).empty() )
+                     .on( 'change', function () {
+                         var val = $.fn.dataTable.util.escapeRegex(
+                             $(this).val()
+                         );
+
+                         column
+                             .search( val ? '^'+val+'$' : '', true, false )
+                             .draw();
+                     } );
+
+                 column.data().unique().sort().each( function ( d, j ) {
+                     select.append( '<option value="'+d+'">'+d+'</option>' )
+                 } );
+             } );
+         }
+      });
       $("a[name='delete_honor']").click(function(event) {
          event.preventDefault();
          var id_sk = $(this).attr('id');

@@ -110,7 +110,6 @@ class SkSemproController extends Controller
             $template = template::whereHas('nama_template', function (Builder $query){
                 $query->where('nama','SK Sempro');
             })->orderBy('created_at','desc')->first();
-
             $sk_sempro = sk_sempro::create([
                 "no_surat" => $request->input("no_surat"),
                 "tgl_sempro1" => carbon::parse($request->input("tgl_sempro1")),
@@ -122,7 +121,7 @@ class SkSemproController extends Controller
                 $this->update_id_sk_sempro($nim, $sk_sempro->no_surat);
             }
             // return redirect()->route('akademik.sempro.show', $sk_sempro->no_surat)->with('success', 'Data Berhasil Ditambahkan');
-            return redirect()->route('akademik.sempro.create')->with('success', 'Data Berhasil Ditambahkan');
+            return redirect()->route('akademik.sempro.show', $sk_sempro->no_surat)->with('success', 'Data Berhasil Ditambahkan');
         } catch (Exception $e) {
             return redirect()->route('akademik.sempro.create')->with('error', $e->getMessage());
         }
@@ -363,6 +362,7 @@ class SkSemproController extends Controller
     public function ktu_show($id)
     {
         $sk = sk_sempro::where('no_surat', $id)->with('template')->first();
+        // dd($sk);
         $status = $sk->status_sk->status;
         if($status == "Draft"){
             return redirect()->route('ktu.sk-sempro.index');

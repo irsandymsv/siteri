@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-	Buat Honorarium SK {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}
+	Buat Honorarium SK Skripsi
 @endsection
 
 @section('css_link')
@@ -52,20 +52,20 @@
 @endsection
 
 @section('judul_header')
-	Honorarium SK {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}
+	Honorarium SK Skripsi
 @endsection
 
 @section('content')
 <button id="back_top" type="button" class="btn bg-black"><i class="fa fa-arrow-up"></i></button>
 
-<form method="POST" action="{{ ($tipe == "SK Skripsi"? route("keuangan.honor-skripsi.store") : route("keuangan.honor-sempro.store")) }}">
+<form method="POST" action="{{ route("keuangan.honor-skripsi.store") }}">
    @csrf
    <input type="hidden" name="status">
    <div class="row">
       <div class="col-xs-12" id="top_title">
             <div class="box box-success">
                <div class="box-header">
-                  <h3 class="box-title">Buat Honorarium SK {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
+                  <h3 class="box-title">Buat Honorarium SK Skripsi</h3>
 
                   <div class="box-tools pull-right">
                    <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -78,9 +78,11 @@
                <div class="box-body">
                   <h4><b>Informasi SK:</b></h3>
                   <p>
-                     Nomor SK : {{ $sk_akademik->no_surat }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($sk_akademik->created_at)->year}}
+                     Nomor SK : {{ $sk_skripsi->no_surat }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($sk_skripsi->created_at)->year}}
                   </p>
-                  <p>Tanggal SK : {{Carbon\Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</p>
+                  <p>Tanggal SK : {{Carbon\Carbon::parse($sk_skripsi->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</p>
+                  <input type="hidden" name="id_sk_skripsi" value="{{$sk_skripsi->no_surat}}">
+
                   <button class="btn bg-purple" name="simpan_draf">Simpan Sebagai Draft</button>
                   <button class="btn btn-success" name="simpan_kirim">Simpan dan Kirim</button>
                </div>
@@ -92,46 +94,15 @@
       <div class="col-xs-12">
          <div class="box box-primary">
             <div class="box-header">
-               <h3 class="box-title">Buat Daftar Honor Pembimbing {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
-               <input type="hidden" name="id_sk_akademik" value="{{$sk_akademik->id}}">
-               {{-- <input type="hidden" name="no_surat" value="{{$sk_akademik->no_surat}}"> --}}
+               <h3 class="box-title">Buat Daftar Honor Pembimbing Skripsi</h3>
 
                <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
-                  </button>
+                  <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
                   <button type="button" class="btn btn-default btn-sm" data-widget="remove"><i class="fa fa-times"></i>
                   </button>
                </div>
             </div>
             <div class="box-body form-group">
-               <table id="tbl_add_honor_pembimbing">
-                  <tr>
-                     <td><label for="honor_pembimbing">Honor Pembimbing I: Rp </label></td>
-                     <td><input type="number" name="honor_pembimbing1" id="honor_pembimbing1" placeholder="Masukkan jumlah honor"></td>
-
-                     @error('honor_pembimbing1')
-                        <span class="invalid-feedback" role="alert" style="color: red;">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                     @enderror
-                  </tr>
-
-                  <tr>
-                     <td><label for="honor_pembimbing">Honor Pembimbing II: Rp </label></td>
-                     <td>
-                        <input type="number" name="honor_pembimbing2" id="honor_pembimbing2" placeholder="Masukkan jumlah honor">
-                     </td>
-                     <td>
-                        <button type="button" id="btn_honor_pembimbing" class="btn btn-primary">Ok</button>
-                     </td>
-
-                     @error('honor_pembimbing2')
-                        <span class="invalid-feedback" role="alert" style="color: red;">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                     @enderror
-                  </tr>
-               </table>
                <div class="table-responsive">
                   <table id="dataTable1" class="table table-bordered table-striped">
                      <thead>
@@ -148,17 +119,16 @@
                      </thead>
 
                      <tbody id="tbl_pembimbing">
-                        @php $no = 0; @endphp
-                        @foreach($detail_sk as $item)
-                           <tr id="{{$no+=1}}">
-                              <td>{{$no}}</td>
-                              <td>{{$item->pembimbing_utama->nama}}</td>
-                              <td>{{$item->pembimbing_utama->npwp}}</td>
+                        @foreach($detail_skripsi as $item)
+                           <tr id="{{ $loop->index + 1 }}">
+                              <td>{{ $loop->index + 1 }}</td>
+                              <td>{{ $item->sutgas_pembimbing[0]->dosen1->nama }}</td>
+                              <td>{{ $item->sutgas_pembimbing[0]->dosen1->npwp }}</td>
                               <td rowspan="2">
-                                 <p>{{$item->nama_mhs}}</p>
-                                 <p>NIM: {{$item->nim}}</p>
+                                 <p>{{ $item->skripsi->mahasiswa->nama }}</p>
+                                 <p>NIM: {{ $item->skripsi->nim }}</p>
                               </td>
-                              <td>{{$item->pembimbing_utama->golongan->golongan}}</td>
+                              <td>{{$item->sutgas_pembimbing[0]->dosen1->golongan->golongan}}</td>
                               <td class="pembimbingHonor_1">Rp 
                                  {{-- <input type="number" name="honorarium_pembimbing[]" class="pembimbingHonor" id="pembimbing_{{$no}}" min="0"> --}}
                                  <span></span>
@@ -169,9 +139,9 @@
 
                            <tr id="{{$no+=1}}">
                               <td>{{$no}}</td>
-                               <td>{{$item->pembimbing_pendamping->nama}}</td>
-                              <td>{{$item->pembimbing_pendamping->npwp}}</td>
-                              <td>{{$item->pembimbing_pendamping->golongan->golongan}}</td>
+                               <td>{{$item->sutgas_pembimbing[0]->dosen1->nama}}</td>
+                              <td>{{$item->sutgas_pembimbing[0]->dosen1->npwp}}</td>
+                              <td>{{$item->sutgas_pembimbing[0]->dosen1->golongan->golongan}}</td>
                               <td class="pembimbingHonor_2">Rp 
                                  {{-- <input type="number" name="honorarium_pembimbing[]" class="pembimbingHonor" id="pembimbing_{{$no}}" min="0"> --}}
                                  <span></span>
@@ -199,7 +169,7 @@
    	<div class="col-xs-12">
    		<div class="box box-danger">
    			<div class="box-header">
-   				<h3 class="box-title">Buat Daftar Honor {{ ($tipe == "SK Skripsi"? "Penguji Skripsi" : "Pembahas Sempro") }} Skripsi</h3>
+   				<h3 class="box-title">Buat Daftar Honor penguji Skripsi</h3>
 
                <div class="box-tools pull-right">
                      <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -210,17 +180,6 @@
    			</div>
 
    			<div class="box-body">
-               <div class="input_honor">
-                  <label for="honor_penguji">Honor {{ ($tipe == "SK Skripsi"? "Penguji" : "Pembahas") }}: Rp </label>
-                  <input type="number" name="honor_penguji" id="honor_penguji" placeholder="Masukkan jumlah honor">
-                  <button type="button" id="btn_honor_penguji" class="btn btn-primary">Ok</button>
-               </div>
-               @error('honor_penguji')
-                  <span class="invalid-feedback" role="alert" style="color: red;">
-                      <strong>{{ $message }}</strong>
-                  </span>
-               @enderror
-
                <div class="table-responsive">
                   <table id="dataTable2" class="table table-bordered table-striped">
                      <thead>
@@ -240,7 +199,7 @@
 
                      <tbody id="tbl_penguji">
                         @php $no = 0; @endphp
-                        @foreach($detail_sk as $item)
+                        @foreach($detail_skripsi as $item)
                            <tr id="{{$no+=1}}">
                               <td>{{$no}}</td>
                               <td>{{$item->penguji_utama->nama}}</td>

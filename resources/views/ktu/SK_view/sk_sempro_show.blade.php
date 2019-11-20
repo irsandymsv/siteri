@@ -30,12 +30,12 @@
          font-size: 16px;
          padding: 20px 50px;
          border: 1px solid black;
-      }
+    }
 
-      .landscape{
-      	width: 90%;
-      	padding: 20px 20px;
-      }
+    .landscape{
+    	width: 95%;
+    	padding: 20px 15px;
+    }
 
 		#kop_surat{
 		   padding: 5px;
@@ -96,6 +96,10 @@
 			padding: 0;
 		}
 
+    #detail_table td:nth-child(5){
+      width: 350px;
+    }
+
 		#isi_template_surat{
 			width: 100%;
 		}
@@ -106,11 +110,11 @@
 
 		.ttd-right{
          float: right;
-      }
+    }
 
-      .right-margin{
-      	margin-right: 60px;
-      }
+    .right-margin{
+    	margin-right: 60px;
+    }
 	</style>
 @endsection
 
@@ -248,7 +252,7 @@
 	            	</tbody>
 	            </table>
                 <br>
-	            <div class="ttd-right right-margin">
+	            <div class="ttd-right">
 	            	{{-- <br> --}}
 	               Dekan,
 	               <br><br><br><br>

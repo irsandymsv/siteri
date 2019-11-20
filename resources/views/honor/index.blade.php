@@ -69,7 +69,7 @@
                            <tr>
                               <td>{{ $loop->index+1 }}</td>
                               <td>{{ $item->nama_honor }}</td>
-                              <td>{{ $item->histori_besaran_honor[0]->jumlah_honor }}</td>
+                              <td>Rp &ensp; {{ number_format($item->histori_besaran_honor[0]->jumlah_honor, 0, ",", ".") }}</td>
                               <td>
                                  <a href="{{ route('honor.edit', $item->id) }}" title="Ubah Data" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                               </td>

@@ -25,6 +25,18 @@
 		.revisi_wrap{
         padding: 5px;
       }
+
+      #dataTable thead tr th{
+      	text-align: center;
+      }
+
+      #dataTable tbody tr td:nth-child(2){
+      	width: 100px;
+      }
+
+      #dataTable tbody tr td:nth-child(5){
+      	width: 350px;
+      }
 	</style>
 @endsection
 
@@ -117,13 +129,13 @@
 		<div class="col-xs-12">
       		<div class="box box-primary">
       			<div class="box-header">
-	              <h3 class="box-title">Data SK {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
+	              	<h3 class="box-title">Data SK {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
 
-	              @if($sk->verif_ktu != 1)
+	              	@if($sk->verif_ktu != 1)
 		              <div class="form-group" style="float: right;">
 		              	<a href="{{ ($tipe == "SK Skripsi"? route('akademik.skripsi.edit', $sk->no_surat) : route('akademik.sempro.edit', $sk->no_surat)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
 		              </div>
-	              @endif
+	              	@endif
 	            </div>
 
 	            <div class="box-body">
@@ -134,16 +146,16 @@
 			            			<th>No</th>
 			            			<th>NIM</th>
 			            			<th>Nama Mahasiswa</th>
-			            			<th>Jurusan</th>
+			            			<th>Program Studi</th>
 			            			<th>Judul</th>
 			            			@if ($tipe == "sk skripsi")
 			            			<th>Pembimbing</th>
 			            			@endif
 			            			<th>
 			            				@if($tipe == "SK Skripsi")
-			            					Penguji
+			            					Penguji I/II
 			            				@else
-			            					Pembahas
+			            					Pembahas I/II
 			            				@endif
 			            			</th>
 			            		</tr>
@@ -190,7 +202,7 @@
 	              	@endif
 	            </div>
       		</div>
-      	</div>
+      </div>
 	</div>
 
 @endsection

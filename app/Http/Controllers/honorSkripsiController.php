@@ -58,7 +58,7 @@ class honorSkripsiController extends Controller
             'penguji_pendamping:no_pegawai,nama,npwp,id_golongan', 'penguji_pendamping.golongan',
         ])->get();
         // dd($detail_sk);
-        return view('keuangan.honor_sk.create', [
+        return view('keuangan.honor_sk.create_skripsi', [
             'sk_akademik' => $sk_akademik,
             'detail_sk' => $detail_sk,
             'tipe' => 'SK Skripsi'

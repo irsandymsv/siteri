@@ -79,7 +79,12 @@
 
                         <div class="form-group">
                            <label for="jumlah_honor">Besaran Honor</label>
-                           <input type="number" class="form-control" id="jumlah_honor" name="jumlah_honor" value="{{ $honor->histori_besaran_honor[0]->jumlah_honor }}">
+                           <div class="input-group">
+                              <div class="input-group-addon">
+                                 Rp
+                              </div>
+                              <input type="number" class="form-control" id="jumlah_honor" name="jumlah_honor" value="{{ $honor->histori_besaran_honor[0]->jumlah_honor }}">
+                            </div>
 
                            @error('jumlah_honor')
                               <br>
