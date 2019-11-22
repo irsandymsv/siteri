@@ -70,7 +70,7 @@ class honorSemproController extends Controller
             $sk_honor = sk_honor::create();
             sk_sempro::where('no_surat',$id_sk_sempro)->update(['id_sk_honor' => $sk_honor->id]);
             $honor_sempro = histori_besaran_honor::whereHas('nama_honor',function (Builder $query){
-                $query->where('nama_honor','Honor Sk Sempro');
+                $query->where('nama_honor','Honor Pembahas Sempro');
             })->orderBy('created_at','desc')->first();
             detail_honor::create([
                 'id_sk_honor' => $honor_sempro->id,
