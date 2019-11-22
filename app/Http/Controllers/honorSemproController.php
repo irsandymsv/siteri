@@ -67,7 +67,6 @@ class honorSemproController extends Controller
 
     public function store($id_sk_sempro)
     {
-        $sk_honor = sk_honor::create();
         try {
             $sk_honor = sk_honor::create();
             sk_sempro::where('no_surat',$id_sk_sempro)->update(['id_sk_honor' => $sk_honor->id]);
@@ -75,7 +74,7 @@ class honorSemproController extends Controller
                 $query->where('nama_honor','Honor Pembahas Sempro');
             })->orderBy('created_at','desc')->first();
             detail_honor::create([
-                'id_sk_honor' => $honor_sempro->id,
+                'id_sk_honor' => $sk_honor->id,
                 'id_histori_besaran_honor' => $honor_sempro->id
             ]);
             return redirect()->route('keuangan.honor-sempro.show', $sk_honor->id)->with('success', 'Data Berhasil Dibuat');
@@ -114,7 +113,7 @@ class honorSemproController extends Controller
             'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan',
             'surat_tugas.dosen2.golongan'
         ])->get();
-        
+
         // dd($sk_honor);
         return  view('keuangan.honor_sk.show_sempro', [
             'sk_honor' => $sk_honor,
@@ -200,8 +199,8 @@ class honorSemproController extends Controller
     {
         $sk_honor = sk_honor::orderBy('updated_at', 'desc')
         ->with(['sk_sempro', 'status_sk_honor'])
-        ->whereHas('status_sk_honor', function(Builder $query){ 
-            $query->whereIn('id', [2,3,4,5,6]); 
+        ->whereHas('status_sk_honor', function(Builder $query){
+            $query->whereIn('id', [2,3,4,5,6]);
         })->get();
 
         // dd($sk_honor);

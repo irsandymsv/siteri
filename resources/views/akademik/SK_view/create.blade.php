@@ -140,7 +140,11 @@
 
                <div class="box-body">
                   <div class="table-responsive">
-
+                    @error('nim')
+                        <span class="invalid-feedback" role="alert" style="color: red;">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                      <div class="form-group">
                         <label for="nim">Pilih NIM Mahasiswa: </label>
                         <select class="form-control select2" id="pilih_nim">
@@ -195,7 +199,7 @@
                                     <button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
                                  </td>
                               </tr>
-                              
+
                            @endforeach
                         @endif
                         </tbody>

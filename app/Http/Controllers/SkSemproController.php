@@ -19,6 +19,8 @@ use Carbon\Carbon;
 use PDF;
 use iio\libmergepdf\Merger;
 use iio\libmergepdf\Pages;
+use PdfMerger;
+use Storage;
 
 class SkSemproController extends Controller
 {
@@ -98,13 +100,22 @@ class SkSemproController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
-            "no_surat" => "required|unique:sk_sempro,no_surat",
-            'tgl_sempro1' => "required",
-            'tgl_sempro2' => "required",
-            "nim" => "required|array",
-            "nim.*" => "required|string"
-        ]);
+        if($request->input("status")==2){
+            $this->validate($request, [
+                "no_surat" => "required|unique:sk_sempro,no_surat",
+                'tgl_sempro1' => "required",
+                'tgl_sempro2' => "required",
+                "nim" => "required|array",
+                "nim.*" => "required|string"
+            ]);
+        }else{
+            $this->validate($request, [
+                "no_surat" => "required|unique:sk_sempro,no_surat",
+                "nim" => "required|array",
+                "nim.*" => "required|string"
+            ]);
+        }
+
 
         try {
             $template = template::whereHas('nama_template', function (Builder $query){
@@ -242,14 +253,21 @@ class SkSemproController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request);
-        $this->validate($request, [
-            "no_surat" => "required",
-            'tgl_sempro1' => "required",
-            'tgl_sempro2' => "required",
-            "nim" => "required|array",
-            "nim.*" => "required|string"
-        ]);
+        if ($request->input("status") == 2) {
+            $this->validate($request, [
+                "no_surat" => "required",
+                'tgl_sempro1' => "required",
+                'tgl_sempro2' => "required",
+                "nim" => "required|array",
+                "nim.*" => "required|string"
+            ]);
+        } else {
+            $this->validate($request, [
+                "no_surat" => "required",
+                "nim" => "required|array",
+                "nim.*" => "required|string"
+            ]);
+        }
 
         try {
             $sk = sk_sempro::find($id);
@@ -327,19 +345,16 @@ class SkSemproController extends Controller
             'tahun_akademik' => $tahun_akademik
         ])->setPaper('a4', 'portrait')->setWarnings(false);
 
-        $pdfCoba = PDF::loadview('akademik.SK_view.pdf', [
-            'sk' => $sk,
-            'detail_skripsi' => $detail_skripsi,
-            'dekan' => $dekan,
-            'tahun_akademik' => $tahun_akademik
-        ])->setPaper('a4', 'portrait')->setWarnings(false);
+        // $content = $pdf->download()->getOriginalContent();
+        // Storage::put('sempro'.$sk->no_surat.'.pdf', $content);
+        // $dom_pdf = $pdf->getDomPDF();
+        // $canvas = $dom_pdf->get_canvas();
+        // $pdf_merger = PdfMerger::addPDF(Storage::disk('local')->path('sempro' . $sk->no_surat . '.pdf'), 'all');
+        // $pdfmerged->addPDF(Storage::disk('local')->path('sempro' . $sk->no_surat . '.pdf'), 'all');
+        // $pdfmerged->merge();
 
-        $merger = new Merger;
-        $merger->addFile($pdf);
-        $merger->addFile($pdfCoba);
-        $createdPdf = $merger->merge();
 
-        return $createdPdf->download("SK Sempro-" . $sk->no_surat);
+        return $pdf->download('SK Sempro-'. $sk->no_surat);
     }
 
 
