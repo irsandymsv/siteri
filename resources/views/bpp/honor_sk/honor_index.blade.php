@@ -43,29 +43,29 @@
                      <thead>
                         <tr>
                            <th>No</th>
+                           <th>SK Sempro</th>
                            <th>Tanggal Dibuat</th>
                            <th>Status</th>
                            <th>Verif BPP</th>
                            <th>Verif KTU</th>
                            <th>Verif Wadek 2</th>
-                           <th>Verif Dekan</th>
-                           <th>Opsi</th>
+                           <th>Pilihan</th>
                         </tr>
                      </thead>
 
                      <tbody>
-                        @php $no=0; @endphp
                         @foreach ($sk_honor as $item)
                            <tr id="sk_{{ $item->id }}">
-                              <td>{{ $no+=1 }}</td>
+                              <td>{{ $loop->index + 1 }}</td>
+                              <td>{{ $item->sk_sempro->no_surat }}</td>
                               <td>
                                  {{ Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}
                               </td>
                               <td>{{ $item->status_sk_honor->status }}</td>
                               <td>
-                                 @if($item->verif_kebag_keuangan == 0) 
+                                 @if($item->verif_bpp == 0) 
                                     Belum Diverifikasi
-                                 @elseif($item->verif_kebag_keuangan == 2) 
+                                 @elseif($item->verif_bpp == 2) 
                                     <label class="label bg-red">Butuh Revisi</label> 
                                  @else
                                     <label class="label bg-green">Sudah Diverifikasi</label>
@@ -84,15 +84,6 @@
                                  @if($item->verif_wadek2 == 0) 
                                     Belum Diverifikasi
                                  @elseif($item->verif_wadek2 == 2) 
-                                    <label class="label bg-red">Butuh Revisi</label> 
-                                 @else
-                                    <label class="label bg-green">Sudah Diverifikasi</label>
-                                 @endif
-                              </td>
-                              <td>
-                                 @if($item->verif_dekan == 0) 
-                                    Belum Diverifikasi
-                                 @elseif($item->verif_dekan == 2) 
                                     <label class="label bg-red">Butuh Revisi</label> 
                                  @else
                                     <label class="label bg-green">Sudah Diverifikasi</label>

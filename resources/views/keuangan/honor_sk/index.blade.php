@@ -35,7 +35,7 @@
                      <thead>
                         <tr>
                            <th>No</th>
-                           <th>Nomor SK</th>
+                           <th>SK Sempro</th>
                            <th>Tanggal SK</th>
                            <th>Status</th>
                            <th>Verif BPP</th>

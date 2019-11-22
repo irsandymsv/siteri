@@ -194,13 +194,17 @@ Route::prefix('bpp')->name('bpp.')->group(function()
 	Route::get('/', function() {
 	    return view('bpp.dashboard');
 	});
+
+	//Route Honor Sempro
+	Route::get('/honor-sempro', 'honorSemproController@bpp_index')->name('honor-sempro.index');
+	Route::get('/honor-sempro/{id_sk_honor}', 'honorSemproController@bpp_show')->name('honor-sempro.show');
+	Route::put('/honor-sempro/verif/{id_sk_honor}', 'honorSemproController@bpp_verif')->name('honor-sempro.verif');
+
+	//Route Honor Skripsi
 	Route::get('/honor-skripsi', 'honorSkripsiController@bpp_index')->name('honor-skripsi.index');
 	Route::get('/honor-skripsi/{id_sk_honor}', 'honorSkripsiController@bpp_show')->name('honor-skripsi.show');
 	Route::put('/honor-skripsi/verif/{id_sk_honor}', 'honorSkripsiController@bpp_verif')->name('honor-skripsi.verif');
 
-	Route::get('/honor-sempro', 'honorSemproController@bpp_index')->name('honor-sempro.index');
-	Route::get('/honor-sempro/{id_sk_honor}', 'honorSemproController@bpp_show')->name('honor-sempro.show');
-	Route::put('/honor-sempro/verif/{id_sk_honor}', 'honorSemproController@bpp_verif')->name('honor-sempro.verif');
 });
 
 Route::prefix('wadek2')->name('wadek2.')->group(function()

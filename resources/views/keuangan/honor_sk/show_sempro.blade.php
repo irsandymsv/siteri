@@ -146,7 +146,7 @@
                      <thead>
                         <tr>
                            <th>No</th>
-                           <th>Pembahas I/II</th>
+                           <th>Tim Pembahas I/II</th>
                            <th>NPWP</th>
                            <th>Nama Mahasiswa/NIM</th>
                            <th>Gol</th>
@@ -157,9 +157,15 @@
                      </thead>
 
                      <tbody id="tbl_penguji">
-                        @php $no=0; $total_honor=0; $total_pph=0; $total_penerimaan=0; @endphp
+                        @php $no=0; $a = 1; $b = 1; $total_honor=0; $total_pph=0; $total_penerimaan=0; @endphp
+
                         @foreach($detail_skripsi as $item)
-                           <tr id="{{ $no+=1 }}">
+                           @if ($no+1 == 4*$a-1)
+                              @php $a+=1; @endphp 
+                              <tr id="{{ $no+=1 }}" style="background-color: #bbb;">
+                           @else
+                              <tr id="{{ $no+=1 }}">   
+                           @endif
                               <td>{{ $no }}</td>
                               <td>{{ $item->surat_tugas[0]->dosen1->nama }}</td>
                               <td>{{ $item->surat_tugas[0]->dosen1->npwp }}</td>
@@ -191,7 +197,12 @@
                               @endphp
                            </tr>
 
-                           <tr id="{{ $no+=1 }}">
+                          @if ($no+1 == 4*$b)
+                              @php $b+=1; @endphp 
+                              <tr id="{{ $no+=1 }}" style="background-color: #bbb;">
+                           @else
+                              <tr id="{{ $no+=1 }}">   
+                           @endif
                               <td>{{ $no }}</td>
                               <td>{{ $item->surat_tugas[0]->dosen2->nama }}</td>
                               <td>{{ $item->surat_tugas[0]->dosen2->npwp }}</td>

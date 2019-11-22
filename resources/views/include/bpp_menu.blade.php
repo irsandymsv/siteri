@@ -7,7 +7,7 @@
         </span>
     </a>
     <ul class="treeview-menu">
-      <li><a href="{{ route('bpp.honor-skripsi.index') }}">Honor SK Dekan Skripsi</a></li>
-      <li><a href="{{ route('bpp.honor-sempro.index') }}">Honor SK Dekan Sempro</a></li>
+      <li><a href="{{ route('bpp.honor-sempro.index') }}">Honor SK Sempro</a></li>
+      <li><a href="{{ route('bpp.honor-skripsi.index') }}">Honor SK Skripsi</a></li>
     </ul>
 </li>

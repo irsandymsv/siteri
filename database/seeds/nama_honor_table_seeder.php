@@ -12,7 +12,7 @@ class nama_honor_table_seeder extends Seeder
      */
     public function run()
     {
-        nama_honor::create([
+        nama_honor::insert([
             [
                 'nama_honor' => 'Honor Pembimbing Utama'
             ],
