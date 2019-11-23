@@ -19,11 +19,11 @@
 
          .main_table{
             margin-left: -0.9cm;
-            margin-right: -0.9cm; 
+            margin-right: -0.9cm;
          }
 
          .tabel_keterangan td:first-child{
-           padding-right: 10px; 
+           padding-right: 10px;
          }
 
          .table-bordered{
@@ -40,7 +40,7 @@
          .table-bordered td{
              padding: 3px;
          }
-        
+
          thead th{
             text-align: center;
          }
@@ -96,7 +96,7 @@
             float: left;
             margin-left: 25px;
          }
-        
+
     </style>
 </head>
 
@@ -140,10 +140,10 @@
 
                @foreach($detail_skripsi as $item)
                   @if ($no+1 == 4*$a-1)
-                     @php $a+=1; @endphp 
+                     @php $a+=1; @endphp
                      <tr id="{{ $no+=1 }}" style="background-color: #bbb;">
                   @else
-                     <tr id="{{ $no+=1 }}">   
+                     <tr id="{{ $no+=1 }}">
                   @endif
                      <td class="first_td">{{ $no }}</td>
                      <td class="nama_dosen">{{ $item->surat_tugas[0]->dosen1->nama }}</td>
@@ -153,7 +153,7 @@
                         <p>NIM: {{ $item->skripsi->nim }}</p>
                      </td>
                      <td class="to_center">{{ $item->surat_tugas[0]->dosen1->golongan->golongan }}</td>
-                     <td id="penguji_{{$no}}" class="pengujiHonor">Rp 
+                     <td id="penguji_{{$no}}" class="pengujiHonor">Rp
                         {{ number_format($sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor, 0, ",", ".") }}
                      </td>
                      <td class="pph" id="pph_{{$no}}">Rp
@@ -178,10 +178,10 @@
                   </tr>
 
                   @if ($no+1 == 4*$b)
-                     @php $b+=1; @endphp 
+                     @php $b+=1; @endphp
                      <tr id="{{ $no+=1 }}" style="background-color: #bbb;">
                   @else
-                     <tr id="{{ $no+=1 }}">   
+                     <tr id="{{ $no+=1 }}">
                   @endif
                      <td class="first_td">{{ $no }}</td>
                      <td class="nama_dosen">{{ $item->surat_tugas[0]->dosen2->nama }}</td>
@@ -219,14 +219,54 @@
                   <td>Rp {{ number_format($total_penerimaan, 0, ",", ".") }}</td>
                   <td></td>
                </tr>
-                
+                @php
+                    function penyebut($nilai) {
+                        $nilai = abs($nilai);
+                        $huruf = array("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas");
+                        $temp = "";
+                        if ($nilai < 12) {
+                            $temp = " ". $huruf[$nilai];
+                        } else if ($nilai <20) {
+                            $temp = penyebut($nilai - 10). " Belas";
+                        } else if ($nilai < 100) {
+                            $temp = penyebut($nilai/10)." Puluh". penyebut($nilai % 10);
+                        } else if ($nilai < 200) {
+                            $temp = " Seratus" . penyebut($nilai - 100);
+                        } else if ($nilai < 1000) {
+                            $temp = penyebut($nilai/100) . " Ratus" . penyebut($nilai % 100);
+                        } else if ($nilai < 2000) {
+                            $temp = " Seribu" . penyebut($nilai - 1000);
+                        } else if ($nilai < 1000000) {
+                            $temp = penyebut($nilai/1000) . " Ribu" . penyebut($nilai % 1000);
+                        } else if ($nilai < 1000000000) {
+                            $temp = penyebut($nilai/1000000) . " Juta" . penyebut($nilai % 1000000);
+                        } else if ($nilai < 1000000000000) {
+                            $temp = penyebut($nilai/1000000000) . " Milyar" . penyebut(fmod($nilai,1000000000));
+                        } else if ($nilai < 1000000000000000) {
+                            $temp = penyebut($nilai/1000000000000) . " Trilyun" . penyebut(fmod($nilai,1000000000000));
+                        }
+                        return $temp;
+                    }
+                    function terbilang($nilai) {
+                        if($nilai<0) {
+                            $hasil = "minus ". trim(penyebut($nilai));
+                        } else {
+                            $hasil = trim(penyebut($nilai));
+                        }
+                        return $hasil;
+                    }
+                @endphp
                <tr class="jml_total">
-                  <td colspan="9">Terbilang: </td>
+                  <td colspan="9">Terbilang:
+                        @php
+                            echo(terbilang($total_honor).' Rupiah');
+                        @endphp
+                  </td>
                </tr>
             </tbody>
-         </table>    
+         </table>
       </div>
-
+      <br>
       <span class="to_left">Mengetahui</span>
       <span class="to_right">Jember</span><br>
       <div class="ttd_row">
@@ -252,6 +292,5 @@
         </div>
       </div>
    </div>
-        
 </body>
 </html>

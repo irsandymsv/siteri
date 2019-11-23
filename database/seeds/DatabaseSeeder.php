@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             status_skripsi_table_seeder::class,
             nama_template_table_seeder::class,
             nama_honor_table_seeder::class,
+            histori_besaran_honor_table_seeder::class,
+            // template_table_seeder::class,
 
             dev_bagian_table_seeder::class,
             dev_keris_table_seeder::class,

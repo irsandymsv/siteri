@@ -116,21 +116,25 @@ class SkSemproController extends Controller
             ]);
         }
 
-
         try {
             $template = template::whereHas('nama_template', function (Builder $query){
                 $query->where('nama','SK Sempro');
             })->orderBy('created_at','desc')->first();
-            $sk_sempro = sk_sempro::create([
-                "no_surat" => $request->input("no_surat"),
-                "tgl_sempro1" => carbon::parse($request->input("tgl_sempro1")),
-                "tgl_sempro2" => carbon::parse($request->input("tgl_sempro2")),
-                "id_status_sk" => $request->input("status"),
-                "id_template" => $template->id
-            ]);
-            foreach ($request->nim as $nim) {
-                $this->update_id_sk_sempro($nim, $sk_sempro->no_surat);
+            if($template==false){
+                return redirect()->route('akademik.sempro.create')->with('error', 'Template Untuk SK Sempro Tidak Ditemukan');
+            }else{
+                $sk_sempro = sk_sempro::create([
+                    "no_surat" => $request->input("no_surat"),
+                    "tgl_sempro1" => carbon::parse($request->input("tgl_sempro1")),
+                    "tgl_sempro2" => carbon::parse($request->input("tgl_sempro2")),
+                    "id_status_sk" => $request->input("status"),
+                    "id_template" => $template->id
+                ]);
+                foreach ($request->nim as $nim) {
+                    $this->update_id_sk_sempro($nim, $sk_sempro->no_surat);
+                }
             }
+
             // return redirect()->route('akademik.sempro.show', $sk_sempro->no_surat)->with('success', 'Data Berhasil Ditambahkan');
             return redirect()->route('akademik.sempro.show', $sk_sempro->no_surat)->with('success', 'Data Berhasil Ditambahkan');
         } catch (Exception $e) {

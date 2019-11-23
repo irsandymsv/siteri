@@ -15,7 +15,7 @@ class CreateNamaHonorTable extends Migration
     {
         Schema::create('nama_honor', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama_honor')->length('50');
+            $table->string('nama_honor')->length('100');
         });
     }
 

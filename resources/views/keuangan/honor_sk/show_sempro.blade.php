@@ -38,9 +38,9 @@
 
 
       .tabel_keterangan td:first-child{
-         padding-right: 10px; 
+         padding-right: 10px;
       }
-      
+
       td span {
          float: right;
       }
@@ -62,9 +62,9 @@
                <span style="margin-left: 5px;">
                  @if($sk_honor->verif_kebag_keuangan == 2)
                  <label class="label bg-red">Butuh Revisi (BPP)</label>
-                 @elseif($sk_honor->verif_ktu == 2) 
+                 @elseif($sk_honor->verif_ktu == 2)
                  <label class="label bg-red">Butuh Revisi (KTU)</label>
-                 @elseif($sk_honor->verif_wadek2 == 2) 
+                 @elseif($sk_honor->verif_wadek2 == 2)
                  <label class="label bg-red">Butuh Revisi (Wadek 2)</label>
                  @endif
                </span>
@@ -79,10 +79,10 @@
 
             <div class="box-body">
                {{-- <div class="form-group" style="float: right;">
-                  @if($sk_honor->verif_kebag_keuangan != 1) 
+                  @if($sk_honor->verif_kebag_keuangan != 1)
                      <a href="{{ route('keuangan.honor-sempro.edit', $sk_honor->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
                   @endif
-                  
+
                   @if ($sk_honor->verif_dekan == 1)
                      <a href="{{ route('keuangan.honor-skripsi.cetak', $sk_honor->id) }}" class="btn btn-info"><i class="fa fa-print"></i> Cetak</a>
                   @endif
@@ -135,7 +135,7 @@
                    <h4>Disetujui Dekan</h4>
                  </div>
                </div> --}}
-                 
+
                @if(!is_null($sk_honor->pesan_revisi))
                  <div class="revisi_wrap">
                   <h4><b>Pesan Revisi</b> : </h4>
@@ -186,10 +186,10 @@
 
                         @foreach($detail_skripsi as $item)
                            @if ($no+1 == 4*$a-1)
-                              @php $a+=1; @endphp 
+                              @php $a+=1; @endphp
                               <tr id="{{ $no+=1 }}" style="background-color: #bbb;">
                            @else
-                              <tr id="{{ $no+=1 }}">   
+                              <tr id="{{ $no+=1 }}">
                            @endif
                               <td>{{ $no }}</td>
                               <td>{{ $item->surat_tugas[0]->dosen1->nama }}</td>
@@ -199,7 +199,7 @@
                                  <p>NIM: {{ $item->skripsi->nim }}</p>
                               </td>
                               <td>{{ $item->surat_tugas[0]->dosen1->golongan->golongan }}</td>
-                              <td id="penguji_{{$no}}" class="pengujiHonor">Rp 
+                              <td id="penguji_{{$no}}" class="pengujiHonor">Rp
                                  {{ number_format($sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor, 0, ",", ".") }}
                               </td>
                               <td class="pph" id="pph_{{$no}}">Rp
@@ -223,10 +223,10 @@
                            </tr>
 
                            @if ($no+1 == 4*$b)
-                              @php $b+=1; @endphp 
+                              @php $b+=1; @endphp
                               <tr id="{{ $no+=1 }}" style="background-color: #bbb;">
                            @else
-                              <tr id="{{ $no+=1 }}">   
+                              <tr id="{{ $no+=1 }}">
                            @endif
                               <td>{{ $no }}</td>
                               <td>{{ $item->surat_tugas[0]->dosen2->nama }}</td>
@@ -262,9 +262,50 @@
                            <td>Rp {{ number_format($total_pph, 0, ",", ".") }}</td>
                            <td>Rp {{ number_format($total_penerimaan, 0, ",", ".") }}</td>
                         </tr>
-                        
+                        @php
+                            function penyebut($nilai) {
+                                $nilai = abs($nilai);
+                                $huruf = array("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas");
+                                $temp = "";
+                                if ($nilai < 12) {
+                                    $temp = " ". $huruf[$nilai];
+                                } else if ($nilai <20) {
+                                    $temp = penyebut($nilai - 10). " Belas";
+                                } else if ($nilai < 100) {
+                                    $temp = penyebut($nilai/10)." Puluh". penyebut($nilai % 10);
+                                } else if ($nilai < 200) {
+                                    $temp = " Seratus" . penyebut($nilai - 100);
+                                } else if ($nilai < 1000) {
+                                    $temp = penyebut($nilai/100) . " Ratus" . penyebut($nilai % 100);
+                                } else if ($nilai < 2000) {
+                                    $temp = " Seribu" . penyebut($nilai - 1000);
+                                } else if ($nilai < 1000000) {
+                                    $temp = penyebut($nilai/1000) . " Ribu" . penyebut($nilai % 1000);
+                                } else if ($nilai < 1000000000) {
+                                    $temp = penyebut($nilai/1000000) . " Juta" . penyebut($nilai % 1000000);
+                                } else if ($nilai < 1000000000000) {
+                                    $temp = penyebut($nilai/1000000000) . " Milyar" . penyebut(fmod($nilai,1000000000));
+                                } else if ($nilai < 1000000000000000) {
+                                    $temp = penyebut($nilai/1000000000000) . " Trilyun" . penyebut(fmod($nilai,1000000000000));
+                                }
+                                return $temp;
+                            }
+
+                            function terbilang($nilai) {
+                                if($nilai<0) {
+                                    $hasil = "minus ". trim(penyebut($nilai));
+                                } else {
+                                    $hasil = trim(penyebut($nilai));
+                                }
+                                return $hasil;
+                            }
+                        @endphp
                         <tr class="jml_total">
-                           <td colspan="8">Terbilang: </td>
+                           <td colspan="8">Terbilang:
+                               @php
+                                   echo(terbilang($total_honor).' Rupiah');
+                               @endphp
+                           </td>
                         </tr>
                      </tbody>
                   </table>
@@ -279,6 +320,7 @@
    <script src="/js/btn_backTop.js"></script>
    <script type="text/javascript">
       var status = @json($sk_honor->id_status_sk_honor);
+
       for (var i = status; i > 0; i--) {
          $("#progres_"+i).addClass('verified');
          $("#progres_"+i).find('i').addClass('fa fa-check');
@@ -305,7 +347,7 @@
       //    $("#tbl_pembimbing").find("#penerimaan_"+no).children('span').text(penerimaan2);
       // });
 
-      
+
       // $(".pengujiHonor").children('span').text(honor_penguji);
       // var nomor = 0;
       // $.each(detail_sk, function(index, val){
