@@ -14,19 +14,19 @@ class dev_golongan_table_seeder extends Seeder
     {
         golongan::insert([
             [
-                'golongan' => 'Golongan 1',
+                'golongan' => 'I',
                 'pph' => 5
             ],
             [
-                'golongan' => 'Golongan 2',
+                'golongan' => 'II',
                 'pph' => 10
             ],
             [
-                'golongan' => 'Golongan 3',
+                'golongan' => 'III',
                 'pph' => 15
             ],
             [
-                'golongan' => 'Golongan 4',
+                'golongan' => 'IV',
                 'pph' => 20
             ],
 

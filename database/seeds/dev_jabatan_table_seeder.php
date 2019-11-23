@@ -17,6 +17,8 @@ class dev_jabatan_table_seeder extends Seeder
             ['jabatan' => 'Wakil Dekan 1'],
             ['jabatan' => 'Wakil Dekan 2'],
             ['jabatan' => 'Dosen'],
+            ['jabatan' => 'KTU'],
+            ['jabatan' => 'BPP'],
         ]);
     }
 }

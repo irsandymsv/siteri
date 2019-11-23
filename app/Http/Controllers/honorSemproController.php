@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
-
 use App\Http\Controllers\Controller;
+use App\sk_honor;
+use App\detail_honor;
+use App\histori_besaran_honor;
 use App\sk_sempro;
 use App\detail_skripsi;
-use App\detail_honor;
-use App\sk_honor;
-use App\histori_besaran_honor;
+use App\User;
+use PDF;
 use Carbon\Carbon;
 
 class honorSemproController extends Controller
@@ -114,6 +115,8 @@ class honorSemproController extends Controller
             'surat_tugas.dosen2.golongan'
         ])->get();
 
+        // $honor_pembahas_sempro = $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor;
+
         // dd($sk_honor);
         return  view('keuangan.honor_sk.show_sempro', [
             'sk_honor' => $sk_honor,
@@ -193,6 +196,65 @@ class honorSemproController extends Controller
             sk_honor::find($id)->delete();
             echo 'Daftar Honor Berhasil Dihapus';
         }
+    }
+
+    public function cetak_pdf($id_sk_honor)
+    {
+        $sk_honor = sk_honor::where('id', $id_sk_honor)
+        ->with([
+            'sk_sempro',
+            'status_sk_honor',
+            'detail_honor',
+            'detail_honor.histori_besaran_honor',
+            'detail_honor.histori_besaran_honor.nama_honor'
+        ])
+        ->first();
+
+        $detail_skripsi = detail_skripsi::where('id_sk_sempro', $sk_honor->sk_sempro->no_surat)
+        ->with([
+            'sk_sempro',
+            'skripsi',
+            'skripsi.mahasiswa',
+
+            'surat_tugas' => function($query)
+            {
+                $query->where([
+                    ['id_tipe_surat_tugas', 2],
+                    ['id_status_surat_tugas', 3]
+                ])->orderBy('created_at', 'desc');
+            },
+            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan',
+            'surat_tugas.dosen1.golongan',
+            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan',
+            'surat_tugas.dosen2.golongan'
+        ])->get();
+
+        $tahun_akademik = $this->get_tahun_akademik($sk_honor->sk_sempro->created_at);
+
+        $dekan = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "Dekan");
+        })->first();
+
+        $ktu = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "KTU");
+        })->first();
+
+        $bpp = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "BPP");
+        })->first();
+
+        $pdf = PDF::loadview('keuangan.honor_sk.pdf_sempro', [
+            'sk_honor' => $sk_honor,
+            'detail_skripsi' => $detail_skripsi,
+            'tahun_akademik' => $tahun_akademik,
+            'dekan' => $dekan,
+            'ktu' => $ktu,
+            'bpp' =>$bpp
+        ])->setPaper('a4', 'portrait')->setWarnings(false);
+        return $pdf->download("Honor SK Sempro-" . $sk_honor->sk_sempro->no_surat);
     }
 
     public function bpp_index()

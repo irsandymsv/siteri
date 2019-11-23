@@ -18,6 +18,8 @@ class honorController extends Controller
 	    		$query->orderBy('created_at', 'desc');
 	    	}
     	])->get();
+
+        // dd($honor);
     	return view('honor.index', ['honor' => $honor]);
     }
 

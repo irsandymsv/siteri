@@ -32,6 +32,15 @@
          background-color: white;
       }
 
+      .jml_total td:first-child{
+         text-align: center;
+      }
+
+
+      .tabel_keterangan td:first-child{
+         padding-right: 10px; 
+      }
+      
       td span {
          float: right;
       }
@@ -79,10 +88,22 @@
                   @endif
                </div> --}}
 
-               <p>Tanggal SK : {{Carbon\Carbon::parse($sk_honor->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</p>
-               <p>Sesuai SK Dekan: {{ $sk_honor->sk_sempro->no_surat }}/UN 25.1.15/SP/{{Carbon\Carbon::parse($sk_honor->sk_sempro->created_at)->year}}</p>
+               <table class="tabel_keterangan">
+                  <tr>
+                     <td>Tanggal SK Honor</td>
+                     <td>: {{ Carbon\Carbon::parse($sk_honor->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
+                  </tr>
+                  <tr>
+                     <td>Sesuai SK Dekan</td>
+                     <td>: {{ $sk_honor->sk_sempro->no_surat }}/UN 25.1.15/SP/{{Carbon\Carbon::parse($sk_honor->sk_sempro->created_at)->year}}</td>
+                  </tr>
+                  <tr>
+                     <td>Tanggal SK Pembahas Sempro</td>
+                     <td>: {{ Carbon\Carbon::parse($sk_honor->sk_sempro->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
+                  </tr>
+               </table>
 
-               <h4><b>Progres Daftar Honor ini: </b></h4>
+               {{-- <h4><b>Progres Daftar Honor ini: </b></h4>
                <div class="tl_wrap">
                  <div class="item_tl" id="progres_1">
                    <div><i></i></div>
@@ -113,7 +134,7 @@
                    <div><i></i></div>
                    <h4>Disetujui Dekan</h4>
                  </div>
-               </div>
+               </div> --}}
                  
                @if(!is_null($sk_honor->pesan_revisi))
                  <div class="revisi_wrap">
@@ -121,6 +142,10 @@
                   <p>"{{ $sk_honor->pesan_revisi }}"</p>
                  </div>
                @endif
+            </div>
+
+            <div class="box-footer">
+               <a href="{{ route("keuangan.honor-sempro.cetak", $sk_honor->id) }}" class="btn bg-teal pull-right"><i class="fa fa-print"></i> Download PDF</a>
             </div>
          </div>
       </div>
@@ -130,7 +155,7 @@
    	<div class="col-xs-12">
    		<div class="box box-danger">
    			<div class="box-header">
-   				<h3 class="box-title">Daftar Honor Pembahas Sempro }}</h3>
+   				<h3 class="box-title">Daftar Honor Pembahas Sempro</h3>
 
                <div class="box-tools pull-right">
                      <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -156,7 +181,7 @@
                         </tr>
                      </thead>
 
-                     <tbody id="tbl_penguji">
+                     <tbody id="tbl_pembahas">
                         @php $no=0; $a = 1; $b = 1; $total_honor=0; $total_pph=0; $total_penerimaan=0; @endphp
 
                         @foreach($detail_skripsi as $item)
@@ -170,34 +195,34 @@
                               <td>{{ $item->surat_tugas[0]->dosen1->nama }}</td>
                               <td>{{ $item->surat_tugas[0]->dosen1->npwp }}</td>
                               <td rowspan="2">
-                                 <p>{{ $item->skripsi->mahasiswa->nama_mhs }}</p>
+                                 <p>{{ $item->skripsi->mahasiswa->nama }}</p>
                                  <p>NIM: {{ $item->skripsi->nim }}</p>
                               </td>
                               <td>{{ $item->surat_tugas[0]->dosen1->golongan->golongan }}</td>
                               <td id="penguji_{{$no}}" class="pengujiHonor">Rp 
-                                 {{ number_format($sk_honor->detail_honor->histori_besaran_honor->jumlah_honor, 0, ",", ".") }}
+                                 {{ number_format($sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor, 0, ",", ".") }}
                               </td>
                               <td class="pph" id="pph_{{$no}}">Rp
                                  @php
-                                    $pph = ($item->surat_tugas[0]->dosen1->golongan->pph * $sk_honor->detail_honor->histori_besaran_honor->jumlah_honor)/100;
+                                    $pph = ($item->surat_tugas[0]->dosen1->golongan->pph * $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor)/100;
                                  @endphp
                                  {{ number_format($pph, 0, ",", ".") }}
                               </td>
                               <td class="penerimaan" id="penerimaan_{{$no}}">Rp
                                  @php
-                                    $penerimaan = $sk_honor->detail_honor->histori_besaran_honor->jumlah_honor - $pph;
+                                    $penerimaan = $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor - $pph;
                                  @endphp
                                  {{ number_format($penerimaan, 0, ",", ".") }}
                               </td>
 
                               @php
-                                 $total_honor+=$sk_honor->detail_honor->histori_besaran_honor->jumlah_honor;
+                                 $total_honor+=$sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor;
                                  $total_pph+=$pph;
                                  $total_penerimaan+=$penerimaan;
                               @endphp
                            </tr>
 
-                          @if ($no+1 == 4*$b)
+                           @if ($no+1 == 4*$b)
                               @php $b+=1; @endphp 
                               <tr id="{{ $no+=1 }}" style="background-color: #bbb;">
                            @else
@@ -208,23 +233,23 @@
                               <td>{{ $item->surat_tugas[0]->dosen2->npwp }}</td>
                               <td>{{ $item->surat_tugas[0]->dosen2->golongan->golongan }}</td>
                               <td id="penguji_{{$no}}" class="pengujiHonor">Rp
-                                 {{ number_format($sk_honor->detail_honor->histori_besaran_honor->jumlah_honor, 0, ",", ".") }}
+                                 {{ number_format($sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor, 0, ",", ".") }}
                               </td>
                               <td class="pph" id="pph_{{$no}}">Rp
                                  @php
-                                    $pph = ($item->surat_tugas[0]->dosen2->golongan->pph * $sk_honor->detail_honor->histori_besaran_honor->jumlah_honor)/100;
+                                    $pph = ($item->surat_tugas[0]->dosen2->golongan->pph * $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor)/100;
                                  @endphp
                                  {{ number_format($pph, 0, ",", ".") }}
                               </td>
                               <td class="penerimaan" id="penerimaan_{{$no}}">Rp
                                  @php
-                                    $penerimaan = $sk_honor->detail_honor->histori_besaran_honor->jumlah_honor - $pph;
+                                    $penerimaan = $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor - $pph;
                                  @endphp
                                  {{ number_format($penerimaan, 0, ",", ".") }}
                               </td>
 
                               @php
-                                $total_honor+=$sk_honor->detail_honor->histori_besaran_honor->jumlah_honor;
+                                $total_honor+=$sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor;
                                 $total_pph+=$pph;
                                 $total_penerimaan+=$penerimaan;
                               @endphp
@@ -232,13 +257,13 @@
                         @endforeach
 
                         <tr class="jml_total">
-                           <td colspan="5" style="text-align: center;">Jumlah</td>
+                           <td colspan="5">Jumlah</td>
                            <td>Rp {{ number_format($total_honor, 0, ",", ".") }}</td>
                            <td>Rp {{ number_format($total_pph, 0, ",", ".") }}</td>
                            <td>Rp {{ number_format($total_penerimaan, 0, ",", ".") }}</td>
                         </tr>
                         
-                        <tr>
+                        <tr class="jml_total">
                            <td colspan="8">Terbilang: </td>
                         </tr>
                      </tbody>
@@ -260,8 +285,8 @@
       }
 
       // var detail_sk = @json($detail_skripsi);
-      // var honor_pembimbing = @json($sk_honor->detail_honor->histori_besaran_honor->jumlah_honor);
-      // var honor_penguji = @json($sk_honor->detail_honor->histori_besaran_honor->jumlah_honor);
+      // var honor_pembimbing = @json($sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor);
+      // var honor_penguji = @json($sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor);
 
       // $(".pembimbingHonor").children('span').text(honor_pembimbing);
 
@@ -287,14 +312,14 @@
       //    nomor+=1;
       //    var pph1 = (honor_penguji * val.penguji_utama.golongan.pph)/100;
       //    var penerimaan1 = honor_penguji - pph1;
-      //    $("#tbl_penguji").find("#pph_"+nomor).children('span').text(pph1);
-      //    $("#tbl_penguji").find("#penerimaan_"+nomor).children('span').text(penerimaan1);
+      //    $("#tbl_pembahas").find("#pph_"+nomor).children('span').text(pph1);
+      //    $("#tbl_pembahas").find("#penerimaan_"+nomor).children('span').text(penerimaan1);
 
       //    nomor+=1;
       //    var pph2 = (honor_penguji * val.penguji_pendamping.golongan.pph)/100;
       //    var penerimaan2 = honor_penguji - pph2;
-      //    $("#tbl_penguji").find("#pph_"+nomor).children('span').text(pph2);
-      //    $("#tbl_penguji").find("#penerimaan_"+nomor).children('span').text(penerimaan2);
+      //    $("#tbl_pembahas").find("#pph_"+nomor).children('span').text(pph2);
+      //    $("#tbl_pembahas").find("#penerimaan_"+nomor).children('span').text(penerimaan2);
       // });
    </script>
 @endsection
