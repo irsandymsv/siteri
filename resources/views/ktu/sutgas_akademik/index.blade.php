@@ -9,6 +9,8 @@
 		Surat Tugas Pembimbing Skripsi
 	@elseif($tipe == "surat tugas pembahas")
 		Surat Tugas Pembahas Sempro
+	@elseif($tipe == "surat tugas penguji")
+		Surat Tugas Penguji Skripsi
 	@endif
 @endsection
 
@@ -22,6 +24,8 @@
 		Surat Tugas Pembimbing Skripsi
 	@elseif($tipe == "surat tugas pembahas")
 		Surat Tugas Pembahas Sempro
+	@elseif($tipe == "surat tugas penguji")
+		Surat Tugas Penguji Skripsi
 	@endif
 @endsection
 
@@ -35,6 +39,8 @@
 							Daftar Surat Tugas Pembimbing Skripsi
 						@elseif($tipe == "surat tugas pembahas")
 							Daftar Surat Tugas Pembahas Sempro
+						@elseif($tipe == "surat tugas penguji")
+							Daftar Surat Tugas Penguji Skripsi
 						@endif
            		</h3>
             	
@@ -97,6 +103,8 @@
 		            						<a href="{{ route('ktu.sutgas-pembimbing.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
 		            					@elseif($tipe == "surat tugas pembahas")
 		            						<a href="{{ route('ktu.sutgas-pembahas.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+		            					@elseif($tipe == "surat tugas penguji")
+		            						<a href="{{ route('ktu.sutgas-penguji.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
 		            					@endif
 		            				</td>
 		            			</tr>

@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-	Detail Surat Tugas Pembahas Sempro
+	Detail Surat Tugas Penguji Skripsi
 @endsection
 
 @section('css_link')
@@ -26,7 +26,7 @@
 @endsection
 
 @section('judul_header')
-	Surat Tugas Pembahas Sempro
+	Surat Tugas Penguji Skripsi
 @endsection
 
 @section('content')
@@ -34,7 +34,7 @@
    	<div class="col-xs-12">
    		<div class="box box-primary">
    			<div class="box-header">
-               <h3 class="box-title">Detail Surat Tugas Pembahas Sempro</h3>
+               <h3 class="box-title">Detail Surat Tugas Penguji Skripsi</h3>
                
                @if($surat_tugas->verif_ktu == 2)
                   <label class="label bg-red">Butuh Revisi</label>
@@ -42,7 +42,7 @@
 
                @if ($surat_tugas->verif_ktu == 1)
                   <div style="float: right;">
-                     <a href="{{ route("akademik.sutgas-pembahas.cetak", $surat_tugas->id) }}" class="btn bg-teal"><i class="fa fa-print"></i> Download PDF</a>
+                     <a href="{{ route("akademik.sutgas-penguji.cetak", $surat_tugas->id) }}" class="btn bg-teal"><i class="fa fa-print"></i> Download PDF</a>
                   </div>
                @endif
 
@@ -144,7 +144,7 @@
                      </tr>
 
                      <tr>
-                        <td>Pembahas I</td>
+                        <td>Penguji I</td>
                         <td>
                            <p>{{ $surat_tugas->dosen1->nama }}</p>
                            <p>{{ $surat_tugas->id_dosen1 }}</p>
@@ -152,7 +152,7 @@
                      </tr>
 
                      <tr>
-                        <td>pembahas II</td>
+                        <td>Penguji II</td>
                         <td>
                            <p>{{ $surat_tugas->dosen2->nama }}</p>
                            <p>{{ $surat_tugas->id_dosen2 }}</p>
@@ -160,7 +160,7 @@
                      </tr>
 
                      <tr>
-                        <td>Tanggal Sempro</td>
+                        <td>Tanggal Ujian</td>
                         <td>{{ Carbon\Carbon::parse($surat_tugas->tanggal)->locale("id_ID")->isoFormat('dddd, D MMMM Y') }}</td>
                      </tr>
 
@@ -170,8 +170,8 @@
                      </tr>
 
                      <tr>
-                        <td>Tempat Sempro</td>
-                        <td>Ruang Kuliah {{ $surat_tugas->tempat }}</td>
+                        <td>Tempat</td>
+                        <td>{{ $surat_tugas->tempat }}</td>
                      </tr>
 
                      <tr>
@@ -183,8 +183,8 @@
             </div>
 
             <div class="box-footer">
-               <a href="{{ route('akademik.sutgas-pembahas.index') }}" class="btn btn-default">Kembali</a>
-               <a href="{{ route('akademik.sutgas-pembahas.edit', $surat_tugas->id) }}" class="btn btn-warning pull-right"><i class="fa fa-edit"></i> Ubah</a> &ensp;   
+               <a href="{{ route('akademik.sutgas-penguji.index') }}" class="btn btn-default">Kembali</a>
+               <a href="{{ route('akademik.sutgas-penguji.edit', $surat_tugas->id) }}" class="btn btn-warning pull-right"><i class="fa fa-edit"></i> Ubah</a> &ensp;   
             </div>
             
    		</div>

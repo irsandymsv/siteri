@@ -2,9 +2,11 @@
 
 <li><a href="{{route('akademik.data-skripsi.index')}}"><i class="fa fa-link"></i> <span>Data Skripsi</span></a></li>
 
+<li class="header">Surat Tugas</li>
+
 <li class="treeview">
-    <a href="#"><i class="fa fa-link"></i> <span>Surat Tugas Pembimbing</span>
-      <br><span> Skripsi</span>
+    <a href="#"><i class="fa fa-link"></i> <span>Pembimbing Skripsi</span>
+      {{-- <br><span> Skripsi</span> --}}
       <span class="pull-right-container">
          <i class="fa fa-angle-left pull-right"></i>
       </span>
@@ -16,8 +18,8 @@
 </li>
 
 <li class="treeview">
-    <a href="#"><i class="fa fa-link"></i> <span>Surat Tugas Pembahas</span>
-      <br><span> Sempro</span>
+    <a href="#"><i class="fa fa-link"></i> <span>Pembahas Sempro</span>
+      {{-- <br><span> Sempro</span> --}}
       <span class="pull-right-container">
          <i class="fa fa-angle-left pull-right"></i>
       </span>
@@ -27,6 +29,21 @@
       <li><a href="{{ route('akademik.sutgas-pembahas.index') }}">Lihat Semua</a></li>
     </ul>
 </li>
+
+<li class="treeview">
+    <a href="#"><i class="fa fa-link"></i> <span>Penguji Skripsi</span>
+      {{-- <br><span> Skripsi</span> --}}
+      <span class="pull-right-container">
+         <i class="fa fa-angle-left pull-right"></i>
+      </span>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="{{route('akademik.sutgas-penguji.create')}}">Buat Baru</a></li>
+      <li><a href="{{ route('akademik.sutgas-penguji.index') }}">Lihat Semua</a></li>
+    </ul>
+</li>
+
+<li class="header">SK</li>
 
 <li class="treeview">
     <a href="#"><i class="fa fa-link"></i> <span>SK Pembahas Sempro</span>
@@ -51,6 +68,8 @@
       <li><a href="{{ route('akademik.skripsi.index') }}">Lihat Semua</a></li>
     </ul>
 </li>
+
+<li class="header">Template Surat</li>
 
 <li class="treeview">
     <a href="#"><i class="fa fa-link"></i> <span>Template SK</span>

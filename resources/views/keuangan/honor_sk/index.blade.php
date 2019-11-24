@@ -49,7 +49,7 @@
                         @foreach ($sk_sempro as $item)
                            <tr id="sk_{{ $item->id }}">
                               <td>{{ $loop->index + 1 }}</td>
-                              <td>{{ $item->no_surat }}</td>
+                              <td>{{ $item->no_surat }}/UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
                               <td>
                                  {{ Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}
                               </td>
@@ -115,7 +115,7 @@
                                        <a href="{{ route('keuangan.honor-sempro.store', $item->no_surat) }}" class="btn btn-success">Generate</a>
                                     @else
                                        <a href="{{ route('keuangan.honor-sempro.show', $item->sk_honor->id) }}" class="btn btn-primary">Lihat</a>
-                                       <button class="btn btn-danger" name="delete_honor" id="{{ $item->id }}" data-toggle="modal" data-target="#modal-delete">Hapus</button>
+                                       {{-- <button class="btn btn-danger" name="delete_honor" id="{{ $item->id }}" data-toggle="modal" data-target="#modal-delete">Hapus</button> --}}
                                     @endif
                                  @endif
                               </td>

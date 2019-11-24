@@ -52,21 +52,29 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
 	Route::get('/surat-tugas-pembimbing/create', 'sutgasPembimbingController@create')->name("sutgas-pembimbing.create");
 	Route::post('/surat-tugas-pembimbing/store', 'sutgasPembimbingController@store')->name("sutgas-pembimbing.store");
 	Route::get('/surat-tugas-pembimbing/{id}', 'sutgasPembimbingController@show')->name("sutgas-pembimbing.show");
-    Route::get('/surat-tugas-pembimbing/{id}/edit', 'sutgasPembimbingController@edit')->name("sutgas-pembimbing.edit");
-    Route::put('/surat-tugas-pembimbing/{id}/update', 'sutgasPembimbingController@update')->name("sutgas-pembimbing.update");
-    Route::get('/surat-tugas-pembimbing/{id}/cetak', 'sutgasPembimbingController@cetak_pdf')->name("sutgas-pembimbing.cetak");
+   Route::get('/surat-tugas-pembimbing/{id}/edit', 'sutgasPembimbingController@edit')->name("sutgas-pembimbing.edit");
+   Route::put('/surat-tugas-pembimbing/{id}/update', 'sutgasPembimbingController@update')->name("sutgas-pembimbing.update");
+   Route::get('/surat-tugas-pembimbing/{id}/cetak', 'sutgasPembimbingController@cetak_pdf')->name("sutgas-pembimbing.cetak");
+
+   Route::get('/getPembimbing/{nim?}', 'suratTugasController@getPembimbing')->name('getPembimbing');
 
    //Route Surat Tugas Pembahas
-    Route::get('/surat-tugas-pembahas', 'sutgasPembahasController@index')->name("sutgas-pembahas.index");
-    Route::get('/surat-tugas-pembahas/create', 'sutgasPembahasController@create')->name("sutgas-pembahas.create");
-    Route::post('/surat-tugas-pembahas/store', 'sutgasPembahasController@store')->name("sutgas-pembahas.store");
-    Route::get('/surat-tugas-pembahas/{id}', 'sutgasPembahasController@show')->name("sutgas-pembahas.show");
-    Route::get('/surat-tugas-pembahas/{id}/edit', 'sutgasPembahasController@edit')->name("sutgas-pembahas.edit");
-    Route::put('/surat-tugas-pembahas/{id}/update', 'sutgasPembahasController@update')->name("sutgas-pembahas.update");
-    Route::get('/surat-tugas-pembahas/{id}/cetak', 'sutgasPembahasController@cetak_pdf')->name("sutgas-pembahas.cetak");
+   Route::get('/surat-tugas-pembahas', 'sutgasPembahasController@index')->name("sutgas-pembahas.index");
+   Route::get('/surat-tugas-pembahas/create', 'sutgasPembahasController@create')->name("sutgas-pembahas.create");
+   Route::post('/surat-tugas-pembahas/store', 'sutgasPembahasController@store')->name("sutgas-pembahas.store");
+   Route::get('/surat-tugas-pembahas/{id}', 'sutgasPembahasController@show')->name("sutgas-pembahas.show");
+   Route::get('/surat-tugas-pembahas/{id}/edit', 'sutgasPembahasController@edit')->name("sutgas-pembahas.edit");
+   Route::put('/surat-tugas-pembahas/{id}/update', 'sutgasPembahasController@update')->name("sutgas-pembahas.update");
+   Route::get('/surat-tugas-pembahas/{id}/cetak', 'sutgasPembahasController@cetak_pdf')->name("sutgas-pembahas.cetak");
 
-
-	Route::get('/getPembimbing/{nim?}', 'suratTugasController@getPembimbing')->name('getPembimbing');
+   //Route Surat Tugas Penguji
+   Route::get('/surat-tugas-penguji', 'sutgasPengujiController@index')->name("sutgas-penguji.index");
+   Route::get('/surat-tugas-penguji/create', 'sutgasPengujiController@create')->name("sutgas-penguji.create");
+   Route::post('/surat-tugas-penguji/store', 'sutgasPengujiController@store')->name("sutgas-penguji.store");
+   Route::get('/surat-tugas-penguji/{id}', 'sutgasPengujiController@show')->name("sutgas-penguji.show");
+   Route::get('/surat-tugas-penguji/{id}/edit', 'sutgasPengujiController@edit')->name("sutgas-penguji.edit");
+   Route::put('/surat-tugas-penguji/{id}/update', 'sutgasPengujiController@update')->name("sutgas-penguji.update");
+   Route::get('/surat-tugas-penguji/{id}/cetak', 'sutgasPengujiController@cetak_pdf')->name("sutgas-penguji.cetak");
 
 	//Route SK Sempro
 	Route::get('/sempro', 'SkSemproController@index')->name('sempro.index');
@@ -113,6 +121,12 @@ Route::prefix('ktu')->name('ktu.')->group(function ()
 	Route::get('/surat-tugas-pembahas/{id}', 'sutgasPembahasController@ktu_show')->name("sutgas-pembahas.show");
 	Route::put('/surat-tugas-pembahas/verif/{id}', 'sutgasPembahasController@ktu_verif')->name("sutgas-pembahas.verif");
 
+	//Route Surat Tugas penguji
+	Route::get('/surat-tugas-penguji', 'sutgasPengujiController@ktu_index')->name('sutgas-penguji.index');
+	Route::get('/surat-tugas-penguji/{id}', 'sutgasPengujiController@ktu_show')->name("sutgas-penguji.show");
+	Route::put('/surat-tugas-penguji/verif/{id}', 'sutgasPengujiController@ktu_verif')->name("sutgas-penguji.verif");
+
+	//Route Surat SK Skripsi
 	Route::get('/sk-skripsi', 'SkSkripsiController@ktu_index_skripsi')->name('sk-skripsi.index');
 	Route::get('/sk-skripsi/{id_sk_akademik}', 'SkSkripsiController@ktu_show')->name('sk-skripsi.show');
 	Route::put('/sk-skripsi/verif/{id_sk_akademik}', 'SkSkripsiController@ktu_verif')->name('sk-skripsi.verif');
