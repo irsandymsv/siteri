@@ -142,7 +142,7 @@
             		<div class="form-group">
             			<label for="id_penguji1">Penguji 1</label><br>
             			<select name="id_penguji1" id="id_penguji1" class="form-control select2">
-            				<option value="">--Pilih Penguji 1--</option>
+                            <option value="">--Pilih Penguji 1--</option>
             				@foreach ($dosen as $item)
             					<option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == old('id_penguji1')? 'selected' : '') }}>
                               {{ $item->nama }}
@@ -324,7 +324,7 @@
                }
             });
          }
-         
+
       }
 	</script>
 @endsection

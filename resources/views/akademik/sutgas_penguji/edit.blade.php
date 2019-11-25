@@ -73,7 +73,7 @@
                 @endphp
                 @endif
             </div>
-            <form action="{{route('akademik.sutgas-Penguji.update',$surat_tugas->id)}}" method="post">
+            <form action="{{route('akademik.sutgas-penguji.update',$surat_tugas->id)}}" method="post">
                <div class="box-body">
                   @csrf
                   @method('PUT')
@@ -143,7 +143,7 @@
 
                   <div class="form-group">
                      <label for="id_Penguji1">Penguji 1</label><br>
-                     <select name="id_Penguji1" id="id_Penguji1" class="form-control select2">
+                     <select name="id_penguji1" id="id_Penguji1" class="form-control select2">
                         <option value="">--Pilih Penguji 1--</option>
                         @foreach ($dosen as $item)
                            @if ($pembimbing['dosen1']->no_pegawai != $item->no_pegawai && $pembimbing['dosen2']->no_pegawai != $item->no_pegawai)
@@ -165,7 +165,7 @@
 
                   <div class="form-group">
                      <label for="id_Penguji2">Penguji 2</label><br>
-                     <select name="id_Penguji2" id="id_Penguji2" class="form-control select2">
+                     <select name="id_penguji2" id="id_Penguji2" class="form-control select2">
                         <option value="">--Pilih Penguji 2--</option>
                         @foreach ($dosen as $item)
                            @if ($pembimbing['dosen1']->no_pegawai != $item->no_pegawai && $pembimbing['dosen2']->no_pegawai != $item->no_pegawai)
@@ -187,7 +187,7 @@
 
                <div class="box-footer">
                   <input type="hidden" name="status" value="">
-                  <a href="{{ route('akademik.sutgas-Penguji.show', $surat_tugas->id) }}" class="btn btn-default">Kembali</a> &ensp;
+                  <a href="{{ route('akademik.sutgas-penguji.show', $surat_tugas->id) }}" class="btn btn-default">Kembali</a> &ensp;
 
                   <div id="btn_group">
                      {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}

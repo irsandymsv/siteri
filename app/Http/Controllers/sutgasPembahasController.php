@@ -159,7 +159,6 @@ class sutgasPembahasController extends suratTugasController
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'id_detail_skripsi' => 'required',
             'no_surat' => 'required',
             'judul_inggris' => 'required',
             'tanggal' => 'required',

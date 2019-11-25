@@ -46,20 +46,24 @@ class sutgasPengujiController extends suratTugasController
     public function store(Request $request)
     {
         $this->validate($request, [
-            'id_detail_skripsi' => 'required',
+            'nim' => 'required',
             'no_surat' => 'required',
-            'id_penguji_utama' => 'required',
-            'id_penguji_pendamping' => 'required',
+            'id_penguji1' => 'required',
+            'id_penguji2' => 'required',
             'status' => 'required'
         ]);
         try {
-            $surat_tugas = $this->store_sutgas($request, 3, $request->status);
-            $this->update_detail_skripsi(
+            $nim = $request->input('nim');
+            $detail_skripsi = detail_skripsi::select('id')->whereHas('skripsi',function (Builder $query) use ($nim){
+                                    $query->where('nim',$nim);
+                                })->orderBy('created_at','desc')->first();
+            $this->store_sutgas(
                 $request,
-                $surat_tugas->id,
-                'id_surat_tugas_penguji',
-                'id_penguji_utama',
-                'iid_penguji_pendamping'
+                3,
+                $request->status,
+                $detail_skripsi->id,
+                'id_penguji1',
+                'id_penguji2'
             );
             return redirect()->route('akademik.sutgas-penguji.index')->with('success', 'Data Surat Tugas Berhasil Ditambahkan');
         } catch (Exception $e) {
@@ -142,21 +146,38 @@ class sutgasPengujiController extends suratTugasController
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'id_detail_skripsi' => 'required',
             'no_surat' => 'required',
-            'id_penguji_utama' => 'required',
-            'id_penguji_pendamping' => 'required',
-            'status' => 'required'
+            'tanggal' => 'required',
+            'tempat' => 'required',
+            'id_penguji1' => 'required',
+            'id_penguji2' => 'required',
+            'nim' => 'required'
         ]);
         try {
-            $this->update_sutgas($request, 3, $request->status, $id);
-            $this->update_detail_skripsi(
-                $request,
-                $id,
-                'id_surat_tugas_penguji',
-                'id_penguji_utama',
-                'iid_penguji_pendamping'
-            );
+            if ($request->input('nim') != $request->input('original_nim')) {
+                $nim = $request->input('nim');
+                $detail_skripsi = detail_skripsi::select('id')->whereHas('skripsi', function (Builder $query) use ($nim) {
+                    $query->where('nim', $nim);
+                })->orderBy('created_at', 'desc')->first();
+                $this->update_sutgas_beda_nim(
+                    $request,
+                    3,
+                    $request->status,
+                    $id,
+                    $detail_skripsi->id,
+                    'id_penguji1',
+                    'id_penguji2'
+                );
+            } else {
+                $this->update_sutgas(
+                    $request,
+                    3,
+                    $request->status,
+                    $id,
+                    'id_penguji1',
+                    'id_penguji1'
+                );
+            }
             return redirect()->route('akademik.sutgas-penguji.show', $id)->with('success', 'Data Surat Tugas Berhasil Dirubah');
         } catch (Exception $e) {
             dd($e->getMessage());
