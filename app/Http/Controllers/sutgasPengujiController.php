@@ -175,7 +175,7 @@ class sutgasPengujiController extends suratTugasController
                     $request->status,
                     $id,
                     'id_penguji1',
-                    'id_penguji1'
+                    'id_penguji2'
                 );
             }
             return redirect()->route('akademik.sutgas-penguji.show', $id)->with('success', 'Data Surat Tugas Berhasil Dirubah');

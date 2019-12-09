@@ -5,11 +5,7 @@
 @endsection
 
 @section('page_title')
-	@if($tipe == "sk skripsi")
       Buat SK skripsi Baru
-   @else
-      Buat SK Sempro baru
-   @endif
 @endsection
 
 @section('css_link')
@@ -36,22 +32,18 @@
 @endsection
 
 @section('judul_header')
-	@if($tipe == "sk skripsi")
       SK Skripsi
-   @else
-      SK Sempro
-   @endif
 @endsection
 
 @section('content')
    <button id="back_top" class="btn bg-black" title="Kembali ke Atas"><i class="fa fa-arrow-up"></i></button>
-   <form action="{{ ( $tipe == "sk skripsi"? route('akademik.skripsi.store') : route('akademik.sempro.store') ) }}" method="post">
+   <form action="{{ route('akademik.skripsi.store') }}" method="post">
       @csrf
    	<div class="row">
       	<div class="col-xs-12">
       		<div class="box box-primary">
       			<div class="box-header">
-                  <h3 class="box-title">Buat SK {{ ($tipe == "sk skripsi"? "Skripsi" : "Sempro") }}</h3>
+                  <h3 class="box-title">Buat SK Skripsi</h3>
 
                     <br><br>
                     @if (session('success'))
@@ -94,10 +86,10 @@
                         </div>
 
                         <div class="form-group col-md-4">
-                           <label for="tgl_sempro1">Tanggal Sempro 1</label>
-                           <input type="date" name="tgl_sempro1" id="tgl_sempro1" class="form-control" value="{{ old('tgl_sempro1') }}">
+                           <label for="tgl_sk_pembimbing">Tanggal SK Pembimbing</label>
+                           <input type="date" name="tgl_sk_pembimbing" id="tgl_sk_pembimbing" class="form-control" value="{{ old('tgl_sk_pembimbing') }}">
 
-                           @error('tgl_sempro1')
+                           @error('tgl_sk_pembimbing')
                               <span class="invalid-feedback" role="alert" style="color: red;">
                                  <strong>{{ $message }}</strong>
                               </span>
@@ -105,10 +97,10 @@
                         </div>
 
                         <div class="form-group col-md-4">
-                           <label for="tgl_sempro2">Tanggal Sempro 2</label>
-                           <input type="date" name="tgl_sempro2" id="tgl_sempro2" class="form-control" value="{{ old('tgl_sempro2') }}">
+                           <label for="tgl_sk_penguji">Tanggal SK Penguji</label>
+                           <input type="date" name="tgl_sk_penguji" id="tgl_sk_penguji" class="form-control" value="{{ old('tgl_sk_penguji') }}">
 
-                           @error('tgl_sempro2')
+                           @error('tgl_sk_penguji')
                               <span class="invalid-feedback" role="alert" style="color: red;">
                                  <strong>{{ $message }}</strong>
                               </span>
@@ -171,7 +163,8 @@
                               <th>Nama Mahasiswa</th>
                               <th>Program Studi</th>
                               <th>Judul Skripsi</th>
-                              <th>Dosen Pembahas</th>
+                              <th>Dosen Pembimbing</th>
+                              <th>Dosen Penguji</th>
                               <th>Opsi</th>
                            </tr>
                         </thead>
@@ -179,14 +172,15 @@
                         <tbody>
                         @if ($old_mahasiswa != "")
                            @foreach($old_mahasiswa as $index => $val)
-                              <tr id="{{ $index }}">
-                                 <td style="width: 60px;">
-                                    {{ $val->nim }}
-                                    <input type="hidden" name="nim[]" value="{{ $val->nim }}">
-                                 </td>
-                                 <td>{{ $val->nama }}</td>
-                                 <td>{{ $val->bagian->bagian }}</td>
-                                 <td style="width: 350px;" >{{ $val->skripsi->detail_skripsi[0]->judul }}</td>
+                           <tr id="{{ $index }}">
+                              <td style="width: 60px;">
+                                 {{ $val->nim }}
+                                 <input type="hidden" name="nim[]" value="{{ $val->nim }}">
+                              </td>
+                              <td>{{ $val->nama }}</td>
+                              <td>{{ $val->bagian->bagian }}</td>
+                              <td style="width: 350px;" >{{ $val->skripsi->detail_skripsi[0]->judul }}</td>
+                              @if ($val->skripsi->detail_skripsi[0]->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Pembimbing")
                                  <td>
                                     <div class="tbl_row">
                                        1. {{ $val->skripsi->detail_skripsi[0]->surat_tugas[0]->dosen1->nama }}
@@ -196,10 +190,35 @@
                                     </div>
                                  </td>
                                  <td>
-                                    <button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
+                                    <div class="tbl_row">
+                                       1. {{ $val->skripsi->detail_skripsi[0]->surat_tugas[1]->dosen1->nama }}
+                                    </div>
+                                    <div class="tbl_row">
+                                       2. {{ $val->skripsi->detail_skripsi[0]->surat_tugas[1]->dosen2->nama }}
+                                    </div>
                                  </td>
-                              </tr>
-
+                              @else
+                                 <td>
+                                    <div class="tbl_row">
+                                       1. {{ $val->skripsi->detail_skripsi[0]->surat_tugas[1]->dosen1->nama }}
+                                    </div>
+                                    <div class="tbl_row">
+                                       2. {{ $val->skripsi->detail_skripsi[0]->surat_tugas[1]->dosen2->nama }}
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div class="tbl_row">
+                                       1. {{ $val->skripsi->detail_skripsi[0]->surat_tugas[0]->dosen1->nama }}
+                                    </div>
+                                    <div class="tbl_row">
+                                       2. {{ $val->skripsi->detail_skripsi[0]->surat_tugas[0]->dosen2->nama }}
+                                    </div>
+                                 </td>
+                              @endif
+                              <td>
+                                 <button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
+                              </td>
+                           </tr>
                            @endforeach
                         @endif
                         </tbody>
@@ -210,7 +229,8 @@
                               <th>Nama Mahasiswa</th>
                               <th>Program Studi</th>
                               <th>Judul Skripsi</th>
-                              <th>Dosen Pembahas</th>
+                              <th>Dosen Pembimbing</th>
+                              <th>Dosen Penguji</th>
                               <th>Opsi</th>
                            </tr>
                         </tfoot>
@@ -231,7 +251,7 @@
 	<script type="text/javascript">
 		$('.select2').select2();
 		var mahasiswa = @json($mahasiswa);
-      // console.log(mahasiswa[0].skripsi.detail_skripsi);
+      // console.log(mahasiswa[0].skripsi.detail_skripsi[0].surat_tugas[0].tipe_surat_tugas.tipe_surat);
 
       $("button[name='simpan_draf']").click(function(event) {
          event.preventDefault();
@@ -254,27 +274,59 @@
       $("#pilih_nim").on("select2:select", function(event) {
          var nim = $(this).val();
          $.each(mahasiswa, function(index, val) {
-             if(nim == val.nim){
+            if(nim == val.nim){
                no+=1;
-               $("tbody").append(`
-                  <tr id="`+no+`">
-                     <td style="width: 60px;">
-                        `+val.nim+`
-                        <input type="hidden" name="nim[]" value="`+val.nim+`">
-                     </td>
-                     <td class="nama_mhs" >`+val.nama+`</td>
-                     <td>`+val.bagian.bagian+`</td>
-                     <td style="width: 350px;" >`+val.skripsi.detail_skripsi[0].judul+`</td>
-                     <td>
-                        <div class="tbl_row">1. `+val.skripsi.detail_skripsi[0].surat_tugas[0].dosen1.nama+`</div>
-                        <div class="tbl_row">2. `+val.skripsi.detail_skripsi[0].surat_tugas[0].dosen2.nama+`</div>
-                     </td>
-                     <td>
-                        <button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
-                     </td>
-                  </tr>
-               `);
-             }
+               if (val.skripsi.detail_skripsi[0].surat_tugas[0].tipe_surat_tugas.tipe_surat == "Surat Tugas Pembimbing") {
+                  $("tbody").append(`
+                     <tr id="`+no+`">
+                        <td style="width: 60px;">
+                           `+val.nim+`
+                           <input type="hidden" name="nim[]" value="`+val.nim+`">
+                        </td>
+                        <td class="nama_mhs" >`+val.nama+`</td>
+                        <td>`+val.bagian.bagian+`</td>
+                        <td style="width: 350px;" >`+val.skripsi.detail_skripsi[0].judul+`</td>
+                        <td>
+                           <div class="tbl_row">1. `+val.skripsi.detail_skripsi[0].surat_tugas[0].dosen1.nama+`</div>
+                           <div class="tbl_row">2. `+val.skripsi.detail_skripsi[0].surat_tugas[0].dosen2.nama+`</div>
+                        </td>
+                        <td>
+                           <div class="tbl_row">1. `+val.skripsi.detail_skripsi[0].surat_tugas[1].dosen1.nama+`</div>
+                           <div class="tbl_row">2. `+val.skripsi.detail_skripsi[0].surat_tugas[1].dosen2.nama+`</div>
+                        </td>
+                        <td>
+                           <button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
+                        </td>
+                     </tr>
+                  `);
+               }
+               else{
+                  $("tbody").append(`
+                     <tr id="`+no+`">
+                        <td style="width: 60px;">
+                           `+val.nim+`
+                           <input type="hidden" name="nim[]" value="`+val.nim+`">
+                        </td>
+                        <td class="nama_mhs" >`+val.nama+`</td>
+                        <td>`+val.bagian.bagian+`</td>
+                        <td style="width: 350px;" >`+val.skripsi.detail_skripsi[0].judul+`</td>
+                        <td>
+                           <div class="tbl_row">1. `+val.skripsi.detail_skripsi[0].surat_tugas[1].dosen1.nama+`</div>
+                           <div class="tbl_row">2. `+val.skripsi.detail_skripsi[0].surat_tugas[1].dosen2.nama+`</div>
+                        </td>
+                        <td>
+                           <div class="tbl_row">1. `+val.skripsi.detail_skripsi[0].surat_tugas[0].dosen1.nama+`</div>
+                           <div class="tbl_row">2. `+val.skripsi.detail_skripsi[0].surat_tugas[0].dosen2.nama+`</div>
+                        </td>
+                        <td>
+                           <button class="btn btn-danger" type="button" title="Hapus Data" name="delete_data"><i class="fa fa-trash"></i></button>
+                        </td>
+                     </tr>
+                  `);
+               }
+               
+               return false;
+            }
          });
 
          $(this).find('option[value="'+nim+'"]').remove();

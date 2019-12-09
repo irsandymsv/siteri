@@ -5,11 +5,7 @@
 @endsection
 
 @section('page_title')
-	@if($tipe == "SK Skripsi")
-		Detail SK skripsi
-	@else
-		Detail SK Sempro
-	@endif
+	Detail SK Sempro
 @endsection
 
 @section('css_link')
@@ -41,11 +37,7 @@
 @endsection
 
 @section('judul_header')
-	@if($tipe == "SK Skripsi")
-		SK Skripsi
-	@else
-		SK Sempro
-	@endif
+	SK Sempro
 @endsection
 
 @section('content')
@@ -55,7 +47,7 @@
 		<div class="col-xs-12">
       		<div class="box box-success">
       			<div class="box-header">
-	              <h3 class="box-title">Progress SK {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }} Ini</h3>
+	              <h3 class="box-title">Progress SK Sempro Ini</h3>
               	  <span style="margin-left: 5px;">
 	            	@if($sk->verif_ktu == 2) 
 							<label class="label bg-red">Butuh Revisi (KTU)</label>
@@ -117,7 +109,7 @@
 	            	<a href="{{ route('akademik.sempro.index') }}" class="btn btn-default">Kembali</a>
             		@if ($sk->verif_ktu == 1)
             	   	<div class="pull-right">
-            	      <a href="{{ ($tipe == "SK Skripsi"? '#' : route('akademik.sempro.cetak', $sk->no_surat)) }}" class="btn bg-teal"><i class="fa fa-print"></i> Download PDF</a>
+            	      <a href="{{ route('akademik.sempro.cetak', $sk->no_surat) }}" class="btn bg-teal"><i class="fa fa-print"></i> Download PDF</a>
             	   	</div>
             		@endif
 	            </div>
@@ -129,11 +121,11 @@
 		<div class="col-xs-12">
       		<div class="box box-primary">
       			<div class="box-header">
-	              	<h3 class="box-title">Data SK {{ ($tipe == "SK Skripsi"? "Skripsi" : "Sempro") }}</h3>
+	              	<h3 class="box-title">Data SK Sempro</h3>
 
 	              	@if($sk->verif_ktu != 1)
 		              <div class="form-group" style="float: right;">
-		              	<a href="{{ ($tipe == "SK Skripsi"? route('akademik.skripsi.edit', $sk->no_surat) : route('akademik.sempro.edit', $sk->no_surat)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+		              	<a href="{{ route('akademik.sempro.edit', $sk->no_surat) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
 		              </div>
 	              	@endif
 	            </div>
@@ -148,16 +140,7 @@
 			            			<th>Nama Mahasiswa</th>
 			            			<th>Program Studi</th>
 			            			<th>Judul</th>
-			            			@if ($tipe == "sk skripsi")
-			            			<th>Pembimbing</th>
-			            			@endif
-			            			<th>
-			            				@if($tipe == "SK Skripsi")
-			            					Penguji I/II
-			            				@else
-			            					Pembahas I/II
-			            				@endif
-			            			</th>
+			            			<th>Pembahas I/II</th>
 			            		</tr>
 			            	</thead>
 			            	<tbody>
@@ -169,17 +152,6 @@
 		            				<td>{{$item->skripsi->mahasiswa->nama}}</td>
 		            				<td>{{$item->skripsi->mahasiswa->bagian->bagian}}</td>
 		            				<td>{{$item->judul}}</td>
-		            				@if ($tipe == "SK Skripsi")
-		            				<td >
-		            					<div class="tbl_row">
-	            							1. {{$item->surat_tugas[0]->dosen1->nama}}
-	            						</div>
-	            						<div class="tbl_row">
-	            							2. {{$item->surat_tugas[0]->dosen2->nama}}
-	            						</div>	
-		            				</td>
-		            				@endif
-		            				
 		            				<td>
 		            					<div class="tbl_row">
 		            						1. {{$item->surat_tugas[0]->dosen1->nama}}
@@ -197,7 +169,7 @@
 	            	 @if($sk->verif_ktu != 1)
 		              <br>
 		              <div class="form-group" style="float: right;">
-		            	<a href="{{ ($tipe == "SK Skripsi"? route('akademik.skripsi.edit', $sk->no_surat) : route('akademik.sempro.edit', $sk->no_surat)) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+		            	<a href="{{ route('akademik.sempro.edit', $sk->no_surat) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
 		              </div>
 	              	@endif
 	            </div>

@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use PDF;
+use App\Http\Controllers\Controller;
 use Exception;
+use PDF;
 use App\bagian;
 use App\User;
-use App\sk_akademik;
-use App\detail_sk;
-use App\Http\Controllers\Controller;
-use App\status_sk_akademik;
-use App\tipe_sk;
+use App\mahasiswa;
+use App\sk_skripsi;
+use App\detail_skripsi;
+use App\skripsi;
+use App\template;
+use App\nama_template;
+use App\status_sk;
 use Carbon\Carbon;
 
 class SkSkripsiController extends Controller
@@ -21,14 +24,12 @@ class SkSkripsiController extends Controller
 	public function index()
 	{
 		try {
-			$sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
-										->whereHas('tipe_sk',function (Builder $query){
-												$query->where('id',1);
-										})->orderBy('updated_at', 'desc')->get();
-			// dd($sk_akademik);
+			$sk = sk_skripsi::with(['status_sk'])
+			->orderBy('updated_at', 'desc')->get();
+			// dd($sk);
 
 			return view('akademik.SK_view.index', [
-				'sk_akademik' => $sk_akademik,
+				'sk' => $sk,
 				'tipe' => "SK Skripsi"
 			]);
 		} catch (Exception $e) {
@@ -39,18 +40,62 @@ class SkSkripsiController extends Controller
 	public function create(Request $request)
 	{
 		$old_data = [];
-		if (count($request->old()) > 0) {
-			// dd($request->old()['nama']);
-			$old_data = $request->old();
-		}
-		$jurusan = bagian::where('is_jurusan', 1)->get();
-		$dosen = user::where('is_dosen', 1)->get();
-		return view('akademik.SK_view.create', [
-			'jurusan' => $jurusan,
-			'dosen' => $dosen,
-			'old_data' => $old_data,
-			'tipe' => "sk skripsi"
-		]);
+     	$old_mahasiswa = "";
+     	if (array_key_exists('nim', $request->old())) {
+         // dd($request->old());
+         $old_data = $request->old();
+         $old_mahasiswa = mahasiswa::whereIn('nim', $request->old()["nim"])
+         ->with([
+            "bagian",
+            "skripsi",
+            "skripsi.status_skripsi",
+            "skripsi.detail_skripsi" => function($query)
+            {
+               $query->orderBy('created_at', 'desc');
+            },
+            "skripsi.detail_skripsi.surat_tugas" => function($query)
+            {
+            	$query->where('id_tipe_surat_tugas', 1)
+	            ->orWhere('id_tipe_surat_tugas', 3)
+	            ->orderBy('created_at', 'desc');
+            },
+            "skripsi.detail_skripsi.surat_tugas.tipe_surat_tugas",
+            "skripsi.detail_skripsi.surat_tugas.dosen1:no_pegawai,nama",
+            "skripsi.detail_skripsi.surat_tugas.dosen2:no_pegawai,nama"
+         ])->get();
+     	}
+
+     	$dosen = user::where('is_dosen', 1)->get();
+     	$mahasiswa = mahasiswa::with([
+         "bagian",
+         "skripsi",
+         "skripsi.status_skripsi",
+         "skripsi.detail_skripsi" => function($query)
+         {
+             $query->orderBy('created_at', 'desc');
+         },
+         "skripsi.detail_skripsi.surat_tugas" => function($query)
+         {
+            $query->where('id_tipe_surat_tugas', 1)
+            ->orWhere('id_tipe_surat_tugas', 3)
+            ->orderBy('created_at', 'desc');
+         },
+         "skripsi.detail_skripsi.surat_tugas.tipe_surat_tugas",
+         "skripsi.detail_skripsi.surat_tugas.dosen1:no_pegawai,nama",
+         "skripsi.detail_skripsi.surat_tugas.dosen2:no_pegawai,nama"
+     	])
+     	->whereHas("skripsi.status_skripsi", function(Builder $query)
+     	{
+         $query->where("status", "Sudah Punya Penguji");
+     	})->get();
+
+     	// dd($mahasiswa);
+     	return view('akademik.SK_view.create_sk_skripsi', [
+         'dosen' => $dosen,
+         'mahasiswa' => $mahasiswa,
+         'old_data' => $old_data,
+         'old_mahasiswa' => $old_mahasiswa
+     	]);
 	}
 
 	public function store(Request $request)
@@ -102,85 +147,124 @@ class SkSkripsiController extends Controller
 
 	public function show($id)
 	{
-		$sk_akademik = sk_akademik::find($id);
-		$detail_sk = detail_sk::where('id_sk_akademik', $id)
-			->with([
-				'bagian',
-				'penguji_utama:no_pegawai,nama',
-				'penguji_pendamping:no_pegawai,nama',
-				'pembimbing_utama:no_pegawai,nama',
-				'pembimbing_pendamping:no_pegawai,nama'
-			])->get();
-		// dd($sk_akademik->created_at);
-		return view('akademik.SK_view.show', [
-			'sk_akademik' => $sk_akademik,
-			'detail_sk' => $detail_sk
-		]);
-	}
+		$sk = sk_skripsi::find($id);
+    	$detail_skripsi = detail_skripsi::where('id_sk_skripsi', $id)
+     	->with([
+         'skripsi',
+         'skripsi.mahasiswa',
+         'skripsi.mahasiswa.bagian',
+         'surat_tugas' => function($query)
+         {
+            $query->where('id_tipe_surat_tugas', 1)
+         	->orWhere('id_tipe_surat_tugas', 3)
+         	->orderBy('created_at', 'desc');
+         },
+         'surat_tugas.tipe_surat_tugas',
+         'surat_tugas.dosen1:no_pegawai,nama',
+         'surat_tugas.dosen2:no_pegawai,nama',
+     	])->get();
 
-	public function cetak($id)
-	{
-		$sk_akademik = sk_akademik::find($id);
-		$detail_sk = detail_sk::where('id_sk_akademik', $id)
-			->with([
-				'bagian',
-				'penguji_utama:no_pegawai,nama',
-				'penguji_pendamping:no_pegawai,nama',
-				'pembimbing_utama:no_pegawai,nama',
-				'pembimbing_pendamping:no_pegawai,nama'
-			])->get();
-
-		$tipe = $sk_akademik->tipe_sk->tipe;
-		$tgl = Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y');
-		$tanggal = new Carbon($sk_akademik->created_at);
-		$tahun = $tanggal->year; 
-
-		$awalSemester = Carbon::create($tahun, 1, 15);
-		$akhirSemester = Carbon::create($tahun, 7, 31);
-		if($tanggal->isBetween($awalSemester, $akhirSemester)){
-			$tahun2 = $tanggal->subYear();
-			$tahun2 = $tahun2->year;
-			$pdf = PDF::loadview('akademik.SK_view.pdf', ['sk_akademik' => $sk_akademik, 'detail_sk' => $detail_sk, 'tahun' => $tahun2, 'tahun2' => $tahun,'thn_asli'=> $tahun])->setPaper('a4', 'landscape')->setWarnings(false);
-		}else{
-			$tahun2 = $tanggal->addYear();
-			$tahun2 = $tahun2->year;
-			$pdf = PDF::loadview('akademik.SK_view.pdf', ['sk_akademik' => $sk_akademik, 'detail_sk' => $detail_sk, 'tahun' => $tahun, 'tahun2' => $tahun2,'thn_asli' => $tahun])->setPaper('a4', 'landscape')->setWarnings(false);
-		}
-		return $pdf->download($tipe . " " . $tgl);
-		
-		
+     	// dd($detail_sk);
+     	return view('akademik.SK_view.show_sk_skripsi', [
+         'sk' => $sk,
+         'detail_skripsi' => $detail_skripsi,
+         'tipe' => 'sk skripsi'
+     	]);
 	}
 
 	public function edit(Request $request, $id)
 	{
 		$old_data = [];
-		if (count($request->old()) > 0) {
-			// dd($request->old()['nama']);
-			$old_data = $request->old();
-		}
-		try {
-			$jurusan = bagian::where('is_jurusan', 1)->get();
-			$dosen = user::where('is_dosen', 1)->get();
-			$sk_akademik = sk_akademik::find($id);
-			$detail_sk = detail_sk::where('id_sk_akademik', $id)
-				->with([
-					'bagian',
-					'penguji_utama:no_pegawai,nama',
-					'penguji_pendamping:no_pegawai,nama',
-					'pembimbing_utama:no_pegawai,nama',
-					'pembimbing_pendamping:no_pegawai,nama'
-				])->get();
-				
-			return view('akademik.SK_view.edit', [
-				'sk_akademik' => $sk_akademik,
-				'detail_sk' => $detail_sk,
-				'jurusan' => $jurusan,
-				'dosen' => $dosen,
-				'old_data' => $old_data
-			]);
-		} catch (Exception $e) {
-			return redirect()->route('akademik.SK_view.index')->with('error', $e->getMessage());
-		}
+      $old_mahasiswa = "";
+      $nim_dihapus = [];
+      if (array_key_exists('nim', $request->old())) {
+
+         $old_data = $request->old();
+         $old_mahasiswa = mahasiswa::whereIn('nim', $request->old()["nim"])
+         ->with([
+            "bagian",
+            "skripsi",
+            "skripsi.status_skripsi",
+            "skripsi.detail_skripsi" => function($query)
+            {
+               $query->orderBy('created_at', 'desc');
+            },
+            "skripsi.detail_skripsi.surat_tugas" => function($query)
+            {
+               $query->where('id_tipe_surat_tugas', 1)
+         		->orWhere('id_tipe_surat_tugas', 3)
+         		->orderBy('created_at', 'desc');
+            },
+            "skripsi.detail_skripsi.surat_tugas.tipe_surat_tugas",
+            "skripsi.detail_skripsi.surat_tugas.dosen1:no_pegawai,nama",
+            "skripsi.detail_skripsi.surat_tugas.dosen2:no_pegawai,nama"
+         ])->get();
+
+         foreach ($old_data["nim"] as $key => $value) {
+            if ($old_data["pilihan_nim"][$key] == 3) {
+               $nim_dihapus [] = $value;
+            }
+         }
+         // dd($nim_dihapus);
+      }
+
+      $sk = sk_skripsi::find($id);
+      $dosen = user::where('is_dosen', 1)->get();
+      $detail_skripsi = detail_skripsi::where('id_sk_sempro', $id)
+      ->with([
+         'skripsi',
+         'skripsi.mahasiswa',
+         'skripsi.mahasiswa.bagian',
+         'surat_tugas' => function($query)
+         {
+            $query->where('id_tipe_surat_tugas', 1)
+         	->orWhere('id_tipe_surat_tugas', 3)
+         	->orderBy('created_at', 'desc');
+         },
+         'surat_tugas.tipe_surat_tugas',
+         'surat_tugas.dosen1:no_pegawai,nama',
+         'surat_tugas.dosen2:no_pegawai,nama',
+      ])->get();
+
+      $nim_detail = [];
+      foreach ($detail_skripsi as $val) {
+         $nim_detail[] = $val->skripsi->nim;
+      }
+
+      $mahasiswa = mahasiswa::with([
+         "bagian",
+         "skripsi",
+         "skripsi.status_skripsi",
+         "skripsi.detail_skripsi" => function($query)
+         {
+               $query->orderBy('created_at', 'desc');
+         },
+         "skripsi.detail_skripsi.surat_tugas" => function($query)
+         {
+            $query->where('id_tipe_surat_tugas', 1)
+         	->orWhere('id_tipe_surat_tugas', 3)
+         	->orderBy('created_at', 'desc');
+         },
+         "skripsi.detail_skripsi.surat_tugas.tipe_surat_tugas",
+         "skripsi.detail_skripsi.surat_tugas.dosen1:no_pegawai,nama",
+         "skripsi.detail_skripsi.surat_tugas.dosen2:no_pegawai,nama"
+      ])
+      ->whereHas("skripsi.status_skripsi", function(Builder $query)
+      {
+         $query->where("status", "Sudah Punya Penguji");
+      })
+      ->get();
+      return view('akademik.SK_view.edit_sk_skripsi', [
+         'sk' => $sk,
+         'detail_skripsi' => $detail_skripsi,
+         'nim_detail' => $nim_detail,
+         'mahasiswa' => $mahasiswa,
+         'dosen' => $dosen,
+         'old_data' => $old_data,
+         'old_mahasiswa' => $old_mahasiswa,
+         'nim_dihapus' => $nim_dihapus,
+         'tipe' => 'sk skripsi'
+      ]);
 	}
 
 	public function update(Request $request, $id)
@@ -263,38 +347,56 @@ class SkSkripsiController extends Controller
 	public function destroy($id = null)
 	{
 		if (!is_null($id)) {
-			sk_akademik::find($id)->delete();
+			sk_skripsi::find($id)->delete();
 			echo 'Data SK Berhasil Dihapus';
 		}
 	}
 
-	public function editPenetapan()
+	public function cetak($id)
 	{
-	    return view('akademik.SK_view.edit_penetapan');
-	}
+		$sk_akademik = sk_akademik::find($id);
+		$detail_sk = detail_sk::where('id_sk_akademik', $id)
+			->with([
+				'bagian',
+				'penguji_utama:no_pegawai,nama',
+				'penguji_pendamping:no_pegawai,nama',
+				'pembimbing_utama:no_pegawai,nama',
+				'pembimbing_pendamping:no_pegawai,nama'
+			])->get();
 
-	public function updatePenetapan()
-	{
-	    
+		$tipe = $sk_akademik->tipe_sk->tipe;
+		$tgl = Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y');
+		$tanggal = new Carbon($sk_akademik->created_at);
+		$tahun = $tanggal->year; 
+
+		$awalSemester = Carbon::create($tahun, 1, 15);
+		$akhirSemester = Carbon::create($tahun, 7, 31);
+		if($tanggal->isBetween($awalSemester, $akhirSemester)){
+			$tahun2 = $tanggal->subYear();
+			$tahun2 = $tahun2->year;
+			$pdf = PDF::loadview('akademik.SK_view.pdf', ['sk_akademik' => $sk_akademik, 'detail_sk' => $detail_sk, 'tahun' => $tahun2, 'tahun2' => $tahun,'thn_asli'=> $tahun])->setPaper('a4', 'landscape')->setWarnings(false);
+		}else{
+			$tahun2 = $tanggal->addYear();
+			$tahun2 = $tahun2->year;
+			$pdf = PDF::loadview('akademik.SK_view.pdf', ['sk_akademik' => $sk_akademik, 'detail_sk' => $detail_sk, 'tahun' => $tahun, 'tahun2' => $tahun2,'thn_asli' => $tahun])->setPaper('a4', 'landscape')->setWarnings(false);
+		}
+		return $pdf->download($tipe . " " . $tgl);
 	}
 
 
 	//KTU
 	public function ktu_index_skripsi()
 	{
-		$sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
-		->whereHas('tipe_sk', function(Builder $query){ 
-			$query->where('id', 1); 
-		})
-		->whereHas('status_sk_akademik', function(Builder $query){ 
-			$query->whereIn('id', [2,3,4]); 
+		$sk = sk_skripsi::with('status_sk')
+		->whereHas('status_sk', function(Builder $query){
+		    $query->whereIn('id', [2,3,4]);
 		})
 		->orderBy('updated_at', 'desc')
 		->get();
 
 		return view('ktu.SK_view.sk_index', [
-			'sk_akademik' => $sk_akademik,
-			'tipe' => "SK Skripsi"
+		    'sk' => $sk,
+		    'tipe' => "SK Skripsi"
 		]);
 	}
 
@@ -319,8 +421,6 @@ class SkSkripsiController extends Controller
 			'detail_sk' => $detail_sk
 		]);
 	}
-
-	
 
 	public function ktu_verif(Request $request, $id)
 	{
@@ -347,68 +447,68 @@ class SkSkripsiController extends Controller
 
 
 	//DEKAN
-	public function dekan_index_skripsi()
-	{
-		$sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
-		->whereHas('tipe_sk', function(Builder $query){ 
-			$query->where('id', 1); 
-		})
-		->whereHas('status_sk_akademik', function(Builder $query){ 
-			$query->whereIn('id', [3,4]); 
-		})
-		->orderBy('updated_at', 'desc')
-		->get();
-		// dd($sk_akademik);
-		return view('dekan.SK_view.sk_index', [
-			'sk_akademik' => $sk_akademik,
-			'tipe' => "SK Skripsi"
-		]);
-	}
+	// public function dekan_index_skripsi()
+	// {
+	// 	$sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
+	// 	->whereHas('tipe_sk', function(Builder $query){ 
+	// 		$query->where('id', 1); 
+	// 	})
+	// 	->whereHas('status_sk_akademik', function(Builder $query){ 
+	// 		$query->whereIn('id', [3,4]); 
+	// 	})
+	// 	->orderBy('updated_at', 'desc')
+	// 	->get();
+	// 	// dd($sk_akademik);
+	// 	return view('dekan.SK_view.sk_index', [
+	// 		'sk_akademik' => $sk_akademik,
+	// 		'tipe' => "SK Skripsi"
+	// 	]);
+	// }
 
-	public function dekan_show($id)
-	{
-		$sk_akademik = sk_akademik::find($id);
-		$status = $sk_akademik->status_sk_akademik;
-		if($status->id != 2 && $status->id != 3){
-			return redirect()->route('dekan.sk-skripsi.index');
-		}
+	// public function dekan_show($id)
+	// {
+	// 	$sk_akademik = sk_akademik::find($id);
+	// 	$status = $sk_akademik->status_sk_akademik;
+	// 	if($status->id != 2 && $status->id != 3){
+	// 		return redirect()->route('dekan.sk-skripsi.index');
+	// 	}
 
-		$detail_sk = detail_sk::where('id_sk_akademik', $id)
-			->with([
-				'bagian',
-				'penguji_utama:no_pegawai,nama',
-				'penguji_pendamping:no_pegawai,nama',
-				'pembimbing_utama:no_pegawai,nama',
-				'pembimbing_pendamping:no_pegawai,nama'
-			])->get();
-		// dd($detail_sk);
-		return view('dekan.SK_view.sk_show', [
-			'sk_akademik' => $sk_akademik,
-			'detail_sk' => $detail_sk
-		]);
-	}
+	// 	$detail_sk = detail_sk::where('id_sk_akademik', $id)
+	// 		->with([
+	// 			'bagian',
+	// 			'penguji_utama:no_pegawai,nama',
+	// 			'penguji_pendamping:no_pegawai,nama',
+	// 			'pembimbing_utama:no_pegawai,nama',
+	// 			'pembimbing_pendamping:no_pegawai,nama'
+	// 		])->get();
+	// 	// dd($detail_sk);
+	// 	return view('dekan.SK_view.sk_show', [
+	// 		'sk_akademik' => $sk_akademik,
+	// 		'detail_sk' => $detail_sk
+	// 	]);
+	// }
 
-	public function dekan_verif(Request $request, $id)
-	{
-		// dd($request);
-		$sk_akademik = sk_akademik::find($id);
-		$sk_akademik->verif_dekan = $request->verif_dekan;
-		if($request->verif_dekan == 2){
-			$request->validate([
-				'pesan_revisi' => 'required|string'
-			]);
+	// public function dekan_verif(Request $request, $id)
+	// {
+	// 	// dd($request);
+	// 	$sk_akademik = sk_akademik::find($id);
+	// 	$sk_akademik->verif_dekan = $request->verif_dekan;
+	// 	if($request->verif_dekan == 2){
+	// 		$request->validate([
+	// 			'pesan_revisi' => 'required|string'
+	// 		]);
 			
-			$sk_akademik->id_status_sk_akademik = 1;
-			$sk_akademik->pesan_revisi = $request->pesan_revisi;
-			$sk_akademik->save();
-			return redirect()->route('dekan.sk-skripsi.index')->with("verif_dekan", 'SK berhasil ditarik, status kembali menjadi "Draft"');
-		}
-		else if ($request->verif_dekan == 1) {
-			$sk_akademik->id_status_sk_akademik = 4;
-			$sk_akademik->pesan_revisi = null;
-			$sk_akademik->save();
-			return redirect()->route('dekan.sk-skripsi.index')->with('verif_dekan', 'verifikasi SK berhasil, status SK saat ini "Disetujui Dekan"');
-		}
-	}
+	// 		$sk_akademik->id_status_sk_akademik = 1;
+	// 		$sk_akademik->pesan_revisi = $request->pesan_revisi;
+	// 		$sk_akademik->save();
+	// 		return redirect()->route('dekan.sk-skripsi.index')->with("verif_dekan", 'SK berhasil ditarik, status kembali menjadi "Draft"');
+	// 	}
+	// 	else if ($request->verif_dekan == 1) {
+	// 		$sk_akademik->id_status_sk_akademik = 4;
+	// 		$sk_akademik->pesan_revisi = null;
+	// 		$sk_akademik->save();
+	// 		return redirect()->route('dekan.sk-skripsi.index')->with('verif_dekan', 'verifikasi SK berhasil, status SK saat ini "Disetujui Dekan"');
+	// 	}
+	// }
 
 }
