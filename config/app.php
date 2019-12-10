@@ -161,12 +161,10 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        Barryvdh\DomPDF\ServiceProvider::class,
         /*
          * Package Service Providers...
          */
-        Barryvdh\DomPDF\ServiceProvider::class,
-        LynX39\LaraPdfMerger\PdfMergerServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -228,7 +226,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-        'PdfMerger' => LynX39\LaraPdfMerger\Facades\PdfMerger::class,
 
     ],
 

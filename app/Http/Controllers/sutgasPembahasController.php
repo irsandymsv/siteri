@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Builder;
 use App\surat_tugas;
 use App\detail_skripsi;
 use App\skripsi;
-use PDF;
 use Exception;
 use App\User;
 use App\keris;
 use App\mahasiswa;
 use Carbon\Carbon;
+use PDF;
 
 class sutgasPembahasController extends suratTugasController
 {

@@ -343,7 +343,7 @@ class SkSkripsiController extends Controller
 			return redirect()->route('akademik.skripsi.index')->with('error', $e->getMessage());
 		}
 	}
-	
+
 	public function destroy($id = null)
 	{
 		if (!is_null($id)) {
@@ -367,7 +367,7 @@ class SkSkripsiController extends Controller
 		$tipe = $sk_akademik->tipe_sk->tipe;
 		$tgl = Carbon::parse($sk_akademik->created_at)->locale('id_ID')->isoFormat('D MMMM Y');
 		$tanggal = new Carbon($sk_akademik->created_at);
-		$tahun = $tanggal->year; 
+		$tahun = $tanggal->year;
 
 		$awalSemester = Carbon::create($tahun, 1, 15);
 		$akhirSemester = Carbon::create($tahun, 7, 31);
@@ -442,7 +442,7 @@ class SkSkripsiController extends Controller
 			$sk_akademik->save();
 			return redirect()->route('ktu.sk-skripsi.index')->with('verif_ktu', 'verifikasi SK berhasil, status SK saat ini "Disetujui KTU"');
 		}
-		
+
 	}
 
 
@@ -450,11 +450,11 @@ class SkSkripsiController extends Controller
 	// public function dekan_index_skripsi()
 	// {
 	// 	$sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
-	// 	->whereHas('tipe_sk', function(Builder $query){ 
-	// 		$query->where('id', 1); 
+	// 	->whereHas('tipe_sk', function(Builder $query){
+	// 		$query->where('id', 1);
 	// 	})
-	// 	->whereHas('status_sk_akademik', function(Builder $query){ 
-	// 		$query->whereIn('id', [3,4]); 
+	// 	->whereHas('status_sk_akademik', function(Builder $query){
+	// 		$query->whereIn('id', [3,4]);
 	// 	})
 	// 	->orderBy('updated_at', 'desc')
 	// 	->get();
@@ -497,7 +497,7 @@ class SkSkripsiController extends Controller
 	// 		$request->validate([
 	// 			'pesan_revisi' => 'required|string'
 	// 		]);
-			
+
 	// 		$sk_akademik->id_status_sk_akademik = 1;
 	// 		$sk_akademik->pesan_revisi = $request->pesan_revisi;
 	// 		$sk_akademik->save();

@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
-
 use App\sk_akademik;
-use App\detail_sk;
+use App\detail_skripsi;
 use App\sk_honor;
 use PDF;
 use Exception;
@@ -85,9 +84,9 @@ class honorSkripsiController extends Controller
                     ->update([
                         'id_sk_honor' => $sk_honor->id
                     ]);
-            return redirect()->route('keuangan.honor-skripsi.show', $sk_honor->id)->with('success', 'Data Berhasil Dibuat'); 
+            return redirect()->route('keuangan.honor-skripsi.show', $sk_honor->id)->with('success', 'Data Berhasil Dibuat');
         }catch(Exception $e){
-            return redirect()->route('keuangan.honor-skripsi.pilih-sk')->with('error', $e->getMessage()); 
+            return redirect()->route('keuangan.honor-skripsi.pilih-sk')->with('error', $e->getMessage());
         }
     }
 
@@ -100,7 +99,7 @@ class honorSkripsiController extends Controller
             'detail_sk.pembimbing_utama:no_pegawai,nama,npwp,id_golongan',
             'detail_sk.pembimbing_utama.golongan',
 
-            'detail_sk.pembimbing_pendamping:no_pegawai,nama,npwp,id_golongan', 
+            'detail_sk.pembimbing_pendamping:no_pegawai,nama,npwp,id_golongan',
             'detail_sk.pembimbing_pendamping.golongan',
 
             'detail_sk.penguji_utama:no_pegawai,nama,npwp,id_golongan',
@@ -164,7 +163,7 @@ class honorSkripsiController extends Controller
             'detail_sk.pembimbing_utama:no_pegawai,nama,npwp,id_golongan',
             'detail_sk.pembimbing_utama.golongan',
 
-            'detail_sk.pembimbing_pendamping:no_pegawai,nama,npwp,id_golongan', 
+            'detail_sk.pembimbing_pendamping:no_pegawai,nama,npwp,id_golongan',
             'detail_sk.pembimbing_pendamping.golongan',
 
             'detail_sk.penguji_utama:no_pegawai,nama,npwp,id_golongan',
@@ -201,9 +200,9 @@ class honorSkripsiController extends Controller
                 $verif_bpp = 0;
                 $verif_ktu = 0;
                 $verif_wadek2 = 0;
-                $verif_dekan = 0; 
+                $verif_dekan = 0;
             }
-            
+
             sk_honor::where('id',$id_sk_honor)->update([
                 'id_status_sk_honor' => $request->status,
                 'honor_pembimbing1' => $request->honor_pembimbing1,
@@ -234,8 +233,8 @@ class honorSkripsiController extends Controller
         $sk_honor = sk_honor::where('id_tipe_sk', 1)
         ->orderBy('updated_at', 'desc')
         ->with(['tipe_sk', 'status_sk_honor'])
-        ->whereHas('status_sk_honor', function(Builder $query){ 
-            $query->whereIn('id', [2,3,4,5,6]); 
+        ->whereHas('status_sk_honor', function(Builder $query){
+            $query->whereIn('id', [2,3,4,5,6]);
         })->get();
 
         // dd($sk_honor);
@@ -254,7 +253,7 @@ class honorSkripsiController extends Controller
             'detail_sk.pembimbing_utama:no_pegawai,nama,id_golongan',
             'detail_sk.pembimbing_utama.golongan',
 
-            'detail_sk.pembimbing_pendamping:no_pegawai,nama,id_golongan', 
+            'detail_sk.pembimbing_pendamping:no_pegawai,nama,id_golongan',
             'detail_sk.pembimbing_pendamping.golongan',
 
             'detail_sk.penguji_utama:no_pegawai,nama,id_golongan',
@@ -272,7 +271,7 @@ class honorSkripsiController extends Controller
         else{
             return  view('bpp.honor_sk.honor_show', [
                 'sk_honor' => $sk_honor
-            ]);    
+            ]);
         }
     }
 
@@ -303,8 +302,8 @@ class honorSkripsiController extends Controller
         $sk_honor = sk_honor::where('id_tipe_sk', 1)
         ->orderBy('updated_at', 'desc')
         ->with(['tipe_sk', 'status_sk_honor'])
-        ->whereHas('status_sk_honor', function(Builder $query){ 
-            $query->whereIn('id', [3,4,5,6]); 
+        ->whereHas('status_sk_honor', function(Builder $query){
+            $query->whereIn('id', [3,4,5,6]);
         })->get();
 
         // dd($sk_honor);
@@ -323,7 +322,7 @@ class honorSkripsiController extends Controller
             'detail_sk.pembimbing_utama:no_pegawai,nama,id_golongan',
             'detail_sk.pembimbing_utama.golongan',
 
-            'detail_sk.pembimbing_pendamping:no_pegawai,nama,id_golongan', 
+            'detail_sk.pembimbing_pendamping:no_pegawai,nama,id_golongan',
             'detail_sk.pembimbing_pendamping.golongan',
 
             'detail_sk.penguji_utama:no_pegawai,nama,id_golongan',
@@ -341,10 +340,10 @@ class honorSkripsiController extends Controller
         else{
             return  view('ktu.honor_sk.honor_show', [
                 'sk_honor' => $sk_honor
-            ]);    
+            ]);
         }
     }
-    
+
     public function ktu_verif(Request $request, $id)
     {
         // dd($request);
@@ -372,8 +371,8 @@ class honorSkripsiController extends Controller
         $sk_honor = sk_honor::where('id_tipe_sk', 1)
         ->orderBy('updated_at', 'desc')
         ->with(['tipe_sk', 'status_sk_honor'])
-        ->whereHas('status_sk_honor', function(Builder $query){ 
-            $query->whereIn('id', [4,5,6]); 
+        ->whereHas('status_sk_honor', function(Builder $query){
+            $query->whereIn('id', [4,5,6]);
         })->get();
 
         // dd($sk_honor);
@@ -392,7 +391,7 @@ class honorSkripsiController extends Controller
             'detail_sk.pembimbing_utama:no_pegawai,nama,id_golongan',
             'detail_sk.pembimbing_utama.golongan',
 
-            'detail_sk.pembimbing_pendamping:no_pegawai,nama,id_golongan', 
+            'detail_sk.pembimbing_pendamping:no_pegawai,nama,id_golongan',
             'detail_sk.pembimbing_pendamping.golongan',
 
             'detail_sk.penguji_utama:no_pegawai,nama,id_golongan',
@@ -410,7 +409,7 @@ class honorSkripsiController extends Controller
         else{
             return  view('wadek2.honor_sk.honor_show', [
                 'sk_honor' => $sk_honor
-            ]);    
+            ]);
         }
     }
 
@@ -441,8 +440,8 @@ class honorSkripsiController extends Controller
         $sk_honor = sk_honor::where('id_tipe_sk', 1)
         ->orderBy('updated_at', 'desc')
         ->with(['tipe_sk', 'status_sk_honor'])
-        ->whereHas('status_sk_honor', function(Builder $query){ 
-            $query->whereIn('id', [5,6]); 
+        ->whereHas('status_sk_honor', function(Builder $query){
+            $query->whereIn('id', [5,6]);
         })->get();
 
         // dd($sk_honor);
@@ -461,7 +460,7 @@ class honorSkripsiController extends Controller
             'detail_sk.pembimbing_utama:no_pegawai,nama,id_golongan',
             'detail_sk.pembimbing_utama.golongan',
 
-            'detail_sk.pembimbing_pendamping:no_pegawai,nama,id_golongan', 
+            'detail_sk.pembimbing_pendamping:no_pegawai,nama,id_golongan',
             'detail_sk.pembimbing_pendamping.golongan',
 
             'detail_sk.penguji_utama:no_pegawai,nama,id_golongan',
@@ -479,7 +478,7 @@ class honorSkripsiController extends Controller
         else{
             return  view('dekan.honor_sk.honor_show', [
                 'sk_honor' => $sk_honor
-            ]);    
+            ]);
         }
     }
 

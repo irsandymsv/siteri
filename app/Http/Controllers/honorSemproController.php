@@ -11,6 +11,7 @@ use App\histori_besaran_honor;
 use App\sk_sempro;
 use App\detail_skripsi;
 use App\User;
+use Exception;
 use PDF;
 use Carbon\Carbon;
 
