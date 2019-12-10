@@ -100,46 +100,42 @@ class SkSkripsiController extends Controller
 
 	public function store(Request $request)
 	{
-		// dd($request->status);
-		$this->validate($request, [
-			"nama"    => "required|array",
-			"nama.*"  => "required|string|max:40",
-			"nim" => "required|array",
-			"nim.*" => "required|string|max:20",
-			"jurusan" => "required|array",
-			"jurusan.*" => "required",
-			"judul" => "required|array",
-			"judul.*" => "required",
-			"pembimbing_utama" => "required|array",
-			"pembimbing_utama.*" => "required",
-			"pembimbing_pendamping" => "required|array",
-			"pembimbing_pendamping.*" => "required",
-			"penguji_utama" => "required|array",
-			"penguji_utama.*" => "required",
-			"penguji_pendamping" => "required|array",
-			"penguji_pendamping.*" => "required",
-			"no_surat" => "required"
-		]);
+        // dd($request);
+        if ($request->input("status") == 2) {
+            $this->validate($request, [
+                "nim" => "required|array",
+                "nim.*" => "required",
+                "tgl_sk_pembimbing" => "required",
+                "tgl_sk_penguji" => "required",
+                "status" => "required",
+                "no_surat" => "required"
+            ]);
+        } else {
+            $this->validate($request, [
+                "no_surat" => "required|unique:sk_sempro,no_surat",
+                "nim" => "required|array",
+                "nim.*" => "required|string"
+            ]);
+        }
 		try {
-			$sk_akademik = sk_akademik::create([
-				'id_tipe_sk' => 1,
-				'id_status_sk_akademik' => $request->status,
-				'no_surat' => $request->no_surat
-			]);
-			for ($i = 0; $i < count($request->nama); $i++) {
-				$detail_sk = detail_sk::create([
-					'id_sk_akademik' => $sk_akademik->id,
-					'nama_mhs' => $request->nama[$i],
-					'nim' => $request->nim[$i],
-					'id_bagian' => $request->jurusan[$i],
-					'judul' => $request->judul[$i],
-					'id_pembimbing_utama' => $request->pembimbing_utama[$i],
-					'id_pembimbing_pendamping' => $request->pembimbing_pendamping[$i],
-					'id_penguji_utama' => $request->penguji_utama[$i],
-					'id_penguji_pendamping' => $request->penguji_pendamping[$i]
-				]);
-			}
-			return redirect()->route('akademik.skripsi.show', $sk_akademik->id)->with('success', 'Data Berhasil Ditambahkan');
+            $template = template::whereHas('nama_template', function (Builder $query) {
+                $query->where('nama', 'SK Skripsi');
+            })->orderBy('created_at', 'desc')->first();
+            if ($template == false) {
+                return redirect()->route('akademik.sempro.create')->with('error', 'Template Untuk SK Sempro Tidak Ditemukan');
+            } else {
+                $sk_skripsi = sk_skripsi::create([
+                    "no_surat" => $request->input("no_surat"),
+                    "tgl_sempro1" => carbon::parse($request->input("tgl_sempro1")),
+                    "tgl_sempro2" => carbon::parse($request->input("tgl_sempro2")),
+                    "id_status_sk" => $request->input("status"),
+                    "id_template" => $template->id
+                ]);
+                foreach ($request->nim as $nim) {
+                    $this->update_id_sk_skripsi($nim, $sk_skripsi->no_surat);
+                }
+            }
+			return redirect()->route('akademik.skripsi.show', $sk_skripsi->no_surat)->with('success', 'Data Berhasil Ditambahkan');
 		} catch (Exception $e) {
 			return redirect()->route('akademik.skripsi.create')->with('error', $e->getMessage());
 		}
@@ -265,7 +261,16 @@ class SkSkripsiController extends Controller
          'nim_dihapus' => $nim_dihapus,
          'tipe' => 'sk skripsi'
       ]);
-	}
+    }
+
+    private function update_id_sk_skripsi($nim, $id)
+    {
+        $detail_skripsi = detail_skripsi::whereHas('skripsi', function (builder $query) use ($nim) {
+            $query->where('nim', $nim);
+        })->orderBy('created_at', 'desc')->first();
+        $detail_skripsi->id_sk_skripsi = $id;
+        $detail_skripsi->save();
+    }
 
 	public function update(Request $request, $id)
 	{

@@ -10,6 +10,8 @@ class sk_skripsi extends Model
     protected $primaryKey = "no_surat";
     public $timestamps = TRUE;
     public $incrementing = FALSE;
+    protected $fillable = ['no_surat', 'id_status_sk', 'tgl_sk_pembimbing', 'tgl_sk_penguji', 'verif_ktu', 'pesan_revisi', 'id_template'];
+
 
     public function status_sk()
     {
