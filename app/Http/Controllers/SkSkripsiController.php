@@ -135,9 +135,9 @@ class SkSkripsiController extends Controller
                     $this->update_id_sk_skripsi($nim, $sk_skripsi->no_surat);
                 }
             }
-			return redirect()->route('akademik.skripsi.show', $sk_skripsi->no_surat)->with('success', 'Data Berhasil Ditambahkan');
+			return redirect()->route('akademik.sk-skripsi.show', $sk_skripsi->no_surat)->with('success', 'Data Berhasil Ditambahkan');
 		} catch (Exception $e) {
-			return redirect()->route('akademik.skripsi.create')->with('error', $e->getMessage());
+			return redirect()->route('akademik.sk-skripsi.create')->with('error', $e->getMessage());
 		}
 	}
 
