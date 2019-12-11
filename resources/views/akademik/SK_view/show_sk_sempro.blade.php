@@ -66,33 +66,52 @@
 	            </div>
 				
 	            <div class="box-body">
-						<h5><b>Nomor Surat</b> : {{$sk->no_surat}}/UN 25.1.15/SP/{{Carbon\Carbon::parse($sk->created_at)->year}}</h5>
-            		<h5><b>Tanggal Dibuat</b> : {{Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
-            		<h5><b>Tanggal Sempro 1</b> : {{Carbon\Carbon::parse($sk->tgl_sempro1)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
-            		<h5><b>Tanggal Sempro 2</b> : {{Carbon\Carbon::parse($sk->tgl_sempro2)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
-            		
-            		<br>
-	            	<h5><b>Progres</b> :</h5>
-	            	<div class="tl_wrap">
-	            	  <div class="item_tl" id="progres_1">
-	            	    <div><i class="fa fa-check"></i></div>
-	            	    <h4>Disimpan</h4>
-	            	  </div>
+	            	<div class="row">
+	            		<div class="col col-md-6">
+	            			<table class="tabel_keterangan">
+	            				<tr>
+	            					<td><b>Nomor Surat</b></td>
+	            					<td>: {{$sk->no_surat}}/UN 25.1.15/SP/{{Carbon\Carbon::parse($sk->created_at)->year}}</td>
+	            				</tr>
+	            				<tr>
+	            					<td><b>Tanggal Dibuat</b></td>
+	            					<td>: {{Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</td>
+	            				</tr>
+	            				<tr>
+	            					<td><b>Tanggal Sempro 1</b></td>
+	            					<td>: {{Carbon\Carbon::parse($sk->tgl_sempro1)->locale('id_ID')->isoFormat('D MMMM Y')}}</td>
+	            				</tr>
+	            				<tr>
+	            					<td><b>Tanggal Sempro 2</b></td>
+	            					<td>: {{Carbon\Carbon::parse($sk->tgl_sempro2)->locale('id_ID')->isoFormat('D MMMM Y')}}</td>
+	            				</tr>
+	            			</table>
+	            		</div>
 
-	            	  <div class="item_tl" id="progres_2">
-	            	    <div><i></i></div>
-	            	    <h4>Dikirim</h4>
-	            	  </div>
+	            		<div class="col col-md-6">
+	            			<h5><b>Progres</b> :</h5>
+	            			<div class="tl_wrap">
+	            			  <div class="item_tl" id="progres_1">
+	            			    <div><i class="fa fa-check"></i></div>
+	            			    <h4>Disimpan</h4>
+	            			  </div>
 
-	            	  <div class="item_tl" id="progres_3">
-	            	    <div><i></i></div>
-	            	    <h4>Disetujui KTU</h4>
-	            	  </div>
+	            			  <div class="item_tl" id="progres_2">
+	            			    <div><i></i></div>
+	            			    <h4>Dikirim</h4>
+	            			  </div>
 
-	            	  {{-- <div class="item_tl" id="progres_4">
-	            	    <div><i></i></div>
-	            	    <h4>Disetujui Dekan</h4>
-	            	  </div> --}}
+	            			  <div class="item_tl" id="progres_3">
+	            			    <div><i></i></div>
+	            			    <h4>Disetujui KTU</h4>
+	            			  </div>
+
+	            			  {{-- <div class="item_tl" id="progres_4">
+	            			    <div><i></i></div>
+	            			    <h4>Disetujui Dekan</h4>
+	            			  </div> --}}
+	            			</div>
+	            		</div>
 	            	</div>
 
          			@if(!is_null($sk->pesan_revisi))
@@ -139,7 +158,7 @@
 			            			<th>NIM</th>
 			            			<th>Nama Mahasiswa</th>
 			            			<th>Program Studi</th>
-			            			<th>Judul</th>
+			            			<th>Judul Skripsi</th>
 			            			<th>Pembahas I/II</th>
 			            		</tr>
 			            	</thead>

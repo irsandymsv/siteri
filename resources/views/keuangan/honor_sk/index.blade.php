@@ -38,9 +38,9 @@
                            <th>SK Sempro</th>
                            <th>Tanggal SK</th>
                            <th>Status</th>
-                           <th>Verif BPP</th>
+                           {{-- <th>Verif BPP</th>
                            <th>Verif KTU</th>
-                           <th>Verif Wadek 2</th>
+                           <th>Verif Wadek 2</th> --}}
                            <th>Pilihan</th>
                         </tr>
                      </thead>
@@ -59,9 +59,8 @@
                                  @else
                                     {{ $item->sk_honor->status_sk_honor->status }}
                                  @endif
-                                 
                               </td>
-                              <td>
+                              {{-- <td>
                                  @if (is_null($item->sk_honor))
                                     -
                                  @else
@@ -73,7 +72,6 @@
                                        <label class="label bg-green">Sudah Diverifikasi</label>
                                     @endif
                                  @endif
-                                 
                               </td>
                               <td>
                                  @if (is_null($item->sk_honor))
@@ -100,7 +98,7 @@
                                        <label class="label bg-green">Sudah Diverifikasi</label>
                                     @endif
                                  @endif
-                              </td>
+                              </td> --}}
                               
                               <td>
                                  @if ($tipe == "SK Skripsi")
@@ -184,9 +182,6 @@
             <th></th>
             <th></th>
             <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
          </tr>`).clone(true).appendTo( '#data_table thead' );
 
       $('#data_table').DataTable({
@@ -213,42 +208,43 @@
              } );
          }
       });
-      $("a[name='delete_honor']").click(function(event) {
-         event.preventDefault();
-         var id_sk = $(this).attr('id');
-
-         @if($tipe == "SK Skripsi")
-         var url_del = "{{route('keuangan.honor-skripsi.destroy')}}" + '/' + id_sk;             
-         @else
-         var url_del = "{{route('keuangan.honor-sempro.destroy')}}" + '/' + id_sk;
-         @endif
-         console.log(url_del);
-         
-         $('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $.ajax({
-               url: url_del,
-               type: 'POST',
-               // dataType: '',
-               data: {_method: 'DELETE'},
-            })
-            .done(function(hasil) {
-               console.log("success");
-               $("tr#sk_"+id_sk).hide();
-               $("#success_delete").show();
-               $("#success_delete").find('span').html(hasil);
-               $("#success_delete").fadeOut(1800);
-            })
-            .fail(function() {
-               console.log("error");
-            });
-         });
       
-      });
+      // $("a[name='delete_honor']").click(function(event) {
+      //    event.preventDefault();
+      //    var id_sk = $(this).attr('id');
+
+      //    @if($tipe == "SK Skripsi")
+      //    var url_del = "{{route('keuangan.honor-skripsi.destroy')}}" + '/' + id_sk;             
+      //    @else
+      //    var url_del = "{{route('keuangan.honor-sempro.destroy')}}" + '/' + id_sk;
+      //    @endif
+      //    console.log(url_del);
+         
+      //    $('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
+      //       $.ajaxSetup({
+      //           headers: {
+      //               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      //           }
+      //       });
+
+      //       $.ajax({
+      //          url: url_del,
+      //          type: 'POST',
+      //          // dataType: '',
+      //          data: {_method: 'DELETE'},
+      //       })
+      //       .done(function(hasil) {
+      //          console.log("success");
+      //          $("tr#sk_"+id_sk).hide();
+      //          $("#success_delete").show();
+      //          $("#success_delete").find('span').html(hasil);
+      //          $("#success_delete").fadeOut(1800);
+      //       })
+      //       .fail(function() {
+      //          console.log("error");
+      //       });
+      //    });
+      
+      // });
    </script>
 @endsection  

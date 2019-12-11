@@ -48,7 +48,12 @@
 	            		<thead>
 		            		<tr>
 		            			<th>No</th>
-		            			<th>No Surat</th>
+		            			@if($tipe == "SK Skripsi")
+			            			<th>No Surat SK Pembimbing</th>
+			            			<th>No Surat SK Penguji</th>
+		            			@else
+		            				<th>No Surat</th>
+		            			@endif
 		            			<th>Tanggal Dibuat</th>
 		            			<th>Status</th>
 		            			<th>Verifikasi KTU</th>
@@ -60,7 +65,12 @@
 		            		@foreach($sk as $item)
 		            			<tr id="sk_{{$item->id}}">
 		            				<td>{{$loop->index + 1}}</td>
-		            				<td>{{ $item->no_surat }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
+		            				@if($tipe == "SK Skripsi")
+			            				<td>{{ $item->no_surat_pembimbing }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
+			            				<td>{{ $item->no_surat_penguji }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
+		            				@else
+		            					<td>{{ $item->no_surat }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
+		            				@endif
 		            				<td>
 		            					{{Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}
 		            				</td>
@@ -85,9 +95,9 @@
 		            				</td> --}}
 		            				<td>
 		            					@if($tipe == "SK Skripsi")
-		            						<a href="{{ route('akademik.skripsi.show', $item->no_surat) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+		            						<a href="{{ route('akademik.skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
 			            					@if($item->verif_ktu != 1)
-			            					<a href="{{ route('akademik.skripsi.edit', $item->no_surat) }}" class="btn btn-warning" title="Ubah SK"><i class="fa fa-edit"></i></a>
+			            					<a href="{{ route('akademik.skripsi.edit', $item->id) }}" class="btn btn-warning" title="Ubah SK"><i class="fa fa-edit"></i></a>
 			            					@endif
 						              	@else
 						              		<a href="{{ route('akademik.sempro.show', $item->no_surat) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
@@ -96,13 +106,13 @@
 			            					@endif
 						              	@endif
 
-						              	@if($item->verif_ktu != 1)
-		            					<a href="#" class="btn btn-danger" id="{{ $item->no_surat }}" name="delete_sk" title="Hapus SK" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
-										@endif
+						              	{{-- @if($item->verif_ktu != 1)
+		            					<a href="#" class="btn btn-danger" id="{{ ($tipe == "SK Skripsi"? $item->id : $item->no_surat) }}" name="delete_sk" title="Hapus SK" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+											@endif --}}
 										
-										@if ($item->verif_ktu == 1)
-                    					<a href="{{ ($tipe == "SK Skripsi"? '#' : route('akademik.sempro.cetak', $item->no_surat)) }}" id="{{ $item->id }}" name="cetak_sk" class="btn btn-info" title="Cetak SK"><i class="fa fa-print"></i></a>
-					  					@endif
+											@if ($item->verif_ktu == 1)
+	                    					<a href="{{ ($tipe == "SK Skripsi"? '#' : route('akademik.sempro.cetak', $item->no_surat)) }}" id="{{ $item->id }}" name="cetak_sk" class="btn btn-info" title="Cetak SK"><i class="fa fa-print"></i></a>
+						  					@endif
 		            				</td>
 		            			</tr>
 		            		@endforeach

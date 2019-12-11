@@ -192,7 +192,8 @@ Route::prefix('keuangan')->name('keuangan.')->group(function()
 	// Route::get('/honor-sempro/{id_sk_honor}/edit', 'honorSemproController@edit')->name('honor-sempro.edit');
 	// Route::put('/honor-sempro/{id_sk_honor}/update', 'honorSemproController@update')->name('honor-sempro.update');
 	Route::delete('/honor-sempro/delete/{id_sk_honor?}', 'honorSemproController@destroy')->name('honor-sempro.destroy');
-	Route::get('/honor-sempro/show/{id_sk_honor}/cetak-pdf', 'honorSemproController@cetak_pdf')->name('honor-sempro.cetak');
+	Route::put('/honor-sempro/{id_sk_honor}/status-dibayarkan', 'honorSemproController@status_dibayarkan')->name('honor-sempro.status_dibayarkan');
+	Route::get('/honor-sempro/{id_sk_honor}/cetak-pdf', 'honorSemproController@cetak_pdf')->name('honor-sempro.cetak');
 });
 
 Route::prefix('honor')->name('honor.')->group(function()

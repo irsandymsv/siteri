@@ -24,9 +24,9 @@
       .tbl_row{
          display: table;
          width: 100%;
-         border-bottom: 0.1px solid lightgrey;
-         margin-top: 10px;
-         margin-bottom: 10px;
+         border-bottom: 0.5px solid grey;
+         margin-top: 7px;
+         margin-bottom: 7px;
       }
 
       .input_no_surat{
@@ -77,7 +77,7 @@
                   <div class="box-body">
                      <div class="row">
                         <div class="form-group col-md-3">
-                           <label for="no_surat">No Surat SK Pembimbing</label><br>
+                           <label for="no_surat_pembimbing">No Surat SK Pembimbing</label><br>
                            <input type="text" class="input_no_surat" name="no_surat_pembimbing" id="no_surat_pembimbing" value="{{ old('no_surat_pembimbing') }}">
                            <span id="format_nomor">/UN25.1.15/SP/{{ Carbon\Carbon::today()->year }}</span>
 
@@ -90,7 +90,7 @@
                         </div>
 
                         <div class="form-group col-md-3">
-                           <label for="no_surat">No Surat SK Penguji</label><br>
+                           <label for="no_surat_penguji">No Surat SK Penguji</label><br>
                            <input type="text" class="input_no_surat" name="no_surat_penguji" id="no_surat_penguji" value="{{ old('no_surat_penguji') }}">
                            <span id="format_nomor">/UN25.1.15/SP/{{ Carbon\Carbon::today()->year }}</span>
 
@@ -130,9 +130,8 @@
                   <div class="box-footer">
                      <div class="form-group">
                         <input type="hidden" name="status" value="">
-                        <button type="submit" name="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button>
-                           &ensp;
-                        <button type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>
+                        <button type="submit" name="simpan_kirim" class="btn btn-success pull-right">Simpan dan Kirim</button>
+                        <button type="submit" name="simpan_draf" class="btn bg-purple pull-right" style="margin-right: 5px;">Simpan Sebagai Draft</button>
                      </div>
                   </div>
 

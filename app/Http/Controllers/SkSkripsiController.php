@@ -125,8 +125,9 @@ class SkSkripsiController extends Controller
             $template_penguji = template::whereHas('nama_template', function (Builder $query) {
                 $query->where('nama', 'SK Penguji Skripsi');
             })->orderBy('created_at', 'desc')->first();
+
             if ($template_pembimbing == false || $template_penguji == false) {
-                return redirect()->route('akademik.skripsi.create')->with('error', 'Template Pembimbing atau Penguji Untuk SK Sempro Tidak Ditemukan');
+                return redirect()->route('akademik.skripsi.create')->with('error', 'Template Pembimbing atau Penguji Untuk SK Skripsi Tidak Ditemukan');
             } else {
                 $sk_skripsi = sk_skripsi::create([
                     "no_surat_pembimbing" => $request->input("no_surat_pembimbing"),
@@ -135,12 +136,14 @@ class SkSkripsiController extends Controller
                     "tgl_sk_penguji" => carbon::parse($request->input("tgl_sk_pembimbing")),
                     "id_status_sk" => $request->input("status"),
                     "id_template_penguji" => $template_penguji->id,
-                    "id_template_pembimbing" => $template_pembimbing->id,
+                    "id_template_pembimbing" => $template_pembimbing->id
                 ]);
+
                 foreach ($request->nim as $nim) {
                     $this->update_id_sk_skripsi($nim, $sk_skripsi->id);
                 }
             }
+
 			return redirect()->route('akademik.skripsi.show', $sk_skripsi->id)->with('success', 'Data Berhasil Ditambahkan');
 		} catch (Exception $e) {
 			return redirect()->route('akademik.skripsi.create')->with('error', $e->getMessage());
@@ -212,7 +215,7 @@ class SkSkripsiController extends Controller
 
       $sk = sk_skripsi::find($id);
       $dosen = user::where('is_dosen', 1)->get();
-      $detail_skripsi = detail_skripsi::where('id_sk_sempro', $id)
+      $detail_skripsi = detail_skripsi::where('id_sk_skripsi', $id)
       ->with([
          'skripsi',
          'skripsi.mahasiswa',
@@ -228,6 +231,7 @@ class SkSkripsiController extends Controller
          'surat_tugas.dosen2:no_pegawai,nama',
       ])->get();
 
+      // dd($detail_skripsi);
       $nim_detail = [];
       foreach ($detail_skripsi as $val) {
          $nim_detail[] = $val->skripsi->nim;
@@ -365,8 +369,8 @@ class SkSkripsiController extends Controller
 
 	public function cetak($id)
 	{
-		$sk_akademik = sk_akademik::find($id);
-		$detail_sk = detail_sk::where('id_sk_akademik', $id)
+		$sk_akademik = sk_skripsi::find($id);
+		$detail_sk = detail_skripsi::where('id_sk_skripsi', $id)
 			->with([
 				'bagian',
 				'penguji_utama:no_pegawai,nama',

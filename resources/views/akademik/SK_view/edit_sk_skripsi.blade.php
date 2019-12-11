@@ -45,7 +45,7 @@
 
 @section('content')
    <button id="back_top" class="btn bg-black" title="Kembali ke Atas"><i class="fa fa-arrow-up"></i></button>
-   <form action="{{ route('akademik.skripsi.update', $sk->no_surat) }}" method="post">
+   <form action="{{ route('akademik.skripsi.update', $sk->id) }}" method="post">
       @csrf
       @method("PUT")
       {{-- @php
@@ -85,12 +85,12 @@
 
                   <div class="box-body">
                      <div class="row">
-                        <div class="form-group col-md-4">
-                           <label for="no_surat">No Surat</label><br>
-                           <input type="text" name="no_surat" id="no_surat" value="{{ $sk->no_surat }}">
+                        <div class="form-group col-md-3">
+                           <label for="no_surat_pembimbing">No Surat SK Pembimbing</label><br>
+                           <input type="text" name="no_surat_pembimbing" id="no_surat_pembimbing" value="{{ $sk->no_surat_pembimbing }}">
                            <span id="format_nomor">/UN25.1.15/SP/{{ Carbon\Carbon::today()->year }}</span>
 
-                           @error('no_surat')
+                           @error('no_surat_pembimbing')
                               <br>
                               <span class="invalid-feedback" role="alert" style="color: red;">
                                  <strong>{{ $message }}</strong>
@@ -98,7 +98,20 @@
                            @enderror
                         </div>
 
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
+                           <label for="no_surat_penguji">No Surat SK Penguji</label><br>
+                           <input type="text" name="no_surat_penguji" id="no_surat_penguji" value="{{ $sk->no_surat_penguji }}">
+                           <span id="format_nomor">/UN25.1.15/SP/{{ Carbon\Carbon::today()->year }}</span>
+
+                           @error('no_surat_penguji')
+                              <br>
+                              <span class="invalid-feedback" role="alert" style="color: red;">
+                                 <strong>{{ $message }}</strong>
+                              </span>
+                           @enderror
+                        </div>
+
+                        <div class="form-group col-md-3">
                            <label for="tgl_sk_pembimbing">Tanggal SK Pembimbing</label>
                            <input type="date" name="tgl_sk_pembimbing" id="tgl_sk_pembimbing" class="form-control" value="{{ $sk->tgl_sk_pembimbing }}">
 
@@ -109,7 +122,7 @@
                            @enderror
                         </div>
 
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                            <label for="tgl_sk_penguji">Tanggal SK Penguji</label>
                            <input type="date" name="tgl_sk_penguji" id="tgl_sk_penguji" class="form-control" value="{{ $sk->tgl_sk_penguji }}">
 
@@ -124,12 +137,14 @@
                   </div>
 
                   <div class="box-footer">
-                     <div class="form-group">
+                     <a href="{{ route('akademik.skripsi.show', $sk->id) }}" class="btn btn-default pull-left">Batal</a>
+
+                     {{-- <div class="form-group"> --}}
                         <input type="hidden" name="status" value="">
-                        <button type="submit" name="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button>
-                           &ensp;
-                        <button type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>
-                     </div>
+                        <button type="submit" name="simpan_kirim" class="btn btn-success pull-right">Simpan dan Kirim</button>
+                        <button type="submit" name="simpan_draf" class="btn bg-purple pull-right" style="margin-right: 5px;">Simpan Sebagai Draft</button>
+                     {{-- </div> --}}
+
                   </div>
 
       		</div>
@@ -198,7 +213,7 @@
                                  </td>
                                  <td>{{ $val->nama }}</td>
                                  <td>{{ $val->bagian->bagian }}</td>
-                                 <td style="width: 350px;" >{{ $val->skripsi->detail_skripsi[0]->judul }}</td>
+                                 <td style="width: 280px;" >{{ $val->skripsi->detail_skripsi[0]->judul }}</td>
                                  @if ($val->skripsi->detail_skripsi[0]->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Pembimbing")
                                     <td>
                                        <div class="tbl_row">
@@ -250,7 +265,7 @@
                                  </td>
                                  <td>{{ $val->skripsi->mahasiswa->nama }}</td>
                                  <td>{{ $val->skripsi->mahasiswa->bagian->bagian }}</td>
-                                 <td style="width: 350px;" >{{ $val->judul }}</td>
+                                 <td style="width: 280px;" >{{ $val->judul }}</td>
                                  @if ($val->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Pembimbing")
                                     <td>
                                        <div class="tbl_row">
@@ -364,7 +379,7 @@
                            </td>
                            <td class="nama_mhs" >`+val.nama+`</td>
                            <td>`+val.bagian.bagian+`</td>
-                           <td style="width: 350px;" >`+val.skripsi.detail_skripsi[0].judul+`</td>
+                           <td style="width: 280px;" >`+val.skripsi.detail_skripsi[0].judul+`</td>
                            <td>
                               <div class="tbl_row">1. `+val.skripsi.detail_skripsi[0].surat_tugas[0].dosen1.nama+`</div>
                               <div class="tbl_row">2. `+val.skripsi.detail_skripsi[0].surat_tugas[0].dosen2.nama+`</div>
@@ -389,7 +404,7 @@
                            </td>
                            <td class="nama_mhs" >`+val.nama+`</td>
                            <td>`+val.bagian.bagian+`</td>
-                           <td style="width: 350px;" >`+val.skripsi.detail_skripsi[0].judul+`</td>
+                           <td style="width: 280px;" >`+val.skripsi.detail_skripsi[0].judul+`</td>
                            <td>
                               <div class="tbl_row">1. `+val.skripsi.detail_skripsi[0].surat_tugas[1].dosen1.nama+`</div>
                               <div class="tbl_row">2. `+val.skripsi.detail_skripsi[0].surat_tugas[1].dosen2.nama+`</div>

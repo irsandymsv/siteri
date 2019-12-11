@@ -36,11 +36,6 @@
          text-align: center;
       }
 
-
-      .tabel_keterangan td:first-child{
-         padding-right: 10px;
-      }
-
       td span {
          float: right;
       }
@@ -101,6 +96,16 @@
                      <td>Tanggal SK Pembahas Sempro</td>
                      <td>: {{ Carbon\Carbon::parse($sk_honor->sk_sempro->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
                   </tr>
+                  <tr>
+                     <td>Status SK Honor</td>
+                     <td>: 
+                        @if ($sk_honor->status_sk_honor->status == "Telah Dibayarkan")
+                           <label class="label bg-green">{{ $sk_honor->status_sk_honor->status }}</label>
+                        @else
+                           {{ $sk_honor->status_sk_honor->status }}
+                        @endif
+                     </td>
+                  </tr>
                </table>
 
                {{-- <h4><b>Progres Daftar Honor ini: </b></h4>
@@ -145,7 +150,15 @@
             </div>
 
             <div class="box-footer">
-               <a href="{{ route("keuangan.honor-sempro.cetak", $sk_honor->id) }}" class="btn bg-teal pull-right"><i class="fa fa-print"></i> Download PDF</a>
+               <a href="{{ route("keuangan.honor-sempro.cetak", $sk_honor->id) }}" class="btn bg-teal pull-right"><i class="fa fa-print"></i> Download PDF</a> 
+
+               @if ($sk_honor->status_sk_honor->status != "Telah Dibayarkan")
+                  <form action="{{ route('keuangan.honor-sempro.status_dibayarkan', $sk_honor->id) }}" method="POST">
+                     @csrf @method('PUT')
+                     
+                     <button type="submit" class="btn btn-success pull-right" style="margin-right: 10px;" title="Ubah status menjadi Telah Dibayarkan"><i class="fa fa-check"></i> Telah Dibayarkan</butto>
+                  </form>
+               @endif
             </div>
          </div>
       </div>

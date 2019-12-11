@@ -199,6 +199,14 @@ class honorSemproController extends Controller
         }
     }
 
+    public function status_dibayarkan($id_sk_honor)
+    {
+        sk_honor::where('id', $id_sk_honor)->update([
+            'id_status_sk_honor' => 6
+        ]);
+        return redirect()->route('keuangan.honor-sempro.show', $id_sk_honor)->with('success', 'Status berhasil diubah menjadi "Telah Dibayarkan"');
+    }
+
     public function cetak_pdf($id_sk_honor)
     {
         $sk_honor = sk_honor::where('id', $id_sk_honor)
@@ -258,6 +266,8 @@ class honorSemproController extends Controller
         return $pdf->download("Honor SK Sempro-" . $sk_honor->sk_sempro->no_surat);
     }
 
+
+    //BPP
     public function bpp_index()
     {
         $sk_honor = sk_honor::orderBy('updated_at', 'desc')
@@ -340,6 +350,8 @@ class honorSemproController extends Controller
         }
     }
 
+
+    //KTU
     public function ktu_index()
     {
         $sk_honor = sk_honor::where('id_tipe_sk', 2)
@@ -409,6 +421,8 @@ class honorSemproController extends Controller
         }
     }
 
+
+    //Wadek2
     public function wadek2_index()
     {
         $sk_honor = sk_honor::where('id_tipe_sk', 2)
@@ -478,6 +492,8 @@ class honorSemproController extends Controller
         }
     }
 
+
+    //Dekan
     public function dekan_index()
     {
         $sk_honor = sk_honor::where('id_tipe_sk', 2)

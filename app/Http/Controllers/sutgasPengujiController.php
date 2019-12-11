@@ -57,7 +57,7 @@ class sutgasPengujiController extends suratTugasController
             $detail_skripsi = detail_skripsi::select('id')->whereHas('skripsi',function (Builder $query) use ($nim){
                                     $query->where('nim',$nim);
                                 })->orderBy('created_at','desc')->first();
-            $this->store_sutgas(
+            $id_baru = $this->store_sutgas(
                 $request,
                 3,
                 $request->status,
@@ -65,7 +65,7 @@ class sutgasPengujiController extends suratTugasController
                 'id_penguji1',
                 'id_penguji2'
             );
-            return redirect()->route('akademik.sutgas-penguji.index')->with('success', 'Data Surat Tugas Berhasil Ditambahkan');
+            return redirect()->route('akademik.sutgas-penguji.show', $id_baru)->with('success', 'Data Surat Tugas Berhasil Ditambahkan');
         } catch (Exception $e) {
             return redirect()->route('akademik.sutgas-penguji.create')->with('error', $e->getMessage());
         }

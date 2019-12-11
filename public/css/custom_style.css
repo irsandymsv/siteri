@@ -97,3 +97,9 @@
 .item_tl.verified h4{
   color: black; 
 }
+
+/*tabel keterangan surat*/
+.tabel_keterangan td{
+   padding-right: 10px;
+   font-size: 15px;
+}

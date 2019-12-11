@@ -31,7 +31,7 @@
       }
 
       #dataTable tbody tr td:nth-child(5){
-      	width: 350px;
+      	width: 250px;
       }
 	</style>
 @endsection
@@ -66,33 +66,56 @@
 	            </div>
 
 	            <div class="box-body">
-						<h5><b>Nomor Surat</b> : {{$sk->no_surat}}/UN 25.1.15/SP/{{Carbon\Carbon::parse($sk->created_at)->year}}</h5>
-            		<h5><b>Tanggal Dibuat</b> : {{Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
-            		<h5><b>Tanggal SK Pembimbing</b> : {{Carbon\Carbon::parse($sk->tgl_sk_pembimbing)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
-            		<h5><b>Tanggal SK Penguji</b> : {{Carbon\Carbon::parse($sk->tgl_sk_penguji)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
+	            	<div class="row">
+	            		<div class="col col-md-6">
+	            			<table class="tabel_keterangan">
+	            				<tr>
+	            					<td><b>Nomor Surat SK Pembimbing</b></td>
+	            					<td>: {{$sk->no_surat_pembimbing}}/UN 25.1.15/SP/{{Carbon\Carbon::parse($sk->created_at)->year}}</td>
+	            				</tr>
+	            				<tr>
+	            					<td><b>Nomor Surat SK Penguji</b></td>
+	            					<td>: {{$sk->no_surat_penguji}}/UN 25.1.15/SP/{{Carbon\Carbon::parse($sk->created_at)->year}}</td>
+	            				</tr>
+	            				<tr>
+	            					<td><b>Tanggal Dibuat</b></td>
+	            					<td>: {{Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</td>
+	            				</tr>
+	            				<tr>
+	            					<td><b>Tanggal SK Pembimbing</b></td>
+	            					<td>: {{Carbon\Carbon::parse($sk->tgl_sk_pembimbing)->locale('id_ID')->isoFormat('D MMMM Y')}}</td>
+	            				</tr>
+	            				<tr>
+	            					<td><b>Tanggal SK Penguji</b></td>
+	            					<td>: {{Carbon\Carbon::parse($sk->tgl_sk_penguji)->locale('id_ID')->isoFormat('D MMMM Y')}}</td>
+	            				</tr>
+	            			</table>
+	            		</div>
 
-            		<br>
-	            	<h5><b>Progres</b> :</h5>
-	            	<div class="tl_wrap">
-	            	  <div class="item_tl" id="progres_1">
-	            	    <div><i class="fa fa-check"></i></div>
-	            	    <h4>Disimpan</h4>
-	            	  </div>
+	            		<div class="col col-md-6">
+	            			<h5><b>Progres</b> :</h5>
+	            			<div class="tl_wrap">
+	            			  <div class="item_tl" id="progres_1">
+	            			    <div><i class="fa fa-check"></i></div>
+	            			    <h4>Disimpan</h4>
+	            			  </div>
 
-	            	  <div class="item_tl" id="progres_2">
-	            	    <div><i></i></div>
-	            	    <h4>Dikirim</h4>
-	            	  </div>
+	            			  <div class="item_tl" id="progres_2">
+	            			    <div><i></i></div>
+	            			    <h4>Dikirim</h4>
+	            			  </div>
 
-	            	  <div class="item_tl" id="progres_3">
-	            	    <div><i></i></div>
-	            	    <h4>Disetujui KTU</h4>
-	            	  </div>
+	            			  <div class="item_tl" id="progres_3">
+	            			    <div><i></i></div>
+	            			    <h4>Disetujui KTU</h4>
+	            			  </div>
 
-	            	  {{-- <div class="item_tl" id="progres_4">
-	            	    <div><i></i></div>
-	            	    <h4>Disetujui Dekan</h4>
-	            	  </div> --}}
+	            			  {{-- <div class="item_tl" id="progres_4">
+	            			    <div><i></i></div>
+	            			    <h4>Disetujui Dekan</h4>
+	            			  </div> --}}
+	            			</div>
+	            		</div>
 	            	</div>
 
          			@if(!is_null($sk->pesan_revisi))
@@ -109,7 +132,7 @@
 	            	<a href="{{ route('akademik.skripsi.index') }}" class="btn btn-default">Kembali</a>
             		@if ($sk->verif_ktu == 1)
             	   	<div class="pull-right">
-            	      <a href="{{ route('akademik.skripsi.cetak', $sk->no_surat) }}" class="btn bg-teal"><i class="fa fa-print"></i> Download PDF</a>
+            	      <a href="{{ route('akademik.skripsi.cetak', $sk->id) }}" class="btn bg-teal"><i class="fa fa-print"></i> Download PDF</a>
             	   	</div>
             		@endif
 	            </div>
@@ -125,7 +148,7 @@
 
 	              	@if($sk->verif_ktu != 1)
 		              <div class="form-group" style="float: right;">
-		              	<a href="{{ route('akademik.skripsi.edit', $sk->no_surat) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+		              	<a href="{{ route('akademik.skripsi.edit', $sk->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
 		              </div>
 	              	@endif
 	            </div>
@@ -139,9 +162,9 @@
 			            			<th>NIM</th>
 			            			<th>Nama Mahasiswa</th>
 			            			<th>Program Studi</th>
-			            			<th>Judul</th>
+			            			<th>Judul Skripsi</th>
 			            			<th>Pembimbing I/II</th>
-			            			<th>Pembahas I/II</th>
+			            			<th>Penguji I/II</th>
 			            		</tr>
 			            	</thead>
 			            	<tbody>
@@ -197,7 +220,7 @@
 	            	 @if($sk->verif_ktu != 1)
 		              <br>
 		              <div class="form-group" style="float: right;">
-		            	<a href="{{ route('akademik.skripsi.edit', $sk->no_surat) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+		            	<a href="{{ route('akademik.skripsi.edit', $sk->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
 		              </div>
 	              	@endif
 	            </div>
