@@ -67,26 +67,29 @@ class templateController extends Controller
     //SK Akademik
     public function index_sk_akademik()
     {
-        $template_sempro = template::with('nama_template')
-        ->whereHas('nama_template', function(Builder $query)
-        {
-            $query->where('nama','SK Sempro');
-        })
-        ->orderBy('created_at', 'desc')
-        ->first();
+        // $template_sempro = template::with('nama_template')
+        // ->whereHas('nama_template', function(Builder $query)
+        // {
+        //     $query->where('nama','SK Sempro');
+        // })
+        // ->orderBy('created_at', 'desc')
+        // ->first();
 
-        $template_skripsi = template::with('nama_template')
-        ->whereHas('nama_template', function(Builder $query)
-        {
-            $query->where('nama','SK Skripsi');
-        })
-        ->orderBy('created_at', 'desc')
-        ->first();
+        // $template_skripsi = template::with('nama_template')
+        // ->whereHas('nama_template', function(Builder $query)
+        // {
+        //     $query->where('nama','SK Skripsi');
+        // })
+        // ->orderBy('created_at', 'desc')
+        // ->first();
+
+        $template = template::with('nama_template')->orderBy('created_at', 'desc')->get();
 
         // dd($template_sempro);
         return view('akademik.SK_view.template_index', [
-            'template_sempro' => $template_sempro,
-            'template_skripsi' => $template_skripsi
+            'template' => $template
+            // 'template_sempro' => $template_sempro,
+            // 'template_skripsi' => $template_skripsi
         ]);
     }
 

@@ -41,7 +41,18 @@
 		            		</tr>
 		            	</thead>
 		            	<tbody>
-                       @if (!is_null($template_sempro))
+                        @foreach ($template as $item)
+                           <tr>
+                              <td>1</td>
+                              <td>{{$item->nama_template->nama}}</td>
+                              <td>{{Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</td>
+                              <td>
+                                 <a href="{{ route('akademik.template-sk.edit', $item->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                              </td>
+                           </tr>
+                        @endforeach
+                        
+                       {{-- @if (!is_null($template_sempro))
                            <tr>
                               <td>1</td>
                               <td>{{$template_sempro->nama_template->nama}}</td>
@@ -61,7 +72,7 @@
                                  <a href="{{ route('akademik.template-sk.edit', $template_skripsi->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                               </td>
                           </tr>
-                       @endif
+                       @endif --}}
 		            	</tbody>
 		            </table>
             	</div>

@@ -131,6 +131,7 @@ Route::prefix('ktu')->name('ktu.')->group(function ()
 	Route::get('/sk-skripsi/{id_sk_akademik}', 'SkSkripsiController@ktu_show')->name('sk-skripsi.show');
 	Route::put('/sk-skripsi/verif/{id_sk_akademik}', 'SkSkripsiController@ktu_verif')->name('sk-skripsi.verif');
 
+	//Route Surat SK Sempro
 	Route::get('/sk-sempro', 'SkSemproController@ktu_index_sempro')->name('sk-sempro.index');
 	Route::get('/sk-sempro/{id_sk_akademik}', 'SkSemproController@ktu_show')->name('sk-sempro.show');
 	Route::put('/sk-sempro/verif/{id_sk_akademik}', 'SkSemproController@ktu_verif')->name('sk-sempro.verif');

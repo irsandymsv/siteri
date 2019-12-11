@@ -14,7 +14,8 @@ class nama_template_table_seeder extends Seeder
     {
         nama_template::insert([
             ['nama' => 'SK Sempro'],
-            ['nama' => 'Sk Skripsi'],
+            ['nama' => 'SK Pembimbing Skripsi'],
+            ['nama' => 'SK Penguji Skripsi'],
         ]);
     }
 }

@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-	Daftar Nama Template Template Surat
+	Daftar Nama Template Surat
 @endsection
 
 @section('css_link')

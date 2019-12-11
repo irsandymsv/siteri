@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-	Detail SK Sempro
+	Detail SK Skripsi
 @endsection
 
 @section('css_link')
@@ -119,7 +119,7 @@
 @endsection
 
 @section('judul_header')
-	SK Sempro
+	SK Skripsi
 @endsection
 
 @section('content')
@@ -128,7 +128,7 @@
 		<div class="col-xs-12">
    		<div class="box box-primary">
    			<div class="box-header">
-              <h3 class="box-title">Data SK Sempro </h3>
+              <h3 class="box-title">Data SK Pembimbing Skripsi</h3>
 
               <div id="tgl_sk">
               		<h5><b>Tanggal Dibuat</b> : {{Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
@@ -177,7 +177,7 @@
             	      <span>DEKAN FAKULTAS ILMU KOMPUTER UNIVERSITAS JEMBER</span><br>
             	      <span>Nomor: {{ $sk->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($sk->created_at)->year }}</span><br>
             	      <small><b>tentang</b></small><br>
-            	      <span>PENETAPAN DOSEN PEMBAHAS SEMINAR PROPOSAL SKRIPSI MAHASISWA</span><br>
+            	      <span>PENETAPAN DOSEN PEMBIMBING SKRIPSI MAHASISWA</span><br>
             	      <span>FAKULTAS ILMU KOMPUTER UNIVERSITAS JEMBER</span><br>
             	      <span>TAHUN AKADEMIK {{ $tahun_akademik['tahun_awal'].'/'.$tahun_akademik['tahun_akhir'] }}</span><br>
             	   </p>
@@ -200,7 +200,7 @@
             	      <li>Penjabat Wakil Dekan I, II;</li>
             	      <li>Kasubag. Tata Usaha;</li>
             	   </ol>
-            	   <span>Fakultas Ilmu Komputer Universitas Jember.</span>
+            	   <span>Lingkungan Fakultas Ilmu Komputer Universitas Jember.</span>
             	</div>
             </div>
 
@@ -217,7 +217,7 @@
             		</tr>
             		<tr>
             			<td>Tentang		</td>
-                    <td>: Penetapan Dosen Pembahas Seminar Porposal Skripsi Mahasiswa Fakultas Ilmu Komputer Jember Tahun Akademik {{ $tahun_akademik['tahun_awal'].'/'.$tahun_akademik['tahun_akhir'] }}</td>
+                    <td>: Penetapan Dosen Pembimbing Skripsi Mahasiswa Fakultas Ilmu Komputer Jember Tahun Akademik {{ $tahun_akademik['tahun_awal'].'/'.$tahun_akademik['tahun_akhir'] }}</td>
             		</tr>
             	</table>
          		<table id="detail_table">
@@ -228,7 +228,7 @@
 	            			<th>Nama Mahasiswa</th>
 	            			<th>Program Studi</th>
 	            			<th>Judul Skripsi</th>
-	            			<th>Dosen Pembahas</th>
+	            			<th>Dosen Pembimbing I/II</th>
 	            		</tr>
 	            	</thead>
 	            	<tbody>
@@ -239,14 +239,25 @@
             				<td>{{$item->skripsi->mahasiswa->nama}}</td>
             				<td>{{$item->skripsi->mahasiswa->bagian->bagian}}</td>
             				<td>{{$item->judul}}</td>
-            				<td>
-            					<div class="tbl_row">
-            						{{ $item->surat_tugas[0]->dosen1->nama }}
-            					</div>
-            					<div>
-            						{{ $item->surat_tugas[0]->dosen2->nama }}
-            					</div>
-            				</td>
+                        @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Pembimbing")
+                           <td>
+                              <div class="tbl_row">
+                                 {{ $item->surat_tugas[0]->dosen1->nama }}
+                              </div>
+                              <div>
+                                 {{ $item->surat_tugas[0]->dosen2->nama }}
+                              </div>
+                           </td>
+                        @else
+                           <td>
+                              <div class="tbl_row">
+                                 {{ $item->surat_tugas[1]->dosen1->nama }}
+                              </div>
+                              <div>
+                                 {{ $item->surat_tugas[1]->dosen2->nama }}
+                              </div>
+                           </td>
+                        @endif
             			</tr>
 	            		@endforeach
 	            	</tbody>
@@ -261,9 +272,136 @@
 	            </div>
             </div>
 
+            {{-- batas SK Pembimbing --}}
+            <br><hr><br>
+
+            <div class="box-header">
+              <h3 class="box-title">Data SK Penguji Skripsi</h3>
+            </div>
+
+            <div class="box-body">
+               <div id="kop_surat">
+                  <div id="logo">
+                     <img src="{{ asset('/image/logo-unej.png') }}">
+                  </div>
+
+                  <div id="keterangan_kop">
+                     <span class="header_18">KEMENTERIAN RISET, TEKNOLOGI, DAN PENDIDIKAN TINGGI</span><br>
+                     <span class="header_18">UNIVERSITAS JEMBER</span><br>
+                     <span class="header_18">FAKULTAS ILMU KOMPUTER</span>
+
+                     <br>
+
+                     <span>Jalan Kalimantan No. 37 Kampus Tegal Boto Jember 68121</span><br>
+                     <span>Telepon 0331 326935, Faximile 0331 326911</span><br>
+                     <span>Website : <i class="underline">www.ilkom.unej.ac.id</i></span>
+                  </div>
+               </div>
+
+               <div id="body_surat">
+                  <p class="top-title">
+                     <span class="judul_surat">KEPUTUSAN</span><br>
+                     <span>DEKAN FAKULTAS ILMU KOMPUTER UNIVERSITAS JEMBER</span><br>
+                     <span>Nomor: {{ $sk->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($sk->created_at)->year }}</span><br>
+                     <small><b>tentang</b></small><br>
+                     <span>PENETAPAN DOSEN PENGUJI SKRIPSI MAHASISWA</span><br>
+                     <span>FAKULTAS ILMU KOMPUTER UNIVERSITAS JEMBER</span><br>
+                     <span>TAHUN AKADEMIK {{ $tahun_akademik['tahun_awal'].'/'.$tahun_akademik['tahun_akhir'] }}</span><br>
+                  </p>
+
+                  <div id="isi_template_surat">
+                     {!! $sk->template->isi !!}
+                  </div>
+                   <br>
+                  <div class="ttd-right">
+                     {{-- <br> --}}
+                     Jember, {{ Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }} <br>
+                     Dekan,
+                     <br><br><br><br>
+                     <span style="text-transform: uppercase;"><b>{{ $dekan->nama }}</b></span><br>
+                     <span>NIP. {{ $dekan->no_pegawai }}</span>
+                  </div>
+
+                  <p style="clear: both;">Tembusan: </p>
+                  <ol>
+                     <li>Penjabat Wakil Dekan I, II;</li>
+                     <li>Kasubag. Tata Usaha;</li>
+                  </ol>
+                  <span>Lingkungan Fakultas Ilmu Komputer Universitas Jember.</span>
+               </div>
+            </div>
+
+            <div class="box-body landscape">
+               <p>Lampiran Dekan Fakultas Ilmu Komputer Universitas Jember</p>
+               <table id="tabel_keterangan">
+                  <tr>
+                     <td>Nomor   </td>
+                     <td>: {{ $sk->no_surat }}//UN25.1.15/SP/{{ Carbon\Carbon::parse($sk->created_at)->year }}</td>
+                  </tr>
+                  <tr>
+                     <td>Tanggal </td>
+                     <td>: {{ Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
+                  </tr>
+                  <tr>
+                     <td>Tentang    </td>
+                    <td>: Penetapan Dosen Penguji Skripsi Mahasiswa Fakultas Ilmu Komputer Jember Tahun Akademik {{ $tahun_akademik['tahun_awal'].'/'.$tahun_akademik['tahun_akhir'] }}</td>
+                  </tr>
+               </table>
+               <table id="detail_table">
+                  <thead>
+                     <tr>
+                        <th>No</th>
+                        <th>NIM</th>
+                        <th>Nama Mahasiswa</th>
+                        <th>Program Studi</th>
+                        <th>Judul Skripsi</th>
+                        <th>Dosen Penguji I/II</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     @foreach($detail_skripsi as $item)
+                     <tr>
+                        <td>{{ $loop->index + 1 }}</td>
+                        <td>{{$item->skripsi->nim}}</td>
+                        <td>{{$item->skripsi->mahasiswa->nama}}</td>
+                        <td>{{$item->skripsi->mahasiswa->bagian->bagian}}</td>
+                        <td>{{$item->judul}}</td>
+                        @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Penguji")
+                           <td>
+                              <div class="tbl_row">
+                                 {{ $item->surat_tugas[0]->dosen1->nama }}
+                              </div>
+                              <div>
+                                 {{ $item->surat_tugas[0]->dosen2->nama }}
+                              </div>
+                           </td>
+                        @else
+                           <td>
+                              <div class="tbl_row">
+                                 {{ $item->surat_tugas[1]->dosen1->nama }}
+                              </div>
+                              <div>
+                                 {{ $item->surat_tugas[1]->dosen2->nama }}
+                              </div>
+                           </td>
+                        @endif
+                     </tr>
+                     @endforeach
+                  </tbody>
+               </table>
+                <br>
+               <div class="ttd-right">
+                  {{-- <br> --}}
+                  Dekan,
+                  <br><br><br><br>
+                  <span style="text-transform: uppercase;"><b>{{ $dekan->nama }}</b></span><br>
+                  <span>NIP. {{ $dekan->no_pegawai }}</span>
+               </div>
+            </div>
+
             <div class="box-footer">
 	            @if($sk->verif_dekan != 1)
-              	<form method="post" action="{{ route('ktu.sk-sempro.verif', $sk->no_surat)  }}">
+              	<form method="post" action="{{ route('ktu.sk-skripsi.verif', $sk->no_surat)  }}">
               		@csrf
               		@method('put')
               		<input type="hidden" name="verif_ktu" value="{{$sk->verif_ktu}}">
@@ -274,7 +412,7 @@
               		@endif
               	</form>
               	@endif
-               <a href="{{ route('ktu.sk-sempro.index') }}" class="btn btn-default pull-right">Kembali</a>
+               <a href="{{ route('ktu.sk-skripsi.index') }}" class="btn btn-default pull-right">Kembali</a>
             </div>
    		</div>
       </div>
@@ -288,7 +426,7 @@
               <span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Pesan Penarikan SK</h4>
           </div>
-          <form method="post" action="{{ route('ktu.sk-sempro.verif', $sk->no_surat) }}">
+          <form method="post" action="{{ route('ktu.sk-skripsi.verif', $sk->no_surat) }}">
           	@csrf
           	@method('PUT')
 	          <div class="modal-body">
