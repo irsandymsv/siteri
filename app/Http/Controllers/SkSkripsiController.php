@@ -100,7 +100,6 @@ class SkSkripsiController extends Controller
 
 	public function store(Request $request)
 	{
-        // dd($request);
         if ($request->input("status") == 2) {
             $this->validate($request, [
                 "nim" => "required|array",
@@ -108,36 +107,43 @@ class SkSkripsiController extends Controller
                 "tgl_sk_pembimbing" => "required",
                 "tgl_sk_penguji" => "required",
                 "status" => "required",
-                "no_surat" => "required"
+                "no_surat_pembimbing" => "required",
+                "no_surat_penguji" => "required",
             ]);
         } else {
             $this->validate($request, [
-                "no_surat" => "required|unique:sk_sempro,no_surat",
+                "no_surat_pembimbing" => "required",
+                "no_surat_penguji" => "required",
                 "nim" => "required|array",
                 "nim.*" => "required|string"
             ]);
         }
 		try {
-            $template = template::whereHas('nama_template', function (Builder $query) {
-                $query->where('nama', 'SK Skripsi');
+            $template_pembimbing = template::whereHas('nama_template', function (Builder $query) {
+                $query->where('nama', 'SK Pembimbing Skripsi');
             })->orderBy('created_at', 'desc')->first();
-            if ($template == false) {
-                return redirect()->route('akademik.sempro.create')->with('error', 'Template Untuk SK Sempro Tidak Ditemukan');
+            $template_penguji = template::whereHas('nama_template', function (Builder $query) {
+                $query->where('nama', 'SK Penguji Skripsi');
+            })->orderBy('created_at', 'desc')->first();
+            if ($template_pembimbing == false || $template_penguji == false) {
+                return redirect()->route('akademik.skripsi.create')->with('error', 'Template Pembimbing atau Penguji Untuk SK Sempro Tidak Ditemukan');
             } else {
                 $sk_skripsi = sk_skripsi::create([
-                    "no_surat" => $request->input("no_surat"),
-                    "tgl_sempro1" => carbon::parse($request->input("tgl_sempro1")),
-                    "tgl_sempro2" => carbon::parse($request->input("tgl_sempro2")),
+                    "no_surat_pembimbing" => $request->input("no_surat_pembimbing"),
+                    "no_surat_penguji" => $request->input("no_surat_penguji"),
+                    "tgl_sk_pembimbing" => carbon::parse($request->input("tgl_sk_pembimbing")),
+                    "tgl_sk_penguji" => carbon::parse($request->input("tgl_sk_pembimbing")),
                     "id_status_sk" => $request->input("status"),
-                    "id_template" => $template->id
+                    "id_template_penguji" => $template_penguji->id,
+                    "id_template_pembimbing" => $template_pembimbing->id,
                 ]);
                 foreach ($request->nim as $nim) {
-                    $this->update_id_sk_skripsi($nim, $sk_skripsi->no_surat);
+                    $this->update_id_sk_skripsi($nim, $sk_skripsi->id);
                 }
             }
-			return redirect()->route('akademik.sk-skripsi.show', $sk_skripsi->no_surat)->with('success', 'Data Berhasil Ditambahkan');
+			return redirect()->route('akademik.skripsi.show', $sk_skripsi->id)->with('success', 'Data Berhasil Ditambahkan');
 		} catch (Exception $e) {
-			return redirect()->route('akademik.sk-skripsi.create')->with('error', $e->getMessage());
+			return redirect()->route('akademik.skripsi.create')->with('error', $e->getMessage());
 		}
 	}
 

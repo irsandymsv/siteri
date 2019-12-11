@@ -14,7 +14,8 @@ class AddForeignKeysToSkSkripsiTable extends Migration
     public function up()
     {
         Schema::table('sk_skripsi', function (Blueprint $table) {
-            $table->foreign('id_template')->references('id')->on('template')->onDelete('set null');
+            $table->foreign('id_template_pembimbing')->references('id')->on('template')->onDelete('set null');
+            $table->foreign('id_template_penguji')->references('id')->on('template')->onDelete('set null');
             $table->foreign('id_sk_honor')->references('id')->on('sk_honor')->onDelete('set null');
         });
     }
@@ -27,7 +28,8 @@ class AddForeignKeysToSkSkripsiTable extends Migration
     public function down()
     {
         Schema::table('sk_skripsi', function (Blueprint $table) {
-            $table->dropForeign('sk_skripsi_id_template_foreign');
+            $table->dropForeign('sk_skripsi_id_template_pembimbing_foreign');
+            $table->dropForeign('sk_skripsi_id_template_penguji_ foreign');
             $table->dropForeign('sk_skripsi_id_sk_honor_foreign');
         });
     }

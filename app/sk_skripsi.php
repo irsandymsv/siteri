@@ -10,7 +10,7 @@ class sk_skripsi extends Model
     protected $primaryKey = "no_surat";
     public $timestamps = TRUE;
     public $incrementing = FALSE;
-    protected $fillable = ['no_surat', 'id_status_sk', 'tgl_sk_pembimbing', 'tgl_sk_penguji', 'verif_ktu', 'pesan_revisi', 'id_template'];
+    protected $fillable = ['no_surat_pembimbing','no_surat_penguji', 'id_status_sk', 'tgl_sk_pembimbing', 'tgl_sk_penguji', 'verif_ktu', 'pesan_revisi', 'id_template'];
 
 
     public function status_sk()
@@ -18,9 +18,14 @@ class sk_skripsi extends Model
         return $this->belongsTo('App\status_sk', 'id_status_sk');
     }
 
-    public function template()
+    public function template_penguji()
     {
-        return $this->belongsTo('App\template', 'id_template');
+        return $this->belongsTo('App\template', 'id_template_penguji');
+    }
+
+    public function template_pembimbing()
+    {
+        return $this->belongsTo('App\template', 'id_template_pembimbing');
     }
 
     public function sk_honor()

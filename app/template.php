@@ -20,8 +20,13 @@ class template extends Model
         return $this->hasMany('App\sk_sempro','id_template');
     }
 
-    public function sk_skripsi()
+    public function template_penguji()
     {
-        return $this->hasMany('App\sk_skripsi','id_template');
+        return $this->hasMany('App\sk_skripsi','id_template_penguji');
+    }
+
+    public function template_pembimbing()
+    {
+        return $this->hasMany('App\sk_skripsi', 'id_template_pembimbing');
     }
 }

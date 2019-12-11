@@ -157,8 +157,6 @@ class SkSemproController extends Controller
          'surat_tugas.dosen1:no_pegawai,nama',
          'surat_tugas.dosen2:no_pegawai,nama',
       ])->get();
-
-      // dd($detail_sk);
       return view('akademik.SK_view.show_sk_sempro', [
          'sk' => $sk,
          'detail_skripsi' => $detail_skripsi,
@@ -215,7 +213,6 @@ class SkSemproController extends Controller
          'surat_tugas.dosen1:no_pegawai,nama',
          'surat_tugas.dosen2:no_pegawai,nama',
       ])->get();
-
       $nim_detail = [];
       foreach ($detail_skripsi as $val) {
          $nim_detail[] = $val->skripsi->nim;

@@ -42,21 +42,21 @@
 
 @section('content')
    <button id="back_top" class="btn bg-black" title="Kembali ke Atas"><i class="fa fa-arrow-up"></i></button>
-	
+
 	<div class="row">
 		<div class="col-xs-12">
       		<div class="box box-success">
       			<div class="box-header">
 	              <h3 class="box-title">Progress SK Skripsi Ini</h3>
               	  <span style="margin-left: 5px;">
-	            	@if($sk->verif_ktu == 2) 
+	            	@if($sk->verif_ktu == 2)
 							<label class="label bg-red">Butuh Revisi (KTU)</label>
-						@elseif($sk->verif_dekan == 2) 
+						@elseif($sk->verif_dekan == 2)
 							<label class="label bg-red">Butuh Revisi (Dekan)</label>
 						@else
 						@endif
 					  </span>
-	          	  
+
 	            	<div class="box-tools pull-right">
 	               	<button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
 	               	</button>
@@ -64,13 +64,13 @@
 	               	</button>
 	              	</div>
 	            </div>
-				
+
 	            <div class="box-body">
 						<h5><b>Nomor Surat</b> : {{$sk->no_surat}}/UN 25.1.15/SP/{{Carbon\Carbon::parse($sk->created_at)->year}}</h5>
             		<h5><b>Tanggal Dibuat</b> : {{Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
             		<h5><b>Tanggal SK Pembimbing</b> : {{Carbon\Carbon::parse($sk->tgl_sk_pembimbing)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
             		<h5><b>Tanggal SK Penguji</b> : {{Carbon\Carbon::parse($sk->tgl_sk_penguji)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
-            		
+
             		<br>
 	            	<h5><b>Progres</b> :</h5>
 	            	<div class="tl_wrap">
@@ -125,7 +125,7 @@
 
 	              	@if($sk->verif_ktu != 1)
 		              <div class="form-group" style="float: right;">
-		              	<a href="{{ route('akademik.Skripsi.edit', $sk->no_surat) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+		              	<a href="{{ route('akademik.skripsi.edit', $sk->no_surat) }}" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
 		              </div>
 	              	@endif
 	            </div>
@@ -191,9 +191,9 @@
 		            			</tr>
 			            		@endforeach
 			            	</tbody>
-			            </table> 
+			            </table>
 	            	</div>
-	            	
+
 	            	 @if($sk->verif_ktu != 1)
 		              <br>
 		              <div class="form-group" style="float: right;">

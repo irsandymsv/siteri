@@ -106,13 +106,19 @@ class templateController extends Controller
             'isi' => 'required'
         ]);
         try{
-            template::insert([
-                'id_nama_template' => $request->input('id_nama_template'),
-                'isi' => $request->input('isi'),
-                'created_at' => Carbon::now()->toDateTimeString(),
-                'updated_at' => Carbon::now()->toDateTimeString()
-            ]);
-            return redirect()->route('akademik.template-sk.index')->with('success','Data Berhasil Dibuat');
+            $template = template::where('id_nama_template',$request->input('id_nama_template'))->get();
+            if($template->count() == 0){
+                template::insert([
+                    'id_nama_template' => $request->input('id_nama_template'),
+                    'isi' => $request->input('isi'),
+                    'created_at' => Carbon::now()->toDateTimeString(),
+                    'updated_at' => Carbon::now()->toDateTimeString()
+                ]);
+                return redirect()->route('akademik.template-sk.index')->with('success', 'Data Berhasil Dibuat');
+            }else{
+                return redirect()->route('akademik.template-sk.create')->with('error', "Tipe Template yang dibuat Sudah Ada");
+            }
+
         }catch(Exception $e){
             return redirect()->route('akademik.template-sk.create')->with('error', $e->getMessage());
         }
