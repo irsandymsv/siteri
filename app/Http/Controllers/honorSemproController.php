@@ -19,14 +19,14 @@ class honorSemproController extends Controller
 {
     public function index()
     {
-        $sk_sempro = sk_sempro::where('verif_ktu', 1)
+        $sk = sk_sempro::where('verif_ktu', 1)
         ->orderBy('created_at', 'desc')
         ->with(['status_sk', 'sk_honor', 'sk_honor.status_sk_honor'])
         ->get();
 
         // dd($sk_sempro);
         return view('keuangan.honor_sk.index', [
-            'sk_sempro' => $sk_sempro,
+            'sk' => $sk,
             'tipe' => 'SK Sempro'
         ]);
     }
@@ -96,13 +96,13 @@ class honorSemproController extends Controller
             'detail_honor.histori_besaran_honor.nama_honor'
         ])
         ->first();
-
+        // dd($sk_honor);
+        
         $detail_skripsi = detail_skripsi::where('id_sk_sempro', $sk_honor->sk_sempro->no_surat)
         ->with([
             'sk_sempro',
             'skripsi',
             'skripsi.mahasiswa',
-
             'surat_tugas' => function($query)
             {
                 $query->where([
@@ -118,7 +118,6 @@ class honorSemproController extends Controller
 
         // $honor_pembahas_sempro = $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor;
 
-        // dd($sk_honor);
         return  view('keuangan.honor_sk.show_sempro', [
             'sk_honor' => $sk_honor,
             'detail_skripsi' => $detail_skripsi

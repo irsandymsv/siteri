@@ -36,6 +36,10 @@
       .show_tr{
          display: block;
       }
+
+      .input_no_surat{
+         width: 35%;
+      }
 	</style>
 @endsection
 
@@ -87,7 +91,7 @@
                      <div class="row">
                         <div class="form-group col-md-3">
                            <label for="no_surat_pembimbing">No Surat SK Pembimbing</label><br>
-                           <input type="text" name="no_surat_pembimbing" id="no_surat_pembimbing" value="{{ $sk->no_surat_pembimbing }}">
+                           <input type="text" name="no_surat_pembimbing" id="no_surat_pembimbing" class="input_no_surat" value="{{ $sk->no_surat_pembimbing }}">
                            <span id="format_nomor">/UN25.1.15/SP/{{ Carbon\Carbon::today()->year }}</span>
 
                            @error('no_surat_pembimbing')
@@ -100,7 +104,7 @@
 
                         <div class="form-group col-md-3">
                            <label for="no_surat_penguji">No Surat SK Penguji</label><br>
-                           <input type="text" name="no_surat_penguji" id="no_surat_penguji" value="{{ $sk->no_surat_penguji }}">
+                           <input type="text" name="no_surat_penguji" id="no_surat_penguji" class="input_no_surat" value="{{ $sk->no_surat_penguji }}">
                            <span id="format_nomor">/UN25.1.15/SP/{{ Carbon\Carbon::today()->year }}</span>
 
                            @error('no_surat_penguji')

@@ -141,12 +141,12 @@
                  </div>
                </div> --}}
 
-               @if(!is_null($sk_honor->pesan_revisi))
+               {{-- @if(!is_null($sk_honor->pesan_revisi))
                  <div class="revisi_wrap">
                   <h4><b>Pesan Revisi</b> : </h4>
                   <p>"{{ $sk_honor->pesan_revisi }}"</p>
                  </div>
-               @endif
+               @endif --}}
             </div>
 
             <div class="box-footer">

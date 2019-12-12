@@ -35,7 +35,12 @@
                      <thead>
                         <tr>
                            <th>No</th>
-                           <th>SK Sempro</th>
+                           @if($tipe == "SK Skripsi")
+                              <th>SK Pembimbing Skripsi</th>
+                              <th>SK Penguji Skripsi</th>
+                           @else
+                              <th>SK Pembahas Sempro</th>
+                           @endif
                            <th>Tanggal SK</th>
                            <th>Status</th>
                            {{-- <th>Verif BPP</th>
@@ -46,10 +51,15 @@
                      </thead>
 
                      <tbody>
-                        @foreach ($sk_sempro as $item)
+                        @foreach ($sk as $item)
                            <tr id="sk_{{ $item->id }}">
                               <td>{{ $loop->index + 1 }}</td>
-                              <td>{{ $item->no_surat }}/UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
+                              @if($tipe == "SK Skripsi")
+                                 <td>{{ $item->no_surat_pembimbing }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
+                                 <td>{{ $item->no_surat_penguji }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
+                              @else
+                                 <td>{{ $item->no_surat }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
+                              @endif
                               <td>
                                  {{ Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}
                               </td>
@@ -103,10 +113,10 @@
                               <td>
                                  @if ($tipe == "SK Skripsi")
                                     @if (is_null($item->sk_honor))
-                                       <a href="#" class="btn btn-success">Generate</a>
+                                       <a href="{{ route('keuangan.honor-skripsi.store', $item->id) }}" class="btn btn-success">Generate</a>
                                     @else
-                                       <a href="#" class="btn btn-primary">Lihat</a>
-                                       <button class="btn btn-danger" name="delete_honor" id="{{ $item->id }}" data-toggle="modal" data-target="#modal-delete">Hapus</button>
+                                       <a href="{{ route('keuangan.honor-skripsi.show', $item->id) }}" class="btn btn-primary">Lihat</a>
+                                       {{-- <button class="btn btn-danger" name="delete_honor" id="{{ $item->id }}" data-toggle="modal" data-target="#modal-delete">Hapus</button> --}}
                                     @endif
                                  @else
                                     @if (is_null($item->sk_honor))
@@ -176,19 +186,33 @@
 
 @section('script')
    <script type="text/javascript">
-      $(`<tr>
+      var nomor_kolom = 0;
+      @if ($tipe == "SK Skripsi")
+         nomor_kolom = 4;
+         $(`<tr>
+            <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
          </tr>`).clone(true).appendTo( '#data_table thead' );
+      @else
+      nomor_kolom = 3;
+         $(`<tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+         </tr>`).clone(true).appendTo( '#data_table thead' );
+      @endif
 
       $('#data_table').DataTable({
          order: [],
          orderCellsTop: true,
          initComplete: function () {
-             this.api().columns([3]).every( function () {
+             this.api().columns([nomor_kolom]).every( function () {
                  var column = this;
                  var select = $('<select><option value=""></option></select>')
                      .appendTo( $("#data_table thead tr:eq(1) th").eq(column.index()).empty() )

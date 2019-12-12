@@ -174,26 +174,29 @@ Route::prefix('keuangan')->name('keuangan.')->group(function()
 	    return view('keuangan.dashboard');
 	});
 
+	//Honor Skripsi
 	Route::get('/honor-skripsi/', 'honorSkripsiController@index')->name('honor-skripsi.index');
-	Route::get('/honor-skripsi/pilih-sk', 'honorSkripsiController@pilih_sk')->name('honor-skripsi.pilih-sk');
-	Route::get('/honor-skripsi/create/{id_sk_akademik}', 'honorSkripsiController@create')->name('honor-skripsi.create');
-	Route::post('/honor-skripsi/store', 'honorSkripsiController@store')->name('honor-skripsi.store');
+	Route::post('/honor-skripsi/store/{id_sk_skripsi}', 'honorSkripsiController@store')->name('honor-skripsi.store');
 	Route::get('/honor-skripsi/show/{id_sk_honor}','honorSkripsiController@show')->name('honor-skripsi.show');
-	Route::get('/honor-skripsi/show/{id_sk_honor}/edit','honorSkripsiController@edit')->name('honor-skripsi.edit');
-	Route::put('/honor-skripsi/show/{id_sk_honor}/update','honorSkripsiController@update')->name('honor-skripsi.update');
 	Route::delete('/honor-skripsi/delete/{id_sk_honor?}', 'honorSkripsiController@destroy')->name('honor-skripsi.destroy');
 	Route::get('/honor-skripsi/show/{id_sk_honor}/cetak-pdf', 'honorSkripsiController@cetak_pdf')->name('honor-skripsi.cetak');
+	Route::put('/honor-skripsi/{id_sk_honor}/status-dibayarkan', 'honorSemproController@status_dibayarkan')->name('honor-skripsi.status_dibayarkan');
+	// Route::get('/honor-skripsi/pilih-sk', 'honorSkripsiController@pilih_sk')->name('honor-skripsi.pilih-sk');
+	// Route::get('/honor-skripsi/create/{id_sk_akademik}', 'honorSkripsiController@create')->name('honor-skripsi.create');
+	// Route::get('/honor-skripsi/show/{id_sk_honor}/edit','honorSkripsiController@edit')->name('honor-skripsi.edit');
+	// Route::put('/honor-skripsi/show/{id_sk_honor}/update','honorSkripsiController@update')->name('honor-skripsi.update');
 
+	//Honor Sempro
 	Route::get('/honor-sempro/', 'honorSemproController@index')->name('honor-sempro.index');
-	// Route::get('/honor-sempro/pilih-sk', 'honorSemproController@pilih_sk')->name('honor-sempro.pilih-sk');
-	// Route::get('/honor-sempro/create/{id_sk_sempro}', 'honorSemproController@create')->name('honor-sempro.create');
 	Route::get('/honor-sempro/store/{id_sk_sempro}', 'honorSemproController@store')->name('honor-sempro.store');
 	Route::get('/honor-sempro/{id_sk_honor}', 'honorSemproController@show')->name('honor-sempro.show');
+	Route::delete('/honor-sempro/delete/{id_sk_honor?}', 'honorSemproController@destroy')->name('honor-sempro.destroy');
+	Route::get('/honor-sempro/{id_sk_honor}/cetak-pdf', 'honorSemproController@cetak_pdf')->name('honor-sempro.cetak');
+	Route::put('/honor-sempro/{id_sk_honor}/status-dibayarkan', 'honorSemproController@status_dibayarkan')->name('honor-sempro.status_dibayarkan');
+	// Route::get('/honor-sempro/pilih-sk', 'honorSemproController@pilih_sk')->name('honor-sempro.pilih-sk');
+	// Route::get('/honor-sempro/create/{id_sk_sempro}', 'honorSemproController@create')->name('honor-sempro.create');
 	// Route::get('/honor-sempro/{id_sk_honor}/edit', 'honorSemproController@edit')->name('honor-sempro.edit');
 	// Route::put('/honor-sempro/{id_sk_honor}/update', 'honorSemproController@update')->name('honor-sempro.update');
-	Route::delete('/honor-sempro/delete/{id_sk_honor?}', 'honorSemproController@destroy')->name('honor-sempro.destroy');
-	Route::put('/honor-sempro/{id_sk_honor}/status-dibayarkan', 'honorSemproController@status_dibayarkan')->name('honor-sempro.status_dibayarkan');
-	Route::get('/honor-sempro/{id_sk_honor}/cetak-pdf', 'honorSemproController@cetak_pdf')->name('honor-sempro.cetak');
 });
 
 Route::prefix('honor')->name('honor.')->group(function()
