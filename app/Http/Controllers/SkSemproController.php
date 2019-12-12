@@ -352,7 +352,7 @@ class SkSemproController extends Controller
         // $pdfmerged->addPDF(Storage::disk('local')->path('sempro' . $sk->no_surat . '.pdf'), 'all');
         // $pdfmerged->merge();
 
-      return $pdf->download('SK Sempro-'. $sk->no_surat);
+      return $pdf->download('SK Sempro-'. $sk->no_surat . ".pdf");
    }
 
 

@@ -227,7 +227,7 @@ class sutgasPengujiController extends suratTugasController
             'sutgas_pembimbing' => $sutgas_pembimbing,
             'dekan' => $dekan
         ])->setPaper('folio', 'portrait')->setWarnings(false);
-        return $pdf->download("Sutgas_Penguji-" . $surat_tugas->no_surat);
+        return $pdf->download("Sutgas_Penguji-" . $surat_tugas->no_surat . ".pdf");
     }
 
      //KTU

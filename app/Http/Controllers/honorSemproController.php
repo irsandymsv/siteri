@@ -263,7 +263,7 @@ class honorSemproController extends Controller
             'ktu' => $ktu,
             'bpp' =>$bpp
         ])->setPaper('a4', 'portrait')->setWarnings(false);
-        return $pdf->download("Honor SK Sempro-" . $sk_honor->sk_sempro->no_surat);
+        return $pdf->download("Honor SK Sempro-" . $sk_honor->sk_sempro->no_surat . ".pdf");
     }
 
 
