@@ -304,7 +304,7 @@ class SkSkripsiController extends Controller
         }
 
 		try {
-			$sk = sk_akademik::find($id);
+			$sk = sk_skripsi::find($id);
 			$verif_ktu = $sk->verif_ktu;
 			$verif_dekan = $sk->verif_dekan;
 			if($request->status == 2){
