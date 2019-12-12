@@ -111,7 +111,7 @@
 											@endif --}}
 										
 											@if ($item->verif_ktu == 1)
-	                    					<a href="{{ ($tipe == "SK Skripsi"? '#' : route('akademik.sempro.cetak', $item->no_surat)) }}" id="{{ $item->id }}" name="cetak_sk" class="btn btn-info" title="Cetak SK"><i class="fa fa-print"></i></a>
+	                    					<a href="{{ ($tipe == "SK Skripsi"? route('akademik.skripsi.cetak', $item->id) : route('akademik.sempro.cetak', $item->no_surat)) }}" id="{{ $item->id }}" name="cetak_sk" class="btn btn-info" title="Cetak SK"><i class="fa fa-print"></i></a>
 						  					@endif
 		            				</td>
 		            			</tr>

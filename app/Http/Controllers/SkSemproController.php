@@ -338,7 +338,7 @@ class SkSemproController extends Controller
       })->first();
       $tahun_akademik = $this->get_tahun_akademik($sk->created_at);
 
-      $pdf = PDF::loadview('akademik.SK_view.pdf', [
+      $pdf = PDF::loadview('akademik.SK_view.pdf_sk_sempro', [
          'sk' => $sk,
          'detail_skripsi' => $detail_skripsi,
          'dekan' => $dekan,
@@ -352,7 +352,6 @@ class SkSemproController extends Controller
         // $pdf_merger = PdfMerger::addPDF(Storage::disk('local')->path('sempro' . $sk->no_surat . '.pdf'), 'all');
         // $pdfmerged->addPDF(Storage::disk('local')->path('sempro' . $sk->no_surat . '.pdf'), 'all');
         // $pdfmerged->merge();
-
 
       return $pdf->download('SK Sempro-'. $sk->no_surat);
    }

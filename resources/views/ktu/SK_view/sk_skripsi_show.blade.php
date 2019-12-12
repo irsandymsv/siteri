@@ -225,7 +225,7 @@
          		<table id="detail_table">
             		<thead>
 	            		<tr>
-                        <th>No</th>
+                    <th>No</th>
 	            			<th>NIM</th>
 	            			<th>Nama Mahasiswa</th>
 	            			<th>Program Studi</th>
@@ -236,7 +236,7 @@
 	            	<tbody>
 	            		@foreach($detail_skripsi as $item)
             			<tr>
-                        <td>{{ $loop->index + 1 }}</td>
+                    <td>{{ $loop->index + 1 }}</td>
             				<td>{{$item->skripsi->nim}}</td>
             				<td>{{$item->skripsi->mahasiswa->nama}}</td>
             				<td>{{$item->skripsi->mahasiswa->bagian->bagian}}</td>
