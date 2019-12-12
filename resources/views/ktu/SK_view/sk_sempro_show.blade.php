@@ -9,6 +9,7 @@
 @endsection
 
 @section('css_link')
+  <link rel="stylesheet" type="text/css" href="/css/custom_style.css">
 	<style type="text/css">
 		.tbl_row{
 			display: table;
@@ -123,7 +124,7 @@
 @endsection
 
 @section('content')
-
+  <button id="back_top" class="btn bg-black" title="Kembali ke Atas"><i class="fa fa-arrow-up"></i></button>
 	<div class="row">
 		<div class="col-xs-12">
    		<div class="box box-primary">
@@ -313,6 +314,7 @@
 @endsection
 
 @section('script')
+<script src="/js/btn_backTop.js"></script>
 <script type="text/javascript">
 	@error('pesan_revisi')
 		$("#modal-tarik-sk").modal("show");

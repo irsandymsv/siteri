@@ -63,7 +63,7 @@
 		            	</thead>
 		            	<tbody>
 		            		@foreach($sk as $item)
-		            			<tr id="sk_{{$item->id}}">
+		            			<tr id="{{ ($tipe == "SK Skripsi"? 'sk_'.$item->id:'sk_'.$item->no_surat) }}">
 		            				<td>{{$loop->index + 1}}</td>
 		            				@if($tipe == "SK Skripsi")
 			            				<td>{{ $item->no_surat_pembimbing }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
@@ -111,7 +111,7 @@
 											@endif --}}
 										
 											@if ($item->verif_ktu == 1)
-	                    					<a href="{{ ($tipe == "SK Skripsi"? '#' : route('akademik.sempro.cetak', $item->no_surat)) }}" id="{{ $item->id }}" name="cetak_sk" class="btn btn-info" title="Cetak SK"><i class="fa fa-print"></i></a>
+	                    					<a href="{{ ($tipe == "SK Skripsi"? route('akademik.skripsi.cetak', $item->id) : route('akademik.sempro.cetak', $item->no_surat)) }}" id="{{ $item->id }}" name="cetak_sk" class="btn btn-info" title="Cetak SK"><i class="fa fa-print"></i></a>
 						  					@endif
 		            				</td>
 		            			</tr>
