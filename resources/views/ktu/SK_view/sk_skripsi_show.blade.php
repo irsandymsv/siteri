@@ -9,6 +9,7 @@
 @endsection
 
 @section('css_link')
+   <link rel="stylesheet" type="text/css" href="/css/custom_style.css">
 	<style type="text/css">
 		.tbl_row{
 			display: table;
@@ -123,12 +124,13 @@
 @endsection
 
 @section('content')
-
+   <button id="back_top" class="btn bg-black" title="Kembali ke Atas"><i class="fa fa-arrow-up"></i></button>
 	<div class="row">
 		<div class="col-xs-12">
    		<div class="box box-primary">
    			<div class="box-header">
               <h3 class="box-title">Data SK Pembimbing Skripsi</h3>
+              <a href="#sk_penguji"><h5>Lompat Ke Data SK Penguji Skripsi</h5></a>
 
               <div id="tgl_sk">
               		<h5><b>Tanggal Dibuat</b> : {{Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
@@ -143,7 +145,7 @@
               </div>
 
               	@if(session()->has('verif_ktu'))
-              	   <br><br>
+              	   <br>
               	   <div class="alert alert-success alert-dismissible" style="margin: auto;">
               	      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
               	      <h4><i class="icon fa fa-check"></i> Berhasil</h4>
@@ -175,7 +177,7 @@
             	   <p class="top-title">
             	      <span class="judul_surat">KEPUTUSAN</span><br>
             	      <span>DEKAN FAKULTAS ILMU KOMPUTER UNIVERSITAS JEMBER</span><br>
-            	      <span>Nomor: {{ $sk->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($sk->created_at)->year }}</span><br>
+            	      <span>Nomor: {{ $sk->no_surat_pembimbing }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($sk->created_at)->year }}</span><br>
             	      <small><b>tentang</b></small><br>
             	      <span>PENETAPAN DOSEN PEMBIMBING SKRIPSI MAHASISWA</span><br>
             	      <span>FAKULTAS ILMU KOMPUTER UNIVERSITAS JEMBER</span><br>
@@ -183,7 +185,7 @@
             	   </p>
 
             	   <div id="isi_template_surat">
-            	   	{!! $sk->template->isi !!}
+            	   	{!! $sk->template_pembimbing->isi !!}
             	   </div>
                    <br>
             	   <div class="ttd-right">
@@ -213,7 +215,7 @@
             		</tr>
             		<tr>
             			<td>Tanggal	</td>
-            			<td>: {{ Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
+            			<td>: {{ Carbon\Carbon::parse($sk->tgl_sk_pembimbing)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
             		</tr>
             		<tr>
             			<td>Tentang		</td>
@@ -275,7 +277,7 @@
             {{-- batas SK Pembimbing --}}
             <br><hr><br>
 
-            <div class="box-header">
+            <div class="box-header" id="sk_penguji">
               <h3 class="box-title">Data SK Penguji Skripsi</h3>
             </div>
 
@@ -302,7 +304,7 @@
                   <p class="top-title">
                      <span class="judul_surat">KEPUTUSAN</span><br>
                      <span>DEKAN FAKULTAS ILMU KOMPUTER UNIVERSITAS JEMBER</span><br>
-                     <span>Nomor: {{ $sk->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($sk->created_at)->year }}</span><br>
+                     <span>Nomor: {{ $sk->no_surat_penguji }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($sk->created_at)->year }}</span><br>
                      <small><b>tentang</b></small><br>
                      <span>PENETAPAN DOSEN PENGUJI SKRIPSI MAHASISWA</span><br>
                      <span>FAKULTAS ILMU KOMPUTER UNIVERSITAS JEMBER</span><br>
@@ -310,7 +312,7 @@
                   </p>
 
                   <div id="isi_template_surat">
-                     {!! $sk->template->isi !!}
+                     {!! $sk->template_penguji->isi !!}
                   </div>
                    <br>
                   <div class="ttd-right">
@@ -340,7 +342,7 @@
                   </tr>
                   <tr>
                      <td>Tanggal </td>
-                     <td>: {{ Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
+                     <td>: {{ Carbon\Carbon::parse($sk->tgl_sk_penguji)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
                   </tr>
                   <tr>
                      <td>Tentang    </td>
@@ -401,7 +403,7 @@
 
             <div class="box-footer">
 	            @if($sk->verif_dekan != 1)
-              	<form method="post" action="{{ route('ktu.sk-skripsi.verif', $sk->no_surat)  }}">
+              	<form method="post" action="{{ route('ktu.sk-skripsi.verif', $sk->id)  }}">
               		@csrf
               		@method('put')
               		<input type="hidden" name="verif_ktu" value="{{$sk->verif_ktu}}">
@@ -426,7 +428,7 @@
               <span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Pesan Penarikan SK</h4>
           </div>
-          <form method="post" action="{{ route('ktu.sk-skripsi.verif', $sk->no_surat) }}">
+          <form method="post" action="{{ route('ktu.sk-skripsi.verif', $sk->id) }}">
           	@csrf
           	@method('PUT')
 	          <div class="modal-body">
@@ -451,6 +453,7 @@
 @endsection
 
 @section('script')
+<script src="/js/btn_backTop.js"></script>
 <script type="text/javascript">
 	@error('pesan_revisi')
 		$("#modal-tarik-sk").modal("show");
@@ -472,6 +475,14 @@
 		$("input[name='verif_ktu']").val(2);
 		$(this).parents("form").trigger('submit');
 	});
+
+  var no_surat_pembimbing = @json($sk->no_surat_pembimbing);
+  var tahun = @json(Carbon\Carbon::parse($sk->created_at)->year);
+  var tgl_sk_pembimbing = @json(Carbon\Carbon::parse($sk->tgl_sk_pembimbing)->locale('id_ID')->isoFormat('D MMMM Y'));
+  var tahun_akademik = @json($tahun_akademik);
+
+  $("td:contains('?sk pembimbing skripsi?')").html(`
+   Keputusan Dekan Fakultas Ilmu Komputer Universitas Jember Nomor : `+no_surat_pembimbing+` /UN25.1.15/SP/`+tahun+`, tanggal `+tgl_sk_pembimbing+` tentang penetapan Dosen Pembimbing Skripsi Mahasiswa Fakultas Ilmu Komputer Universitas Jember Tahun Akademik `+tahun_akademik['tahun_awal']+`/`+tahun_akademik['tahun_akhir']);
 
 </script>
 @endsection

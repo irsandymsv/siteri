@@ -58,7 +58,12 @@
 		            		<thead>
 			            		<tr>
 			            			<th>No</th>
-			            			<th>Nomor Surat</th>
+			            			@if($tipe == "SK Skripsi")
+				            			<th>No Surat SK Pembimbing</th>
+				            			<th>No Surat SK Penguji</th>
+			            			@else
+			            				<th>No Surat</th>
+			            			@endif
 			            			<th>Tanggal Dibuat</th>
 			            			<th>Status</th>
 			            			<th>Verifikasi KTU</th>
@@ -67,11 +72,15 @@
 			            		</tr>
 			            	</thead>
 			            	<tbody>
-			            		@php $no = 0 @endphp
 			            		@foreach($sk as $item)
-			            			<tr id="sk_{{$item->id}}">
-			            				<td>{{$no+=1}}</td>
-			            				<td>{{ $item->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($item->created_at)->year }}</td>
+			            			<tr id="{{ ($tipe == "SK Skripsi"? 'sk_'.$item->id:'sk_'.$item->no_surat) }}">
+			            				<td>{{$loop->index + 1}}</td>
+			            				@if($tipe == "SK Skripsi")
+				            				<td>{{ $item->no_surat_pembimbing }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
+				            				<td>{{ $item->no_surat_penguji }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
+			            				@else
+			            					<td>{{ $item->no_surat }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
+			            				@endif
 			            				<td>
 			            					{{Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}
 			            				</td>
@@ -96,7 +105,7 @@
 			            				</td> --}}
 			            				<td>
 			            					@if($tipe == "SK Skripsi")
-			            					<a href="{{ route('ktu.sk-skripsi.show', $item->no_surat) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+			            					<a href="{{ route('ktu.sk-skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
 			            					@else
 			            					<a href="{{ route('ktu.sk-sempro.show', $item->no_surat) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
 			            					@endif

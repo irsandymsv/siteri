@@ -417,47 +417,72 @@ class SkSkripsiController extends Controller
 
 	public function ktu_show($id)
 	{
-		$sk_akademik = sk_akademik::find($id);
-		$status = $sk_akademik->status_sk_akademik->status;
+		$sk = sk_skripsi::where('id', $id)->with(['template_pembimbing', 'template_penguji'])->first();
+		$status = $sk->status_sk->status;
 		if($status == "Draft"){
 			return redirect()->route('ktu.sk-skripsi.index');
 		}
 
-		$detail_sk = detail_sk::where('id_sk_akademik', $id)
-			->with([
-				'bagian',
-				'penguji_utama:no_pegawai,nama',
-				'penguji_pendamping:no_pegawai,nama',
-				'pembimbing_utama:no_pegawai,nama',
-				'pembimbing_pendamping:no_pegawai,nama'
-			])->get();
-		return view('ktu.SK_view.sk_show', [
-			'sk_akademik' => $sk_akademik,
-			'detail_sk' => $detail_sk
+		$detail_skripsi = detail_skripsi::where('id_sk_skripsi', $id)
+		->with([
+		   'skripsi',
+		   'skripsi.mahasiswa',
+		   'skripsi.mahasiswa.bagian',
+		   'surat_tugas' => function($query)
+		   {
+		      $query->where('id_tipe_surat_tugas', 1)
+         	->orWhere('id_tipe_surat_tugas', 3)
+         	->orderBy('created_at', 'desc');
+		   },
+		   'surat_tugas.tipe_surat_tugas',
+		   'surat_tugas.dosen1:no_pegawai,nama',
+		   'surat_tugas.dosen2:no_pegawai,nama',
+		])->get();
+
+		$dekan = User::with("jabatan")
+		->wherehas("jabatan", function (Builder $query){
+		   $query->where("jabatan", "Dekan");
+		})->first();
+		$tahun_akademik = $this->get_tahun_akademik($sk->created_at);
+		return view('ktu.SK_view.sk_skripsi_show', [
+			'sk' => $sk,
+			'detail_skripsi' => $detail_skripsi,
+         'dekan' => $dekan,
+         'tahun_akademik' => $tahun_akademik
 		]);
 	}
 
 	public function ktu_verif(Request $request, $id)
 	{
-		$sk_akademik = sk_akademik::find($id);
-		$sk_akademik->verif_ktu = $request->verif_ktu;
-		if($request->verif_ktu == 2){
-			$request->validate([
-				'pesan_revisi' => 'required|string'
-			]);
+		$sk = sk_skripsi::find($id);
+      $sk->verif_ktu = $request->verif_ktu;
+      if($request->verif_ktu == 2){
+         $request->validate([
+               'pesan_revisi' => 'required|string'
+         ]);
 
-			$sk_akademik->id_status_sk_akademik = 1;
-			$sk_akademik->pesan_revisi = $request->pesan_revisi;
-			$sk_akademik->save();
-			return redirect()->route('ktu.sk-skripsi.index')->with("verif_ktu", 'SK berhasil ditarik, status kembali menjadi "Draft"');
-		}
-		else if ($request->verif_ktu == 1) {
-			$sk_akademik->id_status_sk_akademik = 3;
-			$sk_akademik->pesan_revisi = null;
-			$sk_akademik->save();
-			return redirect()->route('ktu.sk-skripsi.index')->with('verif_ktu', 'verifikasi SK berhasil, status SK saat ini "Disetujui KTU"');
-		}
+         $sk->id_status_sk = 1;
+         $sk->pesan_revisi = $request->pesan_revisi;
+         $sk->save();
+         return redirect()->route('ktu.sk-skripsi.index')->with("verif_ktu", 'SK berhasil ditarik, status kembali menjadi "Draft"');
+      }
+      else if ($request->verif_ktu == 1) {
+         $sk->id_status_sk = 3;
+         $sk->pesan_revisi = null;
+         $sk->save();
 
+         $detail_skripsi = detail_skripsi::where('id_sk_skripsi', $id)->get();
+         // dd($detail_skripsi);
+         foreach ($detail_skripsi as $value) {
+            skripsi::whereHas('detail_skripsi', function (Builder $query) use ($value) {
+               $query->where('id', $value->id);
+            })->update([
+               'id_status_skripsi' => 6
+            ]);
+         }
+
+         return redirect()->route('ktu.sk-skripsi.show', $id)->with('verif_ktu', 'verifikasi SK berhasil, status SK saat ini "Disetujui KTU"');
+      }
 	}
 
 

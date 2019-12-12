@@ -63,7 +63,7 @@
 		            	</thead>
 		            	<tbody>
 		            		@foreach($sk as $item)
-		            			<tr id="sk_{{$item->id}}">
+		            			<tr id="{{ ($tipe == "SK Skripsi"? 'sk_'.$item->id:'sk_'.$item->no_surat) }}">
 		            				<td>{{$loop->index + 1}}</td>
 		            				@if($tipe == "SK Skripsi")
 			            				<td>{{ $item->no_surat_pembimbing }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
