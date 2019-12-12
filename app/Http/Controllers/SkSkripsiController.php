@@ -284,27 +284,24 @@ class SkSkripsiController extends Controller
 
 	public function update(Request $request, $id)
 	{
-		// dd($request);
-		$this->validate($request, [
-			"id_detail_sk" => "required|array",
-			"id_detail_sk.*" => "required",
-			"nama"    => "required|array",
-			"nama.*"  => "required|string|max:40",
-			"nim" => "required|array",
-			"nim.*" => "required|string|max:20",
-			"jurusan" => "required|array",
-			"jurusan.*" => "required",
-			"judul" => "required|array",
-			"judul.*" => "required",
-			"pembimbing_utama" => "required|array",
-			"pembimbing_utama.*" => "required",
-			"pembimbing_pendamping" => "required|array",
-			"pembimbing_pendamping.*" => "required",
-			"penguji_utama" => "required|array",
-			"penguji_utama.*" => "required",
-			"penguji_pendamping" => "required|array",
-			"penguji_pendamping.*" => "required",
-		]);
+        if ($request->input("status") == 2) {
+            $this->validate($request, [
+                "nim" => "required|array",
+                "nim.*" => "required",
+                "tgl_sk_pembimbing" => "required",
+                "tgl_sk_penguji" => "required",
+                "status" => "required",
+                "no_surat_pembimbing" => "required",
+                "no_surat_penguji" => "required",
+            ]);
+        } else {
+            $this->validate($request, [
+                "no_surat_pembimbing" => "required",
+                "no_surat_penguji" => "required",
+                "nim" => "required|array",
+                "nim.*" => "required|string"
+            ]);
+        }
 
 		try {
 			$sk = sk_akademik::find($id);
@@ -315,44 +312,21 @@ class SkSkripsiController extends Controller
 				$verif_dekan = 0;
 			}
 
-			$sk_akademik = sk_akademik::where('id', $id)->update([
-				'id_status_sk_akademik' => $request->status,
-				'verif_ktu' => $verif_ktu,
-				'verif_dekan' => $verif_dekan,
-				'no_surat' => $request->no_surat
+			$sk_skripsi = sk_skripsi::where('id', $id)->update([
+                "no_surat_pembimbing" => $request->input("no_surat_pembimbing"),
+                "no_surat_penguji" => $request->input("no_surat_penguji"),
+                "tgl_sk_pembimbing" => carbon::parse($request->input("tgl_sk_pembimbing")),
+                "tgl_sk_penguji" => carbon::parse($request->input("tgl_sk_pembimbing")),
+                "id_status_sk" => $request->input("status"),
 			]);
 
-			for ($i = 0; $i < count($request->id_detail_sk); $i++) {
-				if ($request->id_detail_sk[$i] != 0) {
-					if ($request->delete_detail_sk[$i] == 1) {
-						detail_sk::where('id', $request->id_detail_sk[$i])->delete();
-						continue;
-					} else {
-						$detail_sk = detail_sk::where('id', $request->id_detail_sk[$i])->update([
-							'nama_mhs' => $request->nama[$i],
-							'nim' => $request->nim[$i],
-							'id_bagian' => $request->jurusan[$i],
-							'judul' => $request->judul[$i],
-							'id_pembimbing_utama' => $request->pembimbing_utama[$i],
-							'id_pembimbing_pendamping' => $request->pembimbing_pendamping[$i],
-							'id_penguji_utama' => $request->penguji_utama[$i],
-							'id_penguji_pendamping' => $request->penguji_pendamping[$i]
-						]);
-					}
-				} else {
-					$detail_sk = detail_sk::create([
-						'id_sk_akademik' => $id,
-						'nama_mhs' => $request->nama[$i],
-						'nim' => $request->nim[$i],
-						'id_bagian' => $request->jurusan[$i],
-						'judul' => $request->judul[$i],
-						'id_pembimbing_utama' => $request->pembimbing_utama[$i],
-						'id_pembimbing_pendamping' => $request->pembimbing_pendamping[$i],
-						'id_penguji_utama' => $request->penguji_utama[$i],
-						'id_penguji_pendamping' => $request->penguji_pendamping[$i]
-					]);
-				}
-			}
+            for ($i = 0; $i < count($request->nim); $i++) {
+                if ($request->pilihan_nim[$i] == 1) {
+                    $this->update_id_sk_skripsi($request->nim[$i], $id);
+                } else if ($request->pilihan_nim[$i] == 3) {
+                    $this->update_id_sk_skripsi($request->nim[$i], null);
+                }
+            }
 			return redirect()->route('akademik.skripsi.show', $id)->with('success', 'Data Berhasil Diedit');
 		} catch (Exception $e) {
 			return redirect()->route('akademik.skripsi.index')->with('error', $e->getMessage());

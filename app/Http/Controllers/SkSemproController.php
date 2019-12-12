@@ -273,10 +273,9 @@ class SkSemproController extends Controller
       try {
          $sk = sk_sempro::find($id);
          $verif_ktu = $sk->verif_ktu;
-         // $verif_dekan = $sk->verif_dekan;
+
          if($request->status == 2){
             $verif_ktu = 0;
-            // $verif_dekan = 0;
          }
          sk_sempro::where('no_surat', $id)->update([
             "no_surat" => $request->input("no_surat"),
