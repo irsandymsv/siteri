@@ -115,7 +115,7 @@
                                     @if (is_null($item->sk_honor))
                                        <a href="{{ route('keuangan.honor-skripsi.store', $item->id) }}" class="btn btn-success">Generate</a>
                                     @else
-                                       <a href="{{ route('keuangan.honor-skripsi.show', $item->id) }}" class="btn btn-primary">Lihat</a>
+                                       <a href="{{ route('keuangan.honor-skripsi.show', $item->sk_honor->id) }}" class="btn btn-primary">Lihat</a>
                                        {{-- <button class="btn btn-danger" name="delete_honor" id="{{ $item->id }}" data-toggle="modal" data-target="#modal-delete">Hapus</button> --}}
                                     @endif
                                  @else

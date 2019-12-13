@@ -25,7 +25,7 @@ class honorSkripsiController extends Controller
         ->with(['status_sk', 'sk_honor', 'sk_honor.status_sk_honor'])
         ->get();
 
-        // dd($sk_sempro);
+        // dd($sk);
         return view('keuangan.honor_sk.index', [
             'sk' => $sk,
             'tipe' => 'SK Skripsi'
@@ -94,14 +94,12 @@ class honorSkripsiController extends Controller
                 'skripsi',
                 'skripsi.mahasiswa',
                 'surat_tugas' => function ($query) {
-                    $query->where(
-                        'id_tipe_surat_tugas', 1
-
-                    )
+                    $query->where('id_tipe_surat_tugas', 1)
                     ->orWhere('id_tipe_surat_tugas', 3)
                     ->where('id_status_surat_tugas', 3)
                     ->orderBy('created_at', 'desc');
                 },
+                'surat_tugas.tipe_surat_tugas',
                 'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional',
                 'surat_tugas.dosen1.golongan',
                 'surat_tugas.dosen1.fungsional',
@@ -125,11 +123,11 @@ class honorSkripsiController extends Controller
                         $st->dosen1->pph = $this->hitung_pph($pudj, $st->dosen1->golongan->pph);
                     }
                     if ($st->dosen2->fungsional->jab_fungsional == "Tenaga Pengajar") {
-                        $st->dosen1->honorarium = $pptj;
-                        $st->dosen1->pph = $this->hitung_pph($pptj, $st->dosen1->golongan->pph);
+                        $st->dosen2->honorarium = $pptj;
+                        $st->dosen2->pph = $this->hitung_pph($pptj, $st->dosen2->golongan->pph);
                     } else {
                         $st->dosen2->honorarium = $ppdj;
-                        $st->dosen1->pph = $this->hitung_pph($ppdj, $st->dosen1->golongan->pph);
+                        $st->dosen2->pph = $this->hitung_pph($ppdj, $st->dosen2->golongan->pph);
                     }
                 }
             }
@@ -147,7 +145,7 @@ class honorSkripsiController extends Controller
     {
         $sk_honor = sk_honor::where('id', $id_sk_honor)
         ->with([
-            'sk_sempro',
+            'sk_skripsi',
             'status_sk_honor',
             'detail_honor',
             'detail_honor.histori_besaran_honor',
@@ -155,30 +153,63 @@ class honorSkripsiController extends Controller
         ])
         ->first();
 
-        $honor_pembimbing1 = 0;
-        $honor_pembimbing2 = 0;
+        $honor_pembimbing1_jabatan = 0;
+        $honor_pembimbing1_no_jabatan = 0;
+        $honor_pembimbing2_jabatan = 0;
+        $honor_pembimbing2_no_jabatan = 0;
         $honor_penguji1 = 0;
         $honor_penguji2 = 0;
+        foreach ($sk_honor->detail_honor as $item) {
+            if ($item->histori_besaran_honor->nama_honor->nama_honor == "Honor Pembimbing Utama Dengan Jabatan Fungsional") {
+                $honor_pembimbing1_jabatan = $item->histori_besaran_honor->jumlah_honor;
+            }
+            elseif ($item->histori_besaran_honor->nama_honor->nama_honor == "Honor Pembimbing Utama Tanpa Jabatan Fungsional") {
+                $honor_pembimbing1_no_jabatan = $item->histori_besaran_honor->jumlah_honor;;
+            }
+            elseif ($item->histori_besaran_honor->nama_honor->nama_honor == "Honor Pembimbing Pendamping Dengan Jabatan Fungsional") {
+                $honor_pembimbing2_jabatan = $item->histori_besaran_honor->jumlah_honor;;
+            }
+            elseif ($item->histori_besaran_honor->nama_honor->nama_honor == "Honor Pembimbing Pendamping Tanpa Jabatan Fungsional") {
+                $honor_pembimbing2_no_jabatan = $item->histori_besaran_honor->jumlah_honor;;
+            }
+            elseif ($item->histori_besaran_honor->nama_honor->nama_honor == "Honor Penguji Utama Skripsi") {
+                $honor_penguji1 = $item->histori_besaran_honor->jumlah_honor;;
+            }
+            elseif ($item->histori_besaran_honor->nama_honor->nama_honor == "Honor Penguji Pendamping Skripsi") {
+                $honor_penguji2 = $item->histori_besaran_honor->jumlah_honor;;
+            }
+        }
 
-        $detail_skripsi = detail_skripsi::where('id_sk_skripsi', $sk_honor->sk_skripsi->no_surat)
-        ->with([
-            'sk_skripsi',
-            'skripsi',
-            'skripsi.mahasiswa',
-            'surat_tugas' => function($query)
-            {
-                $query->where('id_tipe_surat_tugas', 1)
-                ->orWhere('id_tipe_surat_tugas', 3)
-                ->orderBy('created_at', 'desc');
-            },
-            'surat_tugas.tipe_surat_tugas',
-            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan',
-            'surat_tugas.dosen1.golongan',
-            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan',
-            'surat_tugas.dosen2.golongan'
-        ])->get();
-        // dd($sk_honor);
-        return  view('keuangan.honor_sk.show', [
+        $detail_skripsi = $this->cari_honor(
+            $honor_pembimbing1_jabatan,
+            $honor_pembimbing1_no_jabatan,
+            $honor_pembimbing2_jabatan,
+            $honor_pembimbing2_no_jabatan,
+            $honor_penguji1,
+            $honor_penguji2,
+            $sk_honor->sk_skripsi->id
+        );
+        // dd($detail_skripsi);
+
+        // $detail_skripsi = detail_skripsi::where('id_sk_skripsi', $sk_honor->sk_skripsi->id)
+        // ->with([
+        //     'sk_skripsi',
+        //     'skripsi',
+        //     'skripsi.mahasiswa',
+        //     'surat_tugas' => function($query)
+        //     {
+        //         $query->where('id_tipe_surat_tugas', 1)
+        //         ->orWhere('id_tipe_surat_tugas', 3)
+        //         ->orderBy('created_at', 'desc');
+        //     },
+        //     'surat_tugas.tipe_surat_tugas',
+        //     'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan',
+        //     'surat_tugas.dosen1.golongan',
+        //     'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan',
+        //     'surat_tugas.dosen2.golongan'
+        // ])->get();
+
+        return  view('keuangan.honor_sk.show_skripsi', [
             'sk_honor' => $sk_honor,
             'detail_skripsi' => $detail_skripsi
         ]);
@@ -195,107 +226,166 @@ class honorSkripsiController extends Controller
     public function cetak_pdf($id_sk_honor)
     {
         $sk_honor = sk_honor::where('id', $id_sk_honor)
-            ->with([
-                'tipe_sk',
-                'detail_sk.sk_akademik',
-                'detail_sk.pembimbing_utama:no_pegawai,nama,npwp,id_golongan',
-                'detail_sk.pembimbing_utama.golongan',
-
-                'detail_sk.pembimbing_pendamping:no_pegawai,nama,npwp,id_golongan',
-                'detail_sk.pembimbing_pendamping.golongan',
-
-                'detail_sk.penguji_utama:no_pegawai,nama,npwp,id_golongan',
-                'detail_sk.penguji_utama.golongan',
-
-                'detail_sk.penguji_pendamping:no_pegawai,nama,npwp,id_golongan',
-                'detail_sk.penguji_pendamping.golongan',
-            ])
-            ->first();
-        // return view('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor]);
-        $tipe = $sk_honor->tipe_sk->tipe;
-        $tgl = Carbon::parse($sk_honor->created_at)->locale('id_ID')->isoFormat('D MMMM Y');
-        $tanggal = new Carbon($sk_honor->detail_sk[0]->sk_akademik->created_at);
-        $tahun = $tanggal->year;
-
-        $awalSemester = Carbon::create($tahun, 1, 15);
-        $akhirSemester = Carbon::create($tahun, 7, 31);
-        if ($tanggal->isBetween($awalSemester, $akhirSemester)) {
-            $tahun2 = $tanggal->subYear();
-            $tahun2 = $tahun2->year;
-            $pdf = PDF::loadview('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor,'tahun' => $tahun2,'tahun2' => $tahun,'thn_asli' => $tahun]);
-        }else{
-            $tahun2 = $tanggal->addYear();
-            $tahun2 = $tahun2->year;
-            $pdf = PDF::loadview('keuangan.honor_sk.pdf', ['sk_honor' => $sk_honor, 'tahun' => $tahun2, 'tahun2' => $tahun, 'thn_asli' => $tahun]);
-        }
-        return $pdf->download("Honor ".$tipe." ".$tgl);
-    }
-
-    public function edit($id_sk_honor)
-    {
-        $sk_honor = sk_honor::where('id', $id_sk_honor)
         ->with([
-            'tipe_sk',
+            'sk_skripsi',
             'status_sk_honor',
-            'detail_sk.pembimbing_utama:no_pegawai,nama,npwp,id_golongan',
-            'detail_sk.pembimbing_utama.golongan',
-
-            'detail_sk.pembimbing_pendamping:no_pegawai,nama,npwp,id_golongan',
-            'detail_sk.pembimbing_pendamping.golongan',
-
-            'detail_sk.penguji_utama:no_pegawai,nama,npwp,id_golongan',
-            'detail_sk.penguji_utama.golongan',
-
-            'detail_sk.penguji_pendamping:no_pegawai,npwp,nama,id_golongan',
-            'detail_sk.penguji_pendamping.golongan',
-
-            'detail_sk.sk_akademik'
+            'detail_honor',
+            'detail_honor.histori_besaran_honor',
+            'detail_honor.histori_besaran_honor.nama_honor'
         ])
         ->first();
-        // dd($sk_honor);
-        return  view('keuangan.honor_sk.edit', [
-            'sk_honor' => $sk_honor,
-            'tipe' => 'SK Skripsi'
-        ]);
-    }
 
-    public function update(Request $request, $id_sk_honor)
-    {
-        $this->validate($request, [
-            'honor_pembimbing1' => 'required',
-            'honor_pembimbing2' => 'required',
-            'honor_penguji' => 'required',
-        ]);
-
-        try{
-            $sk_honor = sk_honor::find($id_sk_honor);
-            $verif_bpp = $sk_honor->verif_kebag_keuangan;
-            $verif_ktu = $sk_honor->verif_ktu;
-            $verif_wadek2 = $sk_honor->verif_wadek2;
-            $verif_dekan = $sk_honor->verif_dekan;
-            if ($request->status == 2) {
-                $verif_bpp = 0;
-                $verif_ktu = 0;
-                $verif_wadek2 = 0;
-                $verif_dekan = 0;
+        $honor_pembimbing1_jabatan = 0;
+        $honor_pembimbing1_no_jabatan = 0;
+        $honor_pembimbing2_jabatan = 0;
+        $honor_pembimbing2_no_jabatan = 0;
+        $honor_penguji1 = 0;
+        $honor_penguji2 = 0;
+        foreach ($sk_honor->detail_honor as $item) {
+            if ($item->histori_besaran_honor->nama_honor->nama_honor == "Honor Pembimbing Utama Dengan Jabatan Fungsional") {
+                $honor_pembimbing1_jabatan = $item->histori_besaran_honor->jumlah_honor;
             }
-
-            sk_honor::where('id',$id_sk_honor)->update([
-                'id_status_sk_honor' => $request->status,
-                'honor_pembimbing1' => $request->honor_pembimbing1,
-                'honor_pembimbing2' => $request->honor_pembimbing2,
-                'honor_penguji' => $request->honor_penguji,
-                'verif_kebag_keuangan' => $verif_bpp,
-                'verif_ktu' => $verif_ktu,
-                'verif_wadek2' => $verif_wadek2,
-                'verif_dekan' => $verif_dekan
-            ]);
-
-            return redirect()->route('keuangan.honor-skripsi.show',$id_sk_honor)->with('success','Data Berhasil Dirubah');
-        }catch(Exception $e){
-            return redirect()->route('keuangan.honor-skripsi.edit', $id_sk_honor)->with('error', $e->getMessage());
+            elseif ($item->histori_besaran_honor->nama_honor->nama_honor == "Honor Pembimbing Utama Tanpa Jabatan Fungsional") {
+                $honor_pembimbing1_no_jabatan = $item->histori_besaran_honor->jumlah_honor;;
+            }
+            elseif ($item->histori_besaran_honor->nama_honor->nama_honor == "Honor Pembimbing Pendamping Dengan Jabatan Fungsional") {
+                $honor_pembimbing2_jabatan = $item->histori_besaran_honor->jumlah_honor;;
+            }
+            elseif ($item->histori_besaran_honor->nama_honor->nama_honor == "Honor Pembimbing Pendamping Tanpa Jabatan Fungsional") {
+                $honor_pembimbing2_no_jabatan = $item->histori_besaran_honor->jumlah_honor;;
+            }
+            elseif ($item->histori_besaran_honor->nama_honor->nama_honor == "Honor Penguji Utama Skripsi") {
+                $honor_penguji1 = $item->histori_besaran_honor->jumlah_honor;;
+            }
+            elseif ($item->histori_besaran_honor->nama_honor->nama_honor == "Honor Penguji Pendamping Skripsi") {
+                $honor_penguji2 = $item->histori_besaran_honor->jumlah_honor;;
+            }
         }
+
+        $detail_skripsi = $this->cari_honor(
+            $honor_pembimbing1_jabatan,
+            $honor_pembimbing1_no_jabatan,
+            $honor_pembimbing2_jabatan,
+            $honor_pembimbing2_no_jabatan,
+            $honor_penguji1,
+            $honor_penguji2,
+            $sk_honor->sk_skripsi->id
+        );
+
+        // $detail_skripsi = detail_skripsi::where('id_sk_skripsi', $sk_honor->sk_skripsi->id)
+        // ->with([
+        //     'sk_skripsi',
+        //     'skripsi',
+        //     'skripsi.mahasiswa',
+
+        //     'surat_tugas' => function($query)
+        //     {
+        //         $query->where([
+        //             ['id_tipe_surat_tugas', 2],
+        //             ['id_status_surat_tugas', 3]
+        //         ])->orderBy('created_at', 'desc');
+        //     },
+        //     'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan',
+        //     'surat_tugas.dosen1.golongan',
+        //     'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan',
+        //     'surat_tugas.dosen2.golongan'
+        // ])->get();
+
+        $tahun_akademik = $this->get_tahun_akademik($sk_honor->sk_skripsi->created_at);
+
+        $dekan = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "Dekan");
+        })->first();
+
+        $ktu = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "KTU");
+        })->first();
+
+        $bpp = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "BPP");
+        })->first();
+
+        $pdf = PDF::loadview('keuangan.honor_sk.pdf_skripsi', [
+            'sk_honor' => $sk_honor,
+            'detail_skripsi' => $detail_skripsi,
+            'tahun_akademik' => $tahun_akademik,
+            'dekan' => $dekan,
+            'ktu' => $ktu,
+            'bpp' =>$bpp
+        ])->setPaper('a4', 'portrait')->setWarnings(false);
+
+        $tgl = Carbon::parse($sk_honor->created_at)->format('d-m-Y');
+        return $pdf->download("Honor SK Skripsi-" . $tgl . ".pdf");
     }
+
+    // public function edit($id_sk_honor)
+    // {
+    //     $sk_honor = sk_honor::where('id', $id_sk_honor)
+    //     ->with([
+    //         'tipe_sk',
+    //         'status_sk_honor',
+    //         'detail_sk.pembimbing_utama:no_pegawai,nama,npwp,id_golongan',
+    //         'detail_sk.pembimbing_utama.golongan',
+
+    //         'detail_sk.pembimbing_pendamping:no_pegawai,nama,npwp,id_golongan',
+    //         'detail_sk.pembimbing_pendamping.golongan',
+
+    //         'detail_sk.penguji_utama:no_pegawai,nama,npwp,id_golongan',
+    //         'detail_sk.penguji_utama.golongan',
+
+    //         'detail_sk.penguji_pendamping:no_pegawai,npwp,nama,id_golongan',
+    //         'detail_sk.penguji_pendamping.golongan',
+
+    //         'detail_sk.sk_akademik'
+    //     ])
+    //     ->first();
+    //     // dd($sk_honor);
+    //     return  view('keuangan.honor_sk.edit', [
+    //         'sk_honor' => $sk_honor,
+    //         'tipe' => 'SK Skripsi'
+    //     ]);
+    // }
+
+    // public function update(Request $request, $id_sk_honor)
+    // {
+    //     $this->validate($request, [
+    //         'honor_pembimbing1' => 'required',
+    //         'honor_pembimbing2' => 'required',
+    //         'honor_penguji' => 'required',
+    //     ]);
+
+    //     try{
+    //         $sk_honor = sk_honor::find($id_sk_honor);
+    //         $verif_bpp = $sk_honor->verif_kebag_keuangan;
+    //         $verif_ktu = $sk_honor->verif_ktu;
+    //         $verif_wadek2 = $sk_honor->verif_wadek2;
+    //         $verif_dekan = $sk_honor->verif_dekan;
+    //         if ($request->status == 2) {
+    //             $verif_bpp = 0;
+    //             $verif_ktu = 0;
+    //             $verif_wadek2 = 0;
+    //             $verif_dekan = 0;
+    //         }
+
+    //         sk_honor::where('id',$id_sk_honor)->update([
+    //             'id_status_sk_honor' => $request->status,
+    //             'honor_pembimbing1' => $request->honor_pembimbing1,
+    //             'honor_pembimbing2' => $request->honor_pembimbing2,
+    //             'honor_penguji' => $request->honor_penguji,
+    //             'verif_kebag_keuangan' => $verif_bpp,
+    //             'verif_ktu' => $verif_ktu,
+    //             'verif_wadek2' => $verif_wadek2,
+    //             'verif_dekan' => $verif_dekan
+    //         ]);
+
+    //         return redirect()->route('keuangan.honor-skripsi.show',$id_sk_honor)->with('success','Data Berhasil Dirubah');
+    //     }catch(Exception $e){
+    //         return redirect()->route('keuangan.honor-skripsi.edit', $id_sk_honor)->with('error', $e->getMessage());
+    //     }
+    // }
 
     public function destroy($id = null)
     {

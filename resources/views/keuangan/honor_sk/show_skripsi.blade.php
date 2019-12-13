@@ -32,6 +32,12 @@
          background-color: white;
       }
 
+      .jml_terbilang{
+         text-align: center;
+         background-color: white;
+         font-weight: bold;
+      }
+
       td span {
          float: right;
       }
@@ -201,7 +207,7 @@
                            <th>Nama Mahasiswa/NIM</th>
                            <th>Gol</th>
                            <th>Honorarium</th>
-                           <th>PPH psl 5%-15%</th>
+                           <th>PPH psl 21 5%-15%</th>
                            <th>Penerimaan</th>
                         </tr>
                      </thead>
@@ -211,6 +217,7 @@
                            $no=0; $a = 1; $b = 1; $total_honor=0; $total_pph=0; $total_penerimaan=0;
                         @endphp  
                         @foreach($detail_skripsi as $item)
+                           {{-- dosen1 --}}
                            @if ($no+1 == 4*$a-1)
                               @php $a+=1; @endphp
                               <tr id="{{ $no+=1 }}" style="background-color: #bbb;">
@@ -220,6 +227,10 @@
                               <td>{{$no}}</td>
 
                               @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Pembimbing")
+                                 @php
+                                    $honorarium = $item->surat_tugas[0]->dosen1->honorarium;
+                                    $pph = $item->surat_tugas[0]->dosen1->pph;
+                                 @endphp
                                  <td>{{$item->surat_tugas[0]->dosen1->nama}}</td>
                                  <td>{{$item->surat_tugas[0]->dosen1->npwp}}</td>
                                  <td rowspan="2">
@@ -227,26 +238,23 @@
                                     <p>NIM: {{$item->skripsi->nim}}</p>
                                  </td>
                                  <td>{{$item->surat_tugas[0]->dosen1->golongan->golongan}}</td>
-                                 <td id="pembimbing_{{$no}}" class="pembimbingHonor">Rp 
-                                    {{ number_format($sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor, 0, ",", ".") }}
+                                 <td>Rp 
+                                    {{ number_format($honorarium, 0, ",", ".") }}
                                  </td>
-                                 <td class="pph" id="pph_{{$no}}">Rp 
-                                    <span>
-                                       @php
-                                          $pph = ($item->surat_tugas[0]->dosen1->golongan->pph * $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor)/100;
-                                       @endphp
-                                       {{ number_format($pph, 0, ",", ".") }}
-                                    </span>
+                                 <td>Rp 
+                                    {{ number_format($pph, 0, ",", ".") }}
                                  </td>
-                                 <td class="penerimaan" id="penerimaan_{{$no}}">Rp 
-                                    <span>
-                                       @php
-                                          $penerimaan = $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor - $pph;
-                                       @endphp
-                                       {{ number_format($penerimaan, 0, ",", ".") }}
-                                    </span>
+                                 <td>Rp 
+                                    @php
+                                       $penerimaan = $honorarium - $pph;
+                                    @endphp
+                                    {{ number_format($penerimaan, 0, ",", ".") }}
                                  </td>
                               @else
+                                 @php
+                                    $honorarium = $item->surat_tugas[1]->dosen1->honorarium;
+                                    $pph = $item->surat_tugas[1]->dosen1->pph;
+                                 @endphp
                                  <td>{{$item->surat_tugas[1]->dosen1->nama}}</td>
                                  <td>{{$item->surat_tugas[1]->dosen1->npwp}}</td>
                                  <td rowspan="2">
@@ -254,34 +262,28 @@
                                     <p>NIM: {{$item->skripsi->nim}}</p>
                                  </td>
                                  <td>{{$item->surat_tugas[1]->dosen1->golongan->golongan}}</td>
-                                 <td id="pembimbing_{{$no}}" class="pembimbingHonor">Rp 
-                                    {{ number_format($sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor, 0, ",", ".") }}
+                                 <td>Rp 
+                                    {{ number_format($honorarium, 0, ",", ".") }}
                                  </td>
-                                 <td class="pph" id="pph_{{$no}}">Rp 
-                                    <span>
-                                       @php
-                                          $pph = ($item->surat_tugas[1]->dosen1->golongan->pph * $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor)/100;
-                                       @endphp
-                                       {{ number_format($pph, 0, ",", ".") }}
-                                    </span>
+                                 <td>Rp 
+                                    {{ number_format($pph, 0, ",", ".") }}
                                  </td>
-                                 <td class="penerimaan" id="penerimaan_{{$no}}">Rp 
-                                    <span>
-                                       @php
-                                          $penerimaan = $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor - $pph;
-                                       @endphp
-                                       {{ number_format($penerimaan, 0, ",", ".") }}
-                                    </span>
+                                 <td>Rp 
+                                    @php
+                                       $penerimaan = $honorarium - $pph;
+                                    @endphp
+                                    {{ number_format($penerimaan, 0, ",", ".") }}
                                  </td>
                               @endif
 
                               @php
-                                 $total_honor+=$sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor;
+                                 $total_honor+=$honorarium;
                                  $total_pph+=$pph;
                                  $total_penerimaan+=$penerimaan;
                               @endphp
                            </tr>
 
+                           {{-- dosen2 --}}
                            @if ($no+1 == 4*$b)
                               @php $b+=1; @endphp
                               <tr id="{{ $no+=1 }}" style="background-color: #bbb;">
@@ -291,33 +293,49 @@
                               <td>{{$no}}</td>
 
                               @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Pembimbing")
+                                 @php
+                                    $honorarium = $item->surat_tugas[0]->dosen2->honorarium;
+                                    $pph = $item->surat_tugas[0]->dosen2->pph;
+                                 @endphp
                                  <td>{{$item->surat_tugas[0]->dosen2->nama}}</td>
                                  <td>{{$item->surat_tugas[0]->dosen2->npwp}}</td>
                                  <td>{{$item->surat_tugas[0]->dosen2->golongan->golongan}}</td>
-                                 <td id="pembimbing_{{$no}}" class="pembimbingHonor">Rp  
-                                    <span>{{ number_format($sk_honor->detail_honor[0], 0, ",", ".") }}</span></td>
-                                 <td class="pph" id="pph_{{$no}}">Rp 
-                                    <span>
-                                       @php
-                                          $pph =( $item->surat_tugas[0]->dosen2->golongan->pph * $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor)/100;
-                                       @endphp
-                                       {{ number_format($pph, 0, ",", ".") }}
-                                    </span>
+                                 <td>Rp  
+                                    {{ number_format($honorarium, 0, ",", ".") }}
                                  </td>
-                                 <td class="penerimaan" id="penerimaan_{{$no}}">Rp 
-                                    <span>
-                                       @php
-                                          $penerimaan = $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor - $pph;
-                                       @endphp
-                                       {{ number_format($penerimaan, 0, ",", ".") }}
-                                    </span>
+                                 <td>Rp 
+                                    {{ number_format($pph, 0, ",", ".") }}
+                                 </td>
+                                 <td>Rp 
+                                    @php
+                                       $penerimaan = $honorarium - $pph;
+                                    @endphp
+                                    {{ number_format($penerimaan, 0, ",", ".") }}
                                  </td>
                               @else
-
+                                 @php
+                                    $honorarium = $item->surat_tugas[1]->dosen2->honorarium;
+                                    $pph = $item->surat_tugas[1]->dosen2->pph;
+                                 @endphp
+                                 <td>{{$item->surat_tugas[1]->dosen2->nama}}</td>
+                                 <td>{{$item->surat_tugas[1]->dosen2->npwp}}</td>
+                                 <td>{{$item->surat_tugas[1]->dosen2->golongan->golongan}}</td>
+                                 <td>Rp  
+                                    {{ number_format($honorarium, 0, ",", ".") }}
+                                 </td>
+                                 <td>Rp 
+                                    {{ number_format($pph, 0, ",", ".") }}
+                                 </td>
+                                 <td>Rp 
+                                    @php
+                                       $penerimaan = $honorarium - $pph;
+                                    @endphp
+                                    {{ number_format($penerimaan, 0, ",", ".") }}
+                                 </td>
                               @endif
 
                               @php
-                                 $total_honor+=$sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor;
+                                 $total_honor+=$honorarium;
                                  $total_pph+=$pph;
                                  $total_penerimaan+=$penerimaan;
                               @endphp
@@ -326,9 +344,9 @@
 
                         <tr class="jml_total">
                            <td colspan="5" style="text-align: center;">Jumlah</td>
-                           <td>Rp <span>{{ number_format($total_honor, 0, ",", ".") }}</span></td>
-                           <td>Rp <span>{{ number_format($total_pph, 0, ",", ".") }}</span></td>
-                           <td>Rp <span>{{ number_format($total_penerimaan, 0, ",", ".") }}</span></td>
+                           <td>Rp {{ number_format($total_honor, 0, ",", ".") }}</td>
+                           <td>Rp {{ number_format($total_pph, 0, ",", ".") }}</td>
+                           <td>Rp {{ number_format($total_penerimaan, 0, ",", ".") }}</td>
                         </tr>
 
                         @php
@@ -369,7 +387,7 @@
                                 return $hasil;
                             }
                         @endphp
-                        <tr class="jml_total">
+                        <tr class="jml_terbilang">
                            <td colspan="8">Terbilang:
                                @php
                                    echo(terbilang($total_honor).' Rupiah');
@@ -388,7 +406,7 @@
    	<div class="col-xs-12">
    		<div class="box box-danger">
    			<div class="box-header">
-   				<h3 class="box-title">Daftar Honor {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Penguji Skripsi" : "Pembahas Sempro") }}</h3>
+   				<h3 class="box-title">Daftar Honor Penguji Skripsi</h3>
 
                <div class="box-tools pull-right">
                      <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -404,89 +422,156 @@
                      <thead>
                         <tr>
                            <th>No</th>
-                           <th>
-                            {{ ($sk_honor->tipe_sk->tipe == "SK Skripsi"? "Penguji" : "Pembahas") }} I/II
-                          </th>
+                           <th>Tim Penguji I/II</th>
                            <th>NPWP</th>
                            <th>Nama Mahasiswa/NIM</th>
                            <th>Gol</th>
                            <th>Honorarium</th>
-                           <th>PPH psl 5%-15%</th>
+                           <th>PPH psl 21 5%-15%</th>
                            <th>Penerimaan</th>
                         </tr>
                      </thead>
 
                      <tbody id="tbl_penguji">
-                        @php $no=0; $total_honor=0; $total_pph=0; $total_penerimaan=0; @endphp
-                        @foreach($sk_honor->detail_sk as $item)
-                          <tr id="{{$no+=1}}">
-                            <td>{{$no}}</td>
-                            <td>{{$item->penguji_utama->nama}}</td>
-                            <td>{{$item->penguji_utama->npwp}}</td>
-                            <td rowspan="2">
-                               <p>{{$item->nama_mhs}}</p>
-                               <p>NIM: {{$item->nim}}</p>
-                            </td>
-                            <td>{{$item->penguji_utama->golongan->golongan}}</td>
-                            <td id="penguji_{{$no}}" class="pengujiHonor">Rp 
-                               <span>{{ number_format($sk_honor->honor_penguji, 0, ",", ".") }}</span></td>
-                            <td class="pph" id="pph_{{$no}}">Rp
-                               <span>
-                                  @php
-                                     $pph = ($item->penguji_utama->golongan->pph * $sk_honor->honor_penguji)/100;
-                                  @endphp
-                                  {{ number_format($pph, 0, ",", ".") }}
-                               </span>
-                            </td>
-                            <td class="penerimaan" id="penerimaan_{{$no}}">Rp
-                               @php
-                                  $penerimaan = $sk_honor->honor_penguji - $pph;
-                               @endphp
-                               <span>{{ number_format($penerimaan, 0, ",", ".") }}</span>
-                            </td>
-
-                            @php
-                              $total_honor+=$sk_honor->honor_penguji;
-                              $total_pph+=$pph;
-                              $total_penerimaan+=$penerimaan;
-                            @endphp
-                          </tr>
-
-                           <tr id="{{$no+=1}}">
+                        @php $no=0; $a = 1; $b = 1; $total_honor=0; $total_pph=0; $total_penerimaan=0; @endphp
+                        @foreach($detail_skripsi as $item)
+                           {{-- dosen1 --}}
+                           @if ($no+1 == 4*$a-1)
+                              @php $a+=1; @endphp
+                              <tr id="{{ $no+=1 }}" style="background-color: #bbb;">
+                           @else
+                              <tr id="{{ $no+=1 }}">
+                           @endif
                               <td>{{$no}}</td>
-                               <td>{{$item->penguji_pendamping->nama}}</td>
-                              <td>{{$item->penguji_pendamping->npwp}}</td>
-                              <td>{{$item->penguji_pendamping->golongan->golongan}}</td>
-                              <td id="penguji_{{$no}}" class="pengujiHonor">Rp
-                                 <span>{{ number_format($sk_honor->honor_penguji, 0, ",", ".") }}</span></td>
-                              <td class="pph" id="pph_{{$no}}">Rp
-                                 <span>
-                                    @php
-                                       $pph = ($item->penguji_pendamping->golongan->pph * $sk_honor->honor_penguji)/100;
-                                    @endphp
-                                    {{ number_format($pph, 0, ",", ".") }}
-                                 </span>
-                              </td>
-                              <td class="penerimaan" id="penerimaan_{{$no}}">Rp
+
+                              @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Penguji")
                                  @php
-                                    $penerimaan = $sk_honor->honor_penguji - $pph;
+                                    $honorarium = $item->surat_tugas[0]->dosen1->honorarium;
+                                    $pph = $item->surat_tugas[0]->dosen1->pph;
                                  @endphp
-                                 <span>{{ number_format($penerimaan, 0, ",", ".") }}</span>
-                              </td>
+                                 <td>{{$item->surat_tugas[0]->dosen1->nama}}</td>
+                                 <td>{{$item->surat_tugas[0]->dosen1->npwp}}</td>
+                                 <td rowspan="2">
+                                    <p>{{$item->skripsi->mahasiswa->nama}}</p>
+                                    <p>NIM: {{$item->skripsi->nim}}</p>
+                                 </td>
+                                 <td>{{$item->surat_tugas[0]->dosen1->golongan->golongan}}</td>
+                                 <td>Rp 
+                                    {{ number_format($honorarium, 0, ",", ".") }}
+                                 </td>
+                                 <td>Rp 
+                                    {{ number_format($pph, 0, ",", ".") }}
+                                 </td>
+                                 <td>Rp 
+                                    @php
+                                       $penerimaan = $honorarium - $pph;
+                                    @endphp
+                                    {{ number_format($penerimaan, 0, ",", ".") }}
+                                 </td>
+                              @else
+                                 @php
+                                    $honorarium = $item->surat_tugas[1]->dosen1->honorarium;
+                                    $pph = $item->surat_tugas[1]->dosen1->pph;
+                                 @endphp
+                                 <td>{{$item->surat_tugas[1]->dosen1->nama}}</td>
+                                 <td>{{$item->surat_tugas[1]->dosen1->npwp}}</td>
+                                 <td rowspan="2">
+                                    <p>{{$item->skripsi->mahasiswa->nama}}</p>
+                                    <p>NIM: {{$item->skripsi->nim}}</p>
+                                 </td>
+                                 <td>{{$item->surat_tugas[1]->dosen1->golongan->golongan}}</td>
+                                 <td>Rp 
+                                    {{ number_format($honorarium, 0, ",", ".") }}
+                                 </td>
+                                 <td>Rp 
+                                    {{ number_format($pph, 0, ",", ".") }}
+                                 </td>
+                                 <td>Rp 
+                                    @php
+                                       $penerimaan = $honorarium - $pph;
+                                    @endphp
+                                    {{ number_format($penerimaan, 0, ",", ".") }}
+                                 </td>
+                              @endif
 
                               @php
-                                $total_honor+=$sk_honor->honor_penguji;
-                                $total_pph+=$pph;
-                                $total_penerimaan+=$penerimaan;
+                                 $total_honor+=$honorarium;
+                                 $total_pph+=$pph;
+                                 $total_penerimaan+=$penerimaan;
+                              @endphp
+                           </tr>
+
+                           {{-- dosen2 --}}
+                           @if ($no+1 == 4*$b)
+                              @php $b+=1; @endphp
+                              <tr id="{{ $no+=1 }}" style="background-color: #bbb;">
+                           @else
+                              <tr id="{{ $no+=1 }}">
+                           @endif
+                              <td>{{$no}}</td>
+
+                              @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Penguji")
+                                 @php
+                                    $honorarium = $item->surat_tugas[0]->dosen2->honorarium;
+                                    $pph = $item->surat_tugas[0]->dosen2->pph;
+                                 @endphp
+                                 <td>{{$item->surat_tugas[0]->dosen2->nama}}</td>
+                                 <td>{{$item->surat_tugas[0]->dosen2->npwp}}</td>
+                                 <td>{{$item->surat_tugas[0]->dosen2->golongan->golongan}}</td>
+                                 <td>Rp  
+                                    {{ number_format($honorarium, 0, ",", ".") }}
+                                 </td>
+                                 <td>Rp 
+                                    {{ number_format($pph, 0, ",", ".") }}
+                                 </td>
+                                 <td>Rp 
+                                    @php
+                                       $penerimaan = $honorarium - $pph;
+                                    @endphp
+                                    {{ number_format($penerimaan, 0, ",", ".") }}
+                                 </td>
+                              @else
+                                 @php
+                                    $honorarium = $item->surat_tugas[1]->dosen2->honorarium;
+                                    $pph = $item->surat_tugas[1]->dosen2->pph;
+                                 @endphp
+                                 <td>{{$item->surat_tugas[1]->dosen2->nama}}</td>
+                                 <td>{{$item->surat_tugas[1]->dosen2->npwp}}</td>
+                                 <td>{{$item->surat_tugas[1]->dosen2->golongan->golongan}}</td>
+                                 <td>Rp  
+                                    {{ number_format($honorarium, 0, ",", ".") }}
+                                 </td>
+                                 <td>Rp 
+                                    {{ number_format($pph, 0, ",", ".") }}
+                                 </td>
+                                 <td>Rp 
+                                    @php
+                                       $penerimaan = $honorarium - $pph;
+                                    @endphp
+                                    {{ number_format($penerimaan, 0, ",", ".") }}
+                                 </td>
+                              @endif
+
+                              @php
+                                 $total_honor+=$honorarium;
+                                 $total_pph+=$pph;
+                                 $total_penerimaan+=$penerimaan;
                               @endphp
                            </tr>
                         @endforeach
 
                         <tr class="jml_total">
                            <td colspan="5" style="text-align: center;">Jumlah</td>
-                           <td>Rp <span>{{ number_format($total_honor, 0, ",", ".") }}</span></td>
-                           <td>Rp <span>{{ number_format($total_pph, 0, ",", ".") }}</span></td>
-                           <td>Rp <span>{{ number_format($total_penerimaan, 0, ",", ".") }}</span></td>
+                           <td>Rp {{ number_format($total_honor, 0, ",", ".") }}</td>
+                           <td>Rp {{ number_format($total_pph, 0, ",", ".") }}</td>
+                           <td>Rp {{ number_format($total_penerimaan, 0, ",", ".") }}</td>
+                        </tr>
+                        <tr class="jml_terbilang">
+                           <td colspan="8">Terbilang:
+                               @php
+                                   echo(terbilang($total_honor).' Rupiah');
+                               @endphp
+                           </td>
                         </tr>
                      </tbody>
                   </table>

@@ -59,11 +59,6 @@
            background-color: white;
          }
 
-         .jml_total td{
-           font-weight: bold;
-           background-color: white;
-         }
-
          .jml_total td:first-child{
            text-align: center;
          }
