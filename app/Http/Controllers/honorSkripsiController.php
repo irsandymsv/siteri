@@ -67,7 +67,7 @@ class honorSkripsiController extends Controller
                 ->get();
         foreach($besaran_honor as $bh){
             detail_honor::create([
-                'id_sk_honor' => $bh->id,
+                'id_sk_honor' => $sk_honor->id,
                 'id_histori_besaran_honor' => $bh->besaran_honor_terbaru->id
             ]);
         }
