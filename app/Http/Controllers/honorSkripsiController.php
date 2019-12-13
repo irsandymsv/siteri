@@ -78,26 +78,15 @@ class honorSkripsiController extends Controller
         }
     }
 
-    private function cari_honor ($id_sk_skripsi)
+
+    //pudj = Pembimbing Utama Dengan Jabatan
+    //putj = Pembimbing Utama Tanpa Jabatan
+    //ppdj = Pembimbing Pendamping Dengan Jabatan
+    //pptj = Pembimbing Pendamping Tanpa Jabatan
+    //pus = Penguji Utama Skripsi
+    //pps = Penguji Pendamping Skripsi
+    private function cari_honor (int $pudj, int $putj, int $ppdj, int $pptj, int $pus, int $pps, $id_sk_skripsi)
     {
-        $pudj = nama_honor::with('besaran_honor_terbaru')
-            ->where('nama_honor', 'Honor Pembimbing Utama Dengan Jabatan Fungsional')
-            ->first();
-        $putj = nama_honor::with('besaran_honor_terbaru')
-            ->where('nama_honor', 'Honor Pembimbing Utama Tanpa Jabatan Fungsional')
-            ->first();
-        $ppdj = nama_honor::with('besaran_honor_terbaru')
-            ->where('nama_honor', 'Honor Pembimbing Pendamping Dengan Jabatan Fungsional')
-            ->first();
-        $pptj = nama_honor::with('besaran_honor_terbaru')
-            ->where('nama_honor', 'Honor Pembimbing Pendamping Tanpa Jabatan Fungsional')
-            ->first();
-        $pus = nama_honor::with('besaran_honor_terbaru')
-            ->where('nama_honor', 'Honor Penguji Utama Skripsi')
-            ->first();
-        $pps = nama_honor::with('besaran_honor_terbaru')
-            ->where('nama_honor', 'Honor Penguji Pendamping Skripsi')
-            ->first();
 
         $detail_skripsi = detail_skripsi::where('id_sk_skripsi', $id_sk_skripsi)
             ->with([
