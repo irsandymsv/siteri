@@ -176,13 +176,13 @@ Route::prefix('keuangan')->name('keuangan.')->group(function()
 
 	//Honor Skripsi
 	Route::get('/honor-skripsi/', 'honorSkripsiController@index')->name('honor-skripsi.index');
-	Route::post('/honor-skripsi/store/{id_sk_skripsi}', 'honorSkripsiController@store')->name('honor-skripsi.store');
+	Route::get('/honor-skripsi/store/{id_sk_skripsi}', 'honorSkripsiController@store')->name('honor-skripsi.store');
 	Route::get('/honor-skripsi/show/{id_sk_honor}','honorSkripsiController@show')->name('honor-skripsi.show');
 	Route::delete('/honor-skripsi/delete/{id_sk_honor?}', 'honorSkripsiController@destroy')->name('honor-skripsi.destroy');
 	Route::get('/honor-skripsi/show/{id_sk_honor}/cetak-pdf', 'honorSkripsiController@cetak_pdf')->name('honor-skripsi.cetak');
 	Route::put('/honor-skripsi/{id_sk_honor}/status-dibayarkan', 'honorSemproController@status_dibayarkan')->name('honor-skripsi.status_dibayarkan');
-	// Route::get('/honor-skripsi/pilih-sk', 'honorSkripsiController@pilih_sk')->name('honor-skripsi.pilih-sk');
-	// Route::get('/honor-skripsi/create/{id_sk_akademik}', 'honorSkripsiController@create')->name('honor-skripsi.create');
+    Route::get('/honor-skripsi/create/', 'honorSkripsiController@create')->name('honor-skripsi.create');
+    	// Route::get('/honor-skripsi/pilih-sk', 'honorSkripsiController@pilih_sk')->name('honor-skripsi.pilih-sk');
 	// Route::get('/honor-skripsi/show/{id_sk_honor}/edit','honorSkripsiController@edit')->name('honor-skripsi.edit');
 	// Route::put('/honor-skripsi/show/{id_sk_honor}/update','honorSkripsiController@update')->name('honor-skripsi.update');
 

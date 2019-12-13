@@ -97,7 +97,7 @@ class honorSemproController extends Controller
         ])
         ->first();
         // dd($sk_honor);
-        
+
         $detail_skripsi = detail_skripsi::where('id_sk_sempro', $sk_honor->sk_sempro->no_surat)
         ->with([
             'sk_sempro',
@@ -110,10 +110,11 @@ class honorSemproController extends Controller
                     ['id_status_surat_tugas', 3]
                 ])->orderBy('created_at', 'desc');
             },
-            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan',
+            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional',
             'surat_tugas.dosen1.golongan',
-            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan',
-            'surat_tugas.dosen2.golongan'
+            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional',
+            'surat_tugas.dosen2.golongan',
+
         ])->get();
 
         // $honor_pembahas_sempro = $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor;

@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use App\sk_skripsi;
 use App\detail_skripsi;
+use App\histori_besaran_honor;
+use App\nama_honor;
 use App\sk_honor;
+use App\User;
+use App\detail_honor;
 use PDF;
 use Exception;
 use Carbon\Carbon;
@@ -47,47 +52,106 @@ class honorSkripsiController extends Controller
     //     ]);
     // }
 
-    // public function create($id)
-    // {
-    // 	$sk_akademik = sk_akademik::find($id);
-    //     $detail_sk = detail_sk::where('id_sk_akademik', $id)->with([
-    //         'pembimbing_utama:no_pegawai,nama,npwp,id_golongan', 'pembimbing_utama.golongan',
-    //         'pembimbing_pendamping:no_pegawai,nama,npwp,id_golongan', 'pembimbing_pendamping.golongan',
-    //         'penguji_utama:no_pegawai,nama,npwp,id_golongan', 'penguji_utama.golongan',
-    //         'penguji_pendamping:no_pegawai,nama,npwp,id_golongan', 'penguji_pendamping.golongan',
-    //     ])->get();
-    //     // dd($detail_sk);
-    //     return view('keuangan.honor_sk.create_skripsi', [
-    //         'sk_akademik' => $sk_akademik,
-    //         'detail_sk' => $detail_sk,
-    //         'tipe' => 'SK Skripsi'
-    //     ]);
-    // }
-
     public function store($id_sk_skripsi)
     {
-        $this->validate($request,[
-            'honor_pembimbing1' => 'required',
-            'honor_pembimbing2' => 'required',
-            'honor_penguji' => 'required',
-        ]);
-
-        try{
-            $sk_honor=sk_honor::create([
-                'id_tipe_sk' => 1, //tipe SK Skripsi
-                'id_status_sk_honor' => $request->status,
-                'honor_pembimbing1' => $request->honor_pembimbing1,
-                'honor_pembimbing2' => $request->honor_pembimbing2,
-                'honor_penguji' => $request->honor_penguji
+        try {
+        $sk_honor = sk_honor::create();
+        sk_skripsi::where('id',$id_sk_skripsi)->update(['id_sk_honor' => $sk_honor->id]);
+        $besaran_honor = nama_honor::with('besaran_honor_terbaru')
+                ->where('nama_honor', 'Honor Pembimbing Utama Dengan Jabatan Fungsional')
+                ->orWhere('nama_honor', 'Honor Pembimbing Utama Tanpa Jabatan Fungsional')
+                ->orWhere('nama_honor', 'Honor Pembimbing Pendamping Dengan Jabatan Fungsional')
+                ->orWhere('nama_honor', 'Honor Pembimbing Pendamping Tanpa Jabatan Fungsional')
+                ->orWhere('nama_honor', 'Honor Penguji Utama Skripsi')
+                ->orWhere('nama_honor', 'Honor Penguji Pendamping Skripsi')
+                ->get();
+        foreach($besaran_honor as $bh){
+            detail_honor::create([
+                'id_sk_honor' => $bh->id,
+                'id_histori_besaran_honor' => $bh->besaran_honor_terbaru->id
             ]);
-            detail_sk::where('id_sk_akademik',$request->id_sk_akademik)
-                    ->update([
-                        'id_sk_honor' => $sk_honor->id
-                    ]);
+        }
             return redirect()->route('keuangan.honor-skripsi.show', $sk_honor->id)->with('success', 'Data Berhasil Dibuat');
         }catch(Exception $e){
+            dd($e->getMessage());
             return redirect()->route('keuangan.honor-skripsi.pilih-sk')->with('error', $e->getMessage());
         }
+    }
+
+    private function cari_honor ($id_sk_skripsi)
+    {
+        $pudj = nama_honor::with('besaran_honor_terbaru')
+            ->where('nama_honor', 'Honor Pembimbing Utama Dengan Jabatan Fungsional')
+            ->first();
+        $putj = nama_honor::with('besaran_honor_terbaru')
+            ->where('nama_honor', 'Honor Pembimbing Utama Tanpa Jabatan Fungsional')
+            ->first();
+        $ppdj = nama_honor::with('besaran_honor_terbaru')
+            ->where('nama_honor', 'Honor Pembimbing Pendamping Dengan Jabatan Fungsional')
+            ->first();
+        $pptj = nama_honor::with('besaran_honor_terbaru')
+            ->where('nama_honor', 'Honor Pembimbing Pendamping Tanpa Jabatan Fungsional')
+            ->first();
+        $pus = nama_honor::with('besaran_honor_terbaru')
+            ->where('nama_honor', 'Honor Penguji Utama Skripsi')
+            ->first();
+        $pps = nama_honor::with('besaran_honor_terbaru')
+            ->where('nama_honor', 'Honor Penguji Pendamping Skripsi')
+            ->first();
+
+        $detail_skripsi = detail_skripsi::where('id_sk_skripsi', $id_sk_skripsi)
+            ->with([
+                'sk_skripsi',
+                'skripsi',
+                'skripsi.mahasiswa',
+                'surat_tugas' => function ($query) {
+                    $query->where(
+                        'id_tipe_surat_tugas', 1
+
+                    )
+                    ->orWhere('id_tipe_surat_tugas', 3)
+                    ->where('id_status_surat_tugas', 3)
+                    ->orderBy('created_at', 'desc');
+                },
+                'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional',
+                'surat_tugas.dosen1.golongan',
+                'surat_tugas.dosen1.fungsional',
+                'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional',
+                'surat_tugas.dosen2.golongan',
+                'surat_tugas.dosen2.fungsional',
+            ])->get();
+        foreach($detail_skripsi as $dk){
+            foreach($dk->surat_tugas as $st){
+                if($st->id_tipe_surat_tugas == 3){
+                    $st->dosen1->honorarium = $pus;
+                    $st->dosen1->pph = $this->hitung_pph($pus, $st->dosen1->golongan->pph);
+                    $st->dosen2->honorarium = $pps;
+                    $st->dosen2->pph = $this->hitung_pph($pps, $st->dosen2->golongan->pph);
+                }else{
+                    if ($st->dosen1->fungsional->jab_fungsional == "Tenaga Pengajar"){
+                        $st->dosen1->honorarium = $putj;
+                        $st->dosen1->pph = $this->hitung_pph($putj, $st->dosen1->golongan->pph);
+                    }else{
+                        $st->dosen1->honorarium = $pudj;
+                        $st->dosen1->pph = $this->hitung_pph($pudj, $st->dosen1->golongan->pph);
+                    }
+                    if ($st->dosen2->fungsional->jab_fungsional == "Tenaga Pengajar") {
+                        $st->dosen1->honorarium = $pptj;
+                        $st->dosen1->pph = $this->hitung_pph($pptj, $st->dosen1->golongan->pph);
+                    } else {
+                        $st->dosen2->honorarium = $ppdj;
+                        $st->dosen1->pph = $this->hitung_pph($ppdj, $st->dosen1->golongan->pph);
+                    }
+                }
+            }
+
+        }
+        return $detail_skripsi;
+    }
+
+    private function hitung_pph($honor,$pph){
+        $jumlah_pph = $honor * ($pph/100);
+        return $jumlah_pph;
     }
 
     public function show($id_sk_honor)
