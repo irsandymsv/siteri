@@ -333,7 +333,7 @@ class DatadetailBarang extends Migration
             'idbarang_fk' => '7',
             'merk_barang' => 'Brother B-104',
             'nup' => '11',
-            'idruang_fk' => null
+            'idruang_fk' => 'belum nemu ruang'
         ));
         DB::table('datadetail_barang')->insert(array(
             'tanggal' => '2011-12-01',
