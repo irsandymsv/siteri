@@ -14,11 +14,11 @@ class DetailBarang extends Migration
     public function up()
     {
         Schema::create('detail_barang', function (Blueprint $table) {
-        //     $table->increments('id');
-        //     $table->unsignedInteger('id_categori');
-        //     $table->string('spesifikasi_barang');
-        //     $table->bigInteger('harga_satuan');
-        // });
+            $table->increments('id');
+            $table->unsignedInteger('id_categori');
+            $table->string('spesifikasi_barang');
+            $table->bigInteger('harga_satuan');
+        });
     }
 
     /**
