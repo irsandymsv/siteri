@@ -169,7 +169,7 @@ class SkSkripsiController extends Controller
          'surat_tugas.dosen2:no_pegawai,nama',
      	])->get();
 
-     	// dd($detail_sk);
+     	// dd($detail_skripsi);
      	return view('akademik.SK_view.show_sk_skripsi', [
          'sk' => $sk,
          'detail_skripsi' => $detail_skripsi,
