@@ -87,7 +87,6 @@ class honorSkripsiController extends Controller
     //pps = Penguji Pendamping Skripsi
     private function cari_honor (int $pudj, int $putj, int $ppdj, int $pptj, int $pus, int $pps, $id_sk_skripsi)
     {
-
         $detail_skripsi = detail_skripsi::where('id_sk_skripsi', $id_sk_skripsi)
             ->with([
                 'sk_skripsi',
@@ -110,24 +109,24 @@ class honorSkripsiController extends Controller
         foreach($detail_skripsi as $dk){
             foreach($dk->surat_tugas as $st){
                 if($st->id_tipe_surat_tugas == 3){
-                    $st->dosen1->honorarium = $pus;
-                    $st->dosen1->pph = $this->hitung_pph($pus, $st->dosen1->golongan->pph);
-                    $st->dosen2->honorarium = $pps;
-                    $st->dosen2->pph = $this->hitung_pph($pps, $st->dosen2->golongan->pph);
+                    $st->dosen1->honorarium_pus = $pus;
+                    $st->dosen1->pph_pus = $this->hitung_pph($pus, $st->dosen1->golongan->pph);
+                    $st->dosen2->honorarium_pps = $pps;
+                    $st->dosen2->pph_pps = $this->hitung_pph($pps, $st->dosen2->golongan->pph);
                 }else{
                     if ($st->dosen1->fungsional->jab_fungsional == "Tenaga Pengajar"){
-                        $st->dosen1->honorarium = $putj;
-                        $st->dosen1->pph = $this->hitung_pph($putj, $st->dosen1->golongan->pph);
+                        $st->dosen1->honorarium_putj = $putj;
+                        $st->dosen1->pph_putj = $this->hitung_pph($putj, $st->dosen1->golongan->pph);
                     }else{
-                        $st->dosen1->honorarium = $pudj;
-                        $st->dosen1->pph = $this->hitung_pph($pudj, $st->dosen1->golongan->pph);
+                        $st->dosen1->honorarium_pudj = $pudj;
+                        $st->dosen1->pph_pudj = $this->hitung_pph($pudj, $st->dosen1->golongan->pph);
                     }
                     if ($st->dosen2->fungsional->jab_fungsional == "Tenaga Pengajar") {
-                        $st->dosen2->honorarium = $pptj;
-                        $st->dosen2->pph = $this->hitung_pph($pptj, $st->dosen2->golongan->pph);
+                        $st->dosen2->honorarium_pptj = $pptj;
+                        $st->dosen2->pph_pptj = $this->hitung_pph($pptj, $st->dosen2->golongan->pph);
                     } else {
-                        $st->dosen2->honorarium = $ppdj;
-                        $st->dosen2->pph = $this->hitung_pph($ppdj, $st->dosen2->golongan->pph);
+                        $st->dosen2->honorarium_ppdj = $ppdj;
+                        $st->dosen2->pph_ppdj = $this->hitung_pph($ppdj, $st->dosen2->golongan->pph);
                     }
                 }
             }
@@ -208,7 +207,7 @@ class honorSkripsiController extends Controller
         //     'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan',
         //     'surat_tugas.dosen2.golongan'
         // ])->get();
-
+        // dump($detail_skripsi);
         return  view('keuangan.honor_sk.show_skripsi', [
             'sk_honor' => $sk_honor,
             'detail_skripsi' => $detail_skripsi
