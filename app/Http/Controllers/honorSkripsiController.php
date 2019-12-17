@@ -190,23 +190,6 @@ class honorSkripsiController extends Controller
         );
         // dd($detail_skripsi);
 
-        // $detail_skripsi = detail_skripsi::where('id_sk_skripsi', $sk_honor->sk_skripsi->id)
-        // ->with([
-        //     'sk_skripsi',
-        //     'skripsi',
-        //     'skripsi.mahasiswa',
-        //     'surat_tugas' => function($query)
-        //     {
-        //         $query->where('id_tipe_surat_tugas', 1)
-        //         ->orWhere('id_tipe_surat_tugas', 3)
-        //         ->orderBy('created_at', 'desc');
-        //     },
-        //     'surat_tugas.tipe_surat_tugas',
-        //     'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan',
-        //     'surat_tugas.dosen1.golongan',
-        //     'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan',
-        //     'surat_tugas.dosen2.golongan'
-        // ])->get();
         // dump($detail_skripsi);
         return  view('keuangan.honor_sk.show_skripsi', [
             'sk_honor' => $sk_honor,
@@ -270,25 +253,6 @@ class honorSkripsiController extends Controller
             $honor_penguji2,
             $sk_honor->sk_skripsi->id
         );
-
-        // $detail_skripsi = detail_skripsi::where('id_sk_skripsi', $sk_honor->sk_skripsi->id)
-        // ->with([
-        //     'sk_skripsi',
-        //     'skripsi',
-        //     'skripsi.mahasiswa',
-
-        //     'surat_tugas' => function($query)
-        //     {
-        //         $query->where([
-        //             ['id_tipe_surat_tugas', 2],
-        //             ['id_status_surat_tugas', 3]
-        //         ])->orderBy('created_at', 'desc');
-        //     },
-        //     'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan',
-        //     'surat_tugas.dosen1.golongan',
-        //     'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan',
-        //     'surat_tugas.dosen2.golongan'
-        // ])->get();
 
         $tahun_akademik = $this->get_tahun_akademik($sk_honor->sk_skripsi->created_at);
 

@@ -198,7 +198,7 @@
 
             <div class="box-body">
                <div class="table-responsive">
-                  <table id="dataTable1" class="table table-bordered table-striped">
+                  <table id="dataTable1" class="table table-bordered">
                      <thead>
                         <tr>
                            <th>No</th>
@@ -228,8 +228,14 @@
 
                               @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Pembimbing")
                                  @php
-                                    $honorarium = $item->surat_tugas[0]->dosen1->honorarium;
-                                    $pph = $item->surat_tugas[0]->dosen1->pph;
+                                    if (isset($item->surat_tugas[0]->dosen1->honorarium_putj)) {
+                                       $honorarium = $item->surat_tugas[0]->dosen1->honorarium_putj;
+                                       $pph = $item->surat_tugas[0]->dosen1->pph_putj;
+                                    }
+                                    else{
+                                       $honorarium = $item->surat_tugas[0]->dosen1->honorarium_pudj;
+                                       $pph = $item->surat_tugas[0]->dosen1->pph_pudj;
+                                    }
                                  @endphp
                                  <td>{{$item->surat_tugas[0]->dosen1->nama}}</td>
                                  <td>{{$item->surat_tugas[0]->dosen1->npwp}}</td>
@@ -252,8 +258,14 @@
                                  </td>
                               @else
                                  @php
-                                    $honorarium = $item->surat_tugas[1]->dosen1->honorarium;
-                                    $pph = $item->surat_tugas[1]->dosen1->pph;
+                                    if (isset($item->surat_tugas[1]->dosen1->honorarium_putj)) {
+                                       $honorarium = $item->surat_tugas[1]->dosen1->honorarium_putj;
+                                       $pph = $item->surat_tugas[1]->dosen1->pph_putj;
+                                    }
+                                    else{
+                                       $honorarium = $item->surat_tugas[1]->dosen1->honorarium_pudj;
+                                       $pph = $item->surat_tugas[1]->dosen1->pph_pudj;
+                                    }
                                  @endphp
                                  <td>{{$item->surat_tugas[1]->dosen1->nama}}</td>
                                  <td>{{$item->surat_tugas[1]->dosen1->npwp}}</td>
@@ -294,8 +306,14 @@
 
                               @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Pembimbing")
                                  @php
-                                    $honorarium = $item->surat_tugas[0]->dosen2->honorarium;
-                                    $pph = $item->surat_tugas[0]->dosen2->pph;
+                                    if (isset($item->surat_tugas[0]->dosen2->honorarium_pptj)) {
+                                       $honorarium = $item->surat_tugas[0]->dosen2->honorarium_pptj;
+                                       $pph = $item->surat_tugas[0]->dosen2->pph_pptj;
+                                    }
+                                    else{
+                                       $honorarium = $item->surat_tugas[0]->dosen2->honorarium_ppdj;
+                                       $pph = $item->surat_tugas[0]->dosen2->pph_ppdj;
+                                    }
                                  @endphp
                                  <td>{{$item->surat_tugas[0]->dosen2->nama}}</td>
                                  <td>{{$item->surat_tugas[0]->dosen2->npwp}}</td>
@@ -314,8 +332,14 @@
                                  </td>
                               @else
                                  @php
-                                    $honorarium = $item->surat_tugas[1]->dosen2->honorarium;
-                                    $pph = $item->surat_tugas[1]->dosen2->pph;
+                                    if (isset($item->surat_tugas[1]->dosen2->honorarium_pptj)) {
+                                       $honorarium = $item->surat_tugas[1]->dosen2->honorarium_pptj;
+                                       $pph = $item->surat_tugas[1]->dosen2->pph_pptj;
+                                    }
+                                    else{
+                                       $honorarium = $item->surat_tugas[1]->dosen2->honorarium_ppdj;
+                                       $pph = $item->surat_tugas[1]->dosen2->pph_ppdj;
+                                    }
                                  @endphp
                                  <td>{{$item->surat_tugas[1]->dosen2->nama}}</td>
                                  <td>{{$item->surat_tugas[1]->dosen2->npwp}}</td>
@@ -418,7 +442,7 @@
 
    			<div class="box-body">
                <div class="table-responsive">
-                  <table id="dataTable2" class="table table-bordered table-striped">
+                  <table id="dataTable2" class="table table-bordered">
                      <thead>
                         <tr>
                            <th>No</th>
@@ -446,8 +470,8 @@
 
                               @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Penguji")
                                  @php
-                                    $honorarium = $item->surat_tugas[0]->dosen1->honorarium;
-                                    $pph = $item->surat_tugas[0]->dosen1->pph;
+                                    $honorarium = $item->surat_tugas[0]->dosen1->honorarium_pus;
+                                    $pph = $item->surat_tugas[0]->dosen1->pph_pus;
                                  @endphp
                                  <td>{{$item->surat_tugas[0]->dosen1->nama}}</td>
                                  <td>{{$item->surat_tugas[0]->dosen1->npwp}}</td>
@@ -470,8 +494,8 @@
                                  </td>
                               @else
                                  @php
-                                    $honorarium = $item->surat_tugas[1]->dosen1->honorarium;
-                                    $pph = $item->surat_tugas[1]->dosen1->pph;
+                                    $honorarium = $item->surat_tugas[1]->dosen1->honorarium_pus;
+                                    $pph = $item->surat_tugas[1]->dosen1->pph_pus;
                                  @endphp
                                  <td>{{$item->surat_tugas[1]->dosen1->nama}}</td>
                                  <td>{{$item->surat_tugas[1]->dosen1->npwp}}</td>
@@ -512,8 +536,8 @@
 
                               @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Penguji")
                                  @php
-                                    $honorarium = $item->surat_tugas[0]->dosen2->honorarium;
-                                    $pph = $item->surat_tugas[0]->dosen2->pph;
+                                    $honorarium = $item->surat_tugas[0]->dosen2->honorarium_pps;
+                                    $pph = $item->surat_tugas[0]->dosen2->pph_pps;
                                  @endphp
                                  <td>{{$item->surat_tugas[0]->dosen2->nama}}</td>
                                  <td>{{$item->surat_tugas[0]->dosen2->npwp}}</td>
@@ -532,8 +556,8 @@
                                  </td>
                               @else
                                  @php
-                                    $honorarium = $item->surat_tugas[1]->dosen2->honorarium;
-                                    $pph = $item->surat_tugas[1]->dosen2->pph;
+                                    $honorarium = $item->surat_tugas[1]->dosen2->honorarium_pps;
+                                    $pph = $item->surat_tugas[1]->dosen2->pph_pps;
                                  @endphp
                                  <td>{{$item->surat_tugas[1]->dosen2->nama}}</td>
                                  <td>{{$item->surat_tugas[1]->dosen2->npwp}}</td>
