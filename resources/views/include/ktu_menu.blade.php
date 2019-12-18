@@ -1,4 +1,4 @@
-<li class="active"><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard KTU</span></a></li>
+<li class="active"><a href="{{ route('ktu.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard KTU</span></a></li>
 
 <li class="treeview">
     <a href="#"><i class="fa fa-link"></i> <span>Surat Tugas Akademik</span>
@@ -25,7 +25,7 @@
     </ul>
 </li>
 
-<li class="treeview">
+{{-- <li class="treeview">
     <a href="#"><i class="fa fa-link"></i> <span>Honor SK</span>
       <span class="pull-right-container">
           <i class="fa fa-angle-left pull-right"></i>
@@ -35,4 +35,4 @@
       <li><a href="{{ route('ktu.honor-skripsi.index') }}">Honor SK Dekan Skripsi</a></li>
       <li><a href="{{ route('ktu.honor-sempro.index') }}">Honor SK Dekan Sempro</a></li>
     </ul>
-</li>
+</li> --}}

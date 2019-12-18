@@ -358,14 +358,13 @@ class honorSkripsiController extends Controller
         }
     }
 
+
+    //BPP
     public function bpp_index()
     {
-        $sk_honor = sk_honor::where('id_tipe_sk', 1)
-        ->orderBy('updated_at', 'desc')
-        ->with(['tipe_sk', 'status_sk_honor'])
-        ->whereHas('status_sk_honor', function(Builder $query){
-            $query->whereIn('id', [2,3,4,5,6]);
-        })->get();
+        $sk_honor = sk_honor::orderBy('updated_at', 'desc')
+        ->with(['sk_skripsi', 'status_sk_honor'])
+        ->doesntHave('sk_sempro')->get();
 
         // dd($sk_honor);
         return view('bpp.honor_sk.honor_index', [
@@ -378,31 +377,76 @@ class honorSkripsiController extends Controller
     {
         $sk_honor = sk_honor::where('id', $id_sk_honor)
         ->with([
-            'tipe_sk',
+            'sk_skripsi',
             'status_sk_honor',
-            'detail_sk.pembimbing_utama:no_pegawai,nama,id_golongan',
-            'detail_sk.pembimbing_utama.golongan',
-
-            'detail_sk.pembimbing_pendamping:no_pegawai,nama,id_golongan',
-            'detail_sk.pembimbing_pendamping.golongan',
-
-            'detail_sk.penguji_utama:no_pegawai,nama,id_golongan',
-            'detail_sk.penguji_utama.golongan',
-
-            'detail_sk.penguji_pendamping:no_pegawai,nama,id_golongan',
-            'detail_sk.penguji_pendamping.golongan',
+            'detail_honor',
+            'detail_honor.histori_besaran_honor',
+            'detail_honor.histori_besaran_honor.nama_honor'
         ])
         ->first();
-        // dd($sk_honor);
 
-        if($sk_honor->id_status_sk_honor == 1){
-            return redirect()->route('bpp.honor-skripsi.index');
+        $honor_pembimbing1_jabatan = 0;
+        $honor_pembimbing1_no_jabatan = 0;
+        $honor_pembimbing2_jabatan = 0;
+        $honor_pembimbing2_no_jabatan = 0;
+        $honor_penguji1 = 0;
+        $honor_penguji2 = 0;
+        foreach ($sk_honor->detail_honor as $item) {
+            if ($item->histori_besaran_honor->nama_honor->nama_honor == "Honor Pembimbing Utama Dengan Jabatan Fungsional") {
+                $honor_pembimbing1_jabatan = $item->histori_besaran_honor->jumlah_honor;
+            }
+            elseif ($item->histori_besaran_honor->nama_honor->nama_honor == "Honor Pembimbing Utama Tanpa Jabatan Fungsional") {
+                $honor_pembimbing1_no_jabatan = $item->histori_besaran_honor->jumlah_honor;;
+            }
+            elseif ($item->histori_besaran_honor->nama_honor->nama_honor == "Honor Pembimbing Pendamping Dengan Jabatan Fungsional") {
+                $honor_pembimbing2_jabatan = $item->histori_besaran_honor->jumlah_honor;;
+            }
+            elseif ($item->histori_besaran_honor->nama_honor->nama_honor == "Honor Pembimbing Pendamping Tanpa Jabatan Fungsional") {
+                $honor_pembimbing2_no_jabatan = $item->histori_besaran_honor->jumlah_honor;;
+            }
+            elseif ($item->histori_besaran_honor->nama_honor->nama_honor == "Honor Penguji Utama Skripsi") {
+                $honor_penguji1 = $item->histori_besaran_honor->jumlah_honor;;
+            }
+            elseif ($item->histori_besaran_honor->nama_honor->nama_honor == "Honor Penguji Pendamping Skripsi") {
+                $honor_penguji2 = $item->histori_besaran_honor->jumlah_honor;;
+            }
         }
-        else{
-            return  view('bpp.honor_sk.honor_show', [
-                'sk_honor' => $sk_honor
-            ]);
-        }
+
+        $detail_skripsi = $this->cari_honor(
+            $honor_pembimbing1_jabatan,
+            $honor_pembimbing1_no_jabatan,
+            $honor_pembimbing2_jabatan,
+            $honor_pembimbing2_no_jabatan,
+            $honor_penguji1,
+            $honor_penguji2,
+            $sk_honor->sk_skripsi->id
+        );
+
+        $tahun_akademik = $this->get_tahun_akademik($sk_honor->sk_skripsi->created_at);
+
+        $dekan = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "Dekan");
+        })->first();
+
+        $ktu = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "KTU");
+        })->first();
+
+        $bpp = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "BPP");
+        })->first();
+
+        return view('bpp.honor_sk.show_skripsi', [
+            'sk_honor' => $sk_honor,
+            'detail_skripsi' => $detail_skripsi,
+            'tahun_akademik' => $tahun_akademik,
+            'dekan' => $dekan,
+            'ktu' => $ktu,
+            'bpp' =>$bpp
+        ]);
     }
 
     public function bpp_verif(Request $request, $id)
@@ -427,6 +471,7 @@ class honorSkripsiController extends Controller
         }
     }
 
+    //KTU
     public function ktu_index()
     {
         $sk_honor = sk_honor::where('id_tipe_sk', 1)
@@ -496,6 +541,7 @@ class honorSkripsiController extends Controller
         }
     }
 
+    //Wadek2
     public function wadek2_index()
     {
         $sk_honor = sk_honor::where('id_tipe_sk', 1)
@@ -565,6 +611,7 @@ class honorSkripsiController extends Controller
         }
     }
 
+    //Dekan
     public function dekan_index()
     {
         $sk_honor = sk_honor::where('id_tipe_sk', 1)

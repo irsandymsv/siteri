@@ -16,6 +16,8 @@ class skripsiController extends suratTugasController
     public function index()
     {
     	$data_skripsi = skripsi::with(['mahasiswa', 'status_skripsi'])->get();
+
+        // dd($data_skripsi);
     	return view('akademik.skripsi.index', ['data_skripsi' => $data_skripsi]);
     }
 

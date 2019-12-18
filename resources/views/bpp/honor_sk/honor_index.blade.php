@@ -43,12 +43,18 @@
                      <thead>
                         <tr>
                            <th>No</th>
-                           <th>SK Sempro</th>
+                           @if ($tipe == "SK Skripsi")
+                              <th>Nomor SK Pembimbing</th>
+                              <th>Nomor SK Penguji</th>   
+                           @else
+                              <th>Nomor SK Sempro</th>                           
+                           @endif
                            <th>Tanggal Dibuat</th>
-                           <th>Status</th>
+                           {{-- <th>Status</th>
                            <th>Verif BPP</th>
                            <th>Verif KTU</th>
-                           <th>Verif Wadek 2</th>
+                           <th>Verif Wadek 2</th> --}}
+                           <th>Status Honorarium</th>
                            <th>Pilihan</th>
                         </tr>
                      </thead>
@@ -57,11 +63,17 @@
                         @foreach ($sk_honor as $item)
                            <tr id="sk_{{ $item->id }}">
                               <td>{{ $loop->index + 1 }}</td>
-                              <td>{{ $item->sk_sempro->no_surat }}</td>
+                              @if ($tipe == "SK Skripsi")
+                                 <td>{{ $item->sk_skripsi->no_surat_pembimbing }}/UN 25.1.15/SP/{{Carbon\Carbon::parse($item->sk_skripsi->created_at)->year}}</td>
+                                 <td>{{ $item->sk_skripsi->no_surat_penguji }}/UN 25.1.15/SP/{{Carbon\Carbon::parse($item->sk_skripsi->created_at)->year}}</td>
+                              @else
+                                 <td>{{ $item->sk_sempro->no_surat }}/UN 25.1.15/SP/{{Carbon\Carbon::parse($item->sk_sempro->created_at)->year}}</td>
+                              @endif
                               <td>
                                  {{ Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}
                               </td>
                               <td>{{ $item->status_sk_honor->status }}</td>
+                              {{-- <td>{{ $item->status_sk_honor->status }}</td>
                               <td>
                                  @if($item->verif_bpp == 0) 
                                     Belum Diverifikasi
@@ -88,9 +100,9 @@
                                  @else
                                     <label class="label bg-green">Sudah Diverifikasi</label>
                                  @endif
-                              </td>
+                              </td> --}}
                               <td>
-                                 @if ($item->tipe_sk->tipe == "SK Skripsi")
+                                 @if ($tipe == "SK Skripsi")
                                     <a href="{{ route('bpp.honor-skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
                                  @else
                                     <a href="{{ route('bpp.honor-sempro.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>

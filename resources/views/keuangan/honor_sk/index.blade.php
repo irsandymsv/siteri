@@ -198,7 +198,7 @@
             <th></th>
          </tr>`).clone(true).appendTo( '#data_table thead' );
       @else
-      nomor_kolom = 3;
+         nomor_kolom = 3;
          $(`<tr>
             <th></th>
             <th></th>

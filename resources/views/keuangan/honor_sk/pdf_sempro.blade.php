@@ -267,24 +267,24 @@
       <div class="ttd_row">
          <div>
             PPK,
-           <br><br><br><br>
-           <span><b>{{ $dekan->nama }}</b></span><br>
-           <span>NIP. {{ $dekan->no_pegawai }}</span>
-        </div>
+            <br><br><br><br>
+            <span><b>{{ $dekan->nama }}</b></span><br>
+            <span>NIP. {{ $dekan->no_pegawai }}</span>
+         </div>
 
-        <div>
+         <div>
            Kasubag TU,
            <br><br><br><br>
            <span><b>{{ $ktu->nama }}</b></span><br>
            <span>NIP. {{ $ktu->no_pegawai }}</span>
-        </div>
+         </div>
 
-        <div>
+         <div>
            BPP Fakultas Ilmu Komputer,
            <br><br><br><br>
            <span><b>{{ $bpp->nama }}</b></span><br>
            <span>NIP. {{ $bpp->no_pegawai }}</span>
-        </div>
+         </div>
       </div>
    </div>
 </body>

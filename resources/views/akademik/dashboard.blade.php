@@ -218,8 +218,8 @@
 			    <table class="table table-bordered">
 			      <tr>
 			        <th style="width: 10px">#</th>
-			        <th>No Surat Pembimbing</th>
-			        <th>No Surat Penguji</th>
+			        <th>No SK Pembimbing</th>
+			        <th>No SK Penguji</th>
 			        <th>Tanggal</th>
 			      </tr>
 
