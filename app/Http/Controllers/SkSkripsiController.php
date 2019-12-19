@@ -107,8 +107,8 @@ class SkSkripsiController extends Controller
                 "tgl_sk_pembimbing" => "required",
                 "tgl_sk_penguji" => "required",
                 "status" => "required",
-                "no_surat_pembimbing" => "required",
-                "no_surat_penguji" => "required",
+                "no_surat_pembimbing" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
+                "no_surat_penguji" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
             ]);
         } else {
             $this->validate($request, [
@@ -291,13 +291,13 @@ class SkSkripsiController extends Controller
                 "tgl_sk_pembimbing" => "required",
                 "tgl_sk_penguji" => "required",
                 "status" => "required",
-                "no_surat_pembimbing" => "required",
-                "no_surat_penguji" => "required",
+                "no_surat_pembimbing" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
+                "no_surat_penguji" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
             ]);
         } else {
             $this->validate($request, [
-                "no_surat_pembimbing" => "required",
-                "no_surat_penguji" => "required",
+                "no_surat_pembimbing" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
+                "no_surat_penguji" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
                 "nim" => "required|array",
                 "nim.*" => "required|string"
             ]);

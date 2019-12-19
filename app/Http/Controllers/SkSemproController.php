@@ -101,7 +101,7 @@ class SkSemproController extends Controller
    {
       if($request->input("status")==2){
          $this->validate($request, [
-            "no_surat" => "required|unique:sk_sempro,no_surat",
+            "no_surat" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
             'tgl_sempro1' => "required",
             'tgl_sempro2' => "required",
             "nim" => "required|array",
@@ -256,7 +256,7 @@ class SkSemproController extends Controller
    {
       if ($request->input("status") == 2) {
          $this->validate($request, [
-            "no_surat" => "required",
+            "no_surat" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
             'tgl_sempro1' => "required",
             'tgl_sempro2' => "required",
             "nim" => "required|array",
