@@ -15,6 +15,10 @@
          font-size: 65%;
       }*/
 
+      .box-body{
+         font-size: 15px;
+      }
+
       .ket_tabel{
          border-collapse: inherit;
       }
@@ -51,7 +55,7 @@
       }
 
       .nama_dosen{
-         width: 280px;
+         width: 300px;
       }
 
       .first_td{

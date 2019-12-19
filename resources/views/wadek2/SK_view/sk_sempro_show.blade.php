@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('side_menu')
-   @include('include.ktu_menu')
+   @include('include.wadek2_menu')
 @endsection
 
 @section('page_title')
@@ -31,12 +31,12 @@
          font-size: 16px;
          padding: 20px 50px;
          border: 1px solid black;
-    }
+      }
 
-    .landscape{
-    	width: 95%;
-    	padding: 20px 15px;
-    }
+      .landscape{
+    	 width: 95%;
+    	 padding: 20px 15px;
+      }
 
 		#kop_surat{
 		   padding: 5px;
@@ -97,9 +97,9 @@
 			padding: 0;
 		}
 
-    #detail_table td:nth-child(5){
-      width: 300px;
-    }
+      #detail_table td:nth-child(5){
+         width: 300px;
+      }
 
 		#isi_template_surat{
 			width: 100%;
@@ -133,24 +133,7 @@
 
               <div id="tgl_sk">
               		<h5><b>Tanggal Dibuat</b> : {{Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</h5>
-
-	              	@if($sk->verif_ktu == 0)
-						<b>Belum Diverifikasi</b>
-						@elseif($sk->verif_ktu == 2)
-						<label class="label bg-red">Butuh Revisi</label>
-						@else
-						<label class="label bg-green">Sudah Diverifikasi</label>
-						@endif
               </div>
-
-              	@if(session()->has('verif_ktu'))
-              	   <br><br>
-              	   <div class="alert alert-success alert-dismissible" style="margin: auto;">
-              	      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-              	      <h4><i class="icon fa fa-check"></i> Berhasil</h4>
-              	      {{session('verif_ktu')}}
-              	   </div>
-              	@endif
             </div>
 
             <div class="box-body">
@@ -263,79 +246,14 @@
             </div>
 
             <div class="box-footer">
-	            @if($sk->verif_dekan != 1)
-              	<form method="post" action="{{ route('ktu.sk-sempro.verif', $sk->no_surat)  }}">
-              		@csrf
-              		@method('put')
-              		<input type="hidden" name="verif_ktu" value="{{$sk->verif_ktu}}">
-
-              		@if ($sk->verif_ktu != 1)
-              			<button type="submit" name="setuju_btn" class="btn btn-success"><i class="fa fa-check"></i> Setujui</button>
-              			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-tarik-sk"><i class="fa fa-close"></i> Tarik SK</button>
-              		@endif
-              	</form>
-              	@endif
-               <a href="{{ route('ktu.sk-sempro.index') }}" class="btn btn-default pull-right">Kembali</a>
+               <a href="{{ route('wadek2.sk-sempro.index') }}" class="btn btn-default pull-right">Kembali</a>
             </div>
    		</div>
       </div>
 	</div>
 
-	<div class="modal fade" id="modal-tarik-sk">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header bg-red">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Pesan Penarikan SK</h4>
-          </div>
-          <form method="post" action="{{ route('ktu.sk-sempro.verif', $sk->no_surat) }}">
-          	@csrf
-          	@method('PUT')
-	          <div class="modal-body">
-	            <label for="pesan_revisi">Masukkan Pesan Revisi</label>
-	            <textarea name="pesan_revisi" id="pesan_revisi" class="form-control">{{old('pesan_revisi')}}</textarea>
-	            <input type="hidden" name="verif_ktu" value="{{$sk->verif_ktu}}">
-	            @error('pesan_revisi')
-	            	<p style="color: red;">{{ $message }}</p>
-	            @enderror
-	          </div>
-	          <div class="modal-footer">
-	            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-				      <button type="submit" name="tarik_btn" class="btn btn-danger">Tarik SK</button>
-	          </div>
-      	  </form>
-        </div>
-        <!-- /.modal-content -->
-      </div>
-      <!-- /.modal-dialog -->
-   </div>
-
 @endsection
 
 @section('script')
 <script src="/js/btn_backTop.js"></script>
-<script type="text/javascript">
-	@error('pesan_revisi')
-		$("#modal-tarik-sk").modal("show");
-	@enderror
-
-	var status = @json($sk->id_status_sk);
-	for (var i = status; i > 0; i--) {
-		$("#progres_"+i).children('i').removeClass('bg-grey').addClass('bg-green fa-check');
-	}
-
-	$("button[name='setuju_btn']").click(function(event) {
-		event.preventDefault();
-		$("input[name='verif_ktu']").val(1);
-		$(this).parents("form").trigger('submit');
-	});
-
-	$("button[name='tarik_btn']").click(function(event) {
-		event.preventDefault();
-		$("input[name='verif_ktu']").val(2);
-		$(this).parents("form").trigger('submit');
-	});
-
-</script>
 @endsection

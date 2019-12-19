@@ -357,14 +357,13 @@ class SkSemproController extends Controller
 
 
     //KTU
-   public function ktu_index_sempro()
+   public function ktu_index()
    {
       $sk = sk_sempro::with('status_sk')
       ->whereHas('status_sk', function(Builder $query){
          $query->whereIn('id', [2,3,4]);
       })
-      ->orderBy('updated_at', 'desc')
-      ->get();
+      ->orderBy('updated_at', 'desc')->get();
 
       return view('ktu.SK_view.sk_index', [
          'sk' => $sk,
@@ -443,48 +442,108 @@ class SkSemproController extends Controller
    }
 
 
+   //Wadek2
+   public function wadek2_index()
+   {
+      $sk = sk_sempro::with('status_sk')
+      ->whereHas('status_sk', function(Builder $query){
+         $query->where('status', 'Disetujui KTU');
+      })
+      ->orderBy('updated_at', 'desc')->get();
+
+      return view('Wadek2.SK_view.sk_index', [
+         'sk' => $sk,
+         'tipe' => "SK Sempro"
+      ]);
+   }
+
+   public function wadek2_show($id)
+   {
+      $sk = sk_sempro::where('no_surat', $id)->with('template')->first();
+      $status = $sk->status_sk->status;
+      if($status == "Draft"){
+         return redirect()->route('ktu.sk-sempro.index');
+      }
+
+      $detail_skripsi = detail_skripsi::where('id_sk_sempro', $id)
+      ->with([
+         'skripsi',
+         'skripsi.mahasiswa',
+         'skripsi.mahasiswa.bagian',
+         'surat_tugas' => function($query)
+         {
+            $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
+         },
+         'surat_tugas.tipe_surat_tugas',
+         'surat_tugas.dosen1:no_pegawai,nama',
+         'surat_tugas.dosen2:no_pegawai,nama',
+      ])->get();
+
+      $dekan = User::with("jabatan")
+      ->wherehas("jabatan", function (Builder $query){
+         $query->where("jabatan", "Dekan");
+      })->first();
+      $tahun_akademik = $this->get_tahun_akademik($sk->created_at);
+
+      return view('wadek2.SK_view.sk_sempro_show', [
+         'sk' => $sk,
+         'detail_skripsi' => $detail_skripsi,
+         'dekan' => $dekan,
+         'tahun_akademik' => $tahun_akademik
+      ]);
+   }
+
     //DEKAN
-    // public function dekan_index_sempro()
-    // {
-    //     $sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
-    //     ->whereHas('tipe_sk', function(Builder $query){
-    //         $query->where('id', 2);
-    //     })
-    //     ->whereHas('status_sk_akademik', function(Builder $query){
-    //         $query->whereIn('id', [3,4]);
-    //     })
-    //     ->orderBy('updated_at', 'desc')
-    //     ->get();
+   public function dekan_index()
+   {
+      $sk = sk_sempro::with('status_sk')
+      ->whereHas('status_sk', function(Builder $query){
+         $query->where('status', 'Disetujui KTU');
+      })
+      ->orderBy('updated_at', 'desc')->get();
 
-    //     return view('dekan.SK_view.sk_index', [
-    //         'sk_akademik' => $sk_akademik,
-    //         'tipe' => "SK Sempro"
-    //     ]);
-    // }
+      return view('dekan.SK_view.sk_index', [
+         'sk' => $sk,
+         'tipe' => "SK Sempro"
+      ]);
+    }
 
-    // public function dekan_show($id)
-    // {
-    //     $sk_akademik = sk_akademik::find($id);
-    //     $status = $sk_akademik->status_sk_akademik->status;
-    //     if($status != "Disetujui KTU" && $status != "Disetujui Dekan"){
-    //         return redirect()->route('dekan.sk-sempro.index');
-    //     }
+   public function dekan_show($id)
+   {
+      $sk = sk_sempro::where('no_surat', $id)->with('template')->first();
+      $status = $sk->status_sk->status;
+      if($status == "Draft"){
+         return redirect()->route('ktu.sk-sempro.index');
+      }
 
-    //     $sk_akademik = sk_akademik::find($id);
-    //     $detail_sk = detail_sk::where('id_sk_akademik', $id)
-    //         ->with([
-    //             'bagian',
-    //             'penguji_utama:no_pegawai,nama',
-    //             'penguji_pendamping:no_pegawai,nama',
-    //             'pembimbing_utama:no_pegawai,nama',
-    //             'pembimbing_pendamping:no_pegawai,nama'
-    //         ])->get();
-    //     // dd($detail_sk);
-    //     return view('dekan.SK_view.sk_show', [
-    //         'sk_akademik' => $sk_akademik,
-    //         'detail_sk' => $detail_sk
-    //     ]);
-    // }
+      $detail_skripsi = detail_skripsi::where('id_sk_sempro', $id)
+      ->with([
+         'skripsi',
+         'skripsi.mahasiswa',
+         'skripsi.mahasiswa.bagian',
+         'surat_tugas' => function($query)
+         {
+            $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
+         },
+         'surat_tugas.tipe_surat_tugas',
+         'surat_tugas.dosen1:no_pegawai,nama',
+         'surat_tugas.dosen2:no_pegawai,nama',
+      ])->get();
+
+      $dekan = User::with("jabatan")
+      ->wherehas("jabatan", function (Builder $query){
+         $query->where("jabatan", "Dekan");
+      })->first();
+      $tahun_akademik = $this->get_tahun_akademik($sk->created_at);
+      
+      // dd($detail_sk);
+      return view('dekan.SK_view.sk_sempro_show', [
+         'sk' => $sk,
+         'detail_skripsi' => $detail_skripsi,
+         'dekan' => $dekan,
+         'tahun_akademik' => $tahun_akademik
+      ]);
+   }
 
     // public function dekan_verif(Request $request, $id)
     // {

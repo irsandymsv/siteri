@@ -231,10 +231,10 @@
 				      		<tr>
 				      			<td>{{ $loop->index+1 }}</td>
 				      			<td>
-				      				<a href="{{ route('akademik.sempro.show', $item->id) }}" title="Lihat Detail">{{ $item->no_surat_pembimbing }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($item->created_at)->year }}</a>
+				      				<a href="{{ route('akademik.skripsi.show', $item->id) }}" title="Lihat Detail">{{ $item->no_surat_pembimbing }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($item->created_at)->year }}</a>
 				      			</td>
 				      			<td>
-				      				<a href="{{ route('akademik.sempro.show', $item->id) }}" title="Lihat Detail">{{ $item->no_surat_penguji }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($item->created_at)->year }}</a>
+				      				<a href="{{ route('akademik.skripsi.show', $item->id) }}" title="Lihat Detail">{{ $item->no_surat_penguji }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($item->created_at)->year }}</a>
 				      			</td>
 				      			<td>{{ Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
 				      		</tr>
@@ -263,17 +263,17 @@
 			      </tr>
 
 			      <tbody>
-			      	@if ($sk_sempro_revisi->isEmpty())
+			      	@if ($sk_skripsi_revisi->isEmpty())
 			      		<tr><td colspan="4" style="text-align: center;">Tidak Ada Data</td></tr>
 			      	@else
-			      		@foreach ($sk_sempro_revisi as $item)
+			      		@foreach ($sk_skripsi_revisi as $item)
 				      		<tr>
 				      			<td>{{ $loop->index+1 }}</td>
 				      			<td>
-				      				<a href="{{ route('akademik.sempro.show', $item->id) }}" title="Lihat Detail">{{ $item->no_surat_pembimbing }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($item->created_at)->year }}</a>
+				      				<a href="{{ route('akademik.skripsi.show', $item->id) }}" title="Lihat Detail">{{ $item->no_surat_pembimbing }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($item->created_at)->year }}</a>
 				      			</td>
 				      			<td>
-				      				<a href="{{ route('akademik.sempro.show', $item->id) }}" title="Lihat Detail">{{ $item->no_surat_penguji }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($item->created_at)->year }}</a>
+				      				<a href="{{ route('akademik.skripsi.show', $item->id) }}" title="Lihat Detail">{{ $item->no_surat_penguji }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($item->created_at)->year }}</a>
 				      			</td>
 				      			<td>{{ Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
 				      		</tr>

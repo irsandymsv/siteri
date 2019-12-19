@@ -387,7 +387,7 @@ class SkSkripsiController extends Controller
 
 
 	//KTU
-	public function ktu_index_skripsi()
+	public function ktu_index()
 	{
 		$sk = sk_skripsi::with('status_sk')
 		->whereHas('status_sk', function(Builder $query){
@@ -444,14 +444,14 @@ class SkSkripsiController extends Controller
 		$sk = sk_skripsi::find($id);
       $sk->verif_ktu = $request->verif_ktu;
       if($request->verif_ktu == 2){
-         $request->validate([
-               'pesan_revisi' => 'required|string'
-         ]);
+      $request->validate([
+         'pesan_revisi' => 'required|string'
+      ]);
 
-         $sk->id_status_sk = 1;
-         $sk->pesan_revisi = $request->pesan_revisi;
-         $sk->save();
-         return redirect()->route('ktu.sk-skripsi.index')->with("verif_ktu", 'SK berhasil ditarik, status kembali menjadi "Draft"');
+      $sk->id_status_sk = 1;
+      $sk->pesan_revisi = $request->pesan_revisi;
+      $sk->save();
+      return redirect()->route('ktu.sk-skripsi.index')->with("verif_ktu", 'SK berhasil ditarik, status kembali menjadi "Draft"');
       }
       else if ($request->verif_ktu == 1) {
          $sk->id_status_sk = 3;
@@ -473,47 +473,115 @@ class SkSkripsiController extends Controller
 	}
 
 
+   //Wadek2
+   public function wadek2_index()
+   {
+      $sk = sk_skripsi::with('status_sk')
+      ->whereHas('status_sk', function(Builder $query){
+          $query->whereIn('id', [2,3,4]);
+      })
+      ->orderBy('updated_at', 'desc')
+      ->get();
+
+      return view('wadek2.SK_view.sk_index', [
+          'sk' => $sk,
+          'tipe' => "SK Skripsi"
+      ]);
+   }
+
+   public function wadek2_show($id)
+   {
+      $sk = sk_skripsi::where('id', $id)->with(['template_pembimbing', 'template_penguji'])->first();
+      $status = $sk->status_sk->status;
+      if($status == "Draft"){
+         return redirect()->route('ktu.sk-skripsi.index');
+      }
+
+      $detail_skripsi = detail_skripsi::where('id_sk_skripsi', $id)
+      ->with([
+         'skripsi',
+         'skripsi.mahasiswa',
+         'skripsi.mahasiswa.bagian',
+         'surat_tugas' => function($query)
+         {
+            $query->where('id_tipe_surat_tugas', 1)
+            ->orWhere('id_tipe_surat_tugas', 3)
+            ->orderBy('created_at', 'desc');
+         },
+         'surat_tugas.tipe_surat_tugas',
+         'surat_tugas.dosen1:no_pegawai,nama',
+         'surat_tugas.dosen2:no_pegawai,nama',
+      ])->get();
+
+      $dekan = User::with("jabatan")
+      ->wherehas("jabatan", function (Builder $query){
+         $query->where("jabatan", "Dekan");
+      })->first();
+      $tahun_akademik = $this->get_tahun_akademik($sk->created_at);
+
+      return view('wadek2.SK_view.sk_skripsi_show', [
+         'sk' => $sk,
+         'detail_skripsi' => $detail_skripsi,
+         'dekan' => $dekan,
+         'tahun_akademik' => $tahun_akademik
+      ]);
+   }
+
 	//DEKAN
-	// public function dekan_index_skripsi()
-	// {
-	// 	$sk_akademik = sk_akademik::with(['tipe_sk', 'status_sk_akademik'])
-	// 	->whereHas('tipe_sk', function(Builder $query){
-	// 		$query->where('id', 1);
-	// 	})
-	// 	->whereHas('status_sk_akademik', function(Builder $query){
-	// 		$query->whereIn('id', [3,4]);
-	// 	})
-	// 	->orderBy('updated_at', 'desc')
-	// 	->get();
-	// 	// dd($sk_akademik);
-	// 	return view('dekan.SK_view.sk_index', [
-	// 		'sk_akademik' => $sk_akademik,
-	// 		'tipe' => "SK Skripsi"
-	// 	]);
-	// }
+	public function dekan_index()
+	{
+		$sk = sk_skripsi::with('status_sk')
+      ->whereHas('status_sk', function(Builder $query){
+         $query->whereIn('id', [2,3,4]);
+      })
+      ->orderBy('updated_at', 'desc')
+      ->get();
 
-	// public function dekan_show($id)
-	// {
-	// 	$sk_akademik = sk_akademik::find($id);
-	// 	$status = $sk_akademik->status_sk_akademik;
-	// 	if($status->id != 2 && $status->id != 3){
-	// 		return redirect()->route('dekan.sk-skripsi.index');
-	// 	}
+		// dd($sk_akademik);
+		return view('dekan.SK_view.sk_index', [
+         'sk' => $sk,
+         'tipe' => "SK Skripsi"
+		]);
+	}
 
-	// 	$detail_sk = detail_sk::where('id_sk_akademik', $id)
-	// 		->with([
-	// 			'bagian',
-	// 			'penguji_utama:no_pegawai,nama',
-	// 			'penguji_pendamping:no_pegawai,nama',
-	// 			'pembimbing_utama:no_pegawai,nama',
-	// 			'pembimbing_pendamping:no_pegawai,nama'
-	// 		])->get();
-	// 	// dd($detail_sk);
-	// 	return view('dekan.SK_view.sk_show', [
-	// 		'sk_akademik' => $sk_akademik,
-	// 		'detail_sk' => $detail_sk
-	// 	]);
-	// }
+	public function dekan_show($id)
+	{
+		$sk = sk_skripsi::where('id', $id)->with(['template_pembimbing', 'template_penguji'])->first();
+      $status = $sk->status_sk->status;
+      if($status == "Draft"){
+         return redirect()->route('ktu.sk-skripsi.index');
+      }
+
+      $detail_skripsi = detail_skripsi::where('id_sk_skripsi', $id)
+      ->with([
+         'skripsi',
+         'skripsi.mahasiswa',
+         'skripsi.mahasiswa.bagian',
+         'surat_tugas' => function($query)
+         {
+            $query->where('id_tipe_surat_tugas', 1)
+            ->orWhere('id_tipe_surat_tugas', 3)
+            ->orderBy('created_at', 'desc');
+         },
+         'surat_tugas.tipe_surat_tugas',
+         'surat_tugas.dosen1:no_pegawai,nama',
+         'surat_tugas.dosen2:no_pegawai,nama',
+      ])->get();
+
+      $dekan = User::with("jabatan")
+      ->wherehas("jabatan", function (Builder $query){
+         $query->where("jabatan", "Dekan");
+      })->first();
+      $tahun_akademik = $this->get_tahun_akademik($sk->created_at);
+		
+      // dd($detail_sk);
+		return view('dekan.SK_view.sk_skripsi_show', [
+			'sk' => $sk,
+         'detail_skripsi' => $detail_skripsi,
+         'dekan' => $dekan,
+         'tahun_akademik' => $tahun_akademik
+		]);
+	}
 
 	// public function dekan_verif(Request $request, $id)
 	// {
