@@ -315,44 +315,49 @@ class SkSemproController extends Controller
 
    public function cetak_pdf($id)
    {
-      $sk = sk_sempro::where('no_surat', $id)->with('template')->first();
+        $sk = sk_sempro::where('no_surat', $id)->with('template')->first();
 
-      $detail_skripsi = detail_skripsi::where('id_sk_sempro', $id)
-      ->with([
-         'skripsi',
-         'skripsi.mahasiswa',
-         'skripsi.mahasiswa.bagian',
-         'surat_tugas' => function($query)
-         {
-               $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
-         },
-         'surat_tugas.tipe_surat_tugas',
-         'surat_tugas.dosen1:no_pegawai,nama',
-         'surat_tugas.dosen2:no_pegawai,nama',
-      ])->get();
+        $detail_skripsi = detail_skripsi::where('id_sk_sempro', $id)
+        ->with([
+            'skripsi',
+            'skripsi.mahasiswa',
+            'skripsi.mahasiswa.bagian',
+            'surat_tugas' => function($query)
+            {
+                $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
+            },
+            'surat_tugas.tipe_surat_tugas',
+            'surat_tugas.dosen1:no_pegawai,nama',
+            'surat_tugas.dosen2:no_pegawai,nama',
+        ])->get();
 
-      $dekan = User::with("jabatan")
-      ->wherehas("jabatan", function (Builder $query){
-         $query->where("jabatan", "Dekan");
-      })->first();
-      $tahun_akademik = $this->get_tahun_akademik($sk->created_at);
+        $dekan = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "Dekan");
+        })->first();
+        $tahun_akademik = $this->get_tahun_akademik($sk->created_at);
 
-      $pdf = PDF::loadview('akademik.SK_view.pdf_sk_sempro', [
-         'sk' => $sk,
-         'detail_skripsi' => $detail_skripsi,
-         'dekan' => $dekan,
-         'tahun_akademik' => $tahun_akademik
-      ])->setPaper('a4', 'portrait')->setWarnings(false);
 
-        // $content = $pdf->download()->getOriginalContent();
-        // Storage::put('sempro'.$sk->no_surat.'.pdf', $content);
-        // $dom_pdf = $pdf->getDomPDF();
-        // $canvas = $dom_pdf->get_canvas();
-        // $pdf_merger = PdfMerger::addPDF(Storage::disk('local')->path('sempro' . $sk->no_surat . '.pdf'), 'all');
-        // $pdfmerged->addPDF(Storage::disk('local')->path('sempro' . $sk->no_surat . '.pdf'), 'all');
-        // $pdfmerged->merge();
+        $m = new Merger();
+        $pdf = PDF::loadview('akademik.SK_view.pdf.sempro.pdf_sk_sempro', [
+            'sk' => $sk,
+            'detail_skripsi' => $detail_skripsi,
+            'dekan' => $dekan,
+            'tahun_akademik' => $tahun_akademik
+        ])->setPaper('a4', 'portrait')->setWarnings(false);
+        $m->addRaw($pdf->output());
+        $pdf = PDF::loadview('akademik.SK_view.pdf.sempro.lampiran_sk_sempro', [
+            'sk' => $sk,
+            'detail_skripsi' => $detail_skripsi,
+            'dekan' => $dekan,
+            'tahun_akademik' => $tahun_akademik
+        ])->setPaper('a4', 'landscape')->setWarnings(false);
+        $m->addRaw($pdf->output());
 
-      return $pdf->download('SK Sempro-'. $sk->no_surat . ".pdf");
+      file_put_contents('storage/sempro/SK Sempro-' . $sk->no_surat . ".pdf", $m->merge());
+      return response()->download(
+          storage_path('app\public\sempro\SK Sempro-' . $sk->no_surat . ".pdf")
+      )->deleteFileAfterSend(true);
    }
 
 
@@ -535,7 +540,7 @@ class SkSemproController extends Controller
          $query->where("jabatan", "Dekan");
       })->first();
       $tahun_akademik = $this->get_tahun_akademik($sk->created_at);
-      
+
       // dd($detail_sk);
       return view('dekan.SK_view.sk_sempro_show', [
          'sk' => $sk,

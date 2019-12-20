@@ -18,6 +18,8 @@ use App\template;
 use App\nama_template;
 use App\status_sk;
 use Carbon\Carbon;
+use iio\libmergepdf\Merger;
+use iio\libmergepdf\Pages;
 
 class SkSkripsiController extends Controller
 {
@@ -367,22 +369,41 @@ class SkSkripsiController extends Controller
       })->first();
       $tahun_akademik = $this->get_tahun_akademik($sk->created_at);
 
-      $pdf = PDF::loadview('akademik.SK_view.pdf_sk_skripsi', [
+
+      $m = new Merger();
+      $pdf = PDF::loadview('akademik.SK_view.pdf.skripsi.pdf_sk_skripsi_pembimbing', [
          'sk' => $sk,
          'detail_skripsi' => $detail_skripsi,
          'dekan' => $dekan,
          'tahun_akademik' => $tahun_akademik
       ])->setPaper('a4', 'portrait')->setWarnings(false);
+      $m->addRaw($pdf->output());
+      $pdf = PDF::loadview('akademik.SK_view.pdf.skripsi.lampiran_sk_skripsi_pembimbing', [
+          'sk' => $sk,
+          'detail_skripsi' => $detail_skripsi,
+          'dekan' => $dekan,
+          'tahun_akademik' => $tahun_akademik
+      ])->setPaper('a4', 'landscape')->setWarnings(false);
+      $m->addRaw($pdf->output());
+        $pdf = PDF::loadview('akademik.SK_view.pdf.skripsi.pdf_sk_skripsi_penguji', [
+            'sk' => $sk,
+            'detail_skripsi' => $detail_skripsi,
+            'dekan' => $dekan,
+            'tahun_akademik' => $tahun_akademik
+        ])->setPaper('a4', 'portrait')->setWarnings(false);
+        $m->addRaw($pdf->output());
+        $pdf = PDF::loadview('akademik.SK_view.pdf.skripsi.lampiran_sk_skripsi_penguji', [
+            'sk' => $sk,
+            'detail_skripsi' => $detail_skripsi,
+            'dekan' => $dekan,
+            'tahun_akademik' => $tahun_akademik
+        ])->setPaper('a4', 'landscape')->setWarnings(false);
+        $m->addRaw($pdf->output());
 
-        // $content = $pdf->download()->getOriginalContent();
-        // Storage::put('sempro'.$sk->no_surat.'.pdf', $content);
-        // $dom_pdf = $pdf->getDomPDF();
-        // $canvas = $dom_pdf->get_canvas();
-        // $pdf_merger = PdfMerger::addPDF(Storage::disk('local')->path('sempro' . $sk->no_surat . '.pdf'), 'all');
-        // $pdfmerged->addPDF(Storage::disk('local')->path('sempro' . $sk->no_surat . '.pdf'), 'all');
-        // $pdfmerged->merge();
-
-      return $pdf->download('SK Skripsi-'. $sk->no_surat);
+      file_put_contents('storage/skripsi/SK Skripsi-'. $sk->no_surat . ".pdf", $m->merge());
+      return response()->download(
+          storage_path('app\public\skripsi\SK Skripsi-' . $sk->no_surat . ".pdf")
+      )->deleteFileAfterSend(true);
 	}
 
 
@@ -573,7 +594,7 @@ class SkSkripsiController extends Controller
          $query->where("jabatan", "Dekan");
       })->first();
       $tahun_akademik = $this->get_tahun_akademik($sk->created_at);
-		
+
       // dd($detail_sk);
 		return view('dekan.SK_view.sk_skripsi_show', [
 			'sk' => $sk,

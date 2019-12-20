@@ -236,7 +236,7 @@ Route::prefix('wadek2')->name('wadek2.')->group(function()
 	//Route SK Skripsi
 	Route::get('/sk-skripsi', 'SkSkripsiController@wadek2_index')->name('sk-skripsi.index');
 	Route::get('/sk-skripsi/{id_sk_skripsi}', 'SkSkripsiController@wadek2_show')->name('sk-skripsi.show');
-	
+
 	//Route Honor Sempro
 	Route::get('/honor-sempro', 'honorSemproController@wadek2_index')->name('honor-sempro.index');
 	Route::get('/honor-sempro/{id_sk_honor}', 'honorSemproController@wadek2_show')->name('honor-sempro.show');

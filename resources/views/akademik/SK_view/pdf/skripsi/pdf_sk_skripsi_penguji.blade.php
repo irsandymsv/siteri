@@ -156,17 +156,17 @@
          <p class="top-title">
             <span class="judul_surat">KEPUTUSAN</span><br>
             <span>DEKAN FAKULTAS ILMU KOMPUTER UNIVERSITAS JEMBER</span><br>
-            <span>Nomor: {{ $sk->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($sk->created_at)->year }}</span><br>
+            <span>Nomor: {{ $sk->no_surat_penguji }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($sk->created_at)->year }}</span><br>
             <small><b>tentang</b></small><br>
-            <span>PENETAPAN DOSEN PEMBAHAS SEMINAR PROPOSAL SKRIPSI MAHASISWA</span><br>
+            <span>PENETAPAN DOSEN PENGUJI SKRIPSI MAHASISWA</span><br>
             <span>FAKULTAS ILMU KOMPUTER UNIVERSITAS JEMBER</span><br>
             <span>TAHUN AKADEMIK {{ $tahun_akademik['tahun_awal'].'/'.$tahun_akademik['tahun_akhir'] }}</span><br>
          </p>
 
          <div id="isi_template_surat">
-            {!! $sk->template->isi !!}
+            {!! $sk->template_penguji->isi !!}
          </div>
-
+          <br>
          <div class="ttd-right">
             {{-- <br> --}}
             Jember, {{ Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }} <br>
@@ -181,65 +181,7 @@
             <li>Penjabat Wakil Dekan I, II;</li>
             <li>Kasubag. Tata Usaha;</li>
          </ol>
-         <span>Fakultas Ilmu Komputer Universitas Jember.</span>
-      </div>
-   </div>
-
-   <div class="page-break"></div>
-   <div class="box-body landscape">
-      <p>Lampiran Dekan Fakultas Ilmu Komputer Universitas Jember</p>
-      <table id="tabel_keterangan">
-         <tr>
-            <td>Nomor   </td>
-            <td>: {{ $sk->no_surat }}//UN25.1.15/SP/{{ Carbon\Carbon::parse($sk->created_at)->year }}</td>
-         </tr>
-         <tr>
-            <td>Tanggal </td>
-            <td>: {{ Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
-         </tr>
-         <tr>
-            <td>Tentang    </td>
-            <td>: Penetapan Dosen Pembahas Seminar Porposal Skripsi Mahasiswa Fakultas Ilmu Komputer Jember Tahun Akademik {{ $tahun_akademik['tahun_awal'].'/'.$tahun_akademik['tahun_akhir'] }}</td>
-         </tr>
-      </table>
-      <table id="detail_table">
-         <thead>
-            <tr>
-               <th>No</th>
-               <th>NIM</th>
-               <th>Nama Mahasiswa</th>
-               <th>Program Studi</th>
-               <th>Judul Skripsi</th>
-               <th>Dosen Pembahas</th>
-            </tr>
-         </thead>
-         <tbody>
-            @foreach($detail_skripsi as $item)
-            <tr>
-               <td>{{ $loop->index + 1 }}</td>
-               <td>{{$item->skripsi->nim}}</td>
-               <td>{{$item->skripsi->mahasiswa->nama}}</td>
-               <td>{{$item->skripsi->mahasiswa->bagian->bagian}}</td>
-               <td>{{$item->judul}}</td>
-               <td>
-                  <div class="tbl_row">
-                     {{ $item->surat_tugas[0]->dosen1->nama }}
-                  </div>
-                  <div>
-                     {{ $item->surat_tugas[0]->dosen2->nama }}
-                  </div>
-               </td>
-            </tr>
-            @endforeach
-         </tbody>
-      </table>
-
-      <div class="ttd-right right-margin">
-         {{-- <br> --}}
-         Dekan,
-         <br><br><br><br>
-         <span style="text-transform: uppercase;"><b>{{ $dekan->nama }}</b></span><br>
-         <span>NIP. {{ $dekan->no_pegawai }}</span>
+         <span>Lingkungan Fakultas Ilmu Komputer Universitas Jember.</span>
       </div>
    </div>
 </body>
