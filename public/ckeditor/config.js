@@ -37,4 +37,6 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 
 	config.extraPlugins = 'zoom,liststyle';
+
+	config.enterMode = CKEDITOR.ENTER_BR;
 };

@@ -184,6 +184,17 @@
          <span>Lingkungan Fakultas Ilmu Komputer Universitas Jember.</span>
       </div>
    </div>
+
+   <script src="/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
+   <script type="text/javascript">
+      var no_surat_pembimbing = @json($sk->no_surat_pembimbing);
+      var tahun = @json(Carbon\Carbon::parse($sk->created_at)->year);
+      var tgl_sk_pembimbing = @json(Carbon\Carbon::parse($sk->tgl_sk_pembimbing)->locale('id_ID')->isoFormat('D MMMM Y'));
+      var tahun_akademik = @json($tahun_akademik);
+
+      $("td:contains('?sk pembimbing skripsi?')").html(`
+       Keputusan Dekan Fakultas Ilmu Komputer Universitas Jember Nomor : `+no_surat_pembimbing+` /UN25.1.15/SP/`+tahun+`, tanggal `+tgl_sk_pembimbing+` tentang penetapan Dosen Pembimbing Skripsi Mahasiswa Fakultas Ilmu Komputer Universitas Jember Tahun Akademik `+tahun_akademik['tahun_awal']+`/`+tahun_akademik['tahun_akhir']);
+   </script>
 </body>
 </html>
 
