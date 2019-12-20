@@ -624,6 +624,505 @@ class DatadetailBarang extends Migration
             'idruang_fk' => '1'
         ));
         DB::table('datadetail_barang')->insert(array(
+            // Alat penghancur Kertas
+            'tanggal' => '2012-12-13',
+            'idbarang_fk' => '13',
+            'merk_barang' => 'Secure Maxi 24SC',
+            'nup' => '2',
+            'idruang_fk' => '1'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // mesin absensi
+            'tanggal' => '2017-12-28',
+            'idbarang_fk' => '14',
+            'merk_barang' => 'FINGERSPOT REVO DUO 128BNC',
+            'nup' => '1',
+            'idruang_fk' => ''
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // lASER POINTER
+            'tanggal' => '2017-10-16',
+            'idbarang_fk' => '15',
+            'merk_barang' => 'Logitech Wireless Presenter R400',
+            'nup' => '1',
+            'idruang_fk' => '1'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // lASER POINTER
+            'tanggal' => '2017-10-16',
+            'idbarang_fk' => '15',
+            'merk_barang' => 'Logitech Wireless Presenter R400',
+            'nup' => '2',
+            'idruang_fk' => '1'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2016-11-24',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'SONY VPL EX 230',
+            'nup' => '19',
+            'idruang_fk' => '13'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2016-11-24',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'SONY VPL EX 230',
+            'nup' => '20',
+            'idruang_fk' => '2'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2016-11-24',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'SONY VPL EX 230',
+            'nup' => '21',
+            'idruang_fk' => '22'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2016-11-24',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'SONY VPL EX 230',
+            'nup' => '22',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2016-11-24',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'SONY VPL EX 230',
+            'nup' => '23',
+            'idruang_fk' => '(RUANG 2 BELUM INPUT)'
+        ));
+        
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2010-11-25',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'BENQ MP575',
+            'nup' => '24',
+            'idruang_fk' => '18'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2010-12-1',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'BENQ MP575',
+            'nup' => '25',
+            'idruang_fk' => '18'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2010-12-16',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'BENQ MP515',
+            'nup' => '26',
+            'idruang_fk' => '18'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2010-12-16',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'BENQ MP670',
+            'nup' => '27',
+            'idruang_fk' => '18'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2011-06-06',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'BENQ MX810 ST',
+            'nup' => '28',
+            'idruang_fk' => '1'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2011-07-26',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'BENQ MP660',
+            'nup' => '29',
+            'idruang_fk' => '18'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2011-07-26',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'BENQ MP660',
+            'nup' => '30',
+            'idruang_fk' => '18'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2011-12-01',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'BENQ 2800 Ans',
+            'nup' => '31',
+            'idruang_fk' => '1'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2011-12-01',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'DELL 161011D',
+            'nup' => '32',
+            'idruang_fk' => '1'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2011-12-01',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'DELL 161011D',
+            'nup' => '33',
+            'idruang_fk' => '6'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2011-12-01',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'DELL 161011D',
+            'nup' => '34',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2012-12-18',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'BENQ 2800 Ansi',
+            'nup' => '35',
+            'idruang_fk' => '18'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2012-12-18',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'BENQ 2800 Ansi',
+            'nup' => '36',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2012-12-18',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'BENQ 2800 Ansi',
+            'nup' => '37',
+            'idruang_fk' => '1'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2012-12-18',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'BENQ 2800 Ansi',
+            'nup' => '38',
+            'idruang_fk' => '1'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2012-12-18',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'BENQ 2800 Ansi',
+            'nup' => '39',
+            'idruang_fk' => '1'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2012-12-18',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'BENQ 2800 Ansi',
+            'nup' => '40',
+            'idruang_fk' => '1'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2012-12-18',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'BENQ 2800 Ansi',
+            'nup' => '41',
+            'idruang_fk' => '21'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2017-10-16',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'Infocus Projector(IN226)',
+            'nup' => '42',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2017-10-16',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'Infocus Projector(IN226)',
+            'nup' => '43',
+            'idruang_fk' => '1'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2017-10-16',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'Infocus Projector(IN226)',
+            'nup' => '44',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2017-10-16',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'Infocus Projector(IN226)',
+            'nup' => '45',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2017-10-16',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'Infocus Projector(IN226)',
+            'nup' => '46',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // LCD Projector/Infocus
+            'tanggal' => '2017-10-16',
+            'idbarang_fk' => '16',
+            'merk_barang' => 'Infocus Projector(IN226)',
+            'nup' => '47',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Focusing Screen
+            'tanggal' => '2017-11-14',
+            'idbarang_fk' => '17',
+            'merk_barang' => 'Screen Prokector G-lite Tripot 70" Size 180x180',
+            'nup' => '1',
+            'idruang_fk' => '18'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Focusing Screen
+            'tanggal' => '2017-11-14',
+            'idbarang_fk' => '17',
+            'merk_barang' => 'Screen Prokector G-lite Tripot 70" Size 180x180',
+            'nup' => '2',
+            'idruang_fk' => '18'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Focusing Screen
+            'tanggal' => '2017-11-24',
+            'idbarang_fk' => '17',
+            'merk_barang' => 'Screen Prokector G-lite Tripot 84" Size 213x213',
+            'nup' => '3',
+            'idruang_fk' => '18'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Focusing Screen
+            'tanggal' => '2017-11-14',
+            'idbarang_fk' => '17',
+            'merk_barang' => 'Screen Prokector G-lite Tripot 84" Size 213x213',
+            'nup' => '4',
+            'idruang_fk' => '18'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // papan pengumuman
+            'tanggal' => '2011-12-28',
+            'idbarang_fk' => '18',
+            'merk_barang' => 'GM Announcement Board',
+            'nup' => '1',
+            'idruang_fk' => '16'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // papan pengumuman
+            'tanggal' => '2011-12-28',
+            'idbarang_fk' => '18',
+            'merk_barang' => 'GM Announcement Board',
+            'nup' => '2',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2016-07-28',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Meja Active MTO 120',
+            'nup' => '33',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2016-07-28',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Meja Active MTO 120',
+            'nup' => '34',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2016-07-28',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Meja Active MTO 120',
+            'nup' => '35',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2016-07-28',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Meja Active MTO 120',
+            'nup' => '36',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2016-07-28',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Meja Active MTO 120',
+            'nup' => '37',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Profil',
+            'nup' => '38',
+            'idruang_fk' => '12'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati',
+            'nup' => '39',
+            'idruang_fk' => '5'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati',
+            'nup' => '40',
+            'idruang_fk' => '5'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati',
+            'nup' => '41',
+            'idruang_fk' => '5'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati',
+            'nup' => '42',
+            'idruang_fk' => '5'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati',
+            'nup' => '43',
+            'idruang_fk' => '5'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati',
+            'nup' => '44',
+            'idruang_fk' => '5'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati',
+            'nup' => '45',
+            'idruang_fk' => '1'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati',
+            'nup' => '46',
+            'idruang_fk' => '3'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati',
+            'nup' => '47',
+            'idruang_fk' => '3'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati',
+            'nup' => '48',
+            'idruang_fk' => '4'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati',
+            'nup' => '49',
+            'idruang_fk' => '4'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati',
+            'nup' => '50',
+            'idruang_fk' => '4'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati',
+            'nup' => '51',
+            'idruang_fk' => '4'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati',
+            'nup' => '52',
+            'idruang_fk' => '4'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati',
+            'nup' => '53',
+            'idruang_fk' => '4'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati',
+            'nup' => '54',
+            'idruang_fk' => '4'
+        ));
+//meja kayu sekretarsi
+
+
+
+
+
+
+
+        DB::table('datadetail_barang')->insert(array(
             'tanggal' => '2011-12-22',
             'idbarang_fk' => '1',
             'merk_barang' => 'Single, AMP Single',
