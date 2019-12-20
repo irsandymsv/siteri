@@ -30,15 +30,7 @@ class sutgasPembimbingController extends suratTugasController
 
 	public function create()
 	{
-      $mahasiswa = mahasiswa::doesntHave('skripsi')->get();
-
-      // ->orWhereHas('skripsi.status_skripsi', function(Builder $query)
-      // {
-      // 	$query->where('status', '<>', 'Sudah lulus');
-      // })
-
-
-      // dd($mahasiswa);
+        $mahasiswa = mahasiswa::doesntHave('skripsi')->get();
 		$dosen = user::where('is_dosen', 1)->get();
 		$keris = keris::all();
 		return view('akademik.sutgas_pembimbing.create', [

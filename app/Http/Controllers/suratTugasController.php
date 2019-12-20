@@ -90,20 +90,6 @@ class suratTugasController extends Controller
         return $verif_ktu;
     }
 
-    // protected function update_detail_skripsi(Request $request, int $id_surat_tugas, string $nama_id_surat_tugas)
-    // {
-    //     if($nama_id_surat_tugas == "id_surat_tugas_pembahas"){
-    //         detail_skripsi::where('nim', $request->input('nim'))->update([
-    //             'judul_inggris' => $request->input('judul_inggris'),
-    //             $nama_id_surat_tugas => $id_surat_tugas,
-    //         ]);
-    //     }else{
-    //         detail_skripsi::where('nim', $request->input('nim'))->update([
-    //             $nama_id_surat_tugas => $id_surat_tugas,
-    //         ]);
-    //     }
-    // }
-
     protected function verif($surat_tugas, int $id_status_surat_tugas, $pesan_revisi,$id_status_skripsi)
     {
         $surat_tugas->id_status_surat_tugas = $id_status_surat_tugas;

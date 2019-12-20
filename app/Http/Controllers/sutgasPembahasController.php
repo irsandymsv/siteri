@@ -239,8 +239,6 @@ class sutgasPembahasController extends suratTugasController
             $query->where("jabatan", "Dekan");
         })->first();
 
-        // return view('akademik.sutgas_pembimbing.pdf', ['surat_tugas' => $surat_tugas, 'dekan' => $dekan]);
-
         $pdf = PDF::loadview('akademik.sutgas_pembahas.pdf', [
             'surat_tugas' => $surat_tugas,
             'sutgas_pembimbing' => $sutgas_pembimbing,
