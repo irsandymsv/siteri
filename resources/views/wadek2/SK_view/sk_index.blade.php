@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('side_menu')
-   @include('include.dekan_menu')
+   @include('include.wadek2_menu')
 @endsection
 
 @section('page_title')
@@ -91,9 +91,9 @@
 			            				</td> --}}
 			            				<td>
 			            					@if($tipe == "SK Skripsi")
-			            					<a href="{{ route('dekan.sk-skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+			            					<a href="{{ route('wadek2.sk-skripsi.show', $item->id) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
 			            					@else
-			            					<a href="{{ route('dekan.sk-sempro.show', $item->no_surat) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
+			            					<a href="{{ route('wadek2.sk-sempro.show', $item->no_surat) }}" class="btn btn-primary" title="Lihat Detail"><i class="fa fa-eye"></i></a>
 			            					@endif
 			            				</td>
 			            			</tr>

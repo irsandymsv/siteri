@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('side_menu')
-   @include('include.bpp_menu')
+   @include('include.wadek2_menu')
 @endsection
 
 @section('page_title')
@@ -385,7 +385,7 @@
             </div>
 
             <div class="box-footer">
-               <a href="{{ route('bpp.honor-skripsi.index') }}" class="btn btn-default pull-right">Kembali</a>
+               <a href="{{ route('wadek2.honor-skripsi.index') }}" class="btn btn-default pull-right">Kembali</a>
             </div>
          </div>
       </div>
@@ -608,7 +608,7 @@
    			</div>
 
             <div class="box-footer">
-               <a href="{{ route('bpp.honor-skripsi.index') }}" class="btn btn-default pull-right">Kembali</a>
+               <a href="{{ route('wadek2.honor-skripsi.index') }}" class="btn btn-default pull-right">Kembali</a>
             </div>
    		</div>
    	</div>
@@ -618,10 +618,10 @@
       <div class="col-xs-12">
          @if($sk_honor->verif_dekan != 1)
             <div class="form-group" style="float: right;">
-               <form method="post" action="{{ route('bpp.honor-skripsi.verif', $sk_honor->id) }}">
+               <form method="post" action="{{ route('wadek2.honor-skripsi.verif', $sk_honor->id) }}">
                   @csrf
                   @method('put')
-                  <input type="hidden" name="verif_bpp" value="{{$sk_honor->verif_kebag_keuangan}}">
+                  <input type="hidden" name="verif_wadek2" value="{{$sk_honor->verif_kebag_keuangan}}">
                   
                   @if ($sk_honor->verif_kebag_keuangan != 1)
                      <button type="submit" name="setuju_btn" class="btn btn-success"><i class="fa fa-check"></i> Setujui</button>
@@ -641,14 +641,14 @@
                <span aria-hidden="true">&times;</span></button>
                <h4 class="modal-title">Pesan Penarikan Honorarium</h4>
             </div>
-            <form method="post" action="{{ route('bpp.honor-skripsi.verif', $sk_honor->id) }}">
+            <form method="post" action="{{ route('wadek2.honor-skripsi.verif', $sk_honor->id) }}">
                @csrf
                @method('PUT')
 
                <div class="modal-body">
                   <label for="pesan_revisi">Masukkan Pesan Revisi</label>
                   <textarea name="pesan_revisi" id="pesan_revisi" class="form-control">{{old('pesan_revisi')}}</textarea>
-                  <input type="hidden" name="verif_bpp" value="{{$sk_honor->verif_kebag_keuangan}}">
+                  <input type="hidden" name="verif_wadek2" value="{{$sk_honor->verif_kebag_keuangan}}">
 
                   @error('pesan_revisi')
                      <p style="color: red;">{{ $message }}</p>
@@ -676,13 +676,13 @@
     
     $("button[name='setuju_btn']").click(function(event) {
        event.preventDefault();
-       $("input[name='verif_bpp']").val(1);
+       $("input[name='verif_wadek2']").val(1);
        $(this).parents("form").trigger('submit');
     });
 
     $("button[name='tarik_btn']").click(function(event) {
        event.preventDefault();
-       $("input[name='verif_bpp']").val(2);
+       $("input[name='verif_wadek2']").val(2);
        $(this).parents("form").trigger('submit');
     });
    </script>

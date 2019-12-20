@@ -124,46 +124,50 @@ Route::prefix('ktu')->name('ktu.')->group(function ()
 	Route::get('/surat-tugas-penguji/{id}', 'sutgasPengujiController@ktu_show')->name("sutgas-penguji.show");
 	Route::put('/surat-tugas-penguji/verif/{id}', 'sutgasPengujiController@ktu_verif')->name("sutgas-penguji.verif");
 
-	//Route Surat SK Skripsi
-	Route::get('/sk-skripsi', 'SkSkripsiController@ktu_index_skripsi')->name('sk-skripsi.index');
-	Route::get('/sk-skripsi/{id_sk_skripsi}', 'SkSkripsiController@ktu_show')->name('sk-skripsi.show');
-	Route::put('/sk-skripsi/verif/{id_sk_skripsi}', 'SkSkripsiController@ktu_verif')->name('sk-skripsi.verif');
-
-	//Route Surat SK Sempro
-	Route::get('/sk-sempro', 'SkSemproController@ktu_index_sempro')->name('sk-sempro.index');
+	//Route SK Sempro
+	Route::get('/sk-sempro', 'SkSemproController@ktu_index')->name('sk-sempro.index');
 	Route::get('/sk-sempro/{id_sk_sempro}', 'SkSemproController@ktu_show')->name('sk-sempro.show');
 	Route::put('/sk-sempro/verif/{id_sk_sempro}', 'SkSemproController@ktu_verif')->name('sk-sempro.verif');
 
-	// Route::get('/honor-skripsi', 'honorSkripsiController@ktu_index')->name('honor-skripsi.index');
-	// Route::get('/honor-skripsi/{id_sk_honor}', 'honorSkripsiController@ktu_show')->name('honor-skripsi.show');
-	// Route::put('/honor-skripsi/verif/{id_sk_honor}', 'honorSkripsiController@ktu_verif')->name('honor-skripsi.verif');
+	//Route SK Skripsi
+	Route::get('/sk-skripsi', 'SkSkripsiController@ktu_index')->name('sk-skripsi.index');
+	Route::get('/sk-skripsi/{id_sk_skripsi}', 'SkSkripsiController@ktu_show')->name('sk-skripsi.show');
+	Route::put('/sk-skripsi/verif/{id_sk_skripsi}', 'SkSkripsiController@ktu_verif')->name('sk-skripsi.verif');
 
-	// Route::get('/honor-sempro', 'honorSemproController@ktu_index')->name('honor-sempro.index');
-	// Route::get('/honor-sempro/{id_sk_honor}', 'honorSemproController@ktu_show')->name('honor-sempro.show');
-	// Route::put('/honor-sempro/verif/{id_sk_honor}', 'honorSemproController@ktu_verif')->name('honor-sempro.verif');
+	//Route Honor Sempro
+	Route::get('/honor-sempro', 'honorSemproController@ktu_index')->name('honor-sempro.index');
+	Route::get('/honor-sempro/{id_sk_honor}', 'honorSemproController@ktu_show')->name('honor-sempro.show');
+	Route::put('/honor-sempro/verif/{id_sk_honor}', 'honorSemproController@ktu_verif')->name('honor-sempro.verif');
+
+	//Route Honor Skripsi
+	Route::get('/honor-skripsi', 'honorSkripsiController@ktu_index')->name('honor-skripsi.index');
+	Route::get('/honor-skripsi/{id_sk_honor}', 'honorSkripsiController@ktu_show')->name('honor-skripsi.show');
+	Route::put('/honor-skripsi/verif/{id_sk_honor}', 'honorSkripsiController@ktu_verif')->name('honor-skripsi.verif');
 });
 
 Route::prefix('dekan')->name('dekan.')->group(function()
 {
-	Route::get('/', function()
-	{
-		return view('dekan.dashboard');
-	});
-	Route::get('/sk-skripsi', 'SkSkripsiController@dekan_index_skripsi')->name('sk-skripsi.index');
-	Route::get('/sk-skripsi/{id_sk_akademik}', 'SkSkripsiController@dekan_show')->name('sk-skripsi.show');
-	Route::put('/sk-skripsi/verif/{id_sk_akademik}', 'SkSkripsiController@dekan_verif')->name('sk-skripsi.verif');
+	Route::get('/', 'dekanController@dashboard')->name('dashboard');
 
-	Route::get('/sk-sempro', 'SkSemproController@dekan_index_sempro')->name('sk-sempro.index');
-	Route::get('/sk-sempro/{id_sk_akademik}', 'SkSemproController@dekan_show')->name('sk-sempro.show');
-	Route::put('/sk-sempro/verif/{id_sk_akademik}', 'SkSemproController@dekan_verif')->name('sk-sempro.verif');
+	//Route SK Sempro
+	Route::get('/sk-sempro', 'SkSemproController@dekan_index')->name('sk-sempro.index');
+	Route::get('/sk-sempro/{id_sk_sempro}', 'SkSemproController@dekan_show')->name('sk-sempro.show');
+	Route::put('/sk-sempro/verif/{id_sk_sempro}', 'SkSemproController@dekan_verif')->name('sk-sempro.verif');
 
-	Route::get('/honor-skripsi', 'honorSkripsiController@dekan_index')->name('honor-skripsi.index');
-	Route::get('/honor-skripsi/{id_sk_honor}', 'honorSkripsiController@dekan_show')->name('honor-skripsi.show');
-	Route::put('/honor-skripsi/verif/{id_sk_honor}', 'honorSkripsiController@dekan_verif')->name('honor-skripsi.verif');
+	//Route SK Skripsi
+	Route::get('/sk-skripsi', 'SkSkripsiController@dekan_index')->name('sk-skripsi.index');
+	Route::get('/sk-skripsi/{id_sk_skripsi}', 'SkSkripsiController@dekan_show')->name('sk-skripsi.show');
+	Route::put('/sk-skripsi/verif/{id_sk_skripsi}', 'SkSkripsiController@dekan_verif')->name('sk-skripsi.verif');
 
+	//Route Honor Sempro
 	Route::get('/honor-sempro', 'honorSemproController@dekan_index')->name('honor-sempro.index');
 	Route::get('/honor-sempro/{id_sk_honor}', 'honorSemproController@dekan_show')->name('honor-sempro.show');
 	Route::put('/honor-sempro/verif/{id_sk_honor}', 'honorSemproController@dekan_verif')->name('honor-sempro.verif');
+
+	//Route Honor Skripsi
+	Route::get('/honor-skripsi', 'honorSkripsiController@dekan_index')->name('honor-skripsi.index');
+	Route::get('/honor-skripsi/{id_sk_honor}', 'honorSkripsiController@dekan_show')->name('honor-skripsi.show');
+	Route::put('/honor-skripsi/verif/{id_sk_honor}', 'honorSkripsiController@dekan_verif')->name('honor-skripsi.verif');
 });
 
 Route::prefix('keuangan')->name('keuangan.')->group(function()
@@ -223,14 +227,23 @@ Route::prefix('bpp')->name('bpp.')->group(function()
 
 Route::prefix('wadek2')->name('wadek2.')->group(function()
 {
-	Route::get('/', function() {
-	    return view('wadek2.dashboard');
-	});
-	Route::get('/honor-skripsi', 'honorSkripsiController@wadek2_index')->name('honor-skripsi.index');
-	Route::get('/honor-skripsi/{id_sk_honor}', 'honorSkripsiController@wadek2_show')->name('honor-skripsi.show');
-	Route::put('/honor-skripsi/verif/{id_sk_honor}', 'honorSkripsiController@wadek2_verif')->name('honor-skripsi.verif');
+	Route::get('/', 'wadek2Controller@dashboard')->name('dashboard');
 
+	//Route SK Sempro
+	Route::get('/sk-sempro', 'SkSemproController@wadek2_index')->name('sk-sempro.index');
+	Route::get('/sk-sempro/{id_sk_sempro}', 'SkSemproController@wadek2_show')->name('sk-sempro.show');
+
+	//Route SK Skripsi
+	Route::get('/sk-skripsi', 'SkSkripsiController@wadek2_index')->name('sk-skripsi.index');
+	Route::get('/sk-skripsi/{id_sk_skripsi}', 'SkSkripsiController@wadek2_show')->name('sk-skripsi.show');
+	
+	//Route Honor Sempro
 	Route::get('/honor-sempro', 'honorSemproController@wadek2_index')->name('honor-sempro.index');
 	Route::get('/honor-sempro/{id_sk_honor}', 'honorSemproController@wadek2_show')->name('honor-sempro.show');
 	Route::put('/honor-sempro/verif/{id_sk_honor}', 'honorSemproController@wadek2_verif')->name('honor-sempro.verif');
+
+	//Route Honor Skripsi
+	Route::get('/honor-skripsi', 'honorSkripsiController@wadek2_index')->name('honor-skripsi.index');
+	Route::get('/honor-skripsi/{id_sk_honor}', 'honorSkripsiController@wadek2_show')->name('honor-skripsi.show');
+	Route::put('/honor-skripsi/verif/{id_sk_honor}', 'honorSkripsiController@wadek2_verif')->name('honor-skripsi.verif');
 });
