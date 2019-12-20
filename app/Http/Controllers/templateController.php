@@ -37,11 +37,6 @@ class templateController extends Controller
         }
     }
 
-    // public function show($id)
-    // {
-    // 	return view('template_surat.show');
-    // }
-
     public function edit($id)
     {
         $nama_template = nama_template::find($id);
@@ -67,29 +62,11 @@ class templateController extends Controller
     //SK Akademik
     public function index_sk_akademik()
     {
-        // $template_sempro = template::with('nama_template')
-        // ->whereHas('nama_template', function(Builder $query)
-        // {
-        //     $query->where('nama','SK Sempro');
-        // })
-        // ->orderBy('created_at', 'desc')
-        // ->first();
-
-        // $template_skripsi = template::with('nama_template')
-        // ->whereHas('nama_template', function(Builder $query)
-        // {
-        //     $query->where('nama','SK Skripsi');
-        // })
-        // ->orderBy('created_at', 'desc')
-        // ->first();
-
         $template = template::with('nama_template')->orderBy('created_at', 'desc')->get();
 
-        // dd($template_sempro);
         return view('akademik.SK_view.template_index', [
             'template' => $template
-            // 'template_sempro' => $template_sempro,
-            // 'template_skripsi' => $template_skripsi
+
         ]);
     }
 
@@ -107,7 +84,7 @@ class templateController extends Controller
         ]);
         try{
             $template = template::where('id_nama_template',$request->input('id_nama_template'))->get();
-            if($template->count() == 0){
+            // if($template->count() == 0){
                 template::insert([
                     'id_nama_template' => $request->input('id_nama_template'),
                     'isi' => $request->input('isi'),
@@ -115,19 +92,15 @@ class templateController extends Controller
                     'updated_at' => Carbon::now()->toDateTimeString()
                 ]);
                 return redirect()->route('akademik.template-sk.index')->with('success', 'Data Berhasil Dibuat');
-            }else{
-                return redirect()->route('akademik.template-sk.create')->with('error', "Tipe Template yang dibuat Sudah Ada");
-            }
+            // }else{
+            //     return redirect()->route('akademik.template-sk.create')->with('error', "Tipe Template yang dibuat Sudah Ada");
+            // }
 
         }catch(Exception $e){
             return redirect()->route('akademik.template-sk.create')->with('error', $e->getMessage());
         }
     }
 
-    // public function show_sk_akademik($id)
-    // {
-    //     return view('akademik.SK_view.show');
-    // }
 
     public function edit_sk_akademik($id)
     {
