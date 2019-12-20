@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
+use App\User;
 
 use Illuminate\Http\Request;
 
@@ -23,6 +25,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = Auth::user();
+        $user = User::where('no_pegawai', $user->no_pegawai)->with('jabatan')->first();
+        // dd($user);
+
+        if ($user->jabatan->jabatan == "Dosen") {
+            return redirect()->route('dosen.dashboard');
+        } 
+        else {
+            return view('home');
+        }
+        
     }
 }
