@@ -112,10 +112,25 @@
 
          #isi_template_surat{
             width: 100%;
+            margin-top: 0;
+         }
+
+         #isi_template_surat ol{
+            margin-top: 0;
+            margin-bottom: 0;
          }
 
          #isi_template_surat table:nth-child(2) tr:nth-child(6){
             page-break-after: always;
+         }
+
+         #tbl_menetapkan td{
+            text-align: justify;
+            vertical-align: top;
+         }
+
+         #tbl_menetapkan td:first-child{
+            padding-right: 10px;
          }
 
          .ttd-right{
@@ -166,7 +181,47 @@
          <div id="isi_template_surat">
             {!! $sk->template_penguji->isi !!}
          </div>
-          <br>
+
+         <br>
+         <div id="memperhatikan_menetapkan">
+            <table>
+               <tr>
+                  <td style="vertical-align: top;"><b>Memperhatikan:</b></td>
+                  <td style="text-align: justify;">
+                     Keputusan Dekan Fakultas Ilmu Komputer Universitas Jember Nomor : {{$sk->no_surat_pembimbing }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($sk->created_at)->year }}, tanggal {{ Carbon\Carbon::parse($sk->tgl_sk_pembimbing)->locale('id_ID')->isoFormat('D MMMM Y') }} tentang penetapan Dosen Pembimbing Skripsi Mahasiswa Fakultas Ilmu Komputer Universitas Jember Tahun Akademik {{ $tahun_akademik['tahun_awal'].'/'.$tahun_akademik['tahun_akhir'] }}
+                  </td>
+               </tr>
+            </table>
+            <b style="text-align: center;">MEMUTUSKAN</b>
+            <b>Menetapkan :</b>
+            <table id="tbl_menetapkan" cellpadding="0" cellspacing="0" border="0">
+               <tr>
+                  <td>Pertama</td>
+                  <td>: </td>
+                  <td>Mengangkat dan menugaskan kepada staf pengajar yang namanya tersebut dalam Lampiran Keputusan ini sebagai Tim Penguji Skripsi Mahasiswa Fakultas Ilmu Komputer Universitas Jember Tahun Akademik {{ $tahun_akademik['tahun_awal'].'/'.$tahun_akademik['tahun_akhir'] }}.</td>
+               </tr>
+
+               <tr>
+                  <td>Kedua</td>
+                  <td>: </td>
+                  <td>Tim Penguji Skripsi Mahasiswa Fakultas Ilmu Komputer Universitas Jember berkewajiban memberikan penilaian terhadap beberapa aspek yang diuji sesuai dengan ketentuan yang berlaku.</td>
+               </tr>
+
+               <tr>
+                  <td>Ketiga</td>
+                  <td>: </td>
+                  <td>Biaya Penyelenggaraan Ujian Skripsi mahasiswa ini dibebankan pada DIPA PNBP Fakultas Ilmu Komputer Universitas Jember Tahun {{ Carbon\Carbon::today()->year }}.</td>
+               </tr>
+
+               <tr>
+                  <td>Keempat</td>
+                  <td>: </td>
+                  <td>Keputusan ini berlaku sejak tanggal ditetapkan dengan ketentuan apabila dikemudian hari ternyata terdapat kekeliruan dalam penetapan ini akan diubah dan diperbaiki sebagaimana mestinya.</td>
+               </tr>
+            </table>
+         </div>
+
+         <br>
          <div class="ttd-right">
             {{-- <br> --}}
             Jember, {{ Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }} <br>
@@ -185,7 +240,7 @@
       </div>
    </div>
 
-   <script src="/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
+   {{-- <script src="/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
    <script type="text/javascript">
       var no_surat_pembimbing = @json($sk->no_surat_pembimbing);
       var tahun = @json(Carbon\Carbon::parse($sk->created_at)->year);
@@ -194,7 +249,7 @@
 
       $("td:contains('?sk pembimbing skripsi?')").html(`
        Keputusan Dekan Fakultas Ilmu Komputer Universitas Jember Nomor : `+no_surat_pembimbing+` /UN25.1.15/SP/`+tahun+`, tanggal `+tgl_sk_pembimbing+` tentang penetapan Dosen Pembimbing Skripsi Mahasiswa Fakultas Ilmu Komputer Universitas Jember Tahun Akademik `+tahun_akademik['tahun_awal']+`/`+tahun_akademik['tahun_akhir']);
-   </script>
+   </script> --}}
 </body>
 </html>
 

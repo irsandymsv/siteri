@@ -112,6 +112,12 @@
 
          #isi_template_surat{
             width: 100%;
+            margin-top: 0;
+         }
+
+         #isi_template_surat ol{
+            margin-top: 0;
+            margin-bottom: 0;
          }
 
          #isi_template_surat table:nth-child(2) tr:nth-child(6){

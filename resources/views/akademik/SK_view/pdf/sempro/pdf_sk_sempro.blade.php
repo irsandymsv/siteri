@@ -112,6 +112,12 @@
 
          #isi_template_surat{
             width: 100%;
+            margin-top: 0;
+         }
+
+         #isi_template_surat ol{
+            margin-top: 0;
+            margin-bottom: 0;
          }
 
          #isi_template_surat table:nth-child(2) tr:nth-child(6){
@@ -166,7 +172,7 @@
          <div id="isi_template_surat">
             {!! $sk->template->isi !!}
          </div>
-
+         <br>
          <div class="ttd-right">
             {{-- <br> --}}
             Jember, {{ Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }} <br>

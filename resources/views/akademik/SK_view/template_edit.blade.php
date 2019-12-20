@@ -97,7 +97,7 @@
    <script src="/ckeditor/ckeditor.js"></script>
    <script src="/js/btn_backTop.js"></script>
    <script type="text/javascript">
-      CKEDITOR.addCss('ol { margin-top: 0; margin-bottom: 0; !important; }');
+      CKEDITOR.addCss('.cke_editable ol { margin-top: 0; margin-bottom: 0; !important; }');
       CKEDITOR.replace('editor1', {
          height: '500px',
          tabSpaces: 4
