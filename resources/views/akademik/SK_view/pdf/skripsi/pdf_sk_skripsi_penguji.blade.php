@@ -191,7 +191,7 @@
                   </td>
                </tr>
             </table>
-            <b style="text-align: center;">MEMUTUSKAN</b><br>
+            <p  style="text-align: center;"><b>MEMUTUSKAN</b></p>
             <b>Menetapkan :</b>
             <table id="tbl_menetapkan" cellpadding="0" cellspacing="0" border="0">
                <tr>
