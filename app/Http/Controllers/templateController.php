@@ -64,7 +64,7 @@ class templateController extends Controller
     {
         $nama_template = nama_template::with('template_terbaru')->orderBy('nama', 'asc')->get();
         // dd($nama_template);
-        $template = template::with('nama_template')->orderBy('created_at', 'desc')->get();
+        // $template = template::with('nama_template')->orderBy('created_at', 'desc')->get();
 
         return view('akademik.SK_view.template_index', [
             'nama_template' => $nama_template
