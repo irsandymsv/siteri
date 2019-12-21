@@ -182,7 +182,6 @@
             {!! $sk->template_penguji->isi !!}
          </div>
 
-         <br>
          <div id="memperhatikan_menetapkan">
             <table>
                <tr>
@@ -192,7 +191,7 @@
                   </td>
                </tr>
             </table>
-            <b style="text-align: center;">MEMUTUSKAN</b>
+            <b style="text-align: center;">MEMUTUSKAN</b><br>
             <b>Menetapkan :</b>
             <table id="tbl_menetapkan" cellpadding="0" cellspacing="0" border="0">
                <tr>
