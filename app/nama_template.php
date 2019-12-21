@@ -14,4 +14,9 @@ class nama_template extends Model
     {
         return $this->hasMany('App\template','id_nama_template');
     }
+
+    public function template_terbaru()
+    {
+        return $this->hasOne('App\template', 'id_nama_template')->latest();
+    }
 }

@@ -62,10 +62,12 @@ class templateController extends Controller
     //SK Akademik
     public function index_sk_akademik()
     {
+        $nama_template = nama_template::with('template_terbaru')->orderBy('nama', 'asc')->get();
+        // dd($nama_template);
         $template = template::with('nama_template')->orderBy('created_at', 'desc')->get();
 
         return view('akademik.SK_view.template_index', [
-            'template' => $template
+            'nama_template' => $nama_template
 
         ]);
     }

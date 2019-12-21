@@ -41,17 +41,17 @@
 		            		</tr>
 		            	</thead>
 		            	<tbody>
-                        @foreach ($template as $item)
+                        @foreach ($nama_template as $item)
                            <tr>
                               <td>1</td>
-                              <td>{{$item->nama_template->nama}}</td>
-                              <td>{{Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</td>
+                              <td>{{$item->nama}}</td>
+                              <td>{{Carbon\Carbon::parse($item->template_terbaru->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</td>
                               <td>
-                                 <a href="{{ route('akademik.template-sk.edit', $item->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                 <a href="{{ route('akademik.template-sk.edit', $item->template_terbaru->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                               </td>
                            </tr>
                         @endforeach
-                        
+
                        {{-- @if (!is_null($template_sempro))
                            <tr>
                               <td>1</td>
@@ -62,7 +62,7 @@
                               </td>
                            </tr>
                        @endif
-                        
+
                        @if (!is_null($template_skripsi))
                           <tr>
                              <td>2</td>

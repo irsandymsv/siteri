@@ -345,7 +345,7 @@ class SkSkripsiController extends Controller
 
 	public function cetak($id)
 	{
-		$sk = sk_skripsi::where('id', $id)->with(['template_pembimbing', 'template_penguji'])->first();
+      $sk = sk_skripsi::where('id', $id)->with(['template_pembimbing', 'template_penguji'])->first();
 
       $detail_skripsi = detail_skripsi::where('id_sk_skripsi', $id)
       ->with([
