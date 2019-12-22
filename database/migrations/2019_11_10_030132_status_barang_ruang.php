@@ -18,7 +18,7 @@ class StatusBarangRuang extends Migration
             $table->string('status');
         });
 
-        DB::table('status')->insert(
+        DB::table('status_barang_ruang')->insert(
             array(
                 array(
                     'status' => 'Tetap (tidak mungkin dipinjam)'

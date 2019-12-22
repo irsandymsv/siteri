@@ -1,11 +1,11 @@
 @extends('perlengkapan.perlengkapan_view')
 
 @section('page_title')
-	Dashboard
+Dashboard Perlengkapan
 @endsection
 
 @section('judul_header')
-	Dashboard
+Dashboard
 @endsection
 
 @section('content')
