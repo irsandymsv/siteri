@@ -75,7 +75,7 @@
                <div class="box-body">
             		@csrf
 
-                  <div class="form-group">
+                  {{-- <div class="form-group">
                      <label for="no_surat">No Surat</label><br>
                      <input type="text" name="no_surat" id="no_surat" value="{{ old('no_surat') }}">
                      <span id="format_nomor">/UN25.1.15/SP/{{ Carbon\Carbon::today()->year }}</span>
@@ -85,7 +85,7 @@
                            <strong>{{ $message }}</strong>
                         </span>
                      @enderror
-                  </div>
+                  </div> --}}
                   
                   <div class="row">
                      <div class="col-lg-6">
