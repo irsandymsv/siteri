@@ -15,16 +15,19 @@ class CreatePinjamBarang extends Migration
     {
         Schema::create('pinjam_barang', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('tanggal');
-            $table->time('jam');
+            $table->date('tanggal mulai');
+            $table->date('tanggal berakhir');
+            $table->time('jam mulai');
+            $table->time('jam berakhir');
             $table->string('kegiatan');
-            $table->integer('id_barang');
+            $table->integer('iddatadetail_barang_fk')->unsigned()->nullable();
             $table->integer('jumlah');
-            $table->unsignedInteger('id_satuan');
-            $table->unsignedInteger('id_laporan');
+            $table->integer('idsatuan_fk')->unsigned()->nullable();
 
-            // $table->foreign('id_barang')->references('id')->on('barang');
-            // $table->foreign('id_satuan')->references('id')->on('satuan');
+            $table->foreign('iddatadetail_barang_fk')->references('id')->on('datadetail_barang')->onDelete('set null');
+            $table->foreign('idsatuan_fk')->references('id')->on('satuan')->onDelete('set null');
+
+            //SELECT `tanggal mulai`, `tanggal berakhir`, `jam mulai`, `jam berakhir`, `kegiatan`, dbrg.namabarang, ddbrg.merk_barang, `jumlah`, satuan.satuan FROM `pinjam_barang` JOIN datadetail_barang ddbrg ON iddatadetail_barang_fk = ddbrg.id JOIN databarang dbrg ON ddbrg.idbarang_fk = dbrg.id JOIN satuan ON idsatuan_fk=satuan.id WHERE pinjam_barang.id=1
         });
     }
 

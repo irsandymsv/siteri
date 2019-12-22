@@ -14,16 +14,21 @@ class DatadetailBarang extends Migration
     public function up()
     {
         Schema::create('datadetail_barang', function (Blueprint $table) {
-
+            $table->increments('id');
             $table->date('tanggal');
             $table->integer('idbarang_fk')->unsigned()->nullable();
             $table->string('merk_barang');
             $table->integer('nup');
             $table->integer('idruang_fk')->unsigned()->nullable();
+            $table->integer('idstatus_fk')->unsigned()->nullable();
+            // keterangan
+            // 1 => tetap (tidak mungkin dipinjam)
+            // 2 => bergerak (mungkin dipinjam)
 
 
             $table->foreign('idbarang_fk')->references('id')->on('databarang')->onDelete('set null');
             $table->foreign('idruang_fk')->references('id')->on('dataruang')->onDelete('set null');
+            $table->foreign('idstatus_fk')->references('id')->on('status_barang_ruang')->onDelete('set null');
         });
 
         DB::table('datadetail_barang')->insert(array(
@@ -60,13 +65,6 @@ class DatadetailBarang extends Migration
             'merk_barang' => 'Newmark NM - 03C',
             'nup' => '1',
             'idruang_fk' => '4'
-        ));
-        DB::table('datadetail_barang')->insert(array(
-            'tanggal' => '2011-12-22',
-            'idbarang_fk' => '1',
-            'merk_barang' => 'Single, AMP Single',
-            'nup' => '1',
-            'idruang_fk' => '1'
         ));
         DB::table('datadetail_barang')->insert(array(
             'tanggal' => '2009-12-17',
@@ -333,7 +331,7 @@ class DatadetailBarang extends Migration
             'idbarang_fk' => '7',
             'merk_barang' => 'Brother B-104',
             'nup' => '11',
-            'idruang_fk' => 'belum nemu ruang'
+            'idruang_fk' => '27'
         ));
         DB::table('datadetail_barang')->insert(array(
             'tanggal' => '2011-12-01',
@@ -359,65 +357,65 @@ class DatadetailBarang extends Migration
         DB::table('datadetail_barang')->insert(array(
             'tanggal' => '2014-12-04',
             'idbarang_fk' => '7',
-            'merk_barang' => 'Filing Cabiner  B-104',
+            'merk_barang' => 'Filing Cabinet B-104',
             'nup' => '15',
             'idruang_fk' => '4'
         ));
         DB::table('datadetail_barang')->insert(array(
             'tanggal' => '2014-12-04',
             'idbarang_fk' => '7',
-            'merk_barang' => 'Filing Cabiner  B-104',
+            'merk_barang' => 'Filing Cabinet B-104',
             'nup' => '16',
             'idruang_fk' => '4'
         ));
         DB::table('datadetail_barang')->insert(array(
             'tanggal' => '2014-12-04',
             'idbarang_fk' => '7',
-            'merk_barang' => 'Filing Cabiner  B-104',
+            'merk_barang' => 'Filing Cabinet B-104',
             'nup' => '17',
             'idruang_fk' => '14'
         ));
         DB::table('datadetail_barang')->insert(array(
             'tanggal' => '2017-11-21',
             'idbarang_fk' => '7',
-            'merk_barang' => 'Filing Cabiner Brother B-104',
+            'merk_barang' => 'Filing Cabinet Brother B-104',
             'nup' => '18',
             'idruang_fk' => '10'
         ));
         DB::table('datadetail_barang')->insert(array(
             'tanggal' => '2017-11-21',
             'idbarang_fk' => '7',
-            'merk_barang' => 'Filing Cabiner Brother B-104',
+            'merk_barang' => 'Filing Cabinet Brother B-104',
             'nup' => '19',
             'idruang_fk' => '10'
         ));
         DB::table('datadetail_barang')->insert(array(
             'tanggal' => '2017-11-21',
             'idbarang_fk' => '7',
-            'merk_barang' => 'Filing Cabiner Brother B-104',
+            'merk_barang' => 'Filing Cabinet Brother B-104',
             'nup' => '20',
             'idruang_fk' => '10'
         ));
         DB::table('datadetail_barang')->insert(array(
             'tanggal' => '2019-04-05',
             'idbarang_fk' => '7',
-            'merk_barang' => 'Filing Cabiner  Brother B-103',
+            'merk_barang' => 'Filing Cabinet Brother B-103',
             'nup' => '21',
-            'idruang_fk' => 'ruang belum ada (26)'
+            'idruang_fk' => '27'
         ));
         DB::table('datadetail_barang')->insert(array(
             'tanggal' => '2019-04-05',
             'idbarang_fk' => '7',
-            'merk_barang' => 'Filing Cabiner  Brother B-103',
+            'merk_barang' => 'Filing Cabinet Brother B-103',
             'nup' => '22',
-            'idruang_fk' => 'ruang belum ada (26)'
+            'idruang_fk' => '27'
         ));
         DB::table('datadetail_barang')->insert(array(
             'tanggal' => '2019-04-05',
             'idbarang_fk' => '7',
-            'merk_barang' => 'Filing Cabiner  Brother B-103',
+            'merk_barang' => 'Filing Cabinet Brother B-103',
             'nup' => '23',
-            'idruang_fk' => 'ruang belum ada (26)'
+            'idruang_fk' => '27'
         ));
         DB::table('datadetail_barang')->insert(array(
             // brangkas
@@ -542,7 +540,7 @@ class DatadetailBarang extends Migration
             'idbarang_fk' => '12',
             'merk_barang' => '120X240',
             'nup' => '2',
-            'idruang_fk' => 'ruang belum ada (RK2)'
+            'idruang_fk' => '26'
         ));
         DB::table('datadetail_barang')->insert(array(
             'tanggal' => '2010-03-18',
@@ -637,7 +635,55 @@ class DatadetailBarang extends Migration
             'idbarang_fk' => '14',
             'merk_barang' => 'FINGERSPOT REVO DUO 128BNC',
             'nup' => '1',
-            'idruang_fk' => ''
+            'idruang_fk' => '10'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // mesin absensi
+            'tanggal' => '2017-12-28',
+            'idbarang_fk' => '14',
+            'merk_barang' => 'FINGERSPOT REVO DUO 128BNC',
+            'nup' => '2',
+            'idruang_fk' => '10'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // mesin absensi
+            'tanggal' => '2017-12-28',
+            'idbarang_fk' => '14',
+            'merk_barang' => 'FINGERSPOT REVO DUO 128BNC',
+            'nup' => '3',
+            'idruang_fk' => '10'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // mesin absensi
+            'tanggal' => '2017-12-28',
+            'idbarang_fk' => '14',
+            'merk_barang' => 'FINGERSPOT REVO DUO 128BNC',
+            'nup' => '4',
+            'idruang_fk' => '10'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // mesin absensi
+            'tanggal' => '2017-12-28',
+            'idbarang_fk' => '14',
+            'merk_barang' => 'FINGERSPOT REVO DUO 128BNC',
+            'nup' => '5',
+            'idruang_fk' => '10'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // mesin absensi
+            'tanggal' => '2017-12-28',
+            'idbarang_fk' => '14',
+            'merk_barang' => 'FINGERSPOT REVO DUO 128BNC',
+            'nup' => '6',
+            'idruang_fk' => '10'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // mesin absensi
+            'tanggal' => '2017-12-28',
+            'idbarang_fk' => '14',
+            'merk_barang' => 'FINGERSPOT REVO DUO 128BNC',
+            'nup' => '7',
+            'idruang_fk' => '10'
         ));
         DB::table('datadetail_barang')->insert(array(
             // lASER POINTER
@@ -693,9 +739,9 @@ class DatadetailBarang extends Migration
             'idbarang_fk' => '16',
             'merk_barang' => 'SONY VPL EX 230',
             'nup' => '23',
-            'idruang_fk' => '(RUANG 2 BELUM INPUT)'
+            'idruang_fk' => '26'
         ));
-        
+
         DB::table('datadetail_barang')->insert(array(
             // LCD Projector/Infocus
             'tanggal' => '2010-11-25',
@@ -1107,42 +1153,13 @@ class DatadetailBarang extends Migration
             'idruang_fk' => '4'
         ));
         DB::table('datadetail_barang')->insert(array(
-            // meja kerja kayu
+            //meja kayu sekretaris
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '19',
             'merk_barang' => 'Kayu Jati',
             'nup' => '54',
-            'idruang_fk' => '4'
+            'idruang_fk' => '11'
         ));
-//meja kayu sekretarsi
-
-
-
-
-
-
-
-        DB::table('datadetail_barang')->insert(array(
-            'tanggal' => '2011-12-22',
-            'idbarang_fk' => '1',
-            'merk_barang' => 'Single, AMP Single',
-            'nup' => '1',
-            'idruang_fk' => '1'
-        ));
-        DB::table('datadetail_barang')->insert(array(
-            'tanggal' => '2011-12-22',
-            'idbarang_fk' => '1',
-            'merk_barang' => 'Single, AMP Single',
-            'nup' => '1',
-            'idruang_fk' => '1'
-        ));
-        // DB::table('datadetail_barang')->insert(array(
-        // 'tanggal' => '2011-12-22',
-        //     'idbarang_fk' => '1',
-        //     'merk_barang' => 'Single, AMP Single',
-        //     'nup' => '1',
-        // ));
-
     }
     public function down()
     {

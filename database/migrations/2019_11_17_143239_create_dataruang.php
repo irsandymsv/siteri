@@ -18,6 +18,12 @@ class CreateDataruang extends Migration
             $table->string('koderuang');
             $table->string('namaruang');
             $table->integer('kuota');
+            $table->integer('idstatus_fk')->unsigned()->nullable();
+            // keterangan
+            // 1 => tetap (tidak mungkin dipinjam)
+            // 2 => bergerak (mungkin dipinjam)
+
+            $table->foreign('idstatus_fk')->references('id')->on('status_barang_ruang')->onDelete('set null');
         });
 
         DB::table('dataruang')->insert(array(
@@ -30,51 +36,51 @@ class CreateDataruang extends Migration
             'koderuang' => '024A2010',
             'namaruang' => 'LABORATORIUM GIS',
             'kuota' => '0'
-        )); 
-        
+        ));
+
         DB::table('dataruang')->insert(array(
             'koderuang' => '024A1008',
             'namaruang' => 'UMUM & PERLENGKAPAN 1',
             'kuota' => '0'
         ));
-        
+
         DB::table('dataruang')->insert(array(
             'koderuang' => '024A1009',
             'namaruang' => 'KEUANGAN DAN KEPEGAWAIAN',
             'kuota' => '0'
 
         ));
-        
+
         DB::table('dataruang')->insert(array(
             'koderuang' => '024A1007',
             'namaruang' => 'AKADEMIK DAN KEMAHASISWAAN',
             'kuota' => '0'
         ));
-        
+
         DB::table('dataruang')->insert(array(
             'koderuang' => '024A2006',
             'namaruang' => 'LABORATORIUM BASIS DATA',
             'kuota' => '40'
         ));
-        
+
         DB::table('dataruang')->insert(array(
             'koderuang' => '024A1005',
             'namaruang' => 'LABORATORIUM RPL',
             'kuota' => '40'
         ));
-        
+
         DB::table('dataruang')->insert(array(
             'koderuang' => '024A2005',
             'namaruang' => 'LABORATORIUM SELF ACCESS CENTER',
             'kuota' => '40'
         ));
-        
+
         DB::table('dataruang')->insert(array(
             'koderuang' => '024A1017',
             'namaruang' => 'RUANG BACA',
             'kuota' => '0'
         ));
-        
+
         DB::table('dataruang')->insert(array(
             'koderuang' => 'R.XXXX',
             'namaruang' => 'RUANGAN BELUM ADA',
@@ -162,11 +168,9 @@ class CreateDataruang extends Migration
         ));
         DB::table('dataruang')->insert(array(
             'koderuang' => '024A1004',
-            'namaruang' => 'Ruang  Rapat/ Sidang',
-            'kuota' => '40'
+            'namaruang' => 'RUANG RAPAT/SIDANG',
+            'kuota' => '20'
         ));
-        
-        
     }
 
     /**
