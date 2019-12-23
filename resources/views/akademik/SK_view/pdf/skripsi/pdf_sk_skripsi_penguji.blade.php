@@ -223,7 +223,20 @@
          <br>
          <div class="ttd-right">
             {{-- <br> --}}
-            Jember, {{ Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }} <br>
+            <table>
+               <tr>
+                  <td>Ditetapkan di </td>
+                  <td>: </td>
+                  <td>Jember</td>
+               </tr>
+               <tr>
+                  <td>Pada tanggal </td>
+                  <td>: </td>
+                  <td>{{ Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
+               </tr>
+            </table>
+            <br><br>
+
             Dekan,
             <br><br><br><br>
             <span style="text-transform: uppercase;"><b>{{ $dekan->nama }}</b></span><br>

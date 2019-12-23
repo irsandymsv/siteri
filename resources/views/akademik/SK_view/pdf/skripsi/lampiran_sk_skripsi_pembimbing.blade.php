@@ -129,6 +129,10 @@
          thead th{
             text-align: center;
          }
+
+         .to_center{
+            text-align: center;
+         }
     </style>
 </head>
 
@@ -163,7 +167,7 @@
          <tbody>
             @foreach($detail_skripsi as $item)
             <tr>
-               <td>{{ $loop->index + 1 }}</td>
+               <td class="to_center">{{ $loop->index + 1 }}</td>
                <td>{{$item->skripsi->nim}}</td>
                <td>{{$item->skripsi->mahasiswa->nama}}</td>
                <td>{{$item->skripsi->mahasiswa->bagian->bagian}}</td>
