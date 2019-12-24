@@ -15,10 +15,10 @@ class CreatePinjamBarang extends Migration
     {
         Schema::create('pinjam_barang', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('tanggal mulai');
-            $table->date('tanggal berakhir');
-            $table->time('jam mulai');
-            $table->time('jam berakhir');
+            $table->date('tanggal_mulai');
+            $table->date('tanggal_berakhir');
+            $table->time('jam_mulai');
+            $table->time('jam_berakhir');
             $table->string('kegiatan');
             $table->integer('iddatadetail_barang_fk')->unsigned()->nullable();
             $table->integer('jumlah');

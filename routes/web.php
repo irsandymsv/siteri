@@ -142,8 +142,8 @@ Route::prefix('perlengkapan')->name('perlengkapan.')->group(function () {
         return view('perlengkapan.dashboard');
     });
     Route::resource('inventaris', 'inventarisController');
-    Route::get('/inventaris/barang/{id}', array('as' => 'barang.ajax', 'uses' => 'inventarisController@barangAjax'));
+    // Route::get('/inventaris/barang/{id}', array('as' => 'barang.ajax', 'uses' => 'inventarisController@barangAjax'));
     Route::resource('pengadaan', 'pengadaanController');
-    Route::resource('peminjamanbarang', 'peminjamanBarangController');
-    Route::resource('peminjamanruang', 'peminjamanRuangController');
+    Route::resource('peminjaman_barang', 'peminjamanBarangController');
+    Route::resource('peminjaman_ruang', 'peminjamanRuangController');
 });

@@ -46,8 +46,8 @@
         </span>
     </a>
     <ul class="treeview-menu">
-        <li><a href="{{ route('perlengkapan.peminjamanbarang.create') }}">Buat Baru</a></li>
-        <li><a href="{{ route('perlengkapan.peminjamanbarang.index') }}">Lihat Laporan</a></li>
+        <li><a href="{{ route('perlengkapan.peminjaman_barang.create') }}">Buat Baru</a></li>
+        <li><a href="{{ route('perlengkapan.peminjaman_barang.index') }}">Lihat Laporan</a></li>
     </ul>
 </li>
 
@@ -58,8 +58,8 @@
         </span>
     </a>
     <ul class="treeview-menu">
-        <li><a href="{{ route('perlengkapan.peminjamanruang.create') }}">Buat Baru</a></li>
-        <li><a href="{{ route('perlengkapan.peminjamanruang.index') }}">Lihat Laporan</a></li>
+        <li><a href="{{ route('perlengkapan.peminjaman_ruang.create') }}">Buat Baru</a></li>
+        <li><a href="{{ route('perlengkapan.peminjaman_ruang.index') }}">Lihat Laporan</a></li>
     </ul>
 </li>
 

@@ -17,26 +17,6 @@ class CreateSatuansTable extends Migration
             $table->increments('id');
             $table->string('satuan');
         });
-
-        DB::table('satuan')->insert(
-            array(
-                array(
-                    'satuan' => 'Buah'
-                ),
-                array(
-                    'satuan' => 'Lusin'
-                ),
-                array(
-                    'satuan' => 'Kodi'
-                ),
-                array(
-                    'satuan' => 'Gross'
-                ),
-                array(
-                    'satuan' => 'Rim'
-                )
-            )
-        );
     }
 
     /**

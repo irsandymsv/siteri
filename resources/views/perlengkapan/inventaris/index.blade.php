@@ -17,15 +17,14 @@
                 <h3 class="box-title">Laporan Inventaris</h3>
 
                 <div style="float: right;">
-                    <a href="{{ route('perlengkapan.inventaris.create') }}" class="btn btn-primary"><i
-                            class="fa fa-plus"></i> Buat Laporan</a>
+                    <a href="{{ route('perlengkapan.inventaris.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Laporan</a>
                 </div>
             </div>
 
             <div class="box-body">
                 <div class="table-responsive">
                     <table id="inventaris" class="table table-bordered table-hovered">
-                        <thead>
+                        <!-- <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal Dibuat</th>
@@ -74,6 +73,41 @@
                                 </td>
                             </tr>
                             @endforeach
+                        </tbody> -->
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Tanggal</th>
+                                <th>Kode Barang</th>
+                                <th>Nama Barang</th>
+                                <th>Merk Barang</th>
+                                <th>NUP</th>
+                                <th>Kode Ruang</th>
+                                <th>Uraian Ruang</th>
+                                <th>Status</th>
+                                <th>Opsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php $no = 0 @endphp
+                            @foreach($laporan as $item)
+                            <tr id="lap_{{ $item->id }}">
+                                <td>{{ $no+=1 }}</td>
+                                <td>{{ $item->tanggal }}</td>
+                                <td>{{ $item->data_barang->kodebarang }}</td>
+                                <td>{{ $item->data_barang->namabarang }}</td>
+                                <td>{{ $item->merk_barang }}</td>
+                                <td>{{ $item->nup }}</td>
+                                <td>{{ $item->data_ruang->koderuang }}</td>
+                                <td>{{ $item->data_ruang->namaruang }}</td>
+                                <td>{{ $item->status }}</td>
+                                <td>
+                                    <a href="{{ route('perlengkapan.inventaris.show', $item->id) }}" class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ route('perlengkapan.inventaris.edit', $item->id) }}" class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
+                                    <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -114,11 +148,11 @@
     $(function() {
         $('#inventaris').DataTable();
 
-        $("a[name='hapus_laporan']").click(function(event) {
-                event.preventDefault();
-                var id_lap = $(this).attr('id');
+        // $("a[name='hapus_laporan']").click(function(event) {
+        //     event.preventDefault();
+        //     var id_lap = $(this).attr('id');
 
-            });
-        });
+        // });
+    });
 </script>
 @endsection

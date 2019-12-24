@@ -26,4 +26,9 @@ class satuan extends Model
      * @var array
      */
     protected $guarded = ['id'];
+
+    public function peminjaman_barang()
+    {
+        return $this->hasMany('App\peminjaman_barang', 'idsatuan_fk');
+    }
 }

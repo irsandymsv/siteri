@@ -21,7 +21,7 @@
             </div>
 
             <div class="box-body">
-                {!! Form::open(['route' => 'perlengkapan.pengadaan.store', 'id'=>'form']) !!}
+                {!! Form::open(['route' => 'perlengkapan.peminjaman_barang.store', 'id'=>'form']) !!}
                 <div id="isiForm" class="table-responsive">
                     <h5>Total Data = <span class="data_count">0</span></h5>
                     <table id="tbl-data" class="table table-bordered table-hover">
@@ -90,7 +90,7 @@
     <div class="col-xs-12">
         <div class="box box-success">
             <div class="table-responsive">
-                <table id="pengadaan" class="table table-bordered table-hovered">
+                <table id="peminjaman_barang" class="table table-bordered table-hovered">
                     <thead>
                         <tr>
                             <th>No</th>
