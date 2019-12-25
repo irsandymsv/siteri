@@ -4,6 +4,10 @@
    @include('include.dosen_menu')
 @endsection
 
+@section('css_link')
+   <link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+@endsection
+
 @section('page_title')
 	Pembahas Sempro
 @endsection
@@ -17,8 +21,16 @@
 		<div class="col col-xs-12">
 			<div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              	<li class="active"><a href="#tab_1" data-toggle="tab">Pembahas 1</a></li>
-              	<li><a href="#tab_2" data-toggle="tab">Pembahas 2</a></li>
+              	<li class="active">
+                  <a href="#tab_1" data-toggle="tab">
+                     Pembahas 1 &ensp;<span class="label bg-green">{{ count($sutgas_pembahas_1) }}</span>
+                  </a>
+               </li>
+              	<li>
+                  <a href="#tab_2" data-toggle="tab">
+                     Pembahas 2 &ensp;<span class="label bg-green">{{ count($sutgas_pembahas_2) }}</span>
+                  </a>
+               </li>
               	
             </ul>
             <div class="tab-content">
@@ -81,7 +93,7 @@
                					<td>{{ $item->detail_skripsi->skripsi->nim }}</td>
                					<td>{{ $item->detail_skripsi->skripsi->mahasiswa->nama }}</td>
 	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
-	   			      			<td>{{ Carbon::parse($item->tanggal)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
+	   			      			<td>{{ Carbon\Carbon::parse($item->tanggal)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
                               <td>
                                  @if (Carbon\Carbon::parse($item->tanggal)->gte(Carbon\Carbon::today()))
                                     Belum Dilaksanakan

@@ -17,8 +17,16 @@
 		<div class="col col-xs-12">
 			<div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              	<li class="active"><a href="#tab_1" data-toggle="tab">Penguji Utama</a></li>
-              	<li><a href="#tab_2" data-toggle="tab">Penguji Pendamping</a></li>
+              	<li class="active">
+                  <a href="#tab_1" data-toggle="tab">
+                     Penguji Utama &ensp;<span class="label bg-green">{{ count($sutgas_penguji_1) }}</span>
+                  </a>
+               </li>
+              	<li>
+                  <a href="#tab_2" data-toggle="tab">
+                  Penguji Pendamping &ensp;<span class="label bg-green">{{ count($sutgas_penguji_2) }}</span>
+               </a>
+            </li>
               	
             </ul>
             <div class="tab-content">
