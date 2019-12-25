@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\laporan_pengadaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\laporan_pengadaan;
 use App\pengadaan;
 use App\satuan;
 
@@ -18,7 +18,9 @@ class pengadaanController extends Controller
      */
     public function index()
     {
-        $db = pengadaan::all();
+        // $db = laporan_pengadaan::with(['pengadaan', 'pengadaan.satuan'])
+        //     ->get();
+        $db = laporan_pengadaan::all();
         // dd($db);
         return view('perlengkapan.pengadaan.index', [
             'laporan'  => $db
@@ -45,28 +47,45 @@ class pengadaanController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->data;
-        $data = explode(",", $data);
-        // dd($request->length);
-        $data = array_chunk($data, $request->length);
+        // $data = $request->data;
+        // $data = explode(",", $data);
+        // dump($request);
+        // $data = array_chunk($data, $request->length);
         // dd($data);
+        $this->validate($request, [
+            "keterangan"    => "required|string|max:100",
+            "nama_barang"    => "required|array",
+            "nama_barang.*"  => "required|string|max:50",
+            "spesifikasi" => "required|array",
+            "spesifikasi.*" => "required|string|max:50",
+            "jumlah" => "required|array",
+            "jumlah.*" => "required|integer",
+            "satuan" => "required|array",
+            "satuan.*" => "required|integer|max:4",
+            "harga" => "required|array",
+            "harga.*" => "required|integer"
+        ]);
+        // dd($request);
 
-        $idLaporan = laporan_pengadaan::all()->pluck('id')->last() + 1;
-        laporan_pengadaan::create();
+        // try {
+        laporan_pengadaan::create(['keterangan' => $request->keterangan]);
+        $idLaporan = laporan_pengadaan::all()->pluck('id')->last();
 
-        foreach ($data as $key => $value) {
-            array_push($value, $idLaporan);
+        for ($i = 0; $i < count($request->nama_barang); $i++) {
             pengadaan::create([
-                'nama_barang'   => $value[0],
-                'spesifikasi'   => $value[1],
-                'jumlah'        => $value[2],
-                'id_satuan'     => $value[3],
-                'harga'         => $value[4],
-                'id_laporan'    => $value[5]
+                'nama_barang' => $request->nama_barang[$i],
+                'spesifikasi' => $request->spesifikasi[$i],
+                'jumlah' => $request->jumlah[$i],
+                'id_satuan' => ($request->satuan[$i] + 1),
+                'harga' => $request->harga[$i],
+                'id_laporan' => $idLaporan,
             ]);
         }
-        // dd($value);
+
+        // return view('perlengkapan.pengadaan.index');
+        // } catch (Exception $e) {
         return redirect()->route('perlengkapan.pengadaan.index');
+        // }
     }
 
     /**

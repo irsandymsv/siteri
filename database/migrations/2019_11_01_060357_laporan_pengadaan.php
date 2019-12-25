@@ -15,6 +15,7 @@ class LaporanPengadaan extends Migration
     {
         Schema::create('laporan_pengadaan', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('keterangan');
             $table->boolean('verif_wadek2')->default(false);
             $table->timestamp('dibuat');
         });

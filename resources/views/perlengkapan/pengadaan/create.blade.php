@@ -24,7 +24,6 @@
             <div class="box-body">
                 {!! Form::open(['route' => 'perlengkapan.pengadaan.store', 'id'=>'form']) !!}
                 <div id="isiForm" class="table-responsive">
-                    <h5>Total Data = <span class="data_count">0</span></h5>
                     <table id="tbl-data" class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -33,45 +32,55 @@
                                 <th>Jumlah</th>
                                 <th>Satuan</th>
                                 <th>Harga Satuan</th>
-                                <th>Total</th>
+                                <th>🗙</th>
                             </tr>
                         </thead>
 
                         <tbody id="inputan">
+                            <span><strong>Keterangan</strong></span>{!! Form::text('keterangan', old('keterangan'),
+                            ['class' =>
+                            'form-control']) !!}
                             <tr>
                                 <td>
-                                    {!! Form::text('nama_barang', null, ['class' => 'form-control', 'id' =>
-                                    'nama_barang']) !!}
+                                    {!! Form::text('nama_barang[]', old('nama_barang'), ['class' => 'form-control']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('spesifikasi', null, ['class' => 'form-control', 'id' =>
-                                    'spesifikasi']) !!}
+                                    {!! Form::text('spesifikasi[]', null, ['class' => 'form-control']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah', null, ['class' => 'form-control', 'id' => 'jumlah'])
-                                    !!}
+                                    {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah'])!!}
                                 </td>
 
                                 <td>
-                                    {!! Form::select('satuan', $satuan, null, ['class' => 'form-control', 'id' =>
-                                    'satuan'])!!}
+                                    {!! Form::select('satuan[]', $satuan, null, ['class' =>
+                                    'form-control'])!!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('harga', null, ['class' => 'form-control', 'id' => 'harga']) !!}
+                                    {!! Form::text('harga[]', null, ['class' => 'form-control harga']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::label(null , null, ['class' => 'control-label', 'id' => 'total'])
-                                    !!}
+                                    {!! Form::button(null , [ 'class'=>'fa fa-trash btn btn-danger']) !!}
                                 </td>
                             </tr>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Nama Barang</th>
+                                <th>Spesifikasi</th>
+                                <th>Jumlah</th>
+                                <th>Satuan</th>
+                                <th>Harga Satuan</th>
+                                <th>🗙</th>
+                            </tr>
+                        </tfoot>
                     </table>
 
                     <h5>Total Data = <span class="data_count">0</span></h5>
+                    <h5>Total Harga = <span class="total">0</span></h5>
                 </div>
                 <button id="tambah" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</button>
                 <br><br>
@@ -83,7 +92,7 @@
         </div>
     </div>
 </div>
-
+{{--
 
 
 <div class="row">
@@ -108,7 +117,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 @endsection
 
@@ -117,87 +126,134 @@
 <script>
     $(function(){
 
-        $('#jumlah, #harga').on('input', function(){
-            $('#total').empty();
-            jumlah = $('#jumlah').val();
-            harga = $('#harga').val();
-            $('#total').append('Rp ' + jumlah * harga);
-        });
+        opsiButton();
+        tableCount();
+        totaling();
+
+        // $('#jumlah, #harga').on('input', function(){
+        //     jumlah = $('#jumlah').val();
+        //     harga = $('#harga').val();
+        //     $('#total').html('Rp ' + jumlah * harga);
+        // });
 
         $('#tambah').click(function(event) {
-            nama = $('#nama_barang').val();
-            spesifikasi = $('#spesifikasi').val();
-            jumlah = $('#jumlah').val();
-            satuan = $('#satuan').val();
-            harga = $('#harga').val();
-            total = $('#total').html();
-            data = $('#tbody tr').length;
-            $('#tbody').append(`
-                <tr id="data">
-                    <td>
-                        ` + ++data + `
-                    </td>
+                $('#inputan').append(`
+                <tr>
+                                <td>
+                                    {!! Form::text('nama_barang[]', null, ['class' => 'form-control']) !!}
+                                </td>
 
-                    <td>
-                        ` + nama + `
-                    </td>
+                                <td>
+                                    {!! Form::text('spesifikasi[]', null, ['class' => 'form-control']) !!}
+                                </td>
 
-                    <td>
-                        ` + spesifikasi + `
-                    </td>
+                                <td>
+                                    {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah'])!!}
+                                </td>
 
-                    <td>
-                        ` + jumlah + `
-                    </td>
+                                <td>
+                                    {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control'])!!}
+                                </td>
 
-                    <td class="hidden">
-                        ` + ++satuan + `
-                    </td>
+                                <td>
+                                    {!! Form::text('harga[]', null, ['class' => 'form-control harga']) !!}
+                                </td>
 
-                    <td>
-                        ` + harga + `
-                    </td>
+                                <td>
+                                    {!! Form::button(null , [ 'class'=>'fa fa-trash btn btn-danger']) !!}
+                                </td>
+                            </tr>
+                `);
 
-                    <td>
-                        ` + total + `
-                    </td>
-
-                    <td>
-                        OPSI
-                    </td>
-                </tr>
-            `);
-
-            $('#nama_barang').val('');
-            $('#spesifikasi').val('');
-            $('#jumlah').val('');
-            $('#harga').val('');
-            $('#total').html('');
-			$(".data_count").text(data);
-
+                // inputReset();
+                opsiButton();
+                tableCount();
+                totaling();
         });
 
-        $('#submit').click(function(event){
-            // event.preventDefault();
-            table = $('#tbody tr');
-            data = [];
-            length = ($('#data td').length - (3 * $('#tbody tr').length))/$('#tbody tr').length;
-            $.each(table, function(index, val){
-                // val = val + '';
-                vall = $(val).text().split(/\s+/);
-                vall.shift();
-                vall.shift();
-                vall.pop();
-                vall.pop();
-                vall.pop();
-                vall.splice($.inArray("Rp", vall),1);
-                data.push(vall);
+        // function inputReset(){
+        //     $('#nama_barang').val('');
+        //         $('#spesifikasi').val('');
+        //         $('#jumlah').val('');
+        //         $('#satuan').val(0);
+        //         $('#harga').val('');
+        //         $('#total').html('');
+        // }
+
+        function tableCount(){
+            data = $('#inputan tr').length;
+            $(".data_count").text(data);
+        }
+
+        // $('#form').submit(function(event){
+        //     event.stopPropagation();
+        //     $("form#form :input").each(function () {
+        //         if ($(this).attr('name') === 'satuan[]') {
+        //             $(this).val($(this).val()+1);
+        //         }
+        //     });
+        //     return true;
+        //     tableData = $('#tbody tr');
+        //     table = $('#tbody').html();
+        //     data = [];
+        //     length = ($('.data td').length - (3 * $('#tbody tr').length))/$('#tbody tr').length;
+        //     $.each(tableData, function(index, val){
+        //         // val = val + '';
+        //         vall = $(val).text().split(/\s+/);
+        //         vall.shift();
+        //         vall.shift();
+        //         vall.pop();
+        //         vall.pop();
+        //         vall.pop();
+        //         // vall.splice($.inArray("Rp", vall),1);
+        //         data.push(vall);
+        //     });
+        //     console.log(data, length);
+        //     $('#isiForm').empty();
+        //     $('#isiForm').append(`<input type="hidden" name="data" value="` + data + `">`);
+        //     $('#isiForm').append(`<input type="hidden" name="length" value="` + length + `">`);
+        //     $('#isiForm').append(`<input type="hidden" name="table" value='` + table + `''>`);
+        // });
+
+        function opsiButton(){
+            $('.fa.fa-trash').click(function(){
+                if (data > 1) {
+                    $(this).parents('tr').remove();
+                    tableCount();
+                }
+                totaling();
             });
-            console.log(data);
-            $('#isiForm').empty();
-            $('#isiForm').append(`<input type="hidden" name="data" value="` + data + `">`);
-            $('#isiForm').append(`<input type="hidden" name="length" value="` + length + `">`);
-        });
+        }
+
+        function totaling(){
+            $('.jumlah, .harga').change(function(){
+                jumlah = [];
+                harga = [];
+                total = 0;
+                $('.jumlah').each(function(){
+                    jumlah.push($(this).val() - 0);
+                    // console.log("===============================")
+                    // console.log("Jumlah "+$(this).val());
+                    // console.log("===============================")
+                });
+                $('.harga').each(function(){
+                    harga.push($(this).val() - 0);
+                    // console.log("Harga "+$(this).val());
+                });
+                $("#inputan tr").each(function(key){
+                    total += ((jumlah[key]) * (harga[key]));
+                    console.log("Total "+total);
+                    // console.log("Key "+key);
+                    // console.log("Jumlah "+jumlah[key]);
+                    // console.log("Harga "+harga[key]);
+                });
+                $('.total').text(total);
+                console.log(jumlah);
+                console.log(harga);
+                // harga = $('#harga').val();
+                // $('#total').html('Rp ' + jumlah * harga);
+            });
+        }
     });
 
 </script>

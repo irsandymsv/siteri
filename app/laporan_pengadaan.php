@@ -26,4 +26,9 @@ class laporan_pengadaan extends Model
      * @var array
      */
     protected $guarded = ['id', 'dibuat'];
+
+    public function pengadaan()
+    {
+        return $this->hasMany('App\pengadaan', 'id_laporan');
+    }
 }

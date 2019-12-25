@@ -1,7 +1,8 @@
 @extends('layouts.template')
 
 @section('side_menu')
-<li class="active"><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard Perlengkapan</span></a></li>
+<li class="active"><a href="{{ route('perlengkapan.') }}"><i class="fa fa-dashboard"></i> <span>Dashboard
+            Perlengkapan</span></a></li>
 
 <li>
     <a href="{{ route('perlengkapan.inventaris.index') }}">
