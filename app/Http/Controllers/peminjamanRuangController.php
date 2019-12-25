@@ -7,15 +7,17 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Exception;
 use App\Http\Controllers\Controller;
-use App\peminjaman_ruang;
+use App\detail_pinjam_ruang;
 
 class peminjamanRuangController extends Controller
 {
     public function index()
     {
         try {
-            $laporan = peminjaman_ruang::with(['detail_data_barang.data_barang', 'satuan'])
+            $laporan = detail_pinjam_ruang::with(['data_ruang', 'peminjaman_ruang'])
                 ->get();
+
+            // dd($laporan);
 
             return view('perlengkapan.peminjaman_ruang.index', [
                 'laporan' => $laporan

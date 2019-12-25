@@ -22,7 +22,6 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Tanggal Dibuat</th>
                                 <th>Tanggal Mulai</th>
                                 <th>Tanggal Berakhir</th>
                                 <th>Jam Mulai</th>
@@ -40,16 +39,13 @@
                         <tbody>
                             @php $no = 0 @endphp
                             @foreach($laporan as $item)
-                            <tr id="lap_{{ $item->id }}">
+                            <tr id="lap_{{ $item->peminjaman_barang->id }}">
                                 <td>{{$no+=1}}</td>
-                                <td>
-                                    {{Carbon\Carbon::parse($item->tanggal_dibuat)->locale('id_ID')->isoFormat('D MMMM Y')}}
-                                </td>
-                                <td>{{$item->tanggal_mulai}}</td>
-                                <td>{{$item->tanggal_berakhir}}</td>
-                                <td>{{$item->jam_mulai}}</td>
-                                <td>{{$item->jam_berakhir}}</td>
-                                <td>{{$item->kegiatan}}</td>
+                                <td>{{$item->peminjaman_barang->tanggal_mulai}}</td>
+                                <td>{{$item->peminjaman_barang->tanggal_berakhir}}</td>
+                                <td>{{$item->peminjaman_barang->jam_mulai}}</td>
+                                <td>{{$item->peminjaman_barang->jam_berakhir}}</td>
+                                <td>{{$item->peminjaman_barang->kegiatan}}</td>
                                 <td>{{$item->detail_data_barang->data_barang->nama_barang}}</td>
                                 <td>{{$item->detail_data_barang->merk_barang}}</td>
                                 <td>{{$item->jumlah }} {{$item->satuan->satuan }}</td>
@@ -61,12 +57,12 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('perlengkapan.peminjaman_barang.show', $item->id) }}" class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ route('perlengkapan.peminjaman_barang.show', $item->peminjaman_barang->id) }}" class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
                                     @if($item->verif_wadek2 != 1)
-                                    <a href="{{ route('perlengkapan.peminjaman_barang.edit', $item->id) }}" class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ route('perlengkapan.peminjaman_barang.edit', $item->peminjaman_barang->id) }}" class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
                                     @endif
                                     @if($item->verif_wadek2 != 1)
-                                    <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                    <a href="#" class="btn btn-danger" id="{{ $item->peminjaman_barang->id }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
                                     @endif
 
                                 </td>

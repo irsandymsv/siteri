@@ -7,14 +7,14 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Exception;
 use App\Http\Controllers\Controller;
-use App\peminjaman_barang;
+use App\detail_pinjam_barang;
 
 class peminjamanBarangController extends Controller
 {
     public function index()
     {
         try {
-            $laporan = peminjaman_barang::with(['detail_data_barang.data_barang', 'satuan'])
+            $laporan = detail_pinjam_barang::with(['peminjaman_barang', 'detail_data_barang.data_barang', 'satuan'])
                 ->get();
 
             // dd($laporan);

@@ -27,8 +27,8 @@ class detail_data_barang extends Model
         return $this->belongsTo('App\status_barang_ruang', 'idstatus_fk');
     }
 
-    public function peminjaman_barang()
+    public function detail_pinjam_barang()
     {
-        return $this->hasMany('App\peminjaman_barang', 'iddetail_data_barang_fk');
+        return $this->hasMany('App\detail_pinjam_barang', 'iddetail_data_barang_fk');
     }
 }

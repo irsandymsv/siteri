@@ -21,9 +21,6 @@ class CreatePinjamRuang extends Migration
             $table->time('jam_berakhir');
             $table->string('kegiatan');
             $table->integer('jumlah_peserta');
-            $table->integer('idruang_fk')->unsigned()->nullable();
-
-            $table->foreign('idruang_fk')->references('id')->on('data_ruang')->onDelete('set null');
         });
     }
 

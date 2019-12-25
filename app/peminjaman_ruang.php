@@ -11,4 +11,9 @@ class peminjaman_ruang extends Model
     public $timestamps = false;
 
     protected $guarded = ['id'];
+
+    public function detail_pinjam_ruang()
+    {
+        return $this->hasMany('App\detail_pinjam_ruang', 'idpinjam_ruang_fk');
+    }
 }
