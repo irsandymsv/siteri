@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Exception;
 use App\detail_data_barang;
+use App\data_barang;
 
 class inventarisController extends Controller
 {
@@ -17,11 +18,10 @@ class inventarisController extends Controller
      */
     public function index()
     {
-        $laporan = detail_data_barang::with(['data_barang', 'data_ruang', 'status_barang_ruang'])
-            // ->orderBy('tanggal', 'desc')
-            ->get();
+        $barang = data_barang::all();
+
         return view('perlengkapan.inventaris.index', [
-            'laporan'  => $laporan
+            'barang'  => $barang
         ]);
     }
 
@@ -64,7 +64,15 @@ class inventarisController extends Controller
      */
     public function show($id)
     {
-        //
+        $barang = data_barang::findOrFail($id);
+        $detail_barang = detail_data_barang::where('idbarang_fk', $id)
+            ->with(['data_barang', 'data_ruang', 'status_barang_ruang'])
+            ->get();
+
+        return view('perlengkapan.inventaris.show', [
+            'barang' => $barang,
+            'detail_barang' => $detail_barang
+        ]);
     }
 
     /**

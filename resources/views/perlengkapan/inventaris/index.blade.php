@@ -27,30 +27,18 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Tanggal</th>
                                 <th>Kode Barang</th>
                                 <th>Nama Barang</th>
-                                <th>Merk Barang</th>
-                                <th>NUP</th>
-                                <th>Kode Ruang</th>
-                                <th>Uraian Ruang</th>
-                                <th>Status</th>
                                 <th>Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @php $no = 0 @endphp
-                            @foreach($laporan as $item)
+                            @foreach($barang as $item)
                             <tr id="lap_{{ $item->id }}">
                                 <td>{{ $no+=1 }}</td>
-                                <td>{{ $item->tanggal }}</td>
-                                <td>{{ $item->data_barang->kode_barang }}</td>
-                                <td>{{ $item->data_barang->nama_barang }}</td>
-                                <td>{{ $item->merk_barang }}</td>
-                                <td>{{ $item->nup }}</td>
-                                <td>{{ $item->data_ruang->kode_ruang }}</td>
-                                <td>{{ $item->data_ruang->nama_ruang }}</td>
-                                <td>{{ $item->status }}</td>
+                                <td>{{ $item->kode_barang }}</td>
+                                <td>{{ $item->nama_barang }}</td>
                                 <td>
                                     <a href="{{ route('perlengkapan.inventaris.show', $item->id) }}" class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
                                     <a href="{{ route('perlengkapan.inventaris.edit', $item->id) }}" class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
