@@ -12,8 +12,8 @@ class status_barang_ruang extends Model
 
     protected $guarded = ['id'];
 
-    public function data_detail_barang()
+    public function detail_data_barang()
     {
-        return $this->hasMany('App\data_detail_barang', 'idstatus_fk');
+        return $this->hasMany('App\detail_data_barang', 'idstatus_fk');
     }
 }

@@ -31,7 +31,6 @@
                                 <th>Nama Barang</th>
                                 <th>Merk Barang</th>
                                 <th>Jumlah</th>
-                                <th>Satuan</th>
                                 <th>Status</th>
                                 <!-- <th>Verifikasi KTU</th>
                                 <th>Verifikasi Dekan</th> -->
@@ -51,12 +50,9 @@
                                 <td>{{$item->jam_mulai}}</td>
                                 <td>{{$item->jam_berakhir}}</td>
                                 <td>{{$item->kegiatan}}</td>
-                                <td>{{$item->data_detail_barang->data_barang->nama_barang}}</td>
-                                <td>{{$item->data_detail_barang->merk_barang}}</td>
-                                <td>{{$item->jumlah }}</td>
-                                <td>{{$item->satuan->satuan }}</td>
-                                {{dd($item)}}
-
+                                <td>{{$item->detail_data_barang->data_barang->nama_barang}}</td>
+                                <td>{{$item->detail_data_barang->merk_barang}}</td>
+                                <td>{{$item->jumlah }} {{$item->satuan->satuan }}</td>
                                 <td>
                                     @if($item->verif_wadek2 == 0)
                                     Belum Diverifikasi

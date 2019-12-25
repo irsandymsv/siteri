@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class data_ruang extends Model
 {
-    protected $table = 'dataruang';
+    protected $table = 'data_ruang';
 
     public $timestamps = false;
 
     protected $guarded = ['id'];
 
-    public function data_detail_barang()
+    public function detail_data_barang()
     {
-        return $this->hasMany('App\data_detail_barang', 'idruang_fk');
+        return $this->hasMany('App\detail_data_barang', 'idruang_fk');
     }
 }

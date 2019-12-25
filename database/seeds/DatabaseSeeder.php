@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SatuanSeeder::class,
             DataRuangSeeder::class,
-            DataBarangSeeder::class
+            DataBarangSeeder::class,
+            DetailDataBarangSeeder::class
         ]);
     }
 }

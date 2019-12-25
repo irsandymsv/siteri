@@ -15,15 +15,15 @@ class CreatePinjamRuang extends Migration
     {
         Schema::create('pinjam_ruang', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('tanggal mulai');
-            $table->date('tanggal berakhir');
-            $table->time('jam mulai');
-            $table->time('jam berakhir');
+            $table->date('tanggal_mulai');
+            $table->date('tanggal_berakhir');
+            $table->time('jam_mulai');
+            $table->time('jam_berakhir');
             $table->string('kegiatan');
-            $table->integer('jumlahpeserta');
+            $table->integer('jumlah_peserta');
             $table->integer('idruang_fk')->unsigned()->nullable();
 
-            $table->foreign('idruang_fk')->references('id')->on('dataruang')->onDelete('set null');
+            $table->foreign('idruang_fk')->references('id')->on('data_ruang')->onDelete('set null');
         });
     }
 

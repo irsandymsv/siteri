@@ -12,9 +12,9 @@ class peminjaman_barang extends Model
 
     protected $guarded = ['id'];
 
-    public function data_detail_barang()
+    public function detail_data_barang()
     {
-        return $this->belongsTo('App\data_detail_barang', 'iddatadetail_barang_fk');
+        return $this->belongsTo('App\detail_data_barang', 'iddetail_data_barang_fk');
     }
 
     public function satuan()

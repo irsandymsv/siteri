@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class data_detail_barang extends Model
+class detail_data_barang extends Model
 {
-    protected $table = 'datadetail_barang';
+    protected $table = 'detail_data_barang';
 
     public $timestamps = false;
 
@@ -29,6 +29,6 @@ class data_detail_barang extends Model
 
     public function peminjaman_barang()
     {
-        return $this->hasMany('App\peminjaman_barang', 'iddatadetail_barang_fk');
+        return $this->hasMany('App\peminjaman_barang', 'iddetail_data_barang_fk');
     }
 }

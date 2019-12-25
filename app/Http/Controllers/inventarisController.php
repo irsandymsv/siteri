@@ -6,10 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Exception;
-use App\data_detail_barang;
-use App\data_barang;
-use App\data_ruang;
-use App\status_barang_ruang;
+use App\detail_data_barang;
 
 class inventarisController extends Controller
 {
@@ -20,7 +17,7 @@ class inventarisController extends Controller
      */
     public function index()
     {
-        $laporan = data_detail_barang::with(['data_barang', 'data_ruang', 'status_barang_ruang'])
+        $laporan = detail_data_barang::with(['data_barang', 'data_ruang', 'status_barang_ruang'])
             // ->orderBy('tanggal', 'desc')
             ->get();
         return view('perlengkapan.inventaris.index', [
