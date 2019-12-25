@@ -25,11 +25,12 @@
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal Dibuat</th>
-                                <th>Nama Barang</th>
+                                <th>Keterangan</th>
+                                {{-- <th>Nama Barang</th>
                                 <th>Spesifikasi</th>
                                 <th>Jumlah</th>
                                 <th>Harga Satuan</th>
-                                <th>Total</th>
+                                <th>Total</th> --}}
                                 <th>Status</th>
                                 <th style="width:99.8px">Opsi</th>
                             </tr>
@@ -42,11 +43,12 @@
                                 <td>
                                     {{Carbon\Carbon::parse($item->dibuat)->locale('id_ID')->isoFormat('D MMMM Y')}}
                                 </td>
-                                <td>{{$item->nama_barang}}</td>
+                                <td>{{$item->keterangan}}</td>
+                                {{-- <td>{{$item->nama_barang}}</td>
                                 <td>{{$item->spesifikasi}}</td>
                                 <td>{{$item->jumlah}}</td>
                                 <td>Rp {{$item->harga}}</td>
-                                <td>Rp {{$item->jumlah * $item->harga}}</td>
+                                <td>Rp {{$item->jumlah * $item->harga}}</td> --}}
                                 <td>
                                     @if($item->verif_wadek2 == 0)
                                     Belum Diverifikasi

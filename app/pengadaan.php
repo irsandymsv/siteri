@@ -26,4 +26,14 @@ class pengadaan extends Model
      * @var array
      */
     protected $guarded = ['id'];
+
+    public function laporan_pengadaan()
+    {
+        return $this->belongsTo('App\laporan_pengadaan', 'id_laporan');
+    }
+
+    public function satuan()
+    {
+        return $this->belongsTo('App\satuan', 'id_satuan');
+    }
 }
