@@ -132,15 +132,4 @@ class pengadaanController extends Controller
     {
         //
     }
-
-    public function validator($data)
-    {
-        foreach ($data as $key => $value) {
-            if (is_array($value)) {
-                $this->validator($value);
-            } else {
-                //
-            }
-        }
-    }
 }
