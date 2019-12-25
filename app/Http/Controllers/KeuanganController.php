@@ -11,11 +11,11 @@ class KeuanganController extends Controller
 {
     public function dashboard()
     {
-    	$sk_sempro_baru = sk_sempro::with([
-    		'status_sk' => function ($query){
-    			$query->where('status', 'Disetujui KTU');
-    		}
-    	])
+    	$sk_sempro_baru = sk_sempro::with('status_sk')
+        ->whereHas('status_sk', function(BUilder $query)
+        {
+            $query->where('status', 'Disetujui KTU');
+        })
     	->doesntHave('sk_honor')->orderBy('created_at', 'desc')->get();
 
     	$sk_skripsi_baru = sk_skripsi::with([
@@ -24,6 +24,10 @@ class KeuanganController extends Controller
     			$query->where('status', 'Disetujui KTU');
     		}
     	])
+        ->whereHas('status_sk', function(BUilder $query)
+        {
+            $query->where('status', 'Disetujui KTU');
+        })
     	->doesntHave('sk_honor')->orderBy('created_at', 'desc')->get();
 
     	return view('keuangan.dashboard', [
