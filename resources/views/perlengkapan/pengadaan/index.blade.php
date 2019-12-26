@@ -60,7 +60,7 @@
                                     <a href="{{ route('perlengkapan.pengadaan.show', $item->id) }}"
                                         class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
                                     @if($item->verif_wadek2 != 1)
-                                    <a href="{{ route('perlengkapan.pengadaan.edit', $item->id) }}"
+                                    <a href="{{ route('perlengkapan.pengadaan.edit', [$item->id, 'laporan' => true]) }}"
                                         class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
                                     @endif
                                     @if($item->verif_wadek2 != 1)

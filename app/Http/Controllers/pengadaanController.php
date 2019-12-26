@@ -54,16 +54,16 @@ class pengadaanController extends Controller
         // dd($data);
         $this->validate($request, [
             "keterangan"    => "required|string|max:100",
-            "nama_barang"    => "required|array",
-            "nama_barang.*"  => "required|string|max:50",
-            "spesifikasi" => "required|array",
+            "nama_barang"   => "required|array",
+            "nama_barang.*" => "required|string|max:50",
+            "spesifikasi"   => "required|array",
             "spesifikasi.*" => "required|string|max:50",
-            "jumlah" => "required|array",
-            "jumlah.*" => "required|integer",
-            "satuan" => "required|array",
-            "satuan.*" => "required|integer|max:4",
-            "harga" => "required|array",
-            "harga.*" => "required|integer"
+            "jumlah"        => "required|array",
+            "jumlah.*"      => "required|integer",
+            "satuan"        => "required|array",
+            "satuan.*"      => "required|integer|max:4",
+            "harga"         => "required|array",
+            "harga.*"       => "required|integer"
         ]);
         // dd($request);
 
@@ -73,12 +73,12 @@ class pengadaanController extends Controller
 
         for ($i = 0; $i < count($request->nama_barang); $i++) {
             pengadaan::create([
-                'nama_barang' => $request->nama_barang[$i],
-                'spesifikasi' => $request->spesifikasi[$i],
-                'jumlah' => $request->jumlah[$i],
-                'id_satuan' => ($request->satuan[$i] + 1),
-                'harga' => $request->harga[$i],
-                'id_laporan' => $idLaporan,
+                'nama_barang'   => $request->nama_barang[$i],
+                'spesifikasi'   => $request->spesifikasi[$i],
+                'jumlah'        => $request->jumlah[$i],
+                'id_satuan'     => ($request->satuan[$i] + 1),
+                'harga'         => $request->harga[$i],
+                'id_laporan'    => $idLaporan
             ]);
         }
 
@@ -96,7 +96,15 @@ class pengadaanController extends Controller
      */
     public function show($id)
     {
-        //
+        $laporan = laporan_pengadaan::findOrfail($id);
+        $pengadaan = pengadaan::where('id_laporan', $id)
+            ->with(['laporan_pengadaan', 'satuan'])
+            ->get();
+
+        return view('perlengkapan.pengadaan.show', [
+            'laporan' => $laporan,
+            'pengadaan' => $pengadaan
+        ]);
     }
 
     /**
@@ -105,9 +113,25 @@ class pengadaanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $status)
     {
-        //
+        // dump("EDIT ", $status);
+        if ($status->laporan) {
+            $satuan = satuan::all()->pluck('satuan');
+            $laporan = laporan_pengadaan::with(['pengadaan', 'pengadaan.satuan'])
+                ->where('id', $id)->get();
+            // dd("GAAKKK COMPEKKKKK");
+        } else {
+            $satuan = satuan::all()->pluck('satuan');
+            $laporan = pengadaan::with(['laporan_pengadaan', 'satuan'])
+                ->where('id', $id)->get();
+            // dd("COMPEKKKKK");
+        }
+        return view('perlengkapan.pengadaan.edit', [
+            "laporan"   => $laporan,
+            "satuan"    => $satuan,
+            "status"    => $status->laporan
+        ]);
     }
 
     /**
@@ -119,7 +143,42 @@ class pengadaanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request);
+        if ($request->laporan) {
+            $this->validate($request, [
+                "keterangan"    => "required|string|max:100",
+                "nama_barang"   => "required|array",
+                "nama_barang.*" => "required|string|max:50",
+                "spesifikasi"   => "required|array",
+                "spesifikasi.*" => "required|string|max:50",
+                "jumlah"        => "required|array",
+                "jumlah.*"      => "required|integer",
+                "satuan"        => "required|array",
+                "satuan.*"      => "required|integer|max:4",
+                "harga"         => "required|array",
+                "harga.*"       => "required|integer"
+            ]);
+
+            // try {
+            laporan_pengadaan::findOrfail($id)->update(["keterangan" => $request->keterangan]);
+            pengadaan::whereIn('id_laporan', [$id])->delete();
+
+            for ($i = 0; $i < count($request->nama_barang); $i++) {
+                pengadaan::create([
+                    'nama_barang'   => $request->nama_barang[$i],
+                    'spesifikasi'   => $request->spesifikasi[$i],
+                    'jumlah'        => $request->jumlah[$i],
+                    'id_satuan'     => ($request->satuan[$i] + 1),
+                    'harga'         => $request->harga[$i],
+                    'id_laporan'    => $id
+                ]);
+            }
+            return view('perlengkapan.pengadaan');
+        } else {
+        }
+        // } catch (\Throwable $th) {
+        //     //throw $th;
+        // }
     }
 
     /**
