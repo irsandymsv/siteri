@@ -159,7 +159,6 @@ class pengadaanController extends Controller
                 "harga.*"       => "required|integer"
             ]);
 
-            // try {
             laporan_pengadaan::findOrfail($id)->update(["keterangan" => $request->keterangan]);
             pengadaan::whereIn('id_laporan', [$id])->delete();
 
@@ -173,12 +172,26 @@ class pengadaanController extends Controller
                     'id_laporan'    => $id
                 ]);
             }
-            return view('perlengkapan.pengadaan');
         } else {
+            // dd($request);
+            $this->validate($request, [
+                "nama_barang" => "required|string|max:50",
+                "spesifikasi" => "required|string|max:50",
+                "jumlah"      => "required|integer",
+                "satuan"      => "required|integer|max:4",
+                "harga"       => "required|integer"
+            ]);
+
+            pengadaan::findOrfail($id)->update([
+                "nama_barang" => $request->nama_barang,
+                "spesifikasi" => $request->spesifikasi,
+                "jumlah"      => $request->jumlah,
+                "id_satuan"   => ($request->satuan + 1),
+                "harga"       => $request->harga
+            ]);
         }
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
+
+        return redirect()->route('perlengkapan.pengadaan.index');
     }
 
     /**
