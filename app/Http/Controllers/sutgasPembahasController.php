@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 use App\surat_tugas;
 use App\detail_skripsi;
 use App\skripsi;
@@ -158,15 +160,38 @@ class sutgasPembahasController extends suratTugasController
 
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'no_surat' => 'required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|',
+        // $this->validate($request, [
+        //     'no_surat' => 'required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|',
+        //     'judul_inggris' => 'required',
+        //     'tanggal' => 'required',
+        //     'tempat' => 'required',
+        //     'id_pembahas1' => 'required',
+        //     'id_pembahas2' => 'required',
+        //     'nim' =>'required'
+        // ]);
+
+        $validator = Validator::make($request->all(), [
+            'no_surat' => [
+                'required',
+                Rule::unique('surat_tugas', 'no_surat')->ignore($id),
+                'unique:sk_skripsi,no_surat_pembimbing',
+                'unique:sk_skripsi,no_surat_penguji',
+                'unique:sk_sempro,no_surat'
+
+            ],
             'judul_inggris' => 'required',
             'tanggal' => 'required',
             'tempat' => 'required',
             'id_pembahas1' => 'required',
             'id_pembahas2' => 'required',
-            'nim' =>'required'
+            'nim' => 'required'
         ]);
+        if ($validator->fails()) {
+            return redirect()
+                ->route('akademik.sutgas-pembahas.edit', $id)
+                ->withErrors($validator)
+                ->withInput();
+        }
         try {
             if ($request->input('nim') != $request->input('original_nim')) {
                 $skripsi = skripsi::where('nim', $request->input('nim'))->first();

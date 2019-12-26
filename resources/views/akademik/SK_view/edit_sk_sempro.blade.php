@@ -49,7 +49,7 @@
       @csrf
       @method("PUT")
       {{-- @php
-         dd($detail_skripsi); 
+         dd($detail_skripsi);
       @endphp --}}
    	<div class="row">
       	<div class="col-xs-12">
@@ -126,7 +126,7 @@
                   <div class="box-footer">
                      <input type="hidden" name="status" value="">
                      <button type="submit" name="simpan_kirim" class="btn btn-success pull-right">Simpan dan Kirim</button>
-                     <button type="submit" name="simpan_draf" class="btn bg-purple pull-right" style="margin-right: 5px;>Simpan Sebagai Draft</button>
+                     <button type="submit" name="simpan_draf" class="btn bg-purple pull-right" style="margin-right: 5px;">Simpan Sebagai Draft</button>
                   </div>
 
       		</div>

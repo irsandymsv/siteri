@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 use Exception;
 use App\bagian;
 use App\User;
@@ -255,20 +257,63 @@ class SkSemproController extends Controller
    public function update(Request $request, $id)
    {
       if ($request->input("status") == 2) {
-         $this->validate($request, [
-            "no_surat" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
+        //  $this->validate($request, [
+        //     "no_surat" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
+        //     'tgl_sempro1' => "required",
+        //     'tgl_sempro2' => "required",
+        //     "nim" => "required|array",
+        //     "nim.*" => "required|string"
+        //  ]);
+
+        $validator = Validator::make($request->all(), [
+            'no_surat' => [
+                'required',
+                Rule::unique('sk_sempro', 'no_surat')->ignore($id,'no_surat'),
+                'unique:sk_skripsi,no_surat_pembimbing',
+                'unique:sk_skripsi,no_surat_penguji',
+                'unique:surat_tugas,no_surat'
+
+            ],
             'tgl_sempro1' => "required",
             'tgl_sempro2' => "required",
             "nim" => "required|array",
             "nim.*" => "required|string"
-         ]);
+        ]);
+        if ($validator->fails()) {
+            return redirect()
+                ->route('akademik.sempro.edit', $id)
+                ->withErrors($validator)
+                ->withInput();
+        }
+
       } else {
-         $this->validate($request, [
-            "no_surat" => "required",
+        //  $this->validate($request, [
+        //     "no_surat" => "required",
+        //     "nim" => "required|array",
+        //     "nim.*" => "required|string"
+        //  ]);
+
+        $validator = Validator::make($request->all(), [
+            'no_surat' => [
+                'required',
+                Rule::unique('sk_sempro', 'no_surat')->ignore($id,'no_surat'),
+                'unique:sk_skripsi,no_surat_pembimbing',
+                'unique:sk_skripsi,no_surat_penguji',
+                'unique:surat_tugas,no_surat'
+
+            ],
             "nim" => "required|array",
             "nim.*" => "required|string"
-         ]);
+        ]);
+        if ($validator->fails()) {
+            return redirect()
+                ->route('akademik.sempro.edit', $id)
+                ->withErrors($validator)
+                ->withInput();
+        }
       }
+
+
 
       try {
          $sk = sk_sempro::find($id);

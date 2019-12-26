@@ -87,11 +87,9 @@ class templateController extends Controller
         try{
             $template = template::where('id_nama_template',$request->input('id_nama_template'))->get();
             // if($template->count() == 0){
-                template::insert([
+                template::create([
                     'id_nama_template' => $request->input('id_nama_template'),
-                    'isi' => $request->input('isi'),
-                    'created_at' => Carbon::now()->toDateTimeString(),
-                    'updated_at' => Carbon::now()->toDateTimeString()
+                    'isi' => $request->input('isi')
                 ]);
                 return redirect()->route('akademik.template-sk.index')->with('success', 'Data Berhasil Dibuat');
             // }else{
