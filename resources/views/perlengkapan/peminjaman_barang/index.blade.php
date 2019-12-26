@@ -27,9 +27,6 @@
                                 <th>Jam Mulai</th>
                                 <th>Jam Berakhir</th>
                                 <th>Kegiatan</th>
-                                <th>Nama Barang</th>
-                                <th>Merk Barang</th>
-                                <th>Jumlah</th>
                                 <th>Status</th>
                                 <!-- <th>Verifikasi KTU</th>
                                 <th>Verifikasi Dekan</th> -->
@@ -50,7 +47,7 @@
                                 <td>{{$item->detail_data_barang->merk_barang}}</td>
                                 <td>{{$item->jumlah }} {{$item->satuan->satuan }}</td>
                                 <td>
-                                    @if($item->verif_wadek2 == 0)
+                                    @if($item->verif_ktu == 0)
                                     Belum Diverifikasi
                                     @else
                                     <label class="label bg-green">Sudah Diverifikasi</label>
@@ -58,10 +55,10 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('perlengkapan.peminjaman_barang.show', $item->peminjaman_barang->id) }}" class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
-                                    @if($item->verif_wadek2 != 1)
+                                    @if($item->verif_ktu != 1)
                                     <a href="{{ route('perlengkapan.peminjaman_barang.edit', $item->peminjaman_barang->id) }}" class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
                                     @endif
-                                    @if($item->verif_wadek2 != 1)
+                                    @if($item->verif_ktu != 1)
                                     <a href="#" class="btn btn-danger" id="{{ $item->peminjaman_barang->id }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
                                     @endif
 
