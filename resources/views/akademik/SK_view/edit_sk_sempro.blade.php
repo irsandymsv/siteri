@@ -113,19 +113,10 @@
                         <label for="tgl_sempro2">Tanggal Sempro 2</label>
                         <input type="date" name="tgl_sempro2" id="tgl_sempro2" class="form-control" value="{{ $sk->tgl_sempro2 }}">
 
-<<<<<<< HEAD
                   <div class="box-footer">
                      <input type="hidden" name="status" value="">
                      <button type="submit" name="simpan_kirim" class="btn btn-success pull-right">Simpan dan Kirim</button>
                      <button type="submit" name="simpan_draf" class="btn bg-purple pull-right" style="margin-right: 5px;">Simpan Sebagai Draft</button>
-=======
-                        @error('tgl_sempro2')
-                           <span class="invalid-feedback" role="alert" style="color: red;">
-                              <strong>{{ $message }}</strong>
-                           </span>
-                        @enderror
-                     </div>
->>>>>>> 3ae2fe7b2a7e4a4efa498f1f0de0f29a80abe9f6
                   </div>
 
                </div>
