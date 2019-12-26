@@ -59,17 +59,16 @@ class inventarisController extends Controller
     {
         $this->validate($request, [
             "kode_barang"    => "required|integer|max:10",
-            "nama_barang"    => "required|array",
-            "nama_barang.*"  => "required|string|max:50",
-            "merk_barang"    => "required|array",
+            "nama_barang"  => "required|string|max:50",
+            "merk_barang"     => "required|array",
             "merk_barang.*"  => "required|string|max:50",
             "nama_ruang"     => "required|array",
             "nama_ruang.*"   => "required|integer",
             "satuan"         => "required|array",
             "satuan.*"       => "required|integer|max:4",
-        ]);
-        dd($request);
-
+            ]);
+            
+            dd($request);
         // try {
 
         data_barang::create([

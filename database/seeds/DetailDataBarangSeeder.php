@@ -1141,5 +1141,1781 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '54',
             'idruang_fk' => '11'
         ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati Texwood',
+            'nup' => '55',
+            'idruang_fk' => '3'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati Texwood',
+            'nup' => '56',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati Texwood',
+            'nup' => '57',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati Texwood',
+            'nup' => '58',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati Texwood',
+            'nup' => '59',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Kayu Jati Texwood',
+            'nup' => '60',
+            'idruang_fk' => '2'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Profil 180x90x75',
+            'nup' => '61',
+            'idruang_fk' => '23'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Credenza',
+            'nup' => '62',
+            'idruang_fk' => '23'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Profil',
+            'nup' => '63',
+            'idruang_fk' => '11'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Profil',
+            'nup' => '64',
+            'idruang_fk' => '11'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Profil',
+            'nup' => '65',
+            'idruang_fk' => '11'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2011-07-25',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Espana 1275',
+            'nup' => '66',
+            'idruang_fk' => '13'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2011-07-25',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Espana 1275',
+            'nup' => '67',
+            'idruang_fk' => '13'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2013-02-15',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Fatoni',
+            'nup' => '68',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2013-02-15',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Fatoni',
+            'nup' => '69',
+            'idruang_fk' => '21'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2017-11-21',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Meja Kerja Active Galant MTO 120',
+            'nup' => '70',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2017-11-21',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Meja Kerja Active Galant MTO 120',
+            'nup' => '71',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // meja kerja kayu
+            'tanggal' => '2017-11-21',
+            'idbarang_fk' => '19',
+            'merk_barang' => 'Meja Kerja Active Galant MTO 120',
+            'nup' => '72',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Stainless Chrome',
+            'nup' => '1',
+            'idruang_fk' => '5'
+
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Stainless Chrome',
+            'nup' => '2',
+            'idruang_fk' => '5'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Stainless Chrome',
+            'nup' => '3',
+            'idruang_fk' => '5'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Stainless Chrome',
+            'nup' => '4',
+            'idruang_fk' => '5'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Stainless Chrome',
+            'nup' => '5',
+            'idruang_fk' => '5'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Stainless Chrome',
+            'nup' => '6',
+            'idruang_fk' => '5'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Stainless Chrome',
+            'nup' => '7',
+            'idruang_fk' => '5'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Stainless Chrome',
+            'nup' => '8',
+            'idruang_fk' => '11'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Stainless Chrome',
+            'nup' => '9',
+            'idruang_fk' => '11'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Stainless Chrome',
+            'nup' => '10',
+            'idruang_fk' => '11'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Ushinto 9035',
+            'nup' => '11',
+            'idruang_fk' => '18'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Isebel 147',
+            'nup' => '12',
+            'idruang_fk' => '4'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Isebel 147',
+            'nup' => '13',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Isebel ',
+            'nup' => '14',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Isebel ',
+            'nup' => '15',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Isebel ',
+            'nup' => '16',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Isebel ',
+            'nup' => '17',
+            'idruang_fk' => '5'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato NN ',
+            'nup' => '18',
+            'idruang_fk' => '5'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato NN ',
+            'nup' => '19',
+            'idruang_fk' => '5'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato NN ',
+            'nup' => '20',
+            'idruang_fk' => '5'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato NN ',
+            'nup' => '21',
+            'idruang_fk' => '4'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato NN ',
+            'nup' => '22',
+            'idruang_fk' => '15'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato NN ',
+            'nup' => '23',
+            'idruang_fk' => '5'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato NN ',
+            'nup' => '24',
+            'idruang_fk' => '4'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato NN ',
+            'nup' => '25',
+            'idruang_fk' => '1'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato NN ',
+            'nup' => '26',
+            'idruang_fk' => '4'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato NN ',
+            'nup' => '27',
+            'idruang_fk' => '11'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato NN ',
+            'nup' => '28',
+            'idruang_fk' => '11'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2009-12-17',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato NN ',
+            'nup' => '29',
+            'idruang_fk' => '11'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '30',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '31',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '32',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '33',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '34',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '35',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '36',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '37',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '38',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '39',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '40',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '41',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '42',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '43',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '44',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '45',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '46',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '47',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '48',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '49',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '50',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '51',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '52',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '53',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '54',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '55',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '56',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '57',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '58',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '59',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '60',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '61',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '62',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '63',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '64',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '65',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '66',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '67',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '68',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '69',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '70',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '71',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '72',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '73',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '74',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '75',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '76',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '77',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '78',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '79',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '80',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '81',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '82',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '83',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '84',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '85',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '86',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '87',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '88',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '89',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '90',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '91',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '92',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '93',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '94',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '95',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '96',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '97',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '98',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '99',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '100',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '101',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '102',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '103',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '104',
+            'idruang_fk' => '26'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal(rk 2)
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '105',
+            'idruang_fk' => '26'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '106',
+            'idruang_fk' => '18'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '107',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '108',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '109',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '110',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '111',
+            'idruang_fk' => '20'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '112',
+            'idruang_fk' => '21'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '113',
+            'idruang_fk' => '18'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '114',
+            'idruang_fk' => '24'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '115',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '116',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '117',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '118',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '119',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '120',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '121',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '122',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '123',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '124',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '125',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '126',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '127',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '128',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '129',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '130',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '131',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '132',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '133',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '134',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '135',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '136',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '137',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '138',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '139',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '140',
+            'idruang_fk' => '8'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '141',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '142',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '143',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '144',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '145',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '146',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '147',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '148',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '149',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '150',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'ISEBEL 485 OSCAR HITAM ',
+            'nup' => '151',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'ISEBEL 485 OSCAR HITAM ',
+            'nup' => '152',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'ISEBEL 485 OSCAR HITAM ',
+            'nup' => '153',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'ISEBEL 485 OSCAR HITAM ',
+            'nup' => '154',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'ISEBEL 485 OSCAR HITAM ',
+            'nup' => '155',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'OSCAR FHANTASI VH ',
+            'nup' => '156',
+            'idruang_fk' => '23'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'USHINTO 608T OSCAR HITAM ',
+            'nup' => '157',
+            'idruang_fk' => '23'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'USHINTO 608T OSCAR HITAM ',
+            'nup' => '158',
+            'idruang_fk' => '23'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'USHINTO OSCAR ',
+            'nup' => '159',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'USHINTO OSCAR ',
+            'nup' => '160',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'USHINTO OSCAR ',
+            'nup' => '161',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato INN ',
+            'nup' => '162',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato INN ',
+            'nup' => '163',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato INN ',
+            'nup' => '164',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato INN ',
+            'nup' => '165',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato INN ',
+            'nup' => '166',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato INN ',
+            'nup' => '167',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'FUTURA FTR509 ',
+            'nup' => '168',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'FUTURA FTR509 ',
+            'nup' => '169',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'FUTURA FTR509',
+            'nup' => '170',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'FUTURA FTR509',
+            'nup' => '171',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'FUTURA FTR509',
+            'nup' => '172',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'FUTURA FTR509',
+            'nup' => '173',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'ISEBEL 485 OSCAR HITAM ',
+            'nup' => '174',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'FUTURA FTR509 ',
+            'nup' => '175',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'FUTURA FTR509',
+            'nup' => '176',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'FUTURA FTR509',
+            'nup' => '177',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'FUTURA FTR509 ',
+            'nup' => '178',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'FUTURA FTR509 ',
+            'nup' => '179',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'FUTURA FTR509 ',
+            'nup' => '180',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'FUTURA FTR509 ',
+            'nup' => '181',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato AA ',
+            'nup' => '182',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato AA ',
+            'nup' => '183',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato AA ',
+            'nup' => '184',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato AA ',
+            'nup' => '185',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato AA ',
+            'nup' => '186',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato AA ',
+            'nup' => '187',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato AA',
+            'nup' => '188',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato AA',
+            'nup' => '189',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato AA',
+            'nup' => '190',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato AA',
+            'nup' => '191',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato AA ',
+            'nup' => '192',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato AA',
+            'nup' => '193',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato AA',
+            'nup' => '194',
+            'idruang_fk' => '8'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato AA ',
+            'nup' => '195',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato AA ',
+            'nup' => '196',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato AA ',
+            'nup' => '6',
+            'idruang_fk' => '8'
+        ));
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal SAC
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '195',
+            'idruang_fk' => '8'
+        ));
+
+
+
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '114',
+            'idruang_fk' => '24'
+        ));
+
+        DB::table('datadetail_barang')->insert(array(
+            // Kursi besi metal
+            'tanggal' => '2010-03-18',
+            'idbarang_fk' => '20',
+            'merk_barang' => 'Chitose yamato MDN Chrome ',
+            'nup' => '114',
+            'idruang_fk' => '24'
+        ));
     }
 }

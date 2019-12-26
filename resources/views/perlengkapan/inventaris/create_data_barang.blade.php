@@ -34,10 +34,10 @@
                             </tr>
                             <tr>
                                 <td>
-                                    {!! Form::text('kode_barang[]', old('kode_barang'), ['class' => 'form-control']) !!}
+                                    {!! Form::text('kode_barang', old('kode_barang'), ['class' => 'form-control']) !!}
                                 </td>
                                 <td>
-                                    {!! Form::text('nama_barang[]', null, ['class' => 'form-control']) !!}
+                                    {!! Form::text('nama_barang', null, ['class' => 'form-control']) !!}
                                 </td>
                             </tr>
                             <tr>
