@@ -47,12 +47,12 @@
 		              <h3 class="box-title">{{ ( $tipe == "sk skripsi"? "Buat SK Skripsi" : "Buat SK Sempro" ) }}</h3>
 
 		              <div class="form-group" style="float: right;">
-		            	<button type="submit" name="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button> 
+		            	<button type="submit" name="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button>
 		            		&ensp;
-		            	<button type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>	
+		            	<button type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>
 		              </div>
 		            </div>
-	            	
+
 	            	<div class="box-body">
 	            		@csrf
 	            		<div class="form" id="input_no_surat">
@@ -192,9 +192,9 @@
 						            			</td>
 						            		</tr>
 				            			@endforeach
-				            			
+
 				            		@else
-				            			
+
 				            			<tr id="1">
 					            			<td>
 					            				<input type="text" name="nama[]" class="form-control">
@@ -273,8 +273,8 @@
 				            		</tr>
 				            	</tfoot>
 				            </table>
-		            		
-		            		<h5>Total Data = <span class="data_count"></span></h5>	
+
+		            		<h5>Total Data = <span class="data_count"></span></h5>
 		            	</div>
 
 		            	<button id="addRow" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</button>
@@ -283,9 +283,9 @@
 		            	<input type="hidden" name="status" value="">
 		            	<div class="form-group" style="float: right;">
 		            		<button type="submit" name="simpan_draf" class="btn bg-purple">Simpan Sebagai Draft</button> &ensp;
-		            		<button type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>	
+		            		<button type="submit" name="simpan_kirim" class="btn btn-success">Simpan dan Kirim</button>
 		            	</div>
-		            	
+
 	            	</div>
       			</div>
 	        </form>
@@ -335,7 +335,7 @@
         			<td>
         				<select name="jurusan[]" class="form-control">
         					<option value="">-Pilih Jurusan-</option>
-        					
+
         				</select>
         			</td>
 
@@ -408,7 +408,7 @@
 			var count = $("tbody tr").length;
 			$(".data_count").text(count);
 		}
-		
+
 	})
 </script>
 @endsection

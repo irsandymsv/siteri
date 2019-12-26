@@ -30,6 +30,12 @@ class DatabaseSeeder extends Seeder
             dev_pangkat_table_seeder::class,
             dev_mahasiswa_table_seeder::class,
             dev_users_table_seeder::class,
+            // $this->call(UsersTableSeeder::class);
+
+            SatuanSeeder::class,
+            DataRuangSeeder::class,
+            DataBarangSeeder::class,
+            DetailDataBarangSeeder::class
         ]);
     }
 }
