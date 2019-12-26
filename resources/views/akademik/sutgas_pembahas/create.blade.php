@@ -161,7 +161,7 @@
             			<label for="id_pembahas1">Pembahas 1</label><br>
             			<select name="id_pembahas1" id="id_pembahas1" class="form-control select2">
             				<option value="">--Pilih Pembahas 1--</option>
-            				@foreach ($dosen as $item)
+            				@foreach ($dosen1 as $item)
             					<option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == old('id_pembahas1')? 'selected' : '') }}>
                               {{ $item->nama }}
                            </option>
@@ -179,7 +179,7 @@
             			<label for="id_pembahas2">Pembahas 2</label><br>
             			<select name="id_pembahas2" id="id_pembahas2" class="form-control select2">
             				<option value="">--Pilih Pembahas 2--</option>
-            				@foreach ($dosen as $item)
+            				@foreach ($dosen2 as $item)
             					<option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == old('id_pembahas2')? 'selected' : '') }}>
                               {{ $item->nama }}
                            </option>
@@ -230,7 +230,8 @@
 
       var mahasiswa = @json($mahasiswa);
       var nim_old = @json(old('nim'));
-      var dosen = @json($dosen);
+      var dosen1 = @json($dosen1);
+      var dosen2 = @json($dosen2);
 
       if(nim_old != null){
          var nama = "";
@@ -265,7 +266,7 @@
          })
          .done(function(pembimbing) {
             console.log("success");
-            setDosen(pembimbing['dosen1'].no_pegawai, pembimbing['dosen2'].no_pegawai, old_id_pembahas1, old_id_pembahas2);
+            setDosen_old(pembimbing['dosen1'].no_pegawai, pembimbing['dosen2'].no_pegawai, old_id_pembahas1, old_id_pembahas2);
          })
          .fail(function() {
             console.log("error");
@@ -311,37 +312,91 @@
          });
 		});
 
-      function setDosen(id_pembimbing1, id_pembimbing2, old_pembahas1 = null, old_pembahas2 = null) {
+      function setDosen(id_pembimbing1, id_pembimbing2) {
          $("select[name='id_pembahas1']").find("option:not(:first-child)").remove();
          $("select[name='id_pembahas2']").find("option:not(:first-child)").remove();
 
-         if(old_pembahas1 == null){
-            $.each(dosen, function(index, val) {
-               if(val.no_pegawai != id_pembimbing1 && val.no_pegawai != id_pembimbing2){
+         // $.each(dosen, function(index, val) {
+         //    if(val.no_pegawai != id_pembimbing1 && val.no_pegawai != id_pembimbing2){
+         //       $("select[name='id_pembahas1']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+         //       $("select[name='id_pembahas2']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+         //    }
+         // });
+
+         $.each(dosen1, function(index, val) {
+            if(val.no_pegawai != id_pembimbing1 && val.no_pegawai != id_pembimbing2){
+               $("select[name='id_pembahas1']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+               // $("select[name='id_pembahas2']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+            }
+         });
+
+         $.each(dosen2, function(index, val) {
+            if(val.no_pegawai != id_pembimbing1 && val.no_pegawai != id_pembimbing2){
+               // $("select[name='id_pembahas1']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+               $("select[name='id_pembahas2']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+            }
+         });
+         
+         
+      }
+
+      function setDosen_old(id_pembimbing1, id_pembimbing2, old_pembahas1, old_pembahas2) {
+         $("select[name='id_pembahas1']").find("option:not(:first-child)").remove();
+         $("select[name='id_pembahas2']").find("option:not(:first-child)").remove();
+
+         // $.each(dosen, function(index, val) {
+         //    if(val.no_pegawai != id_pembimbing1 && val.no_pegawai != id_pembimbing2){
+         //       if(val.no_pegawai == old_pembahas1){
+         //          $("select[name='id_pembahas1']").append(`<option value="`+val.no_pegawai+`" selected>`+val.nama+`</option>`);
+         //       }
+         //       else{
+         //          $("select[name='id_pembahas1']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+         //       }
+
+         //       if (val.no_pegawai == old_pembahas2) {
+         //          $("select[name='id_pembahas2']").append(`<option value="`+val.no_pegawai+`" selected>`+val.nama+`</option>`);
+         //       }
+         //       else{
+         //          $("select[name='id_pembahas2']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+         //       }
+         //    }
+         // });
+
+         $.each(dosen1, function(index, val) {
+            if(val.no_pegawai != id_pembimbing1 && val.no_pegawai != id_pembimbing2){
+               if(val.no_pegawai == old_pembahas1){
+                  $("select[name='id_pembahas1']").append(`<option value="`+val.no_pegawai+`" selected>`+val.nama+`</option>`);
+               }
+               else{
                   $("select[name='id_pembahas1']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+               }
+
+               // if (val.no_pegawai == old_pembahas2) {
+               //    $("select[name='id_pembahas2']").append(`<option value="`+val.no_pegawai+`" selected>`+val.nama+`</option>`);
+               // }
+               // else{
+               //    $("select[name='id_pembahas2']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+               // }
+            }
+         });
+
+         $.each(dosen2, function(index, val) {
+            if(val.no_pegawai != id_pembimbing1 && val.no_pegawai != id_pembimbing2){
+               // if(val.no_pegawai == old_pembahas1){
+               //    $("select[name='id_pembahas1']").append(`<option value="`+val.no_pegawai+`" selected>`+val.nama+`</option>`);
+               // }
+               // else{
+               //    $("select[name='id_pembahas1']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+               // }
+
+               if (val.no_pegawai == old_pembahas2) {
+                  $("select[name='id_pembahas2']").append(`<option value="`+val.no_pegawai+`" selected>`+val.nama+`</option>`);
+               }
+               else{
                   $("select[name='id_pembahas2']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
                }
-            });
-         }
-         else{
-            $.each(dosen, function(index, val) {
-               if(val.no_pegawai != id_pembimbing1 && val.no_pegawai != id_pembimbing2){
-                  if(val.no_pegawai == old_pembahas1){
-                     $("select[name='id_pembahas1']").append(`<option value="`+val.no_pegawai+`" selected>`+val.nama+`</option>`);
-                  }
-                  else{
-                     $("select[name='id_pembahas1']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
-                  }
-
-                  if (val.no_pegawai == old_pembahas2) {
-                     $("select[name='id_pembahas2']").append(`<option value="`+val.no_pegawai+`" selected>`+val.nama+`</option>`);
-                  }
-                  else{
-                     $("select[name='id_pembahas2']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
-                  }
-               }
-            });
-         }
+            }
+         });
          
       }
 	</script>

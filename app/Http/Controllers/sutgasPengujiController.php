@@ -38,9 +38,23 @@ class sutgasPengujiController extends suratTugasController
             $query->where('status', 'Sudah Sempro');
         })
         ->get();
-        $dosen = user::where('is_dosen', 1)->get();
+
+        $dosen1 = user::where('is_dosen', 1)
+        ->whereHas('fungsional', function(Builder $query)
+        {
+            $query->whereIn('jab_fungsional', [
+                'Guru Besar',
+                'Lektor Kepala',
+                'Lektor'
+            ]);
+        })->get();
+        $dosen2 = user::where('is_dosen', 1)->get();
         // dd($mahasiswa);
-        return view('akademik.sutgas_penguji.create', ['mahasiswa' => $mahasiswa, 'dosen' => $dosen]);
+        return view('akademik.sutgas_penguji.create', [
+            'mahasiswa' => $mahasiswa,
+            'dosen1' => $dosen1,
+            'dosen2' => $dosen2,
+        ]);
     }
 
     public function store(Request $request)
@@ -50,6 +64,8 @@ class sutgasPengujiController extends suratTugasController
             'no_surat' => 'required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|',
             'id_penguji1' => 'required',
             'id_penguji2' => 'required',
+            'tanggal' => 'required',
+            'tempat' => 'required',
             'status' => 'required'
         ]);
         try {
@@ -131,13 +147,24 @@ class sutgasPengujiController extends suratTugasController
             $query->where('status', 'Sudah Sempro');
         })
         ->orWhere("nim", $surat_tugas->detail_skripsi->skripsi->nim)->get();
-        $dosen = user::where('is_dosen', 1)->get();
+
+        $dosen1 = user::where('is_dosen', 1)
+        ->whereHas('fungsional', function(Builder $query)
+        {
+            $query->whereIn('jab_fungsional', [
+                'Guru Besar',
+                'Lektor Kepala',
+                'Lektor'
+            ]);
+        })->get();
+        $dosen2 = user::where('is_dosen', 1)->get();
         // dd($mahasiswa);
 
         return view('akademik.sutgas_penguji.edit', [
             'surat_tugas' => $surat_tugas,
             'mahasiswa' => $mahasiswa,
-            'dosen' => $dosen,
+            'dosen1' => $dosen1,
+            'dosen2' => $dosen2,
             'tanggal' => $tanggal,
             'pembimbing' => $pembimbing
         ]);

@@ -83,51 +83,51 @@
 
                </div>
 
-                  <div class="box-body">
-                     <div class="row">
-                        <div class="form-group col-md-4">
-                           <label for="no_surat">No Surat</label><br>
-                           <input type="text" name="no_surat" id="no_surat" value="{{ $sk->no_surat }}">
-                           <span id="format_nomor">/UN25.1.15/SP/{{ Carbon\Carbon::today()->year }}</span>
+               <div class="box-body">
+                  <div class="row">
+                     <div class="form-group col-md-4">
+                        <label for="no_surat">No Surat</label><br>
+                        <input type="text" name="no_surat" id="no_surat" value="{{ $sk->no_surat }}">
+                        <span id="format_nomor">/UN25.1.15/SP/{{ Carbon\Carbon::today()->year }}</span>
 
-                           @error('no_surat')
-                              <br>
-                              <span class="invalid-feedback" role="alert" style="color: red;">
-                                 <strong>{{ $message }}</strong>
-                              </span>
-                           @enderror
-                        </div>
-
-                        <div class="form-group col-md-4">
-                           <label for="tgl_sempro1">Tanggal Sempro 1</label>
-                           <input type="date" name="tgl_sempro1" id="tgl_sempro1" class="form-control" value="{{ $sk->tgl_sempro1 }}">
-
-                           @error('tgl_sempro1')
-                              <span class="invalid-feedback" role="alert" style="color: red;">
-                                 <strong>{{ $message }}</strong>
-                              </span>
-                           @enderror
-                        </div>
-
-                        <div class="form-group col-md-4">
-                           <label for="tgl_sempro2">Tanggal Sempro 2</label>
-                           <input type="date" name="tgl_sempro2" id="tgl_sempro2" class="form-control" value="{{ $sk->tgl_sempro2 }}">
-
-                           @error('tgl_sempro2')
-                              <span class="invalid-feedback" role="alert" style="color: red;">
-                                 <strong>{{ $message }}</strong>
-                              </span>
-                           @enderror
-                        </div>
+                        @error('no_surat')
+                           <br>
+                           <span class="invalid-feedback" role="alert" style="color: red;">
+                              <strong>{{ $message }}</strong>
+                           </span>
+                        @enderror
                      </div>
 
+                     <div class="form-group col-md-4">
+                        <label for="tgl_sempro1">Tanggal Sempro 1</label>
+                        <input type="date" name="tgl_sempro1" id="tgl_sempro1" class="form-control" value="{{ $sk->tgl_sempro1 }}">
+
+                        @error('tgl_sempro1')
+                           <span class="invalid-feedback" role="alert" style="color: red;">
+                              <strong>{{ $message }}</strong>
+                           </span>
+                        @enderror
+                     </div>
+
+                     <div class="form-group col-md-4">
+                        <label for="tgl_sempro2">Tanggal Sempro 2</label>
+                        <input type="date" name="tgl_sempro2" id="tgl_sempro2" class="form-control" value="{{ $sk->tgl_sempro2 }}">
+
+                        @error('tgl_sempro2')
+                           <span class="invalid-feedback" role="alert" style="color: red;">
+                              <strong>{{ $message }}</strong>
+                           </span>
+                        @enderror
+                     </div>
                   </div>
 
-                  <div class="box-footer">
-                     <input type="hidden" name="status" value="">
-                     <button type="submit" name="simpan_kirim" class="btn btn-success pull-right">Simpan dan Kirim</button>
-                     <button type="submit" name="simpan_draf" class="btn bg-purple pull-right" style="margin-right: 5px;>Simpan Sebagai Draft</button>
-                  </div>
+               </div>
+
+               <div class="box-footer">
+                  <input type="hidden" name="status" value="">
+                  <button type="submit" name="simpan_kirim" class="btn btn-success pull-right">Simpan dan Kirim</button>
+                  <button type="submit" name="simpan_draf" class="btn bg-purple pull-right" style="margin-right: 5px;">Simpan Sebagai Draft</button>
+               </div>
 
       		</div>
       	</div>
