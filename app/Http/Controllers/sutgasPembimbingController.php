@@ -33,10 +33,20 @@ class sutgasPembimbingController extends suratTugasController
 	public function create()
 	{
         $mahasiswa = mahasiswa::doesntHave('skripsi')->get();
-		$dosen = user::where('is_dosen', 1)->get();
+		$dosen1 = user::where('is_dosen', 1)
+        ->whereHas('fungsional', function(Builder $query)
+        {
+            $query->whereIn('jab_fungsional', [
+                'Guru Besar',
+                'Lektor Kepala',
+                'Lektor'
+            ]);
+        })->get();
+        $dosen2 = user::where('is_dosen', 1)->get();
 		$keris = keris::all();
 		return view('akademik.sutgas_pembimbing.create', [
-			'dosen' => $dosen,
+			'dosen1' => $dosen1,
+            'dosen2' => $dosen2,
 			'keris' => $keris,
 			'mahasiswa' => $mahasiswa
 		]);
@@ -112,13 +122,23 @@ class sutgasPembimbingController extends suratTugasController
         // })
 
         // dd($mahasiswa);
-		$dosen = user::where('is_dosen', 1)->get();
+        $dosen1 = user::where('is_dosen', 1)
+        ->whereHas('fungsional', function(Builder $query)
+        {
+            $query->whereIn('jab_fungsional', [
+                'Guru Besar',
+                'Lektor Kepala',
+                'Lektor'
+            ]);
+        })->get();
+        $dosen2 = user::where('is_dosen', 1)->get();
 		$keris = keris::all();
 
 		return view('akademik.sutgas_pembimbing.edit', [
 			'surat_tugas' => $surat_tugas,
 			'mahasiswa' => $mahasiswa,
-			'dosen' => $dosen,
+			'dosen1' => $dosen1,
+            'dosen2' => $dosen2,
 			'keris' => $keris
 		]);
     }

@@ -42,6 +42,7 @@
 		            	</thead>
 		            	<tbody>
                         @foreach ($nama_template as $item)
+<<<<<<< HEAD
                            <tr>
                                @if($item->template_terbaru!=null)
                               <td>1</td>
@@ -53,6 +54,18 @@
                               @else
                               @endif
                            </tr>
+=======
+                           @if (!is_null($item->template_terbaru))
+                             <tr>
+                                <td>1</td>
+                                <td>{{$item->nama}}</td>
+                                <td>{{Carbon\Carbon::parse($item->template_terbaru->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</td>
+                                <td>
+                                   <a href="{{ route('akademik.template-sk.edit', $item->template_terbaru->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                </td>
+                             </tr>
+                           @endif
+>>>>>>> 3ae2fe7b2a7e4a4efa498f1f0de0f29a80abe9f6
                         @endforeach
 
                        {{-- @if (!is_null($template_sempro))

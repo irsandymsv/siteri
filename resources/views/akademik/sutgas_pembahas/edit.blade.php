@@ -163,7 +163,7 @@
                      <label for="id_pembahas1">Pembahas 1</label><br>
                      <select name="id_pembahas1" id="id_pembahas1" class="form-control select2">
                         <option value="">--Pilih Pembahas 1--</option>
-                        @foreach ($dosen as $item)
+                        @foreach ($dosen1 as $item)
                            @if ($pembimbing['dosen1']->no_pegawai != $item->no_pegawai && $pembimbing['dosen2']->no_pegawai != $item->no_pegawai)
 
                               <option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == $surat_tugas->id_dosen1? 'selected':'') }}>
@@ -185,7 +185,7 @@
                      <label for="id_pembahas2">Pembahas 2</label><br>
                      <select name="id_pembahas2" id="id_pembahas2" class="form-control select2">
                         <option value="">--Pilih Pembahas 2--</option>
-                        @foreach ($dosen as $item)
+                        @foreach ($dosen2 as $item)
                            @if ($pembimbing['dosen1']->no_pegawai != $item->no_pegawai && $pembimbing['dosen2']->no_pegawai != $item->no_pegawai)
 
                               <option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == $surat_tugas->id_dosen2? 'selected':'') }}>
@@ -238,7 +238,8 @@
       });
 
 		var mahasiswa = @json($mahasiswa);
-      var dosen = @json($dosen);
+      var dosen1 = @json($dosen1);
+      var dosen2 = @json($dosen2);
 
 		$("select[name='nim']").change(function(event) {
 			var nim = $(this).val();
@@ -281,9 +282,16 @@
          $("select[name='id_pembahas1']").find("option:not(:first-child)").remove();
          $("select[name='id_pembahas2']").find("option:not(:first-child)").remove();
 
-         $.each(dosen, function(index, val) {
+         $.each(dosen1, function(index, val) {
             if(val.no_pegawai != id_pembimbing1 && val.no_pegawai != id_pembimbing2){
                $("select[name='id_pembahas1']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+               // $("select[name='id_pembahas2']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+            }
+         });
+
+         $.each(dosen2, function(index, val) {
+            if(val.no_pegawai != id_pembimbing1 && val.no_pegawai != id_pembimbing2){
+               // $("select[name='id_pembahas1']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
                $("select[name='id_pembahas2']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
             }
          });

@@ -67,7 +67,7 @@ class dev_users_table_seeder extends Seeder
                 'id_bagian' => 4,
                 'id_pangkat' => 4,
                 'id_golongan' => 4,
-                'id_fungsional' => 4,
+                'id_fungsional' => 3,
             ],
             [
                 'username' => 'dosen5',
@@ -82,6 +82,20 @@ class dev_users_table_seeder extends Seeder
                 'id_pangkat' => 1,
                 'id_golongan' => 2,
                 'id_fungsional' => 3,
+            ],
+            [
+                'username' => 'dosen6',
+                'password' => 'dosendosen',
+                'no_pegawai' => '198511282015041002',
+                'nama' => 'Fajrin Nurman Arifin, ST., M.Eng',
+                'npwp' => '1234567890',
+                'bpjs' => '1234567890',
+                'is_dosen' => 1,
+                'id_jabatan' => 4,
+                'id_bagian' => 4,
+                'id_pangkat' => 1,
+                'id_golongan' => 2,
+                'id_fungsional' => 4,
             ],
 
         ]);
