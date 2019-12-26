@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use Exception;
 use App\detail_data_barang;
 use App\data_barang;
+use App\data_ruang;
+use App\status_barang_ruang;
 
 class inventarisController extends Controller
 {
@@ -32,11 +34,13 @@ class inventarisController extends Controller
      */
     public function create()
     {
-        // $kategori = kategori_barang::all();
-        // //dd($kategori);
-        // return view('perlengkapan.inventaris.create', [
-        //     'kategori' => $kategori
-        // ]);
+        $status = status_barang_ruang::all()->pluck('status');
+        $nama_ruang = data_ruang::all()->pluck('nama_ruang');
+
+        return view('perlengkapan.inventaris.create_data_barang', [
+            "status" => $status,
+            "nama_ruang" => $nama_ruang
+        ]);
     }
 
     public function barangAjax($id)
@@ -53,7 +57,44 @@ class inventarisController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            "kode_barang"    => "required|integer|max:10",
+            "nama_barang"    => "required|array",
+            "nama_barang.*"  => "required|string|max:50",
+            "merk_barang"    => "required|array",
+            "merk_barang.*"  => "required|string|max:50",
+            "nama_ruang"     => "required|array",
+            "nama_ruang.*"   => "required|integer",
+            "satuan"         => "required|array",
+            "satuan.*"       => "required|integer|max:4",
+        ]);
+        dd($request);
+
+        // try {
+
+        data_barang::create([
+            'kode_barang' => $request->kode_barang,
+            'nama_barang' => $request->nama_barang
+        ]);
+
+        $idbarang = data_barang::all()->pluck('id')->last();
+        $nup = detail_data_barang::all()->orderBy('nup')->pluck('nup')->last();
+
+        for ($i = 0; $i < count($request->nama_barang); $i++) {
+            $nup++;
+            detail_data_barang::create([
+                'merk_barang' => $request->merk_barang[$i],
+                'nup' => $nup,
+                'idruang' => ($request->nama_ruang[$i] + 1),
+                'idstatus' => ($request->status[$i] + 1)
+            ]);
+        }
+        // dd($nup);
+
+        // return view('perlengkapan.inventaris.index');
+        // } catch (Exception $e) {
+        return redirect()->route('perlengkapan.inventaris.index');
+        // }
     }
 
     /**
@@ -64,7 +105,7 @@ class inventarisController extends Controller
      */
     public function show($id)
     {
-        $barang = data_barang::findOrFail($id);
+        $barang = data_barang::findOrfail($id);
         $detail_barang = detail_data_barang::where('idbarang_fk', $id)
             ->with(['data_barang', 'data_ruang', 'status_barang_ruang'])
             ->get();
@@ -74,6 +115,7 @@ class inventarisController extends Controller
             'detail_barang' => $detail_barang
         ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
