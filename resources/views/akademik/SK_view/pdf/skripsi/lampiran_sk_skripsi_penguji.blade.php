@@ -200,7 +200,7 @@
          {{-- <br> --}}
          Dekan,
          <br><br><br><br>
-         <span style="text-transform: uppercase;"><b>{{ $dekan->nama }}</b></span><br>
+         <span><b>{{ $dekan->nama }}</b></span><br>
          <span>NIP. {{ $dekan->no_pegawai }}</span>
       </div>
    </div>
