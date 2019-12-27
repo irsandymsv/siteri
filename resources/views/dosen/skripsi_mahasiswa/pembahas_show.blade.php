@@ -1,7 +1,14 @@
 @extends('layouts.template')
 
 @section('side_menu')
-   @include('include.dosen_menu')
+   @if (Auth::user()->jabatan->jabatan == "Dekan")
+      @include('include.dekan_menu')
+   @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+   @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
+   	@include('include.wadek2_menu')
+   @elseif(Auth::user()->jabatan->jabatan == "Dosen")
+      @include('include.dosen_menu')
+   @endif
 @endsection
 
 @section('page_title')
@@ -51,7 +58,16 @@
 			  	<!-- /.box-body -->
 
 			  	<div class="box-footer">
-			  		<a href="{{ route('dosen.pembahas-sempro') }}" class="btn btn-default pull-right">Kembali</a>
+			  		@if (Auth::user()->jabatan->jabatan == "Dekan")
+                  <a href="{{ route('dekan.pembahas-sempro') }}" class="btn btn-default pull-right">Kembali</a>
+               @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+               @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
+               	<a href="{{ route('wadek2.pembahas-sempro') }}" class="btn btn-default pull-right">Kembali</a>
+               @elseif(Auth::user()->jabatan->jabatan == "Dosen")
+                  <a href="{{ route('dosen.pembahas-sempro') }}" class="btn btn-default pull-right">Kembali</a>
+               @endif
+
+			  		{{-- <a href="{{ route('dosen.pembahas-sempro') }}" class="btn btn-default pull-right">Kembali</a> --}}
 			  	</div>
 			</div>
 		</div>

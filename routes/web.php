@@ -168,6 +168,18 @@ Route::prefix('dekan')->name('dekan.')->group(function()
 	Route::get('/honor-skripsi', 'honorSkripsiController@dekan_index')->name('honor-skripsi.index');
 	Route::get('/honor-skripsi/{id_sk_honor}', 'honorSkripsiController@dekan_show')->name('honor-skripsi.show');
 	Route::put('/honor-skripsi/verif/{id_sk_honor}', 'honorSkripsiController@dekan_verif')->name('honor-skripsi.verif');
+
+	//Mahasiswa Bimbingan
+	Route::get('/pembimbing-skripsi', 'dosenController@index_pembimbing')->name('pembimbing-skripsi');
+	Route::get('/pembimbing-skripsi/{nim}', 'dosenController@show_pembimbing')->name('pembimbing-skripsi.show');
+
+	//Mahasiswa Ujian Sempro
+	Route::get('/pembahas-sempro', 'dosenController@index_pembahas')->name('pembahas-sempro');
+	Route::get('/pembahas-sempro/{nim}', 'dosenController@show_pembahas')->name('pembahas-sempro.show');
+
+	//Mahasiswa Ujian Skripsi
+	Route::get('/penguji-skripsi', 'dosenController@index_penguji')->name('penguji-skripsi');
+	Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
 });
 
 Route::prefix('keuangan')->name('keuangan.')->group(function()
@@ -246,6 +258,18 @@ Route::prefix('wadek2')->name('wadek2.')->group(function()
 	Route::get('/honor-skripsi', 'honorSkripsiController@wadek2_index')->name('honor-skripsi.index');
 	Route::get('/honor-skripsi/{id_sk_honor}', 'honorSkripsiController@wadek2_show')->name('honor-skripsi.show');
 	Route::put('/honor-skripsi/verif/{id_sk_honor}', 'honorSkripsiController@wadek2_verif')->name('honor-skripsi.verif');
+
+	//Mahasiswa Bimbingan
+	Route::get('/pembimbing-skripsi', 'dosenController@index_pembimbing')->name('pembimbing-skripsi');
+	Route::get('/pembimbing-skripsi/{nim}', 'dosenController@show_pembimbing')->name('pembimbing-skripsi.show');
+
+	//Mahasiswa Ujian Sempro
+	Route::get('/pembahas-sempro', 'dosenController@index_pembahas')->name('pembahas-sempro');
+	Route::get('/pembahas-sempro/{nim}', 'dosenController@show_pembahas')->name('pembahas-sempro.show');
+
+	//Mahasiswa Ujian Skripsi
+	Route::get('/penguji-skripsi', 'dosenController@index_penguji')->name('penguji-skripsi');
+	Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
 });
 
 Route::prefix('dosen')->name('dosen.')->group(function()

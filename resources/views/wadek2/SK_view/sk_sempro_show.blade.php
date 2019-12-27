@@ -175,7 +175,7 @@
             	      Jember, {{ Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }} <br>
             	      Dekan,
             	      <br><br><br><br>
-            	      <span style="text-transform: uppercase;"><b>{{ $dekan->nama }}</b></span><br>
+            	      <span><b>{{ $dekan->nama }}</b></span><br>
             	      <span>NIP. {{ $dekan->no_pegawai }}</span>
             	   </div>
 
@@ -240,7 +240,7 @@
 	            	{{-- <br> --}}
 	               Dekan,
 	               <br><br><br><br>
-	               <span style="text-transform: uppercase;"><b>{{ $dekan->nama }}</b></span><br>
+	               <span><b>{{ $dekan->nama }}</b></span><br>
 	               <span>NIP. {{ $dekan->no_pegawai }}</span>
 	            </div>
             </div>

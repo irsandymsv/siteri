@@ -1,7 +1,14 @@
 @extends('layouts.template')
 
 @section('side_menu')
-   @include('include.dosen_menu')
+   @if (Auth::user()->jabatan->jabatan == "Dekan")
+      @include('include.dekan_menu')
+   @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+   @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
+      @include('include.wadek2_menu')
+   @elseif(Auth::user()->jabatan->jabatan == "Dosen")
+      @include('include.dosen_menu')
+   @endif
 @endsection
 
 @section('page_title')
@@ -53,7 +60,16 @@
 	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
 	   			      			<td>{{ $item->detail_skripsi->skripsi->status_skripsi->status }}</td>
 	   			      			<td>
-	   			      				<a href="{{ route('dosen.pembimbing-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                 @if (Auth::user()->jabatan->jabatan == "Dekan")
+                                    <a href="{{ route('dekan.pembimbing-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                 @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+                                 @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
+                                    <a href="{{ route('wadek2.pembimbing-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                 @elseif(Auth::user()->jabatan->jabatan == "Dosen")
+                                    <a href="{{ route('dosen.pembimbing-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                 @endif
+
+	   			      				{{-- <a href="{{ route('dosen.pembimbing-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a> --}}
 	   			      			</td>
                				</tr>
             				@endforeach
@@ -82,7 +98,14 @@
 	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
 	   			      			<td>{{ $item->detail_skripsi->skripsi->status_skripsi->status }}</td>
 	   			      			<td>
-	   			      				<a href="{{ route('dosen.pembimbing-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+	   			      				@if (Auth::user()->jabatan->jabatan == "Dekan")
+                                    <a href="{{ route('dekan.pembimbing-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                 @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+                                 @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
+                                    <a href="{{ route('wadek2.pembimbing-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                 @elseif(Auth::user()->jabatan->jabatan == "Dosen")
+                                    <a href="{{ route('dosen.pembimbing-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                 @endif
 	   			      			</td>
                				</tr>
             				@endforeach

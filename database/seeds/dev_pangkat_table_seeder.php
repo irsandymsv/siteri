@@ -13,11 +13,17 @@ class dev_pangkat_table_seeder extends Seeder
     public function run()
     {
         pangkat::insert([
-            ['pangkat' => 'Pangkat 1'],
-            ['pangkat' => 'Pangkat 2'],
-            ['pangkat' => 'Pangkat 3'],
-            ['pangkat' => 'Pangkat 4'],
-            ['pangkat' => 'Pangkat 5'],
+            ['pangkat' => 'Pembina TK.I'],       //1
+            ['pangkat' => 'Pembina Utama Muda'], //2
+            ['pangkat' => 'Penata'],             //3
+            ['pangkat' => 'Pembina Utama Madya'],//4
+            ['pangkat' => 'Penata TK.I'],        //5
+            ['pangkat' => 'Penata Muda TK.I'],   //6
+            ['pangkat' => 'Penata Muda'],        //7
+            ['pangkat' => 'Tenaga Kontrak'],     //8
+            ['pangkat' => 'Penata TK I'],        //9
+            ['pangkat' => 'Pengatur'],           //10
+            ['pangkat' => 'Pengatur TK.I '],     //11
         ]);
     }
 }
