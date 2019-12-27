@@ -13,10 +13,10 @@ class dev_keris_table_seeder extends Seeder
     public function run()
     {
         keris::insert([
-            ['nama' => 'keris 1'],
-            ['nama' => 'keris 2'],
-            ['nama' => 'keris 3'],
-            ['nama' => 'keris 4'],
+            ['nama' => 'DBI'],
+            ['nama' => 'ADS'],
+            ['nama' => 'Network & Security'],
+            ['nama' => 'RPL'],
         ]);
     }
 }
