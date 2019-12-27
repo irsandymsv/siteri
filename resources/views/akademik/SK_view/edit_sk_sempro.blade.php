@@ -112,24 +112,18 @@
                      <div class="form-group col-md-4">
                         <label for="tgl_sempro2">Tanggal Sempro 2</label>
                         <input type="date" name="tgl_sempro2" id="tgl_sempro2" class="form-control" value="{{ $sk->tgl_sempro2 }}">
-
-                  <div class="box-footer">
-                     <input type="hidden" name="status" value="">
-                     <button type="submit" name="simpan_kirim" class="btn btn-success pull-right">Simpan dan Kirim</button>
-                     <button type="submit" name="simpan_draf" class="btn bg-purple pull-right" style="margin-right: 5px;">Simpan Sebagai Draft</button>
+                     </div>
                   </div>
-
                </div>
-
+               
                <div class="box-footer">
                   <input type="hidden" name="status" value="">
                   <button type="submit" name="simpan_kirim" class="btn btn-success pull-right">Simpan dan Kirim</button>
                   <button type="submit" name="simpan_draf" class="btn bg-purple pull-right" style="margin-right: 5px;">Simpan Sebagai Draft</button>
                </div>
-
-      		</div>
-      	</div>
-   	</div>
+            </div>
+         </div>
+      </div>
 
       <div class="row">
          <div class="col-xs-12">
