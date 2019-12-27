@@ -14,6 +14,7 @@ use Exception;
 use App\User;
 use App\keris;
 use App\mahasiswa;
+use App\Rules\id_dosen_tidak_boleh_sama;
 
 //Surat Tugas Pembimbing Controller
 class sutgasPembimbingController extends suratTugasController
@@ -59,7 +60,7 @@ class sutgasPembimbingController extends suratTugasController
             'no_surat' => 'required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|',
             'judul' => 'required',
             'id_keris' => 'required',
-            'id_pembimbing_utama' => 'required',
+            'id_pembimbing_utama' => ['required',new id_dosen_tidak_boleh_sama($request->input("id_pembimbing_pendamping"))],
             'id_pembimbing_pendamping' => 'required'
         ]);
         try{
@@ -165,7 +166,7 @@ class sutgasPembimbingController extends suratTugasController
             ],
             'judul' => 'required',
             'id_keris' => 'required',
-            'id_pembimbing_utama' => 'required',
+            'id_pembimbing_utama' => ['required', new id_dosen_tidak_boleh_sama($request->input("id_pembimbing_pendamping"))],
             'id_pembimbing_pendamping' => 'required'
         ]);
         if ($validator->fails()) {

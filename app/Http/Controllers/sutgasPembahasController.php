@@ -68,7 +68,7 @@ class sutgasPembahasController extends suratTugasController
             'judul_inggris' => 'required',
             'tanggal' => 'required',
             'tempat' => 'required',
-            'id_pembahas1' => 'required',
+            'id_pembahas1' => ['required', new id_dosen_tidak_boleh_sama($request->input("id_pembahas2"))],
             'id_pembahas2' => 'required',
             'status' => 'required'
         ]);
@@ -208,7 +208,7 @@ class sutgasPembahasController extends suratTugasController
             'judul_inggris' => 'required',
             'tanggal' => 'required',
             'tempat' => 'required',
-            'id_pembahas1' => 'required',
+            'id_pembahas1' => ['required', new id_dosen_tidak_boleh_sama($request->input("id_pembahas2"))],
             'id_pembahas2' => 'required',
             'nim' => 'required'
         ]);

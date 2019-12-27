@@ -64,7 +64,7 @@ class sutgasPengujiController extends suratTugasController
         $this->validate($request, [
             'nim' => 'required',
             'no_surat' => 'required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|',
-            'id_penguji1' => 'required',
+            'id_penguji1' => ['required', new id_dosen_tidak_boleh_sama($request->input("id_penguji2"))],
             'id_penguji2' => 'required',
             'tanggal' => 'required',
             'tempat' => 'required',
@@ -194,7 +194,7 @@ class sutgasPengujiController extends suratTugasController
             ],
             'tanggal' => 'required',
             'tempat' => 'required',
-            'id_penguji1' => 'required',
+            'id_penguji1' => ['required', new id_dosen_tidak_boleh_sama($request->input("id_penguji2"))],
             'id_penguji2' => 'required',
             'nim' => 'required'
         ]);
