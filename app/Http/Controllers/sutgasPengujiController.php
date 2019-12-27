@@ -15,6 +15,7 @@ use App\User;
 use PDF;
 use Exception;
 use Carbon\Carbon;
+use App\Rules\id_dosen_tidak_boleh_sama;
 
 class sutgasPengujiController extends suratTugasController
 {

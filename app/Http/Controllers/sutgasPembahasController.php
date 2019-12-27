@@ -15,6 +15,7 @@ use App\keris;
 use App\mahasiswa;
 use Carbon\Carbon;
 use PDF;
+use App\Rules\id_dosen_tidak_boleh_sama;
 
 class sutgasPembahasController extends suratTugasController
 {
