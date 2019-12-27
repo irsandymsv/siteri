@@ -257,13 +257,6 @@ class SkSemproController extends Controller
    public function update(Request $request, $id)
    {
       if ($request->input("status") == 2) {
-        //  $this->validate($request, [
-        //     "no_surat" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
-        //     'tgl_sempro1' => "required",
-        //     'tgl_sempro2' => "required",
-        //     "nim" => "required|array",
-        //     "nim.*" => "required|string"
-        //  ]);
 
         $validator = Validator::make($request->all(), [
             'no_surat' => [
@@ -287,11 +280,6 @@ class SkSemproController extends Controller
         }
 
       } else {
-        //  $this->validate($request, [
-        //     "no_surat" => "required",
-        //     "nim" => "required|array",
-        //     "nim.*" => "required|string"
-        //  ]);
 
         $validator = Validator::make($request->all(), [
             'no_surat' => [
@@ -336,7 +324,7 @@ class SkSemproController extends Controller
                $this->update_id_sk_sempro($request->nim[$i], null);
             }
          }
-         return redirect()->route('akademik.sempro.show', $id)->with('success', 'Data Berhasil Diedit');
+         return redirect()->route('akademik.sempro.show', $request->input("no_surat"))->with('success', 'Data Berhasil Diedit');
       } catch (Exception $e) {
          return redirect()->route('akademik.sempro.edit', $id)->with('error', $e->getMessage());
       }
