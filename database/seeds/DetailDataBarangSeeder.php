@@ -1141,7 +1141,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '54',
             'idruang_fk' => '11'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // meja kerja kayu
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '19',
@@ -1149,7 +1149,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '55',
             'idruang_fk' => '3'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // meja kerja kayu
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '19',
@@ -1157,7 +1157,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '56',
             'idruang_fk' => '15'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // meja kerja kayu
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '19',
@@ -1165,7 +1165,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '57',
             'idruang_fk' => '15'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // meja kerja kayu
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '19',
@@ -1173,7 +1173,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '58',
             'idruang_fk' => '15'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // meja kerja kayu
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '19',
@@ -1181,7 +1181,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '59',
             'idruang_fk' => '15'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // meja kerja kayu
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '19',
@@ -1189,7 +1189,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '60',
             'idruang_fk' => '2'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // meja kerja kayu
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '19',
@@ -1197,7 +1197,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '61',
             'idruang_fk' => '23'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // meja kerja kayu
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '19',
@@ -1205,7 +1205,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '62',
             'idruang_fk' => '23'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // meja kerja kayu
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '19',
@@ -1213,7 +1213,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '63',
             'idruang_fk' => '11'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // meja kerja kayu
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '19',
@@ -1221,7 +1221,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '64',
             'idruang_fk' => '11'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // meja kerja kayu
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '19',
@@ -1229,7 +1229,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '65',
             'idruang_fk' => '11'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // meja kerja kayu
             'tanggal' => '2011-07-25',
             'idbarang_fk' => '19',
@@ -1237,7 +1237,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '66',
             'idruang_fk' => '13'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // meja kerja kayu
             'tanggal' => '2011-07-25',
             'idbarang_fk' => '19',
@@ -1245,7 +1245,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '67',
             'idruang_fk' => '13'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // meja kerja kayu
             'tanggal' => '2013-02-15',
             'idbarang_fk' => '19',
@@ -1253,7 +1253,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '68',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // meja kerja kayu
             'tanggal' => '2013-02-15',
             'idbarang_fk' => '19',
@@ -1261,7 +1261,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '69',
             'idruang_fk' => '21'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // meja kerja kayu
             'tanggal' => '2017-11-21',
             'idbarang_fk' => '19',
@@ -1269,7 +1269,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '70',
             'idruang_fk' => '15'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // meja kerja kayu
             'tanggal' => '2017-11-21',
             'idbarang_fk' => '19',
@@ -1277,7 +1277,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '71',
             'idruang_fk' => '15'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // meja kerja kayu
             'tanggal' => '2017-11-21',
             'idbarang_fk' => '19',
@@ -1285,7 +1285,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '72',
             'idruang_fk' => '15'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1294,7 +1294,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '5'
 
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1302,7 +1302,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '2',
             'idruang_fk' => '5'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1310,7 +1310,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '3',
             'idruang_fk' => '5'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1318,7 +1318,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '4',
             'idruang_fk' => '5'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1326,7 +1326,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '5',
             'idruang_fk' => '5'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1334,7 +1334,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '6',
             'idruang_fk' => '5'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1342,7 +1342,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '7',
             'idruang_fk' => '5'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1350,7 +1350,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '8',
             'idruang_fk' => '11'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1358,7 +1358,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '9',
             'idruang_fk' => '11'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1366,7 +1366,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '10',
             'idruang_fk' => '11'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1374,7 +1374,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '11',
             'idruang_fk' => '18'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1382,7 +1382,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '12',
             'idruang_fk' => '4'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1390,7 +1390,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '13',
             'idruang_fk' => '15'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1398,7 +1398,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '14',
             'idruang_fk' => '15'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1406,7 +1406,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '15',
             'idruang_fk' => '15'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1414,7 +1414,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '16',
             'idruang_fk' => '15'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1422,7 +1422,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '17',
             'idruang_fk' => '5'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1430,7 +1430,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '18',
             'idruang_fk' => '5'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1438,7 +1438,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '19',
             'idruang_fk' => '5'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1446,7 +1446,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '20',
             'idruang_fk' => '5'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1454,7 +1454,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '21',
             'idruang_fk' => '4'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1462,7 +1462,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '22',
             'idruang_fk' => '15'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1470,7 +1470,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '23',
             'idruang_fk' => '5'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1478,7 +1478,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '24',
             'idruang_fk' => '4'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1486,7 +1486,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '25',
             'idruang_fk' => '1'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1494,7 +1494,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '26',
             'idruang_fk' => '4'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1502,7 +1502,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '27',
             'idruang_fk' => '11'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1510,7 +1510,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '28',
             'idruang_fk' => '11'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2009-12-17',
             'idbarang_fk' => '20',
@@ -1518,7 +1518,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '29',
             'idruang_fk' => '11'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1526,7 +1526,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '30',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1534,7 +1534,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '31',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1542,7 +1542,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '32',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1550,7 +1550,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '33',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1558,7 +1558,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '34',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1566,7 +1566,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '35',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1574,7 +1574,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '36',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1582,7 +1582,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '37',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1590,7 +1590,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '38',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1598,7 +1598,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '39',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1606,7 +1606,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '40',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1614,7 +1614,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '41',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1622,7 +1622,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '42',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1630,7 +1630,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '43',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1638,7 +1638,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '44',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1646,7 +1646,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '45',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1654,7 +1654,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '46',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1662,7 +1662,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '47',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1670,7 +1670,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '48',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1678,7 +1678,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '49',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1686,7 +1686,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '50',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1694,7 +1694,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '51',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1702,7 +1702,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '52',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1710,7 +1710,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '53',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1718,7 +1718,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '54',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1726,7 +1726,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '55',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1734,7 +1734,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '56',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1742,7 +1742,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '57',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1750,7 +1750,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '58',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1758,7 +1758,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '59',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1766,7 +1766,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '60',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1774,7 +1774,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '61',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1782,7 +1782,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '62',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1790,7 +1790,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '63',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1798,7 +1798,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '64',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1806,7 +1806,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '65',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1814,7 +1814,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '66',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1822,7 +1822,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '67',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1830,7 +1830,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '68',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1838,7 +1838,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '69',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1846,7 +1846,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '70',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1854,7 +1854,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '71',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1862,7 +1862,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '72',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1870,7 +1870,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '73',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1878,7 +1878,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '74',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1886,7 +1886,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '75',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1894,7 +1894,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '76',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1902,7 +1902,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '77',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1910,7 +1910,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '78',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1918,7 +1918,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '79',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1926,7 +1926,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '80',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1934,7 +1934,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '81',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1942,7 +1942,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '82',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1950,7 +1950,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '83',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1958,7 +1958,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '84',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1966,7 +1966,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '85',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1974,7 +1974,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '86',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1982,7 +1982,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '87',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1990,7 +1990,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '88',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -1998,7 +1998,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '89',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2006,7 +2006,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '90',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2014,7 +2014,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '91',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2022,7 +2022,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '92',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2030,7 +2030,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '93',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2038,7 +2038,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '94',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2046,7 +2046,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '95',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2054,7 +2054,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '96',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2062,7 +2062,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '97',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2070,7 +2070,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '98',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2078,7 +2078,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '99',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2086,7 +2086,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '100',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2094,7 +2094,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '101',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2102,7 +2102,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '102',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2110,7 +2110,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '103',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2118,7 +2118,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '104',
             'idruang_fk' => '26'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal(rk 2)
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2127,7 +2127,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '26'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2135,7 +2135,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '106',
             'idruang_fk' => '18'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2143,7 +2143,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '107',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2151,7 +2151,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '108',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2159,7 +2159,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '109',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2167,7 +2167,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '110',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2175,7 +2175,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '111',
             'idruang_fk' => '20'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2183,7 +2183,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '112',
             'idruang_fk' => '21'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2191,7 +2191,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '113',
             'idruang_fk' => '18'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2199,7 +2199,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '114',
             'idruang_fk' => '24'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2208,7 +2208,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2217,7 +2217,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2226,7 +2226,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2235,7 +2235,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2244,7 +2244,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2253,7 +2253,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2262,7 +2262,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2271,7 +2271,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2280,7 +2280,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2289,7 +2289,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2298,7 +2298,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2307,7 +2307,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2316,7 +2316,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2325,7 +2325,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2334,7 +2334,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2343,7 +2343,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2352,7 +2352,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2361,7 +2361,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2370,7 +2370,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2379,7 +2379,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2388,7 +2388,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2397,7 +2397,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2406,7 +2406,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2414,7 +2414,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '138',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2422,7 +2422,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '139',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2431,7 +2431,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '8'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2439,7 +2439,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '141',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2447,7 +2447,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '142',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2455,7 +2455,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '143',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2463,7 +2463,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '144',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2471,7 +2471,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '145',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2479,7 +2479,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '146',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2487,7 +2487,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '147',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2495,7 +2495,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '148',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2503,7 +2503,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '149',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2511,7 +2511,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '150',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2519,7 +2519,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '151',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2527,7 +2527,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '152',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2535,7 +2535,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '153',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2543,7 +2543,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '154',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2551,7 +2551,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '155',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2559,7 +2559,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '156',
             'idruang_fk' => '23'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2567,7 +2567,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '157',
             'idruang_fk' => '23'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2575,7 +2575,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '158',
             'idruang_fk' => '23'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2583,7 +2583,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '159',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2591,7 +2591,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '160',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2599,7 +2599,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '161',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2607,7 +2607,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '162',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2615,7 +2615,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '163',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2623,7 +2623,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '164',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2631,7 +2631,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '165',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2639,7 +2639,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '166',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2647,7 +2647,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '167',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2655,7 +2655,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '168',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2663,7 +2663,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '169',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2671,7 +2671,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '170',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2679,7 +2679,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '171',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2687,7 +2687,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '172',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2695,7 +2695,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '173',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2703,7 +2703,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '174',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2711,7 +2711,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '175',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2719,7 +2719,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '176',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2727,7 +2727,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '177',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2735,7 +2735,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '178',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2743,7 +2743,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '179',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2751,7 +2751,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '180',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2759,7 +2759,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '181',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2767,7 +2767,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '182',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2775,7 +2775,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '183',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2783,7 +2783,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '184',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2791,7 +2791,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '185',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2799,7 +2799,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '186',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2807,7 +2807,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '187',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2815,7 +2815,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '188',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2823,7 +2823,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '189',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2831,7 +2831,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '190',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2839,7 +2839,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '191',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2847,7 +2847,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '192',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2855,7 +2855,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '193',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2864,7 +2864,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '8'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2872,7 +2872,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '195',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2880,7 +2880,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '196',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2888,7 +2888,7 @@ class DetailDataBarangSeeder extends Seeder
             'nup' => '6',
             'idruang_fk' => '8'
         ));
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal SAC
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2900,7 +2900,7 @@ class DetailDataBarangSeeder extends Seeder
 
 
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
@@ -2909,7 +2909,7 @@ class DetailDataBarangSeeder extends Seeder
             'idruang_fk' => '24'
         ));
 
-        DB::table('datadetail_barang')->insert(array(
+        DB::table('detail_data_barang')->insert(array(
             // Kursi besi metal
             'tanggal' => '2010-03-18',
             'idbarang_fk' => '20',
