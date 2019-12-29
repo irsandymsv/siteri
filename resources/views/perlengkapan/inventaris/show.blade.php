@@ -22,6 +22,9 @@
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title">Data Inventaris</h3>
+                <div style="float: right;">
+                    <a href="{{ route('perlengkapan.inventaris.create', $barang->id) }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Laporan</a>
+                </div>
             </div>
 
             <div class="box-body">

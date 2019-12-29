@@ -24,8 +24,8 @@
             <div class="box-body">
                 {!! Form::open(['route' => 'perlengkapan.inventaris.store', 'id'=>'form']) !!}
                 <div id="isiForm" class="table-responsive">
-
-
+                    {{-- Buat laporan baru --}}
+                    @if ($laporan)
                     <table id="tbl-data" class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -41,6 +41,7 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th>Tanggal</th>
                                 <th>Merk Barang</th>
                                 <th>Ruang</th>
                                 <th>Status</th>
@@ -50,6 +51,9 @@
 
                         <tbody id="inputan">
                             <tr>
+                                <td>
+                                    {!! Form::date('tanggal[]', null, ['class' => 'form-control tanggal'])!!}
+                                </td>
                                 <td>
                                     {!! Form::text('merk_barang[]', null, ['class' => 'form-control merk_barang'])!!}
                                 </td>
@@ -71,6 +75,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
+                                <th>Tanggal</th>
                                 <th>Merk Barang</th>
                                 <th>Ruang</th>
                                 <th>Status</th>
@@ -79,9 +84,71 @@
                         </tfoot>
                     </table>
 
-                    <h5>Total Data = <span class="data_count">0</span></h5>
-
+                    {{-- Buat detail laporan baru --}}
+                    @else
+                    <div class="">
+                        <table class="tabel-keterangan">
+                            <tr>
+                                <td><b>Kode Barang</b></td>
+                                <td>: {{$barang->kode_barang}}</td>
+                            </tr>
+                            <tr>
+                            <td><b>Nama Barang</b></td>
+                            <td>: {{$barang->nama_barang}}</td>
+                        </tr>
+                    </table>
                 </div>
+                <br>
+                <div class="table-responsive">
+                    <table id="pengadaan" class="table table-bordered table-hovered">
+                        <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Merk Barang</th>
+                                    <th>Ruang</th>
+                                    <th>Status</th>
+                                    <th>🗙</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="lap_{{ $laporan->id }}">
+                                    <td>
+                                        {!! Form::date('tanggal[]', null, ['class' => 'form-control tanggal'])!!}
+                                    </td>
+                                    <td>
+                                        {!! Form::text('merk_barang[]', null, ['class' => 'form-control merk_barang'])!!}
+                                    </td>
+
+                                    <td>
+                                        {!! Form::select('nama_ruang[]', $nama_ruang, null, ['class' =>
+                                        'form-control'])!!}
+                                    </td>
+
+                                    <td>
+                                        {!! Form::select('status[]', $status, null, ['class' =>
+                                        'form-control'])!!}
+                                    </td>
+
+                                    <td>
+                                        {!! Form::button(null , [ 'class'=>'fa fa-trash btn btn-danger']) !!}
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Merk Barang</th>
+                                    <th>Ruang</th>
+                                    <th>Status</th>
+                                    <th>🗙</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    @endif
+                    <h5>Total Data = <span class="data_count">0</span></h5>
+                </div>
+
                 <button id="tambah" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</button>
                 <br><br>
                 <div class="form-group" style="float: right;">
@@ -106,6 +173,9 @@
         $('#tambah').click(function(event) {
             $('#inputan').append(`
                 <tr>
+                    <td>
+                        {!! Form::date('tanggal[]', null, ['class' => 'form-control tanggal'])!!}
+                    </td>
                     <td>
                         {!! Form::text('merk_barang[]', null, ['class' => 'form-control merk_barang'])!!}
                     </td>

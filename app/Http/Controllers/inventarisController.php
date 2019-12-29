@@ -32,14 +32,24 @@ class inventarisController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $laporan)
     {
-        $status = status_barang_ruang::all()->pluck('status');
-        $nama_ruang = data_ruang::all()->pluck('nama_ruang');
-
-        return view('perlengkapan.inventaris.create_data_barang', [
-            "status" => $status,
-            "nama_ruang" => $nama_ruang
+        // $id = $laporan->id;
+        if ($laporan->laporan) {
+            $status = status_barang_ruang::all()->pluck('status');
+            $nama_ruang = data_ruang::all()->pluck('nama_ruang');
+        } else {
+            $status = status_barang_ruang::all()->pluck('status');
+            $nama_ruang = data_ruang::all()->pluck('nama_ruang');
+            $barang = data_barang::all();
+            // $barang = data_barang::with('detail_data_barang')
+            //     ->where('id', $id)->get();
+        }
+        return view('perlengkapan.inventaris.create', [
+            'status' => $status,
+            'nama_ruang' => $nama_ruang,
+            'barang' => $barang,
+            'laporan'    => $laporan->laporan
         ]);
     }
 
@@ -58,18 +68,17 @@ class inventarisController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            "kode_barang"    => "required|integer|max:10",
-            "nama_barang"  => "required|string|max:50",
-            "merk_barang"     => "required|array",
-            "merk_barang.*"  => "required|string|max:50",
-            "nama_ruang"     => "required|array",
-            "nama_ruang.*"   => "required|integer",
-            "satuan"         => "required|array",
-            "satuan.*"       => "required|integer|max:4",
-            ]);
-            
-            dd($request);
-        // try {
+            "kode_barang"   => "required|integer",
+            "nama_barang"   => "required|string|max:50",
+            "tanggal"       => "required|array",
+            "tanggal.*"     => "required",
+            "merk_barang"   => "required|array",
+            "merk_barang.*" => "required|string|max:50",
+            "nama_ruang"    => "required|array",
+            "nama_ruang.*"  => "required|integer",
+            "status"        => "required|array",
+            "status.*"      => "required|integer",
+        ]);
 
         data_barang::create([
             'kode_barang' => $request->kode_barang,
@@ -77,23 +86,20 @@ class inventarisController extends Controller
         ]);
 
         $idbarang = data_barang::all()->pluck('id')->last();
-        $nup = detail_data_barang::all()->orderBy('nup')->pluck('nup')->last();
-
-        for ($i = 0; $i < count($request->nama_barang); $i++) {
+        $nup = detail_data_barang::where('idbarang_fk', $idbarang)->pluck('nup')->last();
+        $nup -= 0;
+        for ($i = 0; $i < count($request->merk_barang); $i++) {
             $nup++;
             detail_data_barang::create([
-                'merk_barang' => $request->merk_barang[$i],
-                'nup' => $nup,
-                'idruang' => ($request->nama_ruang[$i] + 1),
-                'idstatus' => ($request->status[$i] + 1)
+                'tanggal'       => $request->tanggal[$i],
+                'idbarang_fk'   => $idbarang,
+                'merk_barang'   => $request->merk_barang[$i],
+                'nup'           => $nup,
+                'idruang_fk'    => ($request->nama_ruang[$i] + 1),
+                'idstatus_fk'   => ($request->status[$i] + 1)
             ]);
         }
-        // dd($nup);
-
-        // return view('perlengkapan.inventaris.index');
-        // } catch (Exception $e) {
-        return redirect()->route('perlengkapan.inventaris.index');
-        // }
+        return redirect()->route('perlengkapan.inventaris.show', $idbarang);
     }
 
     /**
@@ -122,9 +128,23 @@ class inventarisController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $laporan)
     {
-        //
+        if ($laporan->laporan) {
+            $status = status_barang_ruang::all()->pluck('status');
+            $nama_ruang = data_ruang::all()->pluck('nama_ruang');
+        } else {
+            $status = status_barang_ruang::all()->pluck('status');
+            $nama_ruang = data_ruang::all()->pluck('nama_ruang');
+            $barang = data_barang::with('detail_data_barang')
+                ->where('id', $id)->get();
+        }
+        return view('perlengkapan.inventaris.create', [
+            'status' => $status,
+            'nama_ruang' => $nama_ruang,
+            'barang' => $barang,
+            'laporan'    => $laporan->laporan
+        ]);
     }
 
     /**

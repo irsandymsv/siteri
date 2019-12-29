@@ -17,7 +17,7 @@
                 <h3 class="box-title">Laporan Inventaris</h3>
 
                 <div style="float: right;">
-                    <a href="{{ route('perlengkapan.inventaris.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Laporan</a>
+                    <a href="{{ route('perlengkapan.inventaris.create', [ 'laporan' => true]) }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Laporan</a>
                 </div>
             </div>
 
