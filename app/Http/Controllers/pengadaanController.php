@@ -200,8 +200,14 @@ class pengadaanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        //
+        if ($request->laporan) {
+            laporan_pengadaan::findOrfail($id)->delete();
+            Log::alert('Berhasil Dihapus');
+        } else {
+            pengadaan::findOrfail($id)->delete();
+            Log::alert('Berhasil Dihapus');
+        }
     }
 }
