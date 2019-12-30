@@ -33,10 +33,10 @@ class bagian extends Model
         return $this->hasMany('App\User', 'id_bagian');
     }
 
-    public function detail_sk()
-    {
-        return $this->hasMany('App\detail_sk', 'id_bagian');
-    }
+    // public function detail_sk()
+    // {
+    //     return $this->hasMany('App\detail_sk', 'id_bagian');
+    // }
 
     public function mahasiswa()
     {

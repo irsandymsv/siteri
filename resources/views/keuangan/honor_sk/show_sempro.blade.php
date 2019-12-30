@@ -180,7 +180,7 @@
 
    			<div class="box-body">
                <div class="table-responsive">
-                  <table id="dataTable2" class="table table-bordered table-striped">
+                  <table id="dataTable2" class="table table-bordered">
                      <thead>
                         <tr>
                            <th>No</th>
