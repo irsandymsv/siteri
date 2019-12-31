@@ -27,8 +27,8 @@
                                 <th>Jam Mulai</th>
                                 <th>Jam Berakhir</th>
                                 <th>Kegiatan</th>
-                                <th>Jumlah Peserta</th>
-                                <th>Nama Ruang</th>
+                                {{-- <th>Jumlah Peserta</th>
+                                <th>Nama Ruang</th> --}}
                                 <th>Status</th>
                                 <!-- <th>Verifikasi</th> -->
                                 <th style="width:99.8px">Opsi</th>
@@ -37,15 +37,13 @@
                         <tbody>
                             @php $no = 0 @endphp
                             @foreach($laporan as $item)
-                            <tr id="lap_{{ $item->peminjaman_ruang->id }}">
+                            <tr id="lap_{{ $item->id }}">
                                 <td>{{$no+=1}}</td>
-                                <td>{{$item->peminjaman_ruang->tanggal_mulai}}</td>
-                                <td>{{$item->peminjaman_ruang->tanggal_berakhir}}</td>
-                                <td>{{$item->peminjaman_ruang->jam_mulai}}</td>
-                                <td>{{$item->peminjaman_ruang->jam_berakhir}}</td>
-                                <td>{{$item->peminjaman_ruang->kegiatan}}</td>
-                                <td>{{$item->peminjaman_ruang->jumlah_peserta}}</td>
-                                <td>{{$item->data_ruang->nama_ruang}}</td>
+                                <td>{{$item->tanggal_mulai}}</td>
+                                <td>{{$item->tanggal_berakhir}}</td>
+                                <td>{{$item->jam_mulai}}</td>
+                                <td>{{$item->jam_berakhir}}</td>
+                                <td>{{$item->kegiatan}}</td>
                                 <td>
                                     @if($item->verif_baper == 0)
                                     Belum Diverifikasi
@@ -54,12 +52,12 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('perlengkapan.peminjaman_ruang.show', $item->peminjaman_ruang->id) }}" class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>    
+                                    <a href="{{ route('perlengkapan.peminjaman_ruang.show', $item->id) }}" class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
                                     @if($item->verif_baper != 1)
-                                    <a href="{{ route('perlengkapan.peminjaman_ruang.edit', $item->peminjaman_ruang->id) }}" class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ route('perlengkapan.peminjaman_ruang.edit', $item->id) }}" class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
                                     @endif
                                     @if($item->verif_baper != 1)
-                                    <a href="#" class="btn btn-danger" id="{{ $item->peminjaman_ruang->id }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                    <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
                                     @endif
 
                                 </td>

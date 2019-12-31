@@ -41,14 +41,14 @@ class inventarisController extends Controller
         } else {
             $status = status_barang_ruang::all()->pluck('status');
             $nama_ruang = data_ruang::all()->pluck('nama_ruang');
-            $barang = data_barang::all();
+            // $barang = data_barang::all();
             // $barang = data_barang::with('detail_data_barang')
             //     ->where('id', $id)->get();
         }
         return view('perlengkapan.inventaris.create', [
             'status' => $status,
             'nama_ruang' => $nama_ruang,
-            'barang' => $barang,
+            // 'barang' => $barang,
             'laporan'    => $laporan->laporan
         ]);
     }
