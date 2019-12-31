@@ -43,7 +43,7 @@ class peminjamanRuangController extends Controller
         // $ruang = data_ruang::with('detail_data_ruang')
         //     ->where('id', $id)->get();
 
-        return view('perlengkapan.inventaris.create', [
+        return view('perlengkapan.peminjaman_ruang.create', [
             'nama_ruang' => $nama_ruang,
         ]);
     }
@@ -62,6 +62,7 @@ class peminjamanRuangController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $this->validate($request, [
             "kode_ruang"   => "required|integer",
             "nama_ruang"   => "required|string|max:50",

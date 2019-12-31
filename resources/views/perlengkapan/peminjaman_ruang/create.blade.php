@@ -5,6 +5,7 @@
 @section('judul_header', 'Peminjaman Ruang')
 
 @section('css_link')
+<link href="/adminlte/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
 <style type="text/css">
     .hidden {
         display: none important !;
@@ -21,59 +22,55 @@
             </div>
 
             <div class="box-body">
-                {!! Form::open(['route' => 'perlengkapan.pengadaan.store', 'id'=>'form']) !!}
+                {!! Form::open(['route' => 'perlengkapan.peminjaman_ruang.store', 'id'=>'form']) !!}
                 <div id="isiForm" class="table-responsive">
-                    <h5>Total Data = <span class="data_count">0</span></h5>
                     <table id="tbl-data" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Tanggal</th>
-                                <th>Jam</th>
-                                <th>Nama Barang</th>
-                                <th>Spesifikasi</th>
-                                <th>Jumlah</th>
-                                <th>Satuan</th>
-                                <th>Keterangan</th>
+                                <th>Tanggal Mulai</th>
+                                <th>Tanggal Berakhir</th>
+                                <th>Jam Mulai</th>
+                                <th>Jam Berakhir</th>
+                                <th>Kegiatan</th>
+                                <th>Jumlah Peserta</th>
+                                <th>Nama Ruang</th>
                             </tr>
                         </thead>
 
                         <tbody id="inputan">
                             <tr>
                                 <td>
-                                    {!! Form::text('nama_barang', null, ['class' => 'form-control', 'id' =>
-                                    'nama_barang']) !!}
+                                    {!! Form::date('tanggal_mulai', null, ['class' => 'form-control']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('spesifikasi', null, ['class' => 'form-control', 'id' =>
-                                    'spesifikasi']) !!}
+                                    {!! Form::date('tanggal_berakhir', null, ['class' => 'form-control']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah', null, ['class' => 'form-control', 'id' => 'jumlah'])
-                                    !!}
+                                    {!! Form::time('jam_mulai', null, ['class' => 'form-control']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::select('satuan', $satuan, null, ['class' => 'form-control', 'id' =>
-                                    'satuan'])!!}
+                                    {!! Form::time('jam_berakhir', null, ['class' => 'form-control']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('harga', null, ['class' => 'form-control', 'id' => 'harga']) !!}
+                                    {!! Form::text('kegiatan', null, ['class' => 'form-control']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::label(null , null, ['class' => 'control-label', 'id' => 'total'])
-                                    !!}
+                                    {!! Form::text('jumlah_peserta', null, ['class' => 'form-control number']) !!}
+                                </td>
+
+                                <td>
+                                    {!! Form::select('nama_ruang[]', $nama_ruang, null, ['class' =>
+                                    'form-control js-example-basic-multiple', 'multiple' => 'multiple'])!!}
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-
-                    <h5>Total Data = <span class="data_count">0</span></h5>
                 </div>
-                <button id="tambah" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</button>
                 <br><br>
                 <div class="form-group" style="float: right;">
                     {!! Form::submit('Simpan dan Kirim', [ 'class'=>'btn btn-success', 'id' => 'submit']) !!}
@@ -83,37 +80,14 @@
         </div>
     </div>
 </div>
-
-
-
-<div class="row">
-    <div class="col-xs-12">
-        <div class="box box-success">
-            <div class="table-responsive">
-                <table id="pengadaan" class="table table-bordered table-hovered">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Barang</th>
-                            <th>Spesifikasi</th>
-                            <th>Jumlah</th>
-                            <th>Harga Satuan</th>
-                            <th>Total</th>
-                            <th style="width:99.8px">Opsi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 
 @section('script')
+<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
 <script>
     $(function(){
+
+        $('.js-example-basic-multiple').select2();
 
         $('#jumlah, #harga').on('input', function(){
             $('#total').empty();

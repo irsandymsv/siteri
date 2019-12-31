@@ -27,18 +27,51 @@
                     <table id="tbl-data" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Tanggal</th>
-                                <th>Jam</th>
+                                <th>Tanggal Mulai</th>
+                                <th>Tanggal Berakhir</th>
+                                <th>Jam Mulai</th>
+                                <th>Jam Berakhir</th>
+                                <th>Kegiatan</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {!! Form::date('tanggal_mulai', null, ['class' => 'form-control']) !!}
+                                </td>
+
+                                <td>
+                                    {!! Form::date('tanggal_berakhir', null, ['class' => 'form-control']) !!}
+                                </td>
+
+                                <td>
+                                    {!! Form::time('jam_mulai', null, ['class' => 'form-control']) !!}
+                                </td>
+
+                                <td>
+                                    {!! Form::time('jam_berakhir', null, ['class' => 'form-control']) !!}
+                                </td>
+
+                                <td>
+                                    {!! Form::text('kegiatan', null, ['class' => 'form-control']) !!}
+                                </td>
+                            </tr>
+                            <tr>
                                 <th>Nama Barang</th>
-                                <th>Spesifikasi</th>
+                                <th>Merk Barang</th>
                                 <th>Jumlah</th>
                                 <th>Satuan</th>
-                                <th>Keterangan</th>
                             </tr>
                         </thead>
 
                         <tbody id="inputan">
                             <tr>
+                                <td>
+                                    {!! Form::select('nama_barang[]', $nama_barang, null, ['class' =>
+                                    'form-control'])!!}
+                                </td>
+                                <td>
+                                    {!! Form::select('merk_barang[]', $merk_barang, null, ['class' =>
+                                    'form-control'])!!}
+                                </td>
                                 <td>
                                     {!! Form::text('nama_barang', null, ['class' => 'form-control', 'id' =>
                                     'nama_barang']) !!}
