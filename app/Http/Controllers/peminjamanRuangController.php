@@ -62,7 +62,7 @@ class peminjamanRuangController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+        dd($request);
         $this->validate($request, [
             "kode_ruang"   => "required|integer",
             "nama_ruang"   => "required|string|max:50",

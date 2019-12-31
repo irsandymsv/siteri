@@ -89,89 +89,88 @@
 
         $('.js-example-basic-multiple').select2();
 
-        $('#jumlah, #harga').on('input', function(){
-            $('#total').empty();
-            jumlah = $('#jumlah').val();
-            harga = $('#harga').val();
-            $('#total').append('Rp ' + jumlah * harga);
-        });
+        // $('#jumlah, #harga').on('input', function(){
+        //     $('#total').empty();
+        //     jumlah = $('#jumlah').val();
+        //     harga = $('#harga').val();
+        //     $('#total').append('Rp ' + jumlah * harga);
+        // });
 
-        $('#tambah').click(function(event) {
-            nama = $('#nama_barang').val();
-            spesifikasi = $('#spesifikasi').val();
-            jumlah = $('#jumlah').val();
-            satuan = $('#satuan').val();
-            harga = $('#harga').val();
-            total = $('#total').html();
-            data = $('#tbody tr').length;
-            $('#tbody').append(`
-                <tr id="data">
-                    <td>
-                        ` + ++data + `
-                    </td>
+        // $('#tambah').click(function(event) {
+        //     nama = $('#nama_barang').val();
+        //     spesifikasi = $('#spesifikasi').val();
+        //     jumlah = $('#jumlah').val();
+        //     satuan = $('#satuan').val();
+        //     harga = $('#harga').val();
+        //     total = $('#total').html();
+        //     data = $('#tbody tr').length;
+        //     $('#tbody').append(`
+        //         <tr id="data">
+        //             <td>
+        //                 ` + ++data + `
+        //             </td>
 
-                    <td>
-                        ` + nama + `
-                    </td>
+        //             <td>
+        //                 ` + nama + `
+        //             </td>
 
-                    <td>
-                        ` + spesifikasi + `
-                    </td>
+        //             <td>
+        //                 ` + spesifikasi + `
+        //             </td>
 
-                    <td>
-                        ` + jumlah + `
-                    </td>
+        //             <td>
+        //                 ` + jumlah + `
+        //             </td>
 
-                    <td class="hidden">
-                        ` + ++satuan + `
-                    </td>
+        //             <td class="hidden">
+        //                 ` + ++satuan + `
+        //             </td>
 
-                    <td>
-                        ` + harga + `
-                    </td>
+        //             <td>
+        //                 ` + harga + `
+        //             </td>
 
-                    <td>
-                        ` + total + `
-                    </td>
+        //             <td>
+        //                 ` + total + `
+        //             </td>
 
-                    <td>
-                        OPSI
-                    </td>
-                </tr>
-            `);
+        //             <td>
+        //                 OPSI
+        //             </td>
+        //         </tr>
+        //     `);
 
-            $('#nama_barang').val('');
-            $('#spesifikasi').val('');
-            $('#jumlah').val('');
-            $('#harga').val('');
-            $('#total').html('');
-			$(".data_count").text(data);
+        //     $('#nama_barang').val('');
+        //     $('#spesifikasi').val('');
+        //     $('#jumlah').val('');
+        //     $('#harga').val('');
+        //     $('#total').html('');
+		// 	$(".data_count").text(data);
 
-        });
+        // });
 
-        $('#submit').click(function(event){
-            // event.preventDefault();
-            table = $('#tbody tr');
-            data = [];
-            length = ($('#data td').length - (3 * $('#tbody tr').length))/$('#tbody tr').length;
-            $.each(table, function(index, val){
-                // val = val + '';
-                vall = $(val).text().split(/\s+/);
-                vall.shift();
-                vall.shift();
-                vall.pop();
-                vall.pop();
-                vall.pop();
-                vall.splice($.inArray("Rp", vall),1);
-                data.push(vall);
-            });
-            console.log(data);
-            $('#isiForm').empty();
-            $('#isiForm').append(`<input type="hidden" name="data" value="` + data + `">`);
-            $('#isiForm').append(`<input type="hidden" name="length" value="` + length + `">`);
-        });
+        // $('#submit').click(function(event){
+        //     // event.preventDefault();
+        //     table = $('#tbody tr');
+        //     data = [];
+        //     length = ($('#data td').length - (3 * $('#tbody tr').length))/$('#tbody tr').length;
+        //     $.each(table, function(index, val){
+        //         // val = val + '';
+        //         vall = $(val).text().split(/\s+/);
+        //         vall.shift();
+        //         vall.shift();
+        //         vall.pop();
+        //         vall.pop();
+        //         vall.pop();
+        //         vall.splice($.inArray("Rp", vall),1);
+        //         data.push(vall);
+        //     });
+        //     console.log(data);
+        //     $('#isiForm').empty();
+        //     $('#isiForm').append(`<input type="hidden" name="data" value="` + data + `">`);
+        //     $('#isiForm').append(`<input type="hidden" name="length" value="` + length + `">`);
+        // });
     });
 
 </script>
 @endsection
-

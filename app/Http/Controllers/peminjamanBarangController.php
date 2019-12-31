@@ -41,23 +41,32 @@ class peminjamanBarangController extends Controller
     public function create(Request $laporan)
     {
         // $id = $laporan->id;
-        if ($laporan->laporan) {
-            $satuan  = satuan::all()->pluck('satuan');
-            $barang = data_barang::all()->pluck('nama_barang');
-            $detail_barang = detail_data_barang::all()->pluck('nama_barang');
-        } else {
-            $satuan  = satuan::all()->pluck('satuan');
-            $detail_barang = detail_data_barang::all()->pluck('nama_barang');
-            // $barang = data_barang::all();
-            // $barang = data_barang::with('detail_data_barang')
-            //     ->where('id', $id)->get();
-        }
-        return view('perlengkapan.inventaris.create', [
+        // if ($laporan->laporan) {
+        $satuan  = satuan::all()->pluck('satuan');
+        $barang = data_barang::all()->pluck('nama_barang');
+        $detail_barang = detail_data_barang::all()->pluck('merk_barang');
+        // } else {
+        //     $satuan  = satuan::all()->pluck('satuan');
+        //     $detail_barang = detail_data_barang::all()->pluck('merk_barang');
+        // $barang = data_barang::all();
+        // $barang = data_barang::with('detail_data_barang')
+        //     ->where('id', $id)->get();
+        // }
+        // dd($barang);
+        // if ($laporan->laporan) {
+        return view('perlengkapan.peminjaman_barang.create', [
             'satuan' => $satuan,
-            'nama_barang' => $detail_barang,
-            'barang' => $barang,
+            'nama_barang' => $barang,
+            'merk_barang' => $detail_barang,
             'laporan'    => $laporan->laporan
         ]);
+        // } else {
+        //     return view('perlengkapan.peminjaman_barang.create', [
+        //         'satuan' => $satuan,
+        //         'nama_barang' => $detail_barang,
+        //         'laporan'    => $laporan->laporan
+        //     ]);
+        // }
     }
 
     public function barangAjax($id)
