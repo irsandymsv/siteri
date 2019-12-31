@@ -3,6 +3,7 @@
 @section('page_title', 'Pengadaan')
 
 @section('css_link')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" type="text/css" href="/css/custom_style.css">
 <style type="text/css">
     .tabel-keterangan td {
@@ -106,11 +107,13 @@
 @section('script')
 <script>
     $(function(){
-        $('fa.fa-trash').click(function(){
+        $('a.btn.btn-danger').click(function(){
             event.preventDefault();
 				var id = $(this).attr('id');
+                console.log(id);
 
-				var url_del = "{{route('perlengkapan.pengadaan.destroy', "+id+")}}";
+				var url_del = "{{route('perlengkapan.pengadaan.destroy', "id")}}";
+                url_del = url_del.replace('id', id);
 				console.log(url_del);
 
 				$('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
@@ -123,18 +126,15 @@
 					$.ajax({
 						url: url_del,
 						type: 'POST',
-						// dataType: '',
 						data: {_method: 'DELETE'},
 					})
 					.done(function(hasil) {
 						console.log("success");
 						$("tr#lap_"+id).remove();
-						$("#success_delete").show();
-						$("#success_delete").find('span').html(hasil);
-						$("#success_delete").fadeOut(1800);
 					})
 					.fail(function() {
 						console.log("error");
+						$("tr#lap_"+id).remove();
 					});
 				});
         });

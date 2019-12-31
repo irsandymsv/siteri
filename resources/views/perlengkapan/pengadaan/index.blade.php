@@ -112,6 +112,39 @@
 <script>
     $(function(){
         $('#pengadaan').DataTable();
+
+        $('fa.fa-trash').click(function(){
+            event.preventDefault();
+				var id = $(this).attr('id');
+
+				var url_del = "{{route('perlengkapan.pengadaan.destroy', "+id+")}}";
+				console.log(url_del);
+
+				$('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
+					$.ajaxSetup({
+					    headers: {
+					        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					    }
+					});
+
+					$.ajax({
+						url: url_del,
+						type: 'POST',
+						// dataType: '',
+						data: {_method: 'DELETE'},
+					})
+					.done(function(hasil) {
+						console.log("success");
+						$("tr#lap_"+id).remove();
+						$("#success_delete").show();
+						$("#success_delete").find('span').html(hasil);
+						$("#success_delete").fadeOut(1800);
+					})
+					.fail(function() {
+						console.log("error");
+					});
+				});
+        });
     });
 </script>
 
