@@ -6,8 +6,8 @@
 
 {{-- <li>
     <a href="{{ route('perlengkapan.inventaris.index') }}">
-        <i class="fa fa-book"></i> <span>Laporan Inventaris</span>
-    </a>
+<i class="fa fa-book"></i> <span>Laporan Inventaris</span>
+</a>
 </li> --}}
 
 <li class="treeview">
@@ -17,15 +17,15 @@
         </span>
     </a>
     <ul class="treeview-menu">
-        <li><a href="{{ route('perlengkapan.inventaris.create') }}">Buat Baru</a></li>
+        <li><a href="{{ route('perlengkapan.inventaris.create', [ 'laporan' => true]) }}">Buat Baru</a></li>
         <li><a href="{{ route('perlengkapan.inventaris.index') }}">Lihat Laporan</a></li>
     </ul>
 </li>
 
 {{-- <li>
     <a href="{{ route('perlengkapan.pengadaan.index') }}">
-        <i class="fa fa-book"></i><span>Laporan Pengadaan</span>
-    </a>
+<i class="fa fa-book"></i><span>Laporan Pengadaan</span>
+</a>
 </li> --}}
 
 <li class="treeview">
