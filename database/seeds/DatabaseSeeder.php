@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             dev_golongan_table_seeder::class,
             dev_fungsional_table_seeder::class,
             dev_pangkat_table_seeder::class,
-            dev_mahasiswa_table_seeder::class,
+            // dev_mahasiswa_table_seeder::class,
             dev_users_table_seeder::class,
         ]);
     }

@@ -288,3 +288,19 @@ Route::prefix('dosen')->name('dosen.')->group(function()
 	Route::get('/penguji-skripsi', 'dosenController@index_penguji')->name('penguji-skripsi');
 	Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
 });
+
+Route::prefix('kemahasiswaan')->name('kemahasiswaan.')->group(function()
+{
+	Route::get('/', function()
+	{
+		return view('kemahasiswaan.dashboard');
+	})->name('dashboard');
+
+	//Data Mahasiswa
+	Route::get('/mahasiswa', 'mahasiswaController@index')->name('mahasiswa.index');
+	Route::get('/mahasiswa/create', 'mahasiswaController@create')->name('mahasiswa.create');
+	Route::post('/mahasiswa/store', 'mahasiswaController@store')->name('mahasiswa.store');
+	Route::get('/mahasiswa/{nim}', 'mahasiswaController@show')->name('mahasiswa.show');
+	Route::get('/mahasiswa/{nim}/edit', 'mahasiswaController@edit')->name('mahasiswa.edit');
+	Route::put('/mahasiswa/{nim}/update', 'mahasiswaController@update')->name('mahasiswa.update');
+});
