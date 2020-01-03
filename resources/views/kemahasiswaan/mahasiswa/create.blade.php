@@ -16,18 +16,41 @@
    Tambah Mahasiswa Baru
 @endsection
 
-@section('content')     
+@section('content')
    <div class="row">
       <div class="col-xs-12">
          <div class="box box-success">
             <div class="box-header">
                <h3 class="box-title">Tambah Data Mahasiswa Baru</h3>
-            </div>
+               <br><br>
+               @if (session('success'))
+               <div class="alert alert-success alert-dismissible">
+                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                   <h4><i class="icon fa fa-check"></i> Sukses</h4>
+                   {{session('success')}}
+               </div>
+               @php
+               Session::forget('success');
+               @endphp
 
+               @endif
+               @if (session('error'))
+               <div class="alert alert-danger alert-dismissible">
+                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                   <h4><i class="icon fa fa-ban"></i>Error</h4>
+                   {{session('error')}}
+               </div>
+
+               @php
+               Session::forget('error');
+               @endphp
+               @endif
+            </div>
+            <form action="{{ route('kemahasiswaan.mahasiswa.store') }}" method="post">
             <div class="box-body">
-               <form action="{{ route('kemahasiswaan.mahasiswa.store') }}" method="post">
+
                   @csrf
-                  
+
                   <div class="form-group">
                      <label for="nim">NIM</label>
                      <input type="text" name="nim" id="nim" class="form-control">
@@ -65,13 +88,14 @@
                         </span>
                      @enderror
                   </div>
-               </form>
+
             </div>
 
             <div class="box-footer">
                <a href="{{ route('kemahasiswaan.mahasiswa.index') }}" class="btn btn-default">Kembali</a>
                <button class="btn btn-success" type="submit">Simpan</button>
             </div>
+            </form>
          </div>
       </div>
    </div>

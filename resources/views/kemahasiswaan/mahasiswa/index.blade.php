@@ -16,7 +16,7 @@
       Daftar Mahasiswa
 @endsection
 
-@section('content')     
+@section('content')
    <div class="row">
       <div class="col-xs-12">
          <div class="box box-success">
@@ -57,7 +57,7 @@
                               </td>
                               <td>
                                  <a href="{{ route('kemahasiswaan.mahasiswa.show', $item->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
-                                 <a href="{{ route('kemahasiswaan.mahasiswa.edit', $item->nim) }}" class="btn btn-warning"><i class="fa fa-eye"></i></a>
+                                 <a href="{{ route('kemahasiswaan.mahasiswa.edit', $item->nim) }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                               </td>
                            </tr>
                         @endforeach
