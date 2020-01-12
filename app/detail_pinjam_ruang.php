@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class detail_pinjam_ruang extends Model
 {
     protected $table = 'detail_pinjam_ruang';
+    protected $fillable = 'idruang_fk';
 
     public $timestamps = false;
 

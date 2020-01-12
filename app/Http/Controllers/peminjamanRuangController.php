@@ -20,15 +20,11 @@ class peminjamanRuangController extends Controller
      */
     public function index()
     {
-        try {
-            $laporan = peminjaman_ruang::all();
+        $laporan = peminjaman_ruang::all();
 
-            return view('perlengkapan.peminjaman_ruang.index', [
-                'laporan' => $laporan
-            ]);
-        } catch (Exception $e) {
-            return view('perlengkapan.peminjaman_ruang.index');
-        }
+        return view('perlengkapan.peminjaman_ruang.index', [
+            'laporan' => $laporan
+        ]);
     }
 
     /**
@@ -36,12 +32,13 @@ class peminjamanRuangController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $laporan)
+    public function create(Request $jumlah_peserta)
     {
-        $nama_ruang = data_ruang::all()->pluck('nama_ruang');
-        // $ruang = data_ruang::all();
-        // $ruang = data_ruang::with('detail_data_ruang')
-        //     ->where('id', $id)->get();
+        // $nama_ruang = data_ruang::where('kuota', '>=', $jumlah_peserta)
+        //     ->get();
+        $nama_ruang = data_ruang::where('kuota', '!=', '0')
+            ->pluck('nama_ruang');
+        // $nama_ruang = data_ruang::all()->pluck('nama_ruang');
 
         return view('perlengkapan.peminjaman_ruang.create', [
             'nama_ruang' => $nama_ruang,
@@ -62,40 +59,37 @@ class peminjamanRuangController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
         $this->validate($request, [
-            "kode_ruang"   => "required|integer",
-            "nama_ruang"   => "required|string|max:50",
-            "tanggal"       => "required|array",
-            "tanggal.*"     => "required",
-            "merk_ruang"   => "required|array",
-            "merk_ruang.*" => "required|string|max:50",
-            "nama_ruang"    => "required|array",
-            "nama_ruang.*"  => "required|integer",
-            "status"        => "required|array",
-            "status.*"      => "required|integer",
+            "tanggal_mulai"     => "required",
+            "tanggal_berakhir"  => "required",
+            "jam_mulai"         => "required",
+            "jam_berakhir"      => "required",
+            "kegiatan"          => "required|string|max:100",
+            "jumlah_peserta"    => "required|integer",
+            "nama_ruang"        => "required|array",
+            "nama_ruang.*"      => "required|integer"
         ]);
 
-        data_ruang::create([
-            'kode_ruang' => $request->kode_ruang,
-            'nama_ruang' => $request->nama_ruang
+        peminjaman_ruang::create([
+            "tanggal_mulai"     => $request->tanggal_mulai,
+            "tanggal_berakhir"  => $request->tanggal_berakhir,
+            "jam_mulai"         => $request->jam_mulai,
+            "jam_berakhir"      => $request->jam_berakhir,
+            "kegiatan"          => $request->kegiatan,
+            "jumlah_peserta"    => $request->jumlah_peserta
         ]);
 
-        $idruang = data_ruang::all()->pluck('id')->last();
-        $nup = detail_data_ruang::where('idruang_fk', $idruang)->pluck('nup')->last();
-        $nup -= 0;
-        for ($i = 0; $i < count($request->merk_ruang); $i++) {
-            $nup++;
-            detail_data_ruang::create([
-                'tanggal'       => $request->tanggal[$i],
-                'idruang_fk'   => $idruang,
-                'merk_ruang'   => $request->merk_ruang[$i],
-                'nup'           => $nup,
-                'idruang_fk'    => ($request->nama_ruang[$i] + 1),
-                'idstatus_fk'   => ($request->status[$i] + 1)
+        $idlaporan = peminjaman_ruang::all()->pluck('id')->last();
+
+        for ($i = 0; $i < count($request->nama_ruang); $i++) {
+            // dd($request);
+            detail_pinjam_ruang::create([
+                'idpinjam_ruang_fk' => $idlaporan,
+                'idruang_fk'        => ($request->nama_ruang[$i] + 1)
             ]);
         }
-        return redirect()->route('perlengkapan.inventaris.show', $idruang);
+        return redirect()->route('perlengkapan.peminjaman_ruang.show', $idlaporan);
     }
 
     /**
@@ -124,23 +118,23 @@ class peminjamanRuangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Request $laporan)
+    public function edit($id)
     {
-        // if ($laporan->laporan) {
-        //     $status = status_ruang_ruang::all()->pluck('status');
-        //     $nama_ruang = data_ruang::all()->pluck('nama_ruang');
-        // } else {
-        //     $status = status_ruang_ruang::all()->pluck('status');
-        //     $nama_ruang = data_ruang::all()->pluck('nama_ruang');
-        //     $ruang = data_ruang::with('detail_data_ruang')
-        //         ->where('id', $id)->get();
-        // }
-        // return view('perlengkapan.inventaris.create', [
-        //     'status' => $status,
-        //     'nama_ruang' => $nama_ruang,
-        //     'ruang' => $ruang,
-        //     'laporan'    => $laporan->laporan
-        // ]);
+        // dd($id);
+        $nama_ruang = data_ruang::where('kuota', '!=', '0')
+            ->pluck('nama_ruang');
+        $laporan = peminjaman_ruang::with('detail_pinjam_ruang')
+            ->where('id', $id)
+            ->first();
+        // $detail_laporan = detail_pinjam_ruang::all()
+        //     ->where('idpinjam_ruang_fk', $id);
+        // ->get();
+
+        return view('perlengkapan.peminjaman_ruang.edit', [
+            'nama_ruang' => $nama_ruang,
+            'laporan' => $laporan,
+            // 'detail_laporan' => $detail_laporan
+        ]);
     }
 
     /**
@@ -152,7 +146,50 @@ class peminjamanRuangController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->laporan) {
+
+            $this->validate($request, [
+                "tanggal_mulai"     => "required",
+                "tanggal_berakhir"  => "required",
+                "jam_mulai"         => "required",
+                "jam_berakhir"      => "required",
+                "kegiatan"          => "required|string|max:100",
+                "jumlah_peserta"    => "required|integer",
+                "nama_ruang"        => "required|array",
+                "nama_ruang.*"      => "required|integer"
+            ]);
+
+            peminjaman_ruang::findOrfail($id)->update([
+                "tanggal_mulai"     => $request->tanggal_mulai,
+                "tanggal_berakhir"  => $request->tanggal_berakhir,
+                "jam_mulai"         => $request->jam_mulai,
+                "jam_berakhir"      => $request->jam_berakhir,
+                "kegiatan"          => $request->kegiatan,
+                "jumlah_peserta"    => $request->jumlah_peserta
+            ]);
+
+            detail_pinjam_ruang::whereIn('idpinjam_ruang_fk', [$id])->delete();
+
+            for ($i = 0; $i < count($request->nama_ruang); $i++) {
+                // dd($request);
+                detail_pinjam_ruang::create([
+                    'idpinjam_ruang_fk' => $id,
+                    'idruang_fk'        => ($request->nama_ruang[$i] + 1)
+                ]);
+            }
+        } else {
+            // dd($request);
+            $this->validate($request, [
+                "nama_ruang"  => "required|integer"
+            ]);
+
+            detail_pinjam_ruang::findOrfail($id)->update([
+                'idruang_fk'    => ($request->nama_ruang + 1)
+            ]);
+            dd("gak error");
+        }
+
+        return redirect()->route('perlengkapan.peminjaman_ruang.show', $id);
     }
 
     /**
@@ -161,10 +198,14 @@ class peminjamanRuangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        // if (!is_null($id)) {
-        //     inventaris::findOrfail($id)->delete();
-        // }
+        if ($request->laporan) {
+            peminjaman_ruang::findOrfail($id)->delete();
+            Log::alert('Berhasil Dihapus');
+        } else {
+            detail_pinjam_ruang::findOrfail($id)->delete();
+            Log::alert('Berhasil Dihapus');
+        }
     }
 }

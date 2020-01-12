@@ -143,7 +143,7 @@ class pengadaanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request);
+        // dd($request);
         if ($request->laporan) {
             $this->validate($request, [
                 "keterangan"    => "required|string|max:100",
@@ -173,7 +173,7 @@ class pengadaanController extends Controller
                 ]);
             }
         } else {
-            dd($request);
+            // dd($request);
             $this->validate($request, [
                 "nama_barang" => "required|string|max:50",
                 "spesifikasi" => "required|string|max:50",

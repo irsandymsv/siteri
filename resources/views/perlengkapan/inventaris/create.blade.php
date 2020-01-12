@@ -1,6 +1,6 @@
 @extends('perlengkapan.perlengkapan_view')
 
-@section('page_title', 'Buat Inventaris')
+@section('page_title', 'Inventaris')
 
 @section('judul_header', 'Buat Inventaris')
 
@@ -33,7 +33,7 @@
                             </tr>
                         </thead>
 
-                        <tbody id="inputan">
+                        <tbody>
                             <tr>
                                 <td>
                                     {!! Form::text('kode_barang', old('kode_barang'), ['class' => 'form-control']) !!}

@@ -78,7 +78,7 @@ class inventarisController extends Controller
         $idbarang = data_barang::all()->pluck('id')->last();
         $nup = detail_data_barang::where('idbarang_fk', $idbarang)->pluck('nup')->last();
         $nup -= 0;
-        for ($i = 0; $i < count($request->merk_barang); $i++) {
+        for ($i = 0; $i < count($request->nama_ruang); $i++) {
             $nup++;
             detail_data_barang::create([
                 'tanggal'       => $request->tanggal[$i],
@@ -181,7 +181,7 @@ class inventarisController extends Controller
             $nup = detail_data_barang::where('idbarang_fk', $id)->pluck('nup')->last();
             $nup -= 0;
 
-            for ($i = 0; $i < count($request->merk_barang); $i++) {
+            for ($i = 0; $i < count($request->nama_ruang); $i++) {
                 $nup++;
                 detail_data_barang::create([
                     'tanggal'       => $request->tanggal[$i],
@@ -210,7 +210,7 @@ class inventarisController extends Controller
             dd("gak error");
         }
 
-        return redirect()->route('perlengkapan.inventaris.index');
+        return redirect()->route('perlengkapan.inventaris.show', $id);
     }
 
     /**

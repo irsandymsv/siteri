@@ -41,7 +41,9 @@
                         </tr>
                         <tr>
                             <td><b>Status</b></td>
-                            <td>: @if($laporan->verif_ktu == 0)
+                            <td>: @if($laporan->verif_baper == 0)
+                                    Belum Disetujui
+                                    @elseif($laporan->verif_ktu == 0)
                                     Belum Diverifikasi
                                     @else
                                     <label class="label bg-green">Sudah Diverifikasi</label>
@@ -64,16 +66,19 @@
                         <tbody>
                             @php $no = 0 @endphp
                             @foreach($detail_laporan as $item)
-                             <tr id="lap_{{ $item->peminjaman_ruang->id }}">
+                             <tr id="lap_{{ $item->id }}">
                                 <td>{{$no+=1}}</td>
                                 <td>{{$item->data_ruang->nama_ruang}}</td>
                                 <td>{{$item->data_ruang->kuota}}</td>
                                 <td>
-                                    @if($item->verif_ktu != 1)
-                                    <a href="{{ route('perlengkapan.peminjaman_ruang.edit', $item->peminjaman_ruang->id) }}" class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
+                                    @if($laporan->verif_baper != 1)
+                                    <a href="{{ route('perlengkapan.peminjaman_ruang.edit', [$item->id, 'laporan' => true]) }}"
+                                        class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
                                     @endif
-                                    @if($item->verif_ktu != 1)
-                                    <a href="#" class="btn btn-danger" id="{{ $item->peminjaman_ruang->id }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                    @if($laporan->verif_baper != 1)
+                                    <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan"
+                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i
+                                            class="fa fa-trash"></i></a>
                                     @endif
 
                                 </td>
@@ -100,7 +105,7 @@
                 <h4 class="modal-title">Konfirmasi Pembatalan</h4>
             </div>
             <div class="modal-body">
-                <p>Apakah anda yakin ingin membatalkan inventaris ini?</p>
+                <p>Apakah anda yakin ingin membatalkan peminjaman ruang ini?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Tidak</button>

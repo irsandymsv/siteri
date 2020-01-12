@@ -34,7 +34,7 @@ $laporan = $laporan[0];
                             </tr>
                         </thead>
 
-                        <tbody id="inputan">
+                        <tbody>
                             <tr>
                                 <td>
                                     {!! Form::text('kode_barang', $barang->kode_barang, ['class' => 'form-control']) !!}
@@ -58,7 +58,7 @@ $laporan = $laporan[0];
                         </thead>
 
                         <tbody id="inputan">
-                             {!! Form::hidden('barang', true) !!}
+                            {!! Form::hidden('barang', true) !!}
                             @foreach($barang->detail_data_barang as $item)
                             <tr>
                                 <td>
