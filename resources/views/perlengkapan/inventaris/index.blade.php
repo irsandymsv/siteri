@@ -29,7 +29,7 @@
                                 <th>No</th>
                                 <th>Kode Barang</th>
                                 <th>Nama Barang</th>
-                                <th>Status</th>
+                                {{-- <th>Status</th> --}}
                                 <th>Opsi</th>
                             </tr>
                         </thead>
@@ -40,7 +40,7 @@
                                 <td>{{ $no+=1 }}</td>
                                 <td>{{ $item->kode_barang }}</td>
                                 <td>{{ $item->nama_barang }}</td>
-                                <td>{{ $item->status_barang->status }}</td>
+                                {{-- <td>{{ $item->status }}</td> --}}
                                 <td>
                                     <a href="{{ route('perlengkapan.inventaris.show', $item->id) }}" class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
                                     <a href="{{ route('perlengkapan.inventaris.edit', [$item->id, 'laporan' => true]) }}" class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>

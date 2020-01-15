@@ -43,8 +43,13 @@
                                     {!! Form::text('nama_barang', null, ['class' => 'form-control']) !!}
                                 </td>
                                 <td>
-                                    {!! Form::select('status[]', $status, null, ['class' =>
+                                    {!! Form::select('status', $status, null, ['class' =>
                                     'form-control'])!!}
+                                    {{-- <select name="status[]" class="form-control status">
+                                        @foreach ($status as $val)
+                                        <option value="{{ $val->id }}">{{$val->status}}</option>
+                                        @endforeach
+                                    </select> --}}
                                 </td>
                             </tr>
                         </tbody>
@@ -125,10 +130,6 @@
 
                     <td>
                         {!! Form::select('nama_ruang[]', $nama_ruang, null, ['class' => 'form-control'])!!}
-                    </td>
-
-                    <td>
-                        {!! Form::select('status[]', $status, null, ['class' => 'form-control'])!!}
                     </td>
 
                     <td>

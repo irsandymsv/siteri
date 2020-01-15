@@ -31,6 +31,7 @@ $laporan = $laporan[0];
                             <tr>
                                 <th>Kode Barang</th>
                                 <th>Nama Barang</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
 
@@ -42,6 +43,10 @@ $laporan = $laporan[0];
                                 <td>
                                     {!! Form::text('nama_barang', $barang->nama_barang, ['class' => 'form-control']) !!}
                                 </td>
+                                <td>
+                                    {!! Form::select('status', $status, $barang->idstatus_fk-1, ['class' =>
+                                    'form-control'])!!}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -52,7 +57,6 @@ $laporan = $laporan[0];
                                 <th>Tanggal</th>
                                 <th>Merk Barang</th>
                                 <th>Ruang</th>
-                                <th>Status</th>
                                 <th>🗙</th>
                             </tr>
                         </thead>
@@ -74,11 +78,6 @@ $laporan = $laporan[0];
                                 </td>
 
                                 <td>
-                                    {!! Form::select('status[]', $status, $item->idstatus_fk-1, ['class' =>
-                                    'form-control'])!!}
-                                </td>
-
-                                <td>
                                     {!! Form::button(null , [ 'class'=>'fa fa-trash btn btn-danger']) !!}
                                 </td>
                             </tr>
@@ -89,7 +88,6 @@ $laporan = $laporan[0];
                                 <th>Tanggal</th>
                                 <th>Merk Barang</th>
                                 <th>Ruang</th>
-                                <th>Status</th>
                                 <th>🗙</th>
                             </tr>
                         </tfoot>
@@ -112,6 +110,10 @@ $laporan = $laporan[0];
                                 <td><b>Nama Barang</b></td>
                                 <td>: {{$barang->data_barang->nama_barang}}</td>
                             </tr>
+                            <tr>
+                                <td><b>Status</b></td>
+                                <td>: {{$barang->data_barang->status_barang->status}}</td>
+                            </tr>
                         </table>
                     </div>
                     <br>
@@ -122,24 +124,18 @@ $laporan = $laporan[0];
                                     <th>Tanggal</th>
                                     <th>Merk Barang</th>
                                     <th>Ruang</th>
-                                    <th>Status</th>
-                                    <th>🗙</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr id="lap_{{ $barang->id }}">
                                     <td>
-                                        {!! Form::date('tanggal[]', $barang->tanggal, ['class' => 'form-control tanggal'])!!}
+                                        {!! Form::date('tanggal', $barang->tanggal, ['class' => 'form-control tanggal'])!!}
                                     </td>
                                     <td>
-                                        {!! Form::text('merk_barang[]', $barang->merk_barang, ['class' => 'form-control merk_barang'])!!}
+                                        {!! Form::text('merk_barang', $barang->merk_barang, ['class' => 'form-control merk_barang'])!!}
                                     </td>
                                     <td>
-                                        {!! Form::select('nama_ruang[]', $nama_ruang, $barang->idruang_fk-1, ['class' =>
-                                        'form-control'])!!}
-                                    </td>
-                                    <td>
-                                        {!! Form::select('status[]', $status, $barang->idstatus_fk-1, ['class' =>
+                                        {!! Form::select('nama_ruang', $nama_ruang, $barang->idruang_fk-1, ['class' =>
                                         'form-control'])!!}
                                     </td>
                                 </tr>
@@ -178,10 +174,6 @@ $laporan = $laporan[0];
 
                     <td>
                         {!! Form::select('nama_ruang[]', $nama_ruang, null, ['class' => 'form-control'])!!}
-                    </td>
-
-                    <td>
-                        {!! Form::select('status[]', $status, null, ['class' => 'form-control'])!!}
                     </td>
 
                     <td>

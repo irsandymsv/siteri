@@ -61,14 +61,13 @@ class inventarisController extends Controller
         $this->validate($request, [
             "kode_barang"   => "required|integer",
             "nama_barang"   => "required|string|max:50",
+            "status"        => "required|integer",
             "tanggal"       => "required|array",
             "tanggal.*"     => "required",
             "merk_barang"   => "required|array",
             "merk_barang.*" => "required|string|max:50",
             "nama_ruang"    => "required|array",
-            "nama_ruang.*"  => "required|integer",
-            "status"        => "required|array",
-            "status.*"      => "required|integer",
+            "nama_ruang.*"  => "required|integer"
         ]);
 
         data_barang::create([
@@ -126,19 +125,15 @@ class inventarisController extends Controller
             // dd($laporan);
             $status = status_barang::all()->pluck('status');
             $nama_ruang = data_ruang::all()->pluck('nama_ruang');
-            $barang = data_barang::with(['detail_data_barang', 'detail_data_barang.data_ruang', 'detail_data_barang.status_barang'])
+            $barang = data_barang::with(['status_barang', 'detail_data_barang', 'detail_data_barang.data_ruang'])
                 ->where('id', $id)
                 ->first();
-            // dd($barang);
-            // dd($id);
         } else {
             $status = status_barang::all()->pluck('status');
             $nama_ruang = data_ruang::all()->pluck('nama_ruang');
-            $barang = detail_data_barang::with(['data_barang', 'data_ruang', 'status_barang'])
+            $barang = detail_data_barang::with(['data_barang', 'data_barang.status_barang', 'data_ruang'])
                 ->where('id', $id)
                 ->first();
-            // dd($id);
-            // dd($barang);
         }
         return view('perlengkapan.inventaris.edit', [
             'status' => $status,
@@ -157,27 +152,27 @@ class inventarisController extends Controller
      */
     public function update($id, Request $request)
     {
-        // dd($request);
+        $idbarang = data_barang::all()->pluck('id')->last();
         if ($request->barang) {
-            // dd("gak error");
-            // dd($request);
             $this->validate($request, [
                 "kode_barang"   => "required|integer",
                 "nama_barang"   => "required|string|max:50",
+                "status"        => "required|integer",
                 "tanggal"       => "required|array",
                 "tanggal.*"     => "required",
                 "merk_barang"   => "required|array",
                 "merk_barang.*" => "required|string|max:50",
                 "nama_ruang"    => "required|array",
                 "nama_ruang.*"  => "required|integer",
-                "status"        => "required|array",
-                "status.*"      => "required|integer",
             ]);
 
             data_barang::findOrfail($id)->update([
-                "kode_barang" => $request->kode_barang,
-                "nama_barang" => $request->nama_barang
+                'kode_barang' => $request->kode_barang,
+                'nama_barang' => $request->nama_barang,
+                'idstatus_fk' => ($request->status + 1)
             ]);
+
+
             detail_data_barang::whereIn('idbarang_fk', [$id])->delete();
             // $idbarang = data_barang::all()->pluck('id')->last();
             $nup = detail_data_barang::where('idbarang_fk', $id)->pluck('nup')->last();
@@ -190,29 +185,26 @@ class inventarisController extends Controller
                     'idbarang_fk'   => $id,
                     'merk_barang'   => $request->merk_barang[$i],
                     'nup'           => $nup,
-                    'idruang_fk'    => ($request->nama_ruang[$i] + 1),
-                    'idstatus_fk'   => ($request->status[$i] + 1)
+                    'idruang_fk'    => ($request->nama_ruang[$i] + 1)
                 ]);
             }
         } else {
-            // dd($request);
+
             $this->validate($request, [
                 "tanggal"     => "required",
                 "merk_barang" => "required|string|max:50",
-                "nama_ruang"  => "required|integer",
-                "status"      => "required|integer"
+                "nama_ruang"  => "required|integer"
             ]);
-
+            // dd($request);
             detail_data_barang::findOrfail($id)->update([
                 'tanggal'       => $request->tanggal,
                 'merk_barang'   => $request->merk_barang,
-                'idruang_fk'    => ($request->nama_ruang + 1),
-                'idstatus_fk'   => ($request->status + 1)
+                'idruang_fk'    => ($request->nama_ruang + 1)
             ]);
-            dd("gak error");
+            // dd("gak error");
         }
 
-        return redirect()->route('perlengkapan.inventaris.show', $id);
+        return redirect()->route('perlengkapan.inventaris.show', $idbarang);
     }
 
     /**
