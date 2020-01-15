@@ -5,6 +5,10 @@
 @section('judul_header', 'Buat Laporan Peminjaman Barang')
 
 @section('css_link')
+<link href="/adminlte/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
+<link href="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+<link href="/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+<link href="/adminlte/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" />
 <style type="text/css">
     .hidden {
         display: none important !;
@@ -69,15 +73,16 @@
                                 <th>Merk Barang</th>
                                 <th>Jumlah</th>
                                 <th>Satuan</th>
+                                <th>🗙</th>
                             </tr>
                         </thead>
 
                         <tbody id="inputan">
                             <tr>
                                 <td>
-                                    <select id="nama_barang" name="nama_barang[]" class="form-control nama_barang">
+                                    <select id="barang" name="barang[]" class="form-control barang">
                                         <option value="">Pilih Barang</option>
-                                        @foreach ($nama_barang as $val)
+                                        @foreach ($barang as $val)
                                         <option value="{{ $val->id }}" onchange="{{ $val->nama_barang }}">
                                             {{$val->nama_barang}}</option>
                                         @endforeach
@@ -90,7 +95,7 @@
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah', null, ['class' => 'form-control', 'id' => 'jumlah'])
+                                    {!! Form::text('jumlah[]', null, ['class' => 'form-control', 'id' => 'jumlah'])
                                     !!}
                                 </td>
 
@@ -110,6 +115,7 @@
                                 <th>Merk Barang</th>
                                 <th>Jumlah</th>
                                 <th>Satuan</th>
+                                <th>🗙</th>
                             </tr>
                         </tfoot>
                     </table>
@@ -129,6 +135,10 @@
 @endsection
 
 @section('script')
+<script src="/adminlte/bower_components/select2/dist/js/select2.min.js"></script>
+<script src="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="/adminlte/plugins/timepicker/bootstrap-timepicker.min.js"></script>
 <script>
     var dataAjax = null;
     $(function(){
@@ -137,15 +147,28 @@
         tableCount();
         barangAjax();
 
+        $('.js-example-basic-multiple').select2();
+
+        $('#reservation').daterangepicker();
+
+        $('.datepicker').datepicker({
+            autoclose: true,
+            // format: 'yyyy-mm-dd'
+        });
+
+        $('.timepicker').timepicker({
+            showInputs: false
+        });
+
         $('#tambah').click(function(event) {
             $('#inputan').append(`
                 <tr>
                     <td>
-                        <select id="nama_barang" name="nama_barang[]" class="form-control nama_barang">
+                        <select id="barang" name="barang[]" class="form-control barang">
                             <option value="">Pilih Barang</option>
-                            @foreach ($nama_barang as $val)
-                            <option value="{{ $val->id }}" onchange="{{ $val->nama_barang }}">
-                                {{$val->nama_barang}}</option>
+                            @foreach ($barang as $val)
+                            <option value="{{ $val->id }}" onchange="{{ $val->barang }}">
+                                {{$val->barang}}</option>
                             @endforeach
                         </select>
                     </td>
@@ -177,7 +200,7 @@
         });
 
         function barangAjax(){
-            $('.nama_barang').on('change', function(){
+            $('.barang').on('change', function(){
                 var id = $(this).val();
                 var merk = $(this).parents('tr').children('.merk_barang');
                 if(id) {

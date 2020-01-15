@@ -88,11 +88,42 @@
     $(function() {
         $('#inventaris').DataTable();
 
-        // $("a[name='hapus_laporan']").click(function(event) {
-        //     event.preventDefault();
-        //     var id_lap = $(this).attr('id');
-
-        // });
     });
+</script>
+<script>
+    $(function(){
+        $('a.btn.btn-danger').click(function(){
+            event.preventDefault();
+				var id = $(this).attr('id');
+                console.log(id);
+
+				var url_del = "{{route('perlengkapan.inventaris.destroy', "id")}}";
+                url_del = url_del.replace('id', id);
+				console.log(url_del);
+
+				$('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
+					$.ajaxSetup({
+					    headers: {
+					        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					    }
+					});
+
+					$.ajax({
+						url: url_del,
+						type: 'POST',
+						data: {_method: 'DELETE'},
+					})
+					.done(function(hasil) {
+						console.log("success");
+						$("tr#lap_"+id).remove();
+					})
+					.fail(function() {
+						console.log("error");
+						$("tr#lap_"+id).remove();
+					});
+				});
+        });
+    });
+
 </script>
 @endsection

@@ -124,7 +124,7 @@ class peminjamanRuangController extends Controller
         $nama_ruang = data_ruang::all()->pluck('nama_ruang', 'id');
         // $nama_ruang = data_ruang::where('kuota', '!=', '0')
         //     ->pluck('nama_ruang');
-        $laporan = peminjaman_ruang::with('detail_pinjam_ruang', 'detail_pinjam_ruang.data_ruang')
+        $laporan = peminjaman_ruang::with(['detail_pinjam_ruang', 'detail_pinjam_ruang.data_ruang'])
             ->where('id', $id)
             ->first();
         // $detail_laporan = detail_pinjam_ruang::all()
