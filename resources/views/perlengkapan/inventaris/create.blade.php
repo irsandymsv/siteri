@@ -93,15 +93,15 @@
                                 <td>: {{$barang->kode_barang}}</td>
                             </tr>
                             <tr>
-                            <td><b>Nama Barang</b></td>
-                            <td>: {{$barang->nama_barang}}</td>
-                        </tr>
-                    </table>
-                </div>
-                <br>
-                <div class="table-responsive">
-                    <table id="pengadaan" class="table table-bordered table-hovered">
-                        <thead>
+                                <td><b>Nama Barang</b></td>
+                                <td>: {{$barang->nama_barang}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br>
+                    <div class="table-responsive">
+                        <table id="pengadaan" class="table table-bordered table-hovered">
+                            <thead>
                                 <tr>
                                     <th>Tanggal</th>
                                     <th>Merk Barang</th>
@@ -116,7 +116,8 @@
                                         {!! Form::date('tanggal[]', null, ['class' => 'form-control tanggal'])!!}
                                     </td>
                                     <td>
-                                        {!! Form::text('merk_barang[]', null, ['class' => 'form-control merk_barang'])!!}
+                                        {!! Form::text('merk_barang[]', null, ['class' => 'form-control
+                                        merk_barang'])!!}
                                     </td>
 
                                     <td>
