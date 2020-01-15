@@ -22,9 +22,9 @@
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title">Data Inventaris</h3>
-                <div style="float: right;">
+                {{-- <div style="float: right;">
                     <a href="{{ route('perlengkapan.inventaris.create', $barang->id) }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Laporan</a>
-                </div>
+                </div> --}}
             </div>
 
             <div class="box-body">
@@ -38,6 +38,10 @@
                             <td><b>Nama Barang</b></td>
                             <td>: {{$barang->nama_barang}}</td>
                         </tr>
+                        <tr>
+                            <td><b>Status</b></td>
+                            <td>: {{$barang->status_barang->status}}</td>
+                        </tr>
                     </table>
                 </div>
                 <br>
@@ -50,7 +54,6 @@
                                 <th>Merk Barang</th>
                                 <th>Kode Ruang</th>
                                 <th>Uraian Ruang</th>
-                                <th>Status</th>
                                 <th>Opsi</th>
                             </tr>
                         </thead>
@@ -62,7 +65,6 @@
                                 <td>{{ $item->merk_barang }}</td>
                                 <td>{{ $item->data_ruang->kode_ruang }}</td>
                                 <td>{{ $item->data_ruang->nama_ruang }}</td>
-                                <td>{{ $item->status }}</td>
                                 <td>
                                     <a href="{{ route('perlengkapan.inventaris.edit', $item->id) }}"
                                         class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
@@ -114,11 +116,42 @@
     $(function() {
         $('#inventaris').DataTable();
 
-        // $("a[name='hapus_laporan']").click(function(event) {
-        //     event.preventDefault();
-        //     var id_lap = $(this).attr('id');
-
-        // });
     });
+</script>
+<script>
+    $(function(){
+        $('a.btn.btn-danger').click(function(){
+            event.preventDefault();
+				var id = $(this).attr('id');
+                console.log(id);
+
+				var url_del = "{{route('perlengkapan.inventaris.destroy', "id")}}";
+                url_del = url_del.replace('id', id);
+				console.log(url_del);
+
+				$('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
+					$.ajaxSetup({
+					    headers: {
+					        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					    }
+					});
+
+					$.ajax({
+						url: url_del,
+						type: 'POST',
+						data: {_method: 'DELETE'},
+					})
+					.done(function(hasil) {
+						console.log("success");
+						$("tr#lap_"+id).remove();
+					})
+					.fail(function() {
+						console.log("error");
+						$("tr#lap_"+id).remove();
+					});
+				});
+        });
+    });
+
 </script>
 @endsection

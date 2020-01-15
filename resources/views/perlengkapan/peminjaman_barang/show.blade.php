@@ -2,6 +2,8 @@
 
 @section('page_title', 'Peminjaman Barang')
 
+@section('judul_header', 'Peminjaman Barang')
+
 @section('css_link')
 <link rel="stylesheet" type="text/css" href="/css/custom_style.css">
 <style type="text/css">
@@ -12,14 +14,12 @@
 </style>
 @endsection
 
-@section('judul_header', 'Peminjaman Barang')
-
 @section('content')
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Peminjaman Barang</h3>
+                <h3 class="box-title">Laporan Peminjaman Barang</h3>
             </div>
 
             <div class="box-body">

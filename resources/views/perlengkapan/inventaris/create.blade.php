@@ -1,6 +1,6 @@
 @extends('perlengkapan.perlengkapan_view')
 
-@section('page_title', 'Buat Inventaris')
+@section('page_title', 'Inventaris')
 
 @section('judul_header', 'Buat Inventaris')
 
@@ -25,13 +25,16 @@
                 {!! Form::open(['route' => 'perlengkapan.inventaris.store', 'id'=>'form']) !!}
                 <div id="isiForm" class="table-responsive">
                     {{-- Buat laporan baru --}}
-                    @if ($laporan)
                     <table id="tbl-data" class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>Kode Barang</th>
                                 <th>Nama Barang</th>
+                                <th>Status</th>
                             </tr>
+                        </thead>
+
+                        <tbody>
                             <tr>
                                 <td>
                                     {!! Form::text('kode_barang', old('kode_barang'), ['class' => 'form-control']) !!}
@@ -39,12 +42,25 @@
                                 <td>
                                     {!! Form::text('nama_barang', null, ['class' => 'form-control']) !!}
                                 </td>
+                                <td>
+                                    {!! Form::select('status', $status, null, ['class' =>
+                                    'form-control'])!!}
+                                    {{-- <select name="status[]" class="form-control status">
+                                        @foreach ($status as $val)
+                                        <option value="{{ $val->id }}">{{$val->status}}</option>
+                                    @endforeach
+                                    </select> --}}
+                                </td>
                             </tr>
+                        </tbody>
+                    </table>
+
+                    <table id="tbl-data" class="table table-bordered table-hover">
+                        <thead>
                             <tr>
                                 <th>Tanggal</th>
                                 <th>Merk Barang</th>
                                 <th>Ruang</th>
-                                <th>Status</th>
                                 <th>🗙</th>
                             </tr>
                         </thead>
@@ -64,11 +80,6 @@
                                 </td>
 
                                 <td>
-                                    {!! Form::select('status[]', $status, null, ['class' =>
-                                    'form-control'])!!}
-                                </td>
-
-                                <td>
                                     {!! Form::button(null , [ 'class'=>'fa fa-trash btn btn-danger']) !!}
                                 </td>
                             </tr>
@@ -83,70 +94,6 @@
                             </tr>
                         </tfoot>
                     </table>
-
-                    {{-- Buat detail laporan baru --}}
-                    @else
-                    <div class="">
-                        <table class="tabel-keterangan">
-                            <tr>
-                                <td><b>Kode Barang</b></td>
-                                <td>: {{$barang->kode_barang}}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Nama Barang</b></td>
-                                <td>: {{$barang->nama_barang}}</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <br>
-                    <div class="table-responsive">
-                        <table id="pengadaan" class="table table-bordered table-hovered">
-                            <thead>
-                                <tr>
-                                    <th>Tanggal</th>
-                                    <th>Merk Barang</th>
-                                    <th>Ruang</th>
-                                    <th>Status</th>
-                                    <th>🗙</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr id="lap_{{ $laporan->id }}">
-                                    <td>
-                                        {!! Form::date('tanggal[]', null, ['class' => 'form-control tanggal'])!!}
-                                    </td>
-                                    <td>
-                                        {!! Form::text('merk_barang[]', null, ['class' => 'form-control
-                                        merk_barang'])!!}
-                                    </td>
-
-                                    <td>
-                                        {!! Form::select('nama_ruang[]', $nama_ruang, null, ['class' =>
-                                        'form-control'])!!}
-                                    </td>
-
-                                    <td>
-                                        {!! Form::select('status[]', $status, null, ['class' =>
-                                        'form-control'])!!}
-                                    </td>
-
-                                    <td>
-                                        {!! Form::button(null , [ 'class'=>'fa fa-trash btn btn-danger']) !!}
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Tanggal</th>
-                                    <th>Merk Barang</th>
-                                    <th>Ruang</th>
-                                    <th>Status</th>
-                                    <th>🗙</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    @endif
                     <h5>Total Data = <span class="data_count">0</span></h5>
                 </div>
 
@@ -183,10 +130,6 @@
 
                     <td>
                         {!! Form::select('nama_ruang[]', $nama_ruang, null, ['class' => 'form-control'])!!}
-                    </td>
-
-                    <td>
-                        {!! Form::select('status[]', $status, null, ['class' => 'form-control'])!!}
                     </td>
 
                     <td>

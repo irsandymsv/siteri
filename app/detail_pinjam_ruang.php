@@ -10,6 +10,8 @@ class detail_pinjam_ruang extends Model
 
     public $timestamps = false;
 
+    protected $fillable = ['idpinjam_ruang_fk', 'idruang_fk'];
+
     public function peminjaman_ruang()
     {
         return $this->belongsTo('App\peminjaman_ruang', 'idpinjam_ruang_fk');

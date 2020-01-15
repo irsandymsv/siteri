@@ -18,12 +18,6 @@ class CreateDataRuang extends Migration
             $table->string('kode_ruang');
             $table->string('nama_ruang');
             $table->integer('kuota');
-            $table->integer('idstatus_fk')->unsigned()->nullable();
-            // keterangan
-            // 1 => tetap (tidak mungkin dipinjam)
-            // 2 => bergerak (mungkin dipinjam)
-
-            $table->foreign('idstatus_fk')->references('id')->on('status_barang_ruang')->onDelete('set null');
         });
     }
 

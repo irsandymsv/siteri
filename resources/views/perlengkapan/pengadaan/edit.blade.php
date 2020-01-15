@@ -135,11 +135,11 @@ $laporan = $laporan[0];
                                         'form-control']) !!}</td>
                                     <td>{!! Form::text('spesifikasi', $laporan->spesifikasi, ['class' =>
                                         'form-control']) !!}</td>
-                                    <td>{!! Form::angka('jumlah', $laporan->jumlah, ['class' => 'form-control']) !!}
+                                    <td>{!! Form::text('jumlah', $laporan->jumlah, ['class' => 'form-control']) !!}
                                     </td>
                                     <td>{!! Form::select('satuan', $satuan, $laporan->id_satuan-1, ['class' =>
                                         'form-control'])!!}</td>
-                                    <td>{!! Form::angka('harga', $laporan->harga, ['class' => 'form-control']) !!}</td>
+                                    <td>{!! Form::text('harga', $laporan->harga, ['class' => 'form-control']) !!}</td>
                                 </tr>
                             </tbody>
                         </table>

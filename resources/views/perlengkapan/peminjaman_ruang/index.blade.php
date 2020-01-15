@@ -46,20 +46,25 @@
                                 <td>{{$item->kegiatan}}</td>
                                 <td>
                                     @if($item->verif_baper == 0)
+                                    Belum Disetujui
+                                    @elseif($item->verif_ktu == 0)
                                     Belum Diverifikasi
                                     @else
                                     <label class="label bg-green">Sudah Diverifikasi</label>
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('perlengkapan.peminjaman_ruang.show', $item->id) }}" class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ route('perlengkapan.peminjaman_ruang.show', $item->id) }}"
+                                        class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
                                     @if($item->verif_baper != 1)
-                                    <a href="{{ route('perlengkapan.peminjaman_ruang.edit', $item->id) }}" class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ route('perlengkapan.peminjaman_ruang.edit', [$item->id, 'laporan' => true]) }}"
+                                        class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
                                     @endif
                                     @if($item->verif_baper != 1)
-                                    <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                    <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan"
+                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i
+                                            class="fa fa-trash"></i></a>
                                     @endif
-
                                 </td>
                             </tr>
                             @endforeach
@@ -102,5 +107,41 @@
     $(function() {
         $('#peminjaman_ruang').DataTable();
     });
+</script>
+<script>
+    $(function(){
+        $('a.btn.btn-danger').click(function(){
+            event.preventDefault();
+				var id = $(this).attr('id');
+                console.log(id);
+
+				var url_del = "{{route('perlengkapan.peminjaman_ruang.destroy', "id")}}";
+                url_del = url_del.replace('id', id);
+				console.log(url_del);
+
+				$('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
+					$.ajaxSetup({
+					    headers: {
+					        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					    }
+					});
+
+					$.ajax({
+						url: url_del,
+						type: 'POST',
+						data: {_method: 'DELETE'},
+					})
+					.done(function(hasil) {
+						console.log("success");
+						$("tr#lap_"+id).remove();
+					})
+					.fail(function() {
+						console.log("error");
+						$("tr#lap_"+id).remove();
+					});
+				});
+        });
+    });
+
 </script>
 @endsection
