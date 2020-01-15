@@ -38,6 +38,10 @@
                             <td><b>Nama Barang</b></td>
                             <td>: {{$barang->nama_barang}}</td>
                         </tr>
+                        <tr>
+                            <td><b>Status</b></td>
+                            <td>: {{$barang->status_barang->status}}</td>
+                        </tr>
                     </table>
                 </div>
                 <br>
@@ -50,7 +54,6 @@
                                 <th>Merk Barang</th>
                                 <th>Kode Ruang</th>
                                 <th>Uraian Ruang</th>
-                                <th>Status</th>
                                 <th>Opsi</th>
                             </tr>
                         </thead>
@@ -62,7 +65,6 @@
                                 <td>{{ $item->merk_barang }}</td>
                                 <td>{{ $item->data_ruang->kode_ruang }}</td>
                                 <td>{{ $item->data_ruang->nama_ruang }}</td>
-                                <td>{{ $item->status_barang_ruang->status }}</td>
                                 <td>
                                     <a href="{{ route('perlengkapan.inventaris.edit', $item->id) }}"
                                         class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>

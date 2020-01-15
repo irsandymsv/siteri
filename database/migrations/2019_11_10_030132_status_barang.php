@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class StatusBarangRuang extends Migration
+class StatusBarang extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +14,12 @@ class StatusBarangRuang extends Migration
      */
     public function up()
     {
-        Schema::create('status_barang_ruang', function (Blueprint $table) {
+        Schema::create('status_barang', function (Blueprint $table) {
             $table->increments('id');
             $table->string('status');
         });
 
-        DB::table('status_barang_ruang')->insert(
+        DB::table('status_barang')->insert(
             array(
                 array(
                     'status' => 'Tetap (tidak mungkin dipinjam)'
@@ -38,6 +38,6 @@ class StatusBarangRuang extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('status_barang');
     }
 }

@@ -30,6 +30,7 @@
                             <tr>
                                 <th>Kode Barang</th>
                                 <th>Nama Barang</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
 
@@ -41,6 +42,10 @@
                                 <td>
                                     {!! Form::text('nama_barang', null, ['class' => 'form-control']) !!}
                                 </td>
+                                <td>
+                                    {!! Form::select('status[]', $status, null, ['class' =>
+                                    'form-control'])!!}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -51,7 +56,6 @@
                                 <th>Tanggal</th>
                                 <th>Merk Barang</th>
                                 <th>Ruang</th>
-                                <th>Status</th>
                                 <th>🗙</th>
                             </tr>
                         </thead>
@@ -67,11 +71,6 @@
 
                                 <td>
                                     {!! Form::select('nama_ruang[]', $nama_ruang, null, ['class' =>
-                                    'form-control'])!!}
-                                </td>
-
-                                <td>
-                                    {!! Form::select('status[]', $status, null, ['class' =>
                                     'form-control'])!!}
                                 </td>
 

@@ -36,9 +36,9 @@ class peminjamanRuangController extends Controller
     {
         // $nama_ruang = data_ruang::where('kuota', '>=', $jumlah_peserta)
         //     ->get();
-        $nama_ruang = data_ruang::where('kuota', '!=', '0')
-            ->pluck('nama_ruang');
-        // $nama_ruang = data_ruang::all()->pluck('nama_ruang');
+        // $nama_ruang = data_ruang::where('kuota', '!=', '0')
+        //     ->pluck('nama_ruang');
+        $nama_ruang = data_ruang::all()->pluck('nama_ruang');
 
         return view('perlengkapan.peminjaman_ruang.create', [
             'nama_ruang' => $nama_ruang,
@@ -72,12 +72,12 @@ class peminjamanRuangController extends Controller
         ]);
 
         peminjaman_ruang::create([
-            "tanggal_mulai"     => $request->tanggal_mulai,
-            "tanggal_berakhir"  => $request->tanggal_berakhir,
-            "jam_mulai"         => $request->jam_mulai,
-            "jam_berakhir"      => $request->jam_berakhir,
-            "kegiatan"          => $request->kegiatan,
-            "jumlah_peserta"    => $request->jumlah_peserta
+            'tanggal_mulai'     => $request->tanggal_mulai,
+            'tanggal_berakhir'  => $request->tanggal_berakhir,
+            'jam_mulai'         => $request->jam_mulai,
+            'jam_berakhir'      => $request->jam_berakhir,
+            'kegiatan'          => $request->kegiatan,
+            'jumlah_peserta'    => $request->jumlah_peserta
         ]);
 
         $idlaporan = peminjaman_ruang::all()->pluck('id')->last();
@@ -121,9 +121,10 @@ class peminjamanRuangController extends Controller
     public function edit($id)
     {
         // dd($id);
-        $nama_ruang = data_ruang::where('kuota', '!=', '0')
-            ->pluck('nama_ruang');
-        $laporan = peminjaman_ruang::with('detail_pinjam_ruang')
+        $nama_ruang = data_ruang::all()->pluck('nama_ruang', 'id');
+        // $nama_ruang = data_ruang::where('kuota', '!=', '0')
+        //     ->pluck('nama_ruang');
+        $laporan = peminjaman_ruang::with('detail_pinjam_ruang', 'detail_pinjam_ruang.data_ruang')
             ->where('id', $id)
             ->first();
         // $detail_laporan = detail_pinjam_ruang::all()

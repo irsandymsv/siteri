@@ -22,15 +22,11 @@ class peminjamanBarangController extends Controller
      */
     public function index()
     {
-        try {
-            $laporan = peminjaman_barang::all();
+        $laporan = peminjaman_barang::all();
 
-            return view('perlengkapan.peminjaman_barang.index', [
-                'laporan' => $laporan
-            ]);
-        } catch (Exception $e) {
-            return view('perlengkapan.peminjaman_barang.index');
-        }
+        return view('perlengkapan.peminjaman_barang.index', [
+            'laporan' => $laporan
+        ]);
     }
 
     /**
@@ -38,41 +34,26 @@ class peminjamanBarangController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $laporan)
+    public function create()
     {
-        // $id = $laporan->id;
-        // if ($laporan->laporan) {
-        $satuan  = satuan::all()->pluck('satuan');
-        $barang = data_barang::all()->pluck('nama_barang');
-        $detail_barang = detail_data_barang::all()->pluck('merk_barang');
-        // } else {
-        //     $satuan  = satuan::all()->pluck('satuan');
-        //     $detail_barang = detail_data_barang::all()->pluck('merk_barang');
-        // $barang = data_barang::all();
-        // $barang = data_barang::with('detail_data_barang')
-        //     ->where('id', $id)->get();
-        // }
-        // dd($barang);
-        // if ($laporan->laporan) {
+        $nama_barang = data_barang::all();
+        // $nama_barang = data_barang::all()->pluck('nama_barang');
+        // $merk_barang = detail_data_barang::all()->pluck('merk_barang');
+        $satuan = satuan::all()->pluck('satuan');
+
         return view('perlengkapan.peminjaman_barang.create', [
-            'satuan' => $satuan,
-            'nama_barang' => $barang,
-            'merk_barang' => $detail_barang,
-            'laporan'    => $laporan->laporan
+            'nama_barang' => $nama_barang,
+            // 'merk_barang' => $merk_barang,
+            'satuan' => $satuan
         ]);
-        // } else {
-        //     return view('perlengkapan.peminjaman_barang.create', [
-        //         'satuan' => $satuan,
-        //         'nama_barang' => $detail_barang,
-        //         'laporan'    => $laporan->laporan
-        //     ]);
-        // }
     }
 
     public function barangAjax($id)
     {
-        // $barang = detail_barang::where('id_kategori', $id)->get();
-        // return json_encode($barang);
+        $merk_barang = detail_data_barang::where('idbarang_fk', $id)
+            ->get();
+
+        return json_encode($merk_barang);
     }
 
     /**
@@ -84,38 +65,41 @@ class peminjamanBarangController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            "kode_barang"   => "required|integer",
-            "nama_barang"   => "required|string|max:50",
-            "tanggal"       => "required|array",
-            "tanggal.*"     => "required",
-            "merk_barang"   => "required|array",
-            "merk_barang.*" => "required|string|max:50",
-            "nama_barang"    => "required|array",
-            "nama_barang.*"  => "required|integer",
-            "status"        => "required|array",
-            "status.*"      => "required|integer",
+            "tanggal_mulai"     => "required",
+            "tanggal_berakhir"  => "required",
+            "jam_mulai"         => "required",
+            "jam_berakhir"      => "required",
+            "kegiatan"          => "required|string|max:100",
+            "nama_barang"       => "required|array",
+            "nama_barang.*"     => "required|integer",
+            "merk_barang"       => "required|array",
+            "merk_barang.*"     => "required|integer",
+            "jumlah"            => "required|array",
+            "jumlah.*"          => "required|integer",
+            "satuan"            => "required|array",
+            "satuan.*"          => "required|integer"
+        ]);
+        dd("gak error");
+        peminjaman_barang::create([
+            'tanggal_mulai'     => $request->tanggal_mulai,
+            'tanggal_berakhir'  => $request->tanggal_berakhir,
+            'jam_mulai'         => $request->jam_mulai,
+            'jam_berakhir'      => $request->jam_berakhir,
+            'kegiatan'          => $request->kegiatan
         ]);
 
-        data_barang::create([
-            'kode_barang' => $request->kode_barang,
-            'nama_barang' => $request->nama_barang
-        ]);
-
-        $idbarang = data_barang::all()->pluck('id')->last();
-        $nup = detail_data_barang::where('idbarang_fk', $idbarang)->pluck('nup')->last();
-        $nup -= 0;
+        $idlaporan = peminjaman_barang::all()->pluck('id')->last();
         for ($i = 0; $i < count($request->merk_barang); $i++) {
-            $nup++;
-            detail_data_barang::create([
-                'tanggal'       => $request->tanggal[$i],
-                'idbarang_fk'   => $idbarang,
-                'merk_barang'   => $request->merk_barang[$i],
-                'nup'           => $nup,
-                'idbarang_fk'    => ($request->nama_barang[$i] + 1),
-                'idstatus_fk'   => ($request->status[$i] + 1)
+            dd($request);
+            detail_pinjam_barang::create([
+                'idpinjam_barang_fk'        => $idlaporan,
+                'iddetail_data_barang_fk'   => ($request->merk_barang[$i] + 1),
+                'idstatus_fk'   => ($request->status[$i] + 1),
+                'jumlah'        => $request->jumlah[$i],
+                'id_satuan'     => ($request->satuan[$i] + 1)
             ]);
         }
-        return redirect()->route('perlengkapan.inventaris.show', $idbarang);
+        return redirect()->route('perlengkapan.peminjaman_barang.show', $idlaporan);
     }
 
     /**

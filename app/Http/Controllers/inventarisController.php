@@ -9,7 +9,7 @@ use Exception;
 use App\detail_data_barang;
 use App\data_barang;
 use App\data_ruang;
-use App\status_barang_ruang;
+use App\status_barang;
 
 class inventarisController extends Controller
 {
@@ -20,7 +20,8 @@ class inventarisController extends Controller
      */
     public function index()
     {
-        $barang = data_barang::all();
+        $barang = data_barang::with('status_barang')->get();
+        // dd($barang);
 
         return view('perlengkapan.inventaris.index', [
             'barang'  => $barang
@@ -34,7 +35,7 @@ class inventarisController extends Controller
      */
     public function create()
     {
-        $status = status_barang_ruang::all()->pluck('status');
+        $status = status_barang::all()->pluck('status');
         $nama_ruang = data_ruang::all()->pluck('nama_ruang');
 
         return view('perlengkapan.inventaris.create', [
@@ -72,7 +73,8 @@ class inventarisController extends Controller
 
         data_barang::create([
             'kode_barang' => $request->kode_barang,
-            'nama_barang' => $request->nama_barang
+            'nama_barang' => $request->nama_barang,
+            'idstatus_fk' => ($request->status + 1)
         ]);
 
         $idbarang = data_barang::all()->pluck('id')->last();
@@ -86,7 +88,6 @@ class inventarisController extends Controller
                 'merk_barang'   => $request->merk_barang[$i],
                 'nup'           => $nup,
                 'idruang_fk'    => ($request->nama_ruang[$i] + 1),
-                'idstatus_fk'   => ($request->status[$i] + 1)
             ]);
         }
         return redirect()->route('perlengkapan.inventaris.show', $idbarang);
@@ -100,10 +101,11 @@ class inventarisController extends Controller
      */
     public function show($id)
     {
-        $barang = data_barang::findOrfail($id);
+        $barang = data_barang::with('status_barang')->findOrfail($id);
         $detail_barang = detail_data_barang::where('idbarang_fk', $id)
-            ->with(['data_barang', 'data_ruang', 'status_barang_ruang'])
+            ->with(['data_barang', 'data_ruang'])
             ->get();
+        // dd($barang);
 
         return view('perlengkapan.inventaris.show', [
             'barang' => $barang,
@@ -122,17 +124,17 @@ class inventarisController extends Controller
     {
         if ($laporan->laporan) {
             // dd($laporan);
-            $status = status_barang_ruang::all()->pluck('status');
+            $status = status_barang::all()->pluck('status');
             $nama_ruang = data_ruang::all()->pluck('nama_ruang');
-            $barang = data_barang::with(['detail_data_barang', 'detail_data_barang.data_ruang', 'detail_data_barang.status_barang_ruang'])
+            $barang = data_barang::with(['detail_data_barang', 'detail_data_barang.data_ruang', 'detail_data_barang.status_barang'])
                 ->where('id', $id)
                 ->first();
             // dd($barang);
             // dd($id);
         } else {
-            $status = status_barang_ruang::all()->pluck('status');
+            $status = status_barang::all()->pluck('status');
             $nama_ruang = data_ruang::all()->pluck('nama_ruang');
-            $barang = detail_data_barang::with(['data_barang', 'data_ruang', 'status_barang_ruang'])
+            $barang = detail_data_barang::with(['data_barang', 'data_ruang', 'status_barang'])
                 ->where('id', $id)
                 ->first();
             // dd($id);
