@@ -81,7 +81,7 @@
                             <tr>
                                 <td>
                                     <select id="barang" name="barang[]" class="form-control barang">
-                                        <option value="">Pilih Barang</option>
+                                        <option value="null">Pilih Barang</option>
                                         @foreach ($barang as $val)
                                         <option value="{{ $val->id }}" onchange="{{ $val->nama_barang }}">
                                             {{$val->nama_barang}}</option>
