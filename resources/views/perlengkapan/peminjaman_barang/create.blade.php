@@ -169,12 +169,12 @@
                             <option value="">Pilih Barang</option>
                             @foreach ($barang as $val)
                             <option value="{{ $val->id }}" onchange="{{ $val->barang }}">
-                                {{$val->barang}}</option>
+                                {{$val->nama_barang}}</option>
                             @endforeach
                         </select>
                     </td>
 
-                    <td>
+                    <td class="merk">
                         <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang" disabled="true">
                         </select>
                     </td>
@@ -224,7 +224,7 @@
                         $.each(data, function(key, value) {
                             $(njajal).append('<option value="'+ value.id +'">' + value.merk_barang + '</option>');
                         });
-                        console.log(njajal);
+                        // console.log(njajal);
                     }
                 });
                 } else {
