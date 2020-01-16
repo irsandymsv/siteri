@@ -89,8 +89,9 @@
                                     </select>
                                 </td>
 
-                                <td>
-                                    <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang" disabled="true">
+                                <td class="merk">
+                                    <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang"
+                                        disabled="true">
                                     </select>
                                 </td>
 
@@ -203,6 +204,13 @@
             $('.barang').on('change', function(){
                 var id = $(this).val();
                 var merk = $(this).parents('tr').children('.merk_barang');
+
+                // console.log($(this).parents('tr'));
+                // console.log($(this).parents('tr')["0"].children[1]);
+                njajal = $(this).parents('tr').children('.merk').children();
+                // console.log($(this).parents('tr').children('.merk').children());
+                // console.log($(this).parents('tr').children('.merk_barang'));
+
                 if(id) {
                     $.ajax({
                     url: "/perlengkapan/peminjaman_barang/barang/" + id,
@@ -211,12 +219,12 @@
                     success:function(data) {
                         dataAjax = data;
                         // $('.merk_barang').empty();
-                        $(merk).empty();
-                        $(merk).prop('disabled', false);
+                        $(njajal).empty();
+                        $(njajal).prop('disabled', false);
                         $.each(data, function(key, value) {
-                            $(merk).append('<option value="'+ value.id +'">' + value.merk_barang + '</option>');
+                            $(njajal).append('<option value="'+ value.id +'">' + value.merk_barang + '</option>');
                         });
-                        console.log(merk);
+                        console.log(njajal);
                     }
                 });
                 } else {
