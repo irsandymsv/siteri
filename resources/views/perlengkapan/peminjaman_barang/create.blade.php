@@ -228,6 +228,7 @@
                     }
                 });
                 } else {
+                    $(njajal).prop('disabled', true);
                     $(this).parents('tr').children('.merk_barang').empty();
                 }
             });
