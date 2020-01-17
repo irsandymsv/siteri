@@ -168,6 +168,18 @@ Route::prefix('dekan')->name('dekan.')->group(function()
 	Route::get('/honor-skripsi', 'honorSkripsiController@dekan_index')->name('honor-skripsi.index');
 	Route::get('/honor-skripsi/{id_sk_honor}', 'honorSkripsiController@dekan_show')->name('honor-skripsi.show');
 	Route::put('/honor-skripsi/verif/{id_sk_honor}', 'honorSkripsiController@dekan_verif')->name('honor-skripsi.verif');
+
+	//Mahasiswa Bimbingan
+	Route::get('/pembimbing-skripsi', 'dosenController@index_pembimbing')->name('pembimbing-skripsi');
+	Route::get('/pembimbing-skripsi/{nim}', 'dosenController@show_pembimbing')->name('pembimbing-skripsi.show');
+
+	//Mahasiswa Ujian Sempro
+	Route::get('/pembahas-sempro', 'dosenController@index_pembahas')->name('pembahas-sempro');
+	Route::get('/pembahas-sempro/{nim}', 'dosenController@show_pembahas')->name('pembahas-sempro.show');
+
+	//Mahasiswa Ujian Skripsi
+	Route::get('/penguji-skripsi', 'dosenController@index_penguji')->name('penguji-skripsi');
+	Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
 });
 
 Route::prefix('keuangan')->name('keuangan.')->group(function()
@@ -178,11 +190,11 @@ Route::prefix('keuangan')->name('keuangan.')->group(function()
 	Route::get('/honor-skripsi/', 'honorSkripsiController@index')->name('honor-skripsi.index');
 	Route::get('/honor-skripsi/store/{id_sk_skripsi}', 'honorSkripsiController@store')->name('honor-skripsi.store');
 	Route::get('/honor-skripsi/show/{id_sk_honor}','honorSkripsiController@show')->name('honor-skripsi.show');
-	Route::delete('/honor-skripsi/delete/{id_sk_honor?}', 'honorSkripsiController@destroy')->name('honor-skripsi.destroy');
 	Route::get('/honor-skripsi/show/{id_sk_honor}/cetak-pdf', 'honorSkripsiController@cetak_pdf')->name('honor-skripsi.cetak');
 	Route::put('/honor-skripsi/{id_sk_honor}/status-dibayarkan', 'honorSkripsiController@status_dibayarkan')->name('honor-skripsi.status_dibayarkan');
     Route::get('/honor-skripsi/create/', 'honorSkripsiController@create')->name('honor-skripsi.create');
-    	// Route::get('/honor-skripsi/pilih-sk', 'honorSkripsiController@pilih_sk')->name('honor-skripsi.pilih-sk');
+	// Route::delete('/honor-skripsi/delete/{id_sk_honor?}', 'honorSkripsiController@destroy')->name('honor-skripsi.destroy');
+   // Route::get('/honor-skripsi/pilih-sk', 'honorSkripsiController@pilih_sk')->name('honor-skripsi.pilih-sk');
 	// Route::get('/honor-skripsi/show/{id_sk_honor}/edit','honorSkripsiController@edit')->name('honor-skripsi.edit');
 	// Route::put('/honor-skripsi/show/{id_sk_honor}/update','honorSkripsiController@update')->name('honor-skripsi.update');
 
@@ -190,9 +202,9 @@ Route::prefix('keuangan')->name('keuangan.')->group(function()
 	Route::get('/honor-sempro/', 'honorSemproController@index')->name('honor-sempro.index');
 	Route::get('/honor-sempro/store/{id_sk_sempro}', 'honorSemproController@store')->name('honor-sempro.store');
 	Route::get('/honor-sempro/{id_sk_honor}', 'honorSemproController@show')->name('honor-sempro.show');
-	Route::delete('/honor-sempro/delete/{id_sk_honor?}', 'honorSemproController@destroy')->name('honor-sempro.destroy');
 	Route::get('/honor-sempro/{id_sk_honor}/cetak-pdf', 'honorSemproController@cetak_pdf')->name('honor-sempro.cetak');
 	Route::put('/honor-sempro/{id_sk_honor}/status-dibayarkan', 'honorSemproController@status_dibayarkan')->name('honor-sempro.status_dibayarkan');
+	// Route::delete('/honor-sempro/delete/{id_sk_honor?}', 'honorSemproController@destroy')->name('honor-sempro.destroy');
 	// Route::get('/honor-sempro/pilih-sk', 'honorSemproController@pilih_sk')->name('honor-sempro.pilih-sk');
 	// Route::get('/honor-sempro/create/{id_sk_sempro}', 'honorSemproController@create')->name('honor-sempro.create');
 	// Route::get('/honor-sempro/{id_sk_honor}/edit', 'honorSemproController@edit')->name('honor-sempro.edit');
@@ -246,6 +258,18 @@ Route::prefix('wadek2')->name('wadek2.')->group(function()
 	Route::get('/honor-skripsi', 'honorSkripsiController@wadek2_index')->name('honor-skripsi.index');
 	Route::get('/honor-skripsi/{id_sk_honor}', 'honorSkripsiController@wadek2_show')->name('honor-skripsi.show');
 	Route::put('/honor-skripsi/verif/{id_sk_honor}', 'honorSkripsiController@wadek2_verif')->name('honor-skripsi.verif');
+
+	//Mahasiswa Bimbingan
+	Route::get('/pembimbing-skripsi', 'dosenController@index_pembimbing')->name('pembimbing-skripsi');
+	Route::get('/pembimbing-skripsi/{nim}', 'dosenController@show_pembimbing')->name('pembimbing-skripsi.show');
+
+	//Mahasiswa Ujian Sempro
+	Route::get('/pembahas-sempro', 'dosenController@index_pembahas')->name('pembahas-sempro');
+	Route::get('/pembahas-sempro/{nim}', 'dosenController@show_pembahas')->name('pembahas-sempro.show');
+
+	//Mahasiswa Ujian Skripsi
+	Route::get('/penguji-skripsi', 'dosenController@index_penguji')->name('penguji-skripsi');
+	Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
 });
 
 Route::prefix('dosen')->name('dosen.')->group(function()
@@ -274,4 +298,20 @@ Route::prefix('perlengkapan')->name('perlengkapan.')->group(function () {
     Route::resource('pengadaan', 'pengadaanController');
     Route::resource('peminjaman_barang', 'peminjamanBarangController');
     Route::resource('peminjaman_ruang', 'peminjamanRuangController');
+});
+
+Route::prefix('kemahasiswaan')->name('kemahasiswaan.')->group(function()
+{
+	Route::get('/', function()
+	{
+		return view('kemahasiswaan.dashboard');
+	})->name('dashboard');
+
+	//Data Mahasiswa
+	Route::get('/mahasiswa', 'mahasiswaController@index')->name('mahasiswa.index');
+	Route::get('/mahasiswa/create', 'mahasiswaController@create')->name('mahasiswa.create');
+	Route::post('/mahasiswa/store', 'mahasiswaController@store')->name('mahasiswa.store');
+	Route::get('/mahasiswa/{nim}', 'mahasiswaController@show')->name('mahasiswa.show');
+	Route::get('/mahasiswa/{nim}/edit', 'mahasiswaController@edit')->name('mahasiswa.edit');
+	Route::put('/mahasiswa/{nim}/update', 'mahasiswaController@update')->name('mahasiswa.update');
 });

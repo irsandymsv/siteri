@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             nama_template_table_seeder::class,
             nama_honor_table_seeder::class,
             histori_besaran_honor_table_seeder::class,
-            template_table_seeder::class,
+            // template_table_seeder::class,
 
             dev_bagian_table_seeder::class,
             dev_keris_table_seeder::class,
@@ -28,7 +28,8 @@ class DatabaseSeeder extends Seeder
             dev_golongan_table_seeder::class,
             dev_fungsional_table_seeder::class,
             dev_pangkat_table_seeder::class,
-            dev_mahasiswa_table_seeder::class,
+            dev_pph_table_seeder::class,
+            // dev_mahasiswa_table_seeder::class,
             dev_users_table_seeder::class,
             // $this->call(UsersTableSeeder::class);
 

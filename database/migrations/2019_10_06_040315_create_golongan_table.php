@@ -16,7 +16,7 @@ class CreateGolonganTable extends Migration
         Schema::create('golongan', function (Blueprint $table) {
             $table->increments('id');
             $table->string('golongan', 20);
-            $table->float('pph');
+            // $table->float('pph');
         });
     }
 

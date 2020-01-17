@@ -180,7 +180,7 @@
 
    			<div class="box-body">
                <div class="table-responsive">
-                  <table id="dataTable2" class="table table-bordered table-striped">
+                  <table id="dataTable2" class="table table-bordered">
                      <thead>
                         <tr>
                            <th>No</th>
@@ -217,7 +217,7 @@
                               </td>
                               <td class="pph" id="pph_{{$no}}">Rp
                                  @php
-                                    $pph = ($item->surat_tugas[0]->dosen1->golongan->pph * $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor)/100;
+                                    $pph = ($item->surat_tugas[0]->dosen1->pph->pph * $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor)/100;
                                  @endphp
                                  {{ number_format($pph, 0, ",", ".") }}
                               </td>
@@ -250,7 +250,7 @@
                               </td>
                               <td class="pph" id="pph_{{$no}}">Rp
                                  @php
-                                    $pph = ($item->surat_tugas[0]->dosen2->golongan->pph * $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor)/100;
+                                    $pph = ($item->surat_tugas[0]->dosen2->pph->pph * $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor)/100;
                                  @endphp
                                  {{ number_format($pph, 0, ",", ".") }}
                               </td>

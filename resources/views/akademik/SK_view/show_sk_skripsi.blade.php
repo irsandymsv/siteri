@@ -51,9 +51,8 @@
               	  <span style="margin-left: 5px;">
 	            	@if($sk->verif_ktu == 2)
 							<label class="label bg-red">Butuh Revisi (KTU)</label>
-						@elseif($sk->verif_dekan == 2)
-							<label class="label bg-red">Butuh Revisi (Dekan)</label>
-						@else
+						{{-- @elseif($sk->verif_dekan == 2)
+							<label class="label bg-red">Butuh Revisi (Dekan)</label> --}}
 						@endif
 					  </span>
 

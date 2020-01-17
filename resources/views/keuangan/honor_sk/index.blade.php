@@ -214,7 +214,7 @@
          initComplete: function () {
              this.api().columns([nomor_kolom]).every( function () {
                  var column = this;
-                 var select = $('<select><option value=""></option></select>')
+                 var select = $('<select><option value="">- Semua -</option></select>')
                      .appendTo( $("#data_table thead tr:eq(1) th").eq(column.index()).empty() )
                      .on( 'change', function () {
                          var val = $.fn.dataTable.util.escapeRegex(
@@ -238,9 +238,9 @@
       //    var id_sk = $(this).attr('id');
 
       //    @if($tipe == "SK Skripsi")
-      //    var url_del = "{{route('keuangan.honor-skripsi.destroy')}}" + '/' + id_sk;             
+      //    var url_del = "link hapus honor sk Skripsi" + '/' + id_sk;             
       //    @else
-      //    var url_del = "{{route('keuangan.honor-sempro.destroy')}}" + '/' + id_sk;
+      //    var url_del = "link hapus honor sk Skripsi" + '/' + id_sk;
       //    @endif
       //    console.log(url_del);
          

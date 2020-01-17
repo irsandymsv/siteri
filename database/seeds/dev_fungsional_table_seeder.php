@@ -13,10 +13,11 @@ class dev_fungsional_table_seeder extends Seeder
     public function run()
     {
         fungsional::insert([
-            ['jab_fungsional' => 'Fungsional 1'],
-            ['jab_fungsional' => 'Fungsional 2'],
-            ['jab_fungsional' => 'Fungsional 3'],
-            ['jab_fungsional' => 'Fungsional 4'],
+            ['jab_fungsional' => 'Guru Besar'],
+            ['jab_fungsional' => 'Lektor Kepala'],
+            ['jab_fungsional' => 'Lektor'],
+            ['jab_fungsional' => 'Asisten Ahli'],
+            ['jab_fungsional' => 'Tenaga Pengajar'],
         ]);
     }
 }

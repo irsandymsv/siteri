@@ -99,34 +99,36 @@ class honorSkripsiController extends Controller
                     ->orderBy('created_at', 'desc');
                 },
                 'surat_tugas.tipe_surat_tugas',
-                'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional',
+                'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
                 'surat_tugas.dosen1.golongan',
                 'surat_tugas.dosen1.fungsional',
-                'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional',
+                'surat_tugas.dosen1.pph',
+                'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
                 'surat_tugas.dosen2.golongan',
                 'surat_tugas.dosen2.fungsional',
+                'surat_tugas.dosen2.pph',
             ])->get();
         foreach($detail_skripsi as $dk){
             foreach($dk->surat_tugas as $st){
                 if($st->id_tipe_surat_tugas == 3){
                     $st->dosen1->honorarium_pus = $pus;
-                    $st->dosen1->pph_pus = $this->hitung_pph($pus, $st->dosen1->golongan->pph);
+                    $st->dosen1->pph_pus = $this->hitung_pph($pus, $st->dosen1->pph->pph);
                     $st->dosen2->honorarium_pps = $pps;
-                    $st->dosen2->pph_pps = $this->hitung_pph($pps, $st->dosen2->golongan->pph);
+                    $st->dosen2->pph_pps = $this->hitung_pph($pps, $st->dosen2->pph->pph);
                 }else{
                     if ($st->dosen1->fungsional->jab_fungsional == "Tenaga Pengajar"){
                         $st->dosen1->honorarium_putj = $putj;
-                        $st->dosen1->pph_putj = $this->hitung_pph($putj, $st->dosen1->golongan->pph);
+                        $st->dosen1->pph_putj = $this->hitung_pph($putj, $st->dosen1->pph->pph);
                     }else{
                         $st->dosen1->honorarium_pudj = $pudj;
-                        $st->dosen1->pph_pudj = $this->hitung_pph($pudj, $st->dosen1->golongan->pph);
+                        $st->dosen1->pph_pudj = $this->hitung_pph($pudj, $st->dosen1->pph->pph);
                     }
                     if ($st->dosen2->fungsional->jab_fungsional == "Tenaga Pengajar") {
                         $st->dosen2->honorarium_pptj = $pptj;
-                        $st->dosen2->pph_pptj = $this->hitung_pph($pptj, $st->dosen2->golongan->pph);
+                        $st->dosen2->pph_pptj = $this->hitung_pph($pptj, $st->dosen2->pph->pph);
                     } else {
                         $st->dosen2->honorarium_ppdj = $ppdj;
-                        $st->dosen2->pph_ppdj = $this->hitung_pph($ppdj, $st->dosen2->golongan->pph);
+                        $st->dosen2->pph_ppdj = $this->hitung_pph($ppdj, $st->dosen2->pph->pph);
                     }
                 }
             }

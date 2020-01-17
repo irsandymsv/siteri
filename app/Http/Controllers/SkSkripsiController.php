@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 use Exception;
 use PDF;
 use App\bagian;
@@ -287,22 +288,106 @@ class SkSkripsiController extends Controller
 	public function update(Request $request, $id)
 	{
         if ($request->input("status") == 2) {
-            $this->validate($request, [
+            // $this->validate($request, [
+            //     "nim" => "required|array",
+            //     "nim.*" => "required",
+            //     "tgl_sk_pembimbing" => "required",
+            //     "tgl_sk_penguji" => "required",
+            //     "status" => "required",
+            //     "no_surat_pembimbing" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
+            //     "no_surat_penguji" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
+            // ]);
+            $validator = Validator::make($request->all(), [
+                'no_surat_pembimbing' => [
+                    'required',
+                    Rule::unique('sk_skripsi', 'no_surat_pembimbing')->ignore($id),
+                    'unique:sk_sempro,no_surat',
+                    'unique:sk_skripsi,no_surat_penguji',
+                    'unique:surat_tugas,no_surat'
+
+                ],
+                'no_surat_penguji' => [
+                    'required',
+                    Rule::unique('sk_skripsi', 'no_surat_penguji')->ignore($id),
+                    'unique:sk_sempro,no_surat',
+                    'unique:sk_skripsi,no_surat_pembimbing',
+                    'unique:surat_tugas,no_surat'
+
+                ],
                 "nim" => "required|array",
                 "nim.*" => "required",
                 "tgl_sk_pembimbing" => "required",
                 "tgl_sk_penguji" => "required",
                 "status" => "required",
-                "no_surat_pembimbing" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
-                "no_surat_penguji" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
             ]);
+            if ($validator->fails()) {
+                return redirect()
+                    ->route('akademik.skripsi.edit', $id)
+                    ->withErrors($validator)
+                    ->withInput();
+            }
         } else {
-            $this->validate($request, [
-                "no_surat_pembimbing" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
-                "no_surat_penguji" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
+            // $this->validate($request, [
+            //     "no_surat_pembimbing" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
+            //     "no_surat_penguji" => "required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|",
+            //     "nim" => "required|array",
+            //     "nim.*" => "required|string"
+            // ]);
+            $validator = Validator::make($request->all(), [
+                'no_surat_pembimbing' => [
+                    'required',
+                    Rule::unique('sk_skripsi', 'no_surat_pembimbing')->ignore($id),
+                    'unique:sk_sempro,no_surat',
+                    'unique:sk_skripsi,no_surat_penguji',
+                    'unique:surat_tugas,no_surat'
+
+                ],
+                'no_surat_penguji' => [
+                    'required',
+                    Rule::unique('sk_skripsi', 'no_surat_penguji')->ignore($id),
+                    'unique:sk_sempro,no_surat',
+                    'unique:sk_skripsi,no_surat_pembimbing',
+                    'unique:surat_tugas,no_surat'
+
+                ],
                 "nim" => "required|array",
-                "nim.*" => "required|string"
+                "nim.*" => "required",
             ]);
+            if ($validator->fails()) {
+                return redirect()
+                    ->route('akademik.skripsi.edit', $id)
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+            $validator = Validator::make($request->all(), [
+                'no_surat_pembimbing' => [
+                    'required',
+                    Rule::unique('sk_skripsi', 'no_surat_pembimbing')->ignore($id),
+                    'unique:sk_sempro,no_surat',
+                    'unique:sk_skripsi,no_surat_penguji',
+                    'unique:surat_tugas,no_surat'
+
+                ],
+                'no_surat_penguji' => [
+                    'required',
+                    Rule::unique('sk_skripsi', 'no_surat_penguji')->ignore($id),
+                    'unique:sk_sempro,no_surat',
+                    'unique:sk_skripsi,no_surat_pembimbing',
+                    'unique:surat_tugas,no_surat'
+
+                ],
+                "nim" => "required|array",
+                "nim.*" => "required",
+                "tgl_sk_pembimbing" => "required",
+                "tgl_sk_penguji" => "required",
+                "status" => "required",
+            ]);
+            if ($validator->fails()) {
+                return redirect()
+                    ->route('akademik.skripsi.edit', $id)
+                    ->withErrors($validator)
+                    ->withInput();
+            }
         }
 
 		try {

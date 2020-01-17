@@ -1,7 +1,18 @@
 @extends('layouts.template')
 
 @section('side_menu')
-   @include('include.dosen_menu')
+   @if (Auth::user()->jabatan->jabatan == "Dekan")
+      @include('include.dekan_menu')
+   @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+   @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
+      @include('include.wadek2_menu')
+   @elseif(Auth::user()->jabatan->jabatan == "Dosen")
+      @include('include.dosen_menu')
+   @endif
+@endsection
+
+@section('css_link')
+   <link rel="stylesheet" type="text/css" href="/css/custom_style.css">
 @endsection
 
 @section('page_title')
@@ -17,8 +28,16 @@
 		<div class="col col-xs-12">
 			<div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              	<li class="active"><a href="#tab_1" data-toggle="tab">Pembahas 1</a></li>
-              	<li><a href="#tab_2" data-toggle="tab">Pembahas 2</a></li>
+              	<li class="active">
+                  <a href="#tab_1" data-toggle="tab">
+                     Pembahas 1 &ensp;<span class="label bg-green">{{ count($sutgas_pembahas_1) }}</span>
+                  </a>
+               </li>
+              	<li>
+                  <a href="#tab_2" data-toggle="tab">
+                     Pembahas 2 &ensp;<span class="label bg-green">{{ count($sutgas_pembahas_2) }}</span>
+                  </a>
+               </li>
               	
             </ul>
             <div class="tab-content">
@@ -53,7 +72,14 @@
                                  @endif
                               </td>
 	   			      			<td>
-	   			      				<a href="{{ route('dosen.pembahas-sempro.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                 @if (Auth::user()->jabatan->jabatan == "Dekan")
+                                    <a href="{{ route('dekan.pembahas-sempro.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                 @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+                                 @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
+                                    <a href="{{ route('wadek2.pembahas-sempro.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                 @elseif(Auth::user()->jabatan->jabatan == "Dosen")
+                                    <a href="{{ route('dosen.pembahas-sempro.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                 @endif
 	   			      			</td>
                				</tr>
             				@endforeach
@@ -81,7 +107,7 @@
                					<td>{{ $item->detail_skripsi->skripsi->nim }}</td>
                					<td>{{ $item->detail_skripsi->skripsi->mahasiswa->nama }}</td>
 	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
-	   			      			<td>{{ Carbon::parse($item->tanggal)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
+	   			      			<td>{{ Carbon\Carbon::parse($item->tanggal)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
                               <td>
                                  @if (Carbon\Carbon::parse($item->tanggal)->gte(Carbon\Carbon::today()))
                                     Belum Dilaksanakan
@@ -90,7 +116,14 @@
                                  @endif
                               </td>
 	   			      			<td>
-	   			      				<a href="{{ route('dosen.pembahas-sempro.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+	   			      				 @if (Auth::user()->jabatan->jabatan == "Dekan")
+                                    <a href="{{ route('dekan.pembahas-sempro.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                 @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+                                 @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
+                                    <a href="{{ route('wadek2.pembahas-sempro.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                 @elseif(Auth::user()->jabatan->jabatan == "Dosen")
+                                    <a href="{{ route('dosen.pembahas-sempro.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                 @endif
 	   			      			</td>
                				</tr>
             				@endforeach

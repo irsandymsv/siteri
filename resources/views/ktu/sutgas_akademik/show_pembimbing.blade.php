@@ -209,7 +209,7 @@
                      Jember, {{ Carbon\Carbon::parse($surat_tugas->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }} <br>
                      Dekan,
                      <br><br><br><br>
-                     <span style="text-transform: uppercase;">{{ $dekan->nama }}</span><br>
+                     <span>{{ $dekan->nama }}</span><br>
                      <span>NIP. {{ $dekan->no_pegawai }}</span>
                   </div>
 

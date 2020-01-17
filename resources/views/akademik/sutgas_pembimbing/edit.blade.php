@@ -48,8 +48,8 @@
    			<div class="box-header">
                <h3 class="box-title">Ubah Surat Tugas Pembimbing Skripsi</h3>
 
-               <br><br>
-               <h4>Status surat tugas : {{ $surat_tugas->status_surat_tugas->status }}</h4>
+               <br>
+               <h5>Status surat tugas : {{ $surat_tugas->status_surat_tugas->status }}</h5>
             </div>
             <div class="col-xs-12">
                 @if (session('success'))
@@ -151,7 +151,7 @@
                      <label for="pembimbing_utama">Pembimbing Utama</label><br>
                      <select name="id_pembimbing_utama" id="id_pembimbing_utama" class="form-control select2">
                         <option value="">--Pilih Pembimbing Utama--</option>
-                        @foreach ($dosen as $item)
+                        @foreach ($dosen1 as $item)
                            <option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == $surat_tugas->id_dosen1? 'selected':'') }}>
                               {{ $item->nama }}
                            </option>
@@ -169,7 +169,7 @@
                      <label for="pembimbing_pendamping">Pembimbing Pendamping</label><br>
                      <select name="id_pembimbing_pendamping" id="id_pembimbing_pendamping" class="form-control select2">
                         <option value="">--Pilih Pembimbing Pendamping--</option>
-                        @foreach ($dosen as $item)
+                        @foreach ($dosen2 as $item)
                            <option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == $surat_tugas->id_dosen2? 'selected':'') }}>
                               {{ $item->nama }}
                            </option>

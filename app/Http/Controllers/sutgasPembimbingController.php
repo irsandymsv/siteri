@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 use App\surat_tugas;
 use App\detail_skripsi;
 use App\skripsi;
@@ -12,6 +14,7 @@ use Exception;
 use App\User;
 use App\keris;
 use App\mahasiswa;
+use App\Rules\id_dosen_tidak_boleh_sama;
 
 //Surat Tugas Pembimbing Controller
 class sutgasPembimbingController extends suratTugasController
@@ -31,10 +34,20 @@ class sutgasPembimbingController extends suratTugasController
 	public function create()
 	{
         $mahasiswa = mahasiswa::doesntHave('skripsi')->get();
-		$dosen = user::where('is_dosen', 1)->get();
+		$dosen1 = user::where('is_dosen', 1)
+        ->whereHas('fungsional', function(Builder $query)
+        {
+            $query->whereIn('jab_fungsional', [
+                'Guru Besar',
+                'Lektor Kepala',
+                'Lektor'
+            ]);
+        })->get();
+        $dosen2 = user::where('is_dosen', 1)->get();
 		$keris = keris::all();
 		return view('akademik.sutgas_pembimbing.create', [
-			'dosen' => $dosen,
+			'dosen1' => $dosen1,
+            'dosen2' => $dosen2,
 			'keris' => $keris,
 			'mahasiswa' => $mahasiswa
 		]);
@@ -47,7 +60,7 @@ class sutgasPembimbingController extends suratTugasController
             'no_surat' => 'required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|',
             'judul' => 'required',
             'id_keris' => 'required',
-            'id_pembimbing_utama' => 'required',
+            'id_pembimbing_utama' => ['required',new id_dosen_tidak_boleh_sama($request->input("id_pembimbing_pendamping"))],
             'id_pembimbing_pendamping' => 'required'
         ]);
         try{
@@ -110,27 +123,59 @@ class sutgasPembimbingController extends suratTugasController
         // })
 
         // dd($mahasiswa);
-		$dosen = user::where('is_dosen', 1)->get();
+        $dosen1 = user::where('is_dosen', 1)
+        ->whereHas('fungsional', function(Builder $query)
+        {
+            $query->whereIn('jab_fungsional', [
+                'Guru Besar',
+                'Lektor Kepala',
+                'Lektor'
+            ]);
+        })->get();
+        $dosen2 = user::where('is_dosen', 1)->get();
 		$keris = keris::all();
 
 		return view('akademik.sutgas_pembimbing.edit', [
 			'surat_tugas' => $surat_tugas,
 			'mahasiswa' => $mahasiswa,
-			'dosen' => $dosen,
+			'dosen1' => $dosen1,
+            'dosen2' => $dosen2,
 			'keris' => $keris
 		]);
     }
 
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
+        // $this->validate($request, [
+        //     'nim' => 'required',
+        //     'no_surat' => 'required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|',
+        //     'judul' => 'required',
+        //     'id_keris' => 'required',
+        //     'id_pembimbing_utama' => 'required',
+        //     'id_pembimbing_pendamping' => 'required'
+        // ]);
+        $validator = Validator::make($request->all(), [
             'nim' => 'required',
-            'no_surat' => 'required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|',
+            'no_surat' => [
+                'required',
+                Rule::unique('surat_tugas','no_surat')->ignore($id),
+                'unique:sk_skripsi,no_surat_pembimbing',
+                'unique:sk_skripsi,no_surat_penguji',
+                'unique:sk_sempro,no_surat'
+
+            ],
             'judul' => 'required',
             'id_keris' => 'required',
-            'id_pembimbing_utama' => 'required',
+            'id_pembimbing_utama' => ['required', new id_dosen_tidak_boleh_sama($request->input("id_pembimbing_pendamping"))],
             'id_pembimbing_pendamping' => 'required'
         ]);
+        if ($validator->fails()) {
+            return redirect()
+                ->route('akademik.sutgas-pembimbing.edit', $id)
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         try {
             skripsi::where('id', $request->input('id_skripsi'))->update([
                 'nim' => $request->input('nim')
@@ -149,7 +194,7 @@ class sutgasPembimbingController extends suratTugasController
             );
             return redirect()->route('akademik.sutgas-pembimbing.show',$id)->with('success', 'Data Surat Tugas Berhasil Diubah');
         } catch (Exception $e) {
-            dd($e->getMessage());
+            // dd($e->getMessage());
             return redirect()->route('akademik.sutgas-pembimbing.edit', $id)->with('error', $e->getMessage());
         }
     }

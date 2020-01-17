@@ -47,14 +47,8 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $guarded = []; // -> All atribut mass assignable
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    // protected $fillable = [];
+    // protected $guarded = []; 
+    // All atribut mass assignable
 
     /**
      * The attributes that should be hidden for arrays.
@@ -88,6 +82,11 @@ class User extends Authenticatable
     public function golongan()
     {
         return $this->belongsTo('App\golongan', 'id_golongan');
+    }
+
+    public function pph()
+    {
+        return $this->belongsTo('App\pph', 'id_pph');
     }
 
     public function pangkat()
