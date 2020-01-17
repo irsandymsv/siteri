@@ -48,46 +48,45 @@
             </div>
             <form action="{{ route('kemahasiswaan.mahasiswa.store') }}" method="post">
             <div class="box-body">
+               @csrf
 
-                  @csrf
+               <div class="form-group">
+                  <label for="nim">NIM</label>
+                  <input type="text" name="nim" id="nim" class="form-control">
 
-                  <div class="form-group">
-                     <label for="nim">NIM</label>
-                     <input type="text" name="nim" id="nim" class="form-control">
+                  @error('nim')
+                     <span class="invalid-feedback" role="alert" style="color: red;">
+                         <strong>{{ $message }}</strong>
+                     </span>
+                  @enderror
+               </div>
 
-                     @error('nim')
-                        <span class="invalid-feedback" role="alert" style="color: red;">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                     @enderror
-                  </div>
+               <div class="form-group">
+                  <label for="nama">Nama</label>
+                  <input type="text" name="nama" id="nama" class="form-control">
 
-                  <div class="form-group">
-                     <label for="nama">Nama</label>
-                     <input type="text" name="nama" id="nama" class="form-control">
+                  @error('nama')
+                     <span class="invalid-feedback" role="alert" style="color: red;">
+                         <strong>{{ $message }}</strong>
+                     </span>
+                  @enderror
+               </div>
 
-                     @error('nama')
-                        <span class="invalid-feedback" role="alert" style="color: red;">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                     @enderror
-                  </div>
+               <div class="form-group">
+                  <label for="id_bagian">Program Studi</label>
+                  <select name="id_bagian" id="id_bagian" class="form-control">
+                     <option value="">-- Pilih Prodi --</option>
+                     @foreach ($bagian as $item)
+                        <option value="{{ $item->id }}">{{ $item->bagian }}</option>
+                     @endforeach
+                  </select>
 
-                  <div class="form-group">
-                     <label for="id_bagian">Program Studi</label>
-                     <select name="id_bagian" id="id_bagian" class="form-control">
-                        <option value="">-- Pilih Prodi --</option>
-                        @foreach ($bagian as $item)
-                           <option value="{{ $item->id }}">{{ $item->bagian }}</option>
-                        @endforeach
-                     </select>
-
-                     @error('id_bagian')
-                        <span class="invalid-feedback" role="alert" style="color: red;">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                     @enderror
-                  </div>
+                  @error('id_bagian')
+                     <span class="invalid-feedback" role="alert" style="color: red;">
+                         <strong>{{ $message }}</strong>
+                     </span>
+                  @enderror
+               </div>
 
             </div>
 

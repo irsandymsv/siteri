@@ -110,10 +110,12 @@ class honorSemproController extends Controller
                     ['id_status_surat_tugas', 3]
                 ])->orderBy('created_at', 'desc');
             },
-            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional',
+            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
             'surat_tugas.dosen1.golongan',
-            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional',
+            'surat_tugas.dosen1.pph',
+            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
             'surat_tugas.dosen2.golongan',
+            'surat_tugas.dosen2.pph',
 
         ])->get();
 
@@ -125,79 +127,79 @@ class honorSemproController extends Controller
         ]);
     }
 
-    public function edit($id_sk_honor)
-    {
-        $sk_honor = sk_honor::where('id', $id_sk_honor)
-            ->with([
-                'tipe_sk',
-                'status_sk_honor',
-                'detail_sk.pembimbing_utama:no_pegawai,nama,id_golongan',
-                'detail_sk.pembimbing_utama.golongan',
+    // public function edit($id_sk_honor)
+    // {
+    //     $sk_honor = sk_honor::where('id', $id_sk_honor)
+    //         ->with([
+    //             'tipe_sk',
+    //             'status_sk_honor',
+    //             'detail_sk.pembimbing_utama:no_pegawai,nama,id_golongan',
+    //             'detail_sk.pembimbing_utama.golongan',
 
-                'detail_sk.pembimbing_pendamping:no_pegawai,nama,id_golongan',
-                'detail_sk.pembimbing_pendamping.golongan',
+    //             'detail_sk.pembimbing_pendamping:no_pegawai,nama,id_golongan',
+    //             'detail_sk.pembimbing_pendamping.golongan',
 
-                'detail_sk.penguji_utama:no_pegawai,nama,id_golongan',
-                'detail_sk.penguji_utama.golongan',
+    //             'detail_sk.penguji_utama:no_pegawai,nama,id_golongan',
+    //             'detail_sk.penguji_utama.golongan',
 
-                'detail_sk.penguji_pendamping:no_pegawai,nama,id_golongan',
-                'detail_sk.penguji_pendamping.golongan',
+    //             'detail_sk.penguji_pendamping:no_pegawai,nama,id_golongan',
+    //             'detail_sk.penguji_pendamping.golongan',
 
-                'detail_sk.sk_akademik'
-            ])
-            ->first();
-        // dd($sk_honor);
-        return  view('keuangan.honor_sk.edit', [
-            'sk_honor' => $sk_honor,
-            'tipe' => 'SK Sempro'
-        ]);
-    }
+    //             'detail_sk.sk_akademik'
+    //         ])
+    //         ->first();
+    //     // dd($sk_honor);
+    //     return  view('keuangan.honor_sk.edit', [
+    //         'sk_honor' => $sk_honor,
+    //         'tipe' => 'SK Sempro'
+    //     ]);
+    // }
 
-    public function update(Request $request, $id_sk_honor)
-    {
-        $this->validate($request, [
-            'honor_pembimbing1' => 'required',
-            'honor_pembimbing2' => 'required',
-            'honor_penguji' => 'required'
-        ]);
+    // public function update(Request $request, $id_sk_honor)
+    // {
+    //     $this->validate($request, [
+    //         'honor_pembimbing1' => 'required',
+    //         'honor_pembimbing2' => 'required',
+    //         'honor_penguji' => 'required'
+    //     ]);
 
-        try {
-            $sk_honor = sk_honor::find($id_sk_honor);
-            $verif_bpp = $sk_honor->verif_kebag_keuangan;
-            $verif_ktu = $sk_honor->verif_ktu;
-            $verif_wadek2 = $sk_honor->verif_wadek2;
-            $verif_dekan = $sk_honor->verif_dekan;
-            if ($request->status == 2) {
-                $verif_bpp = 0;
-                $verif_ktu = 0;
-                $verif_wadek2 = 0;
-                $verif_dekan = 0;
-            }
+    //     try {
+    //         $sk_honor = sk_honor::find($id_sk_honor);
+    //         $verif_bpp = $sk_honor->verif_kebag_keuangan;
+    //         $verif_ktu = $sk_honor->verif_ktu;
+    //         $verif_wadek2 = $sk_honor->verif_wadek2;
+    //         $verif_dekan = $sk_honor->verif_dekan;
+    //         if ($request->status == 2) {
+    //             $verif_bpp = 0;
+    //             $verif_ktu = 0;
+    //             $verif_wadek2 = 0;
+    //             $verif_dekan = 0;
+    //         }
 
-            sk_honor::where('id', $id_sk_honor)->update([
-                'id_status_sk_honor' => $request->status,
-                'honor_pembimbing1' => $request->honor_pembimbing1,
-                'honor_pembimbing2' => $request->honor_pembimbing2,
-                'honor_penguji' => $request->honor_penguji,
-                'verif_kebag_keuangan' => $verif_bpp,
-                'verif_ktu' => $verif_ktu,
-                'verif_wadek2' => $verif_wadek2,
-                'verif_dekan' => $verif_dekan
-            ]);
+    //         sk_honor::where('id', $id_sk_honor)->update([
+    //             'id_status_sk_honor' => $request->status,
+    //             'honor_pembimbing1' => $request->honor_pembimbing1,
+    //             'honor_pembimbing2' => $request->honor_pembimbing2,
+    //             'honor_penguji' => $request->honor_penguji,
+    //             'verif_kebag_keuangan' => $verif_bpp,
+    //             'verif_ktu' => $verif_ktu,
+    //             'verif_wadek2' => $verif_wadek2,
+    //             'verif_dekan' => $verif_dekan
+    //         ]);
 
-            return redirect()->route('keuangan.honor-sempro.show', $id_sk_honor)->with('success', 'Data Berhasil Dirubah');
-        } catch (Exception $e) {
-            return redirect()->route('keuangan.honor-sempro.edit', $id_sk_honor)->with('error', $e->getMessage());
-        }
-    }
+    //         return redirect()->route('keuangan.honor-sempro.show', $id_sk_honor)->with('success', 'Data Berhasil Dirubah');
+    //     } catch (Exception $e) {
+    //         return redirect()->route('keuangan.honor-sempro.edit', $id_sk_honor)->with('error', $e->getMessage());
+    //     }
+    // }
 
-    public function destroy($id = null)
-    {
-        if (!is_null($id)) {
-            sk_honor::find($id)->delete();
-            echo 'Daftar Honor Berhasil Dihapus';
-        }
-    }
+    // public function destroy($id = null)
+    // {
+    //     if (!is_null($id)) {
+    //         sk_honor::find($id)->delete();
+    //         echo 'Daftar Honor Berhasil Dihapus';
+    //     }
+    // }
 
     public function status_dibayarkan($id_sk_honor)
     {
@@ -232,10 +234,12 @@ class honorSemproController extends Controller
                     ['id_status_surat_tugas', 3]
                 ])->orderBy('created_at', 'desc');
             },
-            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan',
+            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_pph',
             'surat_tugas.dosen1.golongan',
-            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan',
-            'surat_tugas.dosen2.golongan'
+            'surat_tugas.dosen1.pph',
+            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_pph',
+            'surat_tugas.dosen2.golongan',
+            'surat_tugas.dosen2.pph'
         ])->get();
 
         $tahun_akademik = $this->get_tahun_akademik($sk_honor->sk_sempro->created_at);
@@ -313,10 +317,12 @@ class honorSemproController extends Controller
                     ['id_status_surat_tugas', 3]
                 ])->orderBy('created_at', 'desc');
             },
-            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional',
+            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
             'surat_tugas.dosen1.golongan',
-            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional',
+            'surat_tugas.dosen1.pph',
+            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
             'surat_tugas.dosen2.golongan',
+            'surat_tugas.dosen2.pph',
 
         ])->get();
 
@@ -411,10 +417,12 @@ class honorSemproController extends Controller
                     ['id_status_surat_tugas', 3]
                 ])->orderBy('created_at', 'desc');
             },
-            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional',
+            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
             'surat_tugas.dosen1.golongan',
-            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional',
+            'surat_tugas.dosen1.pph',
+            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
             'surat_tugas.dosen2.golongan',
+            'surat_tugas.dosen2.pph',
 
         ])->get();
 
@@ -516,10 +524,12 @@ class honorSemproController extends Controller
                ['id_status_surat_tugas', 3]
             ])->orderBy('created_at', 'desc');
          },
-         'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional',
+         'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
          'surat_tugas.dosen1.golongan',
-         'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional',
+         'surat_tugas.dosen1.pph',
+         'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
          'surat_tugas.dosen2.golongan',
+         'surat_tugas.dosen2.pph',
 
       ])->get();
 
@@ -614,10 +624,12 @@ class honorSemproController extends Controller
                ['id_status_surat_tugas', 3]
             ])->orderBy('created_at', 'desc');
          },
-         'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional',
+         'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
          'surat_tugas.dosen1.golongan',
-         'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional',
+         'surat_tugas.dosen1.pph',
+         'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
          'surat_tugas.dosen2.golongan',
+         'surat_tugas.dosen2.pph',
 
       ])->get();
 

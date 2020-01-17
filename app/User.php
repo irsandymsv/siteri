@@ -84,6 +84,11 @@ class User extends Authenticatable
         return $this->belongsTo('App\golongan', 'id_golongan');
     }
 
+    public function pph()
+    {
+        return $this->belongsTo('App\pph', 'id_pph');
+    }
+
     public function pangkat()
     {
         return $this->belongsTo('App\pangkat', 'id_pangkat');

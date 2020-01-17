@@ -238,9 +238,9 @@
       //    var id_sk = $(this).attr('id');
 
       //    @if($tipe == "SK Skripsi")
-      //    var url_del = "{{route('keuangan.honor-skripsi.destroy')}}" + '/' + id_sk;             
+      //    var url_del = "link hapus honor sk Skripsi" + '/' + id_sk;             
       //    @else
-      //    var url_del = "{{route('keuangan.honor-sempro.destroy')}}" + '/' + id_sk;
+      //    var url_del = "link hapus honor sk Skripsi" + '/' + id_sk;
       //    @endif
       //    console.log(url_del);
          

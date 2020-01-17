@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->unsignedInteger('id_pangkat')->nullable();
             $table->unsignedInteger('id_golongan')->nullable();
             $table->unsignedInteger('id_fungsional')->nullable();
+            $table->unsignedTinyInteger('id_pph')->nullable();
             $table->rememberToken();
             
             // $table->bigIncrements('id');

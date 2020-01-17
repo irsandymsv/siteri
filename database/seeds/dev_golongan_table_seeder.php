@@ -15,19 +15,19 @@ class dev_golongan_table_seeder extends Seeder
         golongan::insert([
             [
                 'golongan' => 'I',
-                'pph' => 5
+                // 'pph' => 5
             ],
             [
                 'golongan' => 'II',
-                'pph' => 10
+                // 'pph' => 10
             ],
             [
                 'golongan' => 'III',
-                'pph' => 15
+                // 'pph' => 15
             ],
             [
                 'golongan' => 'IV',
-                'pph' => 20
+                // 'pph' => 20
             ],
 
         ]);

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGolonganTable extends Migration
+class CreatePphTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateGolonganTable extends Migration
      */
     public function up()
     {
-        Schema::create('golongan', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('golongan', 20);
-            // $table->float('pph');
+        Schema::create('pph', function (Blueprint $table) {
+            $table->tinyIncrements('id');
+            $table->float('pph')->nullable();
+            // $table->timestamps();
         });
     }
 
@@ -27,6 +27,6 @@ class CreateGolonganTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('golongan');
+        Schema::dropIfExists('pph');
     }
 }

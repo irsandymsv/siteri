@@ -27,22 +27,22 @@ class mahasiswaController extends Controller
    }
 
    public function store(Request $request){
-        $this->validate($request, [
-            'nim' => 'required|min:12|unique:mahasiswa,nim',
-            'nama' => 'required',
-            'id_bagian' => 'required'
-        ]);
+      $this->validate($request, [
+         'nim' => 'required|min:12|unique:mahasiswa,nim',
+         'nama' => 'required',
+         'id_bagian' => 'required'
+      ]);
 
-        try{
-            mahasiswa::create([
-                'nim' => $request->input('nim'),
-                'nama' => $request->input('nama'),
-                'id_bagian' => $request->input('id_bagian')
-            ]);
-            return redirect()->route('kemahasiswaan.mahasiswa.create')->with('success','Data Berhasil Dibuat');
-        }catch(Exception $e){
-            return redirect()->route('kemahasiswaan.mahasiswa.create')->with('error', $e->getMessage());
-        }
+     try{
+         mahasiswa::create([
+             'nim' => $request->input('nim'),
+             'nama' => $request->input('nama'),
+             'id_bagian' => $request->input('id_bagian')
+         ]);
+         return redirect()->route('kemahasiswaan.mahasiswa.create')->with('success','Data Berhasil Dibuat');
+      }catch(Exception $e){
+         return redirect()->route('kemahasiswaan.mahasiswa.create')->with('error', $e->getMessage());
+      }
    }
 
    public function show($nim)

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGolonganTable extends Migration
+class AddForeignKeysPphToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateGolonganTable extends Migration
      */
     public function up()
     {
-        Schema::create('golongan', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('golongan', 20);
-            // $table->float('pph');
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('id_pph')->references('id')->on('pph')->onDelete('set null')->onUpdate('cascade');
         });
     }
 
@@ -27,6 +25,8 @@ class CreateGolonganTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('golongan');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign('users_id_pph_foreign');
+        });
     }
 }
