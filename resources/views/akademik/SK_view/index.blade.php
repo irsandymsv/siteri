@@ -36,7 +36,7 @@
    		<div class="box box-success">
    			<div class="box-header">
               <h3 class="box-title">Daftar SK {{ ($tipe == "SK Skripsi"? 'Skripsi' : 'Sempro') }}</h3>
-
+            
               <div style="float: right;">
             	<a href="{{ ($tipe == "SK Skripsi"? route('akademik.skripsi.create') : route('akademik.sempro.create')) }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat SK Baru</a>
               </div>
@@ -76,19 +76,19 @@
 		            				</td>
 		            				<td>{{$item->status_sk->status}}</td>
 		            				<td>
-		            					@if($item->verif_ktu == 0)
+		            					@if($item->verif_ktu == 0) 
 		            						Belum Diverifikasi
-		            					@elseif($item->verif_ktu == 2)
+		            					@elseif($item->verif_ktu == 2) 
 		            						<label class="label bg-red">Butuh Revisi</label>
 		            					@else
 		            						<label class="label bg-green">Sudah Diverifikasi</label>
 		            					@endif
 		            				</td>
 		            				{{-- <td>
-		            					@if($item->verif_dekan == 0)
+		            					@if($item->verif_dekan == 0) 
 		            						Belum Diverifikasi
-		            					@elseif($item->verif_dekan == 2)
-		            						<label class="label bg-red">Butuh Revisi</label>
+		            					@elseif($item->verif_dekan == 2) 
+		            						<label class="label bg-red">Butuh Revisi</label> 
 		            					@else
 		            						<label class="label bg-green">Sudah Diverifikasi</label>
 		            					@endif
@@ -106,23 +106,13 @@
 			            					@endif
 						              	@endif
 
-<<<<<<< HEAD
 						              	{{-- @if($item->verif_ktu != 1)
 		            					<a href="#" class="btn btn-danger" id="{{ ($tipe == "SK Skripsi"? $item->id : $item->no_surat) }}" name="delete_sk" title="Hapus SK" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
 											@endif --}}
-
+										
 											@if ($item->verif_ktu == 1)
 	                    					<a href="{{ ($tipe == "SK Skripsi"? route('akademik.skripsi.cetak', $item->id) : route('akademik.sempro.cetak', $item->no_surat)) }}" id="{{ $item->id }}" name="cetak_sk" class="btn btn-info" title="Cetak SK"><i class="fa fa-print"></i></a>
 						  					@endif
-=======
-						              	@if($item->verif_dekan != 1)
-		            					<a href="#" class="btn btn-danger" id="{{ $item->id }}" name="delete_sk" title="Hapus SK" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
-										@endif
-
-										@if ($item->verif_dekan == 1)
-                    					<a href="{{ route('akademik.skripsi.cetak', $item->id) }}" id="{{ $item->id }}" name="cetak_sk" class="btn btn-info" title="Cetak SK"><i class="fa fa-print"></i></a>
-					  					@endif
->>>>>>> ae6e48a7bd5524d0144a461d36e9981390439304
 		            				</td>
 		            			</tr>
 		            		@endforeach
@@ -150,7 +140,7 @@
             <p>Apakah anda yakin ingin menghapus data SK ini?</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Batal</button>
+            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Batal</button>           
 			<button type="button" id="hapusBtn" data-dismiss="modal" class="btn btn-outline">Hapus SK</button>
           </div>
         </div>
@@ -170,12 +160,12 @@
 				var id_sk = $(this).attr('id');
 
 				@if($tipe == "SK Skripsi")
-				var url_del = "{{route('akademik.skripsi.destroy')}}" + '/' + id_sk;
+				var url_del = "{{route('akademik.skripsi.destroy')}}" + '/' + id_sk;					
 				@else
 				var url_del = "{{route('akademik.sempro.destroy')}}" + '/' + id_sk;
 				@endif
 				console.log(url_del);
-
+				
 				$('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
 					$.ajaxSetup({
 					    headers: {
@@ -200,7 +190,7 @@
 						console.log("error");
 					});
 				});
-
+			
 			});
 		})
 	</script>

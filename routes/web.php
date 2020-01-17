@@ -263,6 +263,7 @@ Route::prefix('dosen')->name('dosen.')->group(function()
 	//Mahasiswa Ujian Skripsi
 	Route::get('/penguji-skripsi', 'dosenController@index_penguji')->name('penguji-skripsi');
 	Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
+});
 
 Route::prefix('perlengkapan')->name('perlengkapan.')->group(function () {
     Route::get('/', function () {
