@@ -71,6 +71,7 @@
                         <tbody>
                             @php $no = 0 @endphp
                             @foreach($detail_laporan as $item)
+                            {{-- {{dd($item)}} --}}
                              <tr id="lap_{{ $item->peminjaman_barang->id }}">
                                 <td>{{$no+=1}}</td>
                                 <td>{{$item->detail_data_barang->data_barang->nama_barang}}</td>

@@ -96,13 +96,12 @@
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah[]', null, ['class' => 'form-control', 'id' => 'jumlah'])
+                                    {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah angka'])
                                     !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control', 'id' =>
-                                    'satuan'])!!}
+                                    {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control'])!!}
                                 </td>
 
                                 <td>
@@ -180,7 +179,7 @@
                     </td>
 
                     <td>
-                        {!! Form::text('jumlah', null, ['class' => 'form-control', 'id' => 'jumlah'])
+                        {!! Form::text('jumlah', null, ['class' => 'form-control angka', 'id' => 'jumlah'])
                         !!}
                     </td>
 
@@ -203,11 +202,10 @@
         function barangAjax(){
             $('.barang').on('change', function(){
                 var id = $(this).val();
-                var merk = $(this).parents('tr').children('.merk_barang');
 
                 // console.log($(this).parents('tr'));
                 // console.log($(this).parents('tr')["0"].children[1]);
-                njajal = $(this).parents('tr').children('.merk').children();
+                merk = $(this).parents('tr').children('.merk').children();
                 // console.log($(this).parents('tr').children('.merk').children());
                 // console.log($(this).parents('tr').children('.merk_barang'));
 
@@ -218,17 +216,16 @@
                     dataType: "json",
                     success:function(data) {
                         dataAjax = data;
-                        // $('.merk_barang').empty();
-                        $(njajal).empty();
-                        $(njajal).prop('disabled', false);
+                        $(merk).empty();
+                        $(merk).prop('disabled', false);
                         $.each(data, function(key, value) {
-                            $(njajal).append('<option value="'+ value.id +'">' + value.merk_barang + '</option>');
+                            $(merk).append('<option value="'+ value.id +'">' + value.merk_barang + '</option>');
                         });
-                        // console.log(njajal);
+                        // console.log(merk);
                     }
                 });
                 } else {
-                    $(njajal).prop('disabled', true);
+                    $(merk).prop('disabled', true);
                     $(this).parents('tr').children('.merk_barang').empty();
                 }
             });

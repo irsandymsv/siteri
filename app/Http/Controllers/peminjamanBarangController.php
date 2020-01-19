@@ -37,13 +37,10 @@ class peminjamanBarangController extends Controller
     public function create()
     {
         $barang = data_barang::all();
-        // $nama_barang = data_barang::all()->pluck('nama_barang');
-        // $merk_barang = detail_data_barang::all()->pluck('merk_barang');
         $satuan = satuan::all()->pluck('satuan');
 
         return view('perlengkapan.peminjaman_barang.create', [
             'barang' => $barang,
-            // 'merk_barang' => $merk_barang,
             'satuan' => $satuan
         ]);
     }
@@ -64,14 +61,15 @@ class peminjamanBarangController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $this->validate($request, [
             "tanggal_mulai"     => "required",
             "tanggal_berakhir"  => "required",
             "jam_mulai"         => "required",
             "jam_berakhir"      => "required",
             "kegiatan"          => "required|string|max:100",
-            "nama_barang"       => "required|array",
-            "nama_barang.*"     => "required|integer",
+            "barang"            => "required|array",
+            "barang.*"          => "required|integer",
             "merk_barang"       => "required|array",
             "merk_barang.*"     => "required|integer",
             "jumlah"            => "required|array",
@@ -79,7 +77,7 @@ class peminjamanBarangController extends Controller
             "satuan"            => "required|array",
             "satuan.*"          => "required|integer"
         ]);
-        dd("gak error");
+
         peminjaman_barang::create([
             'tanggal_mulai'     => $request->tanggal_mulai,
             'tanggal_berakhir'  => $request->tanggal_berakhir,
@@ -87,16 +85,18 @@ class peminjamanBarangController extends Controller
             'jam_berakhir'      => $request->jam_berakhir,
             'kegiatan'          => $request->kegiatan
         ]);
+        // dd("gak error");
 
         $idlaporan = peminjaman_barang::all()->pluck('id')->last();
+
         for ($i = 0; $i < count($request->merk_barang); $i++) {
-            dd($request);
             detail_pinjam_barang::create([
                 'idpinjam_barang_fk'        => $idlaporan,
                 'iddetail_data_barang_fk'   => ($request->merk_barang[$i] + 1),
                 'jumlah'        => $request->jumlah[$i],
-                'id_satuan'     => ($request->satuan[$i] + 1)
+                'idsatuan_fk'     => ($request->satuan[$i] + 1)
             ]);
+            // dd($request);
         }
         return redirect()->route('perlengkapan.peminjaman_barang.show', $idlaporan);
     }

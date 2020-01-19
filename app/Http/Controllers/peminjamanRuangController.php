@@ -36,20 +36,23 @@ class peminjamanRuangController extends Controller
     {
         // $nama_ruang = data_ruang::where('kuota', '>=', $jumlah_peserta)
         //     ->get();
-        // $nama_ruang = data_ruang::where('kuota', '!=', '0')
-        //     ->pluck('nama_ruang');
-        $nama_ruang = data_ruang::all()->pluck('nama_ruang');
+        $ruang = data_ruang::where('kuota', '!=', '0')->orderBy('kuota', 'desc')->get();
+        // $ruang = data_ruang::all();
 
         return view('perlengkapan.peminjaman_ruang.create', [
-            'nama_ruang' => $nama_ruang,
+            // 'nama_ruang' => $nama_ruang,
+            'ruang' => $ruang
         ]);
     }
 
-    public function ruangAjax($id)
-    {
-        // $ruang = detail_ruang::where('id_kategori', $id)->get();
-        // return json_encode($ruang);
-    }
+    // public function ruangAjax($jumlah)
+    // {
+
+    //     $nama_ruang = data_ruang::where('kuota', '>=', $jumlah, 'and', '!=', '0')
+    //         ->get();
+
+    //     return json_encode($nama_ruang);
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -83,11 +86,11 @@ class peminjamanRuangController extends Controller
         $idlaporan = peminjaman_ruang::all()->pluck('id')->last();
 
         for ($i = 0; $i < count($request->nama_ruang); $i++) {
-            // dd($request);
             detail_pinjam_ruang::create([
                 'idpinjam_ruang_fk' => $idlaporan,
-                'idruang_fk'        => ($request->nama_ruang[$i] + 1)
+                'idruang_fk'        => ($request->nama_ruang[$i])
             ]);
+            // dd($request);
         }
         return redirect()->route('perlengkapan.peminjaman_ruang.show', $idlaporan);
     }

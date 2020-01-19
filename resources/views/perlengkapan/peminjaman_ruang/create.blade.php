@@ -71,12 +71,20 @@
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah_peserta', null, ['class' => 'form-control angka']) !!}
+                                    {!! Form::text('jumlah_peserta', null, ['class' => 'form-control jumlah angka']) !!}
                                 </td>
 
-                                <td>
-                                    {!! Form::select('nama_ruang[]', $nama_ruang, null, ['class' =>
-                                    'form-control not-rounded-border js-example-basic-multiple', 'multiple' => 'multiple'])!!}
+                                <td class="ruang" style="min-width:200px">
+                                    {{-- {!! Form::select('nama_ruang[]', $nama_ruang, null, ['class' =>
+                                    'form-control not-rounded-border js-example-basic-multiple', 'multiple' => 'multiple'])!!} --}}
+                                    <select id="nama_ruang" name="nama_ruang[]" class="form-control not-rounded-border js-example-basic-multiple"
+                                    multiple="multiple">
+                                        @foreach ($ruang as $val)
+                                        <option value="{{ $val->id }}">({{$val->kuota}}) {{$val->nama_ruang}}</option>
+                                        @endforeach
+                                    </select>
+                                    <label>Jumlah Kuota : <span class="jumlah_kuota">0</span></label>
+                                    {{-- <label></label> --}}
                                 </td>
                             </tr>
                         </tbody>
@@ -113,6 +121,70 @@
         $('.timepicker').timepicker({
             showInputs: false
         });
+
+        $('#nama_ruang, .jumlah').on('change', function(){
+            ruang = $("#nama_ruang").val();
+            jumlah = $('.jumlah').val();
+            console.log(jumlah);
+            total = 0;
+
+            data = $("#nama_ruang").select2('data');
+
+
+            $(data).each(function(bla, nama_ruang){
+                console.log(nama_ruang.text);
+                nama_ruang = nama_ruang.text.split(" ");
+                nama_ruang = nama_ruang[0];
+                nama_ruang = nama_ruang.split("(")[1];
+                nama_ruang = nama_ruang.split(")")[0];
+                total += nama_ruang-0;
+            });
+            console.log(total);
+                    console.log(data.length);
+
+            if(total > jumlah-0){
+                $("#nama_ruang").select2({
+                    maximumSelectionLength: data.length
+                    // formatSelectionTooBig: function (limit) {
+            
+                    //     $('#box').show().text('Callback!');
+                        
+                    //     return 'Too many selected elements (' + limit + ')';
+                    // }
+                });
+            } else {
+                $("#nama_ruang").select2({
+                    maximumSelectionLength: 999
+                });
+            }
+
+            $('.jumlah_kuota').text(total);
+        });
+
+        // $('.jumlah').on('change', function(){
+        //         jumlah = $(this).val();
+        //     console.log(jumlah);
+        //         ruang = $(this).parents('tr').children('.ruang').children('#nama_ruang');
+
+        //         if(jumlah) {
+        //             $.ajax({
+        //                 url: "/perlengkapan/peminjaman_ruang/ruang/" + jumlah,
+        //                 type: "GET",
+        //                 dataType: "json",
+        //                 success:function(data) {
+        //                     dataAjax = data;
+        //                     $(ruang).empty();
+        //                     $(ruang).prop('disabled', false);
+        //                     $.each(data, function(key, value) {
+        //                         $(ruang).append('<option value="'+ value.id +'">' + value.nama_ruang + '</option>');
+        //                     });
+        //                 }
+        //             });
+        //         } else {
+        //             $(ruang).prop('disabled', true);
+        //             $(this).parents('tr').children('.ruang').empty();
+        //         }
+        //     });
 
     });
 
