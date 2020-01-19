@@ -46,7 +46,7 @@ $laporan = $laporan[0];
 
                         <tbody id="inputan">
                             {!! Form::hidden('laporan', true) !!}
-                            <span><strong>Keterangan</strong></span>{!! Form::text('keterangan', $laporan->keterangan,
+                            <span><strong>Peruntukan</strong></span>{!! Form::text('keterangan', $laporan->keterangan,
                             ['class' =>
                             'form-control']) !!}
                             @foreach ($laporan->pengadaan as $item)
@@ -106,13 +106,22 @@ $laporan = $laporan[0];
                                 <td>: {{$laporan->laporan_pengadaan->dibuat}}</td>
                             </tr>
                             <tr>
-                                <td><b>Keterangan</b></td>
+                                <td><b>Peruntukan</b></td>
                                 <td>: {{$laporan->laporan_pengadaan->keterangan}}</td>
                             </tr>
                             <tr>
                                 <td><b>Status</b></td>
                                 <td>:
-                                    {{$laporan->laporan_pengadaan->verif_wadek2 == 0 ? "Belum Disetujui" : "Sudah Disetujui"}}
+                                    @switch($laporan->laporan_pengadaan->verif_wadek2)
+                                    @case(1)
+                                    <label class="label bg-red">Ditolak</label>
+                                    @break
+                                    @case(2)
+                                    <label class="label bg-green">Disetujui</label>
+                                    @break
+                                    @default
+                                    Belum Diverifikasi
+                                    @endswitch
                                 </td>
                             </tr>
                         </table>

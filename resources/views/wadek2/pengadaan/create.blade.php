@@ -1,4 +1,4 @@
-@extends('wadek2.wadek_view')
+@extends('wadek2.wadek2_view')
 
 @section('page_title', 'This is my title')
 
@@ -11,4 +11,3 @@
 @section('script')
 
 @endsection
-

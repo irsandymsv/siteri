@@ -25,7 +25,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal Dibuat</th>
-                                <th>Keterangan</th>
+                                <th>Peruntukan</th>
                                 {{-- <th>Nama Barang</th>
                                 <th>Spesifikasi</th>
                                 <th>Jumlah</th>

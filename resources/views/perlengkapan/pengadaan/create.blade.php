@@ -37,7 +37,7 @@
                         </thead>
 
                         <tbody id="inputan">
-                            <span><strong>Keterangan</strong></span>
+                            <span><strong>Peruntukan</strong></span>
                             {!! Form::text('keterangan', old('keterangan'), ['class' => 'form-control']) !!}
                             <tr>
                                 <td>

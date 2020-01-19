@@ -30,15 +30,26 @@
                     <table class="tabel-keterangan">
                         <tr>
                             <td><b>Tanggal Dibuat</b></td>
-                            <td>: {{$laporan->dibuat}}</td>
+                            <td>: {{$pengadaan[0]->laporan_pengadaan->dibuat}}</td>
                         </tr>
                         <tr>
-                            <td><b>Keterangan</b></td>
-                            <td>: {{$laporan->keterangan}}</td>
+                            <td><b>Peruntukan</b></td>
+                            <td>: {{$pengadaan[0]->laporan_pengadaan->keterangan}}</td>
                         </tr>
                         <tr>
                             <td><b>Status</b></td>
-                            <td>: {{$laporan->verif_wadek2 == 0 ? "Belum Disetujui" : "Sudah Disetujui"}}</td>
+                            <td>:
+                                @switch($pengadaan->laporan_pengadaan->verif_wadek2)
+                                @case(1)
+                                <label class="label bg-red">Ditolak</label>
+                                @break
+                                @case(2)
+                                <label class="label bg-green">Disetujui</label>
+                                @break
+                                @default
+                                Belum Diverifikasi
+                                @endswitch
+                            </td>
                         </tr>
                     </table>
                 </div>
