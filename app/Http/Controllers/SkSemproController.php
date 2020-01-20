@@ -23,6 +23,7 @@ use iio\libmergepdf\Merger;
 use iio\libmergepdf\Pages;
 use PdfMerger;
 use Storage;
+use App\Notifications\verifSKSemproKtu;
 
 class SkSemproController extends Controller
 {
@@ -474,6 +475,13 @@ class SkSemproController extends Controller
                'id_status_skripsi' => 4
             ]);
          }
+
+         $akademik = User::with('jabatan')
+            ->whereHas('jabatan', function(Builder $query)
+            {
+                $query->where('jabatan', 'Pengelola Data Akademik');
+            })->first();
+         $akademik->notify(new verifSKSemproKtu($sk));
 
          return redirect()->route('ktu.sk-sempro.show', $id)->with('verif_ktu', 'verifikasi SK berhasil, status SK saat ini "Disetujui KTU"');
       }

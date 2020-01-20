@@ -16,6 +16,7 @@ use App\mahasiswa;
 use Carbon\Carbon;
 use PDF;
 use App\Rules\id_dosen_tidak_boleh_sama;
+use App\Notifications\verifSutgasKtu;
 
 class sutgasPembahasController extends suratTugasController
 {
@@ -379,6 +380,13 @@ class sutgasPembahasController extends suratTugasController
         else if ($request->verif_ktu == 1) {
             $surat_tugas = $this->verif($surat_tugas,3,null,3);
             $surat_tugas->save();
+
+            $akademik = User::with('jabatan')
+            ->whereHas('jabatan', function(Builder $query)
+            {
+                $query->where('jabatan', 'Pengelola Data Akademik');
+            })->first();
+            $akademik->notify(new verifSutgasKtu($surat_tugas));
 
             return redirect()->route('ktu.sutgas-pembahas.show', $id)->with('verif_ktu', 'verifikasi surat tugas berhasil, status surat tugas saat ini "Disetujui KTU"');
         }

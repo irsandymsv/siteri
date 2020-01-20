@@ -22,14 +22,16 @@
 			  	</div>
 			  <!-- /.box-header -->
 			  <div class="box-body">
-			    	<table class="table table-bordered">
-			      	<tr>
-			       		<th style="width: 10px">#</th>
-			        		<th>No Surat</th>
-			        		<th>Tipe Surat</th>
-			        		<th>Tanggal Dibuat</th>
-			        		<th>Opsi</th>
-			      	</tr>
+			    	<table id="table_data1" class="table table-bordered">
+			      	<thead>
+			      		<tr>
+			      	 		<th style="width: 10px">#</th>
+			     		  		<th>No Surat</th>
+			     		  		<th>Tipe Surat</th>
+			     		  		<th>Tanggal Dibuat</th>
+			     		  		<th>Opsi</th>
+			      		</tr>
+			      	</thead>
 
 				      <tbody>
 				      	@if ($sutgas_dikirim->isEmpty())

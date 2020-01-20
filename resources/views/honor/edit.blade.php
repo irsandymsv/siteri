@@ -1,17 +1,11 @@
 @extends('layouts.template')
 
 @section('side_menu')
-  <li class="treeview">
-     <a href="#"><i class="fa fa-link"></i> <span>Nama Honor</span>
-        <span class="pull-right-container">
-           <i class="fa fa-angle-left pull-right"></i>
-        </span>
-     </a>
-     <ul class="treeview-menu">
-        <li><a href="{{ route('honor.create') }}">Buat Baru</a></li>
-        <li><a href="{{ route('honor.index') }}">Lihat Semua</a></li>
-     </ul>
-  </li>
+  @if (Auth::user()->jabatan->jabatan == "BPP")
+    @include('include.bpp_menu')
+  @elseif(Auth::user()->jabatan->jabatan == "Penata Dokumen Keuangan")
+    @include('include.keuangan_menu')
+  @endif
 @endsection
 
 @section('page_title')

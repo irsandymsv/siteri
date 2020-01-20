@@ -24,7 +24,7 @@
     </ul>
 </li>
 
-{{-- <li class="treeview">
+<li class="treeview">
     <a href="#"><i class="fa fa-link"></i> <span>Skripsi Mahasiswa</span>
       <span class="pull-right-container">
           <i class="fa fa-angle-left pull-right"></i>
@@ -35,4 +35,4 @@
       <li><a href="{{ route('dekan.pembahas-sempro') }}">Pembahas Sempro</a></li>
       <li><a href="{{ route('dekan.penguji-skripsi') }}">Penguji Skripsi</a></li>
     </ul>
-</li> --}}
+</li>

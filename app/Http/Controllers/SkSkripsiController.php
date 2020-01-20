@@ -21,6 +21,7 @@ use App\status_sk;
 use Carbon\Carbon;
 use iio\libmergepdf\Merger;
 use iio\libmergepdf\Pages;
+use App\Notifications\verifSKSkripsiKtu;
 
 class SkSkripsiController extends Controller
 {
@@ -573,6 +574,13 @@ class SkSkripsiController extends Controller
                'id_status_skripsi' => 6
             ]);
          }
+
+         $akademik = User::with('jabatan')
+            ->whereHas('jabatan', function(Builder $query)
+            {
+                $query->where('jabatan', 'Pengelola Data Akademik');
+            })->first();
+         $akademik->notify(new verifSKSkripsiKtu($sk));
 
          return redirect()->route('ktu.sk-skripsi.show', $id)->with('verif_ktu', 'verifikasi SK berhasil, status SK saat ini "Disetujui KTU"');
       }

@@ -153,6 +153,7 @@
 @section('script')
 	<script type="text/javascript">
 		$(function() {
+			$.fn.dataTable.moment('D MMMM Y', 'id');
 			$('#tbl_data1').DataTable()
 
 			$("a[name='delete_sk']").click(function(event) {

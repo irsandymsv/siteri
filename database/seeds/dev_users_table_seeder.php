@@ -136,6 +136,21 @@ class dev_users_table_seeder extends Seeder
             'id_fungsional' => null,
             'id_pph' => 1
          ],
+         [
+            'username' => 'ayu',
+            'password' => 'tu',
+            'no_pegawai' => '760009201',
+            'nama' => 'Ayu Aisah',
+            'npwp' => null,
+            'bpjs' => null,
+            'is_dosen' => 0,
+            'id_jabatan' => 13,
+            'id_bagian' => 4,
+            'id_pangkat' => null,
+            'id_golongan' => null,
+            'id_fungsional' => null,
+            'id_pph' => null
+         ],
 
       ]);
    }
