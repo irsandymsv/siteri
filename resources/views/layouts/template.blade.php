@@ -10,6 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <title>@yield("page_title") | {{config('app.name')}}</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
   <link rel="stylesheet" href="/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="/adminlte/bower_components/font-awesome/css/font-awesome.min.css">
@@ -89,37 +90,93 @@ desired effect
           <!-- Notifications Menu -->
           <li class="dropdown notifications-menu">
             <!-- Menu toggle button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="btn_notif">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">10</span>
+              @if (count(Auth::user()->unreadNotifications) > 0)
+                <span class="label label-warning" id="jml_notif">{{ count(Auth::user()->unreadNotifications) }}</span>
+              @endif
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
+              <li class="header">
+                @if (count(Auth::user()->unreadNotifications) > 0)
+                  <li class="header">
+                    <span id="header_notif">{{ count(Auth::user()->unreadNotifications) }} Notif baru</span>
+
+                    <span style="float: right;"><a href="#" id="readAll">Tandai Telah Dibaca Semua</a></span>
+                  </li>
+                @else
+                  <li class="header">Tidak Ada Notifikasi Baru</li>
+                @endif
+              </li>
               <li>
                 <!-- Inner Menu: contains the notifications -->
-                <ul class="menu">
-                  <li><!-- start notification -->
+                <ul class="menu" id="list_notif">
+                  <!-- start notification -->
+                  {{-- <li>
                     <a href="#">
                       <i class="fa fa-users text-aqua"></i> 5 new members joined today
                     </a>
-                  </li>
+                  </li> --}}
+
+                  @if (Auth::user()->jabatan->jabatan == 'Pengelola Data Akademik')
+                    @foreach (Auth::user()->unreadNotifications as $notif)
+                      @if ($notif->type == 'App\Notifications\verifSutgasKtu')
+                        <li>
+                          <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+                            Surat Tugas 
+                            @if ($notif->data['tipe_sutgas'] == "Surat Tugas Pembimbing")
+                              Pembimbing
+                            @elseif($notif->data['tipe_sutgas'] == "Surat Tugas Pembahas")
+                              Pembahas
+                            @else
+                              Penguji
+                            @endif 
+                            {{ $notif->data['no_surat'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }} telah diverifikasi.<br>
+                            <small style="color: grey;">{{ Carbon\Carbon::parse($notif->data['waktu_verif'])->locale('id_ID')->DiffForHumans() }}</small>
+                          </a>
+                        </li>
+                      @elseif($notif->type == 'App\Notifications\verifSKSemproKtu')
+                        <li>
+                          <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+                            SK Sempro
+                            {{ $notif->data['no_surat'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }} telah diverifikasi.<br>
+                            <small style="color: grey;">{{ Carbon\Carbon::parse($notif->data['waktu_verif'])->locale('id_ID')->DiffForHumans() }}</small>
+                          </a>
+                        </li>
+                      @elseif($notif->type == 'App\Notifications\verifSKSkripsiKtu')
+                        <li>
+                          <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+                            SK Pembimbing Skripsi 
+                            {{ $notif->data['no_surat_pembimbing'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }} 
+                            dan SK Penguji Skripsi {{ $notif->data['no_surat_penguji'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }} telah diverifikasi.<br>
+                            <small style="color: grey;">{{ Carbon\Carbon::parse($notif->data['waktu_verif'])->locale('id_ID')->DiffForHumans() }}</small>
+                          </a>
+                        </li>
+                      @endif
+                      
+                    @endforeach
+
+                  @endif
+                  
                   <!-- end notification -->
                 </ul>
               </li>
-              <li class="footer"><a href="#">View all</a></li>
+              @if (count(Auth::user()->notifications) > 0)
+                <li class="footer"><a href="{{ route('notifikasi.index') }}">Lihat Semua</a></li>
+              @endif
             </ul>
           </li>
 
           <!-- Tasks Menu (was Here)-->
 
           <!-- User Account Menu -->
-          <li class="dropdown user user-menu">
+          {{-- <li class="dropdown user user-menu">
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
               <img src="/adminlte/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Alexander Pierce</span>
+              <span class="hidden-xs">{{ Auth::user()->nama }}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -131,8 +188,9 @@ desired effect
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>
+
               <!-- Menu Body -->
-              {{-- <li class="user-body">
+              <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
                     <a href="#">Followers</a>
@@ -145,12 +203,13 @@ desired effect
                   </div>
                 </div>
                 <!-- /.row -->
-              </li> --}}
+              </li>
+
               <!-- Menu Footer-->
               <li class="user-footer">
-                {{-- <div class="pull-left">
+                <div class="pull-left">
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
-                </div> --}}
+                </div>
 
                 <div class="pull-right">
                   <a href="#" id="btn_logout" class="btn btn-default btn-flat">Sign out</a>
@@ -161,6 +220,14 @@ desired effect
                 </div>
               </li>
             </ul>
+          </li> --}}
+
+          <li class="user-menu">
+            <a href="#" id="btn_logout" class="">Sign Out</a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+            </form>
           </li>
           <!-- Control Sidebar Toggle Button -->
           
@@ -175,14 +242,14 @@ desired effect
     <section class="sidebar">
 
       <!-- Sidebar user panel (optional) -->
-      <div class="user-panel">
-        <div class="pull-left image">
+      <div class="user-panel" style="padding-bottom: 40px">
+        {{-- <div class="pull-left image">
           <img src="/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p>Alexander Pierce</p>
+        </div> --}}
+        <div class="pull-left info" style="left: 0; width: 100%; white-space: initial; padding-left: 5px;">
+          <p style="text-align: center;">{{ Auth::user()->nama }}</p>
           <!-- Status -->
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          {{-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> --}}
         </div>
       </div>
 
@@ -255,10 +322,10 @@ desired effect
   <footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
-      Anything you want
+      {{-- Anything you want --}}
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    {{-- <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved. --}}
   </footer>
 
   <!-- Control Sidebar -->
@@ -276,21 +343,52 @@ desired effect
 <script src="/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Moment JS -->
+<script src="{{asset('/AdminLTE/bower_components/moment/moment.js')}}"></script>
 <!-- DataTables -->
 <script src="/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="{{asset('/AdminLTE/bower_components/datatables.net/datetime-moment.js')}}"></script>
 <!--- mindmup-Editabletables -->
 <script src="/js/mindmup-editabletable.js"></script>
 <!-- AdminLTE App -->
 <script src="/adminlte/dist/js/adminlte.min.js"></script>
 <!-- page script -->
 <script type="text/javascript">
+  $.fn.dataTable.moment('D MMMM Y', 'id');
   $('#table_data1').DataTable({
     })
 
   $('#btn_logout').click(function (event) {
     event.preventDefault();
     $('#logout-form').trigger('submit');
+  });
+
+  $('a#readAll').click(function(event) {
+    event.preventDefault();
+    console.log('baca semua');
+
+    $.ajax({
+      url: '{{ route('notifikasi.readAll') }}',
+      type: 'GET',
+      // dataType: '',
+      // data: {},
+    })
+    .done(function(result) {
+      console.log("success");
+      console.log('hasil= '+result);
+
+      $('#jml_notif').hide();
+      $('a#readAll').hide();
+      $('#list_notif').hide();
+      $('span#header_notif').text('Tidak Ada Notifikasi Baru');
+    })
+    .fail(function(err, xml) {
+      console.log("error");
+      console.log(err);
+      console.log(xml);
+    });
+    
   });
 </script>
 

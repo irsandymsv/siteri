@@ -22,7 +22,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 // return view('layout.template');
 // });
 
-Route::prefix('template')->name('template.')->group(function ()
+Route::middleware(['auth'])->prefix('notifikasi')->name('notifikasi.')->group(function ()
+{
+	Route::get('/', 'NotificationController@index')->name('index');
+	Route::get('/read/{id}', 'NotificationController@read')->name('read');
+	Route::get('/readAll', 'NotificationController@readAll')->name('readAll');
+});
+
+Route::middleware(['auth', 'checkRole:Pengelola Data Akademik'])->prefix('template')->name('template.')->group(function ()
 {
 	Route::get('/', 'templateController@index')->name('index');
 	Route::get('/create', 'templateController@create')->name('create');
@@ -32,7 +39,7 @@ Route::prefix('template')->name('template.')->group(function ()
 	Route::put('/{id}/update', 'templateController@update')->name('update');
 });
 
-Route::prefix('akademik')->name('akademik.')->group(function (){
+Route::middleware(['auth', 'checkRole:Pengelola Data Akademik'])->prefix('akademik')->name('akademik.')->group(function (){
 	// Route::redirect('/', '/akademik/dashboard');
 	Route::get('/', 'akademikController@dashboard')->name('dashboard');
 
@@ -105,7 +112,7 @@ Route::prefix('akademik')->name('akademik.')->group(function (){
 	Route::put('/template-sk/{id}/update', 'templateController@update_sk_akademik')->name('template-sk.update');
 });
 
-Route::prefix('ktu')->name('ktu.')->group(function ()
+Route::middleware(['auth', 'checkRole:KTU'])->prefix('ktu')->name('ktu.')->group(function ()
 {
 	Route::get('/', 'KTUController@dashboard')->name('dashboard');
 
@@ -145,7 +152,7 @@ Route::prefix('ktu')->name('ktu.')->group(function ()
 	Route::put('/honor-skripsi/verif/{id_sk_honor}', 'honorSkripsiController@ktu_verif')->name('honor-skripsi.verif');
 });
 
-Route::prefix('dekan')->name('dekan.')->group(function()
+Route::middleware(['auth', 'checkRole:Dekan'])->prefix('dekan')->name('dekan.')->group(function()
 {
 	Route::get('/', 'dekanController@dashboard')->name('dashboard');
 
@@ -182,7 +189,7 @@ Route::prefix('dekan')->name('dekan.')->group(function()
 	Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
 });
 
-Route::prefix('keuangan')->name('keuangan.')->group(function()
+Route::middleware(['auth', 'checkRole:Penata Dokumen Keuangan'])->prefix('keuangan')->name('keuangan.')->group(function()
 {
 	Route::get('/', 'KeuanganController@dashboard')->name('dashboard');
 
@@ -211,7 +218,7 @@ Route::prefix('keuangan')->name('keuangan.')->group(function()
 	// Route::put('/honor-sempro/{id_sk_honor}/update', 'honorSemproController@update')->name('honor-sempro.update');
 });
 
-Route::prefix('honor')->name('honor.')->group(function()
+Route::middleware(['auth', 'checkRole:BPP,Penata Dokumen Keuangan'])->prefix('honor')->name('honor.')->group(function()
 {
 	Route::get('/', 'honorController@index')->name('index');
 	Route::get('/create', 'honorController@create')->name('create');
@@ -221,7 +228,7 @@ Route::prefix('honor')->name('honor.')->group(function()
 
 });
 
-Route::prefix('bpp')->name('bpp.')->group(function()
+Route::middleware(['auth', 'checkRole:BPP'])->prefix('bpp')->name('bpp.')->group(function()
 {
 	Route::get('/', 'bppController@dashboard')->name('dashboard');
 
@@ -237,7 +244,7 @@ Route::prefix('bpp')->name('bpp.')->group(function()
 
 });
 
-Route::prefix('wadek2')->name('wadek2.')->group(function()
+Route::middleware(['auth', 'checkRole:Wakil Dekan 2'])->prefix('wadek2')->name('wadek2.')->group(function()
 {
 	Route::get('/', 'wadek2Controller@dashboard')->name('dashboard');
 
@@ -272,7 +279,7 @@ Route::prefix('wadek2')->name('wadek2.')->group(function()
 	Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
 });
 
-Route::prefix('dosen')->name('dosen.')->group(function()
+Route::middleware(['auth', 'checkRole:Dosen'])->prefix('dosen')->name('dosen.')->group(function()
 {
 	Route::get('/', 'dosenController@dashboard')->name('dashboard');
 
@@ -300,7 +307,7 @@ Route::prefix('perlengkapan')->name('perlengkapan.')->group(function () {
     Route::resource('peminjaman_ruang', 'peminjamanRuangController');
 });
 
-Route::prefix('kemahasiswaan')->name('kemahasiswaan.')->group(function()
+Route::middleware(['auth', 'checkRole:Pengadministrasi Kemahasiswaan & Alumni'])->prefix('kemahasiswaan')->name('kemahasiswaan.')->group(function()
 {
 	Route::get('/', function()
 	{

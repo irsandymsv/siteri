@@ -31,6 +31,27 @@ class HomeController extends Controller
 
         if ($user->jabatan->jabatan == "Dosen") {
             return redirect()->route('dosen.dashboard');
+        }
+        elseif ($user->jabatan->jabatan == "Dekan") {
+            return redirect()->route('dekan.dashboard');
+        }
+        elseif ($user->jabatan->jabatan == "Wakil Dekan 2") {
+            return redirect()->route('wadek2.dashboard');
+        }
+        elseif ($user->jabatan->jabatan == "KTU") {
+            return redirect()->route('ktu.dashboard');
+        }
+        elseif ($user->jabatan->jabatan == "BPP") {
+            return redirect()->route('bpp.dashboard');
+        }
+        elseif ($user->jabatan->jabatan == "Pengelola Data Akademik") {
+            return redirect()->route('akademik.dashboard');
+        }
+        elseif ($user->jabatan->jabatan == "Penata Dokumen Keuangan") {
+            return redirect()->route('keuangan.dashboard');
+        }
+        elseif ($user->jabatan->jabatan == "Pengadministrasi Kemahasiswaan & Alumni") {
+            return redirect()->route('kemahasiswaan.dashboard');
         } 
         else {
             return view('home');

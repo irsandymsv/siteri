@@ -1,7 +1,9 @@
 @extends('layouts.template')
 
 @section('side_menu')
-
+  @if (Auth::user()->jabatan->jabatan == 'Pengelola Data Akademik')
+    @include('include.akademik_menu')
+  @endif
 @endsection
 
 @section('page_title')

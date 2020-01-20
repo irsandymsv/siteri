@@ -140,6 +140,7 @@
 
 @section('script')
 	<script type="text/javascript">
+      $.fn.dataTable.moment('D MMMM Y', 'id');
 		$('#tabel_1').DataTable({})
 		$('#tabel_2').DataTable({})
 	</script>

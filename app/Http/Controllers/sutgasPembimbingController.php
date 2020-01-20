@@ -15,6 +15,7 @@ use App\User;
 use App\keris;
 use App\mahasiswa;
 use App\Rules\id_dosen_tidak_boleh_sama;
+use App\Notifications\verifSutgasKtu;
 
 //Surat Tugas Pembimbing Controller
 class sutgasPembimbingController extends suratTugasController
@@ -290,6 +291,14 @@ class sutgasPembimbingController extends suratTugasController
 		else if ($request->verif_ktu == 1) {
             $surat_tugas = $this->verif($surat_tugas,3,null,2);
             $surat_tugas->save();
+
+            $akademik = User::with('jabatan')
+            ->whereHas('jabatan', function(Builder $query)
+            {
+                $query->where('jabatan', 'Pengelola Data Akademik');
+            })->first();
+            $akademik->notify(new verifSutgasKtu($surat_tugas));
+
 			return redirect()->route('ktu.sutgas-pembimbing.show', $id)->with('verif_ktu', 'verifikasi surat tugas berhasil, status surat tugas saat ini "Disetujui KTU"');
 		}
     }

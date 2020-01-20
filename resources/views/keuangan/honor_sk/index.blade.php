@@ -208,6 +208,7 @@
          </tr>`).clone(true).appendTo( '#data_table thead' );
       @endif
 
+      $.fn.dataTable.moment('D MMMM Y', 'id');
       $('#data_table').DataTable({
          order: [],
          orderCellsTop: true,
