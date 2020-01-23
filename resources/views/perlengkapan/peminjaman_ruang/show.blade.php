@@ -71,17 +71,23 @@
                                 <td>{{$item->data_ruang->nama_ruang}}</td>
                                 <td>{{$item->data_ruang->kuota}}</td>
                                 <td>
-                                    @if($laporan->verif_baper != 1)
                                     <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan"
-                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i
-                                            class="fa fa-trash"></i></a>
-                                    @endif
+                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
+                <br><br>
+                @if($laporan->verif_baper == 0)
+                    {!! Form::open(['route' => ['perlengkapan.peminjaman_ruang.update', $item->id], 'method' => 'PUT'])!!}
+                    {!! Form::hidden("verif_baper", 1) !!}
+                    <div class="form-group" style="float: right;">
+                        {!! Form::submit('Setujui', [ 'class'=>'btn btn-success', 'id' => 'submit']) !!}
+                    </div>
+                    {!! Form::close() !!}
+                @endif
             </div>
         </div>
     </div>

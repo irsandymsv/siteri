@@ -19,7 +19,7 @@ $laporan = $laporan[0];
             </div>
 
             <div class="box-body">
-                {{-- @dump($barang) --}}
+                @dump($barang)
                 {!! Form::open(['route' => ['perlengkapan.inventaris.update', $barang->id], 'method' => 'PUT',
                 'id'=>'form'])!!}
                 {{-- {{dd($barang)}} --}}

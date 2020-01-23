@@ -136,10 +136,10 @@ class inventarisController extends Controller
                 ->first();
         }
         return view('perlengkapan.inventaris.edit', [
-            'status' => $status,
-            'nama_ruang' => $nama_ruang,
-            'barang' => $barang,
-            'laporan'    => $laporan->laporan
+            'status'        => $status,
+            'nama_ruang'    => $nama_ruang,
+            'barang'        => $barang,
+            'laporan'       => $laporan->laporan
         ]);
     }
 

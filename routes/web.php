@@ -149,3 +149,12 @@ Route::prefix('perlengkapan')->name('perlengkapan.')->group(function () {
     Route::resource('peminjaman_ruang', 'peminjamanRuangController');
     Route::get('/peminjaman_ruang/ruang/{jumlah}', array('as' => 'ruang.ajax', 'uses' => 'peminjamanRuangController@ruangAjax'));
 });
+
+Route::prefix('ormawa')->name('ormawa.')->group(function () {
+    Route::get('/', function () {
+        return view('ormawa.dashboard');
+    });
+    Route::resource('peminjaman_barang', 'peminjamanBarangController');
+    Route::get('/peminjaman_barang/barang/{id}', array('as' => 'barang.ajax', 'uses' => 'peminjamanBarangController@barangAjax'));
+    Route::resource('peminjaman_ruang', 'peminjamanRuangController');
+});

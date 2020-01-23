@@ -1,24 +1,24 @@
 @extends('perlengkapan.perlengkapan_view')
 
-@section('page_title', 'Peminjaman Barang')
+@section('page_title', 'Peminjaman Ruang')
 
-@section('judul_header', 'Peminjaman Barang')
+@section('judul_header', 'Peminjaman Ruang')
 
 @section('content')
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-success">
             <div class="box-header">
-                <h3 class="box-title">Laporan Peminjaman Barang</h3>
+                <h3 class="box-title">Laporan Peminjaman Ruang</h3>
 
                 <div style="float: right;">
-                    <a href="{{ route('perlengkapan.peminjaman_barang.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Laporan</a>
+                    <a href="{{ route('perlengkapan.peminjaman_ruang.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Laporan</a>
                 </div>
             </div>
 
             <div class="box-body">
                 <div class="table-responsive">
-                    <table id="peminjaman_barang" class="table table-bordered table-hovered">
+                    <table id="peminjaman_ruang" class="table table-bordered table-hovered">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -27,7 +27,10 @@
                                 <th>Jam Mulai</th>
                                 <th>Jam Berakhir</th>
                                 <th>Kegiatan</th>
+                                {{-- <th>Jumlah Peserta</th>
+                                <th>Nama Ruang</th> --}}
                                 <th>Status</th>
+                                <!-- <th>Verifikasi</th> -->
                                 <th style="width:99.8px">Opsi</th>
                             </tr>
                         </thead>
@@ -51,9 +54,17 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('perlengkapan.peminjaman_barang.show', $item->id) }}" class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
-                                    <a href="{{ route('perlengkapan.peminjaman_barang.edit', $item->id) }}" class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
-                                    <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                    <a href="{{ route('perlengkapan.peminjaman_ruang.show', $item->id) }}"
+                                        class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
+                                    @if($item->verif_baper != 1)
+                                    <a href="{{ route('perlengkapan.peminjaman_ruang.edit', [$item->id, 'laporan' => true]) }}"
+                                        class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
+                                    @endif
+                                    @if($item->verif_baper != 1)
+                                    <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan"
+                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i
+                                            class="fa fa-trash"></i></a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
@@ -78,7 +89,7 @@
                 <h4 class="modal-title">Konfirmasi Pembatalan</h4>
             </div>
             <div class="modal-body">
-                <p>Apakah anda yakin ingin membatalkan peminjaman barang ini?</p>
+                <p>Apakah anda yakin ingin membatalkan peminjaman ruang ini?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Tidak</button>
@@ -94,7 +105,7 @@
 @section('script')
 <script>
     $(function() {
-        $('#peminjaman_barang').DataTable();
+        $('#peminjaman_ruang').DataTable();
     });
 </script>
 <script>
@@ -104,7 +115,7 @@
 				var id = $(this).attr('id');
                 console.log(id);
 
-				var url_del = "{{route('perlengkapan.peminjaman_barang.destroy', "id")}}";
+				var url_del = "{{route('perlengkapan.peminjaman_ruang.destroy', "id")}}";
                 url_del = url_del.replace('id', id);
 				console.log(url_del);
 
