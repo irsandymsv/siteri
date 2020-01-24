@@ -78,8 +78,8 @@
 
                         <tbody id="inputan">
                             {!! Form::hidden('status', true) !!}
-                            @foreach($laporan->detail_pinjam_barang as $item)
                             @php $i = 0 @endphp
+                            @foreach($laporan->detail_pinjam_barang as $item)
                             {{-- @dump($item) --}}
                             <tr>
                                 <td>
@@ -117,6 +117,7 @@
                             </tr>
                             @php $i++ @endphp
                             @endforeach
+
                         </tbody>
                         <tfoot>
                             <tr>

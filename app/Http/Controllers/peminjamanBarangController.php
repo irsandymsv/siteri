@@ -375,6 +375,18 @@ class peminjamanBarangController extends Controller
         // }
     }
 
+    public function verif(Request $request, $id)
+    {
+        $this->validate($request, [
+            "verif_baper"  => "required|integer"
+        ]);
+
+        detail_pinjam_barang::findOrfail($id)->update([
+            'verif_baper'    => $request->verif_baper
+        ]);
+        return redirect()->route('perlengkapan.peminjaman_barang.show', $id);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
