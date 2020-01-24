@@ -113,7 +113,7 @@ class peminjamanBarangController extends Controller
         for ($i = 0; $i < count($request->merk_barang); $i++) {
             detail_pinjam_barang::create([
                 'idpinjam_barang_fk'        => $idlaporan,
-                'iddetail_data_barang_fk'   => ($request->merk_barang[$i] + 1),
+                'iddetail_data_barang_fk'   => $request->merk_barang[$i],
                 'jumlah'                    => $request->jumlah[$i],
                 'idsatuan_fk'               => ($request->satuan[$i] + 1)
             ]);
@@ -255,6 +255,7 @@ class peminjamanBarangController extends Controller
     {
         // if (Auth::user()->id_jabatan == 'ormawa') {
         $idlaporan = peminjaman_barang::all()->pluck('id')->last();
+        // dd($request);
         if ($request->laporan) {
 
             $this->validate($request, [
@@ -283,30 +284,31 @@ class peminjamanBarangController extends Controller
 
             detail_pinjam_barang::whereIn('idpinjam_barang_fk', [$id])->delete();
 
-            for ($i = 0; $i < count($request->nama_barang); $i++) {
+            for ($i = 0; $i < count($request->merk_barang); $i++) {
                 // dd($request);
                 detail_pinjam_barang::create([
                     'idpinjam_barang_fk'        => $id,
-                    'iddetail_data_barang_fk'   => ($request->merk_barang[$i] + 1),
+                    'iddetail_data_barang_fk'   => $request->merk_barang[$i],
                     'jumlah'        => $request->jumlah[$i],
-                    'id_satuan'     => ($request->satuan[$i] + 1)
+                    'idsatuan_fk'   => ($request->satuan[$i] + 1)
                 ]);
             }
+            // dd("gak error");
         } else {
             // dd($request);
             $this->validate($request, [
-                "nama_barang"   => "required|integer",
+                "barang"        => "required|integer",
                 "merk_barang"   => "required|integer",
                 "jumlah"        => "required|integer",
                 "satuan"        => "required|integer"
             ]);
 
             detail_pinjam_barang::findOrfail($id)->update([
-                'iddetail_data_barang_fk'   => ($request->merk_barang + 1),
-                'jumlah'        => $request->jumlah,
-                'id_satuan'     => ($request->satuan + 1)
+                'idpinjam_barang_fk'        => $idlaporan,
+                'iddetail_data_barang_fk'   => $request->merk_barang,
+                'jumlah'                    => $request->jumlah,
+                'idsatuan_fk'               => ($request->satuan + 1)
             ]);
-            dd("gak error");
         }
         return redirect()->route('ormawa.peminjaman_barang.show', $idlaporan);
         // } else if (Auth::user()->id_jabatan == 'perlengkapan') {
@@ -397,6 +399,7 @@ class peminjamanBarangController extends Controller
     {
         // if (Auth::user()->id_jabatan == 'perlengkapan') {
         if ($request->laporan) {
+            dd($request);
             peminjaman_barang::findOrfail($id)->delete();
             Log::alert('Berhasil Dihapus');
         } else {

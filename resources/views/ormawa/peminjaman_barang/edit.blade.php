@@ -77,7 +77,7 @@
                         </thead>
 
                         <tbody id="inputan">
-                            {!! Form::hidden('status', true) !!}
+                            {!! Form::hidden('laporan', true) !!}
                             @php $i = 0 @endphp
                             @foreach($laporan->detail_pinjam_barang as $item)
                             {{-- @dump($item) --}}

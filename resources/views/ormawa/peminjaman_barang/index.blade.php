@@ -28,7 +28,7 @@
                                 <th>Jam Berakhir</th>
                                 <th>Kegiatan</th>
                                 <th>Status</th>
-                                <th style="width:99.8px">Opsi</th>
+                                <th style="width:102px">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,7 +53,7 @@
                                 <td>
                                     <a href="{{ route('ormawa.peminjaman_barang.show', $item->id) }}" class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
                                     @if($item->verif_baper != 1)
-                                    <a href="{{ route('ormawa.peminjaman_barang.edit', [$item->id, 'status' => true]) }}" class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ route('ormawa.peminjaman_barang.edit', $item->id) }}" class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
                                     @endif
                                     @if($item->verif_baper != 1)
                                     <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
