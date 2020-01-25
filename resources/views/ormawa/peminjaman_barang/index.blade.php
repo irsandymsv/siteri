@@ -4,6 +4,11 @@
 
 @section('judul_header', 'Peminjaman Barang')
 
+@section('css_link')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col-xs-12">
@@ -52,10 +57,10 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('ormawa.peminjaman_barang.show', $item->id) }}" class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
-                                    @if($item->verif_baper != 1)
+                                    @if($item->verif_ktu != 1)
                                     <a href="{{ route('ormawa.peminjaman_barang.edit', $item->id) }}" class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
                                     @endif
-                                    @if($item->verif_baper != 1)
+                                    @if($item->verif_ktu != 1)
                                     <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
                                     @endif
 
@@ -100,40 +105,40 @@
 <script>
     $(function() {
         $('#peminjaman_barang').DataTable();
-    });
-</script>
-<script>
-    $(function(){
+
         $('a.btn.btn-danger').click(function(){
             event.preventDefault();
-				var id = $(this).attr('id');
-                console.log(id);
+            id = $(this).attr('id');
+            console.log(id);
 
-				var url_del = "{{route('ormawa.peminjaman_barang.destroy', "id")}}";
-                url_del = url_del.replace('id', id);
-				console.log(url_del);
+            url_del = "{{route('ormawa.peminjaman_barang.destroy', "id")}}";
+            url_del = url_del.replace('id', id)
+            console.log(url_del);
 
-				$('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
-					$.ajaxSetup({
-					    headers: {
-					        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-					    }
-					});
+            $('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
 
-					$.ajax({
-						url: url_del,
-						type: 'POST',
-						data: {_method: 'DELETE'},
-					})
-					.done(function(hasil) {
-						console.log("success");
-						$("tr#lap_"+id).remove();
-					})
-					.fail(function() {
-						console.log("error");
-						$("tr#lap_"+id).remove();
-					});
-				});
+                $.ajax({
+                    url: url_del,
+                    type: 'POST',
+                    // dataType: '',
+                    data: {_method: 'DELETE', 'laporan':true},
+                })
+                .done(function(hasil) {
+                    console.log("success");
+                    $("tr#lap_"+id).remove();
+                    $("#success_delete").show();
+                    $("#success_delete").find('span').html(hasil);
+                    $("#success_delete").fadeOut(1800);
+                })
+                .fail(function() {
+                    console.log("error");
+                });
+            });
         });
     });
 

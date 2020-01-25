@@ -5,6 +5,7 @@
 @section('judul_header', 'Peminjaman Barang')
 
 @section('css_link')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" type="text/css" href="/css/custom_style.css">
 <style type="text/css">
     .tabel-keterangan td {
@@ -74,16 +75,16 @@
                             @php $no = 0 @endphp
                             @foreach($detail_laporan as $item)
                             {{-- {{dd($item)}} --}}
-                             <tr id="lap_{{ $item->id }}">
+                             <tr id="{{ $item->iddetail_data_barang_fk }}">
                                 <td>{{$no+=1}}</td>
                                 <td>{{$item->detail_data_barang->data_barang->nama_barang}}</td>
                                 <td>{{$item->detail_data_barang->merk_barang}}</td>
                                 <td>{{$item->jumlah }} {{$item->satuan->satuan }}</td>
-                                {{-- <td>
-                                    @if($item->verif_ktu != 1)
-                                    <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                <td>
+                                    @if($item->peminjaman_barang->verif_ktu != 1)
+                                    <a href="#" class="btn btn-danger" id="{{ $item->idpinjam_barang_fk }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
                                     @endif
-                                </td> --}}
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -107,7 +108,7 @@
                 <h4 class="modal-title">Konfirmasi Pembatalan</h4>
             </div>
             <div class="modal-body">
-                <p>Apakah anda yakin ingin membatalkan inventaris ini?</p>
+                <p>Apakah anda yakin ingin membatalkan peminjaman barang ini?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Tidak</button>
@@ -125,6 +126,43 @@
 <script>
     $(function() {
         $('#peminjaman_barang').DataTable();
+
+        $('a.btn.btn-danger').click(function(){
+            event.preventDefault();
+            id = $(this).attr('id');
+            idmerk = $(this).parents('tr').attr('id');
+            console.log(id);
+            console.log(idmerk);
+
+            url_del = "{{route('ormawa.peminjaman_barang.destroy', "id")}}";
+            url_del = url_del.replace('id', id);
+            console.log(url_del);
+
+            $('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: url_del,
+                    type: 'POST',
+                    data: {_method: 'DELETE', 'idmerk':idmerk},
+                })
+                .done(function(hasil) {
+                    console.log("success");
+                    $("tr#"+idmerk).remove();
+                    $("#success_delete").show();
+                    $("#success_delete").find('span').html(hasil);
+                    $("#success_delete").fadeOut(1800);
+                })
+                .fail(function() {
+                    console.log("error");
+                    $("tr#"+idmerk).remove();
+                });
+            });
+        });
     });
 </script>
 @endsection

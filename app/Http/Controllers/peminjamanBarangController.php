@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use Exception;
 use App\Http\Controllers\Controller;
@@ -397,23 +399,12 @@ class peminjamanBarangController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        // if (Auth::user()->id_jabatan == 'perlengkapan') {
         if ($request->laporan) {
-            dd($request);
             peminjaman_barang::findOrfail($id)->delete();
-            Log::alert('Berhasil Dihapus');
         } else {
-            detail_pinjam_barang::findOrfail($id)->delete();
-            Log::alert('Berhasil Dihapus');
+            detail_pinjam_barang::where('idpinjam_barang_fk', $id)
+                ->where('iddetail_data_barang_fk', $request->idmerk)
+                ->delete();
         }
-        // } else if (Auth::user()->id_jabatan == 'perlengkapan') {
-        //     if ($request->laporan) {
-        //         peminjaman_barang::findOrfail($id)->delete();
-        //         Log::alert('Berhasil Dihapus');
-        //     } else {
-        //         detail_pinjam_barang::findOrfail($id)->delete();
-        //         Log::alert('Berhasil Dihapus');
-        //     }
-        // }
     }
 }
