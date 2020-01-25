@@ -7,87 +7,70 @@
 @section('content')
 <div class="row">
     <div class="col-xs-12">
-        <div class="box box-primary">
+        <div class="box box-success">
             <div class="box-header">
                 <h3 class="box-title">Laporan Peminjaman Ruang</h3>
+
+                <div style="float: right;">
+                    <a href="{{ route('perlengkapan.peminjaman_ruang.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Laporan</a>
+                </div>
             </div>
 
             <div class="box-body">
-                <div class="">
-                    <table class="tabel-keterangan">
-                        <tr>
-                            <td><b>Tanggal Mulai</b></td>
-                            <td>: {{$laporan->tanggal_mulai}}</td>
-                        </tr>
-                        <tr>
-                            <td><b>Tanggal Berakhir</b></td>
-                            <td>: {{$laporan->tanggal_berakhir}}</td>
-                        </tr>
-                        <tr>
-                            <td><b>Jam Mulai</b></td>
-                            <td>: {{$laporan->jam_mulai}}</td>
-                        </tr>
-                        <tr>
-                            <td><b>Jam Berakhir</b></td>
-                            <td>: {{$laporan->jam_berakhir}}</td>
-                        </tr>
-                        <tr>
-                            <td><b>Kegiatan</b></td>
-                            <td>: {{$laporan->kegiatan}}</td>
-                        </tr>
-                        <tr>
-                            <td><b>Jumlah Peserta</b></td>
-                            <td>: {{$laporan->jumlah_peserta}}</td>
-                        </tr>
-                        <tr>
-                            <td><b>Status</b></td>
-                            <td>: @if($laporan->verif_baper == 0)
-                                    Belum Disetujui
-                                    @elseif($laporan->verif_ktu == 0)
-                                    Belum Diverifikasi
-                                    @else
-                                    <label class="label bg-green">Sudah Diverifikasi</label>
-                                    @endif
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <br>
                 <div class="table-responsive">
-                    <table id="inventaris" class="table table-bordered table-hovered">
+                    <table id="peminjaman_ruang" class="table table-bordered table-hovered">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama Ruang</th>
-                                <th>Kuota</th>
+                                <th>Tanggal Mulai</th>
+                                <th>Tanggal Berakhir</th>
+                                <th>Jam Mulai</th>
+                                <th>Jam Berakhir</th>
+                                <th>Kegiatan</th>
+                                {{-- <th>Jumlah Peserta</th>
+                                <th>Nama Ruang</th> --}}
+                                <th>Status</th>
+                                <!-- <th>Verifikasi</th> -->
                                 <th style="width:99.8px">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @php $no = 0 @endphp
-                            @foreach($detail_laporan as $item)
-                             <tr id="lap_{{ $item->id }}">
+                            @foreach($laporan as $item)
+                            <tr id="lap_{{ $item->id }}">
                                 <td>{{$no+=1}}</td>
-                                <td>{{$item->data_ruang->nama_ruang}}</td>
-                                <td>{{$item->data_ruang->kuota}}</td>
+                                <td>{{$item->tanggal_mulai}}</td>
+                                <td>{{$item->tanggal_berakhir}}</td>
+                                <td>{{$item->jam_mulai}}</td>
+                                <td>{{$item->jam_berakhir}}</td>
+                                <td>{{$item->kegiatan}}</td>
                                 <td>
+                                    @if($item->verif_baper == 0)
+                                    Belum Disetujui
+                                    @elseif($item->verif_ktu == 0)
+                                    Belum Diverifikasi
+                                    @else
+                                    <label class="label bg-green">Sudah Diverifikasi</label>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('perlengkapan.peminjaman_ruang.show', $item->id) }}"
+                                        class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
+                                    @if($item->verif_baper != 1)
+                                    <a href="{{ route('perlengkapan.peminjaman_ruang.edit', [$item->id, 'laporan' => true]) }}"
+                                        class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
+                                    @endif
+                                    @if($item->verif_baper != 1)
                                     <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan"
-                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i
+                                            class="fa fa-trash"></i></a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
-                <br><br>
-                @if($laporan->verif_baper == 0)
-                    {!! Form::open(['route' => ['perlengkapan.peminjaman_ruang.verif', $item->id], 'method' => 'PUT'])!!}
-                    {!! Form::hidden("verif_baper", 1) !!}
-                    <div class="form-group" style="float: right;">
-                        {!! Form::submit('Setujui', [ 'class'=>'btn btn-success', 'id' => 'submit']) !!}
-                    </div>
-                    {!! Form::close() !!}
-                @endif
             </div>
         </div>
     </div>
@@ -117,7 +100,6 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-
 @endsection
 
 @section('script')
@@ -163,4 +145,3 @@
 
 </script>
 @endsection
-

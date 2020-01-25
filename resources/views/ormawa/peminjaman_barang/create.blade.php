@@ -1,4 +1,4 @@
-@extends('perlengkapan.perlengkapan_view')
+@extends('ormawa.ormawa_view')
 
 @section('page_title', 'Peminjaman Barang')
 
@@ -25,7 +25,7 @@
             </div>
 
             <div class="box-body">
-                {!! Form::open(['route' => 'perlengkapan.peminjaman_barang.store', 'id'=>'form']) !!}
+                {!! Form::open(['route' => 'ormawa.peminjaman_barang.store', 'id'=>'form']) !!}
                 <div id="isiForm" class="table-responsive">
                     <table id="tbl-data" class="table table-bordered table-hover">
                         <thead>
@@ -83,8 +83,7 @@
                                     <select id="barang" name="barang[]" class="form-control barang">
                                         <option value="null">Pilih Barang</option>
                                         @foreach ($barang as $val)
-                                        <option value="{{ $val->id }}" onchange="{{ $val->nama_barang }}">
-                                            {{$val->nama_barang}}</option>
+                                        <option value="{{ $val->id }}">{{ $val->nama_barang }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -167,8 +166,7 @@
                         <select id="barang" name="barang[]" class="form-control barang">
                             <option value="">Pilih Barang</option>
                             @foreach ($barang as $val)
-                            <option value="{{ $val->id }}" onchange="{{ $val->barang }}">
-                                {{$val->nama_barang}}</option>
+                            <option value="{{ $val->id }}">{{$val->nama_barang}}</option>
                             @endforeach
                         </select>
                     </td>
@@ -179,7 +177,7 @@
                     </td>
 
                     <td>
-                        {!! Form::text('jumlah', null, ['class' => 'form-control angka', 'id' => 'jumlah'])
+                        {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah angka'])
                         !!}
                     </td>
 
@@ -211,7 +209,7 @@
 
                 if(id) {
                     $.ajax({
-                    url: "/perlengkapan/peminjaman_barang/barang/" + id,
+                    url: "/ormawa/peminjaman_barang/barang/" + id,
                     type: "GET",
                     dataType: "json",
                     success:function(data) {

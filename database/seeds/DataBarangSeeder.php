@@ -120,11 +120,11 @@ class DataBarangSeeder extends Seeder
         ));
         DB::table('data_barang')->insert(array(
             'kode_barang' => '3050205015',
-            'nama_barang' => 'tandon Air'
+            'nama_barang' => 'Tandon Air'
         ));
         DB::table('data_barang')->insert(array(
             'kode_barang' => '3050206002',
-            'nama_barang' => 'televisi'
+            'nama_barang' => 'Televisi'
         ));
         DB::table('data_barang')->insert(array(
             'kode_barang' => '3050206005',
@@ -144,7 +144,7 @@ class DataBarangSeeder extends Seeder
         ));
         DB::table('data_barang')->insert(array(
             'kode_barang' => '3050206034',
-            'nama_barang' => 'tangga Alumunium'
+            'nama_barang' => 'Tangga Alumunium'
         ));
         DB::table('data_barang')->insert(array(
             'kode_barang' => '3050206036',
@@ -176,11 +176,11 @@ class DataBarangSeeder extends Seeder
         ));
         DB::table('data_barang')->insert(array(
             'kode_barang' => '3060105037',
-            'nama_barang' => 'teropong'
+            'nama_barang' => 'Teropong'
         ));
         DB::table('data_barang')->insert(array(
             'kode_barang' => '3060201001',
-            'nama_barang' => 'telephone(PABX)'
+            'nama_barang' => 'Telephone(PABX)'
         ));
         DB::table('data_barang')->insert(array(
             'kode_barang' => '3060201010',
@@ -280,7 +280,7 @@ class DataBarangSeeder extends Seeder
         ));
         DB::table('data_barang')->insert(array(
             'kode_barang' => '3100104021',
-            'nama_barang' => 'Kabel UtP'
+            'nama_barang' => 'Kabel UTP'
         ));
         DB::table('data_barang')->insert(array(
             'kode_barang' => '3100104024',
@@ -304,7 +304,7 @@ class DataBarangSeeder extends Seeder
         ));
         DB::table('data_barang')->insert(array(
             'kode_barang' => '3190102001',
-            'nama_barang' => 'Alat tenis Meja'
+            'nama_barang' => 'Alat Tenis Meja'
         ));
         DB::table('data_barang')->insert(array(
             'kode_barang' => '6020101002',
@@ -313,6 +313,10 @@ class DataBarangSeeder extends Seeder
         DB::table('data_barang')->insert(array(
             'kode_barang' => '8010101001',
             'nama_barang' => 'Software Komputer'
+        ));
+        DB::table('data_barang')->insert(array(
+            'kode_barang' => '3050204006',
+            'nama_barang' => 'Kipas Angin'
         ));
     }
 }

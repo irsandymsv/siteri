@@ -1,4 +1,4 @@
-@extends('perlengkapan.perlengkapan_view')
+@extends('ormawa.ormawa_view')
 
 @section('page_title', 'Peminjaman Barang')
 
@@ -74,28 +74,21 @@
                             @php $no = 0 @endphp
                             @foreach($detail_laporan as $item)
                             {{-- {{dd($item)}} --}}
-                             <tr id="lap_{{ $item->peminjaman_barang->id }}">
+                             <tr id="lap_{{ $item->id }}">
                                 <td>{{$no+=1}}</td>
                                 <td>{{$item->detail_data_barang->data_barang->nama_barang}}</td>
                                 <td>{{$item->detail_data_barang->merk_barang}}</td>
                                 <td>{{$item->jumlah }} {{$item->satuan->satuan }}</td>
                                 {{-- <td>
-                                    <a href="#" class="btn btn-danger" id="{{ $item->peminjaman_barang->id }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                    @if($item->verif_ktu != 1)
+                                    <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                    @endif
                                 </td> --}}
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
-                <br><br>
-                @if($laporan->verif_baper == 0)
-                    {!! Form::open(['route' => ['perlengkapan.peminjaman_barang.update', $item->id], 'method' => 'PUT'])!!}
-                    {!! Form::hidden("verif_baper", 1) !!}
-                    <div class="form-group" style="float: right;">
-                        {!! Form::submit('Setujui', [ 'class'=>'btn btn-success', 'id' => 'submit']) !!}
-                    </div>
-                    {!! Form::close() !!}
-                @endif
             </div>
         </div>
     </div>

@@ -1,8 +1,8 @@
-@extends('perlengkapan.perlengkapan_view')
+@extends('ormawa.ormawa_view')
 
 @section('page_title', 'Peminjaman Barang')
 
-@section('judul_header', 'Buat Laporan Peminjaman Barang')
+@section('judul_header', 'Ubah Laporan Peminjaman Barang')
 
 @section('css_link')
 <link href="/adminlte/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
@@ -21,11 +21,14 @@
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Buat Laporan Peminjaman Barang</h3>
+                <h3 class="box-title">Ubah Laporan Peminjaman Barang</h3>
             </div>
 
             <div class="box-body">
-                {!! Form::open(['route' => 'perlengkapan.peminjaman_barang.store', 'id'=>'form']) !!}
+                {{-- @dump($laporan) --}}
+                {!! Form::open(['route' => ['ormawa.peminjaman_barang.update', $laporan->id], 'method' => 'PUT',
+                'id'=>'form']) !!}
+                {{-- {{dd($laporan)}} --}}
                 <div id="isiForm" class="table-responsive">
                     <table id="tbl-data" class="table table-bordered table-hover">
                         <thead>
@@ -41,27 +44,23 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    {!! Form::date('tanggal_mulai', null, ['class' => 'form-control tanggal']) !!}
-                                    {{-- {!! Form::text('tanggal_mulai', null, ['class' => 'form-control datepicker not-rounded-border']) !!} --}}
+                                    {!! Form::date('tanggal_mulai', $laporan->tanggal_mulai, ['class' => 'form-control tanggal']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::date('tanggal_berakhir', null, ['class' => 'form-control tanggal']) !!}
-                                    {{-- {!! Form::text('tanggal_berakhir', null, ['class' => 'form-control datepicker not-rounded-border']) !!} --}}
+                                    {!! Form::date('tanggal_berakhir', $laporan->tanggal_berakhir, ['class' => 'form-control tanggal']) !!}
                                 </td>
 
                                 <td>
-                                    {{-- {!! Form::text('jam_mulai', null, ['class' => 'form-control timepicker']) !!} --}}
-                                    {!! Form::time('jam_mulai', null, ['class' => 'form-control']) !!}
+                                    {!! Form::time('jam_mulai', $laporan->jam_mulai, ['class' => 'form-control']) !!}
                                 </td>
 
                                 <td>
-                                    {{-- {!! Form::text('jam_berakhir', null, ['class' => 'form-control timepicker']) !!} --}}
-                                    {!! Form::time('jam_berakhir', null, ['class' => 'form-control']) !!}
+                                    {!! Form::time('jam_berakhir', $laporan->jam_berakhir, ['class' => 'form-control']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('kegiatan', null, ['class' => 'form-control']) !!}
+                                    {!! Form::text('kegiatan', $laporan->kegiatan, ['class' => 'form-control']) !!}
                                 </td>
                             </tr>
                         </tbody>
@@ -78,36 +77,47 @@
                         </thead>
 
                         <tbody id="inputan">
+                            {!! Form::hidden('laporan', true) !!}
+                            @php $i = 0 @endphp
+                            @foreach($laporan->detail_pinjam_barang as $item)
+                            {{-- @dump($item) --}}
                             <tr>
                                 <td>
                                     <select id="barang" name="barang[]" class="form-control barang">
-                                        <option value="null">Pilih Barang</option>
+                                        <option value="">Pilih Barang</option>
                                         @foreach ($barang as $val)
-                                        <option value="{{ $val->id }}" onchange="{{ $val->nama_barang }}">
-                                            {{$val->nama_barang}}</option>
+                                        <option value="{{ $val->id }}" {{ ($val->id == $item->detail_data_barang->idbarang_fk) ? 'selected' : '' }}>
+                                            {{ $val->nama_barang }}</option>
                                         @endforeach
                                     </select>
                                 </td>
 
                                 <td class="merk">
-                                    <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang"
-                                        disabled="true">
+                                    <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang">
+                                        @foreach ($merk[$i] as $val)
+                                        <option value="{{ $val->id }}" {{ ($val->id == $item->iddetail_data_barang_fk) ? 'selected' : '' }}>
+                                            {{ $val->merk_barang }}</option>
+                                        @endforeach
                                     </select>
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah angka'])
+                                    {!! Form::text('jumlah[]', $item->jumlah, ['class' => 'form-control angka', 'id' => 'jumlah'])
                                     !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control'])!!}
+                                    {!! Form::select('satuan[]', $satuan, $item->idsatuan_fk-1, ['class' => 'form-control', 'id' =>
+                                    'satuan'])!!}
                                 </td>
 
                                 <td>
                                     {!! Form::button(null , [ 'class'=>'fa fa-trash btn btn-danger']) !!}
                                 </td>
                             </tr>
+                            @php $i++ @endphp
+                            @endforeach
+
                         </tbody>
                         <tfoot>
                             <tr>
@@ -121,11 +131,12 @@
                     </table>
 
                     <h5>Total Data = <span class="data_count">0</span></h5>
-                </div>
-                <button id="tambah" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</button>
-                <br><br>
-                <div class="form-group" style="float: right;">
-                    {!! Form::submit('Simpan dan Kirim', [ 'class'=>'btn btn-success', 'id' => 'submit']) !!}
+
+                    <button id="tambah" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</button>
+                    <br><br>
+                    <div class="form-group" style="float: right;">
+                        {!! Form::submit('Simpan dan Kirim', [ 'class'=>'btn btn-success', 'id' => 'submit']) !!}
+                    </div>
                 </div>
                 {!! Form::close() !!}
             </div>
@@ -167,8 +178,7 @@
                         <select id="barang" name="barang[]" class="form-control barang">
                             <option value="">Pilih Barang</option>
                             @foreach ($barang as $val)
-                            <option value="{{ $val->id }}" onchange="{{ $val->barang }}">
-                                {{$val->nama_barang}}</option>
+                            <option value="{{ $val->id }}">{{$val->nama_barang}}</option>
                             @endforeach
                         </select>
                     </td>
@@ -179,7 +189,7 @@
                     </td>
 
                     <td>
-                        {!! Form::text('jumlah', null, ['class' => 'form-control angka', 'id' => 'jumlah'])
+                        {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah angka'])
                         !!}
                     </td>
 
@@ -211,7 +221,7 @@
 
                 if(id) {
                     $.ajax({
-                    url: "/perlengkapan/peminjaman_barang/barang/" + id,
+                    url: "/ormawa/peminjaman_barang/barang/" + id,
                     type: "GET",
                     dataType: "json",
                     success:function(data) {
@@ -248,3 +258,4 @@
 
 </script>
 @endsection
+
