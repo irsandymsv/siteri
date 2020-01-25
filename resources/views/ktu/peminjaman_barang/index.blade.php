@@ -1,47 +1,32 @@
 @extends('perlengkapan.perlengkapan_view')
 
-@section('page_title', 'Laporan Pengadaan')
+@section('page_title', 'Peminjaman Barang')
 
-@section('css_link')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
-<style type="text/css">
-    .tabel-keterangan td {
-        padding-right: 10px;
-        font-size: 15px;
-    }
-</style>
-@endsection
-
-@section('judul_header', 'Laporan Pengadaan')
+@section('judul_header', 'Peminjaman Barang')
 
 @section('content')
-
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-success">
             <div class="box-header">
-                <h3 class="box-title">Laporan Pengadaan</h3>
+                <h3 class="box-title">Laporan Peminjaman Barang</h3>
 
                 <div style="float: right;">
-                    <a href="{{ route('perlengkapan.pengadaan.create') }}" class="btn btn-primary"><i
-                            class="fa fa-plus"></i> Buat Laporan</a>
+                    <a href="{{ route('perlengkapan.peminjaman_barang.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Laporan</a>
                 </div>
             </div>
 
             <div class="box-body">
                 <div class="table-responsive">
-                    <table id="pengadaan" class="table table-bordered table-hovered">
+                    <table id="peminjaman_barang" class="table table-bordered table-hovered">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Tanggal Dibuat</th>
-                                <th>Peruntukan</th>
-                                {{-- <th>Nama Barang</th>
-                                <th>Spesifikasi</th>
-                                <th>Jumlah</th>
-                                <th>Harga Satuan</th>
-                                <th>Total</th> --}}
+                                <th>Tanggal Mulai</th>
+                                <th>Tanggal Berakhir</th>
+                                <th>Jam Mulai</th>
+                                <th>Jam Berakhir</th>
+                                <th>Kegiatan</th>
                                 <th>Status</th>
                                 <th style="width:99.8px">Opsi</th>
                             </tr>
@@ -51,33 +36,27 @@
                             @foreach($laporan as $item)
                             <tr id="lap_{{ $item->id }}">
                                 <td>{{$no+=1}}</td>
+                                <td>{{$item->tanggal_mulai}}</td>
+                                <td>{{$item->tanggal_berakhir}}</td>
+                                <td>{{$item->jam_mulai}}</td>
+                                <td>{{$item->jam_berakhir}}</td>
+                                <td>{{$item->kegiatan}}</td>
                                 <td>
-                                    {{Carbon\Carbon::parse($item->dibuat)->locale('id_ID')->isoFormat('D MMMM Y')}}
-                                </td>
-                                <td>{{$item->keterangan}}</td>
-                                {{-- <td>{{$item->nama_barang}}</td>
-                                <td>{{$item->spesifikasi}}</td>
-                                <td>{{$item->jumlah}}</td>
-                                <td>Rp {{$item->harga}}</td>
-                                <td>Rp {{$item->jumlah * $item->harga}}</td> --}}
-                                <td>
-                                    @if($item->verif_wadek2 == 0)
+                                    @if($item->verif_baper == 0)
+                                    Belum Disetujui
+                                    @elseif($item->verif_ktu == 0)
                                     Belum Diverifikasi
                                     @else
                                     <label class="label bg-green">Sudah Diverifikasi</label>
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('perlengkapan.pengadaan.show', $item->id) }}"
-                                        class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
-                                    @if($item->verif_wadek2 != 1)
-                                    <a href="{{ route('perlengkapan.pengadaan.edit', [$item->id, 'laporan' => true]) }}"
-                                        class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ route('perlengkapan.peminjaman_barang.show', $item->id) }}" class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
+                                    @if($item->verif_baper != 1)
+                                    <a href="{{ route('perlengkapan.peminjaman_barang.edit', $item->id) }}" class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
                                     @endif
-                                    @if($item->verif_wadek2 != 1)
-                                    <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan"
-                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i
-                                            class="fa fa-trash"></i></a>
+                                    @if($item->verif_baper != 1)
+                                    <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
                                     @endif
 
                                 </td>
@@ -104,7 +83,7 @@
                 <h4 class="modal-title">Konfirmasi Pembatalan</h4>
             </div>
             <div class="modal-body">
-                <p>Apakah anda yakin ingin membatalkan pengadaan ini?</p>
+                <p>Apakah anda yakin ingin membatalkan peminjaman barang ini?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Tidak</button>
@@ -115,21 +94,23 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-
 @endsection
 
 @section('script')
-
+<script>
+    $(function() {
+        $('#peminjaman_barang').DataTable();
+    });
+</script>
 <script>
     $(function(){
-        $('#pengadaan').DataTable();
-
         $('a.btn.btn-danger').click(function(){
             event.preventDefault();
-				id = $(this).attr('id');
+				var id = $(this).attr('id');
+                console.log(id);
 
-				url_del = "{{route('perlengkapan.pengadaan.destroy', "id")}}";
-                url_del = url_del.replace('id', id)
+				var url_del = "{{route('perlengkapan.peminjaman_barang.destroy', "id")}}";
+                url_del = url_del.replace('id', id);
 				console.log(url_del);
 
 				$('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
@@ -142,22 +123,19 @@
 					$.ajax({
 						url: url_del,
 						type: 'POST',
-						// dataType: '',
-						data: {_method: 'DELETE', 'laporan':true},
+						data: {_method: 'DELETE'},
 					})
 					.done(function(hasil) {
 						console.log("success");
 						$("tr#lap_"+id).remove();
-						$("#success_delete").show();
-						$("#success_delete").find('span').html(hasil);
-						$("#success_delete").fadeOut(1800);
 					})
 					.fail(function() {
 						console.log("error");
+						$("tr#lap_"+id).remove();
 					});
 				});
         });
     });
-</script>
 
+</script>
 @endsection

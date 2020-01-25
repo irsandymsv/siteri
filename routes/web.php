@@ -135,7 +135,9 @@ Route::prefix('wadek2')->name('wadek2.')->group(function () {
     Route::get('/honor-sempro', 'honorSemproController@wadek2_index')->name('honor-sempro.index');
     Route::get('/honor-sempro/{id_sk_honor}', 'honorSemproController@wadek2_show')->name('honor-sempro.show');
     Route::put('/honor-sempro/verif/{id_sk_honor}', 'honorSemproController@wadek2_verif')->name('honor-sempro.verif');
-    Route::resource('pengadaan', 'pengadaanController');
+    Route::resource('pengadaan', 'pengadaanController', [
+        'only' => ['index', 'show', 'update']
+    ]);
 });
 
 Route::prefix('perlengkapan')->name('perlengkapan.')->group(function () {
