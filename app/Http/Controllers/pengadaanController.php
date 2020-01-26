@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use App\laporan_pengadaan;
 use App\pengadaan;
 use App\satuan;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class pengadaanController extends Controller
 {
@@ -18,6 +20,8 @@ class pengadaanController extends Controller
      */
     public function index()
     {
+        // ===== Perlengkapan =====
+        // if (Auth::user()->id_jabatan == 'perlengkapan') {
         // $db = laporan_pengadaan::with(['pengadaan', 'pengadaan.satuan'])
         //     ->get();
         $db = laporan_pengadaan::all();
@@ -25,6 +29,16 @@ class pengadaanController extends Controller
         return view('perlengkapan.pengadaan.index', [
             'laporan'  => $db
         ]);
+        // }
+
+        // ===== Wadek 2 =====
+        // else if (Auth::user()->id_jabatan == 'wadek2') {
+        $db = laporan_pengadaan::all();
+        // dd($db);
+        return view('wadek2.pengadaan.index', [
+            'laporan'  => $db
+        ]);
+        // }
     }
 
     /**
@@ -88,6 +102,15 @@ class pengadaanController extends Controller
         // }
     }
 
+    // // ===== Perlengkapan =====
+    // if (Auth::user()->id_jabatan == 'perlengkapan') {
+    // }
+
+    // // ===== Wadek 2 =====
+    // else if (Auth::user()->id_jabatan == 'wadek2') {
+    // }
+
+
     /**
      * Display the specified resource.
      *
@@ -96,15 +119,29 @@ class pengadaanController extends Controller
      */
     public function show($id)
     {
-        $laporan = laporan_pengadaan::findOrfail($id);
+        // // ===== Perlengkapan =====
+        // if (Auth::user()->id_jabatan == 'perlengkapan') {
         $pengadaan = pengadaan::where('id_laporan', $id)
             ->with(['laporan_pengadaan', 'satuan'])
             ->get();
 
+        // dd($pengadaan);
         return view('perlengkapan.pengadaan.show', [
-            'laporan' => $laporan,
             'pengadaan' => $pengadaan
         ]);
+        // }
+
+        // // ===== Wadek 2 =====
+        // else if (Auth::user()->id_jabatan == 'wadek2') {
+        $pengadaan = pengadaan::where('id_laporan', $id)
+            ->with(['laporan_pengadaan', 'satuan'])
+            ->get();
+
+        // dd($pengadaan);
+        return view('wadek2.pengadaan.show', [
+            'pengadaan' => $pengadaan
+        ]);
+        // }
     }
 
     /**
@@ -143,6 +180,9 @@ class pengadaanController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        // // ===== Perlengkapan =====
+        // if (Auth::user()->id_jabatan == 'perlengkapan') {
         // dd($request);
         if ($request->laporan) {
             $this->validate($request, [
@@ -159,7 +199,6 @@ class pengadaanController extends Controller
                 "harga.*"       => "required|integer"
             ]);
 
-            // try {
             laporan_pengadaan::findOrfail($id)->update(["keterangan" => $request->keterangan]);
             pengadaan::whereIn('id_laporan', [$id])->delete();
 
@@ -173,11 +212,41 @@ class pengadaanController extends Controller
                     'id_laporan'    => $id
                 ]);
             }
-            return view('perlengkapan.pengadaan');
         } else {
+            // dd($request);
+            $this->validate($request, [
+                "nama_barang" => "required|string|max:50",
+                "spesifikasi" => "required|string|max:50",
+                "jumlah"      => "required|integer",
+                "satuan"      => "required|integer|max:4",
+                "harga"       => "required|integer"
+            ]);
+
+            pengadaan::findOrfail($id)->update([
+                "nama_barang" => $request->nama_barang,
+                "spesifikasi" => $request->spesifikasi,
+                "jumlah"      => $request->jumlah,
+                "id_satuan"   => ($request->satuan + 1),
+                "harga"       => $request->harga
+            ]);
         }
-        // } catch (\Throwable $th) {
-        //     //throw $th;
+
+        return redirect()->route('perlengkapan.pengadaan.index');
+        // }
+
+        // // ===== Wadek 2 =====
+        // else if (Auth::user()->id_jabatan == 'wadek2') {
+        $this->validate($request, [
+            "verif_wadek2"  => "required|integer|between:1,2",
+            "pesan_tolak"   => "requiredIf:verif_wadek2,1|string|max:100"
+        ]);
+
+        laporan_pengadaan::findOrfail($id)->update([
+            "pesan"         => $request->pesan_tolak,
+            "verif_wadek2"  => $request->verif_wadek2
+        ]);
+
+        return redirect()->route('perlengkapan.pengadaan.index');
         // }
     }
 
@@ -187,8 +256,12 @@ class pengadaanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        //
+        if ($request->laporan) {
+            laporan_pengadaan::findOrfail($id)->delete();
+        } else {
+            pengadaan::findOrfail($id)->delete();
+        }
     }
 }

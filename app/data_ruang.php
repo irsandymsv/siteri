@@ -12,6 +12,8 @@ class data_ruang extends Model
 
     protected $guarded = ['id'];
 
+    // protected $fillable = 'idruang_fk';
+
     public function detail_data_barang()
     {
         return $this->hasMany('App\detail_data_barang', 'idruang_fk');

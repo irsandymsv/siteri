@@ -27,8 +27,8 @@ class satuan extends Model
      */
     protected $guarded = ['id'];
 
-    public function peminjaman_barang()
+    public function detail_pinjam_barang()
     {
-        return $this->hasMany('App\peminjaman_barang', 'idsatuan_fk');
+        return $this->hasMany('App\detail_pinjam_barang', 'idsatuan_fk');
     }
 }

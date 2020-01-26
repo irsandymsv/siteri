@@ -21,6 +21,8 @@ class CreatePinjamRuang extends Migration
             $table->time('jam_berakhir');
             $table->string('kegiatan');
             $table->integer('jumlah_peserta');
+            $table->boolean('verif_baper')->default(false);
+            $table->boolean('verif_ktu')->default(false);
         });
     }
 

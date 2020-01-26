@@ -2,12 +2,20 @@
 
 @section('page_title', 'Peminjaman Ruang')
 
-@section('judul_header', 'Peminjaman Ruang')
+@section('judul_header', 'Buat Laporan Peminjaman Ruang')
 
 @section('css_link')
+<link href="/adminlte/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
+<link href="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+<link href="/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+<link href="/adminlte/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" />
 <style type="text/css">
     .hidden {
         display: none important !;
+    }
+
+    .not-rounded-border {
+        border-radius: 0;
     }
 </style>
 @endsection
@@ -17,63 +25,71 @@
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Buat Peminjaman Barang</h3>
+                <h3 class="box-title">Buat Laporan Peminjaman Ruang</h3>
             </div>
 
             <div class="box-body">
-                {!! Form::open(['route' => 'perlengkapan.pengadaan.store', 'id'=>'form']) !!}
+                {!! Form::open(['route' => 'perlengkapan.peminjaman_ruang.store', 'id'=>'form']) !!}
                 <div id="isiForm" class="table-responsive">
-                    <h5>Total Data = <span class="data_count">0</span></h5>
                     <table id="tbl-data" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Tanggal</th>
-                                <th>Jam</th>
-                                <th>Nama Barang</th>
-                                <th>Spesifikasi</th>
-                                <th>Jumlah</th>
-                                <th>Satuan</th>
-                                <th>Keterangan</th>
+                                <th>Tanggal Mulai</th>
+                                <th>Tanggal Berakhir</th>
+                                <th>Jam Mulai</th>
+                                <th>Jam Berakhir</th>
+                                <th>Kegiatan</th>
+                                <th>Jumlah Peserta</th>
+                                <th>Nama Ruang</th>
                             </tr>
                         </thead>
 
                         <tbody id="inputan">
                             <tr>
                                 <td>
-                                    {!! Form::text('nama_barang', null, ['class' => 'form-control', 'id' =>
-                                    'nama_barang']) !!}
+                                    {!! Form::date('tanggal_mulai', null, ['class' => 'form-control tanggal']) !!}
+                                    {{-- {!! Form::text('tanggal_mulai', null, ['class' => 'form-control datepicker not-rounded-border']) !!} --}}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('spesifikasi', null, ['class' => 'form-control', 'id' =>
-                                    'spesifikasi']) !!}
+                                    {!! Form::date('tanggal_berakhir', null, ['class' => 'form-control tanggal']) !!}
+                                    {{-- {!! Form::text('tanggal_berakhir', null, ['class' => 'form-control datepicker not-rounded-border']) !!} --}}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah', null, ['class' => 'form-control', 'id' => 'jumlah'])
-                                    !!}
+                                    {{-- {!! Form::text('jam_mulai', null, ['class' => 'form-control timepicker']) !!} --}}
+                                    {!! Form::time('jam_mulai', null, ['class' => 'form-control']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::select('satuan', $satuan, null, ['class' => 'form-control', 'id' =>
-                                    'satuan'])!!}
+                                    {{-- {!! Form::text('jam_berakhir', null, ['class' => 'form-control timepicker']) !!} --}}
+                                    {!! Form::time('jam_berakhir', null, ['class' => 'form-control']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('harga', null, ['class' => 'form-control', 'id' => 'harga']) !!}
+                                    {!! Form::text('kegiatan', null, ['class' => 'form-control']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::label(null , null, ['class' => 'control-label', 'id' => 'total'])
-                                    !!}
+                                    {!! Form::text('jumlah_peserta', null, ['class' => 'form-control jumlah angka']) !!}
+                                </td>
+
+                                <td class="ruang" style="min-width:200px">
+                                    {{-- {!! Form::select('nama_ruang[]', $nama_ruang, null, ['class' =>
+                                    'form-control not-rounded-border js-example-basic-multiple', 'multiple' => 'multiple'])!!} --}}
+                                    <select id="nama_ruang" name="nama_ruang[]" class="form-control select2"
+                                    multiple="multiple">
+                                        @foreach ($ruang as $val)
+                                        <option value="{{ $val->id }}">({{$val->kuota}}) {{$val->nama_ruang}}</option>
+                                        @endforeach
+                                    </select>
+                                    <label>Jumlah Kuota : <span class="jumlah_kuota">0</span></label>
+                                    {{-- <label></label> --}}
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-
-                    <h5>Total Data = <span class="data_count">0</span></h5>
                 </div>
-                <button id="tambah" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</button>
                 <br><br>
                 <div class="form-group" style="float: right;">
                     {!! Form::submit('Simpan dan Kirim', [ 'class'=>'btn btn-success', 'id' => 'submit']) !!}
@@ -83,121 +99,94 @@
         </div>
     </div>
 </div>
-
-
-
-<div class="row">
-    <div class="col-xs-12">
-        <div class="box box-success">
-            <div class="table-responsive">
-                <table id="pengadaan" class="table table-bordered table-hovered">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Barang</th>
-                            <th>Spesifikasi</th>
-                            <th>Jumlah</th>
-                            <th>Harga Satuan</th>
-                            <th>Total</th>
-                            <th style="width:99.8px">Opsi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 
 @section('script')
+<script src="/adminlte/bower_components/select2/dist/js/select2.min.js"></script>
+<script src="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="/adminlte/plugins/timepicker/bootstrap-timepicker.min.js"></script>
 <script>
     $(function(){
 
-        $('#jumlah, #harga').on('input', function(){
-            $('#total').empty();
-            jumlah = $('#jumlah').val();
-            harga = $('#harga').val();
-            $('#total').append('Rp ' + jumlah * harga);
+        $('.js-example-basic-multiple').select2();
+
+        $('#reservation').daterangepicker();
+
+        $('.datepicker').datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd'
         });
 
-        $('#tambah').click(function(event) {
-            nama = $('#nama_barang').val();
-            spesifikasi = $('#spesifikasi').val();
-            jumlah = $('#jumlah').val();
-            satuan = $('#satuan').val();
-            harga = $('#harga').val();
-            total = $('#total').html();
-            data = $('#tbody tr').length;
-            $('#tbody').append(`
-                <tr id="data">
-                    <td>
-                        ` + ++data + `
-                    </td>
-
-                    <td>
-                        ` + nama + `
-                    </td>
-
-                    <td>
-                        ` + spesifikasi + `
-                    </td>
-
-                    <td>
-                        ` + jumlah + `
-                    </td>
-
-                    <td class="hidden">
-                        ` + ++satuan + `
-                    </td>
-
-                    <td>
-                        ` + harga + `
-                    </td>
-
-                    <td>
-                        ` + total + `
-                    </td>
-
-                    <td>
-                        OPSI
-                    </td>
-                </tr>
-            `);
-
-            $('#nama_barang').val('');
-            $('#spesifikasi').val('');
-            $('#jumlah').val('');
-            $('#harga').val('');
-            $('#total').html('');
-			$(".data_count").text(data);
-
+        $('.timepicker').timepicker({
+            showInputs: false
         });
 
-        $('#submit').click(function(event){
-            // event.preventDefault();
-            table = $('#tbody tr');
-            data = [];
-            length = ($('#data td').length - (3 * $('#tbody tr').length))/$('#tbody tr').length;
-            $.each(table, function(index, val){
-                // val = val + '';
-                vall = $(val).text().split(/\s+/);
-                vall.shift();
-                vall.shift();
-                vall.pop();
-                vall.pop();
-                vall.pop();
-                vall.splice($.inArray("Rp", vall),1);
-                data.push(vall);
+        $('#nama_ruang, .jumlah').on('change', function(){
+            ruang = $("#nama_ruang").val();
+            jumlah = $('.jumlah').val();
+            console.log(jumlah);
+            total = 0;
+
+            data = $("#nama_ruang").select2('data');
+
+
+            $(data).each(function(bla, nama_ruang){
+                console.log(nama_ruang.text);
+                nama_ruang = nama_ruang.text.split(" ");
+                nama_ruang = nama_ruang[0];
+                nama_ruang = nama_ruang.split("(")[1];
+                nama_ruang = nama_ruang.split(")")[0];
+                total += nama_ruang-0;
             });
-            console.log(data);
-            $('#isiForm').empty();
-            $('#isiForm').append(`<input type="hidden" name="data" value="` + data + `">`);
-            $('#isiForm').append(`<input type="hidden" name="length" value="` + length + `">`);
+            console.log(total);
+                    console.log(data.length);
+
+            if(total > jumlah-0){
+                $("#nama_ruang").select2({
+                    maximumSelectionLength: data.length
+                    // formatSelectionTooBig: function (limit) {
+
+                    //     $('#box').show().text('Callback!');
+
+                    //     return 'Too many selected elements (' + limit + ')';
+                    // }
+                });
+            } else {
+                $("#nama_ruang").select2({
+                    maximumSelectionLength: 999
+                });
+            }
+
+            $('.jumlah_kuota').text(total);
         });
+
+        // $('.jumlah').on('change', function(){
+        //         jumlah = $(this).val();
+        //     console.log(jumlah);
+        //         ruang = $(this).parents('tr').children('.ruang').children('#nama_ruang');
+
+        //         if(jumlah) {
+        //             $.ajax({
+        //                 url: "/perlengkapan/peminjaman_ruang/ruang/" + jumlah,
+        //                 type: "GET",
+        //                 dataType: "json",
+        //                 success:function(data) {
+        //                     dataAjax = data;
+        //                     $(ruang).empty();
+        //                     $(ruang).prop('disabled', false);
+        //                     $.each(data, function(key, value) {
+        //                         $(ruang).append('<option value="'+ value.id +'">' + value.nama_ruang + '</option>');
+        //                     });
+        //                 }
+        //             });
+        //         } else {
+        //             $(ruang).prop('disabled', true);
+        //             $(this).parents('tr').children('.ruang').empty();
+        //         }
+        //     });
+
     });
 
 </script>
 @endsection
-

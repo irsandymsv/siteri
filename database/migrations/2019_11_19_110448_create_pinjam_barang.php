@@ -20,6 +20,8 @@ class CreatePinjamBarang extends Migration
             $table->time('jam_mulai');
             $table->time('jam_berakhir');
             $table->string('kegiatan');
+            $table->boolean('verif_baper')->default(false);
+            $table->boolean('verif_ktu')->default(false);
         });
     }
 

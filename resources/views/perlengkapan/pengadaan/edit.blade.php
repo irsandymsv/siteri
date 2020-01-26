@@ -46,7 +46,7 @@ $laporan = $laporan[0];
 
                         <tbody id="inputan">
                             {!! Form::hidden('laporan', true) !!}
-                            <span><strong>Keterangan</strong></span>{!! Form::text('keterangan', $laporan->keterangan,
+                            <span><strong>Peruntukan</strong></span>{!! Form::text('keterangan', $laporan->keterangan,
                             ['class' =>
                             'form-control']) !!}
                             @foreach ($laporan->pengadaan as $item)
@@ -60,7 +60,8 @@ $laporan = $laporan[0];
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah[]', $item->jumlah, ['class' => 'form-control jumlah'])!!}
+                                    {!! Form::text('jumlah[]', $item->jumlah, ['class' => 'form-control jumlah
+                                    angka'])!!}
                                 </td>
 
                                 <td>
@@ -69,7 +70,8 @@ $laporan = $laporan[0];
                                 </td>
 
                                 <td>
-                                    {!! Form::text('harga[]', $item->harga, ['class' => 'form-control harga']) !!}
+                                    {!! Form::text('harga[]', $item->harga, ['class' => 'form-control harga angka'])
+                                    !!}
                                 </td>
 
                                 <td>
@@ -104,13 +106,22 @@ $laporan = $laporan[0];
                                 <td>: {{$laporan->laporan_pengadaan->dibuat}}</td>
                             </tr>
                             <tr>
-                                <td><b>Keterangan</b></td>
+                                <td><b>Peruntukan</b></td>
                                 <td>: {{$laporan->laporan_pengadaan->keterangan}}</td>
                             </tr>
                             <tr>
                                 <td><b>Status</b></td>
                                 <td>:
-                                    {{$laporan->laporan_pengadaan->verif_wadek2 == 0 ? "Belum Disetujui" : "Sudah Disetujui"}}
+                                    @switch($laporan->laporan_pengadaan->verif_wadek2)
+                                    @case(1)
+                                    <label class="label bg-red">Ditolak</label>
+                                    @break
+                                    @case(2)
+                                    <label class="label bg-green">Disetujui</label>
+                                    @break
+                                    @default
+                                    Belum Diverifikasi
+                                    @endswitch
                                 </td>
                             </tr>
                         </table>
@@ -133,11 +144,11 @@ $laporan = $laporan[0];
                                         'form-control']) !!}</td>
                                     <td>{!! Form::text('spesifikasi', $laporan->spesifikasi, ['class' =>
                                         'form-control']) !!}</td>
-                                    <td>{!! Form::number('jumlah', $laporan->jumlah, ['class' => 'form-control']) !!}
+                                    <td>{!! Form::text('jumlah', $laporan->jumlah, ['class' => 'form-control']) !!}
                                     </td>
                                     <td>{!! Form::select('satuan', $satuan, $laporan->id_satuan-1, ['class' =>
                                         'form-control'])!!}</td>
-                                    <td>{!! Form::number('harga', $laporan->harga, ['class' => 'form-control']) !!}</td>
+                                    <td>{!! Form::text('harga', $laporan->harga, ['class' => 'form-control']) !!}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -175,7 +186,7 @@ $laporan = $laporan[0];
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah'])!!}
+                                    {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah angka'])!!}
                                 </td>
 
                                 <td>
@@ -183,7 +194,7 @@ $laporan = $laporan[0];
                                 </td>
 
                                 <td>
-                                    {!! Form::text('harga[]', null, ['class' => 'form-control harga']) !!}
+                                    {!! Form::text('harga[]', null, ['class' => 'form-control harga angka']) !!}
                                 </td>
 
                                 <td>

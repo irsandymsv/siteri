@@ -4,11 +4,11 @@
 <li class="active"><a href="{{ route('perlengkapan.') }}"><i class="fa fa-dashboard"></i> <span>Dashboard
             Perlengkapan</span></a></li>
 
-<li>
+{{-- <li>
     <a href="{{ route('perlengkapan.inventaris.index') }}">
-        <i class="fa fa-book"></i> <span>Laporan Inventaris</span>
-    </a>
-</li>
+<i class="fa fa-book"></i> <span>Laporan Inventaris</span>
+</a>
+</li> --}}
 
 <li class="treeview">
     <a href="#"><i class="fa fa-link"></i> <span>Inventaris</span>
@@ -17,16 +17,16 @@
         </span>
     </a>
     <ul class="treeview-menu">
-        <li><a href="{{ route('perlengkapan.inventaris.create') }}">Buat Baru</a></li>
+        <li><a href="{{ route('perlengkapan.inventaris.create', [ 'laporan' => true]) }}">Buat Baru</a></li>
         <li><a href="{{ route('perlengkapan.inventaris.index') }}">Lihat Laporan</a></li>
     </ul>
 </li>
 
-<li>
+{{-- <li>
     <a href="{{ route('perlengkapan.pengadaan.index') }}">
-        <i class="fa fa-book"></i><span>Laporan Pengadaan</span>
-    </a>
-</li>
+<i class="fa fa-book"></i><span>Laporan Pengadaan</span>
+</a>
+</li> --}}
 
 <li class="treeview">
     <a href="#"><i class="fa fa-link"></i> <span>Pengadaan</span>

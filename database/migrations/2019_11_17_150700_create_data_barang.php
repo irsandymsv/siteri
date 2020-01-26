@@ -17,6 +17,11 @@ class CreateDataBarang extends Migration
             $table->increments('id');
             $table->string('kode_barang');
             $table->string('nama_barang');
+            $table->integer('idstatus_fk')->unsigned()->nullable();
+            // keterangan
+            // 1 => tetap (tidak mungkin dipinjam)
+            // 2 => bergerak (mungkin dipinjam)
+            $table->foreign('idstatus_fk')->references('id')->on('status_barang')->onDelete('set null');
         });
     }
 

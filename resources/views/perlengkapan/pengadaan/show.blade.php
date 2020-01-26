@@ -3,6 +3,7 @@
 @section('page_title', 'Pengadaan')
 
 @section('css_link')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" type="text/css" href="/css/custom_style.css">
 <style type="text/css">
     .tabel-keterangan td {
@@ -29,15 +30,27 @@
                     <table class="tabel-keterangan">
                         <tr>
                             <td><b>Tanggal Dibuat</b></td>
-                            <td>: {{$laporan->dibuat}}</td>
+                            <td>: {{$pengadaan[0]->laporan_pengadaan->dibuat}}</td>
                         </tr>
                         <tr>
-                            <td><b>Keterangan</b></td>
-                            <td>: {{$laporan->keterangan}}</td>
+                            <td><b>Peruntukan</b></td>
+                            <td>: {{$pengadaan[0]->laporan_pengadaan->keterangan}}</td>
                         </tr>
+                        {{-- {{ dd($pengadaan) }} --}}
                         <tr>
                             <td><b>Status</b></td>
-                            <td>: {{$laporan->verif_wadek2 == 0 ? "Belum Disetujui" : "Sudah Disetujui"}}</td>
+                            <td>:
+                                @switch($pengadaan[0]->laporan_pengadaan->verif_wadek2)
+                                @case(1)
+                                <label class="label bg-red">Ditolak</label>
+                                @break
+                                @case(2)
+                                <label class="label bg-green">Disetujui</label>
+                                @break
+                                @default
+                                Belum Diverifikasi
+                                @endswitch
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -106,11 +119,13 @@
 @section('script')
 <script>
     $(function(){
-        $('fa.fa-trash').click(function(){
+        $('a.btn.btn-danger').click(function(){
             event.preventDefault();
 				var id = $(this).attr('id');
+                console.log(id);
 
-				var url_del = "{{route('perlengkapan.pengadaan.destroy', "+id+")}}";
+				var url_del = "{{route('perlengkapan.pengadaan.destroy', "id")}}";
+                url_del = url_del.replace('id', id);
 				console.log(url_del);
 
 				$('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
@@ -123,18 +138,15 @@
 					$.ajax({
 						url: url_del,
 						type: 'POST',
-						// dataType: '',
 						data: {_method: 'DELETE'},
 					})
 					.done(function(hasil) {
 						console.log("success");
 						$("tr#lap_"+id).remove();
-						$("#success_delete").show();
-						$("#success_delete").find('span').html(hasil);
-						$("#success_delete").fadeOut(1800);
 					})
 					.fail(function() {
 						console.log("error");
+						$("tr#lap_"+id).remove();
 					});
 				});
         });

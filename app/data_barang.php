@@ -16,4 +16,9 @@ class data_barang extends Model
     {
         return $this->hasMany('App\detail_data_barang', 'idbarang_fk');
     }
+
+    public function status_barang()
+    {
+        return $this->belongsTo('App\status_barang', 'idstatus_fk');
+    }
 }

@@ -2,6 +2,17 @@
 
 @section('page_title', 'Laporan Pengadaan')
 
+@section('css_link')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+<style type="text/css">
+    .tabel-keterangan td {
+        padding-right: 10px;
+        font-size: 15px;
+    }
+</style>
+@endsection
+
 @section('judul_header', 'Laporan Pengadaan')
 
 @section('content')
@@ -25,7 +36,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal Dibuat</th>
-                                <th>Keterangan</th>
+                                <th>Peruntukan</th>
                                 {{-- <th>Nama Barang</th>
                                 <th>Spesifikasi</th>
                                 <th>Jumlah</th>
@@ -112,6 +123,40 @@
 <script>
     $(function(){
         $('#pengadaan').DataTable();
+
+        $('a.btn.btn-danger').click(function(){
+            event.preventDefault();
+				id = $(this).attr('id');
+
+				url_del = "{{route('perlengkapan.pengadaan.destroy', "id")}}";
+                url_del = url_del.replace('id', id)
+				console.log(url_del);
+
+				$('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
+					$.ajaxSetup({
+					    headers: {
+					        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					    }
+					});
+
+					$.ajax({
+						url: url_del,
+						type: 'POST',
+						// dataType: '',
+						data: {_method: 'DELETE', 'laporan':true},
+					})
+					.done(function(hasil) {
+						console.log("success");
+						$("tr#lap_"+id).remove();
+						$("#success_delete").show();
+						$("#success_delete").find('span').html(hasil);
+						$("#success_delete").fadeOut(1800);
+					})
+					.fail(function() {
+						console.log("error");
+					});
+				});
+        });
     });
 </script>
 

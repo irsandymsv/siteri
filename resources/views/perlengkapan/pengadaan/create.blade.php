@@ -37,9 +37,8 @@
                         </thead>
 
                         <tbody id="inputan">
-                            <span><strong>Keterangan</strong></span>{!! Form::text('keterangan', old('keterangan'),
-                            ['class' =>
-                            'form-control']) !!}
+                            <span><strong>Peruntukan</strong></span>
+                            {!! Form::text('keterangan', old('keterangan'), ['class' => 'form-control']) !!}
                             <tr>
                                 <td>
                                     {!! Form::text('nama_barang[]', old('nama_barang'), ['class' => 'form-control']) !!}
@@ -50,16 +49,15 @@
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah'])!!}
+                                    {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah angka'])!!}
                                 </td>
 
                                 <td>
-                                    {!! Form::select('satuan[]', $satuan, null, ['class' =>
-                                    'form-control'])!!}
+                                    {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control'])!!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('harga[]', null, ['class' => 'form-control harga']) !!}
+                                    {!! Form::text('harga[]', null, ['class' => 'form-control harga angka']) !!}
                                 </td>
 
                                 <td>
@@ -148,7 +146,7 @@
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah'])!!}
+                                    {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah angka'])!!}
                                 </td>
 
                                 <td>
@@ -156,7 +154,7 @@
                                 </td>
 
                                 <td>
-                                    {!! Form::text('harga[]', null, ['class' => 'form-control harga']) !!}
+                                    {!! Form::text('harga[]', null, ['class' => 'form-control harga angka']) !!}
                                 </td>
 
                                 <td>
