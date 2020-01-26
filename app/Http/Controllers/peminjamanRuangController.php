@@ -335,22 +335,12 @@ class peminjamanRuangController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        if (Auth::user()->id_jabatan == 'perlengkapan') {
-            if ($request->laporan) {
-                peminjaman_ruang::findOrfail($id)->delete();
-                Log::alert('Berhasil Dihapus');
-            } else {
-                detail_pinjam_ruang::findOrfail($id)->delete();
-                Log::alert('Berhasil Dihapus');
-            }
-        } else if (Auth::user()->id_jabatan == 'perlengkapan') {
-            if ($request->laporan) {
-                peminjaman_ruang::findOrfail($id)->delete();
-                Log::alert('Berhasil Dihapus');
-            } else {
-                detail_pinjam_ruang::findOrfail($id)->delete();
-                Log::alert('Berhasil Dihapus');
-            }
+        if ($request->laporan) {
+            peminjaman_ruang::findOrfail($id)->delete();
+            Log::alert('Berhasil Dihapus');
+        } else {
+            detail_pinjam_ruang::findOrfail($id)->delete();
+            Log::alert('Berhasil Dihapus');
         }
     }
 }

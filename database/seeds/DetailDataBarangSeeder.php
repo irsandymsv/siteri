@@ -3380,7 +3380,7 @@ class DetailDataBarangSeeder extends Seeder
         'idruang_fk' => '13'
     ));DB::table('detail_data_barang')->insert(array(
         // Kursi besi metal OEMRO
-        'tanggal' => '22011-07-25',
+        'tanggal' => '2011-07-25',
         'idbarang_fk' => '20',
         'merk_barang' => 'ISEBEL 311 TLLPP',
         'nup' => '265',
@@ -11503,7 +11503,7 @@ DB::table('detail_data_barang')->insert(array(
         ));
         DB::table('detail_data_barang')->insert(array(
             // Personal Computer
-            'tanggal' => '2018-12-182',
+            'tanggal' => '2018-12-12',
             'idbarang_fk' => '47',
             'merk_barang' => 'Dell Inspiron 3277 AIO',
             'nup' => '149',
@@ -11543,7 +11543,7 @@ DB::table('detail_data_barang')->insert(array(
         ));
         DB::table('detail_data_barang')->insert(array(
             // Personal Computer
-            'tanggal' => '2018-12-182',
+            'tanggal' => '2018-12-12',
             'idbarang_fk' => '47',
             'merk_barang' => 'Dell Inspiron 3277 AIO',
             'nup' => '154',
@@ -13520,6 +13520,7 @@ DB::table('detail_data_barang')->insert(array(
             'tanggal' => '2011-12-01',
             'idbarang_fk' => '68',
             'merk_barang' => 'D-LINK DGS 1210-16/r',
+            'nup' => '17',
             'idruang_fk' => '25'
         ));
         DB::table('detail_data_barang')->insert(array(

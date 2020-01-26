@@ -150,6 +150,8 @@ Route::prefix('perlengkapan')->name('perlengkapan.')->group(function () {
     Route::get('/peminjaman_barang/barang/{id}', array('as' => 'barang.ajax', 'uses' => 'peminjamanBarangController@barangAjax'));
     Route::resource('peminjaman_ruang', 'peminjamanRuangController');
     Route::get('/peminjaman_ruang/ruang/{jumlah}', array('as' => 'ruang.ajax', 'uses' => 'peminjamanRuangController@ruangAjax'));
+    Route::put('/peminjaman_barang/verif/{verif_baper}', 'peminjamanBarangController@verif_baper')->name('peminjaman_barang.verif');
+    Route::put('/peminjaman_ruang/verif/{verif_baper}', 'peminjamanRuangController@verif_baper')->name('peminjaman_ruang.verif');
 });
 
 Route::prefix('ormawa')->name('ormawa.')->group(function () {

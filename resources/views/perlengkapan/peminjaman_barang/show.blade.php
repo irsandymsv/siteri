@@ -89,7 +89,7 @@
                 </div>
                 <br><br>
                 @if($laporan->verif_baper == 0)
-                    {!! Form::open(['route' => ['perlengkapan.peminjaman_barang.update', $item->id], 'method' => 'PUT'])!!}
+                    {!! Form::open(['route' => ['perlengkapan.peminjaman_barang.verif', $laporan->id], 'method' => 'PUT'])!!}
                     {!! Form::hidden("verif_baper", 1) !!}
                     <div class="form-group" style="float: right;">
                         {!! Form::submit('Setujui', [ 'class'=>'btn btn-success', 'id' => 'submit']) !!}
@@ -114,7 +114,7 @@
                 <h4 class="modal-title">Konfirmasi Pembatalan</h4>
             </div>
             <div class="modal-body">
-                <p>Apakah anda yakin ingin membatalkan inventaris ini?</p>
+                <p>Apakah anda yakin ingin membatalkan peminjaman barang ini?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Tidak</button>
