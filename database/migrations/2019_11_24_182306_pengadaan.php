@@ -23,7 +23,7 @@ class Pengadaan extends Migration
             $table->integer('id_laporan')->unsigned()->nullable();
 
             $table->foreign('id_satuan')->references('id')->on('satuan')->onDelete('set null');
-            $table->foreign('id_laporan')->references('id')->on('laporan_pengadaan')->onDelete('set null');
+            $table->foreign('id_laporan')->references('id')->on('laporan_pengadaan')->onDelete('cascade');
         });
     }
 
