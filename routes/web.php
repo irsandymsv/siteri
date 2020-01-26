@@ -147,6 +147,14 @@ Route::middleware(['auth', 'checkRole:KTU'])->prefix('ktu')->name('ktu.')->group
     Route::get('/honor-skripsi', 'honorSkripsiController@ktu_index')->name('honor-skripsi.index');
     Route::get('/honor-skripsi/{id_sk_honor}', 'honorSkripsiController@ktu_show')->name('honor-skripsi.show');
     Route::put('/honor-skripsi/verif/{id_sk_honor}', 'honorSkripsiController@ktu_verif')->name('honor-skripsi.verif');
+
+    //Peminjaman
+    Route::resource('peminjaman_barang', 'peminjamanBarangController', [
+        'only' => ['index', 'show', 'update']
+    ]);
+    Route::resource('peminjaman_ruang', 'peminjamanRuangController', [
+        'only' => ['index', 'show', 'update']
+    ]);
 });
 
 Route::middleware(['auth', 'checkRole:Dekan'])->prefix('dekan')->name('dekan.')->group(function () {
