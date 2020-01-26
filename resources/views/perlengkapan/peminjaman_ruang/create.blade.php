@@ -77,7 +77,7 @@
                                 <td class="ruang" style="min-width:200px">
                                     {{-- {!! Form::select('nama_ruang[]', $nama_ruang, null, ['class' =>
                                     'form-control not-rounded-border js-example-basic-multiple', 'multiple' => 'multiple'])!!} --}}
-                                    <select id="nama_ruang" name="nama_ruang[]" class="form-control not-rounded-border js-example-basic-multiple"
+                                    <select id="nama_ruang" name="nama_ruang[]" class="form-control select2"
                                     multiple="multiple">
                                         @foreach ($ruang as $val)
                                         <option value="{{ $val->id }}">({{$val->kuota}}) {{$val->nama_ruang}}</option>
@@ -146,9 +146,9 @@
                 $("#nama_ruang").select2({
                     maximumSelectionLength: data.length
                     // formatSelectionTooBig: function (limit) {
-            
+
                     //     $('#box').show().text('Callback!');
-                        
+
                     //     return 'Too many selected elements (' + limit + ')';
                     // }
                 });

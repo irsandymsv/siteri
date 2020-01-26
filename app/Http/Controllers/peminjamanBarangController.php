@@ -25,23 +25,21 @@ class peminjamanBarangController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->id_jabatan == 'ormawa') {
-            $laporan = peminjaman_barang::all();
+        // if (Auth::user()->id_jabatan == 'ormawa') {
+        // $laporan = peminjaman_barang::all();
 
-            return view(
-                'ormawa.peminjaman_barang.index', [
-                'laporan' => $laporan
-                ]
-            );
-        } else if (Auth::user()->id_jabatan == 'perlengkapan') {
-            $laporan = peminjaman_barang::all();
+        // return view('ormawa.peminjaman_barang.index', [
+        //     'laporan' => $laporan
+        // ]);
+        // } else if (Auth::user()->id_jabatan == 'perlengkapan') {
+        $laporan = peminjaman_barang::all();
 
-            return view(
-                'perlengkapan.peminjaman_barang.index', [
-                'laporan' => $laporan
-                ]
-            );
-        }
+        return view(
+            'perlengkapan.peminjaman_barang.index', [
+            'laporan' => $laporan
+            ]
+        );
+        // }
     }
 
     /**
@@ -52,15 +50,13 @@ class peminjamanBarangController extends Controller
     public function create()
     {
         // if (Auth::user()->id_jabatan == 'ormawa') {
-        $barang = data_barang::where('idstatus_fk', '2')->get();
-        $satuan = satuan::all()->pluck('satuan');
+        // $barang = data_barang::where('idstatus_fk', '2')->get();
+        // $satuan = satuan::all()->pluck('satuan');
 
-        return view(
-            'ormawa.peminjaman_barang.create', [
-            'barang' => $barang,
-            'satuan' => $satuan
-            ]
-        );
+        // return view('ormawa.peminjaman_barang.create', [
+        //     'barang' => $barang,
+        //     'satuan' => $satuan
+        // ]);
         // } else if (Auth::user()->id_jabatan == 'perlengkapan') {
         $barang = data_barang::all();
         $satuan = satuan::all()->pluck('satuan');
@@ -92,47 +88,41 @@ class peminjamanBarangController extends Controller
     {
         // dd($request);
         // if (Auth::user()->id_jabatan == 'ormawa') {
-        $this->validate(
-            $request, [
-            "tanggal_mulai"     => "required",
-            "tanggal_berakhir"  => "required",
-            "jam_mulai"         => "required",
-            "jam_berakhir"      => "required",
-            "kegiatan"          => "required|string|max:100",
-            "barang"            => "required|array",
-            "barang.*"          => "required|integer",
-            "merk_barang"       => "required|array",
-            "merk_barang.*"     => "required|integer",
-            "jumlah"            => "required|array",
-            "jumlah.*"          => "required|integer",
-            "satuan"            => "required|array",
-            "satuan.*"          => "required|integer"
-            ]
-        );
+        // $this->validate($request, [
+        //     "tanggal_mulai"     => "required",
+        //     "tanggal_berakhir"  => "required",
+        //     "jam_mulai"         => "required",
+        //     "jam_berakhir"      => "required",
+        //     "kegiatan"          => "required|string|max:100",
+        //     "barang"            => "required|array",
+        //     "barang.*"          => "required|integer",
+        //     "merk_barang"       => "required|array",
+        //     "merk_barang.*"     => "required|integer",
+        //     "jumlah"            => "required|array",
+        //     "jumlah.*"          => "required|integer",
+        //     "satuan"            => "required|array",
+        //     "satuan.*"          => "required|integer"
+        // ]);
 
-        peminjaman_barang::create(
-            [
-            'tanggal_mulai'     => $request->tanggal_mulai,
-            'tanggal_berakhir'  => $request->tanggal_berakhir,
-            'jam_mulai'         => $request->jam_mulai,
-            'jam_berakhir'      => $request->jam_berakhir,
-            'kegiatan'          => $request->kegiatan
-            ]
-        );
+        // peminjaman_barang::create([
+        //     'tanggal_mulai'     => $request->tanggal_mulai,
+        //     'tanggal_berakhir'  => $request->tanggal_berakhir,
+        //     'jam_mulai'         => $request->jam_mulai,
+        //     'jam_berakhir'      => $request->jam_berakhir,
+        //     'kegiatan'          => $request->kegiatan
+        // ]);
 
-        $idlaporan = peminjaman_barang::all()->pluck('id')->last();
+        // $idlaporan = peminjaman_barang::all()->pluck('id')->last();
 
-        for ($i = 0; $i < count($request->merk_barang); $i++) {
-            detail_pinjam_barang::create(
-                [
-                'idpinjam_barang_fk'        => $idlaporan,
-                'iddetail_data_barang_fk'   => $request->merk_barang[$i],
-                'jumlah'                    => $request->jumlah[$i],
-                'idsatuan_fk'               => ($request->satuan[$i] + 1)
-                ]
-            );
-        }
-        return redirect()->route('ormawa.peminjaman_barang.show', $idlaporan);
+        // for ($i = 0; $i < count($request->merk_barang); $i++) {
+        //     detail_pinjam_barang::create([
+        //         'idpinjam_barang_fk'        => $idlaporan,
+        //         'iddetail_data_barang_fk'   => $request->merk_barang[$i],
+        //         'jumlah'                    => $request->jumlah[$i],
+        //         'idsatuan_fk'               => ($request->satuan[$i] + 1)
+        //     ]);
+        // }
+        // return redirect()->route('ormawa.peminjaman_barang.show', $idlaporan);
         // } else if (Auth::user()->id_jabatan == 'perlengkapan') {
         $this->validate(
             $request, [
@@ -411,7 +401,7 @@ class peminjamanBarangController extends Controller
             ]
         );
 
-        peminjaman_barang::findOrfail($id)->update(
+        detail_pinjam_barang::findOrfail($id)->update(
             [
             'verif_baper'    => $request->verif_baper
             ]
@@ -427,7 +417,7 @@ class peminjamanBarangController extends Controller
             ]
         );
 
-        peminjaman_barang::findOrfail($id)->update(
+        detail_pinjam_barang::findOrfail($id)->update(
             [
             'verif_ktu'    => $request->verif_ktu
             ]
