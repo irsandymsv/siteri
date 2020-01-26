@@ -48,8 +48,8 @@
                                     @endswitch
                                 </td>
                                 <td>
-                                    <a href="{{ route('perlengkapan.pengadaan.show', $item->id) }}"
-                                        class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ route('wadek2.pengadaan.show', $item->id) }}" class="btn btn-primary"
+                                        title="Lihat Laporan"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                             @endforeach

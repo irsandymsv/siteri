@@ -63,6 +63,13 @@ Route::prefix('ktu')->name('ktu.')->group(function () {
     Route::get('/honor-sempro', 'honorSemproController@ktu_index')->name('honor-sempro.index');
     Route::get('/honor-sempro/{id_sk_honor}', 'honorSemproController@ktu_show')->name('honor-sempro.show');
     Route::put('/honor-sempro/verif/{id_sk_honor}', 'honorSemproController@ktu_verif')->name('honor-sempro.verif');
+
+    Route::resource('peminjaman_barang', 'peminjamanBarangController', [
+        'only' => ['index', 'show', 'update']
+    ]);
+    Route::resource('peminjaman_ruang', 'peminjamanRuangController', [
+        'only' => ['index', 'show', 'update']
+    ]);
 });
 
 Route::prefix('dekan')->name('dekan.')->group(function () {

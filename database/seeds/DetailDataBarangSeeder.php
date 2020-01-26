@@ -13537,7 +13537,7 @@ DB::table('detail_data_barang')->insert(array(
             'idbarang_fk' => '68',
             'merk_barang' => 'D-LINK DGS 1210-16/r',
             'nup' => '19',
-            'idruang_fk' => '29'
+            'idruang_fk' => '25'
         ));
         DB::table('detail_data_barang')->insert(array(
             // Switch 
