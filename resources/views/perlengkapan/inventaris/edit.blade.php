@@ -128,6 +128,7 @@ $laporan = $laporan[0];
                             </thead>
                             <tbody>
                                 <tr id="lap_{{ $barang->id }}">
+                                    {!! Form::hidden("id", $barang->idbarang_fk) !!}
                                     <td>
                                         {!! Form::date('tanggal', $barang->tanggal, ['class' => 'form-control tanggal'])!!}
                                     </td>

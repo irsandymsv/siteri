@@ -5,10 +5,11 @@
 @section('judul_header', 'Buat Laporan Peminjaman Barang')
 
 @section('css_link')
-<link href="/adminlte/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
-<link href="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+<link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
+<link rel="stylesheet" href="/adminlte/dist/css/AdminLTE.min.css">
+{{-- <link href="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
 <link href="/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
-<link href="/adminlte/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" />
+<link href="/adminlte/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" /> --}}
 <style type="text/css">
     .hidden {
         display: none important !;
@@ -26,7 +27,7 @@
 
             <div class="box-body">
                 {!! Form::open(['route' => 'perlengkapan.peminjaman_barang.store', 'id'=>'form']) !!}
-                <div id="isiForm" class="table-responsive">
+                <div id="isiForm" class="form-group table-responsive">
                     <table id="tbl-data" class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -80,7 +81,7 @@
                         <tbody id="inputan">
                             <tr>
                                 <td>
-                                    <select id="barang" name="barang[]" class="form-control barang">
+                                    <select id="barang" name="barang[]" class="form-control barang select2" style="width: 100%;">
                                         <option value="null">Pilih Barang</option>
                                         @foreach ($barang as $val)
                                         <option value="{{ $val->id }}" onchange="{{ $val->nama_barang }}">
@@ -90,7 +91,7 @@
                                 </td>
 
                                 <td class="merk">
-                                    <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang"
+                                    <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang select2" style="width: 100%;"
                                         disabled="true">
                                     </select>
                                 </td>
@@ -101,7 +102,7 @@
                                 </td>
 
                                 <td>
-                                    {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control'])!!}
+                                    {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control select2', 'style' => 'width:100%'])!!}
                                 </td>
 
                                 <td>
@@ -147,6 +148,8 @@
         tableCount();
         barangAjax();
 
+        $('.select2').select2();
+
         $('.js-example-basic-multiple').select2();
 
         $('#reservation').daterangepicker();
@@ -174,7 +177,7 @@
                     </td>
 
                     <td class="merk">
-                        <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang" disabled="true">
+                        <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang select2" style="width: 100%;" disabled="true">
                         </select>
                     </td>
 
@@ -184,7 +187,7 @@
                     </td>
 
                     <td>
-                        {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control', 'id' =>
+                        {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control select2', 'style' => 'width:100%', 'id' =>
                         'satuan'])!!}
                     </td>
 
@@ -205,7 +208,8 @@
 
                 // console.log($(this).parents('tr'));
                 // console.log($(this).parents('tr')["0"].children[1]);
-                merk = $(this).parents('tr').children('.merk').children();
+                merk = $(this).parents('tr').children('.merk').children('.merk_barang');
+                // ruang = $(this).parents('tr').children('.ruang').children('#nama_ruang');
                 // console.log($(this).parents('tr').children('.merk').children());
                 // console.log($(this).parents('tr').children('.merk_barang'));
 

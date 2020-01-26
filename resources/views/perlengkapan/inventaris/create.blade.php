@@ -89,7 +89,6 @@
                                 <th>Tanggal</th>
                                 <th>Merk Barang</th>
                                 <th>Ruang</th>
-                                <th>Status</th>
                                 <th>🗙</th>
                             </tr>
                         </tfoot>

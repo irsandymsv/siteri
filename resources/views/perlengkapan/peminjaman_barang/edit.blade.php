@@ -81,7 +81,7 @@
                             @foreach($laporan->detail_pinjam_barang as $item)
                             <tr>
                                 <td>
-                                    <select id="barang" name="barang[]" class="form-control barang">
+                                    <select id="barang" name="barang[]" class="form-control barang select2">
                                         @foreach ($barang as $val)
                                         <option value="{{ $val->id }}" onchange="{{ $val->nama_barang }}">
                                             {{ $item->idbarang_fk-1 }}</option>
@@ -90,7 +90,7 @@
                                 </td>
 
                                 <td>
-                                    <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang" disabled="true">
+                                    <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang select2" disabled="true">
                                     </select>
                                 </td>
 
@@ -216,7 +216,9 @@
         opsiButton();
         tableCount();
         barangAjax();
-        
+
+        $('.select2').select2();
+
         $('.js-example-basic-multiple').select2();
 
         $('#reservation').daterangepicker();
@@ -238,23 +240,23 @@
                             <option value="">Pilih Barang</option>
                             @foreach ($barang as $val)
                             <option value="{{ $val->id }}" onchange="{{ $val->barang }}">
-                                {{$val->barang}}</option>
+                                {{$val->nama_barang}}</option>
                             @endforeach
                         </select>
                     </td>
 
-                    <td>
-                        <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang" disabled="true">
+                    <td class="merk">
+                        <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang select2" style="width: 100%;" disabled="true">
                         </select>
                     </td>
 
                     <td>
-                        {!! Form::text('jumlah', null, ['class' => 'form-control', 'id' => 'jumlah'])
+                        {!! Form::text('jumlah', null, ['class' => 'form-control angka', 'id' => 'jumlah'])
                         !!}
                     </td>
 
                     <td>
-                        {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control', 'id' =>
+                        {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control select2', 'style' => 'width:100%', 'id' =>
                         'satuan'])!!}
                     </td>
 
@@ -272,7 +274,14 @@
         function barangAjax(){
             $('.barang').on('change', function(){
                 var id = $(this).val();
-                var merk = $(this).parents('tr').children('.merk_barang');
+
+                // console.log($(this).parents('tr'));
+                // console.log($(this).parents('tr')["0"].children[1]);
+                merk = $(this).parents('tr').children('.merk').children('.merk_barang');
+                // ruang = $(this).parents('tr').children('.ruang').children('#nama_ruang');
+                // console.log($(this).parents('tr').children('.merk').children());
+                // console.log($(this).parents('tr').children('.merk_barang'));
+
                 if(id) {
                     $.ajax({
                     url: "/perlengkapan/peminjaman_barang/barang/" + id,
@@ -280,16 +289,16 @@
                     dataType: "json",
                     success:function(data) {
                         dataAjax = data;
-                        // $('.merk_barang').empty();
                         $(merk).empty();
                         $(merk).prop('disabled', false);
                         $.each(data, function(key, value) {
                             $(merk).append('<option value="'+ value.id +'">' + value.merk_barang + '</option>');
                         });
-                        console.log(merk);
+                        // console.log(merk);
                     }
                 });
                 } else {
+                    $(merk).prop('disabled', true);
                     $(this).parents('tr').children('.merk_barang').empty();
                 }
             });

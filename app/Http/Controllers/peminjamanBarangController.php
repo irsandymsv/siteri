@@ -56,7 +56,7 @@ class peminjamanBarangController extends Controller
         //     'satuan' => $satuan
         // ]);
         // } else if (Auth::user()->id_jabatan == 'perlengkapan') {
-        $barang = data_barang::all();
+        $barang = data_barang::where('idstatus_fk', '2')->get();
         $satuan = satuan::all()->pluck('satuan');
 
         return view('perlengkapan.peminjaman_barang.create', [
@@ -203,23 +203,23 @@ class peminjamanBarangController extends Controller
     public function edit(Request $request, $id)
     {
         // if (Auth::user()->id_jabatan == 'ormawa') {
-        $barang = data_barang::where('idstatus_fk', '2')->get();
-        $satuan = satuan::all()->pluck('satuan');
-        $laporan = peminjaman_barang::with(['detail_pinjam_barang', 'detail_pinjam_barang.detail_data_barang', 'detail_pinjam_barang.detail_data_barang.data_barang', 'detail_pinjam_barang.satuan'])
-            ->where('id', $id)
-            ->first();
-        $merk = [];
-        foreach ($laporan->detail_pinjam_barang as $item) {
-            $merk_barang = detail_data_barang::where('idbarang_fk', $item->detail_data_barang->idbarang_fk)->get();
-            array_push($merk, $merk_barang);
-        }
+        // $barang = data_barang::where('idstatus_fk', '2')->get();
+        // $satuan = satuan::all()->pluck('satuan');
+        // $laporan = peminjaman_barang::with(['detail_pinjam_barang', 'detail_pinjam_barang.detail_data_barang', 'detail_pinjam_barang.detail_data_barang.data_barang', 'detail_pinjam_barang.satuan'])
+        //     ->where('id', $id)
+        //     ->first();
+        // $merk = [];
+        // foreach ($laporan->detail_pinjam_barang as $item) {
+        //     $merk_barang = detail_data_barang::where('idbarang_fk', $item->detail_data_barang->idbarang_fk)->get();
+        //     array_push($merk, $merk_barang);
+        // }
         // dd($merk);
-        return view('ormawa.peminjaman_barang.edit', [
-            'barang'    => $barang,
-            'satuan'    => $satuan,
-            'laporan'   => $laporan,
-            'merk'      => $merk
-        ]);
+        // return view('ormawa.peminjaman_barang.edit', [
+        //     'barang'    => $barang,
+        //     'satuan'    => $satuan,
+        //     'laporan'   => $laporan,
+        //     'merk'      => $merk
+        // ]);
         // } else if (Auth::user()->id_jabatan == 'perlengkapan') {
         //     if ($status->status) {
         $barang = data_barang::where('idstatus_fk', '2')->get();
@@ -313,6 +313,7 @@ class peminjamanBarangController extends Controller
         // return redirect()->route('ormawa.peminjaman_barang.show', $idlaporan);
         // } else if (Auth::user()->id_jabatan == 'perlengkapan') {
         $idlaporan = peminjaman_barang::all()->pluck('id')->last();
+        // dd($request);
         if ($request->laporan) {
             $this->validate($request, [
                 "tanggal_mulai"     => "required",
@@ -363,20 +364,22 @@ class peminjamanBarangController extends Controller
                 'id_satuan'     => ($request->satuan + 1)
             ]);
         }
-        return redirect()->route('perlengkapan.peminjaman_barang.show', $idlaporan);
-        // }
+        
+        return $this->show($id);
+        
     }
 
     public function verif_baper(Request $request, $id)
     {
+        // dd($request);
         $this->validate($request, [
             "verif_baper"  => "required|integer"
         ]);
 
-        detail_pinjam_barang::findOrfail($id)->update([
+        peminjaman_barang::findOrfail($id)->update([
             'verif_baper'    => $request->verif_baper
         ]);
-        return redirect()->route('perlengkapan.peminjaman_barang.show', $id);
+        return view('perlengkapan.peminjaman_barang.show', $id);
     }
 
     public function verif_ktu(Request $request, $id)
@@ -385,7 +388,7 @@ class peminjamanBarangController extends Controller
             "verif_ktu"  => "required|integer"
         ]);
 
-        detail_pinjam_barang::findOrfail($id)->update([
+        peminjaman_barang::findOrfail($id)->update([
             'verif_ktu'    => $request->verif_ktu
         ]);
         return redirect()->route('ktu.peminjaman_barang.show', $id);

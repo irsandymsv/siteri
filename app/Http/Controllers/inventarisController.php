@@ -201,10 +201,12 @@ class inventarisController extends Controller
                 'merk_barang'   => $request->merk_barang,
                 'idruang_fk'    => ($request->nama_ruang + 1)
             ]);
+            $id = $request->id;
             // dd("gak error");
         }
-
-        return redirect()->route('perlengkapan.inventaris.show', $idbarang);
+        // dd($id);
+        // return redirect()->route('perlengkapan.inventaris.show', $idbarang);
+        return $this->show($id);
     }
 
     /**
@@ -217,10 +219,8 @@ class inventarisController extends Controller
     {
         if ($request->barang) {
             data_barang::findOrfail($id)->delete();
-            Log::alert('Berhasil Dihapus');
         } else {
             detail_data_barang::findOrfail($id)->delete();
-            Log::alert('Berhasil Dihapus');
         }
     }
 }
