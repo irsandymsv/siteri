@@ -23,7 +23,11 @@
                     <table class="tabel-keterangan">
                         <tr>
                             <td><b>Tanggal Dibuat</b></td>
-                            <td>: {{$laporan->dibuat}}</td>
+                            <td>: {{$laporan->created_at}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Terakhir Diubah</b></td>
+                            <td>: {{$laporan->updated_at}}</td>
                         </tr>
                         <tr>
                             <td><b>Peruntukan</b></td>

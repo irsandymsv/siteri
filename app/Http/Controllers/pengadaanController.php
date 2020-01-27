@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\laporan_pengadaan;
+use App\Notifications\verifPengadaan;
 use App\pengadaan;
 use App\satuan;
 use Illuminate\Support\Facades\Auth;
@@ -105,6 +106,17 @@ class pengadaanController extends Controller
                 ]
             );
         }
+
+        $laporan = laporan_pengadaan::findOrfail($idLaporan);
+
+        $wadek = User::with('jabatan')
+            ->whereHas(
+                'jabatan', function (Builder $query) {
+                    $query->where('jabatan', 'Wakil Dekan 2');
+                }
+            )->first();
+
+            $wadek->notify(new verifPengadaan($laporan));
 
         // return view('perlengkapan.pengadaan.index');
         // } catch (Exception $e) {

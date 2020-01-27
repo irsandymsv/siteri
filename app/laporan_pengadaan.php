@@ -18,14 +18,14 @@ class laporan_pengadaan extends Model
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * The attributes that aren't mass assignable.
      *
      * @var array
      */
-    protected $guarded = ['id', 'dibuat'];
+    protected $guarded = ['id'];
 
     public function pengadaan()
     {
