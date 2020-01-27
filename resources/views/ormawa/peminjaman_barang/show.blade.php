@@ -1,5 +1,9 @@
 @extends('ormawa.ormawa_view')
 
+@section('side_menu')
+@include('include.ormawa_menu')
+@endsection
+
 @section('page_title', 'Peminjaman Barang')
 
 @section('judul_header', 'Peminjaman Barang')
@@ -49,12 +53,12 @@
                         <tr>
                             <td><b>Status</b></td>
                             <td>: @if($laporan->verif_baper == 0)
-                                    Belum Disetujui
-                                    @elseif($laporan->verif_ktu == 0)
-                                    Belum Diverifikasi
-                                    @else
-                                    <label class="label bg-green">Sudah Diverifikasi</label>
-                                    @endif
+                                Belum Disetujui
+                                @elseif($laporan->verif_ktu == 0)
+                                Belum Diverifikasi
+                                @else
+                                <label class="label bg-green">Sudah Diverifikasi</label>
+                                @endif
                             </td>
                         </tr>
                     </table>
@@ -75,14 +79,16 @@
                             @php $no = 0 @endphp
                             @foreach($detail_laporan as $item)
                             {{-- {{dd($item)}} --}}
-                             <tr id="{{ $item->iddetail_data_barang_fk }}">
+                            <tr id="{{ $item->iddetail_data_barang_fk }}">
                                 <td>{{$no+=1}}</td>
                                 <td>{{$item->detail_data_barang->data_barang->nama_barang}}</td>
                                 <td>{{$item->detail_data_barang->merk_barang}}</td>
                                 <td>{{$item->jumlah }} {{$item->satuan->satuan }}</td>
                                 <td>
                                     @if($item->peminjaman_barang->verif_ktu != 1)
-                                    <a href="#" class="btn btn-danger" id="{{ $item->idpinjam_barang_fk }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                    <a href="#" class="btn btn-danger" id="{{ $item->idpinjam_barang_fk }}"
+                                        name="hapus_laporan" title="Hapus Laporan" data-toggle="modal"
+                                        data-target="#modal-delete"><i class="fa fa-trash"></i></a>
                                     @endif
                                 </td>
                             </tr>

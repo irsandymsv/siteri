@@ -1,4 +1,8 @@
-@extends('perlengkapan.perlengkapan_view')
+@extends('ktu.ktu_view')
+
+@section('side_menu')
+@include('include.ktu_menu')
+@endsection
 
 @section('page_title', 'Peminjaman Ruang')
 
@@ -12,7 +16,8 @@
                 <h3 class="box-title">Laporan Peminjaman Ruang</h3>
 
                 <div style="float: right;">
-                    <a href="{{ route('perlengkapan.peminjaman_ruang.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Laporan</a>
+                    <a href="{{ route('ktu.peminjaman_ruang.create') }}" class="btn btn-primary"><i
+                            class="fa fa-plus"></i> Buat Laporan</a>
                 </div>
             </div>
 
@@ -54,10 +59,10 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('perlengkapan.peminjaman_ruang.show', $item->id) }}"
+                                    <a href="{{ route('ktu.peminjaman_ruang.show', $item->id) }}"
                                         class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
                                     @if($item->verif_baper != 1)
-                                    <a href="{{ route('perlengkapan.peminjaman_ruang.edit', [$item->id, 'laporan' => true]) }}"
+                                    <a href="{{ route('ktu.peminjaman_ruang.edit', [$item->id, 'laporan' => true]) }}"
                                         class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
                                     @endif
                                     @if($item->verif_baper != 1)
@@ -115,7 +120,7 @@
 				var id = $(this).attr('id');
                 console.log(id);
 
-				var url_del = "{{route('perlengkapan.peminjaman_ruang.destroy', "id")}}";
+				var url_del = "{{route('ktu.peminjaman_ruang.destroy', "id")}}";
                 url_del = url_del.replace('id', id);
 				console.log(url_del);
 

@@ -1,5 +1,9 @@
 @extends('perlengkapan.perlengkapan_view')
 
+@section('side_menu')
+@include('include.ormawa_menu')
+@endsection
+
 @section('page_title', 'Peminjaman Ruang')
 
 @section('judul_header', 'Peminjaman Ruang')
@@ -12,7 +16,8 @@
                 <h3 class="box-title">Laporan Peminjaman Ruang</h3>
 
                 <div style="float: right;">
-                    <a href="{{ route('perlengkapan.peminjaman_ruang.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Laporan</a>
+                    <a href="{{ route('perlengkapan.peminjaman_ruang.create') }}" class="btn btn-primary"><i
+                            class="fa fa-plus"></i> Buat Laporan</a>
                 </div>
             </div>
 
@@ -62,7 +67,8 @@
                                     @endif
                                     @if($item->verif_ktu != 1)
                                     <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan"
-                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i
+                                            class="fa fa-trash"></i></a>
                                     @endif
                                 </td>
                             </tr>

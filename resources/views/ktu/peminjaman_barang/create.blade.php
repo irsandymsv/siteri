@@ -1,5 +1,9 @@
 @extends('perlengkapan.perlengkapan_view')
 
+@section('side_menu')
+@include('include.ktu_menu')
+@endsection
+
 @section('page_title', 'Peminjaman Barang')
 
 @section('judul_header', 'Buat Laporan Peminjaman Barang')

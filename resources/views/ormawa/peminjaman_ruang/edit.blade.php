@@ -1,5 +1,9 @@
 @extends('perlengkapan.perlengkapan_view')
 
+@section('side_menu')
+@include('include.ormawa_menu')
+@endsection
+
 @section('page_title', 'Peminjaman Ruang')
 
 @section('judul_header', 'Ubah Laporan Peminjaman Ruang')
@@ -47,11 +51,13 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    {!! Form::text('tanggal_mulai', $laporan->tanggal_mulai, ['class' => 'form-control datepicker not-rounded-border']) !!}
+                                    {!! Form::text('tanggal_mulai', $laporan->tanggal_mulai, ['class' => 'form-control
+                                    datepicker not-rounded-border']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('tanggal_berakhir', $laporan->tanggal_berakhir, ['class' => 'form-control datepicker not-rounded-border']) !!}
+                                    {!! Form::text('tanggal_berakhir', $laporan->tanggal_berakhir, ['class' =>
+                                    'form-control datepicker not-rounded-border']) !!}
                                 </td>
 
                                 <td>
@@ -61,7 +67,8 @@
 
                                 <td>
                                     {{-- {!! Form::text('jam_berakhir', null, ['class' => 'form-control timepicker']) !!} --}}
-                                    {!! Form::time('jam_berakhir', $laporan->jam_berakhir, ['class' => 'form-control']) !!}
+                                    {!! Form::time('jam_berakhir', $laporan->jam_berakhir, ['class' => 'form-control'])
+                                    !!}
                                 </td>
 
                                 <td>
@@ -69,7 +76,8 @@
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah_peserta', $laporan->jumlah_peserta, ['class' => 'form-control angka']) !!}
+                                    {!! Form::text('jumlah_peserta', $laporan->jumlah_peserta, ['class' => 'form-control
+                                    angka']) !!}
                                 </td>
                             </tr>
                         </tbody>
@@ -173,4 +181,3 @@
 
 </script>
 @endsection
-

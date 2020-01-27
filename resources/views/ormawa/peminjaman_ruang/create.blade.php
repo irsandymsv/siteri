@@ -1,5 +1,9 @@
 @extends('perlengkapan.perlengkapan_view')
 
+@section('side_menu')
+@include('include.ormawa_menu')
+@endsection
+
 @section('page_title', 'Peminjaman Ruang')
 
 @section('judul_header', 'Buat Laporan Peminjaman Ruang')
@@ -77,8 +81,9 @@
                                 <td class="ruang" style="min-width:200px">
                                     {{-- {!! Form::select('nama_ruang[]', $nama_ruang, null, ['class' =>
                                     'form-control not-rounded-border js-example-basic-multiple', 'multiple' => 'multiple'])!!} --}}
-                                    <select id="nama_ruang" name="nama_ruang[]" class="form-control not-rounded-border js-example-basic-multiple"
-                                    multiple="multiple">
+                                    <select id="nama_ruang" name="nama_ruang[]"
+                                        class="form-control not-rounded-border js-example-basic-multiple"
+                                        multiple="multiple">
                                         @foreach ($ruang as $val)
                                         <option value="{{ $val->id }}">({{$val->kuota}}) {{$val->nama_ruang}}</option>
                                         @endforeach
@@ -146,9 +151,9 @@
                 $("#nama_ruang").select2({
                     maximumSelectionLength: data.length
                     // formatSelectionTooBig: function (limit) {
-            
+
                     //     $('#box').show().text('Callback!');
-                        
+
                     //     return 'Too many selected elements (' + limit + ')';
                     // }
                 });

@@ -1,4 +1,8 @@
-@extends('perlengkapan.perlengkapan_view')
+@extends('ktu.ktu_view')
+
+@section('side_menu')
+@include('include.ktu_menu')
+@endsection
 
 @section('page_title', 'Peminjaman Barang')
 
@@ -48,10 +52,10 @@
                         <tr>
                             <td><b>Status</b></td>
                             <td>: @if($laporan->verif_ktu == 0)
-                                    Belum Diverifikasi
-                                    @else
-                                    <label class="label bg-green">Sudah Diverifikasi</label>
-                                    @endif
+                                Belum Diverifikasi
+                                @else
+                                <label class="label bg-green">Sudah Diverifikasi</label>
+                                @endif
                             </td>
                         </tr>
                     </table>
@@ -71,17 +75,20 @@
                         <tbody>
                             @php $no = 0 @endphp
                             @foreach($detail_laporan as $item)
-                             <tr id="lap_{{ $item->peminjaman_barang->id }}">
+                            <tr id="lap_{{ $item->peminjaman_barang->id }}">
                                 <td>{{$no+=1}}</td>
                                 <td>{{$item->detail_data_barang->data_barang->nama_barang}}</td>
                                 <td>{{$item->detail_data_barang->merk_barang}}</td>
                                 <td>{{$item->jumlah }} {{$item->satuan->satuan }}</td>
                                 <td>
                                     @if($item->verif_ktu != 1)
-                                    <a href="{{ route('perlengkapan.peminjaman_barang.edit', $item->peminjaman_barang->id) }}" class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ route('ktu.peminjaman_barang.edit', $item->peminjaman_barang->id) }}"
+                                        class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
                                     @endif
                                     @if($item->verif_ktu != 1)
-                                    <a href="#" class="btn btn-danger" id="{{ $item->peminjaman_barang->id }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                    <a href="#" class="btn btn-danger" id="{{ $item->peminjaman_barang->id }}"
+                                        name="hapus_laporan" title="Hapus Laporan" data-toggle="modal"
+                                        data-target="#modal-delete"><i class="fa fa-trash"></i></a>
                                     @endif
 
                                 </td>

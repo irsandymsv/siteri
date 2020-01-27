@@ -1,4 +1,8 @@
-@extends('perlengkapan.perlengkapan_view')
+@extends('ktu.ktu_view')
+
+@section('side_menu')
+@include('include.ktu_menu')
+@endsection
 
 @section('page_title', 'Peminjaman Ruang')
 
@@ -42,12 +46,12 @@
                         <tr>
                             <td><b>Status</b></td>
                             <td>: @if($laporan->verif_baper == 0)
-                                    Belum Disetujui
-                                    @elseif($laporan->verif_ktu == 0)
-                                    Belum Diverifikasi
-                                    @else
-                                    <label class="label bg-green">Sudah Diverifikasi</label>
-                                    @endif
+                                Belum Disetujui
+                                @elseif($laporan->verif_ktu == 0)
+                                Belum Diverifikasi
+                                @else
+                                <label class="label bg-green">Sudah Diverifikasi</label>
+                                @endif
                             </td>
                         </tr>
                     </table>
@@ -66,7 +70,7 @@
                         <tbody>
                             @php $no = 0 @endphp
                             @foreach($detail_laporan as $item)
-                             <tr id="lap_{{ $item->id }}">
+                            <tr id="lap_{{ $item->id }}">
                                 <td>{{$no+=1}}</td>
                                 <td>{{$item->data_ruang->nama_ruang}}</td>
                                 <td>{{$item->data_ruang->kuota}}</td>
@@ -127,7 +131,7 @@
 				var id = $(this).attr('id');
                 console.log(id);
 
-				var url_del = "{{route('perlengkapan.peminjaman_ruang.destroy', "id")}}";
+				var url_del = "{{route('ktu.peminjaman_ruang.destroy', "id")}}";
                 url_del = url_del.replace('id', id);
 				console.log(url_del);
 
@@ -157,4 +161,3 @@
 
 </script>
 @endsection
-

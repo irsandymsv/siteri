@@ -18,7 +18,6 @@
 
 @section('content')
 @php
-// $laporan = ($status) ? $laporan[0] : $laporan ;
 $laporan = $laporan[0];
 // dd($laporan);
 @endphp
@@ -27,7 +26,7 @@ $laporan = $laporan[0];
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Buat Laporan Pengadaan</h3>
+                <h3 class="box-title">Ubah Laporan Pengadaan</h3>
             </div>
 
             <div class="box-body">

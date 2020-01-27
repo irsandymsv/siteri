@@ -1,5 +1,9 @@
 @extends('ormawa.ormawa_view')
 
+@section('side_menu')
+@include('include.ormawa_menu')
+@endsection
+
 @section('page_title', 'Peminjaman Barang')
 
 @section('judul_header', 'Peminjaman Barang')
@@ -17,7 +21,8 @@
                 <h3 class="box-title">Laporan Peminjaman Barang</h3>
 
                 <div style="float: right;">
-                    <a href="{{ route('ormawa.peminjaman_barang.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Laporan</a>
+                    <a href="{{ route('ormawa.peminjaman_barang.create') }}" class="btn btn-primary"><i
+                            class="fa fa-plus"></i> Buat Laporan</a>
                 </div>
             </div>
 
@@ -56,12 +61,16 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('ormawa.peminjaman_barang.show', $item->id) }}" class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ route('ormawa.peminjaman_barang.show', $item->id) }}"
+                                        class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
                                     @if($item->verif_ktu != 1)
-                                    <a href="{{ route('ormawa.peminjaman_barang.edit', $item->id) }}" class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ route('ormawa.peminjaman_barang.edit', $item->id) }}"
+                                        class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
                                     @endif
                                     @if($item->verif_ktu != 1)
-                                    <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                    <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan"
+                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i
+                                            class="fa fa-trash"></i></a>
                                     @endif
 
                                 </td>
