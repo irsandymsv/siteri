@@ -1,5 +1,9 @@
 @extends('perlengkapan.perlengkapan_view')
 
+@section('side_menu')
+@include('include.perlengkapan_menu')
+@endsection
+
 @section('page_title', 'Laporan Inventaris')
 
 @section('css_link')
@@ -17,7 +21,8 @@
                 <h3 class="box-title">Laporan Inventaris</h3>
 
                 <div style="float: right;">
-                    <a href="{{ route('perlengkapan.inventaris.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Laporan</a>
+                    <a href="{{ route('perlengkapan.inventaris.create') }}" class="btn btn-primary"><i
+                            class="fa fa-plus"></i> Buat Laporan</a>
                 </div>
             </div>
 
@@ -42,9 +47,13 @@
                                 <td>{{ $item->nama_barang }}</td>
                                 {{-- <td>{{ $item->status }}</td> --}}
                                 <td>
-                                    <a href="{{ route('perlengkapan.inventaris.show', $item->id) }}" class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
-                                    <a href="{{ route('perlengkapan.inventaris.edit', [$item->id, 'laporan' => true]) }}" class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
-                                    <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan" title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                    <a href="{{ route('perlengkapan.inventaris.show', $item->id) }}"
+                                        class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ route('perlengkapan.inventaris.edit', [$item->id, 'laporan' => true]) }}"
+                                        class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
+                                    <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan"
+                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i
+                                            class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                             @endforeach

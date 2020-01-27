@@ -1,5 +1,9 @@
 @extends('perlengkapan.perlengkapan_view')
 
+@section('side_menu')
+@include('include.perlengkapan_menu')
+@endsection
+
 @section('page_title', 'Laporan Inventaris')
 
 @section('css_link')
@@ -23,63 +27,64 @@
             <div class="box-header">
                 <h3 class="box-title">Data Inventaris</h3>
                 {{-- <div style="float: right;">
-                    <a href="{{ route('perlengkapan.inventaris.create', $barang->id) }}" class="btn btn-primary"><i class="fa fa-plus"></i> Buat Laporan</a>
-                </div> --}}
-            </div>
+                    <a href="{{ route('perlengkapan.inventaris.create', $barang->id) }}" class="btn btn-primary"><i
+                    class="fa fa-plus"></i> Buat Laporan</a>
+            </div> --}}
+        </div>
 
-            <div class="box-body">
-                <div class="">
-                    <table class="tabel-keterangan">
+        <div class="box-body">
+            <div class="">
+                <table class="tabel-keterangan">
+                    <tr>
+                        <td><b>Kode Barang</b></td>
+                        <td>: {{$barang->kode_barang}}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Nama Barang</b></td>
+                        <td>: {{$barang->nama_barang}}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Status</b></td>
+                        <td>: {{$barang->status_barang->status}}</td>
+                    </tr>
+                </table>
+            </div>
+            <br>
+            <div class="table-responsive">
+                <table id="inventaris" class="table table-bordered table-hovered">
+                    <thead>
                         <tr>
-                            <td><b>Kode Barang</b></td>
-                            <td>: {{$barang->kode_barang}}</td>
+                            <th>NUP</th>
+                            <th>Tanggal</th>
+                            <th>Merk Barang</th>
+                            <th>Kode Ruang</th>
+                            <th>Uraian Ruang</th>
+                            <th>Opsi</th>
                         </tr>
-                        <tr>
-                            <td><b>Nama Barang</b></td>
-                            <td>: {{$barang->nama_barang}}</td>
+                    </thead>
+                    <tbody>
+                        @foreach($detail_barang as $item)
+                        <tr id="lap_{{ $item->id }}">
+                            <td>{{ $item->nup }}</td>
+                            <td>{{ $item->tanggal }}</td>
+                            <td>{{ $item->merk_barang }}</td>
+                            <td>{{ $item->data_ruang->kode_ruang }}</td>
+                            <td>{{ $item->data_ruang->nama_ruang }}</td>
+                            <td>
+                                <a href="{{ route('perlengkapan.inventaris.edit', $item->id) }}" class="btn btn-warning"
+                                    title="Ubah Laporan"><i class="fa fa-edit"></i></a>
+                                <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan"
+                                    title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i
+                                        class="fa fa-trash"></i></a>
+                            </td>
                         </tr>
-                        <tr>
-                            <td><b>Status</b></td>
-                            <td>: {{$barang->status_barang->status}}</td>
-                        </tr>
-                    </table>
-                </div>
-                <br>
-                <div class="table-responsive">
-                    <table id="inventaris" class="table table-bordered table-hovered">
-                        <thead>
-                            <tr>
-                                <th>NUP</th>
-                                <th>Tanggal</th>
-                                <th>Merk Barang</th>
-                                <th>Kode Ruang</th>
-                                <th>Uraian Ruang</th>
-                                <th>Opsi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($detail_barang as $item)
-                            <tr id="lap_{{ $item->id }}">
-                                <td>{{ $item->nup }}</td>
-                                <td>{{ $item->tanggal }}</td>
-                                <td>{{ $item->merk_barang }}</td>
-                                <td>{{ $item->data_ruang->kode_ruang }}</td>
-                                <td>{{ $item->data_ruang->nama_ruang }}</td>
-                                <td>
-                                    <a href="{{ route('perlengkapan.inventaris.edit', $item->id) }}"
-                                        class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
-                                    <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan"
-                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i
-                                            class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <div id="success_delete" class="pop_up_info">

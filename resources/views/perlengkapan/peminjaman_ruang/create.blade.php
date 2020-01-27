@@ -1,5 +1,9 @@
 @extends('perlengkapan.perlengkapan_view')
 
+@section('side_menu')
+@include('include.perlengkapan_menu')
+@endsection
+
 @section('page_title', 'Peminjaman Ruang')
 
 @section('judul_header', 'Buat Laporan Peminjaman Ruang')
@@ -78,7 +82,7 @@
                                     {{-- {!! Form::select('nama_ruang[]', $nama_ruang, null, ['class' =>
                                     'form-control not-rounded-border js-example-basic-multiple', 'multiple' => 'multiple'])!!} --}}
                                     <select id="nama_ruang" name="nama_ruang[]" class="form-control select2"
-                                    multiple="multiple">
+                                        multiple="multiple">
                                         @foreach ($ruang as $val)
                                         <option value="{{ $val->id }}">({{$val->kuota}}) {{$val->nama_ruang}}</option>
                                         @endforeach

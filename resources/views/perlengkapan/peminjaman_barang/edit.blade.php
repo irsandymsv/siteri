@@ -1,5 +1,9 @@
 @extends('perlengkapan.perlengkapan_view')
 
+@section('side_menu')
+@include('include.perlengkapan_menu')
+@endsection
+
 @section('page_title', 'Peminjaman Barang')
 
 @section('judul_header', 'Ubah Laporan Peminjaman Barang')
@@ -44,11 +48,13 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    {!! Form::date('tanggal_mulai', $laporan->tanggal_mulai, ['class' => 'form-control tanggal']) !!}
+                                    {!! Form::date('tanggal_mulai', $laporan->tanggal_mulai, ['class' => 'form-control
+                                    tanggal']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::date('tanggal_berakhir', $laporan->tanggal_berakhir, ['class' => 'form-control tanggal']) !!}
+                                    {!! Form::date('tanggal_berakhir', $laporan->tanggal_berakhir, ['class' =>
+                                    'form-control tanggal']) !!}
                                 </td>
 
                                 <td>
@@ -56,7 +62,8 @@
                                 </td>
 
                                 <td>
-                                    {!! Form::time('jam_berakhir', $laporan->jam_berakhir, ['class' => 'form-control']) !!}
+                                    {!! Form::time('jam_berakhir', $laporan->jam_berakhir, ['class' => 'form-control'])
+                                    !!}
                                 </td>
 
                                 <td>
@@ -90,17 +97,20 @@
                                 </td>
 
                                 <td>
-                                    <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang select2" disabled="true">
+                                    <select id="merk_barang" name="merk_barang[]"
+                                        class="form-control merk_barang select2" disabled="true">
                                     </select>
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah[]', $item->jumlah, ['class' => 'form-control', 'id' => 'jumlah'])
+                                    {!! Form::text('jumlah[]', $item->jumlah, ['class' => 'form-control', 'id' =>
+                                    'jumlah'])
                                     !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::select('satuan[]', $satuan, $item->idsatuan_fk-1, ['class' => 'form-control', 'id' =>
+                                    {!! Form::select('satuan[]', $satuan, $item->idsatuan_fk-1, ['class' =>
+                                    'form-control', 'id' =>
                                     'satuan'])!!}
                                 </td>
 
@@ -175,17 +185,20 @@
                                     </td>
 
                                     <td>
-                                        <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang" disabled="true">
+                                        <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang"
+                                            disabled="true">
                                         </select>
                                     </td>
 
                                     <td>
-                                        {!! Form::text('jumlah[]', $laporan->jumlah, ['class' => 'form-control', 'id' => 'jumlah'])
+                                        {!! Form::text('jumlah[]', $laporan->jumlah, ['class' => 'form-control', 'id' =>
+                                        'jumlah'])
                                         !!}
                                     </td>
 
                                     <td>
-                                        {!! Form::select('satuan[]', $satuan, $laporan->idsatuan_fk-1, ['class' => 'form-control', 'id' =>
+                                        {!! Form::select('satuan[]', $satuan, $laporan->idsatuan_fk-1, ['class' =>
+                                        'form-control', 'id' =>
                                         'satuan'])!!}
                                     </td>
                                 </tr>
@@ -321,4 +334,3 @@
 
 </script>
 @endsection
-

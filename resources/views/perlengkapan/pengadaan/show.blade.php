@@ -1,5 +1,9 @@
 @extends('perlengkapan.perlengkapan_view')
 
+@section('side_menu')
+@include('include.perlengkapan_menu')
+@endsection
+
 @section('page_title', 'Pengadaan')
 
 @section('css_link')

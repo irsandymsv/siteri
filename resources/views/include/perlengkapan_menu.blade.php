@@ -1,11 +1,8 @@
-@extends('layouts.template')
-
-@section('side_menu')
 <li class="active"><a href="{{ route('perlengkapan.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard
             Perlengkapan</span></a></li>
 
 {{-- <li>
-    <a href="{{ route('perlengkapan.inventaris.index') }}">
+<a href="{{ route('perlengkapan.inventaris.index') }}">
 <i class="fa fa-book"></i> <span>Laporan Inventaris</span>
 </a>
 </li> --}}
@@ -23,7 +20,7 @@
 </li>
 
 {{-- <li>
-    <a href="{{ route('perlengkapan.pengadaan.index') }}">
+<a href="{{ route('perlengkapan.pengadaan.index') }}">
 <i class="fa fa-book"></i><span>Laporan Pengadaan</span>
 </a>
 </li> --}}
@@ -63,5 +60,3 @@
         <li><a href="{{ route('perlengkapan.peminjaman_ruang.index') }}">Lihat Laporan</a></li>
     </ul>
 </li>
-
-@endsection

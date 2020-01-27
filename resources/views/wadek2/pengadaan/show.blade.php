@@ -1,5 +1,9 @@
 @extends('wadek2.wadek2_view')
 
+@section('side_menu')
+@include('include.wadek2_menu')
+@endsection
+
 @section('page_title', 'Laporan Pengadaan')
 
 @section('judul_header', 'Laporan Pengadaan')
@@ -98,7 +102,8 @@ $laporan = $pengadaan[0]->laporan_pengadaan;
                                 class="fa fa-close"></i> Tolak Laporan</button>
                         </form>
 
-                        <a href="{{ route('wadek2.pengadaan.index') }}" class="btn btn-default pull-right">Kembali</a>
+                        {{-- <a href="{{ route('wadek2.pengadaan.index') }}" class="btn btn-default
+                        pull-right">Kembali</a> --}}
 
                         <div class="modal fade" id="modal-tolak">
                             <div class="modal-dialog">

@@ -1,5 +1,9 @@
 @extends('perlengkapan.perlengkapan_view')
 
+@section('side_menu')
+@include('include.perlengkapan_menu')
+@endsection
+
 @section('page_title', 'Ubah Data Inventaris')
 
 @section('judul_header', 'Ubah Data Inventaris')
@@ -69,7 +73,8 @@ $laporan = $laporan[0];
                                     {!! Form::date('tanggal[]', $item->tanggal, ['class' => 'form-control tanggal'])!!}
                                 </td>
                                 <td>
-                                    {!! Form::text('merk_barang[]', $item->merk_barang, ['class' => 'form-control merk_barang'])!!}
+                                    {!! Form::text('merk_barang[]', $item->merk_barang, ['class' => 'form-control
+                                    merk_barang'])!!}
                                 </td>
 
                                 <td>
@@ -130,10 +135,12 @@ $laporan = $laporan[0];
                                 <tr id="lap_{{ $barang->id }}">
                                     {!! Form::hidden("id", $barang->idbarang_fk) !!}
                                     <td>
-                                        {!! Form::date('tanggal', $barang->tanggal, ['class' => 'form-control tanggal'])!!}
+                                        {!! Form::date('tanggal', $barang->tanggal, ['class' => 'form-control
+                                        tanggal'])!!}
                                     </td>
                                     <td>
-                                        {!! Form::text('merk_barang', $barang->merk_barang, ['class' => 'form-control merk_barang'])!!}
+                                        {!! Form::text('merk_barang', $barang->merk_barang, ['class' => 'form-control
+                                        merk_barang'])!!}
                                     </td>
                                     <td>
                                         {!! Form::select('nama_ruang', $nama_ruang, $barang->idruang_fk-1, ['class' =>
@@ -209,4 +216,3 @@ $laporan = $laporan[0];
 
 @endsection
 @endif
-

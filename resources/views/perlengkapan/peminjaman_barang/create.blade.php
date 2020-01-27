@@ -1,5 +1,9 @@
 @extends('perlengkapan.perlengkapan_view')
 
+@section('side_menu')
+@include('include.perlengkapan_menu')
+@endsection
+
 @section('page_title', 'Peminjaman Barang')
 
 @section('judul_header', 'Buat Laporan Peminjaman Barang')
@@ -81,7 +85,8 @@
                         <tbody id="inputan">
                             <tr>
                                 <td>
-                                    <select id="barang" name="barang[]" class="form-control barang select2" style="width: 100%;">
+                                    <select id="barang" name="barang[]" class="form-control barang select2"
+                                        style="width: 100%;">
                                         <option value="null">Pilih Barang</option>
                                         @foreach ($barang as $val)
                                         <option value="{{ $val->id }}" onchange="{{ $val->nama_barang }}">
@@ -91,8 +96,8 @@
                                 </td>
 
                                 <td class="merk">
-                                    <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang select2" style="width: 100%;"
-                                        disabled="true">
+                                    <select id="merk_barang" name="merk_barang[]"
+                                        class="form-control merk_barang select2" style="width: 100%;" disabled="true">
                                     </select>
                                 </td>
 
@@ -102,7 +107,8 @@
                                 </td>
 
                                 <td>
-                                    {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control select2', 'style' => 'width:100%'])!!}
+                                    {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control select2',
+                                    'style' => 'width:100%'])!!}
                                 </td>
 
                                 <td>

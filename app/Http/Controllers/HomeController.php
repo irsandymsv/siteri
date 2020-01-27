@@ -52,10 +52,13 @@ class HomeController extends Controller
         }
         elseif ($user->jabatan->jabatan == "Pengadministrasi Kemahasiswaan & Alumni") {
             return redirect()->route('kemahasiswaan.dashboard');
-        } 
+        }
+        elseif ($user->jabatan->jabatan == "Pengadministrasi BMN") {
+            return redirect()->route('perlengkapan.dashboard');
+        }
         else {
             return view('home');
         }
-        
+
     }
 }

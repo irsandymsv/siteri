@@ -1,5 +1,9 @@
 @extends('perlengkapan.perlengkapan_view')
 
+@section('side_menu')
+@include('include.perlengkapan_menu')
+@endsection
+
 @section('page_title', 'Peminjaman Ruang')
 
 @section('judul_header', 'Peminjaman Ruang')
@@ -42,12 +46,12 @@
                         <tr>
                             <td><b>Status</b></td>
                             <td>: @if($laporan->verif_baper == 0)
-                                    Belum Disetujui
-                                    @elseif($laporan->verif_ktu == 0)
-                                    Belum Diverifikasi
-                                    @else
-                                    <label class="label bg-green">Sudah Diverifikasi</label>
-                                    @endif
+                                Belum Disetujui
+                                @elseif($laporan->verif_ktu == 0)
+                                Belum Diverifikasi
+                                @else
+                                <label class="label bg-green">Sudah Diverifikasi</label>
+                                @endif
                             </td>
                         </tr>
                     </table>
@@ -66,13 +70,14 @@
                         <tbody>
                             @php $no = 0 @endphp
                             @foreach($detail_laporan as $item)
-                             <tr id="lap_{{ $item->id }}">
+                            <tr id="lap_{{ $item->id }}">
                                 <td>{{$no+=1}}</td>
                                 <td>{{$item->data_ruang->nama_ruang}}</td>
                                 <td>{{$item->data_ruang->kuota}}</td>
                                 <td>
                                     <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan"
-                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i
+                                            class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -81,12 +86,12 @@
                 </div>
                 <br><br>
                 @if($laporan->verif_baper == 0)
-                    {!! Form::open(['route' => ['perlengkapan.peminjaman_ruang.verif', $item->id], 'method' => 'PUT'])!!}
-                    {!! Form::hidden("verif_baper", 1) !!}
-                    <div class="form-group" style="float: right;">
-                        {!! Form::submit('Setujui', [ 'class'=>'btn btn-success', 'id' => 'submit']) !!}
-                    </div>
-                    {!! Form::close() !!}
+                {!! Form::open(['route' => ['perlengkapan.peminjaman_ruang.verif', $item->id], 'method' => 'PUT'])!!}
+                {!! Form::hidden("verif_baper", 1) !!}
+                <div class="form-group" style="float: right;">
+                    {!! Form::submit('Setujui', [ 'class'=>'btn btn-success', 'id' => 'submit']) !!}
+                </div>
+                {!! Form::close() !!}
                 @endif
             </div>
         </div>
@@ -163,4 +168,3 @@
 
 </script>
 @endsection
-

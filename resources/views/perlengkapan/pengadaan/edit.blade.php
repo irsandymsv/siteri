@@ -1,5 +1,9 @@
 @extends('perlengkapan.perlengkapan_view')
 
+@section('side_menu')
+@include('include.perlengkapan_menu')
+@endsection
+
 @section('page_title', 'Ubah Data Pengadaan')
 
 @section('judul_header', 'Ubah Data Pengadaan')
@@ -139,6 +143,7 @@ $laporan = $laporan[0];
                                 </tr>
                             </thead>
                             <tbody>
+                                {!! Form::hidden("id", $laporan->laporan_pengadaan->id) !!}
                                 <tr id="lap_{{ $laporan->id }}">
                                     <td>{!! Form::text('nama_barang', $laporan->nama_barang, ['class' =>
                                         'form-control']) !!}</td>

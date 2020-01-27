@@ -1,5 +1,9 @@
 @extends('wadek2.wadek2_view')
 
+@section('side_menu')
+@include('include.wadek2_menu')
+@endsection
+
 @section('page_title', 'Laporan Pengadaan')
 
 @section('judul_header', 'Laporan Pengadaan')
