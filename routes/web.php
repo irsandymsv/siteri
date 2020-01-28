@@ -29,6 +29,7 @@ Route::middleware(['auth'])->prefix('notifikasi')->name('notifikasi.')->group(
         Route::get('/', 'NotificationController@index')->name('index');
         Route::get('/read/{id}', 'NotificationController@read')->name('read');
         Route::get('/readAll', 'NotificationController@readAll')->name('readAll');
+        Route::get('/load', 'NotificationController@load')->name('load');
     }
 );
 
