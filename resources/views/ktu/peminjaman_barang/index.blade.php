@@ -6,7 +6,11 @@
 
 @section('page_title', 'Peminjaman Barang')
 
-@section('judul_header', 'Peminjaman Barang')
+@extends('layouts.template')
+
+@section('side_menu')
+@include('include.ktu_menu')
+@endsection
 
 @section('content')
 <div class="row">
