@@ -1,4 +1,8 @@
-@extends('perlengkapan.perlengkapan_view')
+@extends('layouts.template')
+
+@section('side_menu')
+@include('include.ktu_menu')
+@endsection
 
 @section('page_title', 'Peminjaman Ruang')
 
@@ -76,7 +80,8 @@
 
                                 <td>
                                     {!! Form::select('nama_ruang[]', $nama_ruang, null, ['class' =>
-                                    'form-control not-rounded-border js-example-basic-multiple', 'multiple' => 'multiple'])!!}
+                                    'form-control not-rounded-border js-example-basic-multiple', 'multiple' =>
+                                    'multiple'])!!}
                                 </td>
                             </tr>
                         </tbody>

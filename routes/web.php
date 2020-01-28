@@ -160,14 +160,17 @@ Route::middleware(['auth', 'checkRole:KTU'])->prefix('ktu')->name('ktu.')->group
         //Peminjaman
         Route::resource(
             'peminjaman_barang', 'peminjamanBarangController', [
-            'only' => ['index', 'show', 'update']
+            'only' => ['index', 'show']
             ]
         );
+        Route::put('/peminjaman_barang/verif/{verif_ktu}', 'peminjamanBarangController@verif_ktu')->name('peminjaman_barang.verif');
+
         Route::resource(
             'peminjaman_ruang', 'peminjamanRuangController', [
-            'only' => ['index', 'show', 'update']
-            ]
+                'only' => ['index', 'show']
+                ]
         );
+        Route::put('/peminjaman_ruang/verif/{verif_ktu}', 'peminjamanRuangController@verif_ktu')->name('peminjaman_ruang.verif');
     }
 );
 
@@ -345,13 +348,13 @@ Route::middleware(['auth', 'checkRole:Pengadministrasi BMN'])->prefix('perlengka
     }
 );
 
-Route::prefix('ormawa')->name('ormawa.')->group(
+Route::middleware(['auth', 'checkRole:Pengadministrasi Layanan Kegiatan Mahasiswa'])->prefix('ormawa')->name('ormawa.')->group(
     function () {
         Route::get(
             '/', function () {
                 return view('ormawa.dashboard');
             }
-        );
+        )->name('dashboard');
         Route::resource('peminjaman_barang', 'peminjamanBarangController');
         Route::get('/peminjaman_barang/barang/{id}', array('as' => 'barang.ajax', 'uses' => 'peminjamanBarangController@barangAjax'));
         Route::resource('peminjaman_ruang', 'peminjamanRuangController');

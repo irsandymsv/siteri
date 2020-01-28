@@ -1,5 +1,9 @@
 @extends('ormawa.ormawa_view')
 
+@section('side_menu')
+@include('include.ormawa_menu')
+@endsection
+
 @section('page_title', 'Peminjaman Barang')
 
 @section('judul_header', 'Ubah Laporan Peminjaman Barang')
@@ -44,11 +48,13 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    {!! Form::date('tanggal_mulai', $laporan->tanggal_mulai, ['class' => 'form-control tanggal']) !!}
+                                    {!! Form::date('tanggal_mulai', $laporan->tanggal_mulai, ['class' => 'form-control
+                                    tanggal']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::date('tanggal_berakhir', $laporan->tanggal_berakhir, ['class' => 'form-control tanggal']) !!}
+                                    {!! Form::date('tanggal_berakhir', $laporan->tanggal_berakhir, ['class' =>
+                                    'form-control tanggal']) !!}
                                 </td>
 
                                 <td>
@@ -56,7 +62,8 @@
                                 </td>
 
                                 <td>
-                                    {!! Form::time('jam_berakhir', $laporan->jam_berakhir, ['class' => 'form-control']) !!}
+                                    {!! Form::time('jam_berakhir', $laporan->jam_berakhir, ['class' => 'form-control'])
+                                    !!}
                                 </td>
 
                                 <td>
@@ -86,7 +93,8 @@
                                     <select id="barang" name="barang[]" class="form-control barang">
                                         <option value="">Pilih Barang</option>
                                         @foreach ($barang as $val)
-                                        <option value="{{ $val->id }}" {{ ($val->id == $item->detail_data_barang->idbarang_fk) ? 'selected' : '' }}>
+                                        <option value="{{ $val->id }}"
+                                            {{ ($val->id == $item->detail_data_barang->idbarang_fk) ? 'selected' : '' }}>
                                             {{ $val->nama_barang }}</option>
                                         @endforeach
                                     </select>
@@ -95,19 +103,22 @@
                                 <td class="merk">
                                     <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang">
                                         @foreach ($merk[$i] as $val)
-                                        <option value="{{ $val->id }}" {{ ($val->id == $item->iddetail_data_barang_fk) ? 'selected' : '' }}>
+                                        <option value="{{ $val->id }}"
+                                            {{ ($val->id == $item->iddetail_data_barang_fk) ? 'selected' : '' }}>
                                             {{ $val->merk_barang }}</option>
                                         @endforeach
                                     </select>
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah[]', $item->jumlah, ['class' => 'form-control angka', 'id' => 'jumlah'])
+                                    {!! Form::text('jumlah[]', $item->jumlah, ['class' => 'form-control angka', 'id' =>
+                                    'jumlah'])
                                     !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::select('satuan[]', $satuan, $item->idsatuan_fk-1, ['class' => 'form-control', 'id' =>
+                                    {!! Form::select('satuan[]', $satuan, $item->idsatuan_fk-1, ['class' =>
+                                    'form-control', 'id' =>
                                     'satuan'])!!}
                                 </td>
 
@@ -258,4 +269,3 @@
 
 </script>
 @endsection
-

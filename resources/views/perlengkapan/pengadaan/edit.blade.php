@@ -1,4 +1,4 @@
-@extends('perlengkapan.perlengkapan_view')
+@extends('layouts.template')
 
 @section('side_menu')
 @include('include.perlengkapan_menu')
@@ -18,7 +18,6 @@
 
 @section('content')
 @php
-// $laporan = ($status) ? $laporan[0] : $laporan ;
 $laporan = $laporan[0];
 // dd($laporan);
 @endphp
@@ -27,7 +26,7 @@ $laporan = $laporan[0];
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Buat Laporan Pengadaan</h3>
+                <h3 class="box-title">Ubah Laporan Pengadaan</h3>
             </div>
 
             <div class="box-body">
@@ -107,7 +106,11 @@ $laporan = $laporan[0];
                         <table class="tabel-keterangan">
                             <tr>
                                 <td><b>Tanggal Dibuat</b></td>
-                                <td>: {{$laporan->laporan_pengadaan->dibuat}}</td>
+                                <td>: {{$laporan->laporan_pengadaan->created_at}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Terakhir Diubah</b></td>
+                                <td>: {{$laporan->laporan_pengadaan->updated_at}}</td>
                             </tr>
                             <tr>
                                 <td><b>Peruntukan</b></td>

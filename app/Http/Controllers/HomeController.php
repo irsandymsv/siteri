@@ -56,6 +56,9 @@ class HomeController extends Controller
         elseif ($user->jabatan->jabatan == "Pengadministrasi BMN") {
             return redirect()->route('perlengkapan.dashboard');
         }
+        elseif ($user->jabatan->jabatan == "Pengadministrasi Layanan Kegiatan Mahasiswa") {
+            return redirect()->route('ormawa.dashboard');
+        }
         else {
             return view('home');
         }

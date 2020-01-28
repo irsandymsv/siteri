@@ -1,6 +1,3 @@
-@extends('layouts.template')
-
-@section('side_menu')
 <li class="active"><a href="{{ route('ormawa.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard
             Ormawa</span></a></li>
 
@@ -27,5 +24,3 @@
         <li><a href="{{ route('ormawa.peminjaman_ruang.index') }}">Lihat Laporan</a></li>
     </ul>
 </li>
-
-@endsection

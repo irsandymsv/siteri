@@ -1,4 +1,4 @@
-@extends('wadek2.wadek2_view')
+@extends('layouts.template')
 
 @section('side_menu')
 @include('include.wadek2_menu')
@@ -25,6 +25,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal Dibuat</th>
+                                <th>Terakhir Diubah</th>
                                 <th>Keterangan</th>
                                 <th>Status</th>
                                 <th style="width:99.8px">Opsi</th>
@@ -36,7 +37,10 @@
                             <tr id="lap_{{ $item->id }}">
                                 <td>{{$no+=1}}</td>
                                 <td>
-                                    {{Carbon\Carbon::parse($item->dibuat)->locale('id_ID')->isoFormat('D MMMM Y')}}
+                                    {{Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}
+                                </td>
+                                <td>
+                                    {{Carbon\Carbon::parse($item->updated_at)->locale('id_ID')->isoFormat('D MMMM Y')}}
                                 </td>
                                 <td>{{$item->keterangan}}</td>
                                 <td>

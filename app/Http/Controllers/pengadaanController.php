@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\laporan_pengadaan;
+use App\Notifications\verifPengadaan;
 use App\pengadaan;
 use App\satuan;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class pengadaanController extends Controller
 {
+    const temp = null;
     /**
      * Display a listing of the resource.
      *
@@ -23,10 +27,10 @@ class pengadaanController extends Controller
         // dd(Auth::user()->jabatan->jabatan);
         // ===== Perlengkapan =====
         if (Auth::user()->jabatan->jabatan == "Pengadministrasi BMN") {
-            $db = laporan_pengadaan::with(['pengadaan', 'pengadaan.satuan'])
-            ->get();
-            $db = laporan_pengadaan::all();
+            // $db = laporan_pengadaan::where('id', $id)->with(['pengadaan'])
+            // ->get();
             // dd($db);
+            $db = laporan_pengadaan::all();
             return view(
                 'perlengkapan.pengadaan.index', [
                 'laporan'  => $db
@@ -105,6 +109,18 @@ class pengadaanController extends Controller
             );
         }
 
+        $laporan = laporan_pengadaan::findOrfail($idLaporan);
+        // dd($laporan);
+
+        $wadek = User::with('jabatan')
+            ->whereHas(
+                'jabatan', function (Builder $query) {
+                    $query->where('jabatan', 'Wakil Dekan 2');
+                }
+            )->first();
+
+        $wadek->notify(new verifPengadaan($laporan));
+
         // return view('perlengkapan.pengadaan.index');
         // } catch (Exception $e) {
         return redirect()->route('perlengkapan.pengadaan.index');
@@ -128,30 +144,44 @@ class pengadaanController extends Controller
      */
     public function show($id)
     {
+        $this->temp = $id;
+        // dd($this->temp);
         // // ===== Perlengkapan =====
         if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN') {
-            $pengadaan = pengadaan::where('id_laporan', $id)
-                ->with(['laporan_pengadaan', 'satuan'])
+            $pengadaan = laporan_pengadaan::where('id', $id)->with(
+                ['pengadaan.satuan', 'pengadaan' => function ($id_pengadaan) {
+                    $id_pengadaan->where('id_laporan', $this->temp);
+                }]
+            )
                 ->get();
 
             // dd($pengadaan);
             return view(
                 'perlengkapan.pengadaan.show', [
-                'pengadaan' => $pengadaan
+                'pengadaan' => $pengadaan[0]->pengadaan,
+                'laporan_pengadaan' => $pengadaan[0]
                 ]
             );
         }
 
         // // ===== Wadek 2 =====
         else if (Auth::user()->jabatan->jabatan == 'Wakil Dekan 2') {
-            $pengadaan = pengadaan::where('id_laporan', $id)
-                ->with(['laporan_pengadaan', 'satuan'])
+            $pengadaan = laporan_pengadaan::where('id', $id)->with(
+                ['pengadaan.satuan', 'pengadaan' => function ($id_pengadaan) {
+                    $id_pengadaan->where('id_laporan', $this->temp);
+                }]
+            )
                 ->get();
+
+            // $pengadaan = pengadaan::where('id_laporan', $id)
+            //     ->with(['laporan_pengadaan', 'satuan'])
+            //     ->get();
 
             // dd($pengadaan);
             return view(
                 'wadek2.pengadaan.show', [
-                'pengadaan' => $pengadaan
+                    'pengadaan' => $pengadaan[0]->pengadaan,
+                    'laporan' => $pengadaan[0]
                 ]
             );
         }
@@ -165,11 +195,16 @@ class pengadaanController extends Controller
      */
     public function edit($id, Request $status)
     {
-        // dump("EDIT ", $status);
+        $this->temp = $id;
+        // dd($status);
         if ($status->laporan) {
             $satuan = satuan::all()->pluck('satuan');
-            $laporan = laporan_pengadaan::with(['pengadaan', 'pengadaan.satuan'])
-                ->where('id', $id)->get();
+            $laporan = laporan_pengadaan::where('id', $id)->with(
+                ['pengadaan.satuan', 'pengadaan' => function ($id_pengadaan) {
+                    $id_pengadaan->where('id_laporan', $this->temp);
+                }]
+            )
+                ->get();
             // dd("GAAKKK COMPEKKKKK");
         } else {
             $satuan = satuan::all()->pluck('satuan');
@@ -257,9 +292,22 @@ class pengadaanController extends Controller
                     "harga"       => $request->harga
                     ]
                 );
+                $id = $request->id;
             }
 
-            return redirect()->route('perlengkapan.pengadaan.index');
+            $laporan = laporan_pengadaan::findOrfail($id);
+            // dd($laporan);
+
+            $wadek = User::with('jabatan')
+                ->whereHas(
+                    'jabatan', function (Builder $query) {
+                        $query->where('jabatan', 'Wakil Dekan 2');
+                    }
+                )->first();
+
+            $wadek->notify(new verifPengadaan($laporan));
+
+            return $this->show($id);
         }
 
         // // ===== Wadek 2 =====
@@ -278,7 +326,18 @@ class pengadaanController extends Controller
                 ]
             );
 
-            return redirect()->route('perlengkapan.pengadaan.index');
+            $laporan = laporan_pengadaan::findOrfail($id);
+
+            $perlengkapan = User::with('jabatan')
+                ->whereHas(
+                    'jabatan', function (Builder $query) {
+                        $query->where('jabatan', 'Pengadministrasi BMN');
+                    }
+                )->first();
+
+            $perlengkapan->notify(new verifPengadaan($laporan));
+
+            return $this->show($id);
         }
     }
 
