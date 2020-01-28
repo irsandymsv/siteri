@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Auth;
 
 class verifPengadaan extends Notification
 {
@@ -20,7 +21,7 @@ class verifPengadaan extends Notification
      */
     public function __construct(laporan_pengadaan $laporan)
     {
-        $this->$laporan = $laporan;
+        $this->laporan = $laporan;
     }
 
     /**
@@ -56,8 +57,20 @@ class verifPengadaan extends Notification
      */
     public function toArray($notifiable)
     {
-        return [
-            //
-        ];
+        if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN') {
+            return [
+                'keterangan' => $this->laporan->keterangan,
+                'created_at' => $this->laporan->created_at,
+                'updated_at' => $this->laporan->updated_at
+            ];
+        } else
+        if (Auth::user()->jabatan->jabatan == 'Wakil Dekan 2') {
+            return [
+                'keterangan' => $this->laporan->keterangan,
+                'created_at' => $this->laporan->created_at,
+                'updated_at' => $this->laporan->updated_at,
+                'pesan'      => $this->laporan->pesan
+            ];
+        }
     }
 }

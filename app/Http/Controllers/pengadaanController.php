@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\laporan_pengadaan;
 use App\Notifications\verifPengadaan;
 use App\pengadaan;
 use App\satuan;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -25,7 +27,7 @@ class pengadaanController extends Controller
         // dd(Auth::user()->jabatan->jabatan);
         // ===== Perlengkapan =====
         if (Auth::user()->jabatan->jabatan == "Pengadministrasi BMN") {
-            // $db = laporan_pengadaan::with(['pengadaan'])
+            // $db = laporan_pengadaan::where('id', $id)->with(['pengadaan'])
             // ->get();
             // dd($db);
             $db = laporan_pengadaan::all();
@@ -108,6 +110,7 @@ class pengadaanController extends Controller
         }
 
         $laporan = laporan_pengadaan::findOrfail($idLaporan);
+        // dd($laporan);
 
         $wadek = User::with('jabatan')
             ->whereHas(
@@ -116,7 +119,7 @@ class pengadaanController extends Controller
                 }
             )->first();
 
-            $wadek->notify(new verifPengadaan($laporan));
+        $wadek->notify(new verifPengadaan($laporan));
 
         // return view('perlengkapan.pengadaan.index');
         // } catch (Exception $e) {
@@ -145,7 +148,7 @@ class pengadaanController extends Controller
         // dd($this->temp);
         // // ===== Perlengkapan =====
         if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN') {
-            $pengadaan = laporan_pengadaan::with(
+            $pengadaan = laporan_pengadaan::where('id', $id)->with(
                 ['pengadaan.satuan', 'pengadaan' => function ($id_pengadaan) {
                     $id_pengadaan->where('id_laporan', $this->temp);
                 }]
@@ -163,7 +166,7 @@ class pengadaanController extends Controller
 
         // // ===== Wadek 2 =====
         else if (Auth::user()->jabatan->jabatan == 'Wakil Dekan 2') {
-            $pengadaan = laporan_pengadaan::with(
+            $pengadaan = laporan_pengadaan::where('id', $id)->with(
                 ['pengadaan.satuan', 'pengadaan' => function ($id_pengadaan) {
                     $id_pengadaan->where('id_laporan', $this->temp);
                 }]
@@ -196,7 +199,7 @@ class pengadaanController extends Controller
         // dd($status);
         if ($status->laporan) {
             $satuan = satuan::all()->pluck('satuan');
-            $laporan = laporan_pengadaan::with(
+            $laporan = laporan_pengadaan::where('id', $id)->with(
                 ['pengadaan.satuan', 'pengadaan' => function ($id_pengadaan) {
                     $id_pengadaan->where('id_laporan', $this->temp);
                 }]
@@ -292,6 +295,18 @@ class pengadaanController extends Controller
                 $id = $request->id;
             }
 
+            $laporan = laporan_pengadaan::findOrfail($id);
+            // dd($laporan);
+
+            $wadek = User::with('jabatan')
+                ->whereHas(
+                    'jabatan', function (Builder $query) {
+                        $query->where('jabatan', 'Wakil Dekan 2');
+                    }
+                )->first();
+
+            $wadek->notify(new verifPengadaan($laporan));
+
             return $this->show($id);
         }
 
@@ -310,6 +325,17 @@ class pengadaanController extends Controller
                 "verif_wadek2"  => $request->verif_wadek2
                 ]
             );
+
+            $laporan = laporan_pengadaan::findOrfail($id);
+
+            $perlengkapan = User::with('jabatan')
+                ->whereHas(
+                    'jabatan', function (Builder $query) {
+                        $query->where('jabatan', 'Pengadministrasi BMN');
+                    }
+                )->first();
+
+            $perlengkapan->notify(new verifPengadaan($laporan));
 
             return $this->show($id);
         }

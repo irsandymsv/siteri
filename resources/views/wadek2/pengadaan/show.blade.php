@@ -1,4 +1,4 @@
-@extends('wadek2.wadek2_view')
+@extends('layouts.template')
 
 @section('side_menu')
 @include('include.wadek2_menu')
@@ -9,6 +9,8 @@
 @section('judul_header', 'Laporan Pengadaan')
 
 @section('content')
+
+{{-- @dump($laporan) --}}
 
 <div class="row">
     <div class="col-xs-12">

@@ -19,6 +19,7 @@ class LaporanPengadaan extends Migration
                 $table->string('keterangan');
                 $table->boolean('verif_wadek2')->default(false);
                 $table->string('pesan')->nullable();
+                $table->timestamps();
             }
         );
     }
