@@ -26,11 +26,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //HEAD
 Route::middleware(['auth'])->prefix('notifikasi')->name('notifikasi.')->group(
-	function () {
-		Route::get('/', 'NotificationController@index')->name('index');
-		Route::get('/read/{id}', 'NotificationController@read')->name('read');
-		Route::get('/readAll', 'NotificationController@readAll')->name('readAll');
-	}
+    function () {
+        Route::get('/', 'NotificationController@index')->name('index');
+        Route::get('/read/{id}', 'NotificationController@read')->name('read');
+        Route::get('/readAll', 'NotificationController@readAll')->name('readAll');
+        Route::get('/load', 'NotificationController@load')->name('load');
+    }
 );
 
 Route::middleware(['auth', 'checkRole:Pengelola Data Akademik'])->prefix('template')->name('template.')->group(
@@ -336,43 +337,54 @@ Route::middleware(['auth', 'checkRole:Dosen'])->prefix('dosen')->name('dosen.')-
 );
 
 Route::middleware(['auth', 'checkRole:Pengadministrasi BMN'])->prefix('perlengkapan')->name('perlengkapan.')->group(
-	function () {
-		Route::get(
-			'/', function () {
-				return view('perlengkapan.dashboard');
-			}
-		)->name('dashboard');
-		Route::resource('inventaris', 'inventarisController');
-		Route::resource('pengadaan', 'pengadaanController');
-		Route::resource('peminjaman_barang', 'peminjamanBarangController');
-		Route::get('/peminjaman_barang/barang/{id}', array('as' => 'barang.ajax', 'uses' => 'peminjamanBarangController@barangAjax'));
-		Route::resource('peminjaman_ruang', 'peminjamanRuangController');
-		Route::get('/peminjaman_ruang/ruang/{jumlah}', array('as' => 'ruang.ajax', 'uses' => 'peminjamanRuangController@ruangAjax'));
-		Route::put('/peminjaman_barang/verif/{verif_baper}', 'peminjamanBarangController@verif_baper')->name('peminjaman_barang.verif');
-		Route::put('/peminjaman_ruang/verif/{verif_baper}', 'peminjamanRuangController@verif_baper')->name('peminjaman_ruang.verif');
-	}
+    function () {
+        Route::get(
+            '/',
+            function () {
+                return view('perlengkapan.dashboard');
+            }
+        )->name('dashboard');
+
+        //Inventaris
+        Route::resource('inventaris', 'inventarisController');
+
+        //Pengadaan
+        Route::resource('pengadaan', 'pengadaanController');
+
+        //Peminjaman Barang
+        Route::resource('peminjaman_barang', 'peminjamanBarangController');
+        Route::get('/peminjaman_barang/barang/{id}', array('as' => 'barang.ajax', 'uses' => 'peminjamanBarangController@barangAjax'));
+        Route::put('/peminjaman_barang/verif/{verif_baper}', 'peminjamanBarangController@verif_baper')->name('peminjaman_barang.verif');
+
+        //Peminjaman Ruang
+        Route::resource('peminjaman_ruang', 'peminjamanRuangController');
+        Route::get('/peminjaman_ruang/ruang/{jumlah}', array('as' => 'ruang.ajax', 'uses' => 'peminjamanRuangController@ruangAjax'));
+        Route::put('/peminjaman_ruang/verif/{verif_baper}', 'peminjamanRuangController@verif_baper')->name('peminjaman_ruang.verif');
+    }
 );
 
 Route::middleware(['auth', 'checkRole:Pengadministrasi Layanan Kegiatan Mahasiswa'])->prefix('ormawa')->name('ormawa.')->group(
-	function () {
-		Route::get(
-			'/', function () {
-				return view('ormawa.dashboard');
-			}
-		)->name('dashboard');
-		Route::resource('peminjaman_barang', 'peminjamanBarangController');
-		Route::get('/peminjaman_barang/barang/{id}', array('as' => 'barang.ajax', 'uses' => 'peminjamanBarangController@barangAjax'));
-		Route::resource('peminjaman_ruang', 'peminjamanRuangController');
-	}
+    function () {
+        Route::get(
+            '/',
+            function () {
+                return view('ormawa.dashboard');
+            }
+        )->name('dashboard');
+        Route::resource('peminjaman_barang', 'peminjamanBarangController');
+        Route::get('/peminjaman_barang/barang/{id}', array('as' => 'barang.ajax', 'uses' => 'peminjamanBarangController@barangAjax'));
+        Route::resource('peminjaman_ruang', 'peminjamanRuangController');
+    }
 );
 
 Route::middleware(['auth', 'checkRole:Pengadministrasi Kemahasiswaan & Alumni'])->prefix('kemahasiswaan')->name('kemahasiswaan.')->group(
-	function () {
-		Route::get(
-			'/', function () {
-				return view('kemahasiswaan.dashboard');
-			}
-		)->name('dashboard');
+    function () {
+        Route::get(
+            '/',
+            function () {
+                return view('kemahasiswaan.dashboard');
+            }
+        )->name('dashboard');
 
         //Data Mahasiswa
 		Route::get('/mahasiswa', 'mahasiswaController@index')->name('mahasiswa.index');

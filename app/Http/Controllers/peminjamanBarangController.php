@@ -37,6 +37,12 @@ class peminjamanBarangController extends Controller
             return view('perlengkapan.peminjaman_barang.index', [
                 'laporan' => $laporan
             ]);
+        } else if (Auth::user()->jabatan->jabatan == 'KTU') {
+            $laporan = peminjaman_barang::where('verif_baper', '1')->get();
+            
+            return view('ktu.peminjaman_barang.index', [
+                'laporan' => $laporan
+            ]);
         }
     }
 
@@ -85,10 +91,7 @@ class peminjamanBarangController extends Controller
         // dd($request);
         if (Auth::user()->jabatan->jabatan == 'Pengadministrasi Layanan Kegiatan Mahasiswa') {
             $this->validate($request, [
-                "tanggal_mulai"     => "required",
-                "tanggal_berakhir"  => "required",
-                "jam_mulai"         => "required",
-                "jam_berakhir"      => "required",
+                "tanggal"           => "required",
                 "kegiatan"          => "required|string|max:100",
                 "barang"            => "required|array",
                 "barang.*"          => "required|integer",
@@ -100,11 +103,19 @@ class peminjamanBarangController extends Controller
                 "satuan.*"          => "required|integer"
             ]);
 
+            $tanggal = explode(" - ", $request->tanggal);
+            $jam_mulai = explode(' ', $tanggal[0]);
+            $tanggal_mulai = $jam_mulai[0];
+            $jam_mulai = $jam_mulai[1];
+            $jam_berakhir = explode(' ', $tanggal[1]);
+            $tanggal_berakhir = $jam_berakhir[0];
+            $jam_berakhir = $jam_berakhir[1];
+
             peminjaman_barang::create([
-                'tanggal_mulai'     => $request->tanggal_mulai,
-                'tanggal_berakhir'  => $request->tanggal_berakhir,
-                'jam_mulai'         => $request->jam_mulai,
-                'jam_berakhir'      => $request->jam_berakhir,
+                'tanggal_mulai'     => $tanggal_mulai,
+                'tanggal_berakhir'  => $tanggal_berakhir,
+                'jam_mulai'         => $jam_mulai,
+                'jam_berakhir'      => $jam_berakhir,
                 'kegiatan'          => $request->kegiatan
             ]);
 
@@ -190,6 +201,16 @@ class peminjamanBarangController extends Controller
                 'laporan' => $laporan,
                 'detail_laporan' => $detail_laporan
             ]);
+        } else if (Auth::user()->jabatan->jabatan == 'KTU') {
+            $laporan = peminjaman_barang::findOrfail($id);
+            $detail_laporan = detail_pinjam_barang::where('idpinjam_barang_fk', $id)
+                ->with(['peminjaman_barang', 'detail_data_barang.data_barang', 'satuan'])
+                ->get();
+
+            return view('ktu.peminjaman_barang.show', [
+                'laporan' => $laporan,
+                'detail_laporan' => $detail_laporan
+            ]);
         }
     }
 
@@ -213,12 +234,17 @@ class peminjamanBarangController extends Controller
                 $merk_barang = detail_data_barang::where('idbarang_fk', $item->detail_data_barang->idbarang_fk)->get();
                 array_push($merk, $merk_barang);
             }
-            // dd($merk);
+
+            $tanggal1 = implode(" ", [$laporan->tanggal_mulai, $laporan->jam_mulai]);
+            $tanggal2 = implode(" ", [$laporan->tanggal_berakhir, $laporan->jam_berakhir]);
+            $tanggal = implode(" - ", [$tanggal1, $tanggal2]);
+
             return view('ormawa.peminjaman_barang.edit', [
                 'barang'    => $barang,
                 'satuan'    => $satuan,
                 'laporan'   => $laporan,
-                'merk'      => $merk
+                'merk'      => $merk,
+                'tanggal'   => $tanggal
             ]);
         } else if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN') {
             // if ($status->status) {
@@ -262,10 +288,7 @@ class peminjamanBarangController extends Controller
             $idlaporan = peminjaman_barang::all()->pluck('id')->last();
             if ($request->laporan) {
                 $this->validate($request, [
-                    "tanggal_mulai"     => "required",
-                    "tanggal_berakhir"  => "required",
-                    "jam_mulai"         => "required",
-                    "jam_berakhir"      => "required",
+                    "tanggal"           => "required",
                     "kegiatan"          => "required|string|max:100",
                     "barang"            => "required|array",
                     "barang.*"          => "required|integer",
@@ -277,11 +300,19 @@ class peminjamanBarangController extends Controller
                     "satuan.*"          => "required|integer"
                 ]);
 
+                $tanggal = explode(" - ", $request->tanggal);
+                $jam_mulai = explode(' ', $tanggal[0]);
+                $tanggal_mulai = $jam_mulai[0];
+                $jam_mulai = $jam_mulai[1];
+                $jam_berakhir = explode(' ', $tanggal[1]);
+                $tanggal_berakhir = $jam_berakhir[0];
+                $jam_berakhir = $jam_berakhir[1];
+
                 peminjaman_barang::findOrfail($id)->update([
-                    'tanggal_mulai'     => $request->tanggal_mulai,
-                    'tanggal_berakhir'  => $request->tanggal_berakhir,
-                    'jam_mulai'         => $request->jam_mulai,
-                    'jam_berakhir'      => $request->jam_berakhir,
+                    'tanggal_mulai'     => $tanggal_mulai,
+                    'tanggal_berakhir'  => $tanggal_berakhir,
+                    'jam_mulai'         => $jam_mulai,
+                    'jam_berakhir'      => $jam_berakhir,
                     'kegiatan'          => $request->kegiatan
                 ]);
 
@@ -373,7 +404,7 @@ class peminjamanBarangController extends Controller
             "verif_baper"  => "required|integer"
         ]);
 
-        detail_pinjam_barang::findOrfail($id)->update([
+        peminjaman_barang::findOrfail($id)->update([
             'verif_baper'    => $request->verif_baper
         ]);
         return redirect()->route('perlengkapan.peminjaman_barang.show', $id);
@@ -385,7 +416,7 @@ class peminjamanBarangController extends Controller
             "verif_ktu"  => "required|integer"
         ]);
 
-        detail_pinjam_barang::findOrfail($id)->update([
+        peminjaman_barang::findOrfail($id)->update([
             'verif_ktu'    => $request->verif_ktu
         ]);
         return redirect()->route('ktu.peminjaman_barang.show', $id);

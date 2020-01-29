@@ -473,20 +473,41 @@ desired effect
     });
 
   });
+
+    $(function(){
+        page_y = 0;
+        function loadlink(){
+            page_y = $('#list_notif').scrollTop();
+            // url = '{{ route("notifikasi.load", "position") }}'
+            // url = url.replace('position', page_y);
+            $('.dropdown.notifications-menu').load('{{ route("notifikasi.load") }}', function(){
+                console.log(page_y);
+                $('#list_notif').scrollTop(page_y);
+            });
+        }
+
+        loadlink();
+        setInterval(function(){
+            loadlink()
+            // console.log(page_y);
+            // $('#list_notif').scrollTop(page_y);
+        }, 5000);
+    });
+
     </script>
     <script>
         $(document).on('ready change', function(){
-        $('.angka').on('input', function(){
-            $(this).val(this.value.replace(/[^0-9]/g,''));
-        });
+            $('.angka').on('input', function(){
+                $(this).val(this.value.replace(/[^0-9]/g,''));
+            });
 
-        $('.huruf').on('input', function(){
-            $(this).val(this.value.replace(/[^a-zA-Z ]/g,''));
+            $('.huruf').on('input', function(){
+                $(this).val(this.value.replace(/[^a-zA-Z ]/g,''));
+            });
+            $('.anghrf').on('input', function(){
+                $(this).val(this.value.replace(/[^a-zA-Z 0-9]/g,''));
+            });
         });
-        $('.anghrf').on('input', function(){
-            $(this).val(this.value.replace(/[^a-zA-Z 0-9]/g,''));
-        });
-    });
     </script>
 
     @yield('script')

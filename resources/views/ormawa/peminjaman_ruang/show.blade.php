@@ -1,4 +1,4 @@
-@extends('perlengkapan.perlengkapan_view')
+@extends('layouts.template')
 
 @section('side_menu')
 @include('include.ormawa_menu')
@@ -64,7 +64,7 @@
                                 <th>No</th>
                                 <th>Nama Ruang</th>
                                 <th>Kuota</th>
-                                {{-- <th style="width:99.8px">Opsi</th> --}}
+                                <th style="width:99.8px">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -74,13 +74,13 @@
                                 <td>{{$no+=1}}</td>
                                 <td>{{$item->data_ruang->nama_ruang}}</td>
                                 <td>{{$item->data_ruang->kuota}}</td>
-                                {{-- <td>
+                                <td>
                                     @if($laporan->verif_baper != 1)
                                     <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan"
                                 title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i
                                     class="fa fa-trash"></i></a>
                                 @endif
-                                </td> --}}
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -131,7 +131,7 @@
 				var id = $(this).attr('id');
                 console.log(id);
 
-				var url_del = "{{route('perlengkapan.peminjaman_ruang.destroy', "id")}}";
+				var url_del = "{{route('ormawa.peminjaman_ruang.destroy', "id")}}";
                 url_del = url_del.replace('id', id);
 				console.log(url_del);
 
