@@ -6,11 +6,8 @@
 
 @section('page_title', 'Peminjaman Barang')
 
-<<<<<<< HEAD
 @section('judul_header', 'Peminjaman Barang')
 
-=======
->>>>>>> a2bddbc60c84c31b3b3643792b16bb9c7d96aa75
 @section('content')
 <div class="row">
     <div class="col-xs-12">
