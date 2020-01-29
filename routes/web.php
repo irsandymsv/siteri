@@ -12,7 +12,8 @@
 */
 
 Route::get(
-    '/', function () {
+    '/',
+    function () {
         return view('welcome');
     }
 );
@@ -160,16 +161,20 @@ Route::middleware(['auth', 'checkRole:KTU'])->prefix('ktu')->name('ktu.')->group
 
         //Peminjaman
         Route::resource(
-            'peminjaman_barang', 'peminjamanBarangController', [
-            'only' => ['index', 'show']
+            'peminjaman_barang',
+            'peminjamanBarangController',
+            [
+                'only' => ['index', 'show']
             ]
         );
         Route::put('/peminjaman_barang/verif/{verif_ktu}', 'peminjamanBarangController@verif_ktu')->name('peminjaman_barang.verif');
 
         Route::resource(
-            'peminjaman_ruang', 'peminjamanRuangController', [
+            'peminjaman_ruang',
+            'peminjamanRuangController',
+            [
                 'only' => ['index', 'show']
-                ]
+            ]
         );
         Route::put('/peminjaman_ruang/verif/{verif_ktu}', 'peminjamanRuangController@verif_ktu')->name('peminjaman_ruang.verif');
     }
@@ -306,8 +311,10 @@ Route::middleware(['auth', 'checkRole:Wakil Dekan 2'])->prefix('wadek2')->name('
 
         //Verif pengadaan
         Route::resource(
-            'pengadaan', 'pengadaanController', [
-            'only' => ['index', 'show', 'update']
+            'pengadaan',
+            'pengadaanController',
+            [
+                'only' => ['index', 'show', 'update']
             ]
         );
     }
@@ -334,17 +341,25 @@ Route::middleware(['auth', 'checkRole:Dosen'])->prefix('dosen')->name('dosen.')-
 Route::middleware(['auth', 'checkRole:Pengadministrasi BMN'])->prefix('perlengkapan')->name('perlengkapan.')->group(
     function () {
         Route::get(
-            '/', function () {
+            '/',
+            function () {
                 return view('perlengkapan.dashboard');
             }
         )->name('dashboard');
+        //Inventaris
         Route::resource('inventaris', 'inventarisController');
+
+        //Pengadaan
         Route::resource('pengadaan', 'pengadaanController');
+
+        //Peminjaman Barang
         Route::resource('peminjaman_barang', 'peminjamanBarangController');
         Route::get('/peminjaman_barang/barang/{id}', array('as' => 'barang.ajax', 'uses' => 'peminjamanBarangController@barangAjax'));
+        Route::put('/peminjaman_barang/verif/{verif_baper}', 'peminjamanBarangController@verif_baper')->name('peminjaman_barang.verif');
+
+        //Peminjaman Ruang
         Route::resource('peminjaman_ruang', 'peminjamanRuangController');
         Route::get('/peminjaman_ruang/ruang/{jumlah}', array('as' => 'ruang.ajax', 'uses' => 'peminjamanRuangController@ruangAjax'));
-        Route::put('/peminjaman_barang/verif/{verif_baper}', 'peminjamanBarangController@verif_baper')->name('peminjaman_barang.verif');
         Route::put('/peminjaman_ruang/verif/{verif_baper}', 'peminjamanRuangController@verif_baper')->name('peminjaman_ruang.verif');
     }
 );
@@ -352,7 +367,8 @@ Route::middleware(['auth', 'checkRole:Pengadministrasi BMN'])->prefix('perlengka
 Route::middleware(['auth', 'checkRole:Pengadministrasi Layanan Kegiatan Mahasiswa'])->prefix('ormawa')->name('ormawa.')->group(
     function () {
         Route::get(
-            '/', function () {
+            '/',
+            function () {
                 return view('ormawa.dashboard');
             }
         )->name('dashboard');
@@ -365,7 +381,8 @@ Route::middleware(['auth', 'checkRole:Pengadministrasi Layanan Kegiatan Mahasisw
 Route::middleware(['auth', 'checkRole:Pengadministrasi Kemahasiswaan & Alumni'])->prefix('kemahasiswaan')->name('kemahasiswaan.')->group(
     function () {
         Route::get(
-            '/', function () {
+            '/',
+            function () {
                 return view('kemahasiswaan.dashboard');
             }
         )->name('dashboard');
