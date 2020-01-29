@@ -1,16 +1,10 @@
-@extends('ktu.ktu_view')
+@extends('layouts.template')
 
 @section('side_menu')
 @include('include.ktu_menu')
 @endsection
 
 @section('page_title', 'Peminjaman Barang')
-
-@extends('layouts.template')
-
-@section('side_menu')
-@include('include.ktu_menu')
-@endsection
 
 @section('content')
 <div class="row">
