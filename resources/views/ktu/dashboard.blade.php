@@ -237,7 +237,7 @@ Dashboard
                     <tbody>
                         @if ($sk_honor_skripsi->isEmpty())
                         <tr>
-                            <td colspan="4" style="text-align: center;">Tidak Ada Data</td>
+                            <td colspan="5" style="text-align: center;">Tidak Ada Data</td>
                         </tr>
                         @else
                         @foreach ($sk_honor_skripsi as $item)
@@ -287,7 +287,7 @@ Dashboard
                     <tbody>
                         @if ($pinjam_barang->isEmpty())
                         <tr>
-                            <td colspan="6" style="text-align: center;">Tidak Ada Data</td>
+                            <td colspan="5" style="text-align: center;">Tidak Ada Data</td>
                         </tr>
                         @else
                         @foreach ($pinjam_barang as $item)
@@ -313,7 +313,7 @@ Dashboard
     </div>
 
     <div class="col col-md-6">
-        <div class="box box-warning">
+        <div class="box box-success">
             <div class="box-header with-border">
                 <h3 class="box-title">Peminjaman Ruang Butuh Verifikasi</h3>
 
@@ -336,7 +336,7 @@ Dashboard
                     <tbody>
                         @if ($pinjam_ruang->isEmpty())
                         <tr>
-                            <td colspan="6" style="text-align: center;">Tidak Ada Data</td>
+                            <td colspan="5" style="text-align: center;">Tidak Ada Data</td>
                         </tr>
                         @else
                         @foreach ($pinjam_ruang as $item)

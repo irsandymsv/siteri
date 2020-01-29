@@ -53,8 +53,7 @@ class KTUController extends Controller
         $pinjam_barang = peminjaman_barang::where('verif_baper', 1)->where('verif_ktu', 0)->limit(3)->get();
 
         //Penimjaman Ruang
-        $pinjam_ruang = peminjaman_ruang::where('verif_baper', 1)->where('verif_ktu', 0)
-            ->orderBy('updated_at', 'DESC')->limit(3);
+        $pinjam_ruang = peminjaman_ruang::where('verif_baper', 1)->where('verif_ktu', 0)->limit(3)->get();
 
 
 
