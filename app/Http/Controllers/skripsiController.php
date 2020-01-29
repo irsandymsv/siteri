@@ -9,6 +9,7 @@ use App\mahasiswa;
 use App\detail_skripsi;
 use App\User;
 use App\keris;
+use App\status_skripsi;
 use Exception;
 
 class skripsiController extends suratTugasController
@@ -115,5 +116,27 @@ class skripsiController extends suratTugasController
             return redirect()->route('akademik.data-skripsi.update-judul',$request->input('id_skripsi'))->with('error',$e->getMessage());
         }
 
+    }
+
+    public function editStatus($id_skripsi)
+    {
+        $status_skripsi = status_skripsi::all();
+        $skripsi = skripsi::where('id', $id_skripsi)->with('mahasiswa')->first();
+        return view('akademik.skripsi.editStatus', [
+            'skripsi' => $skripsi,
+            'status_skripsi' => $status_skripsi
+        ]);
+    }
+
+    public function updateStatus(Request $request, $id_skripsi)
+    {
+        $this->validate($request,[
+            'id_status_skripsi' => 'required'
+        ]);
+
+        skripsi::where('id',$id_skripsi)->update([
+                'id_status_skripsi' => $request->input('id_status_skripsi')
+        ]);
+        return redirect()->route('akademik.data-skripsi.edit-status', $id_skripsi)->with('success', 'Data Berhasil Dirubah');
     }
 }

@@ -35,4 +35,14 @@ class detail_skripsi extends Model
         return $this->hasMany('App\surat_tugas', 'id_detail_skripsi');
     }
 
+    public function sutgas_pembimbing_terbaru()
+    {
+        return $this->hasOne('App\surat_tugas', 'id_detail_skripsi')->where('id_tipe_surat_tugas', 1)->latest();
+    }
+
+    public function sutgas_penguji_terbaru()
+    {
+        return $this->hasOne('App\surat_tugas', 'id_detail_skripsi')->where('id_tipe_surat_tugas', 3)->latest();
+    }
+
 }

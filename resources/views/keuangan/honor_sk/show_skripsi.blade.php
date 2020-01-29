@@ -226,37 +226,38 @@
                            @endif
                               <td>{{$no}}</td>
 
-                              @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Pembimbing")
+                              {{-- @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Pembimbing") --}}
+                              @php
+                                 if (isset($item->sutgas_pembimbing_terbaru->dosen1->honorarium_putj)) {
+                                    $honorarium = $item->sutgas_pembimbing_terbaru->dosen1->honorarium_putj;
+                                    $pph = $item->sutgas_pembimbing_terbaru->dosen1->pph_putj;
+                                 }
+                                 else{
+                                    $honorarium = $item->sutgas_pembimbing_terbaru->dosen1->honorarium_pudj;
+                                    $pph = $item->sutgas_pembimbing_terbaru->dosen1->pph_pudj;
+                                 }
+                              @endphp
+                              <td>{{$item->sutgas_pembimbing_terbaru->dosen1->nama}}</td>
+                              <td>{{$item->sutgas_pembimbing_terbaru->dosen1->npwp}}</td>
+                              <td rowspan="2">
+                                 <p>{{$item->skripsi->mahasiswa->nama}}</p>
+                                 <p>NIM: {{$item->skripsi->nim}}</p>
+                              </td>
+                              <td>{{$item->sutgas_pembimbing_terbaru->dosen1->golongan->golongan}}</td>
+                              <td>Rp 
+                                 {{ number_format($honorarium, 0, ",", ".") }}
+                              </td>
+                              <td>Rp 
+                                 {{ number_format($pph, 0, ",", ".") }}
+                              </td>
+                              <td>Rp 
                                  @php
-                                    if (isset($item->surat_tugas[0]->dosen1->honorarium_putj)) {
-                                       $honorarium = $item->surat_tugas[0]->dosen1->honorarium_putj;
-                                       $pph = $item->surat_tugas[0]->dosen1->pph_putj;
-                                    }
-                                    else{
-                                       $honorarium = $item->surat_tugas[0]->dosen1->honorarium_pudj;
-                                       $pph = $item->surat_tugas[0]->dosen1->pph_pudj;
-                                    }
+                                    $penerimaan = $honorarium - $pph;
                                  @endphp
-                                 <td>{{$item->surat_tugas[0]->dosen1->nama}}</td>
-                                 <td>{{$item->surat_tugas[0]->dosen1->npwp}}</td>
-                                 <td rowspan="2">
-                                    <p>{{$item->skripsi->mahasiswa->nama}}</p>
-                                    <p>NIM: {{$item->skripsi->nim}}</p>
-                                 </td>
-                                 <td>{{$item->surat_tugas[0]->dosen1->golongan->golongan}}</td>
-                                 <td>Rp 
-                                    {{ number_format($honorarium, 0, ",", ".") }}
-                                 </td>
-                                 <td>Rp 
-                                    {{ number_format($pph, 0, ",", ".") }}
-                                 </td>
-                                 <td>Rp 
-                                    @php
-                                       $penerimaan = $honorarium - $pph;
-                                    @endphp
-                                    {{ number_format($penerimaan, 0, ",", ".") }}
-                                 </td>
-                              @else
+                                 {{ number_format($penerimaan, 0, ",", ".") }}
+                              </td>
+
+                              {{-- @else
                                  @php
                                     if (isset($item->surat_tugas[1]->dosen1->honorarium_putj)) {
                                        $honorarium = $item->surat_tugas[1]->dosen1->honorarium_putj;
@@ -286,7 +287,7 @@
                                     @endphp
                                     {{ number_format($penerimaan, 0, ",", ".") }}
                                  </td>
-                              @endif
+                              @endif --}}
 
                               @php
                                  $total_honor+=$honorarium;
@@ -304,20 +305,20 @@
                            @endif
                               <td>{{$no}}</td>
 
-                              @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Pembimbing")
+                              {{-- @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Pembimbing") --}}
                                  @php
-                                    if (isset($item->surat_tugas[0]->dosen2->honorarium_pptj)) {
-                                       $honorarium = $item->surat_tugas[0]->dosen2->honorarium_pptj;
-                                       $pph = $item->surat_tugas[0]->dosen2->pph_pptj;
+                                    if (isset($item->sutgas_pembimbing_terbaru->dosen2->honorarium_pptj)) {
+                                       $honorarium = $item->sutgas_pembimbing_terbaru->dosen2->honorarium_pptj;
+                                       $pph = $item->sutgas_pembimbing_terbaru->dosen2->pph_pptj;
                                     }
                                     else{
-                                       $honorarium = $item->surat_tugas[0]->dosen2->honorarium_ppdj;
-                                       $pph = $item->surat_tugas[0]->dosen2->pph_ppdj;
+                                       $honorarium = $item->sutgas_pembimbing_terbaru->dosen2->honorarium_ppdj;
+                                       $pph = $item->sutgas_pembimbing_terbaru->dosen2->pph_ppdj;
                                     }
                                  @endphp
-                                 <td>{{$item->surat_tugas[0]->dosen2->nama}}</td>
-                                 <td>{{$item->surat_tugas[0]->dosen2->npwp}}</td>
-                                 <td>{{$item->surat_tugas[0]->dosen2->golongan->golongan}}</td>
+                                 <td>{{$item->sutgas_pembimbing_terbaru->dosen2->nama}}</td>
+                                 <td>{{$item->sutgas_pembimbing_terbaru->dosen2->npwp}}</td>
+                                 <td>{{$item->sutgas_pembimbing_terbaru->dosen2->golongan->golongan}}</td>
                                  <td>Rp  
                                     {{ number_format($honorarium, 0, ",", ".") }}
                                  </td>
@@ -330,7 +331,7 @@
                                     @endphp
                                     {{ number_format($penerimaan, 0, ",", ".") }}
                                  </td>
-                              @else
+                              {{-- @else
                                  @php
                                     if (isset($item->surat_tugas[1]->dosen2->honorarium_pptj)) {
                                        $honorarium = $item->surat_tugas[1]->dosen2->honorarium_pptj;
@@ -356,7 +357,7 @@
                                     @endphp
                                     {{ number_format($penerimaan, 0, ",", ".") }}
                                  </td>
-                              @endif
+                              @endif --}}
 
                               @php
                                  $total_honor+=$honorarium;
@@ -468,31 +469,31 @@
                            @endif
                               <td>{{$no}}</td>
 
-                              @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Penguji")
+                              {{-- @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Penguji") --}}
+                              @php
+                                 $honorarium = $item->sutgas_penguji_terbaru->dosen1->honorarium_pus;
+                                 $pph = $item->sutgas_penguji_terbaru->dosen1->pph_pus;
+                              @endphp
+                              <td>{{$item->sutgas_penguji_terbaru->dosen1->nama}}</td>
+                              <td>{{$item->sutgas_penguji_terbaru->dosen1->npwp}}</td>
+                              <td rowspan="2">
+                                 <p>{{$item->skripsi->mahasiswa->nama}}</p>
+                                 <p>NIM: {{$item->skripsi->nim}}</p>
+                              </td>
+                              <td>{{$item->sutgas_penguji_terbaru->dosen1->golongan->golongan}}</td>
+                              <td>Rp 
+                                 {{ number_format($honorarium, 0, ",", ".") }}
+                              </td>
+                              <td>Rp 
+                                 {{ number_format($pph, 0, ",", ".") }}
+                              </td>
+                              <td>Rp 
                                  @php
-                                    $honorarium = $item->surat_tugas[0]->dosen1->honorarium_pus;
-                                    $pph = $item->surat_tugas[0]->dosen1->pph_pus;
+                                    $penerimaan = $honorarium - $pph;
                                  @endphp
-                                 <td>{{$item->surat_tugas[0]->dosen1->nama}}</td>
-                                 <td>{{$item->surat_tugas[0]->dosen1->npwp}}</td>
-                                 <td rowspan="2">
-                                    <p>{{$item->skripsi->mahasiswa->nama}}</p>
-                                    <p>NIM: {{$item->skripsi->nim}}</p>
-                                 </td>
-                                 <td>{{$item->surat_tugas[0]->dosen1->golongan->golongan}}</td>
-                                 <td>Rp 
-                                    {{ number_format($honorarium, 0, ",", ".") }}
-                                 </td>
-                                 <td>Rp 
-                                    {{ number_format($pph, 0, ",", ".") }}
-                                 </td>
-                                 <td>Rp 
-                                    @php
-                                       $penerimaan = $honorarium - $pph;
-                                    @endphp
-                                    {{ number_format($penerimaan, 0, ",", ".") }}
-                                 </td>
-                              @else
+                                 {{ number_format($penerimaan, 0, ",", ".") }}
+                              </td>
+                              {{-- @else
                                  @php
                                     $honorarium = $item->surat_tugas[1]->dosen1->honorarium_pus;
                                     $pph = $item->surat_tugas[1]->dosen1->pph_pus;
@@ -516,7 +517,7 @@
                                     @endphp
                                     {{ number_format($penerimaan, 0, ",", ".") }}
                                  </td>
-                              @endif
+                              @endif --}}
 
                               @php
                                  $total_honor+=$honorarium;
@@ -534,27 +535,27 @@
                            @endif
                               <td>{{$no}}</td>
 
-                              @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Penguji")
+                              {{-- @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Penguji") --}}
+                              @php
+                                 $honorarium = $item->sutgas_penguji_terbaru->dosen2->honorarium_pps;
+                                 $pph = $item->sutgas_penguji_terbaru->dosen2->pph_pps;
+                              @endphp
+                              <td>{{$item->sutgas_penguji_terbaru->dosen2->nama}}</td>
+                              <td>{{$item->sutgas_penguji_terbaru->dosen2->npwp}}</td>
+                              <td>{{$item->sutgas_penguji_terbaru->dosen2->golongan->golongan}}</td>
+                              <td>Rp  
+                                 {{ number_format($honorarium, 0, ",", ".") }}
+                              </td>
+                              <td>Rp 
+                                 {{ number_format($pph, 0, ",", ".") }}
+                              </td>
+                              <td>Rp 
                                  @php
-                                    $honorarium = $item->surat_tugas[0]->dosen2->honorarium_pps;
-                                    $pph = $item->surat_tugas[0]->dosen2->pph_pps;
+                                    $penerimaan = $honorarium - $pph;
                                  @endphp
-                                 <td>{{$item->surat_tugas[0]->dosen2->nama}}</td>
-                                 <td>{{$item->surat_tugas[0]->dosen2->npwp}}</td>
-                                 <td>{{$item->surat_tugas[0]->dosen2->golongan->golongan}}</td>
-                                 <td>Rp  
-                                    {{ number_format($honorarium, 0, ",", ".") }}
-                                 </td>
-                                 <td>Rp 
-                                    {{ number_format($pph, 0, ",", ".") }}
-                                 </td>
-                                 <td>Rp 
-                                    @php
-                                       $penerimaan = $honorarium - $pph;
-                                    @endphp
-                                    {{ number_format($penerimaan, 0, ",", ".") }}
-                                 </td>
-                              @else
+                                 {{ number_format($penerimaan, 0, ",", ".") }}
+                              </td>
+                              {{-- @else
                                  @php
                                     $honorarium = $item->surat_tugas[1]->dosen2->honorarium_pps;
                                     $pph = $item->surat_tugas[1]->dosen2->pph_pps;
@@ -574,7 +575,7 @@
                                     @endphp
                                     {{ number_format($penerimaan, 0, ",", ".") }}
                                  </td>
-                              @endif
+                              @endif --}}
 
                               @php
                                  $total_honor+=$honorarium;

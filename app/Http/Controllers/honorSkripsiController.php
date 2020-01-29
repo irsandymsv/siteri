@@ -92,45 +92,72 @@ class honorSkripsiController extends Controller
                 'sk_skripsi',
                 'skripsi',
                 'skripsi.mahasiswa',
-                'surat_tugas' => function ($query) {
-                    $query->where('id_tipe_surat_tugas', 1)
-                    ->orWhere('id_tipe_surat_tugas', 3)
-                    ->where('id_status_surat_tugas', 3)
-                    ->orderBy('created_at', 'desc');
-                },
-                'surat_tugas.tipe_surat_tugas',
-                'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
-                'surat_tugas.dosen1.golongan',
-                'surat_tugas.dosen1.fungsional',
-                'surat_tugas.dosen1.pph',
-                'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
-                'surat_tugas.dosen2.golongan',
-                'surat_tugas.dosen2.fungsional',
-                'surat_tugas.dosen2.pph',
+
+                'sutgas_pembimbing_terbaru',
+                'sutgas_pembimbing_terbaru.tipe_surat_tugas',
+
+                'sutgas_pembimbing_terbaru.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
+                'sutgas_pembimbing_terbaru.dosen1.golongan',
+                'sutgas_pembimbing_terbaru.dosen1.fungsional',
+                'sutgas_pembimbing_terbaru.dosen1.pph',
+
+                'sutgas_pembimbing_terbaru.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
+                'sutgas_pembimbing_terbaru.dosen2.golongan',
+                'sutgas_pembimbing_terbaru.dosen2.fungsional',
+                'sutgas_pembimbing_terbaru.dosen2.pph',                
+
+                'sutgas_penguji_terbaru',
+                'sutgas_penguji_terbaru.tipe_surat_tugas',
+
+                'sutgas_penguji_terbaru.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
+                'sutgas_penguji_terbaru.dosen1.golongan',
+                'sutgas_penguji_terbaru.dosen1.fungsional',
+                'sutgas_penguji_terbaru.dosen1.pph',
+
+                'sutgas_penguji_terbaru.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
+                'sutgas_penguji_terbaru.dosen2.golongan',
+                'sutgas_penguji_terbaru.dosen2.fungsional',
+                'sutgas_penguji_terbaru.dosen2.pph',
+
+                // 'surat_tugas' => function ($query) {
+                //     $query->where('id_tipe_surat_tugas', 1)
+                //     ->orWhere('id_tipe_surat_tugas', 3)
+                //     ->where('id_status_surat_tugas', 3)
+                //     ->orderBy('created_at', 'desc');
+                // },
+                // 'surat_tugas.tipe_surat_tugas',
+
+                // 'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
+                // 'surat_tugas.dosen1.golongan',
+                // 'surat_tugas.dosen1.fungsional',
+                // 'surat_tugas.dosen1.pph',
+
+                // 'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
+                // 'surat_tugas.dosen2.golongan',
+                // 'surat_tugas.dosen2.fungsional',
+                // 'surat_tugas.dosen2.pph',
             ])->get();
+            // dd($detail_skripsi);
+
         foreach($detail_skripsi as $dk){
-            foreach($dk->surat_tugas as $st){
-                if($st->id_tipe_surat_tugas == 3){
-                    $st->dosen1->honorarium_pus = $pus;
-                    $st->dosen1->pph_pus = $this->hitung_pph($pus, $st->dosen1->pph->pph);
-                    $st->dosen2->honorarium_pps = $pps;
-                    $st->dosen2->pph_pps = $this->hitung_pph($pps, $st->dosen2->pph->pph);
-                }else{
-                    if ($st->dosen1->fungsional->jab_fungsional == "Tenaga Pengajar"){
-                        $st->dosen1->honorarium_putj = $putj;
-                        $st->dosen1->pph_putj = $this->hitung_pph($putj, $st->dosen1->pph->pph);
-                    }else{
-                        $st->dosen1->honorarium_pudj = $pudj;
-                        $st->dosen1->pph_pudj = $this->hitung_pph($pudj, $st->dosen1->pph->pph);
-                    }
-                    if ($st->dosen2->fungsional->jab_fungsional == "Tenaga Pengajar") {
-                        $st->dosen2->honorarium_pptj = $pptj;
-                        $st->dosen2->pph_pptj = $this->hitung_pph($pptj, $st->dosen2->pph->pph);
-                    } else {
-                        $st->dosen2->honorarium_ppdj = $ppdj;
-                        $st->dosen2->pph_ppdj = $this->hitung_pph($ppdj, $st->dosen2->pph->pph);
-                    }
-                }
+            $dk->sutgas_penguji_terbaru->dosen1->honorarium_pus = $pus;
+            $dk->sutgas_penguji_terbaru->dosen1->pph_pus = $this->hitung_pph($pus, $dk->sutgas_penguji_terbaru->dosen1->pph->pph);
+            $dk->sutgas_penguji_terbaru->dosen2->honorarium_pps = $pps;
+            $dk->sutgas_penguji_terbaru->dosen2->pph_pps = $this->hitung_pph($pps, $dk->sutgas_penguji_terbaru->dosen2->pph->pph);
+        
+            if ($dk->sutgas_pembimbing_terbaru->dosen1->fungsional->jab_fungsional == "Tenaga Pengajar"){
+                $dk->sutgas_pembimbing_terbaru->dosen1->honorarium_putj = $putj;
+                $dk->sutgas_pembimbing_terbaru->dosen1->pph_putj = $this->hitung_pph($putj, $dk->sutgas_pembimbing_terbaru->dosen1->pph->pph);
+            }else{
+                $dk->sutgas_pembimbing_terbaru->dosen1->honorarium_pudj = $pudj;
+                $dk->sutgas_pembimbing_terbaru->dosen1->pph_pudj = $this->hitung_pph($pudj, $dk->sutgas_pembimbing_terbaru->dosen1->pph->pph);
+            }
+            if ($dk->sutgas_pembimbing_terbaru->dosen2->fungsional->jab_fungsional == "Tenaga Pengajar") {
+                $dk->sutgas_pembimbing_terbaru->dosen2->honorarium_pptj = $pptj;
+                $dk->sutgas_pembimbing_terbaru->dosen2->pph_pptj = $this->hitung_pph($pptj, $dk->sutgas_pembimbing_terbaru->dosen2->pph->pph);
+            } else {
+                $dk->sutgas_pembimbing_terbaru->dosen2->honorarium_ppdj = $ppdj;
+                $dk->sutgas_pembimbing_terbaru->dosen2->pph_ppdj = $this->hitung_pph($ppdj, $dk->sutgas_pembimbing_terbaru->dosen2->pph->pph);
             }
 
         }
@@ -202,7 +229,7 @@ class honorSkripsiController extends Controller
     public function status_dibayarkan($id_sk_honor)
     {
         sk_honor::where('id', $id_sk_honor)->update([
-            'id_status_sk_honor' => 6
+            'id_status_sk_honor' => 2
         ]);
         return redirect()->route('keuangan.honor-skripsi.show', $id_sk_honor)->with('success', 'Status berhasil diubah menjadi "Telah Dibayarkan"');
     }

@@ -16,9 +16,9 @@ class CreateSkHonorTable extends Migration
         Schema::create('sk_honor', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedSmallInteger('id_status_sk_honor')->default(1)->nullable();
-            $table->tinyInteger('verif_bpp')->nullable()->default(0);
-            $table->tinyInteger('verif_ktu')->nullable()->default(0);
-            $table->tinyInteger('verif_wadek2')->nullable()->default(0);
+            // $table->tinyInteger('verif_bpp')->nullable()->default(0);
+            // $table->tinyInteger('verif_ktu')->nullable()->default(0);
+            // $table->tinyInteger('verif_wadek2')->nullable()->default(0);
             $table->timestamps();
 
 
