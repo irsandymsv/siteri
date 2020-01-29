@@ -333,11 +333,7 @@ Route::middleware(['auth', 'checkRole:Dosen'])->prefix('dosen')->name('dosen.')-
 
 Route::middleware(['auth', 'checkRole:Pengadministrasi BMN'])->prefix('perlengkapan')->name('perlengkapan.')->group(
     function () {
-        Route::get(
-            '/', function () {
-                return view('perlengkapan.dashboard');
-            }
-        )->name('dashboard');
+        Route::get('/', 'PerlengkapanController@dashboard')->name('dashboard');
         Route::resource('inventaris', 'inventarisController');
         Route::resource('pengadaan', 'pengadaanController');
         Route::resource('peminjaman_barang', 'peminjamanBarangController');
@@ -351,11 +347,7 @@ Route::middleware(['auth', 'checkRole:Pengadministrasi BMN'])->prefix('perlengka
 
 Route::middleware(['auth', 'checkRole:Pengadministrasi Layanan Kegiatan Mahasiswa'])->prefix('ormawa')->name('ormawa.')->group(
     function () {
-        Route::get(
-            '/', function () {
-                return view('ormawa.dashboard');
-            }
-        )->name('dashboard');
+        Route::get('/', 'OrmawaController@dashboard')->name('dashboard');
         Route::resource('peminjaman_barang', 'peminjamanBarangController');
         Route::get('/peminjaman_barang/barang/{id}', array('as' => 'barang.ajax', 'uses' => 'peminjamanBarangController@barangAjax'));
         Route::resource('peminjaman_ruang', 'peminjamanRuangController');
