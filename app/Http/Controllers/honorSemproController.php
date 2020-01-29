@@ -204,7 +204,7 @@ class honorSemproController extends Controller
     public function status_dibayarkan($id_sk_honor)
     {
         sk_honor::where('id', $id_sk_honor)->update([
-            'id_status_sk_honor' => 6
+            'id_status_sk_honor' => 2
         ]);
         return redirect()->route('keuangan.honor-sempro.show', $id_sk_honor)->with('success', 'Status berhasil diubah menjadi "Telah Dibayarkan"');
     }

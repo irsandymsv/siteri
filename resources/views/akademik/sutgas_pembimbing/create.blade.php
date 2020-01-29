@@ -219,10 +219,12 @@
 
       var mahasiswa = @json($mahasiswa);
       var nim_old = @json(old('nim'));
+      var pembimbing_utama_old = @json(old('id_pembimbing_utama'));
+      var pembimbing_pendamping_old = @json(old('id_pembimbing_pendamping'));
 
       if(nim_old != null){
          var nama = "";
-         console.log('ada gan');
+         // console.log('ada gan');
          $.each(mahasiswa, function(index, val) {
              if(nim_old == val.nim){
                nama = val.nama;
@@ -233,6 +235,16 @@
          $("input[name='nama_mhs']").val(nama);
       }
 
+      //Set disable pilihan dosen di select dosen 2 yg sdh dipilih di select dosen 1
+      if (pembimbing_utama_old != null) {
+         $("select#id_pembimbing_pendamping option[value='"+pembimbing_utama_old+"']").attr('disabled', 'disabled');
+      }
+      //Set disable pilihan dosen di select dosen 1 yg sdh dipilih di select dosen 2
+      if (pembimbing_pendamping_old != null) {
+         $("select#id_pembimbing_utama option[value='"+pembimbing_pendamping_old+"']").attr('disabled', 'disabled');
+      }
+
+      //Set nama mahasiswa
 		$("select[name='nim']").change(function(event) {
 			var nim = $(this).val();
 			var nama = "";
@@ -244,5 +256,19 @@
 			});
 			$("input[name='nama_mhs']").val(nama);
 		});
+
+      // Set dosen yg sama di select dosen 2 jadi disabled ketika select dosen 1 berubah
+      $("select#id_pembimbing_utama").change(function(event) {
+         $("select#id_pembimbing_pendamping option[disabled='disabled']").removeAttr('disabled');
+         var no_pegawai = $(this).val();
+         $("select#id_pembimbing_pendamping option[value='"+no_pegawai+"']").attr('disabled', 'disabled');
+      });
+
+      //Set dosen yg sama di select dosen 1 jadi disabled ketika select dosen 2 berubah   
+      $("select#id_pembimbing_pendamping").change(function(event) {
+         $("select#id_pembimbing_utama option[disabled='disabled']").removeAttr('disabled');
+         var no_pegawai = $(this).val();
+         $("select#id_pembimbing_utama option[value='"+no_pegawai+"']").attr('disabled', 'disabled');
+      });
 	</script>
 @endsection

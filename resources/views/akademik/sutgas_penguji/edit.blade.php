@@ -142,8 +142,8 @@
                   </div>
 
                   <div class="form-group">
-                     <label for="id_Penguji1">Penguji 1</label><br>
-                     <select name="id_penguji1" id="id_Penguji1" class="form-control select2">
+                     <label for="id_penguji1">Penguji 1</label><br>
+                     <select name="id_penguji1" id="id_penguji1" class="form-control select2">
                         <option value="">--Pilih Penguji 1--</option>
                         @foreach ($dosen1 as $item)
                            @if ($pembimbing['dosen1']->no_pegawai != $item->no_pegawai && $pembimbing['dosen2']->no_pegawai != $item->no_pegawai)
@@ -156,7 +156,7 @@
                         @endforeach
                      </select>
 
-                     @error('id_Penguji1')
+                     @error('id_penguji1')
                         <span class="invalid-feedback" role="alert" style="color: red;">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -164,8 +164,8 @@
                   </div>
 
                   <div class="form-group">
-                     <label for="id_Penguji2">Penguji 2</label><br>
-                     <select name="id_penguji2" id="id_Penguji2" class="form-control select2">
+                     <label for="id_penguji2">Penguji 2</label><br>
+                     <select name="id_penguji2" id="id_penguji2" class="form-control select2">
                         <option value="">--Pilih Penguji 2--</option>
                         @foreach ($dosen2 as $item)
                            @if ($pembimbing['dosen1']->no_pegawai != $item->no_pegawai && $pembimbing['dosen2']->no_pegawai != $item->no_pegawai)
@@ -177,7 +177,7 @@
                         @endforeach
                      </select>
 
-                     @error('id_Penguji2')
+                     @error('id_penguji2')
                         <span class="invalid-feedback" role="alert" style="color: red;">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -222,6 +222,27 @@
 		var mahasiswa = @json($mahasiswa);
       var dosen1 = @json($dosen1);
       var dosen2 = @json($dosen2);
+      var id_dosen1 = @json($surat_tugas->id_dosen1);
+      var id_dosen2 = @json($surat_tugas->id_dosen2);
+
+      //Set disable pilihan dosen di select dosen 2 yg sdh dipilih di select dosen 1
+      $("select#id_penguji2 option[value='"+id_dosen1+"']").attr('disabled', 'disabled');
+      //Set disable pilihan dosen di select dosen 1 yg sdh dipilih di select dosen 2
+      $("select#id_penguji1 option[value='"+id_dosen2+"']").attr('disabled', 'disabled');
+
+      // Set dosen yg sama di select dosen 2 jadi disabled ketika select dosen 1 berubah
+      $("select#id_penguji1").change(function(event) {
+         $("select#id_penguji2 option[disabled='disabled']").removeAttr('disabled');
+         var no_pegawai = $(this).val();
+         $("select#id_penguji2 option[value='"+no_pegawai+"']").attr('disabled', 'disabled');
+      });
+
+      //Set dosen yg sama di select dosen 1 jadi disabled ketika select dosen 2 berubah   
+      $("select#id_penguji2").change(function(event) {
+         $("select#id_penguji1 option[disabled='disabled']").removeAttr('disabled');
+         var no_pegawai = $(this).val();
+         $("select#id_penguji1 option[value='"+no_pegawai+"']").attr('disabled', 'disabled');
+      });
 
 		$("select[name='nim']").change(function(event) {
 			var nim = $(this).val();
@@ -253,6 +274,7 @@
          })
          .done(function(pembimbing) {
             console.log("success");
+            // console.log(pembimbing);
             setDosen(pembimbing['dosen1'].no_pegawai, pembimbing['dosen2'].no_pegawai);
          })
          .fail(function() {
@@ -261,12 +283,12 @@
 		});
 
       function setDosen(id_pembimbing1, id_pembimbing2) {
-         $("select[name='id_Penguji1']").find("option:not(:first-child)").remove();
-         $("select[name='id_Penguji2']").find("option:not(:first-child)").remove();
+         $("select[name='id_penguji1']").find("option:not(:first-child)").remove();
+         $("select[name='id_penguji2']").find("option:not(:first-child)").remove();
 
          $.each(dosen1, function(index, val) {
             if(val.no_pegawai != id_pembimbing1 && val.no_pegawai != id_pembimbing2){
-               $("select[name='id_Penguji1']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+               $("select[name='id_penguji1']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
                // $("select[name='id_Penguji2']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
             }
          });
@@ -274,7 +296,7 @@
          $.each(dosen2, function(index, val) {
             if(val.no_pegawai != id_pembimbing1 && val.no_pegawai != id_pembimbing2){
                // $("select[name='id_Penguji1']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
-               $("select[name='id_Penguji2']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
+               $("select[name='id_penguji2']").append(`<option value="`+val.no_pegawai+`">`+val.nama+`</option>`);
             }
          });
       }

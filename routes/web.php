@@ -54,6 +54,10 @@ Route::middleware(['auth', 'checkRole:Pengelola Data Akademik'])->prefix('akadem
 	Route::get('data-skripsi/{id_skripsi}/update-judul', 'skripsiController@updateJudul')->name('data-skripsi.update-judul');
 	Route::put('data-skripsi/{id_skripsi}/update-judul/update', 'skripsiController@update_updateJudul')->name('data-skripsi.update-judul.update');
 
+	//edit status skripsi
+	Route::get('data-skripsi/{id_skripsi}/edit-status', 'skripsiController@editStatus')->name('data-skripsi.edit-status');
+	Route::put('data-skripsi/{id_skripsi}/update-status', 'skripsiController@updateStatus')->name('data-skripsi.edit-status.update');
+
 	//Route Surat Tugas Pembimbing
 	Route::get('/surat-tugas-pembimbing', 'sutgasPembimbingController@index')->name("sutgas-pembimbing.index");
 	Route::get('/surat-tugas-pembimbing/create', 'sutgasPembimbingController@create')->name("sutgas-pembimbing.create");
