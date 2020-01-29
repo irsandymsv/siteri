@@ -346,6 +346,7 @@ Route::middleware(['auth', 'checkRole:Pengadministrasi BMN'])->prefix('perlengka
                 return view('perlengkapan.dashboard');
             }
         )->name('dashboard');
+
         //Inventaris
         Route::resource('inventaris', 'inventarisController');
 
