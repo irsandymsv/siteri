@@ -135,7 +135,7 @@
 
         $('#reservation').daterangepicker();
 
-        $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, locale: { format: 'YYYY/MM/DD HH:mm:SS' }})
+        $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, locale: { format: 'YYYY/MM/DD HH:mm:ss' }})
 
         $('.datepicker').datepicker({
             autoclose: true,
