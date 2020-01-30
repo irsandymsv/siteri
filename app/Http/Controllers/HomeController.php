@@ -35,6 +35,9 @@ class HomeController extends Controller
         elseif ($user->jabatan->jabatan == "Dekan") {
             return redirect()->route('dekan.dashboard');
         }
+        elseif ($user->jabatan->jabatan == "Wakil Dekan 1") {
+            return redirect()->route('wadek1.dashboard');
+        }
         elseif ($user->jabatan->jabatan == "Wakil Dekan 2") {
             return redirect()->route('wadek2.dashboard');
         }

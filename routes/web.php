@@ -24,15 +24,16 @@ Route::get('/home', 'HomeController@index')->name('home');
 // return view('layout.template');
 // });
 
-//HEAD
 Route::middleware(['auth'])->prefix('notifikasi')->name('notifikasi.')->group(
     function () {
         Route::get('/', 'NotificationController@index')->name('index');
         Route::get('/read/{id}', 'NotificationController@read')->name('read');
         Route::get('/readAll', 'NotificationController@readAll')->name('readAll');
-        Route::get('/load', 'NotificationController@load')->name('load');
+        // Route::get('/load', 'NotificationController@load')->name('load');
     }
 );
+
+Route::get('/notifikasi/load', 'NotificationController@load')->name('notifikasi.load');
 
 Route::middleware(['auth', 'checkRole:Pengelola Data Akademik'])->prefix('template')->name('template.')->group(
     function () {
@@ -374,5 +375,23 @@ Route::middleware(['auth', 'checkRole:Pengadministrasi Kemahasiswaan & Alumni'])
         Route::get('/mahasiswa/{nim}', 'mahasiswaController@show')->name('mahasiswa.show');
         Route::get('/mahasiswa/{nim}/edit', 'mahasiswaController@edit')->name('mahasiswa.edit');
         Route::put('/mahasiswa/{nim}/update', 'mahasiswaController@update')->name('mahasiswa.update');
+    }
+);
+
+Route::middleware(['auth', 'checkRole:Wakil Dekan 1'])->prefix('wadek1')->name('wadek1.')->group(
+    function () {
+        Route::get('/', 'wadek1Controller@dashboard')->name('dashboard');
+
+        //Mahasiswa Bimbingan
+        Route::get('/pembimbing-skripsi', 'dosenController@index_pembimbing')->name('pembimbing-skripsi');
+        Route::get('/pembimbing-skripsi/{nim}', 'dosenController@show_pembimbing')->name('pembimbing-skripsi.show');
+
+        //Mahasiswa Ujian Sempro
+        Route::get('/pembahas-sempro', 'dosenController@index_pembahas')->name('pembahas-sempro');
+        Route::get('/pembahas-sempro/{nim}', 'dosenController@show_pembahas')->name('pembahas-sempro.show');
+
+        //Mahasiswa Ujian Skripsi
+        Route::get('/penguji-skripsi', 'dosenController@index_penguji')->name('penguji-skripsi');
+        Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
     }
 );

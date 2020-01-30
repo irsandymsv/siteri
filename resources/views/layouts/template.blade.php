@@ -367,54 +367,57 @@ desired effect
     <!-- page script -->
     <script type="text/javascript">
         $.fn.dataTable.moment('D MMMM Y', 'id');
-  $('#table_data1').DataTable({
-    })
+        $('#table_data1').DataTable({
+        })
 
-  $('#btn_logout').click(function (event) {
-    event.preventDefault();
-    $('#logout-form').trigger('submit');
-  });
+        $('#btn_logout').click(function (event) {
+            event.preventDefault();
+            $('#logout-form').trigger('submit');
+        });
 
-  $('a#readAll').click(function(event) {
-    event.preventDefault();
-    console.log('baca semua');
+        readAllNotif();
+        function readAllNotif() {
+        $('a#readAll').click(function(event) {
+            event.preventDefault();
+            console.log('baca semua');
 
-    $.ajax({
-      url: '{{ route('notifikasi.readAll') }}',
-      type: 'GET',
-      // dataType: '',
-      // data: {},
-    })
-    .done(function(result) {
-      console.log("success");
-      console.log('hasil= '+result);
+            $.ajax({
+              url: '{{ route('notifikasi.readAll') }}',
+              type: 'GET',
+              // dataType: '',
+              // data: {},
+            })
+            .done(function(result) {
+              console.log("success");
+              console.log('hasil= '+result);
 
-      $('#jml_notif').hide();
-      $('a#readAll').hide();
-      $('#list_notif').hide();
-      $('span#header_notif').text('Tidak Ada Notifikasi Baru');
-    })
-    .fail(function(err, xml) {
-      console.log("error");
-      console.log(err);
-      console.log(xml);
-    });
-
-  });
-
-    $(function(){
-        function loadlink(){
-            posisi = $('#list_notif').scrollTop();
-            $('.dropdown.notifications-menu').load('{{ route("notifikasi.load") }}', function(){
-                $('#list_notif').scrollTop(posisi);
+              $('#jml_notif').hide();
+              $('a#readAll').hide();
+              $('#list_notif').hide();
+              $('span#header_notif').text('Tidak Ada Notifikasi Baru');
+            })
+            .fail(function(err, xml) {
+              console.log("error");
+              console.log(err);
+              console.log(xml);
             });
+          });
         }
+
+        $(function(){
+            function loadlink(){
+                posisi = $('#list_notif').scrollTop();
+                $('.dropdown.notifications-menu').load('{{ route("notifikasi.load") }}', function(){
+                    $('#list_notif').scrollTop(posisi);
+                });
+                readAllNotif();
+            }
 
             loadlink();
             setInterval(function(){
                 loadlink()
             }, 3000);
-    });
+        });
 
     </script>
     <script>
