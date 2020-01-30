@@ -4,9 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe0183726a78fe56b6e43715f69ed262",
-    // "content-hash": "bb737d2dbff8a6700fdaf8794ad4cbbd",
-    // "content-hash": "b5b19ffeca7dba5441809f5d607639a8",
+    "content-hash": "c76017c4d303f9c48ddac71dd21d6c17",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -503,7 +501,6 @@
                 "trusted proxy"
             ],
             "time": "2019-12-20T13:11:11+00:00"
-<<<<<<< HEAD
         },
         {
             "name": "goodnesskay/laravelpdfviewer",
@@ -592,8 +589,6 @@
                 "pdf"
             ],
             "time": "2019-12-16T11:01:06+00:00"
-=======
->>>>>>> ae6e48a7bd5524d0144a461d36e9981390439304
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -3324,7 +3319,6 @@
                 "dump"
             ],
             "time": "2019-12-18T13:41:29+00:00"
-<<<<<<< HEAD
         },
         {
             "name": "tecnickcom/tcpdf",
@@ -3387,8 +3381,6 @@
                 "qrcode"
             ],
             "time": "2019-09-20T09:35:01+00:00"
-=======
->>>>>>> ae6e48a7bd5524d0144a461d36e9981390439304
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -3438,6 +3430,68 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2019-10-24T08:53:34+00:00"
+        },
+        {
+            "name": "uxweb/sweet-alert",
+            "version": "v2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/uxweb/sweet-alert.git",
+                "reference": "5ad72efabaa8e864443247daeafeae69a0913f7a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/uxweb/sweet-alert/zipball/5ad72efabaa8e864443247daeafeae69a0913f7a",
+                "reference": "5ad72efabaa8e864443247daeafeae69a0913f7a",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/session": "~5.0|^6.0|^7.0",
+                "illuminate/support": "~5.0|^6.0|^7.0",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "UxWeb\\SweetAlert\\SweetAlertServiceProvider"
+                    ],
+                    "aliases": {
+                        "Alert": "UxWeb\\SweetAlert\\SweetAlert"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "UxWeb\\SweetAlert\\": "src/SweetAlert/"
+                },
+                "files": [
+                    "src/SweetAlert/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Uziel Bueno",
+                    "email": "ux.webs@gmail.com"
+                }
+            ],
+            "description": "A simple PHP package to show Sweet Alerts with the Laravel Framework",
+            "keywords": [
+                "alert",
+                "laravel",
+                "notifier",
+                "sweet"
+            ],
+            "time": "2019-12-24T07:25:40+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -3617,18 +3671,6 @@
         },
         {
             "name": "filp/whoops",
-<<<<<<< HEAD
-            "version": "2.5.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/filp/whoops.git",
-                "reference": "ee9699e79d8fcdd15c107e035d7b965e4fa854ac"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/ee9699e79d8fcdd15c107e035d7b965e4fa854ac",
-                "reference": "ee9699e79d8fcdd15c107e035d7b965e4fa854ac",
-=======
             "version": "2.6.0",
             "source": {
                 "type": "git",
@@ -3639,7 +3681,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/filp/whoops/zipball/ecbc8f3ed2cafca3cfca3d5febaae5a9d2899508",
                 "reference": "ecbc8f3ed2cafca3cfca3d5febaae5a9d2899508",
->>>>>>> ae6e48a7bd5524d0144a461d36e9981390439304
                 "shasum": ""
             },
             "require": {
@@ -3687,11 +3728,7 @@
                 "throwable",
                 "whoops"
             ],
-<<<<<<< HEAD
-            "time": "2019-12-21T10:00:00+00:00"
-=======
             "time": "2019-12-25T10:00:00+00:00"
->>>>>>> ae6e48a7bd5524d0144a461d36e9981390439304
         },
         {
             "name": "fzaninotto/faker",
@@ -4223,18 +4260,6 @@
         },
         {
             "name": "phpspec/prophecy",
-<<<<<<< HEAD
-            "version": "1.10.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "d638ebbb58daba25a6a0dc7969e1358a0e3c6682"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/d638ebbb58daba25a6a0dc7969e1358a0e3c6682",
-                "reference": "d638ebbb58daba25a6a0dc7969e1358a0e3c6682",
-=======
             "version": "1.10.1",
             "source": {
                 "type": "git",
@@ -4245,7 +4270,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/phpspec/prophecy/zipball/cbe1df668b3fe136bcc909126a0f529a78d4cbbc",
                 "reference": "cbe1df668b3fe136bcc909126a0f529a78d4cbbc",
->>>>>>> ae6e48a7bd5524d0144a461d36e9981390439304
                 "shasum": ""
             },
             "require": {
@@ -4295,11 +4319,7 @@
                 "spy",
                 "stub"
             ],
-<<<<<<< HEAD
-            "time": "2019-12-17T16:54:23+00:00"
-=======
             "time": "2019-12-22T21:05:45+00:00"
->>>>>>> ae6e48a7bd5524d0144a461d36e9981390439304
         },
         {
             "name": "phpunit/php-code-coverage",

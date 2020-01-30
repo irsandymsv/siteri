@@ -219,6 +219,8 @@
       });
 
 		var mahasiswa = @json($mahasiswa);
+      var id_dosen1 = @json($surat_tugas->id_dosen1);
+      var id_dosen2 = @json($surat_tugas->id_dosen2);
 
 		$("select[name='nim']").change(function(event) {
 			var nim = $(this).val();
@@ -231,5 +233,24 @@
 			});
 			$("input[name='nama_mhs']").val(nama);
 		});
+
+      //Set disable pilihan dosen di select dosen 2 yg sdh dipilih di select dosen 1
+      $("select#id_pembimbing_pendamping option[value='"+id_dosen1+"']").attr('disabled', 'disabled');
+      //Set disable pilihan dosen di select dosen 1 yg sdh dipilih di select dosen 2
+      $("select#id_pembimbing_utama option[value='"+id_dosen2+"']").attr('disabled', 'disabled');
+
+      // Set dosen yg sama di select dosen 2 jadi disabled ketika select dosen 1 berubah
+      $("select#id_pembimbing_utama").change(function(event) {
+         $("select#id_pembimbing_pendamping option[disabled='disabled']").removeAttr('disabled');
+         var no_pegawai = $(this).val();
+         $("select#id_pembimbing_pendamping option[value='"+no_pegawai+"']").attr('disabled', 'disabled');
+      });
+
+      //Set dosen yg sama di select dosen 1 jadi disabled ketika select dosen 2 berubah
+      $("select#id_pembimbing_pendamping").change(function(event) {
+         $("select#id_pembimbing_utama option[disabled='disabled']").removeAttr('disabled');
+         var no_pegawai = $(this).val();
+         $("select#id_pembimbing_utama option[value='"+no_pegawai+"']").attr('disabled', 'disabled');
+      });
 	</script>
 @endsection

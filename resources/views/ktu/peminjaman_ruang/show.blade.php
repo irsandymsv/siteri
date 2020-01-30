@@ -64,7 +64,6 @@
                                 <th>No</th>
                                 <th>Nama Ruang</th>
                                 <th>Kuota</th>
-                                <th style="width:99.8px">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -80,8 +79,8 @@
                     </table>
                 </div>
                 <br><br>
-                @if($laporan->verif_ktu == 0)
-                {!! Form::open(['route' => ['ktu.peminjaman_barang.verif', $laporan->id], 'method' =>
+                @if($laporan->verif_ktu == 0 && $laporan->verif_ktu == 0)
+                {!! Form::open(['route' => ['ktu.peminjaman_ruang.verif', $laporan->id], 'method' =>
                 'PUT'])!!}
                 {!! Form::hidden("verif_ktu", 1) !!}
                 <div class="form-group" style="float: right;">
@@ -102,37 +101,6 @@
 
         $('#peminjaman_ruang').DataTable();
 
-        $('a.btn.btn-danger').click(function(){
-            event.preventDefault();
-				var id = $(this).attr('id');
-                console.log(id);
-
-				var url_del = "{{route('ktu.peminjaman_ruang.destroy', "id")}}";
-                url_del = url_del.replace('id', id);
-				console.log(url_del);
-
-				$('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
-					$.ajaxSetup({
-					    headers: {
-					        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-					    }
-					});
-
-					$.ajax({
-						url: url_del,
-						type: 'POST',
-						data: {_method: 'DELETE'},
-					})
-					.done(function(hasil) {
-						console.log("success");
-						$("tr#lap_"+id).remove();
-					})
-					.fail(function() {
-						console.log("error");
-						$("tr#lap_"+id).remove();
-					});
-				});
-        });
     });
 
 </script>

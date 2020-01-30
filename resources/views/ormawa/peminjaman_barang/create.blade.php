@@ -34,10 +34,7 @@
                     <table id="tbl-data" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Tanggal Mulai</th>
-                                <th>Tanggal Berakhir</th>
-                                <th>Jam Mulai</th>
-                                <th>Jam Berakhir</th>
+                                <th>Tanggal/Jam</th>
                                 <th>Kegiatan</th>
                             </tr>
                         </thead>
@@ -45,23 +42,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    {!! Form::date('tanggal_mulai', null, ['class' => 'form-control tanggal']) !!}
-                                    {{-- {!! Form::text('tanggal_mulai', null, ['class' => 'form-control datepicker not-rounded-border']) !!} --}}
-                                </td>
-
-                                <td>
-                                    {!! Form::date('tanggal_berakhir', null, ['class' => 'form-control tanggal']) !!}
-                                    {{-- {!! Form::text('tanggal_berakhir', null, ['class' => 'form-control datepicker not-rounded-border']) !!} --}}
-                                </td>
-
-                                <td>
-                                    {{-- {!! Form::text('jam_mulai', null, ['class' => 'form-control timepicker']) !!} --}}
-                                    {!! Form::time('jam_mulai', null, ['class' => 'form-control']) !!}
-                                </td>
-
-                                <td>
-                                    {{-- {!! Form::text('jam_berakhir', null, ['class' => 'form-control timepicker']) !!} --}}
-                                    {!! Form::time('jam_berakhir', null, ['class' => 'form-control']) !!}
+                                    {!! Form::text('tanggal', null, ['class' => 'form-control not-rounded-border', 'id' => 'reservationtime']) !!}
                                 </td>
 
                                 <td>
@@ -153,6 +134,8 @@
         $('.js-example-basic-multiple').select2();
 
         $('#reservation').daterangepicker();
+
+        $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, locale: { format: 'YYYY/MM/DD HH:mm:SS' }})
 
         $('.datepicker').datepicker({
             autoclose: true,

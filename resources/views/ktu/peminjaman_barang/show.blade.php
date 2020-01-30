@@ -51,11 +51,13 @@
                         </tr>
                         <tr>
                             <td><b>Status</b></td>
-                            <td>: @if($laporan->verif_ktu == 0)
-                                Belum Diverifikasi
-                                @else
-                                <label class="label bg-green">Sudah Diverifikasi</label>
-                                @endif
+                            <td>: @if($laporan->verif_baper == 0)
+                                    Belum Disetujui
+                                    @elseif($laporan->verif_ktu == 0)
+                                    Belum Diverifikasi
+                                    @else
+                                    <label class="label bg-green">Sudah Diverifikasi</label>
+                                    @endif
                             </td>
                         </tr>
                     </table>
@@ -69,7 +71,6 @@
                                 <th>Nama Barang</th>
                                 <th>Merk Barang</th>
                                 <th>Jumlah</th>
-                                <th style="width:99.8px">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -86,7 +87,7 @@
                     </table>
                 </div>
                 <br><br>
-                @if($laporan->verif_ktu == 0)
+                @if($laporan->verif_baper == 1 && $laporan->verif_ktu == 0)
                 {!! Form::open(['route' => ['ktu.peminjaman_barang.verif', $laporan->id], 'method' =>
                 'PUT'])!!}
                 {!! Form::hidden("verif_ktu", 1) !!}

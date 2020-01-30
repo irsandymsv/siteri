@@ -29,7 +29,7 @@
                                 <th>Jam Berakhir</th>
                                 <th>Kegiatan</th>
                                 <th>Status</th>
-                                <th style="width:99.8px">Opsi</th>
+                                <th>Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -73,37 +73,6 @@
 
         $('#peminjaman_ruang').DataTable();
 
-        $('a.btn.btn-danger').click(function(){
-            event.preventDefault();
-				var id = $(this).attr('id');
-                console.log(id);
-
-				var url_del = "{{route('ktu.peminjaman_ruang.destroy', "id")}}";
-                url_del = url_del.replace('id', id);
-				console.log(url_del);
-
-				$('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
-					$.ajaxSetup({
-					    headers: {
-					        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-					    }
-					});
-
-					$.ajax({
-						url: url_del,
-						type: 'POST',
-						data: {_method: 'DELETE'},
-					})
-					.done(function(hasil) {
-						console.log("success");
-						$("tr#lap_"+id).remove();
-					})
-					.fail(function() {
-						console.log("error");
-						$("tr#lap_"+id).remove();
-					});
-				});
-        });
     });
 
 </script>

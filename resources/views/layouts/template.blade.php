@@ -473,20 +473,35 @@ desired effect
     });
 
   });
+
+    $(function(){
+        function loadlink(){
+            posisi = $('#list_notif').scrollTop();
+            $('.dropdown.notifications-menu').load('{{ route("notifikasi.load") }}', function(){
+                $('#list_notif').scrollTop(posisi);
+            });
+        }
+
+        loadlink();
+        setInterval(function(){
+            loadlink()
+        }, 3000);
+    });
+
     </script>
     <script>
         $(document).on('ready change', function(){
-        $('.angka').on('input', function(){
-            $(this).val(this.value.replace(/[^0-9]/g,''));
-        });
+            $('.angka').on('input', function(){
+                $(this).val(this.value.replace(/[^0-9]/g,''));
+            });
 
-        $('.huruf').on('input', function(){
-            $(this).val(this.value.replace(/[^a-zA-Z ]/g,''));
+            $('.huruf').on('input', function(){
+                $(this).val(this.value.replace(/[^a-zA-Z ]/g,''));
+            });
+            $('.anghrf').on('input', function(){
+                $(this).val(this.value.replace(/[^a-zA-Z 0-9]/g,''));
+            });
         });
-        $('.anghrf').on('input', function(){
-            $(this).val(this.value.replace(/[^a-zA-Z 0-9]/g,''));
-        });
-    });
     </script>
 
     @yield('script')

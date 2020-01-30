@@ -24,11 +24,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 // return view('layout.template');
 // });
 
+//HEAD
 Route::middleware(['auth'])->prefix('notifikasi')->name('notifikasi.')->group(
     function () {
         Route::get('/', 'NotificationController@index')->name('index');
         Route::get('/read/{id}', 'NotificationController@read')->name('read');
         Route::get('/readAll', 'NotificationController@readAll')->name('readAll');
+        Route::get('/load', 'NotificationController@load')->name('load');
     }
 );
 
@@ -58,6 +60,10 @@ Route::middleware(['auth', 'checkRole:Pengelola Data Akademik'])->prefix('akadem
 
         Route::get('data-skripsi/{id_skripsi}/update-judul', 'skripsiController@updateJudul')->name('data-skripsi.update-judul');
         Route::put('data-skripsi/{id_skripsi}/update-judul/update', 'skripsiController@update_updateJudul')->name('data-skripsi.update-judul.update');
+
+        //edit status skripsi
+        Route::get('data-skripsi/{id_skripsi}/edit-status', 'skripsiController@editStatus')->name('data-skripsi.edit-status');
+        Route::put('data-skripsi/{id_skripsi}/update-status', 'skripsiController@updateStatus')->name('data-skripsi.edit-status.update');
 
         //Route Surat Tugas Pembimbing
         Route::get('/surat-tugas-pembimbing', 'sutgasPembimbingController@index')->name("sutgas-pembimbing.index");
@@ -163,14 +169,14 @@ Route::middleware(['auth', 'checkRole:KTU'])->prefix('ktu')->name('ktu.')->group
             'only' => ['index', 'show']
             ]
         );
-        Route::put('/peminjaman_barang/verif/{verif_ktu}', 'peminjamanBarangController@verif_ktu')->name('peminjaman_barang.verif');
+           Route::put('/peminjaman_barang/verif/{verif_ktu}', 'peminjamanBarangController@verif_ktu')->name('peminjaman_barang.verif');
 
         Route::resource(
             'peminjaman_ruang', 'peminjamanRuangController', [
                 'only' => ['index', 'show']
                 ]
         );
-        Route::put('/peminjaman_ruang/verif/{verif_ktu}', 'peminjamanRuangController@verif_ktu')->name('peminjaman_ruang.verif');
+           Route::put('/peminjaman_ruang/verif/{verif_ktu}', 'peminjamanRuangController@verif_ktu')->name('peminjaman_ruang.verif');
     }
 );
 
@@ -332,11 +338,7 @@ Route::middleware(['auth', 'checkRole:Dosen'])->prefix('dosen')->name('dosen.')-
 
 Route::middleware(['auth', 'checkRole:Pengadministrasi BMN'])->prefix('perlengkapan')->name('perlengkapan.')->group(
     function () {
-        Route::get(
-            '/', function () {
-                return view('perlengkapan.dashboard');
-            }
-        )->name('dashboard');
+        Route::get('/', 'PerlengkapanController@dashboard')->name('dashboard');
         Route::resource('inventaris', 'inventarisController');
         Route::resource('pengadaan', 'pengadaanController');
         Route::resource('peminjaman_barang', 'peminjamanBarangController');
@@ -350,11 +352,7 @@ Route::middleware(['auth', 'checkRole:Pengadministrasi BMN'])->prefix('perlengka
 
 Route::middleware(['auth', 'checkRole:Pengadministrasi Layanan Kegiatan Mahasiswa'])->prefix('ormawa')->name('ormawa.')->group(
     function () {
-        Route::get(
-            '/', function () {
-                return view('ormawa.dashboard');
-            }
-        )->name('dashboard');
+        Route::get('/', 'OrmawaController@dashboard')->name('dashboard');
         Route::resource('peminjaman_barang', 'peminjamanBarangController');
         Route::get('/peminjaman_barang/barang/{id}', array('as' => 'barang.ajax', 'uses' => 'peminjamanBarangController@barangAjax'));
         Route::resource('peminjaman_ruang', 'peminjamanRuangController');

@@ -37,10 +37,7 @@
                     <table id="tbl-data" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Tanggal Mulai</th>
-                                <th>Tanggal Berakhir</th>
-                                <th>Jam Mulai</th>
-                                <th>Jam Berakhir</th>
+                                <th>Tanggal/Jam</th>
                                 <th>Kegiatan</th>
                             </tr>
                         </thead>
@@ -48,24 +45,8 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    {!! Form::date('tanggal_mulai', $laporan->tanggal_mulai, ['class' => 'form-control
-                                    tanggal']) !!}
+                                    {!! Form::text('tanggal', $tanggal, ['class' => 'form-control not-rounded-border', 'id' => 'reservationtime']) !!}
                                 </td>
-
-                                <td>
-                                    {!! Form::date('tanggal_berakhir', $laporan->tanggal_berakhir, ['class' =>
-                                    'form-control tanggal']) !!}
-                                </td>
-
-                                <td>
-                                    {!! Form::time('jam_mulai', $laporan->jam_mulai, ['class' => 'form-control']) !!}
-                                </td>
-
-                                <td>
-                                    {!! Form::time('jam_berakhir', $laporan->jam_berakhir, ['class' => 'form-control'])
-                                    !!}
-                                </td>
-
                                 <td>
                                     {!! Form::text('kegiatan', $laporan->kegiatan, ['class' => 'form-control']) !!}
                                 </td>
@@ -172,6 +153,8 @@
         $('.js-example-basic-multiple').select2();
 
         $('#reservation').daterangepicker();
+
+        $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, locale: { format: 'YYYY/MM/DD HH:mm:SS' }})
 
         $('.datepicker').datepicker({
             autoclose: true,
