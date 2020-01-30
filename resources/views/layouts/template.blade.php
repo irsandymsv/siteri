@@ -23,6 +23,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="/adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <!-- Style CSs -->
     <link rel="stylesheet" href="/css/style.css">
+    <!-- Sweet Alert -->
+    <script src="/js/sweet.js"></script>
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
@@ -84,6 +86,7 @@ desired effect
 -->
 
 <body class="hold-transition skin-blue sidebar-mini">
+    @include('sweet::alert')
     <div class="wrapper">
 
         <!-- Main Header -->

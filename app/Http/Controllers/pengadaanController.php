@@ -14,6 +14,7 @@ use App\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use UxWeb\SweetAlert\SweetAlert;
 
 class pengadaanController extends Controller
 {
@@ -260,6 +261,7 @@ class pengadaanController extends Controller
                             ]
                         );
                     } catch (Exception $e) {
+
                         $gagal = $e->validator->messages();
                         $compek =[];
                         $compek = (array) $gagal;
@@ -268,10 +270,15 @@ class pengadaanController extends Controller
                             array_push($gagal, $key);
                         }
                         $gagal = $gagal[0];
-                        $key = array_key_last($gagal);
-                        $messages = array_pop($gagal);
-                        // dd(explode('.', $key)[0] . ' ke-' . explode('.', $key)[1]);
-                        dd($messages[0]);
+                        $key = array_key_first($gagal);
+                        $messages = array_shift($gagal)[0];
+                        if (strpos($key, '.')) {
+                            $keyFix = explode('.', $key)[0] . ' ke-' . (explode('.', $key)[1] + 1);
+                            $messages = str_replace($key, $keyFix, $messages);
+                        }
+
+                        alert()->error("" . $messages, 'Gagal Update')->persistent("Tutup");
+                        return redirect()->route('perlengkapan.pengadaan.edit', [$id, 'laporan' => true]);
                     }
 
                     laporan_pengadaan::findOrfail($id)->update(
@@ -334,12 +341,7 @@ class pengadaanController extends Controller
                 // return $this->show($id);
 
             } else {
-                error_log('Gagal Mengubah, Data Sudah Disetujui');
-                \Log::notice('Gagal Mengubah, Data Sudah Disetujui');
-                \Log::info('This is some useful information.');
-                \Log::warning('Something could be going wrong.');
-                \Log::error('Something is really going wrong.');
-                // dd('Gagal Mengubah, Data Sudah Disetujui');
+                alert()->error("Laporan Sudah Disetujui Wakil Dekan 2", "Gagal Update")->persistent('Tutup');
             }
         }
 
