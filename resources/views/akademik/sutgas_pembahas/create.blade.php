@@ -240,7 +240,8 @@
          var old_id_pembahas1 = @json(old('id_pembahas1'));
          var old_id_pembahas2 = @json(old('id_pembahas2'));
 
-         console.log('ada gan');
+         // console.log('ada gan');
+         //set old mahasiswa
          $.each(mahasiswa, function(index, val) {
              if(nim_old == val.nim){
                nama = val.nama;
@@ -267,11 +268,34 @@
          .done(function(pembimbing) {
             console.log("success");
             setDosen_old(pembimbing['dosen1'].no_pegawai, pembimbing['dosen2'].no_pegawai, old_id_pembahas1, old_id_pembahas2);
+
+            //Set disable pilihan dosen di select dosen 2 yg sdh dipilih di select dosen 1
+            if (old_id_pembahas1 != null) {
+               $("select#id_pembahas2 option[value='"+old_id_pembahas1+"']").attr('disabled', 'disabled');
+            }
+            //Set disable pilihan dosen di select dosen 1 yg sdh dipilih di select dosen 2
+            if (old_id_pembahas2 != null) {
+               $("select#id_pembahas1 option[value='"+old_id_pembahas2+"']").attr('disabled', 'disabled');
+            }
          })
          .fail(function() {
             console.log("error");
          });
       }
+
+      // Set dosen yg sama di select dosen 2 jadi disabled ketika select dosen 1 berubah
+      $("select#id_pembahas1").change(function(event) {
+         $("select#id_pembahas2 option[disabled='disabled']").removeAttr('disabled');
+         var no_pegawai = $(this).val();
+         $("select#id_pembahas2 option[value='"+no_pegawai+"']").attr('disabled', 'disabled');
+      });
+
+      //Set dosen yg sama di select dosen 1 jadi disabled ketika select dosen 2 berubah   
+      $("select#id_pembahas2").change(function(event) {
+         $("select#id_pembahas1 option[disabled='disabled']").removeAttr('disabled');
+         var no_pegawai = $(this).val();
+         $("select#id_pembahas1 option[value='"+no_pegawai+"']").attr('disabled', 'disabled');
+      });
 
 		$("select[name='nim']").change(function(event) {
 			var nim = $(this).val();

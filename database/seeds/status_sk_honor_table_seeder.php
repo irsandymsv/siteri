@@ -14,10 +14,10 @@ class status_sk_honor_table_seeder extends Seeder
     {
         status_sk_honor::insert([
             ['status' => 'Draft'],
-            ['status' => 'Dikirim'],
-            ['status' => 'Disetujui BPP'],
-            ['status' => 'Disetujui KTU'],
-            ['status' => 'Disetujui Wadek 2'],
+            // ['status' => 'Dikirim'],
+            // ['status' => 'Disetujui BPP'],
+            // ['status' => 'Disetujui KTU'],
+            // ['status' => 'Disetujui Wadek 2'],
             ['status' => 'Telah Dibayarkan']
         ]);
     }

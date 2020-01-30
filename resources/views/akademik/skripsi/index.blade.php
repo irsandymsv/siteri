@@ -59,7 +59,7 @@
 		            				<td>{{ $item->mahasiswa->nama }}</td>
 		            				<td>{{ $item->status_skripsi->status }}</td>
 		            				<td>
-		            					@if ($item->status_skripsi->status == "Sudah Punya Penguji" || $item->status_skripsi->status == "Sudah Lulus")
+		            					@if ($item->status_skripsi->status == "Sudah Lulus")
 		            						-
 		            					@else
 		            						<div class="btn-group">
@@ -74,6 +74,11 @@
 			            							<li>
 			            								<a href="{{ route('akademik.data-skripsi.update-judul', $item->id) }}">Update Judul</a>
 			            							</li>
+			            							@if ($item->status_skripsi->status == "Sudah Punya Penguji")
+			            								<li>
+			            									<a href="{{ route('akademik.data-skripsi.edit-status', $item->id) }}">Edit Status</a>
+			            								</li>
+			            							@endif
 			            						</ul>
 			            					</div>
 		            					@endif
