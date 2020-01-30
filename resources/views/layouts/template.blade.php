@@ -475,23 +475,17 @@ desired effect
   });
 
     $(function(){
-        page_y = 0;
         function loadlink(){
-            page_y = $('#list_notif').scrollTop();
-            // url = '{{ route("notifikasi.load", "position") }}'
-            // url = url.replace('position', page_y);
+            posisi = $('#list_notif').scrollTop();
             $('.dropdown.notifications-menu').load('{{ route("notifikasi.load") }}', function(){
-                console.log(page_y);
-                $('#list_notif').scrollTop(page_y);
+                $('#list_notif').scrollTop(posisi);
             });
         }
 
         loadlink();
         setInterval(function(){
             loadlink()
-            // console.log(page_y);
-            // $('#list_notif').scrollTop(page_y);
-        }, 5000);
+        }, 3000);
     });
 
     </script>
