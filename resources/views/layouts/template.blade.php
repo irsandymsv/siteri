@@ -137,12 +137,6 @@ desired effect
                                     <!-- Inner Menu: contains the notifications -->
                                     <ul class="menu" id="list_notif">
                                         <!-- start notification -->
-                                        {{-- <li>
-                                            <a href="#">
-                                              <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                            </a>
-                                        </li> --}}
-
                                         @if (Auth::user()->jabatan->jabatan == 'Pengelola Data Akademik')
                                         @foreach (Auth::user()->unreadNotifications as $notif)
                                         @if ($notif->type == 'App\Notifications\verifSutgasKtu')
@@ -252,7 +246,6 @@ desired effect
                 </div>
             </nav>
         </header>
-
         <!-- Left side column. contains the logo and sidebar -->
         <aside class="main-sidebar">
 
@@ -281,9 +274,6 @@ desired effect
                         </span>
                     </div>
                 </form> --}}
-                <!-- /.search form -->
-
-                <!-- search form (Optional) -->
                 <!-- /.search form -->
 
                 <!-- Sidebar Menu -->
@@ -353,7 +343,7 @@ desired effect
 
         <!-- /.control-sidebar -->
         <!-- Add the sidebar's background. This div must be placed
-        immediately after the control sidebar -->
+            immediately after the control sidebar -->
         <div class="control-sidebar-bg"></div>
     </div>
     <!-- ./wrapper -->
@@ -377,60 +367,54 @@ desired effect
     <!-- page script -->
     <script type="text/javascript">
         $.fn.dataTable.moment('D MMMM Y', 'id');
-        $('#table_data1').DataTable({
-            })
+  $('#table_data1').DataTable({
+    })
 
-        $('#btn_logout').click(function (event) {
-            event.preventDefault();
-            $('#logout-form').trigger('submit');
-        });
+  $('#btn_logout').click(function (event) {
+    event.preventDefault();
+    $('#logout-form').trigger('submit');
+  });
 
-        $('a#readAll').click(function(event) {
-            event.preventDefault();
-            console.log('baca semua');
+  $('a#readAll').click(function(event) {
+    event.preventDefault();
+    console.log('baca semua');
 
-            $.ajax({
-              url: '{{ route('notifikasi.readAll') }}',
-              type: 'GET',
-              // dataType: '',
-              // data: {},
-            })
-            .done(function(result) {
-              console.log("success");
-              console.log('hasil= '+result);
+    $.ajax({
+      url: '{{ route('notifikasi.readAll') }}',
+      type: 'GET',
+      // dataType: '',
+      // data: {},
+    })
+    .done(function(result) {
+      console.log("success");
+      console.log('hasil= '+result);
 
-              $('#jml_notif').hide();
-              $('a#readAll').hide();
-              $('#list_notif').hide();
-              $('span#header_notif').text('Tidak Ada Notifikasi Baru');
-            })
-            .fail(function(err, xml) {
-              console.log("error");
-              console.log(err);
-              console.log(xml);
+      $('#jml_notif').hide();
+      $('a#readAll').hide();
+      $('#list_notif').hide();
+      $('span#header_notif').text('Tidak Ada Notifikasi Baru');
+    })
+    .fail(function(err, xml) {
+      console.log("error");
+      console.log(err);
+      console.log(xml);
+    });
+
+  });
+
+    $(function(){
+        function loadlink(){
+            posisi = $('#list_notif').scrollTop();
+            $('.dropdown.notifications-menu').load('{{ route("notifikasi.load") }}', function(){
+                $('#list_notif').scrollTop(posisi);
             });
-
-        });
-
-        $(function(){
-            page_y = 0;
-            function loadlink(){
-                page_y = $('#list_notif').scrollTop();
-                // url = '{{ route("notifikasi.load", "position") }}'
-                // url = url.replace('position', page_y);
-                $('.dropdown.notifications-menu').load('{{ route("notifikasi.load") }}', function(){
-                    console.log(page_y);
-                    $('#list_notif').scrollTop(page_y);
-                });
-            }
+        }
 
             loadlink();
             setInterval(function(){
                 loadlink()
-                // console.log(page_y);
-                // $('#list_notif').scrollTop(page_y);
-            }, 5000);
-        });
+            }, 3000);
+    });
 
     </script>
     <script>
