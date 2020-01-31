@@ -11,7 +11,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'username', 'password', 'no_pegawai', 'nama',
+        'username', 'password', 'no_pegawai', 'nama','id_jabatan','id_bagian','id_pangkat','id_golongan','id_fungsional', 'jurusan',
     ];
 
     /**
@@ -139,4 +139,35 @@ class User extends Authenticatable
     //     return $this->hasMany('App\detail_skripsi', 'id_pembahas2');
     // }
 
+
+    //Kepegawaian
+    public function fungsionalnya()
+    {
+        return $this->belongsTo('App\fungsional', 'id_fungsional');
+    }
+
+    public function golongannya()
+    {
+        return $this->belongsTo('App\golongan', 'id_golongan');
+    }
+
+    public function pangkatnya()
+    {
+        return $this->belongsTo('App\pangkat', 'id_pangkat');
+    }
+
+    public function jabatannya()
+    {
+        return $this->belongsTo('App\jabatan', 'id_jabatan');
+    }
+
+    public function prodi()
+    {
+        return $this->belongsTo('App\prodi', 'jurusan');
+    }
+
+    public function dosen_tugas()
+    {
+        return $this->hasMany('App\dosen_tugas', 'id_dosen');
+    }
 }
