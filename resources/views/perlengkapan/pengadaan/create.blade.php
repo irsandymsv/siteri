@@ -42,10 +42,11 @@
 
                         <tbody id="inputan">
                             <span><strong>Peruntukan</strong></span>
-                            {!! Form::text('keterangan', old('keterangan'), ['class' => 'form-control']) !!}
+                            {!! Form::text('keterangan', null, ['class' => 'form-control']) !!}
                             <tr>
                                 <td>
-                                    {!! Form::text('nama_barang[]', old('nama_barang'), ['class' => 'form-control']) !!}
+                                    {!! Form::text('nama_barang[]', null, ['class' => 'form-control'])
+                                    !!}
                                 </td>
 
                                 <td>

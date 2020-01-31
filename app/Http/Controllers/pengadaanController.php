@@ -77,21 +77,48 @@ class pengadaanController extends Controller
         // dump($request);
         // $data = array_chunk($data, $request->length);
         // dd($data);
-        $this->validate(
-            $request, [
-            "keterangan"    => "required|string|max:100",
-            "nama_barang"   => "required|array",
-            "nama_barang.*" => "required|string|max:50",
-            "spesifikasi"   => "required|array",
-            "spesifikasi.*" => "required|string|max:50",
-            "jumlah"        => "required|array",
-            "jumlah.*"      => "required|integer",
-            "satuan"        => "required|array",
-            "satuan.*"      => "required|integer|max:4",
-            "harga"         => "required|array",
-            "harga.*"       => "required|integer"
-            ]
-        );
+        try {
+            $this->validate(
+                $request, [
+                "keterangan"    => "required|string|max:100",
+                "nama_barang"   => "required|array",
+                "nama_barang.*" => "required|string|max:50",
+                "spesifikasi"   => "required|array",
+                "spesifikasi.*" => "required|string|max:50",
+                "jumlah"        => "required|array",
+                "jumlah.*"      => "required|integer",
+                "satuan"        => "required|array",
+                "satuan.*"      => "required|integer|max:4",
+                "harga"         => "required|array",
+                "harga.*"       => "required|integer"
+                ]
+            );
+        } catch (Exception $e) {
+
+            $gagal = $e->validator->messages();
+            $compek =[];
+            $compek = (array) $gagal;
+            $gagal = [];
+            foreach ($compek as $key) {
+                array_push($gagal, $key);
+            }
+
+            $gagal = $gagal[0];
+            $key = array_key_first($gagal);
+            $messages = array_shift($gagal)[0];
+
+            if (strpos($key, '.')) {
+                $keyFix = explode('.', $key)[0] . ' ke-' . (explode('.', $key)[1] + 1);
+                $messages = str_replace($key, $keyFix, $messages);
+            }
+
+            if (strpos($messages, 'keterangan')) {
+                $messages = str_replace('keterangan', 'peruntukan', $messages);
+            }
+
+            alert()->error("" . $messages, 'Gagal Update')->persistent("Tutup");
+            return redirect()->route('perlengkapan.pengadaan.create')->withInput();
+        }
         // dd($request);
 
         // try {
@@ -269,16 +296,22 @@ class pengadaanController extends Controller
                         foreach ($compek as $key) {
                             array_push($gagal, $key);
                         }
+
                         $gagal = $gagal[0];
                         $key = array_key_first($gagal);
                         $messages = array_shift($gagal)[0];
+
                         if (strpos($key, '.')) {
                             $keyFix = explode('.', $key)[0] . ' ke-' . (explode('.', $key)[1] + 1);
                             $messages = str_replace($key, $keyFix, $messages);
                         }
 
+                        if (strpos($messages, 'keterangan')) {
+                            $messages = str_replace('keterangan', 'peruntukan', $messages);
+                        }
+
                         alert()->error("" . $messages, 'Gagal Update')->persistent("Tutup");
-                        return redirect()->route('perlengkapan.pengadaan.edit', [$id, 'laporan' => true]);
+                        return redirect()->route('perlengkapan.pengadaan.edit', [$id, 'laporan' => true])->withInput();
                     }
 
                     laporan_pengadaan::findOrfail($id)->update(
@@ -303,15 +336,42 @@ class pengadaanController extends Controller
                     }
                 } else {
                     // dd($request);
-                    $this->validate(
-                        $request, [
-                        "nama_barang" => "required|string|max:50",
-                        "spesifikasi" => "required|string|max:50",
-                        "jumlah"      => "required|integer",
-                        "satuan"      => "required|integer|max:4",
-                        "harga"       => "required|integer"
-                        ]
-                    );
+                    try {
+                        $this->validate(
+                            $request, [
+                            "nama_barang" => "required|string|max:50",
+                            "spesifikasi" => "required|string|max:50",
+                            "jumlah"      => "required|integer",
+                            "satuan"      => "required|integer|max:4",
+                            "harga"       => "required|integer"
+                            ]
+                        );
+                    } catch (Exception $e) {
+
+                        $gagal = $e->validator->messages();
+                        $compek =[];
+                        $compek = (array) $gagal;
+                        $gagal = [];
+                        foreach ($compek as $key) {
+                            array_push($gagal, $key);
+                        }
+
+                        $gagal = $gagal[0];
+                        $key = array_key_first($gagal);
+                        $messages = array_shift($gagal)[0];
+
+                        if (strpos($key, '.')) {
+                            $keyFix = explode('.', $key)[0] . ' ke-' . (explode('.', $key)[1] + 1);
+                            $messages = str_replace($key, $keyFix, $messages);
+                        }
+
+                        if (strpos($messages, 'keterangan')) {
+                            $messages = str_replace('keterangan', 'peruntukan', $messages);
+                        }
+                        // dd($request);
+                        alert()->error("" . $messages, 'Gagal Update')->persistent("Tutup");
+                        return redirect()->route('perlengkapan.pengadaan.edit', $id)->withInput();
+                    }
 
                     laporan_pengadaan::findOrfail($request->id)->update(["verif_wadek2" => 0]);
                     pengadaan::findOrfail($id)->update(
@@ -386,10 +446,25 @@ class pengadaanController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        if ($request->laporan) {
-            laporan_pengadaan::findOrfail($id)->delete();
-        } else {
-            pengadaan::findOrfail($id)->delete();
+        try {
+            if ($request->laporan) {
+                laporan_pengadaan::findOrfail($id)->delete();
+                alert()->success("Berhasil Dihapus");
+                Log::alert('Berhasil Dihapus');
+            } else {
+                pengadaan::findOrfail($id)->delete();
+                laporan_pengadaan::findOrfail($request->lap)->update(
+                    [
+                    'verif_wadek2'  => 0,
+                    'pesan'         => null
+                    ]
+                );
+                alert()->success("Berhasil Dihapus");
+                Log::alert('Berhasil Dihapus');
+            }
+        } catch (Exception $e) {
+            Log::alert('Gagal Dihapus');
+            alert()->error("Gagal Menghapus");
         }
     }
 }
