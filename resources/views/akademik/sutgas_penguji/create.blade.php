@@ -130,7 +130,15 @@
 
                   <div class="form-group">
                      <label for="tempat">Tempat Pelaksanaan</label><br>
-                     <input type="text" name="tempat" id="tempat" class="form-control" value="Ruang Sidang">
+                     <select name="tempat" id="tempat" class="form-control select2">
+                        <option value="">--Pilih Ruangan--</option>
+                        @foreach ($ruangan as $item)
+                           <option value="{{ $item->id }}" {{ ($item->id == old('tempat')? 'selected' : '') }}>
+                              {{ $item->nama_ruang }}
+                           </option>
+                        @endforeach
+                     </select>
+                     {{-- <input type="text" name="tempat" id="tempat" class="form-control" value="Ruang Sidang"> --}}
 
                      @error('tempat')
                         <span class="invalid-feedback" role="alert" style="color: red;">

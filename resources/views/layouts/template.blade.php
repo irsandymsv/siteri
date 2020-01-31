@@ -410,12 +410,13 @@ desired effect
                 $('.dropdown.notifications-menu').load('{{ route("notifikasi.load") }}', function(){
                     $('#list_notif').scrollTop(posisi);
                 });
-                readAllNotif();
+                
             }
 
             loadlink();
             setInterval(function(){
                 loadlink()
+                readAllNotif();
             }, 3000);
         });
 

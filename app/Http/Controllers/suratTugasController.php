@@ -21,7 +21,7 @@ class suratTugasController extends Controller
                 'id_detail_skripsi' => $id_detail_skripsi,
                 'id_status_surat_tugas' => $id_status_surat_tugas,
                 'tanggal' =>carbon::parse($request->input('tanggal')),
-                'tempat'=>$request->input('tempat'),
+                'id_ruang'=>$request->input('tempat'),
                 'id_dosen1' => $request->input($tipe_id_dosen1),
                 'id_dosen2' => $request->input($tipe_id_dosen2)
             ]);
@@ -46,7 +46,7 @@ class suratTugasController extends Controller
                 'id_tipe_surat_tugas' => $id_tipe_surat_tugas,
                 'id_status_surat_tugas' => $id_status_surat_tugas,
                 'tanggal' => carbon::parse($request->input('tanggal')),
-                'tempat' => $request->input('tempat'),
+                'id_ruang' => $request->input('tempat'),
                 'verif_ktu' => $this->cek_verif_ktu($id_status_surat_tugas, $id),
                 'id_dosen1' => $request->input($nama_id_dosen1),
                 'id_dosen2' => $request->input($nama_id_dosen2)
@@ -72,7 +72,7 @@ class suratTugasController extends Controller
             'id_tipe_surat_tugas' => $id_tipe_surat_tugas,
             'id_status_surat_tugas' => $id_status_surat_tugas,
             'tanggal' => carbon::parse($request->input('tanggal')),
-            'tempat' => $request->input('tempat'),
+            'id_ruang' => $request->input('tempat'),
             'verif_ktu' => $this->cek_verif_ktu($id_status_surat_tugas,$id),
             'id_detail_skripsi' => $id_detail_skripsi,
             'id_dosen1' => $request->input($nama_id_dosen1),
