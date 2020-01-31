@@ -40,7 +40,7 @@ Dashboard
                     <tbody>
                         @if ($pengadaan->isEmpty())
                         <tr>
-                            <td colspan="5" style="text-align: center;">Tidak Ada Data</td>
+                            <td colspan="6" style="text-align: center;">Tidak Ada Data</td>
                         </tr>
                         @else
                         @foreach ($pengadaan as $item)

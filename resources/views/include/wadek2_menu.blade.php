@@ -1,5 +1,4 @@
-<li class="active"><a href="{{ route('wadek2.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard Wadek
-            2</span></a></li>
+<li class="active"><a href="{{ route('wadek2.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard Wadek 2</span></a></li>
 
 <li class="treeview">
     <a href="#"><i class="fa fa-link"></i> <span>SK Akademik</span>

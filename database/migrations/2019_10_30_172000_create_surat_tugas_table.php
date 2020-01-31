@@ -23,7 +23,7 @@ class CreateSuratTugasTable extends Migration
             $table->string('id_dosen2')->length(25)->nullable();
             $table->unsignedBigInteger('id_detail_skripsi')->nullable();
             $table->dateTime('tanggal')->nullable();
-            $table->string('tempat')->length(50)->nullable();
+            $table->unsignedInteger('id_ruang')->nullable();
             $table->text("pesan_revisi")->nullable();
             $table->timestamps();
 
