@@ -85,7 +85,7 @@
                                 <td>{{$item->detail_data_barang->merk_barang}}</td>
                                 <td>{{$item->jumlah }} {{$item->satuan->satuan }}</td>
                                 <td>
-                                    @if($item->peminjaman_barang->verif_ktu != 1)
+                                    @if($laporan->verif_ktu != 1)
                                     <a href="#" class="btn btn-danger" id="{{ $item->idpinjam_barang_fk }}"
                                         name="hapus_laporan" title="Hapus Laporan" data-toggle="modal"
                                         data-target="#modal-delete"><i class="fa fa-trash"></i></a>
