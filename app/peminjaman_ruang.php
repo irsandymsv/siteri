@@ -8,7 +8,7 @@ class peminjaman_ruang extends Model
 {
     protected $table = 'pinjam_ruang';
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $guarded = ['id'];
 
