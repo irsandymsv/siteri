@@ -9,11 +9,10 @@
 @section('judul_header', 'Buat Laporan Peminjaman Barang')
 
 @section('css_link')
-<link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
-<link rel="stylesheet" href="/adminlte/dist/css/AdminLTE.min.css">
-{{-- <link href="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+<link href="/adminlte/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
+<link href="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
 <link href="/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
-<link href="/adminlte/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" /> --}}
+<link href="/adminlte/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" />
 <style type="text/css">
     .hidden {
         display: none important !;
@@ -31,14 +30,11 @@
 
             <div class="box-body">
                 {!! Form::open(['route' => 'perlengkapan.peminjaman_barang.store', 'id'=>'form']) !!}
-                <div id="isiForm" class="form-group table-responsive">
+                <div id="isiForm" class="table-responsive">
                     <table id="tbl-data" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Tanggal Mulai</th>
-                                <th>Tanggal Berakhir</th>
-                                <th>Jam Mulai</th>
-                                <th>Jam Berakhir</th>
+                                <th>Tanggal/Jam</th>
                                 <th>Kegiatan</th>
                             </tr>
                         </thead>
@@ -46,23 +42,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    {!! Form::date('tanggal_mulai', null, ['class' => 'form-control tanggal']) !!}
-                                    {{-- {!! Form::text('tanggal_mulai', null, ['class' => 'form-control datepicker not-rounded-border']) !!} --}}
-                                </td>
-
-                                <td>
-                                    {!! Form::date('tanggal_berakhir', null, ['class' => 'form-control tanggal']) !!}
-                                    {{-- {!! Form::text('tanggal_berakhir', null, ['class' => 'form-control datepicker not-rounded-border']) !!} --}}
-                                </td>
-
-                                <td>
-                                    {{-- {!! Form::text('jam_mulai', null, ['class' => 'form-control timepicker']) !!} --}}
-                                    {!! Form::time('jam_mulai', null, ['class' => 'form-control']) !!}
-                                </td>
-
-                                <td>
-                                    {{-- {!! Form::text('jam_berakhir', null, ['class' => 'form-control timepicker']) !!} --}}
-                                    {!! Form::time('jam_berakhir', null, ['class' => 'form-control']) !!}
+                                    {!! Form::text('tanggal', null, ['class' => 'form-control not-rounded-border', 'id' => 'reservationtime']) !!}
                                 </td>
 
                                 <td>
@@ -85,19 +65,17 @@
                         <tbody id="inputan">
                             <tr>
                                 <td>
-                                    <select id="barang" name="barang[]" class="form-control barang select2"
-                                        style="width: 100%;">
+                                    <select id="barang" name="barang[]" class="form-control barang">
                                         <option value="null">Pilih Barang</option>
                                         @foreach ($barang as $val)
-                                        <option value="{{ $val->id }}" onchange="{{ $val->nama_barang }}">
-                                            {{$val->nama_barang}}</option>
+                                        <option value="{{ $val->id }}">{{ $val->nama_barang }}</option>
                                         @endforeach
                                     </select>
                                 </td>
 
                                 <td class="merk">
-                                    <select id="merk_barang" name="merk_barang[]"
-                                        class="form-control merk_barang select2" style="width: 100%;" disabled="true">
+                                    <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang"
+                                        disabled="true">
                                     </select>
                                 </td>
 
@@ -107,8 +85,7 @@
                                 </td>
 
                                 <td>
-                                    {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control select2',
-                                    'style' => 'width:100%'])!!}
+                                    {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control'])!!}
                                 </td>
 
                                 <td>
@@ -154,11 +131,11 @@
         tableCount();
         barangAjax();
 
-        $('.select2').select2();
-
         $('.js-example-basic-multiple').select2();
 
         $('#reservation').daterangepicker();
+
+        $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, locale: { format: 'YYYY/MM/DD HH:mm:ss' }})
 
         $('.datepicker').datepicker({
             autoclose: true,
@@ -176,24 +153,23 @@
                         <select id="barang" name="barang[]" class="form-control barang">
                             <option value="">Pilih Barang</option>
                             @foreach ($barang as $val)
-                            <option value="{{ $val->id }}" onchange="{{ $val->barang }}">
-                                {{$val->nama_barang}}</option>
+                            <option value="{{ $val->id }}">{{$val->nama_barang}}</option>
                             @endforeach
                         </select>
                     </td>
 
                     <td class="merk">
-                        <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang select2" style="width: 100%;" disabled="true">
+                        <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang" disabled="true">
                         </select>
                     </td>
 
                     <td>
-                        {!! Form::text('jumlah', null, ['class' => 'form-control angka', 'id' => 'jumlah'])
+                        {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah angka'])
                         !!}
                     </td>
 
                     <td>
-                        {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control select2', 'style' => 'width:100%', 'id' =>
+                        {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control', 'id' =>
                         'satuan'])!!}
                     </td>
 
@@ -214,8 +190,7 @@
 
                 // console.log($(this).parents('tr'));
                 // console.log($(this).parents('tr')["0"].children[1]);
-                merk = $(this).parents('tr').children('.merk').children('.merk_barang');
-                // ruang = $(this).parents('tr').children('.ruang').children('#nama_ruang');
+                merk = $(this).parents('tr').children('.merk').children();
                 // console.log($(this).parents('tr').children('.merk').children());
                 // console.log($(this).parents('tr').children('.merk_barang'));
 

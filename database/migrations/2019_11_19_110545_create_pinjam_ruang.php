@@ -23,6 +23,7 @@ class CreatePinjamRuang extends Migration
             $table->integer('jumlah_peserta');
             $table->boolean('verif_baper')->default(false);
             $table->boolean('verif_ktu')->default(false);
+            $table->timestamps();
         });
     }
 

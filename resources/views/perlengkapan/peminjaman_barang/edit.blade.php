@@ -21,6 +21,9 @@
 @endsection
 
 @section('content')
+{{-- @php
+$status = $status[0];
+@endphp --}}
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
@@ -32,15 +35,11 @@
                 {!! Form::open(['route' => ['perlengkapan.peminjaman_barang.update', $laporan->id], 'method' => 'PUT',
                 'id'=>'form']) !!}
                 <div id="isiForm" class="table-responsive">
-                    {{-- Form Edit Laporan --}}
-                    @if ($status)
+                    {{-- @if ($status) --}}
                     <table id="tbl-data" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Tanggal Mulai</th>
-                                <th>Tanggal Berakhir</th>
-                                <th>Jam Mulai</th>
-                                <th>Jam Berakhir</th>
+                                <th>Tanggal/Jam</th>
                                 <th>Kegiatan</th>
                             </tr>
                         </thead>
@@ -48,24 +47,8 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    {!! Form::date('tanggal_mulai', $laporan->tanggal_mulai, ['class' => 'form-control
-                                    tanggal']) !!}
+                                    {!! Form::text('tanggal', $tanggal, ['class' => 'form-control not-rounded-border', 'id' => 'reservationtime']) !!}
                                 </td>
-
-                                <td>
-                                    {!! Form::date('tanggal_berakhir', $laporan->tanggal_berakhir, ['class' =>
-                                    'form-control tanggal']) !!}
-                                </td>
-
-                                <td>
-                                    {!! Form::time('jam_mulai', $laporan->jam_mulai, ['class' => 'form-control']) !!}
-                                </td>
-
-                                <td>
-                                    {!! Form::time('jam_berakhir', $laporan->jam_berakhir, ['class' => 'form-control'])
-                                    !!}
-                                </td>
-
                                 <td>
                                     {!! Form::text('kegiatan', $laporan->kegiatan, ['class' => 'form-control']) !!}
                                 </td>
@@ -85,25 +68,33 @@
 
                         <tbody id="inputan">
                             {!! Form::hidden('laporan', true) !!}
+                            @php $i = 0 @endphp
                             @foreach($laporan->detail_pinjam_barang as $item)
+                            {{-- @dump($item) --}}
                             <tr>
                                 <td>
-                                    <select id="barang" name="barang[]" class="form-control barang select2">
+                                    <select id="barang" name="barang[]" class="form-control barang">
+                                        <option value="">Pilih Barang</option>
                                         @foreach ($barang as $val)
-                                        <option value="{{ $val->id }}" onchange="{{ $val->nama_barang }}">
-                                            {{ $item->idbarang_fk-1 }}</option>
+                                        <option value="{{ $val->id }}"
+                                            {{ ($val->id == $item->detail_data_barang->idbarang_fk) ? 'selected' : '' }}>
+                                            {{ $val->nama_barang }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+
+                                <td class="merk">
+                                    <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang">
+                                        @foreach ($merk[$i] as $val)
+                                        <option value="{{ $val->id }}"
+                                            {{ ($val->id == $item->iddetail_data_barang_fk) ? 'selected' : '' }}>
+                                            {{ $val->merk_barang }}</option>
                                         @endforeach
                                     </select>
                                 </td>
 
                                 <td>
-                                    <select id="merk_barang" name="merk_barang[]"
-                                        class="form-control merk_barang select2" disabled="true">
-                                    </select>
-                                </td>
-
-                                <td>
-                                    {!! Form::text('jumlah[]', $item->jumlah, ['class' => 'form-control', 'id' =>
+                                    {!! Form::text('jumlah[]', $item->jumlah, ['class' => 'form-control angka', 'id' =>
                                     'jumlah'])
                                     !!}
                                 </td>
@@ -118,7 +109,9 @@
                                     {!! Form::button(null , [ 'class'=>'fa fa-trash btn btn-danger']) !!}
                                 </td>
                             </tr>
+                            @php $i++ @endphp
                             @endforeach
+
                         </tbody>
                         <tfoot>
                             <tr>
@@ -135,63 +128,70 @@
 
                     <button id="tambah" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</button>
                     <br><br>
-
                     {{-- Edit 1 Item --}}
-                    @else
+                    {{-- @else
                     <div class="">
                         <table class="tabel-keterangan">
                             <tr>
                                 <td><b>Tanggal Mulai</b></td>
-                                <td>: {{$laporan->detail_pinjam_barang->tanggal_mulai}}</td>
+                                <td>: {{$laporan->peminjaman_barang->tanggal_mulai}}</td>
                             </tr>
                             <tr>
                                 <td><b>Tanggal Berakhir</b></td>
-                                <td>: {{$laporan->detail_pinjam_barang->tanggal_berakhir}}</td>
+                                <td>: {{$laporan->peminjaman_barang->tanggal_berakhir}}</td>
                             </tr>
                             <tr>
                                 <td><b>Jam Mulai</b></td>
-                                <td>: {{$laporan->detail_pinjam_barang->jam_mulai}}</td>
+                                <td>: {{$laporan->peminjaman_barang->jam_mulai}}</td>
                             </tr>
                             <tr>
                                 <td><b>Jam Berakhir</b></td>
-                                <td>: {{$laporan->detail_pinjam_barang->jam_berakhir}}</td>
+                                <td>: {{$laporan->peminjaman_barang->jam_berakhir}}</td>
                             </tr>
                             <tr>
                                 <td><b>Kegiatan</b></td>
-                                <td>: {{$laporan->detail_pinjam_barang->kegiatan}}</td>
+                                <td>: {{$laporan->peminjaman_barang->kegiatan}}</td>
                             </tr>
                         </table>
                     </div>
                     <br>
                     <div class="table-responsive">
-                        <table id="peminjaman_barang" class="table table-bordered table-hovered">
+                        <table id="inventaris" class="table table-bordered table-hovered">
                             <thead>
                                 <tr>
                                     <th>Nama Barang</th>
                                     <th>Merk Barang</th>
                                     <th>Jumlah</th>
-                                    <th>Satuan</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @php $i = 0 @endphp
                                 <tr id="lap_{{ $laporan->id }}">
+                                    {!! Form::hidden("id", $laporan->idpinjam_barang_fk) !!}
+                                    {!! Form::hidden("idmerk", $laporan->iddetail_data_barang_fk) !!}
                                     <td>
                                         <select id="barang" name="barang[]" class="form-control barang">
+                                            <option value="">Pilih Barang</option>
                                             @foreach ($barang as $val)
-                                            <option value="{{ $val->id }}" onchange="{{ $val->nama_barang }}">
-                                                {{ $laporan->idbarang_fk-1 }}</option>
+                                            <option value="{{ $val->id }}"
+                                                {{ ($val->id == $laporan->detail_data_barang->idbarang_fk) ? 'selected' : '' }}>
+                                                {{ $val->nama_barang }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+
+                                    <td class="merk">
+                                        <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang">
+                                            @foreach ($merk[$i] as $val)
+                                            <option value="{{ $val->id }}"
+                                                {{ ($val->id == $laporan->iddetail_data_barang_fk) ? 'selected' : '' }}>
+                                                {{ $val->merk_barang }}</option>
                                             @endforeach
                                         </select>
                                     </td>
 
                                     <td>
-                                        <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang"
-                                            disabled="true">
-                                        </select>
-                                    </td>
-
-                                    <td>
-                                        {!! Form::text('jumlah[]', $laporan->jumlah, ['class' => 'form-control', 'id' =>
+                                        {!! Form::text('jumlah[]', $laporan->jumlah, ['class' => 'form-control angka', 'id' =>
                                         'jumlah'])
                                         !!}
                                     </td>
@@ -201,11 +201,16 @@
                                         'form-control', 'id' =>
                                         'satuan'])!!}
                                     </td>
+
+                                    <td>
+                                        {!! Form::button(null , [ 'class'=>'fa fa-trash btn btn-danger']) !!}
+                                    </td>
                                 </tr>
+                                @php $i++ @endphp
                             </tbody>
                         </table>
                     </div>
-                    @endif
+                    @endif --}}
                     <div class="form-group" style="float: right;">
                         {!! Form::submit('Simpan dan Kirim', [ 'class'=>'btn btn-success', 'id' => 'submit']) !!}
                     </div>
@@ -217,6 +222,7 @@
 </div>
 @endsection
 
+{{-- @if ($status) --}}
 @section('script')
 <script src="/adminlte/bower_components/select2/dist/js/select2.min.js"></script>
 <script src="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
@@ -230,11 +236,11 @@
         tableCount();
         barangAjax();
 
-        $('.select2').select2();
-
         $('.js-example-basic-multiple').select2();
 
         $('#reservation').daterangepicker();
+
+        $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, locale: { format: 'YYYY/MM/DD HH:mm:ss' }})
 
         $('.datepicker').datepicker({
             autoclose: true,
@@ -252,24 +258,23 @@
                         <select id="barang" name="barang[]" class="form-control barang">
                             <option value="">Pilih Barang</option>
                             @foreach ($barang as $val)
-                            <option value="{{ $val->id }}" onchange="{{ $val->barang }}">
-                                {{$val->nama_barang}}</option>
+                            <option value="{{ $val->id }}">{{$val->nama_barang}}</option>
                             @endforeach
                         </select>
                     </td>
 
                     <td class="merk">
-                        <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang select2" style="width: 100%;" disabled="true">
+                        <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang" disabled="true">
                         </select>
                     </td>
 
                     <td>
-                        {!! Form::text('jumlah', null, ['class' => 'form-control angka', 'id' => 'jumlah'])
+                        {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah angka'])
                         !!}
                     </td>
 
                     <td>
-                        {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control select2', 'style' => 'width:100%', 'id' =>
+                        {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control', 'id' =>
                         'satuan'])!!}
                     </td>
 
@@ -290,8 +295,7 @@
 
                 // console.log($(this).parents('tr'));
                 // console.log($(this).parents('tr')["0"].children[1]);
-                merk = $(this).parents('tr').children('.merk').children('.merk_barang');
-                // ruang = $(this).parents('tr').children('.ruang').children('#nama_ruang');
+                merk = $(this).parents('tr').children('.merk').children();
                 // console.log($(this).parents('tr').children('.merk').children());
                 // console.log($(this).parents('tr').children('.merk_barang'));
 
@@ -334,3 +338,4 @@
 
 </script>
 @endsection
+{{-- @endif --}}
