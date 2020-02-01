@@ -281,10 +281,11 @@ class pengadaanController extends Controller
                     ]
                 );
             } catch (Exception $e) {
-                if (is_null($request->value)) {
+                dd($request);
+                if (isEmptyOrNullString($request->value)) {
                     $request->value = 'Diisi!';
                 }
-                $retun = ["peruntukan" => $request->value, "status" => "Gagal Ubah"];
+                $retun = ["peruntukan" => $request->value, "status" => "Gagal Ubah Peruntukan"];
                 return $retun;
             }
         } elseif ($request->select == 'nama' || $request->select == 'spesifikasi') {
@@ -315,13 +316,13 @@ class pengadaanController extends Controller
                     ]
                 );
             } catch (Exception $e) {
-                if (is_null($request->value)) {
+                if (isEmptyOrNullString($request->value)) {
                     $request->value = 'Diisi!';
                 }
                 if ($request->select == 'nama') {
-                    $retun = ["nama" => $request->value, "status" => "Gagal Ubah"];
+                    $retun = ["nama" => $request->value, "status" => "Gagal Ubah Nama"];
                 } else {
-                    $retun = ["spesifikasi" => $request->value, "status" => "Gagal Ubah"];
+                    $retun = ["spesifikasi" => $request->value, "status" => "Gagal Ubah Spesifikasi"];
                 }
                 return $retun;
             }
@@ -345,10 +346,10 @@ class pengadaanController extends Controller
                     ]
                 );
             } catch (Exception $e) {
-                if (is_null($request->value)) {
+                if (isEmptyOrNullString($request->value)) {
                     $request->value = '0';
                 }
-                $retun = ["nama" => $request->value, "status" => "Gagal Ubah"];
+                $retun = ["satuan" => $request->value, "status" => "Gagal Ubah Satuan"];
                 return $retun;
             }
         } elseif ($request->select == 'jumlah' || $request->select == 'harga') {
@@ -379,13 +380,13 @@ class pengadaanController extends Controller
                     ]
                 );
             } catch (Exception $e) {
-                if (is_null($request->value)) {
+                if (isEmptyOrNullString($request->value)) {
                     $request->value = 'Diisi!';
                 }
                 if ($request->select == 'jumlah') {
-                    $retun = ["jumlah" => $request->value, "status" => "Gagal Ubah"];
+                    $retun = ["jumlah" => $request->value, "status" => "Gagal Ubah Jumlah"];
                 } else {
-                    $retun = ["harga" => $request->value, "status" => "Gagal Ubah"];
+                    $retun = ["harga" => $request->value, "status" => "Gagal Ubah harga"];
                 }
                 return $retun;
             }

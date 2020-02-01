@@ -177,7 +177,6 @@
 						console.log("error");
 					});
 				});
-            keyPress();
         });
 
         function ubahStatus(){
@@ -274,7 +273,7 @@
                     $.ajax({
                         type: 'GET',
                         url: urls,
-                        headers: {'X-Requested-With': 'XMLHttpRequest'},
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         // data: {value: value},
                         success: function (response) {
                             form = response;
@@ -326,21 +325,25 @@
                     data: {select: select, value: value},
                 })
                 .done(function(hasil) {
-                    if (hasil.status == "Gagal Ubah") {
-                        alert("Gagal Ubah")
-                        target = null;
-                    }
+                    console.log(hasil);
+                    pesan = hasil.status;
+                    // if ($(pesan).index('Gagal') != 1) {
+                    //     alert(pesan);
+                    //     console.log("Pesan = " + pesan);
+                    // }
                 })
-                .fail(function() {
-                    alert("Gagal Menyimpan");
-                    target = null;
+                .fail(function(hasil) {
+                    alert(hasil.status);
                 });
+
+            target = null;
         }
 
-        function keyPress (e) {
+
+        $(document).keyup(function (e) {
             console.log("Mitet!!");
             if (edit) {
-                if(e.key === "Escape") {
+                if (e.key === "Escape") {
                     $(target).html(ori);
                 } else
                 if(e.key === "Enter"){
@@ -350,7 +353,7 @@
 
                 edit = false;
             }
-        }
+        });
 
         @endif
     });
