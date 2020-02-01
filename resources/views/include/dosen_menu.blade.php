@@ -23,6 +23,5 @@
   <ul class="treeview-menu">
     <li><a href="{{ route('dosen.surat.index') }}">Lihat Surat Tugas</a></li>
     <li><a href="{{ route('dosen.dosen_upload_index') }}">Upload bukti</a></li>
-    <li><a href="">Honor SK Dekan Sempro</a></li>
   </ul>
 </li>

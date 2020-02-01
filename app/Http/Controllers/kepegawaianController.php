@@ -632,7 +632,7 @@ class kepegawaianController extends Controller
         $id_sk = $surat_tugas->id;
         $dosen_tugas = dosen_tugas::where('id_sk', $id_sk)->get();
         $jenis = jenis_sk::all();
-        $status = status_suratall();
+        $status = status_surat::all();
         $bukti = bukti_perjalanan::where('id_spd', $id)->get();
     
       return view('bpp.surat_tugas.preview_spd', [
