@@ -391,6 +391,22 @@ class pengadaanController extends Controller
                 return $retun;
             }
         }
+
+        if ($request->select == 'peruntukan') {
+            $laporan = laporan_pengadaan::findOrfail($request->id);
+        } else {
+            $laporan = laporan_pengadaan::findOrfail($request->lap);
+        }
+
+        $wadek = User::with('jabatan')
+            ->whereHas(
+                'jabatan', function (Builder $query) {
+                    $query->where('jabatan', 'Wakil Dekan 2');
+                }
+            )->first();
+
+        $wadek->notify(new verifPengadaan($laporan));
+
     }
 
     /**

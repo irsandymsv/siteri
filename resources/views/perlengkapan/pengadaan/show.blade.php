@@ -201,7 +201,7 @@
             return select;
         }
 
-        @if ($laporan_pengadaan->verif_wadek2 != 4)
+        @if ($laporan_pengadaan->verif_wadek2 != 2)
         edit = false;
         target = null;
         ori = null;
