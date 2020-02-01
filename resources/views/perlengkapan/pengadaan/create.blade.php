@@ -146,23 +146,23 @@
                 $('#inputan').append(`
                 <tr>
                                 <td>
-                                    {!! Form::text('nama_barang[]', null, ['class' => 'form-control'], 'required') !!}
+                                    {!! Form::text('nama_barang[]', null, ['class' => 'form-control', 'required']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('spesifikasi[]', null, ['class' => 'form-control'], 'required') !!}
+                                    {!! Form::text('spesifikasi[]', null, ['class' => 'form-control', 'required']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah angka'], 'required')!!}
+                                    {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah angka', 'required'])!!}
                                 </td>
 
                                 <td>
-                                    {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control'], 'required')!!}
+                                    {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control', 'required'])!!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('harga[]', null, ['class' => 'form-control harga angka'], 'required') !!}
+                                    {!! Form::text('harga[]', null, ['class' => 'form-control harga angka', 'required']) !!}
                                 </td>
 
                                 <td>

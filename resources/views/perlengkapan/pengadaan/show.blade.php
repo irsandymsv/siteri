@@ -337,6 +337,9 @@
                 });
 
             target = null;
+            if ('{{ $laporan_pengadaan->verif_wadek2 }}' == '1') {
+                ubahStatus();
+            }
         }
 
 
