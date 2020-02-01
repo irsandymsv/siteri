@@ -1,4 +1,4 @@
-@extends('ormawa.ormawa_view')
+@extends('layouts.template')
 
 @section('side_menu')
 @include('include.ormawa_menu')
@@ -21,6 +21,9 @@
 @endsection
 
 @section('content')
+{{-- @php
+$status = $status[0];
+@endphp --}}
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
@@ -29,11 +32,10 @@
             </div>
 
             <div class="box-body">
-                {{-- @dump($laporan) --}}
                 {!! Form::open(['route' => ['ormawa.peminjaman_barang.update', $laporan->id], 'method' => 'PUT',
                 'id'=>'form']) !!}
-                {{-- {{dd($laporan)}} --}}
                 <div id="isiForm" class="table-responsive">
+                    {{-- @if ($status) --}}
                     <table id="tbl-data" class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -126,6 +128,89 @@
 
                     <button id="tambah" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</button>
                     <br><br>
+                    {{-- Edit 1 Item --}}
+                    {{-- @else
+                    <div class="">
+                        <table class="tabel-keterangan">
+                            <tr>
+                                <td><b>Tanggal Mulai</b></td>
+                                <td>: {{$laporan->peminjaman_barang->tanggal_mulai}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Tanggal Berakhir</b></td>
+                                <td>: {{$laporan->peminjaman_barang->tanggal_berakhir}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Jam Mulai</b></td>
+                                <td>: {{$laporan->peminjaman_barang->jam_mulai}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Jam Berakhir</b></td>
+                                <td>: {{$laporan->peminjaman_barang->jam_berakhir}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Kegiatan</b></td>
+                                <td>: {{$laporan->peminjaman_barang->kegiatan}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br>
+                    <div class="table-responsive">
+                        <table id="inventaris" class="table table-bordered table-hovered">
+                            <thead>
+                                <tr>
+                                    <th>Nama Barang</th>
+                                    <th>Merk Barang</th>
+                                    <th>Jumlah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $i = 0 @endphp
+                                <tr id="lap_{{ $laporan->id }}">
+                                    {!! Form::hidden("id", $laporan->idpinjam_barang_fk) !!}
+                                    {!! Form::hidden("idmerk", $laporan->iddetail_data_barang_fk) !!}
+                                    <td>
+                                        <select id="barang" name="barang[]" class="form-control barang">
+                                            <option value="">Pilih Barang</option>
+                                            @foreach ($barang as $val)
+                                            <option value="{{ $val->id }}"
+                                                {{ ($val->id == $laporan->detail_data_barang->idbarang_fk) ? 'selected' : '' }}>
+                                                {{ $val->nama_barang }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+
+                                    <td class="merk">
+                                        <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang">
+                                            @foreach ($merk[$i] as $val)
+                                            <option value="{{ $val->id }}"
+                                                {{ ($val->id == $laporan->iddetail_data_barang_fk) ? 'selected' : '' }}>
+                                                {{ $val->merk_barang }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+
+                                    <td>
+                                        {!! Form::text('jumlah[]', $laporan->jumlah, ['class' => 'form-control angka', 'id' =>
+                                        'jumlah'])
+                                        !!}
+                                    </td>
+
+                                    <td>
+                                        {!! Form::select('satuan[]', $satuan, $laporan->idsatuan_fk-1, ['class' =>
+                                        'form-control', 'id' =>
+                                        'satuan'])!!}
+                                    </td>
+
+                                    <td>
+                                        {!! Form::button(null , [ 'class'=>'fa fa-trash btn btn-danger']) !!}
+                                    </td>
+                                </tr>
+                                @php $i++ @endphp
+                            </tbody>
+                        </table>
+                    </div>
+                    @endif --}}
                     <div class="form-group" style="float: right;">
                         {!! Form::submit('Simpan dan Kirim', [ 'class'=>'btn btn-success', 'id' => 'submit']) !!}
                     </div>
@@ -137,6 +222,7 @@
 </div>
 @endsection
 
+{{-- @if ($status) --}}
 @section('script')
 <script src="/adminlte/bower_components/select2/dist/js/select2.min.js"></script>
 <script src="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
@@ -252,3 +338,4 @@
 
 </script>
 @endsection
+{{-- @endif --}}

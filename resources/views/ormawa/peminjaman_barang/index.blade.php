@@ -1,4 +1,4 @@
-@extends('ormawa.ormawa_view')
+@extends('layouts.template')
 
 @section('side_menu')
 @include('include.ormawa_menu')
@@ -64,6 +64,8 @@
                                     <a href="{{ route('ormawa.peminjaman_barang.show', $item->id) }}"
                                         class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
                                     @if($item->verif_baper != 1)
+                                    {{-- <a href="{{ route('ormawa.peminjaman_barang.edit', [$item->id, 'status' => true]) }}"
+                                        class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a> --}}
                                     <a href="{{ route('ormawa.peminjaman_barang.edit', $item->id) }}"
                                         class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
                                     @endif
