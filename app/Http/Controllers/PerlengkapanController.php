@@ -26,12 +26,12 @@ class PerlengkapanController extends Controller
         $pinjam_ruang = peminjaman_ruang::where('verif_baper', 1)->where('verif_ktu', 0)->limit(10)->get();
 
 
-
         return view(
-            'perlengkapan.dashboard', [
-            'pengadaan'             => $pengadaan,
-            'pinjam_barang'         => $pinjam_barang,
-            'pinjam_ruang'          => $pinjam_ruang
+            'perlengkapan.dashboard',
+            [
+                'pengadaan'             => $pengadaan,
+                'pinjam_barang'         => $pinjam_barang,
+                'pinjam_ruang'          => $pinjam_ruang
             ]
         );
     }

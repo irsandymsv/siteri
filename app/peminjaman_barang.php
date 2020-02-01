@@ -8,7 +8,7 @@ class peminjaman_barang extends Model
 {
     protected $table = 'pinjam_barang';
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $guarded = ['id'];
 
