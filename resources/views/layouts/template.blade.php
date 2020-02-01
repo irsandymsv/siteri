@@ -124,8 +124,7 @@ desired effect
                                 @endif
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">
-                                    @if (count(Auth::user()->unreadNotifications) > 0)
+                                @if (count(Auth::user()->unreadNotifications) > 0)
                                 <li class="header">
                                     <span id="header_notif">{{ count(Auth::user()->unreadNotifications) }} Notif
                                         baru</span>
@@ -136,174 +135,116 @@ desired effect
                                 @else
                                 <li class="header">Tidak Ada Notifikasi Baru</li>
                                 @endif
-                        </li>
-                        <li>
-                            <!-- Inner Menu: contains the notifications -->
-                            <ul class="menu" id="list_notif">
-                                <!-- start notification -->
-                                {{-- <li>
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                    </a>
-                  </li> --}}
 
-                                @if (Auth::user()->jabatan->jabatan == 'Pengelola Data Akademik')
-                                @foreach (Auth::user()->unreadNotifications as $notif)
-                                @if ($notif->type == 'App\Notifications\verifSutgasKtu')
                                 <li>
-                                    <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
-                                        Surat Tugas
-                                        @if ($notif->data['tipe_sutgas'] == "Surat Tugas Pembimbing")
-                                        Pembimbing
-                                        @elseif($notif->data['tipe_sutgas'] == "Surat Tugas Pembahas")
-                                        Pembahas
-                                        @else
-                                        Penguji
+                                    <!-- Inner Menu: contains the notifications -->
+                                    <ul class="menu" id="list_notif">
+                                        <!-- start notification -->
+                                        @if (Auth::user()->jabatan->jabatan == 'Pengelola Data Akademik')
+                                        @foreach (Auth::user()->unreadNotifications as $notif)
+                                        @if ($notif->type == 'App\Notifications\verifSutgasKtu')
+                                        <li>
+                                            <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+                                                Surat Tugas
+                                                @if ($notif->data['tipe_sutgas'] == "Surat Tugas Pembimbing")
+                                                Pembimbing
+                                                @elseif($notif->data['tipe_sutgas'] == "Surat Tugas Pembahas")
+                                                Pembahas
+                                                @else
+                                                Penguji
+                                                @endif
+                                                {{ $notif->data['no_surat'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }}
+                                                telah diverifikasi.<br>
+                                                <small
+                                                    style="color: grey;">{{ Carbon\Carbon::parse($notif->data['waktu_verif'])->locale('id_ID')->DiffForHumans() }}</small>
+                                            </a>
+                                        </li>
+                                        @elseif($notif->type == 'App\Notifications\verifSKSemproKtu')
+                                        <li>
+                                            <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+                                                SK Sempro
+                                                {{ $notif->data['no_surat'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }}
+                                                telah diverifikasi.<br>
+                                                <small
+                                                    style="color: grey;">{{ Carbon\Carbon::parse($notif->data['waktu_verif'])->locale('id_ID')->DiffForHumans() }}</small>
+                                            </a>
+                                        </li>
+                                        @elseif($notif->type == 'App\Notifications\verifSKSkripsiKtu')
+                                        <li>
+                                            <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+                                                SK Pembimbing Skripsi
+                                                {{ $notif->data['no_surat_pembimbing'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }}
+                                                dan SK Penguji Skripsi
+                                                {{ $notif->data['no_surat_penguji'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }}
+                                                telah diverifikasi.<br>
+                                                <small
+                                                    style="color: grey;">{{ Carbon\Carbon::parse($notif->data['waktu_verif'])->locale('id_ID')->DiffForHumans() }}</small>
+                                            </a>
+                                        </li>
                                         @endif
-                                        {{ $notif->data['no_surat'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }}
-                                        telah diverifikasi.<br>
-                                        <small
-                                            style="color: grey;">{{ Carbon\Carbon::parse($notif->data['waktu_verif'])->locale('id_ID')->DiffForHumans() }}</small>
-                                    </a>
+
+                                        @endforeach
+
+                                        @endif
+
+                                        @if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN')
+                                        @foreach (Auth::user()->unreadNotifications as $notif)
+                                        <li>
+                                            <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+                                                <i
+                                                    class="{{ ($notif->data['pesan']) ? 'fa fa-times-circle' : 'fa fa-check-circle' }} col-xs-2"></i>
+                                                <div class="col-xs-10">
+                                                    Laporan Pengadaan<br>
+                                                    <b>{{ $notif->data['keterangan'] }}</b><br>
+                                                    @if ($notif->data['pesan'])
+                                                    {{ $notif->data['pesan'] }}<br>
+                                                    @endif
+                                                    <small
+                                                        style="color: grey;">{{ Carbon\Carbon::parse($notif->data['updated_at'])->locale('id_ID')->DiffForHumans() }}</small>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        @endforeach
+                                        @endif
+
+                                        @if (Auth::user()->jabatan->jabatan == 'Wakil Dekan 2')
+                                        @foreach (Auth::user()->unreadNotifications as $notif)
+                                        <li>
+                                            <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+                                                <i class="fa fa-exclamation-circle col-xs-2"></i>
+                                                <div class="col-xs-10">
+                                                    Laporan Pengadaan Baru<br>
+                                                    <b>{{ $notif->data['keterangan'] }}</b><br>
+                                                    <small
+                                                        style="color: grey;">{{ Carbon\Carbon::parse($notif->data['updated_at'])->locale('id_ID')->DiffForHumans() }}</small>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        @endforeach
+                                        @endif
+
+                                        <!-- end notification -->
+                                    </ul>
                                 </li>
-                                @elseif($notif->type == 'App\Notifications\verifSKSemproKtu')
-                                <li>
-                                    <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
-                                        SK Sempro
-                                        {{ $notif->data['no_surat'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }}
-                                        telah diverifikasi.<br>
-                                        <small
-                                            style="color: grey;">{{ Carbon\Carbon::parse($notif->data['waktu_verif'])->locale('id_ID')->DiffForHumans() }}</small>
-                                    </a>
-                                </li>
-                                @elseif($notif->type == 'App\Notifications\verifSKSkripsiKtu')
-                                <li>
-                                    <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
-                                        SK Pembimbing Skripsi
-                                        {{ $notif->data['no_surat_pembimbing'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }}
-                                        dan SK Penguji Skripsi
-                                        {{ $notif->data['no_surat_penguji'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }}
-                                        telah diverifikasi.<br>
-                                        <small
-                                            style="color: grey;">{{ Carbon\Carbon::parse($notif->data['waktu_verif'])->locale('id_ID')->DiffForHumans() }}</small>
-                                    </a>
-                                </li>
+
+                                @if (count(Auth::user()->notifications) > 0)
+                                <li class="footer"><a href="{{ route('notifikasi.index') }}">Lihat Semua</a></li>
                                 @endif
-
-                                @endforeach
-
-                                @endif
-
-                                @if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN')
-                                @foreach (Auth::user()->unreadNotifications as $notif)
-                                <li>
-                                    <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
-                                        <i
-                                            class="{{ ($notif->data['pesan']) ? 'fa fa-times-circle' : 'fa fa-check-circle' }} col-xs-2"></i>
-                                        <div class="col-xs-10">
-                                            Laporan Pengadaan<br>
-                                            <b>{{ $notif->data['keterangan'] }}</b><br>
-                                            @if ($notif->data['pesan'])
-                                            {{ $notif->data['pesan'] }}<br>
-                                            @endif
-                                            <small
-                                                style="color: grey;">{{ Carbon\Carbon::parse($notif->data['updated_at'])->locale('id_ID')->DiffForHumans() }}</small>
-                                        </div>
-                                    </a>
-                                </li>
-                                @endforeach
-                                @endif
-
-                                @if (Auth::user()->jabatan->jabatan == 'Wakil Dekan 2')
-                                @foreach (Auth::user()->unreadNotifications as $notif)
-                                <li>
-                                    <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
-                                        <i class="fa fa-exclamation-circle col-xs-2"></i>
-                                        <div class="col-xs-10">
-                                            Laporan Pengadaan Baru<br>
-                                            <b>{{ $notif->data['keterangan'] }}</b><br>
-                                            <small
-                                                style="color: grey;">{{ Carbon\Carbon::parse($notif->data['updated_at'])->locale('id_ID')->DiffForHumans() }}</small>
-                                        </div>
-                                    </a>
-                                </li>
-                                @endforeach
-                                @endif
-
-                                <!-- end notification -->
                             </ul>
                         </li>
-                        @if (count(Auth::user()->notifications) > 0)
-                        <li class="footer"><a href="{{ route('notifikasi.index') }}">Lihat Semua</a></li>
-                        @endif
-                    </ul>
-                    </li>
 
-                    <!-- Tasks Menu (was Here)-->
+                        <!-- Tasks Menu (was Here)-->
 
-                    <!-- User Account Menu -->
-                    {{-- <li class="dropdown user user-menu">
-            <!-- Menu Toggle Button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <!-- The user image in the navbar-->
-              <img src="/adminlte/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">{{ Auth::user()->nama }}</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <!-- The user image in the menu -->
-                        <li class="user-header">
-                            <img src="/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <!-- User Account Menu -->
 
-                            <p>
-                                Alexander Pierce - Web Developer
-                                <small>Member since Nov. 2012</small>
-                            </p>
+                        <li class="user-menu">
+                            <a href="#" id="btn_logout" class="">Sign Out</a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </li>
-
-                        <!-- Menu Body -->
-                        <li class="user-body">
-                            <div class="row">
-                                <div class="col-xs-4 text-center">
-                                    <a href="#">Followers</a>
-                                </div>
-                                <div class="col-xs-4 text-center">
-                                    <a href="#">Sales</a>
-                                </div>
-                                <div class="col-xs-4 text-center">
-                                    <a href="#">Friends</a>
-                                </div>
-                            </div>
-                            <!-- /.row -->
-                        </li>
-
-                        <!-- Menu Footer-->
-                        <li class="user-footer">
-                            <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
-                            </div>
-
-                            <div class="pull-right">
-                                <a href="#" id="btn_logout" class="btn btn-default btn-flat">Sign out</a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                    style="display: none;">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
-                    </ul>
-                    </li> --}}
-
-                    <li class="user-menu">
-                        <a href="#" id="btn_logout" class="">Sign Out</a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </li>
-                    <!-- Control Sidebar Toggle Button -->
-
+                        <!-- Control Sidebar Toggle Button -->
                     </ul>
                 </div>
             </nav>
@@ -317,8 +258,8 @@ desired effect
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel" style="padding-bottom: 40px">
                     {{-- <div class="pull-left image">
-          <img src="/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-        </div> --}}
+                      <img src="/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    </div> --}}
                     <div class="pull-left info" style="left: 0; width: 100%; white-space: initial; padding-left: 5px;">
                         <p style="text-align: center;">{{ Auth::user()->nama }}</p>
                         <!-- Status -->
@@ -328,27 +269,14 @@ desired effect
 
                 <!-- search form (Optional) -->
                 {{-- <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-          <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
-        </div>
-      </form> --}}
-                <!-- /.search form -->
-
-                <!-- search form (Optional) -->
-                <form action="#" method="get" class="sidebar-form">
                     <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Search...">
-                        <span class="input-group-btn">
-                            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i
-                                    class="fa fa-search"></i>
-                            </button>
+                      <input type="text" name="q" class="form-control" placeholder="Search...">
+                      <span class="input-group-btn">
+                          <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                          </button>
                         </span>
                     </div>
-                </form>
+                </form> --}}
                 <!-- /.search form -->
 
                 <!-- Sidebar Menu -->
@@ -357,18 +285,18 @@ desired effect
                     <!-- Optionally, you can add icons to the links -->
 
                     <!-- <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
-          </ul>
-        </li> -->
+                    <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+                    <li class="treeview">
+                      <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                          </span>
+                      </a>
+                      <ul class="treeview-menu">
+                        <li><a href="#">Link in level 2</a></li>
+                        <li><a href="#">Link in level 2</a></li>
+                      </ul>
+                    </li> -->
 
                     @yield('side_menu')
                 </ul>
@@ -383,14 +311,14 @@ desired effect
             <section class="content-header">
                 <h1>
                     <!-- Page Header
-        <small>Optional description</small> -->
+                <small>Optional description</small> -->
                     @yield('judul_header')
                 </h1>
 
                 {{-- <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol> --}}
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                    <li class="active">Here</li>
+                </ol> --}}
                 @yield('breadcrumb')
             </section>
 
@@ -418,7 +346,7 @@ desired effect
 
         <!-- /.control-sidebar -->
         <!-- Add the sidebar's background. This div must be placed
-  immediately after the control sidebar -->
+            immediately after the control sidebar -->
         <div class="control-sidebar-bg"></div>
     </div>
     <!-- ./wrapper -->
@@ -442,54 +370,58 @@ desired effect
     <!-- page script -->
     <script type="text/javascript">
         $.fn.dataTable.moment('D MMMM Y', 'id');
-  $('#table_data1').DataTable({
-    })
+        $('#table_data1').DataTable({
+        })
 
-  $('#btn_logout').click(function (event) {
-    event.preventDefault();
-    $('#logout-form').trigger('submit');
-  });
+        $('#btn_logout').click(function (event) {
+            event.preventDefault();
+            $('#logout-form').trigger('submit');
+        });
 
-  $('a#readAll').click(function(event) {
-    event.preventDefault();
-    console.log('baca semua');
+        readAllNotif();
+        function readAllNotif() {
+        $('a#readAll').click(function(event) {
+            event.preventDefault();
+            console.log('baca semua');
 
-    $.ajax({
-      url: '{{ route('notifikasi.readAll') }}',
-      type: 'GET',
-      // dataType: '',
-      // data: {},
-    })
-    .done(function(result) {
-      console.log("success");
-      console.log('hasil= '+result);
+            $.ajax({
+              url: '{{ route('notifikasi.readAll') }}',
+              type: 'GET',
+              // dataType: '',
+              // data: {},
+            })
+            .done(function(result) {
+              console.log("success");
+              console.log('hasil= '+result);
 
-      $('#jml_notif').hide();
-      $('a#readAll').hide();
-      $('#list_notif').hide();
-      $('span#header_notif').text('Tidak Ada Notifikasi Baru');
-    })
-    .fail(function(err, xml) {
-      console.log("error");
-      console.log(err);
-      console.log(xml);
-    });
-
-  });
-
-    $(function(){
-        function loadlink(){
-            posisi = $('#list_notif').scrollTop();
-            $('.dropdown.notifications-menu').load('{{ route("notifikasi.load") }}', function(){
-                $('#list_notif').scrollTop(posisi);
+              $('#jml_notif').hide();
+              $('a#readAll').hide();
+              $('#list_notif').hide();
+              $('span#header_notif').text('Tidak Ada Notifikasi Baru');
+            })
+            .fail(function(err, xml) {
+              console.log("error");
+              console.log(err);
+              console.log(xml);
             });
+          });
         }
 
-        loadlink();
-        setInterval(function(){
-            loadlink()
-        }, 3000);
-    });
+        $(function(){
+            function loadlink(){
+                posisi = $('#list_notif').scrollTop();
+                $('.dropdown.notifications-menu').load('{{ route("notifikasi.load") }}', function(){
+                    $('#list_notif').scrollTop(posisi);
+                });
+                
+            }
+
+            loadlink();
+            setInterval(function(){
+                loadlink()
+                readAllNotif();
+            }, 3000);
+        });
 
     </script>
     <script>

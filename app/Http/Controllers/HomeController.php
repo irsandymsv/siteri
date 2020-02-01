@@ -35,6 +35,9 @@ class HomeController extends Controller
         elseif ($user->jabatan->jabatan == "Dekan") {
             return redirect()->route('dekan.dashboard');
         }
+        elseif ($user->jabatan->jabatan == "Wakil Dekan 1") {
+            return redirect()->route('wadek1.dashboard');
+        }
         elseif ($user->jabatan->jabatan == "Wakil Dekan 2") {
             return redirect()->route('wadek2.dashboard');
         }
@@ -58,6 +61,12 @@ class HomeController extends Controller
         }
         elseif ($user->jabatan->jabatan == "Pengadministrasi Layanan Kegiatan Mahasiswa") {
             return redirect()->route('ormawa.dashboard');
+        }
+        elseif ($user->jabatan->jabatan == "Pemroses Mutasi Kepegawaian") {
+            return redirect()->route('kepegawaian.surat.index');
+        }
+        elseif ($user->jabatan->jabatan == "Sekretaris Pimpinan") {
+            return redirect()->route('staffpim.index');
         }
         else {
             return view('home');

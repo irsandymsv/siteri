@@ -36,3 +36,14 @@
       <li><a href="{{ route('dekan.penguji-skripsi') }}">Penguji Skripsi</a></li>
     </ul>
 </li>
+<li class="treeview">
+  <a href="#"><i class="fa fa-link"></i> <span>Surat Tugas</span>
+    <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
+  </a>
+  <ul class="treeview-menu">
+    <li><a href="{{ route('dosen.surat.index') }}">Lihat Surat Tugas</a></li>
+    <li><a href="{{ route('dosen.dosen_upload_index') }}">Upload bukti</a></li>
+  </ul>
+</li>

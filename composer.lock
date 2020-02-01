@@ -4,7 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+    
     "content-hash": "c76017c4d303f9c48ddac71dd21d6c17",
+
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -3318,7 +3320,12 @@
                 "debug",
                 "dump"
             ],
+<<<<<<< HEAD
+            "time": "2019-12-18T13:41:29+00:00"
+
+=======
             "time": "2020-01-04T13:00:46+00:00"
+>>>>>>> 83400f7ff6fba45a907d0eee9a7f82c57e4c1d3b
         },
         {
             "name": "tecnickcom/tcpdf",
@@ -3671,7 +3678,12 @@
         },
         {
             "name": "filp/whoops",
+<<<<<<< HEAD
+            "version": "2.6.0",
+
+=======
             "version": "2.7.1",
+>>>>>>> 83400f7ff6fba45a907d0eee9a7f82c57e4c1d3b
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",

@@ -72,16 +72,18 @@ class NotificationController extends Controller
 
     public function load()
     {
-        if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN') {
-            return view('notifikasi.perlengkapan');
-        } elseif (Auth::user()->jabatan->jabatan == 'Wakil Dekan 2') {
-            return view('notifikasi.wadek2');
-        } elseif (Auth::user()->jabatan->jabatan == 'Pengelola Data Akademik') {
-            return view('notifikasi.akademik');
-        } elseif (Auth::user()->jabatan->jabatan == 'Pengadministrasi Layanan Kegiatan Mahasiswa') {
-            return view('notifikasi.ormawa');
-        } elseif (Auth::user()->jabatan->jabatan == 'KTU') {
-            return view('notifikasi.ktu');
+        if (Auth::check()) {
+            if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN') {
+                return view('notifikasi.perlengkapan');
+            } elseif (Auth::user()->jabatan->jabatan == 'Wakil Dekan 2') {
+                return view('notifikasi.wadek2');
+            } elseif (Auth::user()->jabatan->jabatan == 'Pengelola Data Akademik') {
+                return view('notifikasi.akademik');
+            } elseif (Auth::user()->jabatan->jabatan == 'Pengadministrasi Layanan Kegiatan Mahasiswa') {
+                return view('notifikasi.ormawa');
+            } elseif (Auth::user()->jabatan->jabatan == 'KTU') {
+                return view('notifikasi.ktu');
+            }
         }
     }
 }

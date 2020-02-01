@@ -12,6 +12,7 @@ use App\mahasiswa;
 use App\skripsi;
 use App\keris;
 use App\User;
+use App\data_ruang;
 use PDF;
 use Exception;
 use Carbon\Carbon;
@@ -53,11 +54,13 @@ class sutgasPengujiController extends suratTugasController
             ]);
         })->get();
         $dosen2 = user::where('is_dosen', 1)->get();
+        $ruangan = data_ruang::all();
         // dd($mahasiswa);
         return view('akademik.sutgas_penguji.create', [
             'mahasiswa' => $mahasiswa,
             'dosen1' => $dosen1,
             'dosen2' => $dosen2,
+            'ruangan' => $ruangan
         ]);
     }
 
@@ -100,7 +103,8 @@ class sutgasPengujiController extends suratTugasController
             "detail_skripsi.skripsi.mahasiswa",
             "detail_skripsi.keris",
             "dosen1:no_pegawai,nama",
-            "dosen2:no_pegawai,nama"
+            "dosen2:no_pegawai,nama",
+            "data_ruang"
         ])->first();
 
         $sutgas_pembimbing = surat_tugas::where('id_detail_skripsi', $surat_tugas->id_detail_skripsi)
@@ -133,7 +137,8 @@ class sutgasPengujiController extends suratTugasController
             "detail_skripsi.skripsi.mahasiswa",
             "detail_skripsi.keris",
             "dosen1:no_pegawai,nama",
-            "dosen2:no_pegawai,nama"
+            "dosen2:no_pegawai,nama",
+            "data_ruang"
         ])->first();
 
         $pembimbing = $this->getPembimbing($surat_tugas->detail_skripsi->skripsi->nim);
@@ -162,6 +167,7 @@ class sutgasPengujiController extends suratTugasController
             ]);
         })->get();
         $dosen2 = user::where('is_dosen', 1)->get();
+        $ruangan = data_ruang::all();
         // dd($mahasiswa);
 
         return view('akademik.sutgas_penguji.edit', [
@@ -170,7 +176,8 @@ class sutgasPengujiController extends suratTugasController
             'dosen1' => $dosen1,
             'dosen2' => $dosen2,
             'tanggal' => $tanggal,
-            'pembimbing' => $pembimbing
+            'pembimbing' => $pembimbing,
+            'ruangan' => $ruangan
         ]);
     }
 
@@ -250,7 +257,8 @@ class sutgasPengujiController extends suratTugasController
             "dosen1:no_pegawai,nama,id_fungsional",
             "dosen1.fungsional",
             "dosen2:no_pegawai,nama,id_fungsional",
-            "dosen2.fungsional"
+            "dosen2.fungsional",
+            "data_ruang"
         ])->first();
 
         $sutgas_pembimbing = surat_tugas::where('id_detail_skripsi', $surat_tugas->id_detail_skripsi)
@@ -316,7 +324,8 @@ class sutgasPengujiController extends suratTugasController
             "dosen1:no_pegawai,nama,id_fungsional",
             "dosen1.fungsional",
             "dosen2:no_pegawai,nama,id_fungsional",
-            "dosen2.fungsional"
+            "dosen2.fungsional",
+            "data_ruang"
         ])->first();
 
         $sutgas_pembimbing = surat_tugas::where('id_detail_skripsi', $surat_tugas->id_detail_skripsi)

@@ -185,7 +185,7 @@
                      </tr>
                      <tr>
                         <td>Tempat</td>
-                        <td>: Ruang Kuliah {{ $surat_tugas->tempat }}</td>
+                        <td>: Ruang {{ $surat_tugas->data_ruang->nama_ruang }}</td>
                      </tr>
 
                      {{-- <tr><td><br></td></tr> --}}

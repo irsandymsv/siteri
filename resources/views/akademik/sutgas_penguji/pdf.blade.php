@@ -160,7 +160,7 @@
             </tr>
             <tr>
                <td>Tempat</td>
-               <td>: {{ $surat_tugas->tempat }}</td>
+               <td>: {{ $surat_tugas->data_ruang->nama_ruang }}</td>
             </tr>
 
             {{-- <tr><td><br></td></tr> --}}

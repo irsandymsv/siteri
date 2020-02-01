@@ -1,5 +1,4 @@
-<li class="active"><a href="{{ route('wadek2.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard Wadek
-            2</span></a></li>
+<li class="active"><a href="{{ route('wadek2.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard Wadek 2</span></a></li>
 
 <li class="treeview">
     <a href="#"><i class="fa fa-link"></i> <span>SK Akademik</span>
@@ -35,6 +34,29 @@
         <li><a href="{{ route('wadek2.pembimbing-skripsi') }}">Pembimbing Skripsi</a></li>
         <li><a href="{{ route('wadek2.pembahas-sempro') }}">Pembahas Sempro</a></li>
         <li><a href="{{ route('wadek2.penguji-skripsi') }}">Penguji Skripsi</a></li>
+    </ul>
+</li>
+
+<li class="treeview">
+    <a href="#"><i class="fa fa-link"></i> <span>Memu</span>
+      <span class="pull-right-container">
+          <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="{{route('wadek2.memu.create')}}">Buat Memu</a></li>
+      <li><a href="{{route('wadek2.memu.index')}}">Lihat Semua</a></li>
+    </ul>
+</li>
+
+<li class="treeview">
+    <a href="#"><i class="fa fa-link"></i> <span>Surat Tugas</span>
+      <span class="pull-right-container">
+          <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="{{route('wadek2.surat.index')}}">Lihat Semua</a></li>
     </ul>
 </li>
 

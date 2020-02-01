@@ -35,6 +35,11 @@ class surat_tugas extends Model
         return $this->belongsTo('App\detail_skripsi', 'id_detail_skripsi');
     }
 
+    public function data_ruang()
+   {
+       return $this->belongsTo('App\data_ruang','id_ruang');
+   }
+
 
 
     // public function surat_tugas_pembimbing()

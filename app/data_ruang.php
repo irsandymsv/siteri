@@ -23,4 +23,9 @@ class data_ruang extends Model
     {
         return $this->hasMany('App\detail_pinjam_ruang', 'idruang_fk');
     }
+
+    public function surat_tugas()
+    {
+        return $this->hasMany('App\surat_tugas', 'id_ruang');
+    }
 }

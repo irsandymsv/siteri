@@ -143,14 +143,22 @@
 
                   <div class="form-group">
                      <label for="tempat">Tempat Pelaksanaan</label><br>
+                     <select name="tempat" id="tempat" class="form-control select2">
+                        <option value="">--Pilih Ruangan--</option>
+                        @foreach ($ruangan as $item)
+                           <option value="{{ $item->id }}" {{ ($item->id == $surat_tugas->id_ruang? 'selected' : '') }}>
+                              {{ $item->nama_ruang }}
+                           </option>
+                        @endforeach
+                     </select>
 
-                     <div class="input-group">
+                     {{-- <div class="input-group">
                         <div class="input-group-addon">
                            Ruang Kuliah :
                         </div>
                         <input type="text" name="tempat" id="tempat" class="form-control" value="{{ $surat_tugas->tempat }}">
                      </div>
-                     <span><i>Note: Pisahkan nama ruang dengan tanda koma (,) jika ingin memasukkan banyak ruang</i></span>
+                     <span><i>Note: Pisahkan nama ruang dengan tanda koma (,) jika ingin memasukkan banyak ruang</i></span> --}}
 
                      @error('tempat')
                         <span class="invalid-feedback" role="alert" style="color: red;">

@@ -4,6 +4,7 @@
    @if (Auth::user()->jabatan->jabatan == "Dekan")
       @include('include.dekan_menu')
    @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+   	@include('include.wadek1_menu')
    @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
    	@include('include.wadek2_menu')
    @elseif(Auth::user()->jabatan->jabatan == "Dosen")
@@ -61,6 +62,7 @@
 			  		@if (Auth::user()->jabatan->jabatan == "Dekan")
                   <a href="{{ route('dekan.pembimbing-skripsi') }}" class="btn btn-default pull-right">Kembali</a>
                @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+               	<a href="{{ route('wadek1.pembimbing-skripsi') }}" class="btn btn-default pull-right">Kembali</a>
                @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
                	<a href="{{ route('wadek2.pembimbing-skripsi') }}" class="btn btn-default pull-right">Kembali</a>
                @elseif(Auth::user()->jabatan->jabatan == "Dosen")

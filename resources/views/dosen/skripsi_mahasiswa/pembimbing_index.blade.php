@@ -4,6 +4,7 @@
    @if (Auth::user()->jabatan->jabatan == "Dekan")
       @include('include.dekan_menu')
    @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+      @include('include.wadek1_menu')
    @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
       @include('include.wadek2_menu')
    @elseif(Auth::user()->jabatan->jabatan == "Dosen")
@@ -63,6 +64,7 @@
                                  @if (Auth::user()->jabatan->jabatan == "Dekan")
                                     <a href="{{ route('dekan.pembimbing-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                                  @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+                                    <a href="{{ route('wadek1.pembimbing-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                                  @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
                                     <a href="{{ route('wadek2.pembimbing-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                                  @elseif(Auth::user()->jabatan->jabatan == "Dosen")
@@ -90,6 +92,7 @@
 	               			<th>Opsi</th>
 	               		</tr>
 	               	</thead>
+                     <tbody>
             				@foreach ($sutgas_pembimbing_2 as $item)
                				<tr>
                					<td>{{ $loop->index+1 }}</td>
@@ -101,6 +104,7 @@
 	   			      				@if (Auth::user()->jabatan->jabatan == "Dekan")
                                     <a href="{{ route('dekan.pembimbing-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                                  @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+                                    <a href="{{ route('wadek1.pembimbing-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                                  @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
                                     <a href="{{ route('wadek2.pembimbing-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                                  @elseif(Auth::user()->jabatan->jabatan == "Dosen")
