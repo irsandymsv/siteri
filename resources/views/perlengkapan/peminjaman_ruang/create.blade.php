@@ -9,7 +9,7 @@
 @section('judul_header', 'Buat Laporan Peminjaman Ruang')
 
 @section('css_link')
-<link href="/adminlte/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
 <link href="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
 <link href="/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 <link href="/adminlte/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" />
@@ -38,10 +38,7 @@
                     <table id="tbl-data" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Tanggal Mulai</th>
-                                <th>Tanggal Berakhir</th>
-                                <th>Jam Mulai</th>
-                                <th>Jam Berakhir</th>
+                                <th>Tanggal/Jam</th>
                                 <th>Kegiatan</th>
                                 <th>Jumlah Peserta</th>
                                 <th>Nama Ruang</th>
@@ -50,27 +47,11 @@
 
                         <tbody id="inputan">
                             <tr>
-                                <td>
-                                    {!! Form::date('tanggal_mulai', null, ['class' => 'form-control tanggal']) !!}
-                                    {{-- {!! Form::text('tanggal_mulai', null, ['class' => 'form-control datepicker not-rounded-border']) !!} --}}
+                                <td style="min-width:300px">
+                                    {!! Form::text('tanggal', null, ['class' => 'form-control not-rounded-border', 'id' => 'reservationtime']) !!}
                                 </td>
 
-                                <td>
-                                    {!! Form::date('tanggal_berakhir', null, ['class' => 'form-control tanggal']) !!}
-                                    {{-- {!! Form::text('tanggal_berakhir', null, ['class' => 'form-control datepicker not-rounded-border']) !!} --}}
-                                </td>
-
-                                <td>
-                                    {{-- {!! Form::text('jam_mulai', null, ['class' => 'form-control timepicker']) !!} --}}
-                                    {!! Form::time('jam_mulai', null, ['class' => 'form-control']) !!}
-                                </td>
-
-                                <td>
-                                    {{-- {!! Form::text('jam_berakhir', null, ['class' => 'form-control timepicker']) !!} --}}
-                                    {!! Form::time('jam_berakhir', null, ['class' => 'form-control']) !!}
-                                </td>
-
-                                <td>
+                                <td style="min-width:300px">
                                     {!! Form::text('kegiatan', null, ['class' => 'form-control']) !!}
                                 </td>
 
@@ -78,17 +59,16 @@
                                     {!! Form::text('jumlah_peserta', null, ['class' => 'form-control jumlah angka']) !!}
                                 </td>
 
-                                <td class="ruang" style="min-width:200px">
-                                    {{-- {!! Form::select('nama_ruang[]', $nama_ruang, null, ['class' =>
-                                    'form-control not-rounded-border js-example-basic-multiple', 'multiple' => 'multiple'])!!} --}}
-                                    <select id="nama_ruang" name="nama_ruang[]" class="form-control select2"
+                                <td class="ruang">
+                                    <select id="nama_ruang" name="nama_ruang[]"
+                                        class="form-control not-rounded-border js-example-basic-multiple"
                                         multiple="multiple">
                                         @foreach ($ruang as $val)
                                         <option value="{{ $val->id }}">({{$val->kuota}}) {{$val->nama_ruang}}</option>
                                         @endforeach
                                     </select>
+                                    <br>
                                     <label>Jumlah Kuota : <span class="jumlah_kuota">0</span></label>
-                                    {{-- <label></label> --}}
                                 </td>
                             </tr>
                         </tbody>
@@ -112,10 +92,13 @@
 <script src="/adminlte/plugins/timepicker/bootstrap-timepicker.min.js"></script>
 <script>
     $(function(){
+        $('.select2').select2();
 
         $('.js-example-basic-multiple').select2();
 
         $('#reservation').daterangepicker();
+
+        $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, locale: { format: 'YYYY/MM/DD HH:mm:ss' }})
 
         $('.datepicker').datepicker({
             autoclose: true,
@@ -146,7 +129,7 @@
             console.log(total);
                     console.log(data.length);
 
-            if(total > jumlah-0){
+            if(total >= jumlah-0){
                 $("#nama_ruang").select2({
                     maximumSelectionLength: data.length
                     // formatSelectionTooBig: function (limit) {
