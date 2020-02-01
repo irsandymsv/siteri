@@ -327,6 +327,7 @@ class pengadaanController extends Controller
                 return $retun;
             }
         } elseif ($request->select == 'satuan') {
+            // dd($request);
             try {
                 $this->validate(
                     $request,
@@ -336,7 +337,7 @@ class pengadaanController extends Controller
                 );
                 pengadaan::findOrfail($id)->update(
                     [
-                    "satuan"   => $request->value
+                    "id_satuan"   => ($request->value + 1)
                     ]
                 );
                 laporan_pengadaan::findOrfail($request->lap)->update(
@@ -346,6 +347,7 @@ class pengadaanController extends Controller
                     ]
                 );
             } catch (Exception $e) {
+                // dd($e->getMessage());
                 if (isEmptyOrNullString($request->value)) {
                     $request->value = '0';
                 }
