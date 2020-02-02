@@ -144,6 +144,12 @@
          thead th{
             text-align: center;
          }
+
+         .tembusan{
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-bottom: 0;
+         }
     </style>
 </head>
 
@@ -235,7 +241,6 @@
                   <td>{{ Carbon\Carbon::parse($sk->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
                </tr>
             </table>
-            <br><br>
 
             Dekan,
             <br><br><br><br>
@@ -243,8 +248,8 @@
             <span>NIP. {{ $dekan->no_pegawai }}</span>
          </div>
 
-         <p style="clear: both;">Tembusan: </p>
-         <ol>
+         <p style="clear: both; margin-bottom: 0; padding-bottom: 0;">Tembusan: </p>
+         <ol class="tembusan">
             <li>Penjabat Wakil Dekan I, II;</li>
             <li>Kasubag. Tata Usaha;</li>
          </ol>

@@ -31,13 +31,13 @@
          }
 
          .box-body{
-            margin: auto;
+            /*margin: auto;*/
             font-family: 'Times New Roman';
-            font-size: 12pt;
+            font-size: 11pt;
             margin-top: 0;
             margin-bottom: 0.5pt;
             margin-left: 0.8cm;
-            margin-right: 0.8cm;
+            margin-right: 0.1cm;
          }
 
          .landscape{
@@ -91,6 +91,10 @@
             letter-spacing: 1.5pt;
          }
 
+         #tabel_keterangan{
+            margin-top: 0;
+         }
+
          #detail_table{
             margin-top: 15px;
             width: 100%;
@@ -106,9 +110,9 @@
             padding: 5px;
          }
 
-         #detail_table td:last-child{
+         /*#detail_table td:last-child{
             padding: 0;
-         }
+         }*/
 
          #isi_template_surat{
             width: 100%;
@@ -133,12 +137,24 @@
          .to_center{
             text-align: center;
          }
+
+         .nomor{
+            width: 20px;
+         }
+
+         .nim{
+            width: 50px;
+         }
+
+         .prodi{
+            width: 70px;
+         }
     </style>
 </head>
 
 <body>
-   <div class="box-body landscape">
-      <p>Lampiran Dekan Fakultas Ilmu Komputer Universitas Jember</p>
+   <div class="box-body">
+      <p style="margin-bottom: 0;">Lampiran Dekan Fakultas Ilmu Komputer Universitas Jember</p>
       <table id="tabel_keterangan">
          <tr>
             <td>Nomor   </td>
@@ -167,30 +183,36 @@
          <tbody>
             @foreach($detail_skripsi as $item)
             <tr>
-               <td class="to_center">{{ $loop->index + 1 }}</td>
-               <td>{{$item->skripsi->nim}}</td>
-               <td>{{$item->skripsi->mahasiswa->nama}}</td>
-               <td>{{$item->skripsi->mahasiswa->prodi->nama}}</td>
-               <td>{{$item->judul}}</td>
+               <td class="to_center nomor" rowspan="2">{{ $loop->index + 1 }}</td>
+               <td class="nim" rowspan="2">{{$item->skripsi->nim}}</td>
+               <td rowspan="2">{{$item->skripsi->mahasiswa->nama}}</td>
+               <td class="prodi" rowspan="2">{{$item->skripsi->mahasiswa->prodi->nama}}</td>
+               <td rowspan="2">{{$item->judul}}</td>
                @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Penguji")
                   <td>
-                     <div class="tbl_row">
-                        {{ $item->surat_tugas[0]->dosen1->nama }}
-                     </div>
-                     <div>
+                       {{ $item->surat_tugas[0]->dosen1->nama }}
+                     {{-- <div>
                         {{ $item->surat_tugas[0]->dosen2->nama }}
-                     </div>
+                     </div> --}}
                   </td>
                @else
                   <td>
-                     <div class="tbl_row">
-                        {{ $item->surat_tugas[1]->dosen1->nama }}
-                     </div>
-                     <div>
+                     {{ $item->surat_tugas[1]->dosen1->nama }}
+                     {{-- <div>
                         {{ $item->surat_tugas[1]->dosen2->nama }}
-                     </div>
+                     </div> --}}
                   </td>
                @endif
+            </tr>
+
+            <tr>
+               <td>
+                  @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Penguji")
+                     {{ $item->surat_tugas[0]->dosen2->nama }}
+                  @else
+                     {{ $item->surat_tugas[1]->dosen2->nama }}
+                  @endif
+               </td>
             </tr>
             @endforeach
          </tbody>
@@ -205,7 +227,7 @@
       </div>
    </div>
 
-   <script type="text/javascript">
+   {{-- <script type="text/javascript">
       var no_surat_pembimbing = @json($sk->no_surat_pembimbing);
       var tahun = @json(Carbon\Carbon::parse($sk->created_at)->year);
       var tgl_sk_pembimbing = @json(Carbon\Carbon::parse($sk->tgl_sk_pembimbing)->locale('id_ID')->isoFormat('D MMMM Y'));
@@ -213,7 +235,7 @@
 
       $("td:contains('?sk pembimbing skripsi?')").html(`
        Keputusan Dekan Fakultas Ilmu Komputer Universitas Jember Nomor : `+no_surat_pembimbing+` /UN25.1.15/SP/`+tahun+`, tanggal `+tgl_sk_pembimbing+` tentang penetapan Dosen Pembimbing Skripsi Mahasiswa Fakultas Ilmu Komputer Universitas Jember Tahun Akademik `+tahun_akademik['tahun_awal']+`/`+tahun_akademik['tahun_akhir']);
-   </script>
+   </script> --}}
 </body>
 </html>
 
