@@ -48,7 +48,7 @@
                                 <th>Harga Satuan</th>
                                 <th>Total</th> --}}
                                 <th>Status</th>
-                                <th style="width:99.8px">Opsi</th>
+                                <th style="width:100px">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -108,6 +108,10 @@
     <h4><i class="icon fa fa-check"></i> <span></span></h4>
 </div>
 
+<div id="failed_delete" class="pop_up_danger">
+    <h4><i class="icon fa fa-times"></i> <span></span></h4>
+</div>
+
 <div class="modal modal-danger fade" id="modal-delete">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -138,37 +142,43 @@
         $('#pengadaan').DataTable();
 
         $('a.btn.btn-danger').click(function(){
+            $("#success_delete").show();
+            $("#success_delete").find('span').html("Compek");
+            $("#success_delete").fadeOut(1800);
+        });
+
+        $('a.btn.btn-danger').click(function(){
             event.preventDefault();
-				id = $(this).attr('id');
+            id = $(this).attr('id');
 
-				url_del = "{{route('perlengkapan.pengadaan.destroy', "id")}}";
-                url_del = url_del.replace('id', id)
-				console.log(url_del);
+            url_del = "{{route('perlengkapan.pengadaan.destroy', "id")}}";
+            url_del = url_del.replace('id', id)
+            console.log(url_del);
 
-				$('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
-					$.ajaxSetup({
-					    headers: {
-					        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-					    }
-					});
+            $('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
 
-					$.ajax({
-						url: url_del,
-						type: 'POST',
-						// dataType: '',
-						data: {_method: 'DELETE', 'laporan':true},
-					})
-					.done(function(hasil) {
-						console.log("success");
-						$("tr#lap_"+id).remove();
-						$("#success_delete").show();
-						$("#success_delete").find('span').html(hasil);
-						$("#success_delete").fadeOut(1800);
-					})
-					.fail(function() {
-						console.log("error");
-					});
-				});
+                $.ajax({
+                    url: url_del,
+                    type: 'POST',
+                    // dataType: '',
+                    data: {_method: 'DELETE', 'laporan':true},
+                })
+                .done(function(hasil) {
+                    console.log("success");
+                    $("tr#lap_"+id).remove();
+                    $("#success_delete").show();
+                    $("#success_delete").find('span').html(hasil);
+                    $("#success_delete").fadeOut(1800);
+                })
+                .fail(function() {
+                    console.log("error");
+                });
+            });
         });
     });
 </script>
