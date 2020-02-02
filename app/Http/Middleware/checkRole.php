@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-
+use Auth;
 class checkRole
 {
    /**
@@ -22,7 +22,7 @@ class checkRole
             }
          }
          return redirect()->back();
-      } 
+      }
       else {
          if ($request->user()->jabatan->jabatan != $roles) {
             return redirect()->back();    
