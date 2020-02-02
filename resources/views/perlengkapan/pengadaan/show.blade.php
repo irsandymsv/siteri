@@ -344,17 +344,19 @@
 
 
         $(document).keyup(function (e) {
-            console.log("Mitet!!");
             if (edit) {
+                console.log("Mitet!!");
                 if (e.key === "Escape") {
                     $(target).html(ori);
+                    edit = false;
+                    target = false;
                 } else
                 if(e.key === "Enter"){
                     unedit();
                     save();
+                    target = false;
+                    edit = false;
                 }
-
-                edit = false;
             }
         });
 

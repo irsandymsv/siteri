@@ -282,7 +282,7 @@ class pengadaanController extends Controller
                 );
             } catch (Exception $e) {
                 dd($request);
-                if (isEmptyOrNullString($request->value)) {
+                if (!(isset($request->value) && empty($request->value))) {
                     $request->value = 'Diisi!';
                 }
                 $retun = ["peruntukan" => $request->value, "status" => "Gagal Ubah Peruntukan"];
@@ -316,7 +316,7 @@ class pengadaanController extends Controller
                     ]
                 );
             } catch (Exception $e) {
-                if (isEmptyOrNullString($request->value)) {
+                if (!(isset($request->value) && empty($request->value))) {
                     $request->value = 'Diisi!';
                 }
                 if ($request->select == 'nama') {
@@ -348,7 +348,7 @@ class pengadaanController extends Controller
                 );
             } catch (Exception $e) {
                 // dd($e->getMessage());
-                if (isEmptyOrNullString($request->value)) {
+                if (!(isset($request->value) && empty($request->value))) {
                     $request->value = '0';
                 }
                 $retun = ["satuan" => $request->value, "status" => "Gagal Ubah Satuan"];
@@ -382,7 +382,7 @@ class pengadaanController extends Controller
                     ]
                 );
             } catch (Exception $e) {
-                if (isEmptyOrNullString($request->value)) {
+                if (!(isset($request->value) && empty($request->value))) {
                     $request->value = 'Diisi!';
                 }
                 if ($request->select == 'jumlah') {
