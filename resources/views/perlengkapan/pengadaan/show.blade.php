@@ -47,9 +47,9 @@
                             <td><b>Terakhir Diubah</b></td>
                             <td>: {{$laporan_pengadaan->updated_at}}</td>
                         </tr>
-                        <tr>
+                        <tr id="{{ $laporan_pengadaan->id }}">
                             <td><b>Peruntukan</b></td>
-                            <td>: {{$laporan_pengadaan->keterangan}}</td>
+                            <td id="peruntukan">: {{$laporan_pengadaan->keterangan}}</td>
                         </tr>
                         <tr>
                             <td><b>Status</b></td>
@@ -87,15 +87,18 @@
                         </thead>
                         <tbody>
                             @foreach($pengadaan as $item)
-                            <tr id="lap_{{ $item->id }}">
-                                <td>{{ $item->nama_barang }}</td>
-                                <td>{{ $item->spesifikasi }}</td>
-                                <td>{{ $item->jumlah }} {{ $item->satuan->satuan }}</td>
-                                <td>{{ $item->harga }}</td>
+                            <tr id="{{ $item->id }}" id2="{{ $laporan_pengadaan->id }}">
+                                <td class="nama">{{ $item->nama_barang }}</td>
+                                <td class="spesifikasi">{{ $item->spesifikasi }}</td>
+                                <td style="max-width: 100px"><span class="jumlah"
+                                        style="float:left; margin-right: 2px;">{{ $item->jumlah }}
+                                    </span><span class="satuan" idd="{{ $item->satuan->id }}"
+                                        style="float:left">{{ $item->satuan->satuan }}</span></td>
+                                <td class="harga">{{ $item->harga }}</td>
                                 @if ($laporan_pengadaan->verif_wadek2 != 2)
                                 <td>
-                                    <a href="{{ route('perlengkapan.pengadaan.edit', $item->id) }}"
-                                        class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
+                                    {{-- <a href="{{ route('perlengkapan.pengadaan.edit', $item->id) }}"
+                                    class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a> --}}
                                     <a href="#" class="btn btn-danger" id="{{ $item->id }}"
                                         id2="{{ $laporan_pengadaan->id }}" name="hapus_laporan" title="Hapus Laporan"
                                         data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
@@ -143,11 +146,11 @@
     $(function(){
         $('a.btn.btn-danger').click(function(){
             event.preventDefault();
-				var id = $(this).attr('id');
-				var id2 = $(this).attr('id2');
+				id = $(this).attr('id');
+				id2 = $(this).attr('id2');
                 console.log(id);
 
-				var url_del = "{{route('perlengkapan.pengadaan.destroy', ["id", 'lap' => 'compek'])}}";
+				url_del = "{{route('perlengkapan.pengadaan.destroy', ["id", 'lap' => 'compek'])}}";
                 url_del = url_del.replace('id', id);
                 url_del = url_del.replace('compek', id2);
 				console.log(url_del);
@@ -166,12 +169,8 @@
 					})
 					.done(function(hasil) {
 						console.log("success");
-                        $("tr#lap_"+id).remove();
-                        if ($('#box').hasClass('box-danger')) {
-                            $('#status').html(': Belom Diverifikasi');
-                            $('#pesan').remove();
-                            $('#box').removeClass('box-danger').addClass('box-primary');
-                        }
+                        $("tr#"+id).remove();
+                        ubahStatus();
 					})
 					.fail(function() {
                         alert("Gagal Menghapus")
@@ -179,6 +178,189 @@
 					});
 				});
         });
+
+        function ubahStatus(){
+            if ($('#box').hasClass('box-danger')) {
+                $('#status').html(': Belom Diverifikasi');
+                $('#pesan').remove();
+                $('#box').removeClass('box-danger').addClass('box-primary');
+            }
+        }
+
+        function getSelector(prop){
+            select = '';
+            id = $(prop).attr("id");
+            if (id) {
+                select =  id;
+            }
+
+            classNames = $(prop).attr("class");
+            if (classNames) {
+                select = classNames;
+            }
+            return select;
+        }
+
+        @if ($laporan_pengadaan->verif_wadek2 != 2)
+        edit = false;
+        target = null;
+        ori = null;
+        select = null;
+        value = null;
+
+        $('#peruntukan, .nama, .spesifikasi, .jumlah, .satuan, .harga').dblclick(function(event){
+            if (target) {
+                unedit();
+                save();
+            }
+            if (!target) {
+                value = $(this).html();
+                ori = $(this).html();
+                select = getSelector(this);
+                target = this;
+                edit = true;
+                // console.log(select);
+                if (select == 'peruntukan') {
+                    value = value.substring(2);
+                } else
+
+                console.log(value);
+                if (select == 'peruntukan' || select == 'nama' || select == 'spesifikasi') {
+                    form = '{!! Form::text('keterangan', 'null', ['class' => 'form-control', 'required']) !!}';
+                    form = form.replace('null', value);
+                    form = form.replace('keterangan', select);
+                    // console.log(form);
+                    $(this).html(form);
+                } else
+
+                if (select == 'harga') {
+                    form = '{!! Form::text('harga', 'null', ['class' => 'form-control jumlah angka', 'required'])!!}';
+                    form = form.replace('null', value);
+                    console.log(form);
+                    $(this).html(form);
+                } else
+
+                if (select == 'jumlah') {
+                    form = '{!! Form::text('jumlah', 'null', ['class' => 'form-control jumlah angka', 'required', 'style' => 'max-width:60px'])!!}';
+                    form = form.replace('null', value);
+                    console.log(form);
+                    $(this).html(form);
+                } else
+
+                if (select == 'satuan') {
+                    @php
+                    $loop = true;
+                    $count = 0;
+                    foreach ($satuan as $val) {
+                    @endphp
+                        if (value == '{{ $val }}') {
+                            @php
+                            $value = $count;
+                            $loop = false;
+                            @endphp
+                        }
+                    @php
+                        if ($loop) {
+                            break;
+                        } else continue;
+                        $count++;
+                    }
+                    @endphp
+                    value = $(this).attr('idd') - 1;
+                    urls = '{{ route("perlengkapan.pengadaan.getForm", "id") }}';
+                    urls = urls.replace('id', value);
+                    console.log(urls);
+                    $.ajax({
+                        type: 'GET',
+                        url: urls,
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        // data: {value: value},
+                        success: function (response) {
+                            form = response;
+                            // console.log(value);
+                            // console.log(form);
+                            $(target).html(form);
+                        }
+                    });
+                }
+            } else {
+            }
+        });
+
+        function unedit() {
+            value = $(target).children().val();
+            console.log(value);
+            if (select == 'peruntukan') {
+                $(target).html(': ' + value);
+            } else
+            if (select == 'satuan') {
+                $(target).html($(target).children().find(':selected').text());
+            } else
+            if (select == 'jumlah' || select == 'harga') {
+                value = value.replace(/\D/g,'');
+                $(target).html(value);
+            } else {
+                $(target).html(value);
+            }
+        }
+
+        function save(params) {
+            id = $(target).parents('tr').attr('id');
+            id2 = $(target).parents('tr').attr('id2');
+            console.log(id, id2);
+            url = "{{route('perlengkapan.pengadaan.saveItem', ["id", 'lap' => 'compek'])}}";
+            url = url.replace('id', id);
+            url = url.replace('compek', id2);
+            console.log(url);
+
+            $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {select: select, value: value},
+                })
+                .done(function(hasil) {
+                    console.log(hasil);
+                    pesan = hasil.status;
+                    // if ($(pesan).index('Gagal') != 1) {
+                    //     alert(pesan);
+                    //     console.log("Pesan = " + pesan);
+                    // }
+                })
+                .fail(function(hasil) {
+                    alert(hasil.status);
+                });
+
+            target = null;
+            if ('{{ $laporan_pengadaan->verif_wadek2 }}' == '1') {
+                ubahStatus();
+            }
+        }
+
+
+        $(document).keyup(function (e) {
+            if (edit) {
+                console.log("Mitet!!");
+                if (e.key === "Escape") {
+                    $(target).html(ori);
+                    edit = false;
+                    target = false;
+                } else
+                if(e.key === "Enter"){
+                    unedit();
+                    save();
+                    target = false;
+                    edit = false;
+                }
+            }
+        });
+
+        @endif
     });
 
 </script>

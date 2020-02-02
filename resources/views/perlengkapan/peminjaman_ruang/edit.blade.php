@@ -39,78 +39,42 @@
                     <table id="tbl-data" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Tanggal Mulai</th>
-                                <th>Tanggal Berakhir</th>
-                                <th>Jam Mulai</th>
-                                <th>Jam Berakhir</th>
+                                <th>Tanggal/Jam</th>
                                 <th>Kegiatan</th>
                                 <th>Jumlah Peserta</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {{-- {!! Form::hidden('laporan', true) !!} --}}
-                            <tr>
-                                <td>
-                                    {!! Form::text('tanggal_mulai', $laporan->tanggal_mulai, ['class' => 'form-control
-                                    datepicker not-rounded-border']) !!}
-                                </td>
-
-                                <td>
-                                    {!! Form::text('tanggal_berakhir', $laporan->tanggal_berakhir, ['class' =>
-                                    'form-control datepicker not-rounded-border']) !!}
-                                </td>
-
-                                <td>
-                                    {{-- {!! Form::text('jam_mulai', null, ['class' => 'form-control timepicker']) !!} --}}
-                                    {!! Form::time('jam_mulai', $laporan->jam_mulai, ['class' => 'form-control']) !!}
-                                </td>
-
-                                <td>
-                                    {{-- {!! Form::text('jam_berakhir', null, ['class' => 'form-control timepicker']) !!} --}}
-                                    {!! Form::time('jam_berakhir', $laporan->jam_berakhir, ['class' => 'form-control'])
-                                    !!}
-                                </td>
-
-                                <td>
-                                    {!! Form::text('kegiatan', $laporan->kegiatan, ['class' => 'form-control']) !!}
-                                </td>
-
-                                <td>
-                                    {!! Form::text('jumlah_peserta', $laporan->jumlah_peserta, ['class' => 'form-control
-                                    angka']) !!}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table id="tbl-data" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
                                 <th>Nama Ruang</th>
-                                <th>🗙</th>
                             </tr>
                         </thead>
 
                         <tbody id="inputan">
                             {!! Form::hidden('laporan', true) !!}
-                            @foreach($laporan->detail_pinjam_ruang as $item)
                             <tr>
-                                <td>
-                                    {!! Form::select('nama_ruang[]', $nama_ruang, $item->idruang_fk-1, ['class' =>
-                                    'form-control'])!!}
+                                <td style="min-width:300px">
+                                    {!! Form::text('tanggal', $tanggal, ['class' => 'form-control not-rounded-border', 'id' => 'reservationtime']) !!}
                                 </td>
+
+                                <td style="min-width:300px">
+                                    {!! Form::text('kegiatan', $laporan->kegiatan, ['class' => 'form-control']) !!}
+                                </td>
+
                                 <td>
-                                    {!! Form::button(null , [ 'class'=>'fa fa-trash btn btn-danger']) !!}
+                                    {!! Form::text('jumlah_peserta', $laporan->jumlah_peserta, ['class' => 'form-control jumlah
+                                    angka']) !!}
+                                </td>
+                                <td class="ruang">
+                                    <select id="nama_ruang" name="nama_ruang[]"
+                                        class="form-control not-rounded-border js-example-basic-multiple"
+                                        multiple="multiple">
+                                        @foreach ($ruang as $val)
+                                        <option value="{{ $val->id }}" {{ (in_array($val->id, $nama_ruang) ? 'selected' : '') }} >({{$val->kuota}}) {{$val->nama_ruang}}</option>
+                                        @endforeach
+                                    </select>
+                                    <br>
+                                    <label>Jumlah Kuota : <span class="jumlah_kuota">0</span></label>
                                 </td>
                             </tr>
-                            @endforeach
                         </tbody>
                     </table>
-
-                    <h5>Total Data = <span class="data_count">0</span></h5>
-
-                    <button id="tambah" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</button>
-                    <br><br>
                 </div>
                 <br><br>
                 <div class="form-group" style="float: right;">
@@ -135,6 +99,8 @@
 
         $('#reservation').daterangepicker();
 
+        $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, locale: { format: 'YYYY/MM/DD HH:mm:ss' }})
+
         $('.datepicker').datepicker({
             autoclose: true,
             // format: 'yyyy-mm-dd'
@@ -144,39 +110,44 @@
             showInputs: false
         });
 
-        opsiButton();
-        tableCount();
+        $('#nama_ruang, .jumlah').on('change', function(){
+            ruang = $("#nama_ruang").val();
+            jumlah = $('.jumlah').val();
+            console.log(jumlah);
+            total = 0;
 
-        $('#tambah').click(function(event) {
-            $('#inputan').append(`
-                <tr>
-                    <td>
-                        {!! Form::select('nama_ruang[]', $nama_ruang, $item->idruang_fk-1, ['class' =>
-                        'form-control'])!!}
-                    </td>
-                    <td>
-                        {!! Form::button(null , [ 'class'=>'fa fa-trash btn btn-danger']) !!}
-                    </td>
-                </tr>
-            `);
+            data = $("#nama_ruang").select2('data');
 
-            opsiButton();
-            tableCount();
-        });
 
-        function tableCount(){
-            data = $('#inputan tr').length;
-            $(".data_count").text(data);
-        }
-
-        function opsiButton(){
-            $('.fa.fa-trash').click(function(){
-                if (data > 1) {
-                    $(this).parents('tr').remove();
-                    tableCount();
-                }
+            $(data).each(function(bla, nama_ruang){
+                console.log(nama_ruang.text);
+                nama_ruang = nama_ruang.text.split(" ");
+                nama_ruang = nama_ruang[0];
+                nama_ruang = nama_ruang.split("(")[1];
+                nama_ruang = nama_ruang.split(")")[0];
+                total += nama_ruang-0;
             });
-        }
+            console.log(total);
+                    console.log(data.length);
+
+            if(total >= jumlah-0){
+                $("#nama_ruang").select2({
+                    maximumSelectionLength: data.length
+                    // formatSelectionTooBig: function (limit) {
+
+                    //     $('#box').show().text('Callback!');
+
+                    //     return 'Too many selected elements (' + limit + ')';
+                    // }
+                });
+            } else {
+                $("#nama_ruang").select2({
+                    maximumSelectionLength: 999
+                });
+            }
+
+            $('.jumlah_kuota').text(total);
+        });
 
     });
 

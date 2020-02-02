@@ -55,25 +55,28 @@ $laporan = $laporan[0];
                             @foreach ($laporan->pengadaan as $item)
                             <tr>
                                 <td>
-                                    {!! Form::text('nama_barang[]', $item->nama_barang, ['class' => 'form-control']) !!}
+                                    {!! Form::text('nama_barang[]', $item->nama_barang, ['class' => 'form-control',
+                                    'required']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('spesifikasi[]', $item->spesifikasi, ['class' => 'form-control']) !!}
+                                    {!! Form::text('spesifikasi[]', $item->spesifikasi, ['class' => 'form-control',
+                                    'required']) !!}
                                 </td>
 
                                 <td>
                                     {!! Form::text('jumlah[]', $item->jumlah, ['class' => 'form-control jumlah
-                                    angka'])!!}
+                                    angka', 'required'])!!}
                                 </td>
 
                                 <td>
                                     {!! Form::select('satuan[]', $satuan, $item->id_satuan-1, ['class' =>
-                                    'form-control'])!!}
+                                    'form-control', 'required'])!!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('harga[]', $item->harga, ['class' => 'form-control harga angka'])
+                                    {!! Form::text('harga[]', $item->harga, ['class' => 'form-control harga angka',
+                                    'required'])
                                     !!}
                                 </td>
 
@@ -149,14 +152,16 @@ $laporan = $laporan[0];
                                 {!! Form::hidden("id", $laporan->laporan_pengadaan->id) !!}
                                 <tr id="lap_{{ $laporan->id }}">
                                     <td>{!! Form::text('nama_barang', $laporan->nama_barang, ['class' =>
-                                        'form-control']) !!}</td>
+                                        'form-control', 'required']) !!}</td>
                                     <td>{!! Form::text('spesifikasi', $laporan->spesifikasi, ['class' =>
-                                        'form-control']) !!}</td>
-                                    <td>{!! Form::text('jumlah', $laporan->jumlah, ['class' => 'form-control']) !!}
+                                        'form-control', 'required']) !!}</td>
+                                    <td>{!! Form::text('jumlah', $laporan->jumlah, ['class' => 'form-control',
+                                        'required']) !!}
                                     </td>
                                     <td>{!! Form::select('satuan', $satuan, $laporan->id_satuan-1, ['class' =>
-                                        'form-control'])!!}</td>
-                                    <td>{!! Form::text('harga', $laporan->harga, ['class' => 'form-control']) !!}</td>
+                                        'form-control', 'required'])!!}</td>
+                                    <td>{!! Form::text('harga', $laporan->harga, ['class' => 'form-control',
+                                        'required']) !!}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -186,23 +191,23 @@ $laporan = $laporan[0];
                 $('#inputan').append(`
                 <tr>
                                 <td>
-                                    {!! Form::text('nama_barang[]', null, ['class' => 'form-control']) !!}
+                                    {!! Form::text('nama_barang[]', null, ['class' => 'form-control', 'required']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('spesifikasi[]', null, ['class' => 'form-control']) !!}
+                                    {!! Form::text('spesifikasi[]', null, ['class' => 'form-control', 'required']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah angka'])!!}
+                                    {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah angka', 'required'])!!}
                                 </td>
 
                                 <td>
-                                    {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control'])!!}
+                                    {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control', 'required'])!!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('harga[]', null, ['class' => 'form-control harga angka']) !!}
+                                    {!! Form::text('harga[]', null, ['class' => 'form-control harga angka', 'required']) !!}
                                 </td>
 
                                 <td>

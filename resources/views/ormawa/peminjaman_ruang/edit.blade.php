@@ -1,4 +1,4 @@
-@extends('perlengkapan.perlengkapan_view')
+@extends('layouts.template')
 
 @section('side_menu')
 @include('include.ormawa_menu')

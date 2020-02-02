@@ -86,7 +86,7 @@
                 </div>
                 <br><br>
                 @if($laporan->verif_baper == 0)
-                {!! Form::open(['route' => ['perlengkapan.peminjaman_ruang.verif', $item->id], 'method' => 'PUT'])!!}
+                {!! Form::open(['route' => ['perlengkapan.peminjaman_ruang.verif', $laporan->id], 'method' => 'PUT'])!!}
                 {!! Form::hidden("verif_baper", 1) !!}
                 <div class="form-group" style="float: right;">
                     {!! Form::submit('Setujui', [ 'class'=>'btn btn-success', 'id' => 'submit']) !!}
