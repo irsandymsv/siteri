@@ -68,13 +68,15 @@ class verifPeminjamanRuang extends Notification
             return [
                 'id'         => $this->laporan->id,
                 'kegiatan'   => $this->laporan->kegiatan,
+                'verif_baper' => $this->laporan->verif_baper,
                 'updated_at' => $this->laporan->updated_at
             ];
         } else
-        if (Auth::user()->jabatan->jabatan == 'Wakil Dekan 2') {
+        if (Auth::user()->jabatan->jabatan == 'KTU') {
             return [
                 'id'         => $this->laporan->id,
                 'kegiatan'   => $this->laporan->kegiatan,
+                'verif_ktu'  => $this->laporan->verif_ktu,
                 'updated_at' => $this->laporan->updated_at
             ];
         }

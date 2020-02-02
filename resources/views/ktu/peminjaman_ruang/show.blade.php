@@ -79,7 +79,7 @@
                     </table>
                 </div>
                 <br><br>
-                @if($laporan->verif_ktu == 0 && $laporan->verif_ktu == 0)
+                @if($laporan->verif_baper == 1 && $laporan->verif_ktu == 0)
                 {!! Form::open(['route' => ['ktu.peminjaman_ruang.verif', $laporan->id], 'method' =>
                 'PUT'])!!}
                 {!! Form::hidden("verif_ktu", 1) !!}
