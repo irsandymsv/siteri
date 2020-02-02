@@ -123,6 +123,9 @@ Route::middleware(['auth', 'checkRole:Pengelola Data Akademik'])->prefix('akadem
         Route::get('/template-sk/{id}', 'templateController@show_sk_akademik')->name('template-sk.show');
         Route::get('/template-sk/{id}/edit', 'templateController@edit_sk_akademik')->name('template-sk.edit');
         Route::put('/template-sk/{id}/update', 'templateController@update_sk_akademik')->name('template-sk.update');
+
+        //Ganti Password
+        Route::get('/ganti_password', 'manageUserController@akademik_ganti_password')->name('ganti.password');
     }
 );
 
@@ -243,6 +246,9 @@ Route::middleware(['auth', 'checkRole:Dekan'])->prefix('dekan')->name('dekan.')-
         //Mahasiswa Ujian Skripsi
         Route::get('/penguji-skripsi', 'dosenController@index_penguji')->name('penguji-skripsi');
         Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
+
+         //Ganti Password
+         Route::get('/ganti_password', 'manageUserController@dekan_ganti_password')->name('ganti.password');
     }
 );
 
@@ -273,6 +279,9 @@ Route::middleware(['auth', 'checkRole:Penata Dokumen Keuangan'])->prefix('keuang
         // Route::get('/honor-sempro/create/{id_sk_sempro}', 'honorSemproController@create')->name('honor-sempro.create');
         // Route::get('/honor-sempro/{id_sk_honor}/edit', 'honorSemproController@edit')->name('honor-sempro.edit');
         // Route::put('/honor-sempro/{id_sk_honor}/update', 'honorSemproController@update')->name('honor-sempro.update');
+         
+        //Ganti Password
+         Route::get('/ganti_password', 'manageUserController@keuangan_ganti_password')->name('ganti.password');
     }
 );
 
@@ -308,7 +317,10 @@ Route::middleware(['auth', 'checkRole:BPP'])->prefix('bpp')->name('bpp.')->group
 		Route::get('/spd', 'kepegawaianController@bpp_spd_index')->name('spd.index');
 		Route::get('/spd/{id}/view', 'kepegawaianController@bpp_spd_preview')->name('spd.view');
 		Route::get('/spd/{id}/download', 'kepegawaianController@download_bukti')->name('spd.download');
-		Route::get('/spd/{id}/selesai', 'kepegawaianController@bpp_selesai')->name('spd.selesai');
+        Route::get('/spd/{id}/selesai', 'kepegawaianController@bpp_selesai')->name('spd.selesai');
+        
+        //Ganti Password
+        Route::get('/ganti_password', 'manageUserController@bpp_ganti_password')->name('ganti.password');
 	}
 
 );
@@ -421,6 +433,9 @@ Route::middleware(['auth', 'checkRole:Pengadministrasi BMN'])->prefix('perlengka
         Route::put('/peminjaman_ruang/verif/{verif_baper}', 'peminjamanRuangController@verif_baper')->name('peminjaman_ruang.verif');
         Route::get('/pengadaan/{id}/getForm', 'pengadaanController@getForm')->name('pengadaan.getForm');
         Route::post('/pengadaan/{id}/saveItem', 'pengadaanController@saveItem')->name('pengadaan.saveItem');
+
+        //Ganti Password
+        Route::get('/ganti_password', 'manageUserController@perlengkapan_ganti_password')->name('ganti.password');
     }
 );
 
@@ -430,6 +445,9 @@ Route::middleware(['auth', 'checkRole:Pengadministrasi Layanan Kegiatan Mahasisw
         Route::resource('peminjaman_barang', 'peminjamanBarangController');
         Route::get('/peminjaman_barang/barang/{id}', array('as' => 'barang.ajax', 'uses' => 'peminjamanBarangController@barangAjax'));
         Route::resource('peminjaman_ruang', 'peminjamanRuangController');
+
+        //Ganti Password
+        Route::get('/ganti_password', 'manageUserController@ormawa_ganti_password')->name('ganti.password');
     }
 );
 
@@ -448,6 +466,9 @@ Route::middleware(['auth', 'checkRole:Pengadministrasi Kemahasiswaan & Alumni'])
         Route::get('/mahasiswa/{nim}', 'mahasiswaController@show')->name('mahasiswa.show');
         Route::get('/mahasiswa/{nim}/edit', 'mahasiswaController@edit')->name('mahasiswa.edit');
         Route::put('/mahasiswa/{nim}/update', 'mahasiswaController@update')->name('mahasiswa.update');
+
+        //Ganti Password
+        Route::get('/ganti_password', 'manageUserController@kemahasiswaan_ganti_password')->name('ganti.password');
     }
 );
 
@@ -466,6 +487,9 @@ Route::middleware(['auth', 'checkRole:Wakil Dekan 1'])->prefix('wadek1')->name('
         //Mahasiswa Ujian Skripsi
         Route::get('/penguji-skripsi', 'dosenController@index_penguji')->name('penguji-skripsi');
         Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
+
+        //Ganti Password
+        Route::get('/ganti_password', 'manageUserController@wadek1_ganti_password')->name('ganti.password');
     }
 );
 
@@ -487,7 +511,8 @@ Route::middleware(['auth', 'checkRole:Sekretaris Pimpinan'])->prefix('staffpim')
 	Route::get('/surat_tugas/{id}/approve', 'kepegawaianController@sp_surat_approve')->name('surat.approve');
 	Route::put('/surat_tugas/{id}/reject', 'kepegawaianController@sp_surat_reject')->name('surat.reject');
 	Route::get('/surat_tugas/{id}/alasan', 'kepegawaianController@sp_reject_view')->name('surat.reject.view');
-	Route::get('/ganti_password', 'manageUserController@staffpim_ganti_password')->name('ganti.password');
+    Route::get('/ganti_password', 'manageUserController@staffpim_ganti_password')->name('ganti.password');
+    
 });
 
 Route::middleware(['auth', 'checkRole:Pemroses Mutasi Kepegawaian'])->prefix('kepegawaian')->name('kepegawaian.')->group(function()
