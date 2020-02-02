@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\mahasiswa;
-use App\bagian;
+use App\prodi;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
@@ -14,30 +14,30 @@ class mahasiswaController extends Controller
 {
    public function index()
    {
-   	$mahasiswa = mahasiswa::with('bagian')->get();
+   	$mahasiswa = mahasiswa::with('prodi')->get();
 
     	return view('kemahasiswaan.mahasiswa.index', ['mahasiswa' => $mahasiswa]);
    }
 
    public function create()
    {
-   	$bagian = bagian::where('is_jurusan', 1)->get();
+   	$prodi = prodi::all();
 
-   	return view('kemahasiswaan.mahasiswa.create', ['bagian' => $bagian]);
+   	return view('kemahasiswaan.mahasiswa.create', ['prodi' => $prodi]);
    }
 
    public function store(Request $request){
       $this->validate($request, [
          'nim' => 'required|min:12|unique:mahasiswa,nim',
          'nama' => 'required',
-         'id_bagian' => 'required'
+         'id_prodi' => 'required'
       ]);
 
      try{
          mahasiswa::create([
              'nim' => $request->input('nim'),
              'nama' => $request->input('nama'),
-             'id_bagian' => $request->input('id_bagian')
+             'id_prodi' => $request->input('id_prodi')
          ]);
          return redirect()->route('kemahasiswaan.mahasiswa.create')->with('success','Data Berhasil Dibuat');
       }catch(Exception $e){
@@ -47,18 +47,18 @@ class mahasiswaController extends Controller
 
    public function show($nim)
    {
-   	$mahasiswa = mahasiswa::where('nim', $nim)->with('bagian')->first();
+   	$mahasiswa = mahasiswa::where('nim', $nim)->with('prodi')->first();
    	// dd($mahasiswa);
    	return view('kemahasiswaan.mahasiswa.show', ['mahasiswa' => $mahasiswa]);
    }
 
    public function edit($nim)
    {
-   	$bagian = bagian::where('is_jurusan', 1)->get();
-   	$mahasiswa = mahasiswa::where('nim', $nim)->with('bagian')->first();
+   	$prodi = prodi::where('is_jurusan', 1)->get();
+   	$mahasiswa = mahasiswa::where('nim', $nim)->with('prodi')->first();
 
    	return view('kemahasiswaan.mahasiswa.edit', [
-   		'bagian' => $bagian,
+   		'prodi' => $prodi,
    		'mahasiswa'=>$mahasiswa
    	]);
    }
@@ -71,7 +71,7 @@ class mahasiswaController extends Controller
 
             ],
             'nama' => 'required',
-            'id_bagian' => 'required'
+            'id_prodi' => 'required'
         ]);
         if ($validator->fails()) {
             return redirect()
@@ -83,7 +83,7 @@ class mahasiswaController extends Controller
             mahasiswa::where('nim',$id)->update([
                 'nim' => $request->input('nim'),
                 'nama' => $request->input('nama'),
-                'id_bagian' => $request->input('id_bagian')
+                'id_prodi' => $request->input('id_prodi')
             ]);
             return redirect()->route('kemahasiswaan.mahasiswa.edit', $request->input('nim'))->with('success', 'Data Berhasil Diubah');
         }catch(Exception $e){

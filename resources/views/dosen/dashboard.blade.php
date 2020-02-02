@@ -45,7 +45,7 @@
 	   			      			<td>{{ $loop->index+1 }}</td>
 	   			      			<td>{{ $item->detail_skripsi->skripsi->nim }}</td>
 	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->nama }}</td>
-	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
+	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->prodi->nama }}</td>
 	   			      			<td>
 				      					<a href="{{ route('dosen.pembimbing-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" title="Lihat Detail" class="btn btn-primary"><i class="fa fa-eye"></i></a>
 				      				</td>
@@ -90,7 +90,7 @@
 	   			      			<td>{{ $loop->index+1 }}</td>
 	   			      			<td>{{ $item->detail_skripsi->skripsi->nim }}</td>
 	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->nama }}</td>
-	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
+	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->prodi->nama }}</td>
 	   			      			<td>
 				      					<a href="{{ route('dosen.pembimbing-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" title="Lihat Detail" class="btn btn-primary"><i class="fa fa-eye"></i></a>
 				      				</td>
@@ -137,7 +137,7 @@
 	   			      			<td>{{ $loop->index+1 }}</td>
 	   			      			<td>{{ $item->detail_skripsi->skripsi->nim }}</td>
 	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->nama }}</td>
-	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
+	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->prodi->nama }}</td>
 	   			      			<td>
 				      					<a href="{{ route('dosen.pembahas-sempro.show', $item->detail_skripsi->skripsi->nim) }}" title="Lihat Detail" class="btn btn-primary"><i class="fa fa-eye"></i></a>
 				      				</td>
@@ -182,7 +182,7 @@
 	   			      			<td>{{ $loop->index+1 }}</td>
 	   			      			<td>{{ $item->detail_skripsi->skripsi->nim }}</td>
 	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->nama }}</td>
-	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
+	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->prodi->nama }}</td>
 	   			      			<td>
 				      					<a href="{{ route('dosen.pembahas-sempro.show', $item->detail_skripsi->skripsi->nim) }}" title="Lihat Detail" class="btn btn-primary"><i class="fa fa-eye"></i></a>
 				      				</td>
@@ -229,7 +229,7 @@
 	   			      			<td>{{ $loop->index+1 }}</td>
 	   			      			<td>{{ $item->detail_skripsi->skripsi->nim }}</td>
 	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->nama }}</td>
-	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
+	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->prodi->nama }}</td>
 	   			      			<td>
 				      					<a href="{{ route('dosen.penguji-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" title="Lihat Detail" class="btn btn-primary"><i class="fa fa-eye"></i></a>
 				      				</td>
@@ -274,7 +274,7 @@
 	   			      			<td>{{ $loop->index+1 }}</td>
 	   			      			<td>{{ $item->detail_skripsi->skripsi->nim }}</td>
 	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->nama }}</td>
-	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
+	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->prodi->nama }}</td>
 	   			      			<td>
 				      					<a href="{{ route('dosen.penguji-skripsi.show', $item->detail_skripsi->skripsi->nim) }}" title="Lihat Detail" class="btn btn-primary"><i class="fa fa-eye"></i></a>
 				      				</td>

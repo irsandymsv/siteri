@@ -12,8 +12,12 @@ class mahasiswa extends Model
     public $incrementing = false;
     protected $fillable =['nim','id_bagian','nama'];
 
-    public function bagian(){
-        return $this->belongsTo('App\bagian','id_bagian');
+    // public function bagian(){
+    //     return $this->belongsTo('App\bagian','id_bagian');
+    // }
+
+    public function prodi(){
+        return $this->belongsTo('App\prodi','id_prodi');
     }
 
     public function skripsi()

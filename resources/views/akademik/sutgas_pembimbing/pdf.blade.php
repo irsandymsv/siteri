@@ -162,7 +162,7 @@
             </tr>
             <tr>
                <td>Program Studi</td>
-               <td>: {{ $surat_tugas->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
+               <td>: {{ $surat_tugas->detail_skripsi->skripsi->mahasiswa->prodi->nama }}</td>
             </tr>
             <tr>
                <td>Dengan Judul</td>

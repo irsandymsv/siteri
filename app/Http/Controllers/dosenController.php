@@ -31,7 +31,7 @@ class dosenController extends Controller
    		'detail_skripsi',
    		'detail_skripsi.skripsi',
    		'detail_skripsi.skripsi.mahasiswa',
-   		'detail_skripsi.skripsi.mahasiswa.bagian'
+   		'detail_skripsi.skripsi.mahasiswa.prodi'
    	])
    	->whereHas('tipe_surat_tugas', function (Builder $query)
    	{
@@ -49,7 +49,7 @@ class dosenController extends Controller
    		'detail_skripsi',
    		'detail_skripsi.skripsi',
    		'detail_skripsi.skripsi.mahasiswa',
-   		'detail_skripsi.skripsi.mahasiswa.bagian'
+   		'detail_skripsi.skripsi.mahasiswa.prodi'
    	])
    	->whereHas('tipe_surat_tugas', function (Builder $query)
    	{
@@ -68,7 +68,7 @@ class dosenController extends Controller
    		'detail_skripsi',
    		'detail_skripsi.skripsi',
    		'detail_skripsi.skripsi.mahasiswa',
-   		'detail_skripsi.skripsi.mahasiswa.bagian'
+   		'detail_skripsi.skripsi.mahasiswa.prodi'
    	])
    	->whereHas('tipe_surat_tugas', function (Builder $query)
    	{
@@ -87,7 +87,7 @@ class dosenController extends Controller
    		'detail_skripsi',
    		'detail_skripsi.skripsi',
    		'detail_skripsi.skripsi.mahasiswa',
-   		'detail_skripsi.skripsi.mahasiswa.bagian'
+   		'detail_skripsi.skripsi.mahasiswa.prodi'
    	])
    	->whereHas('tipe_surat_tugas', function (Builder $query)
    	{
@@ -106,7 +106,7 @@ class dosenController extends Controller
    		'detail_skripsi',
    		'detail_skripsi.skripsi',
    		'detail_skripsi.skripsi.mahasiswa',
-   		'detail_skripsi.skripsi.mahasiswa.bagian'
+   		'detail_skripsi.skripsi.mahasiswa.prodi'
    	])
    	->whereHas('tipe_surat_tugas', function (Builder $query)
    	{
@@ -125,7 +125,7 @@ class dosenController extends Controller
    		'detail_skripsi',
    		'detail_skripsi.skripsi',
    		'detail_skripsi.skripsi.mahasiswa',
-   		'detail_skripsi.skripsi.mahasiswa.bagian'
+   		'detail_skripsi.skripsi.mahasiswa.prodi'
    	])
    	->whereHas('tipe_surat_tugas', function (Builder $query)
    	{
@@ -158,7 +158,7 @@ class dosenController extends Controller
    		'detail_skripsi.skripsi',
    		'detail_skripsi.skripsi.status_skripsi',
    		'detail_skripsi.skripsi.mahasiswa',
-   		'detail_skripsi.skripsi.mahasiswa.bagian',
+   		'detail_skripsi.skripsi.mahasiswa.prodi',
    	])
    	->whereHas('tipe_surat_tugas', function (Builder $query)
    	{
@@ -177,7 +177,7 @@ class dosenController extends Controller
    		'detail_skripsi.skripsi',
    		'detail_skripsi.skripsi.status_skripsi',
    		'detail_skripsi.skripsi.mahasiswa',
-   		'detail_skripsi.skripsi.mahasiswa.bagian'
+   		'detail_skripsi.skripsi.mahasiswa.prodi'
    	])
    	->whereHas('tipe_surat_tugas', function (Builder $query)
    	{
@@ -199,7 +199,7 @@ class dosenController extends Controller
    {
    	$mahasiswa = mahasiswa::where('nim', $nim)
    	->with([
-   		'bagian',
+   		'prodi',
    		'skripsi',
    		'skripsi.status_skripsi',
    		'skripsi.detail_skripsi' => function($query)
@@ -255,7 +255,7 @@ class dosenController extends Controller
    		'detail_skripsi.skripsi',
    		'detail_skripsi.skripsi.status_skripsi',
    		'detail_skripsi.skripsi.mahasiswa',
-   		'detail_skripsi.skripsi.mahasiswa.bagian',
+   		'detail_skripsi.skripsi.mahasiswa.prodi',
    	])
    	->whereHas('tipe_surat_tugas', function (Builder $query)
    	{
@@ -274,7 +274,7 @@ class dosenController extends Controller
    		'detail_skripsi.skripsi',
    		'detail_skripsi.skripsi.status_skripsi',
    		'detail_skripsi.skripsi.mahasiswa',
-   		'detail_skripsi.skripsi.mahasiswa.bagian'
+   		'detail_skripsi.skripsi.mahasiswa.prodi'
    	])
    	->whereHas('tipe_surat_tugas', function (Builder $query)
    	{
@@ -296,7 +296,7 @@ class dosenController extends Controller
    {
    	$mahasiswa = mahasiswa::where('nim', $nim)
    	->with([
-   		'bagian',
+   		'prodi',
    		'skripsi',
    		'skripsi.status_skripsi',
    		'skripsi.detail_skripsi' => function($query)
@@ -336,7 +336,7 @@ class dosenController extends Controller
    		'detail_skripsi.skripsi',
    		'detail_skripsi.skripsi.status_skripsi',
    		'detail_skripsi.skripsi.mahasiswa',
-   		'detail_skripsi.skripsi.mahasiswa.bagian',
+   		'detail_skripsi.skripsi.mahasiswa.prodi',
    	])
    	->whereHas('tipe_surat_tugas', function (Builder $query)
    	{
@@ -355,7 +355,7 @@ class dosenController extends Controller
    		'detail_skripsi.skripsi',
    		'detail_skripsi.skripsi.status_skripsi',
    		'detail_skripsi.skripsi.mahasiswa',
-   		'detail_skripsi.skripsi.mahasiswa.bagian'
+   		'detail_skripsi.skripsi.mahasiswa.prodi'
    	])
    	->whereHas('tipe_surat_tugas', function (Builder $query)
    	{
@@ -377,7 +377,7 @@ class dosenController extends Controller
    {
    	$mahasiswa = mahasiswa::where('nim', $nim)
    	->with([
-   		'bagian',
+   		'prodi',
    		'skripsi',
    		'skripsi.status_skripsi',
    		'skripsi.detail_skripsi' => function($query)

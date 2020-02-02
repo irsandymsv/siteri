@@ -58,7 +58,7 @@
                					<td>{{ $loop->index+1 }}</td>
                					<td>{{ $item->detail_skripsi->skripsi->nim }}</td>
                					<td>{{ $item->detail_skripsi->skripsi->mahasiswa->nama }}</td>
-	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
+	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->prodi->nama }}</td>
 	   			      			<td>{{ $item->detail_skripsi->skripsi->status_skripsi->status }}</td>
 	   			      			<td>
                                  @if (Auth::user()->jabatan->jabatan == "Dekan")
@@ -98,7 +98,7 @@
                					<td>{{ $loop->index+1 }}</td>
                					<td>{{ $item->detail_skripsi->skripsi->nim }}</td>
                					<td>{{ $item->detail_skripsi->skripsi->mahasiswa->nama }}</td>
-	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
+	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->prodi->nama }}</td>
 	   			      			<td>{{ $item->detail_skripsi->skripsi->status_skripsi->status }}</td>
 	   			      			<td>
 	   			      				@if (Auth::user()->jabatan->jabatan == "Dekan")

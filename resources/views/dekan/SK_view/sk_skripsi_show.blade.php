@@ -222,7 +222,7 @@
                     <td>{{ $loop->index + 1 }}</td>
             				<td>{{$item->skripsi->nim}}</td>
             				<td>{{$item->skripsi->mahasiswa->nama}}</td>
-            				<td>{{$item->skripsi->mahasiswa->bagian->bagian}}</td>
+            				<td>{{$item->skripsi->mahasiswa->prodi->nama}}</td>
             				<td>{{$item->judul}}</td>
                         @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Pembimbing")
                            <td>
@@ -349,7 +349,7 @@
                         <td>{{ $loop->index + 1 }}</td>
                         <td>{{$item->skripsi->nim}}</td>
                         <td>{{$item->skripsi->mahasiswa->nama}}</td>
-                        <td>{{$item->skripsi->mahasiswa->bagian->bagian}}</td>
+                        <td>{{$item->skripsi->mahasiswa->prodi->nama}}</td>
                         <td>{{$item->judul}}</td>
                         @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Penguji")
                            <td>

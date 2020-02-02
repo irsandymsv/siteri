@@ -216,7 +216,7 @@
                                     @endif
                                  </td>
                                  <td>{{ $val->nama }}</td>
-                                 <td>{{ $val->bagian->bagian }}</td>
+                                 <td>{{ $val->prodi->nama }}</td>
                                  <td style="width: 280px;" >{{ $val->skripsi->detail_skripsi[0]->judul }}</td>
                                  @if ($val->skripsi->detail_skripsi[0]->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Pembimbing")
                                     <td>
@@ -268,7 +268,7 @@
                                     <input type="hidden" name="pilihan_nim[]" value="2">
                                  </td>
                                  <td>{{ $val->skripsi->mahasiswa->nama }}</td>
-                                 <td>{{ $val->skripsi->mahasiswa->bagian->bagian }}</td>
+                                 <td>{{ $val->skripsi->mahasiswa->prodi->nama }}</td>
                                  <td style="width: 280px;" >{{ $val->judul }}</td>
                                  @if ($val->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Pembimbing")
                                     <td>
@@ -382,7 +382,7 @@
                               <input type="hidden" name="pilihan_nim[]" value="1">
                            </td>
                            <td class="nama_mhs" >`+val.nama+`</td>
-                           <td>`+val.bagian.bagian+`</td>
+                           <td>`+val.prodi.nama+`</td>
                            <td style="width: 280px;" >`+val.skripsi.detail_skripsi[0].judul+`</td>
                            <td>
                               <div class="tbl_row">1. `+val.skripsi.detail_skripsi[0].surat_tugas[0].dosen1.nama+`</div>
@@ -407,7 +407,7 @@
                               <input type="hidden" name="pilihan_nim[]" value="1">
                            </td>
                            <td class="nama_mhs" >`+val.nama+`</td>
-                           <td>`+val.bagian.bagian+`</td>
+                           <td>`+val.prodi.nama+`</td>
                            <td style="width: 280px;" >`+val.skripsi.detail_skripsi[0].judul+`</td>
                            <td>
                               <div class="tbl_row">1. `+val.skripsi.detail_skripsi[0].surat_tugas[1].dosen1.nama+`</div>

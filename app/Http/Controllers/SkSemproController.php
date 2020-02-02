@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Exception;
-use App\bagian;
+use App\prodi;
 use App\User;
 use App\sk_sempro;
 use App\detail_skripsi;
@@ -52,7 +52,7 @@ class SkSemproController extends Controller
          $old_data = $request->old();
          $old_mahasiswa = mahasiswa::whereIn('nim', $request->old()["nim"])
             ->with([
-               "bagian",
+               "prodi",
                "skripsi",
                "skripsi.status_skripsi",
                "skripsi.detail_skripsi" => function($query)
@@ -71,7 +71,7 @@ class SkSemproController extends Controller
 
       $dosen = user::where('is_dosen', 1)->get();
       $mahasiswa = mahasiswa::with([
-         "bagian",
+         "prodi",
          "skripsi",
          "skripsi.status_skripsi",
          "skripsi.detail_skripsi" => function($query)
@@ -151,7 +151,7 @@ class SkSemproController extends Controller
       ->with([
          'skripsi',
          'skripsi.mahasiswa',
-         'skripsi.mahasiswa.bagian',
+         'skripsi.mahasiswa.prodi',
          'surat_tugas' => function($query)
          {
             $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
@@ -177,7 +177,7 @@ class SkSemproController extends Controller
          $old_data = $request->old();
          $old_mahasiswa = mahasiswa::whereIn('nim', $request->old()["nim"])
          ->with([
-            "bagian",
+            "prodi",
             "skripsi",
             "skripsi.status_skripsi",
             "skripsi.detail_skripsi" => function($query)
@@ -207,7 +207,7 @@ class SkSemproController extends Controller
       ->with([
          'skripsi',
          'skripsi.mahasiswa',
-         'skripsi.mahasiswa.bagian',
+         'skripsi.mahasiswa.prodi',
          'surat_tugas' => function($query)
          {
             $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
@@ -222,7 +222,7 @@ class SkSemproController extends Controller
       }
 
       $mahasiswa = mahasiswa::with([
-         "bagian",
+         "prodi",
          "skripsi",
          "skripsi.status_skripsi",
          "skripsi.detail_skripsi" => function($query)
@@ -355,7 +355,7 @@ class SkSemproController extends Controller
         ->with([
             'skripsi',
             'skripsi.mahasiswa',
-            'skripsi.mahasiswa.bagian',
+            'skripsi.mahasiswa.prodi',
             'surat_tugas' => function($query)
             {
                 $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
@@ -423,7 +423,7 @@ class SkSemproController extends Controller
       ->with([
          'skripsi',
          'skripsi.mahasiswa',
-         'skripsi.mahasiswa.bagian',
+         'skripsi.mahasiswa.prodi',
          'surat_tugas' => function($query)
          {
             $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
@@ -515,7 +515,7 @@ class SkSemproController extends Controller
       ->with([
          'skripsi',
          'skripsi.mahasiswa',
-         'skripsi.mahasiswa.bagian',
+         'skripsi.mahasiswa.prodi',
          'surat_tugas' => function($query)
          {
             $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');
@@ -566,7 +566,7 @@ class SkSemproController extends Controller
       ->with([
          'skripsi',
          'skripsi.mahasiswa',
-         'skripsi.mahasiswa.bagian',
+         'skripsi.mahasiswa.prodi',
          'surat_tugas' => function($query)
          {
             $query->where('id_tipe_surat_tugas', 2)->orderBy('created_at', 'desc');

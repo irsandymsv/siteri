@@ -42,7 +42,7 @@
 
 			      	<tr>
 			      		<td>Program Studi</td>
-			      		<td>{{ $mahasiswa->bagian->bagian }}</td>
+			      		<td>{{ $mahasiswa->prodi->nama }}</td>
 			      	</tr>
 
 			      	<tr>
