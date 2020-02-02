@@ -174,7 +174,7 @@
                                     <input type="hidden" name="nim[]" value="{{ $val->nim }}">
                                  </td>
                                  <td>{{ $val->nama }}</td>
-                                 <td>{{ $val->bagian->bagian }}</td>
+                                 <td>{{ $val->prodi->nama }}</td>
                                  <td style="width: 350px;" >{{ $val->skripsi->detail_skripsi[0]->judul }}</td>
                                  <td>
                                     <div class="tbl_row">
@@ -252,7 +252,7 @@
                         <input type="hidden" name="nim[]" value="`+val.nim+`">
                      </td>
                      <td class="nama_mhs" >`+val.nama+`</td>
-                     <td>`+val.bagian.bagian+`</td>
+                     <td>`+val.prodi.nama+`</td>
                      <td style="width: 350px;" >`+val.skripsi.detail_skripsi[0].judul+`</td>
                      <td>
                         <div class="tbl_row">1. `+val.skripsi.detail_skripsi[0].surat_tugas[0].dosen1.nama+`</div>

@@ -1,4 +1,4 @@
-INSERT INTO `mahasiswa` (`nim`, `id_bagian`, `nama`) VALUES
+INSERT INTO `mahasiswa` (`nim`, `id_prodi`, `nama`) VALUES
 ('092410101001', 1, 'ARIESTO WIRATAMA'),
 ('092410101003', 1, 'DARA FARADISHA MAHARDHIKA'),
 ('092410101004', 1, 'DWI ANDIKA FEBRIANTO'),
@@ -1121,7 +1121,7 @@ INSERT INTO `mahasiswa` (`nim`, `id_bagian`, `nama`) VALUES
 ('172410103004', 3, 'RISCHI MAULIDAH MIFTAHUL QUDSIYAH'),
 ('172410103005', 3, 'VAULINA MEGA RAHAYU');
 
-INSERT INTO `mahasiswa` (`nim`, `id_bagian`, `nama`) VALUES
+INSERT INTO `mahasiswa` (`nim`, `id_prodi`, `nama`) VALUES
 ('172410103006', 3, 'CHIKA HIRDA MILLENA'),
 ('172410103007', 3, 'SAUKIR RAHMAN'),
 ('172410103008', 3, 'RETNO WULANDARI'),

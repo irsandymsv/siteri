@@ -59,7 +59,7 @@
                               <td>{{ $loop->index+1 }}</td>
                               <td>{{ $item->detail_skripsi->skripsi->nim }}</td>
                               <td>{{ $item->detail_skripsi->skripsi->mahasiswa->nama }}</td>
-                              <td>{{ $item->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
+                              <td>{{ $item->detail_skripsi->skripsi->mahasiswa->prodi->nama }}</td>
 	   			      			<td>{{ Carbon\Carbon::parse($item->tanggal)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
                               <td>
                                  @if (Carbon\Carbon::parse($item->tanggal)->gte(Carbon\Carbon::today()))
@@ -106,7 +106,7 @@
                					<td>{{ $loop->index+1 }}</td>
                					<td>{{ $item->detail_skripsi->skripsi->nim }}</td>
                					<td>{{ $item->detail_skripsi->skripsi->mahasiswa->nama }}</td>
-	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->bagian->bagian }}</td>
+	   			      			<td>{{ $item->detail_skripsi->skripsi->mahasiswa->prodi->nama }}</td>
 	   			      			<td>{{ Carbon\Carbon::parse($item->tanggal)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
                               <td>
                                  @if (Carbon\Carbon::parse($item->tanggal)->gte(Carbon\Carbon::today()))

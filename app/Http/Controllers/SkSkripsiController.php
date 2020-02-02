@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
 use Exception;
 use PDF;
-use App\bagian;
+use App\prodi;
 use App\User;
 use App\mahasiswa;
 use App\sk_skripsi;
@@ -50,7 +50,7 @@ class SkSkripsiController extends Controller
          $old_data = $request->old();
          $old_mahasiswa = mahasiswa::whereIn('nim', $request->old()["nim"])
          ->with([
-            "bagian",
+            "prodi",
             "skripsi",
             "skripsi.status_skripsi",
             "skripsi.detail_skripsi" => function($query)
@@ -71,7 +71,7 @@ class SkSkripsiController extends Controller
 
      	$dosen = user::where('is_dosen', 1)->get();
      	$mahasiswa = mahasiswa::with([
-         "bagian",
+         "prodi",
          "skripsi",
          "skripsi.status_skripsi",
          "skripsi.detail_skripsi" => function($query)
@@ -161,7 +161,7 @@ class SkSkripsiController extends Controller
      	->with([
          'skripsi',
          'skripsi.mahasiswa',
-         'skripsi.mahasiswa.bagian',
+         'skripsi.mahasiswa.prodi',
          'surat_tugas' => function($query)
          {
             $query->where('id_tipe_surat_tugas', 1)
@@ -191,7 +191,7 @@ class SkSkripsiController extends Controller
          $old_data = $request->old();
          $old_mahasiswa = mahasiswa::whereIn('nim', $request->old()["nim"])
          ->with([
-            "bagian",
+            "prodi",
             "skripsi",
             "skripsi.status_skripsi",
             "skripsi.detail_skripsi" => function($query)
@@ -223,7 +223,7 @@ class SkSkripsiController extends Controller
       ->with([
          'skripsi',
          'skripsi.mahasiswa',
-         'skripsi.mahasiswa.bagian',
+         'skripsi.mahasiswa.prodi',
          'surat_tugas' => function($query)
          {
             $query->where('id_tipe_surat_tugas', 1)
@@ -242,7 +242,7 @@ class SkSkripsiController extends Controller
       }
 
       $mahasiswa = mahasiswa::with([
-         "bagian",
+         "prodi",
          "skripsi",
          "skripsi.status_skripsi",
          "skripsi.detail_skripsi" => function($query)
@@ -437,7 +437,7 @@ class SkSkripsiController extends Controller
       ->with([
          'skripsi',
          'skripsi.mahasiswa',
-         'skripsi.mahasiswa.bagian',
+         'skripsi.mahasiswa.prodi',
          'surat_tugas' => function($query)
          {
          	$query->where('id_tipe_surat_tugas', 1)
@@ -521,7 +521,7 @@ class SkSkripsiController extends Controller
 		->with([
 		   'skripsi',
 		   'skripsi.mahasiswa',
-		   'skripsi.mahasiswa.bagian',
+		   'skripsi.mahasiswa.prodi',
 		   'surat_tugas' => function($query)
 		   {
 		      $query->where('id_tipe_surat_tugas', 1)
@@ -615,7 +615,7 @@ class SkSkripsiController extends Controller
       ->with([
          'skripsi',
          'skripsi.mahasiswa',
-         'skripsi.mahasiswa.bagian',
+         'skripsi.mahasiswa.prodi',
          'surat_tugas' => function($query)
          {
             $query->where('id_tipe_surat_tugas', 1)
@@ -670,7 +670,7 @@ class SkSkripsiController extends Controller
       ->with([
          'skripsi',
          'skripsi.mahasiswa',
-         'skripsi.mahasiswa.bagian',
+         'skripsi.mahasiswa.prodi',
          'surat_tugas' => function($query)
          {
             $query->where('id_tipe_surat_tugas', 1)

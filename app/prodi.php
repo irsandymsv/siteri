@@ -32,4 +32,9 @@ class prodi extends Model
     {
         return $this->hasMany('App\User', 'id');
     }
+
+    public function mahasiswa()
+    {
+        return $this->hasMany('App\mahasiswa','id_prodi');
+    }
 }

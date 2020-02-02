@@ -73,15 +73,15 @@
                </div>
 
                <div class="form-group">
-                  <label for="id_bagian">Program Studi</label>
-                  <select name="id_bagian" id="id_bagian" class="form-control">
+                  <label for="id_prodi">Program Studi</label>
+                  <select name="id_prodi" id="id_prodi" class="form-control">
                      <option value="">-- Pilih Prodi --</option>
-                     @foreach ($bagian as $item)
-                        <option value="{{ $item->id }}">{{ $item->bagian }}</option>
+                     @foreach ($prodi as $item)
+                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
                      @endforeach
                   </select>
 
-                  @error('id_bagian')
+                  @error('id_prodi')
                      <span class="invalid-feedback" role="alert" style="color: red;">
                          <strong>{{ $message }}</strong>
                      </span>

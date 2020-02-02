@@ -269,7 +269,7 @@ class sutgasPembahasController extends suratTugasController
         ->with([
             "detail_skripsi",
             "detail_skripsi.skripsi.mahasiswa",
-            "detail_skripsi.skripsi.mahasiswa.bagian",
+            "detail_skripsi.skripsi.mahasiswa.prodi",
             "detail_skripsi.keris",
             "dosen1:no_pegawai,nama,id_fungsional",
             "dosen1.fungsional",
@@ -334,7 +334,7 @@ class sutgasPembahasController extends suratTugasController
         ->with([
             "detail_skripsi",
             "detail_skripsi.skripsi.mahasiswa",
-            "detail_skripsi.skripsi.mahasiswa.bagian",
+            "detail_skripsi.skripsi.mahasiswa.prodi",
             "detail_skripsi.keris",
             "dosen1:no_pegawai,nama,id_fungsional",
             "dosen1.fungsional",

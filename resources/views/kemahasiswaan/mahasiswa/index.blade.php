@@ -48,7 +48,7 @@
                               <td>{{ $loop->index+1 }}</td>
                               <td>{{ $item->nim }}</td>
                               <td>{{ $item->nama }}</td>
-                              <td>{{ $item->bagian->bagian }}</td>
+                              <td>{{ $item->prodi->nama }}</td>
                               <td>
                                  @php
                                     $angkatan = substr($item->nim, 0, 2);
