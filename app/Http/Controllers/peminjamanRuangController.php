@@ -427,6 +427,7 @@ class peminjamanRuangController extends Controller
             return redirect()->route('perlengkapan.peminjaman_ruang.show', $id);
         }
     }
+
     public function verif_baper(Request $request, $id)
     {
         $this->validate(
