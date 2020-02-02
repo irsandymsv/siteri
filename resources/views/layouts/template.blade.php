@@ -418,9 +418,9 @@ desired effect
 
             loadlink();
             setInterval(function(){
-                loadlink()
                 readAllNotif();
-            }, 3000);
+                loadlink()
+            }, 5000);
         });
 
     </script>

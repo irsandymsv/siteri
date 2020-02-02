@@ -38,7 +38,7 @@
          }
 
          .table-bordered td{
-             padding: 3px;
+             padding: 2px;
          }
 
          thead th{
@@ -51,7 +51,7 @@
 
          .first_td{
             text-align: center;
-            width: 25px;
+            width: 20px;
          }
 
          .jml_total td{
@@ -61,10 +61,6 @@
 
          .jml_total td:first-child{
            text-align: center;
-         }
-
-         .span_uang{
-            /*margin-left: 20px;*/
          }
 
          .to_center{
@@ -90,6 +86,18 @@
             width: 30%;
             float: left;
             margin-left: 25px;
+         }
+
+         .width-narrow {
+            width: 5%;
+         }
+
+         .golongan{
+            width: 20px;
+         }
+
+         .nama_mhs{
+            width: 130px;
          }
 
     </style>
@@ -124,8 +132,8 @@
                   <th>Nama Mahasiswa/NIM</th>
                   <th>Gol</th>
                   <th>Honorarium</th>
-                  <th>PPH psl 21 5%-15%</th>
-                  <th>Penerimaan</th>
+                  <th class="width-narrow">PPH psl 21 5%-15%</th>
+                  <th class="width-narrow">Penerimaan</th>
                   <th>Tanda Tangan</th>
                </tr>
             </thead>
@@ -134,6 +142,19 @@
                @php $no=0; $a = 1; $b = 1; $total_honor=0; $total_pph=0; $total_penerimaan=0; @endphp
 
                @foreach($detail_skripsi as $item)
+                  //Dosen1
+                  @php
+                     $gol = "";
+                     if (is_null($item->surat_tugas[0]->dosen1->golongan)) {
+                        $gol = "-";
+                     }
+                     else{
+                        $gol = $item->surat_tugas[0]->dosen1->golongan->golongan;
+                        $gol = substr($gol,0,(strlen($gol)-2 ));
+                     }
+                     $pph = ($item->surat_tugas[0]->dosen1->pph->pph * $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor)/100;
+                     $penerimaan = $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor - $pph;
+                  @endphp
                   @if ($no+1 == 4*$a-1)
                      @php $a+=1; @endphp
                      <tr id="{{ $no+=1 }}" style="background-color: #bbb;">
@@ -143,25 +164,19 @@
                      <td class="first_td">{{ $no }}</td>
                      <td class="nama_dosen">{{ $item->surat_tugas[0]->dosen1->nama }}</td>
                      <td class="to_center">{{ $item->surat_tugas[0]->dosen1->npwp }}</td>
-                     <td rowspan="2">
+                     <td rowspan="2" class="nama_mhs">
                         <p>{{ $item->skripsi->mahasiswa->nama }}</p>
                         <p>NIM: {{ $item->skripsi->nim }}</p>
                      </td>
-                     <td class="to_center">{{ $item->surat_tugas[0]->dosen1->golongan->golongan }}</td>
-                     <td id="penguji_{{$no}}" class="pengujiHonor">Rp
+                     <td class="to_center golongan">{{ $gol }}</td>
+                     <td id="penguji_{{$no}}" class="width-narrow">Rp
                         {{ number_format($sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor, 0, ",", ".") }}
                      </td>
-                     <td class="pph" id="pph_{{$no}}">Rp
-                        @php
-                           $pph = ($item->surat_tugas[0]->dosen1->pph->pph * $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor)/100;
-                        @endphp
-                        <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
+                     <td class="width-narrow">Rp
+                        {{ number_format($pph, 0, ",", ".") }}
                      </td>
-                     <td class="penerimaan" id="penerimaan_{{$no}}">Rp
-                        @php
-                           $penerimaan = $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor - $pph;
-                        @endphp
-                        <span class="span_uang">{{ number_format($penerimaan, 0, ",", ".") }}</span>
+                     <td class="width-narrow">Rp
+                        {{ number_format($penerimaan, 0, ",", ".") }}
                      </td>
                      <td>{{ $no }}.</td>
 
@@ -172,6 +187,19 @@
                      @endphp
                   </tr>
 
+                  //Dosen2
+                  @php
+                     $gol = "";
+                     if (is_null($item->surat_tugas[0]->dosen2->golongan)) {
+                        $gol = "-";
+                     }
+                     else{
+                        $gol = $item->surat_tugas[0]->dosen2->golongan->golongan;
+                        $gol = substr($gol,0,(strlen($gol)-2 ));
+                     }
+                     $pph = ($item->surat_tugas[0]->dosen2->pph->pph * $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor)/100;
+                     $penerimaan = $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor - $pph;
+                  @endphp
                   @if ($no+1 == 4*$b)
                      @php $b+=1; @endphp
                      <tr id="{{ $no+=1 }}" style="background-color: #bbb;">
@@ -181,23 +209,17 @@
                      <td class="first_td">{{ $no }}</td>
                      <td class="nama_dosen">{{ $item->surat_tugas[0]->dosen2->nama }}</td>
                      <td class="to_center">{{ $item->surat_tugas[0]->dosen2->npwp }}</td>
-                     <td class="to_center">{{ $item->surat_tugas[0]->dosen2->golongan->golongan }}</td>
-                     <td id="penguji_{{$no}}" class="pengujiHonor">Rp
+                     <td class="to_center golongan">{{ $gol }}</td>
+                     <td id="penguji_{{$no}}" class="width-narrow">Rp
                         {{ number_format($sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor, 0, ",", ".") }}
                      </td>
-                     <td class="pph" id="pph_{{$no}}">Rp
-                        @php
-                           $pph = ($item->surat_tugas[0]->dosen2->pph->pph * $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor)/100;
-                        @endphp
-                        <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
+                     <td class="width-narrow">Rp
+                        {{ number_format($pph, 0, ",", ".") }}
                      </td>
-                     <td class="penerimaan" id="penerimaan_{{$no}}">Rp
-                        @php
-                           $penerimaan = $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor - $pph;
-                        @endphp
-                        <span class="span_uang">{{ number_format($penerimaan, 0, ",", ".") }}</span>
+                     <td class="width-narrow">Rp
+                        {{ number_format($penerimaan, 0, ",", ".") }}
                      </td>
-                     <td>{{ $no }}.</td>
+                     <td class="ttd_dosen">{{ $no }}.</td>
 
                      @php
                         $total_honor+=$sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor;

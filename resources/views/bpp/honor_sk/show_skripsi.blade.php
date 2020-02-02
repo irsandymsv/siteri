@@ -184,7 +184,16 @@
                                  <p>{{ $item->skripsi->mahasiswa->nama }}</p>
                                  <p>NIM: {{ $item->skripsi->nim }}</p>
                               </td>
-                              <td class="to_center">{{ $item->sutgas_pembimbing_terbaru->dosen1->golongan->golongan }}</td>
+                              <td class="to_center">
+                                 @if (is_null($item->sutgas_pembimbing_terbaru->dosen1->golongan))
+                                    -
+                                 @else
+                                 @php
+                                    $gol = $item->sutgas_pembimbing_terbaru->dosen1->golongan->golongan;
+                                 @endphp
+                                    {{ substr($gol,0,(strlen($gol)-2 )) }}
+                                 @endif
+                              </td>
                               <td>Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
                               <td>Rp
                                  <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
@@ -224,7 +233,16 @@
                               @endphp
                               <td class="nama_dosen">{{ $item->sutgas_pembimbing_terbaru->dosen2->nama }}</td>
                               <td class="to_center">{{ $item->sutgas_pembimbing_terbaru->dosen2->npwp }}</td>
-                              <td class="to_center">{{ $item->sutgas_pembimbing_terbaru->dosen2->golongan->golongan }}</td>
+                              <td class="to_center">
+                                 @if (is_null($item->sutgas_pembimbing_terbaru->dosen2->golongan))
+                                    -
+                                 @else
+                                 @php
+                                    $gol =$item->sutgas_pembimbing_terbaru->dosen2->golongan->golongan;
+                                 @endphp
+                                    {{ substr($gol,0,(strlen($gol)-2)) }}
+                                 @endif
+                              </td>
                               <td>Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
                               <td>Rp
                                  <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
@@ -403,7 +421,16 @@
                                  <p>{{ $item->skripsi->mahasiswa->nama }}</p>
                                  <p>NIM: {{ $item->skripsi->nim }}</p>
                               </td>
-                              <td class="to_center">{{ $item->sutgas_penguji_terbaru->dosen1->golongan->golongan }}</td>
+                              <td class="to_center">
+                                 @if (is_null($item->sutgas_penguji_terbaru->dosen1->golongan))
+                                    -
+                                 @else
+                                 @php
+                                    $gol = $item->sutgas_penguji_terbaru->dosen1->golongan->golongan;
+                                 @endphp
+                                    {{ substr($gol,0,(strlen($gol)-2 )) }}
+                                 @endif
+                              </td>
                               <td>Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
                               <td>Rp
                                  <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
@@ -437,7 +464,16 @@
                               @endphp
                               <td class="nama_dosen">{{ $item->sutgas_penguji_terbaru->dosen2->nama }}</td>
                               <td class="to_center">{{ $item->sutgas_penguji_terbaru->dosen2->npwp }}</td>
-                              <td class="to_center">{{ $item->sutgas_penguji_terbaru->dosen2->golongan->golongan }}</td>
+                              <td class="to_center">
+                                 @if (is_null($item->sutgas_penguji_terbaru->dosen2->golongan))
+                                    -
+                                 @else
+                                 @php
+                                    $gol = $item->sutgas_penguji_terbaru->dosen2->golongan->golongan;
+                                 @endphp
+                                    {{ substr($gol,0,(strlen($gol)-2)) }}
+                                 @endif
+                              </td>
                               <td>Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
                               <td>Rp
                                  <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>

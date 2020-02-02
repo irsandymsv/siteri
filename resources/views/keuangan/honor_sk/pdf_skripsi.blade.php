@@ -38,7 +38,7 @@
          }
 
          .table-bordered td{
-             padding: 3px;
+             padding: 2px;
          }
 
          thead th{
@@ -51,7 +51,7 @@
 
          .first_td{
             text-align: center;
-            width: 25px;
+            width: 20px;
          }
 
          .jml_total td{
@@ -90,6 +90,18 @@
             width: 30%;
             float: left;
             margin-left: 25px;
+         }
+
+         .golongan{
+            width: 20px;
+         }
+
+         .width-narrow {
+            width: 5%;
+         }
+
+         .nama_mhs{
+            width: 130px;
          }
 
     </style>
@@ -135,6 +147,18 @@
 
                @foreach($detail_skripsi as $item)
                   {{-- dosen1 --}}
+
+                  @php
+                     $gol = "";
+                     if (is_null($item->sutgas_pembimbing_terbaru->dosen1->golongan)) {
+                        $gol = "-";
+                     }
+                     else{
+                        $gol = $item->sutgas_pembimbing_terbaru->dosen1->golongan->golongan;
+                        $gol = substr($gol,0,(strlen($gol)-2));
+                     }
+                  @endphp
+
                   @if ($no+1 == 4*$a-1)
                      @php $a+=1; @endphp
                      <tr id="{{ $no+=1 }}" style="background-color: #bbb;">
@@ -152,22 +176,20 @@
                            $honorarium = $item->sutgas_pembimbing_terbaru->dosen1->honorarium_pudj;
                            $pph = $item->sutgas_pembimbing_terbaru->dosen1->pph_pudj;
                         }
+                        $penerimaan = $honorarium - $pph;
                      @endphp
                      <td class="nama_dosen">{{ $item->sutgas_pembimbing_terbaru->dosen1->nama }}</td>
                      <td class="to_center">{{ $item->sutgas_pembimbing_terbaru->dosen1->npwp }}</td>
-                     <td rowspan="2">
+                     <td rowspan="2" class="nama_mhs">
                         <p>{{ $item->skripsi->mahasiswa->nama }}</p>
                         <p>NIM: {{ $item->skripsi->nim }}</p>
                      </td>
-                     <td class="to_center">{{ $item->sutgas_pembimbing_terbaru->dosen1->golongan->golongan }}</td>
-                     <td>Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
-                     <td>Rp
+                     <td class="to_center golongan">{{ $gol }}</td>
+                     <td class="width-narrow">Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
+                     <td class="width-narrow">Rp
                         <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
                      </td>
-                     <td>Rp
-                        @php
-                           $penerimaan = $honorarium - $pph;
-                        @endphp
+                     <td class="width-narrow">Rp
                         <span class="span_uang">{{ number_format($penerimaan, 0, ",", ".") }}</span>
                      </td>
                      <td>{{ $no }}.</td>
@@ -180,6 +202,16 @@
                   </tr>
 
                   {{-- dosen2 --}}
+                  @php
+                     $gol = "";
+                     if (is_null($item->sutgas_pembimbing_terbaru->dosen2->golongan)) {
+                        $gol = "-";
+                     }
+                     else{
+                        $gol = $item->sutgas_pembimbing_terbaru->dosen2->golongan->golongan;
+                        $gol = substr($gol,0,(strlen($gol)-2));
+                     }
+                  @endphp
                   @if ($no+1 == 4*$b)
                      @php $b+=1; @endphp
                      <tr id="{{ $no+=1 }}" style="background-color: #bbb;">
@@ -197,18 +229,16 @@
                            $honorarium = $item->sutgas_pembimbing_terbaru->dosen2->honorarium_ppdj;
                            $pph = $item->sutgas_pembimbing_terbaru->dosen2->pph_ppdj;
                         }
+                        $penerimaan = $honorarium - $pph;
                      @endphp
                      <td class="nama_dosen">{{ $item->sutgas_pembimbing_terbaru->dosen2->nama }}</td>
                      <td class="to_center">{{ $item->sutgas_pembimbing_terbaru->dosen2->npwp }}</td>
-                     <td class="to_center">{{ $item->sutgas_pembimbing_terbaru->dosen2->golongan->golongan }}</td>
-                     <td>Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
-                     <td>Rp
+                     <td class="to_center golongan">{{ $gol }}</td>
+                     <td class="width-narrow">Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
+                     <td class="width-narrow">Rp
                         <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
                      </td>
-                     <td>Rp
-                        @php
-                           $penerimaan = $honorarium - $pph;
-                        @endphp
+                     <td class="width-narrow">Rp
                         <span class="span_uang">{{ number_format($penerimaan, 0, ",", ".") }}</span>
                      </td>
                      <td>{{ $no }}.</td>
@@ -343,6 +373,16 @@
 
                @foreach($detail_skripsi as $item)
                   {{-- dosen1 --}}
+                  @php
+                     $gol = "";
+                     if (is_null($item->sutgas_penguji_terbaru->dosen1->golongan)) {
+                        $gol = "-";
+                     }
+                     else{
+                        $gol = $item->sutgas_penguji_terbaru->dosen1->golongan->golongan;
+                        $gol = substr($gol,0,(strlen($gol)-2));
+                     }
+                  @endphp
                   @if ($no+1 == 4*$a-1)
                      @php $a+=1; @endphp
                      <tr id="{{ $no+=1 }}" style="background-color: #bbb;">
@@ -354,22 +394,20 @@
                      @php
                         $honorarium = $item->sutgas_penguji_terbaru->dosen1->honorarium_pus;
                         $pph = $item->sutgas_penguji_terbaru->dosen1->pph_pus;
+                        $penerimaan = $honorarium - $pph;
                      @endphp
                      <td class="nama_dosen">{{ $item->sutgas_penguji_terbaru->dosen1->nama }}</td>
                      <td class="to_center">{{ $item->sutgas_penguji_terbaru->dosen1->npwp }}</td>
-                     <td rowspan="2">
+                     <td rowspan="2" class="nama_mhs">
                         <p>{{ $item->skripsi->mahasiswa->nama }}</p>
                         <p>NIM: {{ $item->skripsi->nim }}</p>
                      </td>
-                     <td class="to_center">{{ $item->sutgas_penguji_terbaru->dosen1->golongan->golongan }}</td>
-                     <td>Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
-                     <td>Rp
+                     <td class="to_center golongan">{{ $gol }}</td>
+                     <td class="width-narrow">Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
+                     <td class="width-narrow">Rp
                         <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
                      </td>
-                     <td>Rp
-                        @php
-                           $penerimaan = $honorarium - $pph;
-                        @endphp
+                     <td class="width-narrow">Rp
                         <span class="span_uang">{{ number_format($penerimaan, 0, ",", ".") }}</span>
                      </td>
                      <td>{{ $no }}.</td>
@@ -382,6 +420,16 @@
                   </tr>
 
                   {{-- dosen2 --}}
+                  @php
+                     $gol = "";
+                     if (is_null($item->sutgas_penguji_terbaru->dosen2->golongan)) {
+                        $gol = "-";
+                     }
+                     else{
+                        $gol = $item->sutgas_penguji_terbaru->dosen2->golongan->golongan;
+                        $gol = substr($gol,0,(strlen($gol)-2));
+                     }
+                  @endphp
                   @if ($no+1 == 4*$b)
                      @php $b+=1; @endphp
                      <tr id="{{ $no+=1 }}" style="background-color: #bbb;">
@@ -393,18 +441,16 @@
                      @php
                         $honorarium = $item->sutgas_penguji_terbaru->dosen2->honorarium_pps;
                         $pph = $item->sutgas_penguji_terbaru->dosen2->pph_pps;
+                        $penerimaan = $honorarium - $pph;
                      @endphp
                      <td class="nama_dosen">{{ $item->sutgas_penguji_terbaru->dosen2->nama }}</td>
                      <td class="to_center">{{ $item->sutgas_penguji_terbaru->dosen2->npwp }}</td>
-                     <td class="to_center">{{ $item->sutgas_penguji_terbaru->dosen2->golongan->golongan }}</td>
-                     <td>Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
-                     <td>Rp
+                     <td class="to_center golongan">{{ $gol }}</td>
+                     <td class="width-narrow">Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
+                     <td class="width-narrow">Rp
                         <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
                      </td>
-                     <td>Rp
-                        @php
-                           $penerimaan = $honorarium - $pph;
-                        @endphp
+                     <td class="width-narrow">Rp
                         <span class="span_uang">{{ number_format($penerimaan, 0, ",", ".") }}</span>
                      </td>
                      <td>{{ $no }}.</td>
