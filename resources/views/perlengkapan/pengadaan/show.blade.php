@@ -209,82 +209,86 @@
         value = null;
 
         $('#peruntukan, .nama, .spesifikasi, .jumlah, .satuan, .harga').dblclick(function(event){
-            if (target) {
-                unedit();
-                save();
-            }
-            if (!target) {
-                value = $(this).html();
-                ori = $(this).html();
-                select = getSelector(this);
-                target = this;
-                edit = true;
-                // console.log(select);
-                if (select == 'peruntukan') {
-                    value = value.substring(2);
-                } else
-
-                console.log(value);
-                if (select == 'peruntukan' || select == 'nama' || select == 'spesifikasi') {
-                    form = '{!! Form::text('keterangan', 'null', ['class' => 'form-control', 'required']) !!}';
-                    form = form.replace('null', value);
-                    form = form.replace('keterangan', select);
-                    // console.log(form);
-                    $(this).html(form);
-                } else
-
-                if (select == 'harga') {
-                    form = '{!! Form::text('harga', 'null', ['class' => 'form-control jumlah angka', 'required'])!!}';
-                    form = form.replace('null', value);
-                    console.log(form);
-                    $(this).html(form);
-                } else
-
-                if (select == 'jumlah') {
-                    form = '{!! Form::text('jumlah', 'null', ['class' => 'form-control jumlah angka', 'required', 'style' => 'max-width:60px'])!!}';
-                    form = form.replace('null', value);
-                    console.log(form);
-                    $(this).html(form);
-                } else
-
-                if (select == 'satuan') {
-                    @php
-                    $loop = true;
-                    $count = 0;
-                    foreach ($satuan as $val) {
-                    @endphp
-                        if (value == '{{ $val }}') {
-                            @php
-                            $value = $count;
-                            $loop = false;
-                            @endphp
-                        }
-                    @php
-                        if ($loop) {
-                            break;
-                        } else continue;
-                        $count++;
+            // if (edit) {
+            //     if ($(e.target).parent()[0] != target) {
+                    if (target) {
+                        unedit();
+                        save();
                     }
-                    @endphp
-                    value = $(this).attr('idd') - 1;
-                    urls = '{{ route("perlengkapan.pengadaan.getForm", "id") }}';
-                    urls = urls.replace('id', value);
-                    console.log(urls);
-                    $.ajax({
-                        type: 'GET',
-                        url: urls,
-                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        // data: {value: value},
-                        success: function (response) {
-                            form = response;
-                            // console.log(value);
+                    if (!target) {
+                        value = $(this).html();
+                        ori = $(this).html();
+                        select = getSelector(this);
+                        target = this;
+                        edit = true;
+                        // console.log(select);
+                        if (select == 'peruntukan') {
+                            value = value.substring(2);
+                        } else
+
+                        console.log(value);
+                        if (select == 'peruntukan' || select == 'nama' || select == 'spesifikasi') {
+                            form = '{!! Form::text('keterangan', 'null', ['class' => 'form-control', 'required']) !!}';
+                            form = form.replace('null', value);
+                            form = form.replace('keterangan', select);
                             // console.log(form);
-                            $(target).html(form);
+                            $(this).html(form);
+                        } else
+
+                        if (select == 'harga') {
+                            form = '{!! Form::text('harga', 'null', ['class' => 'form-control jumlah angka', 'required'])!!}';
+                            form = form.replace('null', value);
+                            console.log(form);
+                            $(this).html(form);
+                        } else
+
+                        if (select == 'jumlah') {
+                            form = '{!! Form::text('jumlah', 'null', ['class' => 'form-control jumlah angka', 'required', 'style' => 'max-width:60px'])!!}';
+                            form = form.replace('null', value);
+                            console.log(form);
+                            $(this).html(form);
+                        } else
+
+                        if (select == 'satuan') {
+                            @php
+                            $loop = true;
+                            $count = 0;
+                            foreach ($satuan as $val) {
+                            @endphp
+                                if (value == '{{ $val }}') {
+                                    @php
+                                    $value = $count;
+                                    $loop = false;
+                                    @endphp
+                                }
+                            @php
+                                if ($loop) {
+                                    break;
+                                } else continue;
+                                $count++;
+                            }
+                            @endphp
+                            value = $(this).attr('idd') - 1;
+                            urls = '{{ route("perlengkapan.pengadaan.getForm", "id") }}';
+                            urls = urls.replace('id', value);
+                            console.log(urls);
+                            $.ajax({
+                                type: 'GET',
+                                url: urls,
+                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                // data: {value: value},
+                                success: function (response) {
+                                    form = response;
+                                    // console.log(value);
+                                    // console.log(form);
+                                    $(target).html(form);
+                                }
+                            });
                         }
-                    });
-                }
-            } else {
-            }
+                    } else {
+                    }
+            //     }
+            // }
         });
 
         function unedit() {
@@ -348,14 +352,25 @@
                 console.log("Mitet!!");
                 if (e.key === "Escape") {
                     $(target).html(ori);
-                    edit = false;
-                    target = false;
+                    edit = null;
+                    target = null;
                 } else
                 if(e.key === "Enter"){
                     unedit();
                     save();
-                    target = false;
-                    edit = false;
+                    target = null;
+                    edit = null;
+                }
+            }
+        });
+
+        $('html').click(function (e) {
+            if (edit) {
+                if ($(e.target).parent()[0] != target) {
+                    unedit();
+                    save();
+                    edit = null;
+                    target = null;
                 }
             }
         });
