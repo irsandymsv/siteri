@@ -87,4 +87,9 @@ class NotificationController extends Controller
             }
         }
     }
+
+    public function icon()
+    {
+        return view('notifikasi.iconNotif');
+    }
 }
