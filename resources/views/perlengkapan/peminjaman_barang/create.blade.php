@@ -18,6 +18,9 @@
     .hidden {
         display: none important !;
     }
+    span.select2.select2-container.select2-container--default  {
+        width: 100% important!;
+    }
 </style>
 @endsection
 
@@ -66,7 +69,7 @@
                         <tbody id="inputan">
                             <tr>
                                 <td>
-                                    <select id="barang" name="barang[]" class="form-control barang select2">
+                                    <select id="barang1" name="barang[]" class="form-control barang select2" style="width: 100%">
                                         <option value="null">Pilih Barang</option>
                                         @foreach ($barang as $val)
                                         <option value="{{ $val->id }}">{{ $val->nama_barang }}</option>
@@ -75,7 +78,7 @@
                                 </td>
 
                                 <td class="merk">
-                                    <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang select2"
+                                    <select id="merk_barang1" name="merk_barang[]" class="form-control merk_barang select2" style="width: 100%"
                                         disabled="true">
                                     </select>
                                 </td>
@@ -132,7 +135,7 @@
         tableCount();
         barangAjax();
 
-        $('.select2').select2();
+        $('#barang1, #merk_barang1').select2();
 
         $('.js-example-basic-multiple').select2();
 
@@ -154,11 +157,14 @@
             showInputs: false
         });
 
+        count = 1;
         $('#tambah').click(function(event) {
+            count++;
+
             $('#inputan').append(`
                 <tr>
                     <td>
-                        <select id="barang" name="barang[]" class="form-control barang">
+                        <select id="barang`+count+`" name="barang[]" class="form-control barang select2" style="width: 100%">
                             <option value="">Pilih Barang</option>
                             @foreach ($barang as $val)
                             <option value="{{ $val->id }}">{{$val->nama_barang}}</option>
@@ -167,7 +173,7 @@
                     </td>
 
                     <td class="merk">
-                        <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang" disabled="true">
+                        <select id="merk_barang`+count+`" name="merk_barang[]" class="form-control merk_barang select2" style="width: 100%" disabled="true">
                         </select>
                     </td>
 
@@ -186,7 +192,13 @@
                     </td>
                 </tr>
             `);
+            $('#barang'+count+', #merk_barang'+count).select2();
 
+            compek = $('#inputan').children().last();
+            $($($(compek)[0]).children().first()).children().select2();
+
+            // console.log(compek.children('.select2'));
+            // $('.select2').select2();
             opsiButton();
             tableCount();
             barangAjax();
@@ -198,7 +210,7 @@
 
                 // console.log($(this).parents('tr'));
                 // console.log($(this).parents('tr')["0"].children[1]);
-                merk = $(this).parents('tr').children('.merk').children();
+                merk = $(this).parents('tr').children('.merk').children('.merk_barang');
                 // console.log($(this).parents('tr').children('.merk').children());
                 // console.log($(this).parents('tr').children('.merk_barang'));
 

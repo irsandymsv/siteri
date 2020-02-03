@@ -42,7 +42,7 @@ $laporan = $laporan[0];
                         <tbody>
                             <tr>
                                 <td>
-                                    {!! Form::text('kode_barang', $barang->kode_barang, ['class' => 'form-control']) !!}
+                                    {!! Form::text('kode_barang', $barang->kode_barang, ['class' => 'form-control angka']) !!}
                                 </td>
                                 <td>
                                     {!! Form::text('nama_barang', $barang->nama_barang, ['class' => 'form-control']) !!}

@@ -152,10 +152,11 @@ class inventarisController extends Controller
      */
     public function update($id, Request $request)
     {
+        // dd($request);    
         $idbarang = data_barang::all()->pluck('id')->last();
         if ($request->barang) {
             $this->validate($request, [
-                "kode_barang"   => "required|integer",
+                "kode_barang"   => "required|numeric",
                 "nama_barang"   => "required|string|max:50",
                 "status"        => "required|integer",
                 "tanggal"       => "required|array",
@@ -218,6 +219,7 @@ class inventarisController extends Controller
     public function destroy($id, Request $request)
     {
         if ($request->barang) {
+            // dd($id, $request);
             data_barang::findOrfail($id)->delete();
         } else {
             detail_data_barang::findOrfail($id)->delete();
