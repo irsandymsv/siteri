@@ -8,6 +8,11 @@
 
 @section('judul_header', 'Peminjaman Ruang')
 
+@section('css_link')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col-xs-12">
@@ -73,14 +78,13 @@
                         <tbody>
                             @php $no = 0 @endphp
                             @foreach($detail_laporan as $item)
-                            <tr id="lap_{{ $item->id }}">
+                            <tr id="{{ $item->idruang_fk }}">
                                 <td>{{$no+=1}}</td>
                                 <td>{{$item->data_ruang->nama_ruang}}</td>
                                 <td>{{$item->data_ruang->kuota}}</td>
                                 <td>
-                                    <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan"
-                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i
-                                            class="fa fa-trash"></i></a>
+                                    <a href="#" class="btn btn-danger" id="{{ $item->idpinjam_ruang_fk }}" name="hapus_laporan"
+                                    title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -89,7 +93,8 @@
                 </div>
                 <br><br>
                 @if($laporan->verif_baper == 0)
-                {!! Form::open(['route' => ['perlengkapan.peminjaman_ruang.verif', $laporan->id], 'method' => 'PUT'])!!}
+                {!! Form::open(['route' => ['perlengkapan.peminjaman_ruang.verif', $laporan->id], 'method' =>
+                'PUT'])!!}
                 {!! Form::hidden("verif_baper", 1) !!}
                 <div class="form-group" style="float: right;">
                     {!! Form::submit('Setujui', [ 'class'=>'btn btn-success', 'id' => 'submit']) !!}
@@ -138,34 +143,39 @@
     $(function(){
         $('a.btn.btn-danger').click(function(){
             event.preventDefault();
-				var id = $(this).attr('id');
-                console.log(id);
+            id = $(this).attr('id');
+            idruang = $(this).parents('tr').attr('id');
+            console.log(id);
+            console.log(idruang);
 
-				var url_del = "{{route('perlengkapan.peminjaman_ruang.destroy', "id")}}";
-                url_del = url_del.replace('id', id);
-				console.log(url_del);
+            url_del = "{{route('perlengkapan.peminjaman_ruang.destroy', "id")}}";
+            url_del = url_del.replace('id', id);
+            console.log(url_del);
 
-				$('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
-					$.ajaxSetup({
-					    headers: {
-					        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-					    }
-					});
+            $('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
 
-					$.ajax({
-						url: url_del,
-						type: 'POST',
-						data: {_method: 'DELETE'},
-					})
-					.done(function(hasil) {
-						console.log("success");
-						$("tr#lap_"+id).remove();
-					})
-					.fail(function() {
-						console.log("error");
-						$("tr#lap_"+id).remove();
-					});
-				});
+                $.ajax({
+                    url: url_del,
+                    type: 'POST',
+                    data: {_method: 'DELETE', 'idruang':idruang},
+                })
+                .done(function(hasil) {
+                    console.log("success");
+                    $("tr#"+idruang).remove();
+                    $("#success_delete").show();
+                    $("#success_delete").find('span').html(hasil);
+                    $("#success_delete").fadeOut(1800);
+                })
+                .fail(function() {
+                    console.log("error");
+                    $("tr#"+idruang).remove();
+                });
+            });
         });
     });
 

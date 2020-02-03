@@ -108,42 +108,46 @@
 @section('script')
 <script>
     $(function() {
-        $('#peminjaman_barang').DataTable();
+        $('#peminjaman_barang').DataTable({
+            "fnDrawCallback": function( oSettings ) {
 
-        $('a.btn.btn-danger').click(function(){
-            event.preventDefault();
-            id = $(this).attr('id');
-            console.log(id);
+                $('a.btn.btn-danger').click(function(){
+                    event.preventDefault();
+                    id = $(this).attr('id');
+                    console.log(id);
 
-            url_del = "{{route('perlengkapan.peminjaman_barang.destroy', "id")}}";
-            url_del = url_del.replace('id', id)
-            console.log(url_del);
+                    url_del = "{{route('perlengkapan.peminjaman_barang.destroy', "id")}}";
+                    url_del = url_del.replace('id', id)
+                    console.log(url_del);
 
-            $('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
+                    $('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                        $.ajax({
+                            url: url_del,
+                            type: 'POST',
+                            // dataType: '',
+                            data: {_method: 'DELETE', 'laporan':true},
+                        })
+                        .done(function(hasil) {
+                            console.log("success");
+                            $("tr#lap_"+id).remove();
+                            $("#success_delete").show();
+                            $("#success_delete").find('span').html(hasil);
+                            $("#success_delete").fadeOut(1800);
+                        })
+                        .fail(function() {
+                            console.log("error");
+                        });
+                    });
                 });
-
-                $.ajax({
-                    url: url_del,
-                    type: 'POST',
-                    // dataType: '',
-                    data: {_method: 'DELETE', 'laporan':true},
-                })
-                .done(function(hasil) {
-                    console.log("success");
-                    $("tr#lap_"+id).remove();
-                    $("#success_delete").show();
-                    $("#success_delete").find('span').html(hasil);
-                    $("#success_delete").fadeOut(1800);
-                })
-                .fail(function() {
-                    console.log("error");
-                });
-            });
+            }
         });
+
     });
 
 </script>

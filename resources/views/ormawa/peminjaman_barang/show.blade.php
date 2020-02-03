@@ -25,10 +25,12 @@
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title">Laporan Peminjaman Barang</h3>
+                @if($laporan->verif_baper == 0)
                 <div style="float: right;">
                     <a href="{{ route('ormawa.peminjaman_barang.edit', [$laporan->id, 'laporan' => true]) }}"
                         class="btn btn-warning"><i class="fa fa-edit"></i> Ubah Laporan</a>
                 </div>
+                @endif
             </div>
 
             <div class="box-body">
@@ -139,44 +141,48 @@
 @section('script')
 <script>
     $(function() {
-        $('#peminjaman_barang').DataTable();
+        $('#peminjaman_barang').DataTable({
+            "fnDrawCallback": function( oSettings ) {
 
-        $('a.btn.btn-danger').click(function(){
-            event.preventDefault();
-            id = $(this).attr('id');
-            idmerk = $(this).parents('tr').attr('id');
-            console.log(id);
-            console.log(idmerk);
+                $('a.btn.btn-danger').click(function(){
+                    event.preventDefault();
+                    id = $(this).attr('id');
+                    idmerk = $(this).parents('tr').attr('id');
+                    console.log(id);
+                    console.log(idmerk);
 
-            url_del = "{{route('ormawa.peminjaman_barang.destroy', "id")}}";
-            url_del = url_del.replace('id', id);
-            console.log(url_del);
+                    url_del = "{{route('ormawa.peminjaman_barang.destroy', "id")}}";
+                    url_del = url_del.replace('id', id);
+                    console.log(url_del);
 
-            $('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
+                    $('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                        $.ajax({
+                            url: url_del,
+                            type: 'POST',
+                            data: {_method: 'DELETE', 'idmerk':idmerk},
+                        })
+                        .done(function(hasil) {
+                            console.log("success");
+                            $("tr#"+idmerk).remove();
+                            $("#success_delete").show();
+                            $("#success_delete").find('span').html(hasil);
+                            $("#success_delete").fadeOut(1800);
+                        })
+                        .fail(function() {
+                            console.log("error");
+                            $("tr#"+idmerk).remove();
+                        });
+                    });
                 });
-
-                $.ajax({
-                    url: url_del,
-                    type: 'POST',
-                    data: {_method: 'DELETE', 'idmerk':idmerk},
-                })
-                .done(function(hasil) {
-                    console.log("success");
-                    $("tr#"+idmerk).remove();
-                    $("#success_delete").show();
-                    $("#success_delete").find('span').html(hasil);
-                    $("#success_delete").fadeOut(1800);
-                })
-                .fail(function() {
-                    console.log("error");
-                    $("tr#"+idmerk).remove();
-                });
-            });
+            }
         });
+
     });
 </script>
 @endsection
