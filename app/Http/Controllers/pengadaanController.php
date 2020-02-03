@@ -35,9 +35,8 @@ class pengadaanController extends Controller
             // dd($db);
             $db = laporan_pengadaan::all();
             return view(
-                'perlengkapan.pengadaan.index',
-                [
-                    'laporan'  => $db
+                'perlengkapan.pengadaan.index', [
+                'laporan'  => $db
                 ]
             );
         }
@@ -47,9 +46,8 @@ class pengadaanController extends Controller
             $db = laporan_pengadaan::all();
             // dd($db);
             return view(
-                'wadek2.pengadaan.index',
-                [
-                    'laporan'  => $db
+                'wadek2.pengadaan.index', [
+                'laporan'  => $db
                 ]
             );
         }
@@ -82,25 +80,24 @@ class pengadaanController extends Controller
         // dd($data);
         try {
             $this->validate(
-                $request,
-                [
-                    "keterangan"    => "required|string|max:100",
-                    "nama_barang"   => "required|array",
-                    "nama_barang.*" => "required|string|max:50",
-                    "spesifikasi"   => "required|array",
-                    "spesifikasi.*" => "required|string|max:50",
-                    "jumlah"        => "required|array",
-                    "jumlah.*"      => "required|integer",
-                    "satuan"        => "required|array",
-                    "satuan.*"      => "required|integer|max:4",
-                    "harga"         => "required|array",
-                    "harga.*"       => "required|integer"
+                $request, [
+                "keterangan"    => "required|string|max:100",
+                "nama_barang"   => "required|array",
+                "nama_barang.*" => "required|string|max:50",
+                "spesifikasi"   => "required|array",
+                "spesifikasi.*" => "required|string|max:50",
+                "jumlah"        => "required|array",
+                "jumlah.*"      => "required|integer",
+                "satuan"        => "required|array",
+                "satuan.*"      => "required|integer|max:4",
+                "harga"         => "required|array",
+                "harga.*"       => "required|integer"
                 ]
             );
         } catch (Exception $e) {
 
             $gagal = $e->validator->messages();
-            $compek = [];
+            $compek =[];
             $compek = (array) $gagal;
             $gagal = [];
             foreach ($compek as $key) {
@@ -132,23 +129,22 @@ class pengadaanController extends Controller
         for ($i = 0; $i < count($request->nama_barang); $i++) {
             pengadaan::create(
                 [
-                    'nama_barang'   => $request->nama_barang[$i],
-                    'spesifikasi'   => $request->spesifikasi[$i],
-                    'jumlah'        => $request->jumlah[$i],
-                    'id_satuan'     => ($request->satuan[$i] + 1),
-                    'harga'         => $request->harga[$i],
-                    'id_laporan'    => $idLaporan
+                'nama_barang'   => $request->nama_barang[$i],
+                'spesifikasi'   => $request->spesifikasi[$i],
+                'jumlah'        => $request->jumlah[$i],
+                'id_satuan'     => ($request->satuan[$i] + 1),
+                'harga'         => $request->harga[$i],
+                'id_laporan'    => $idLaporan
                 ]
             );
         }
 
         $laporan = laporan_pengadaan::findOrfail($idLaporan);
-        dd($laporan);
+        // dd($laporan);
 
         $wadek = User::with('jabatan')
             ->whereHas(
-                'jabatan',
-                function (Builder $query) {
+                'jabatan', function (Builder $query) {
                     $query->where('jabatan', 'Wakil Dekan 2');
                 }
             )->first();
@@ -194,11 +190,10 @@ class pengadaanController extends Controller
             // dd($form);
             // dd($pengadaan);
             return view(
-                'perlengkapan.pengadaan.show',
-                [
-                    'pengadaan'         => $pengadaan[0]->pengadaan,
-                    'laporan_pengadaan' => $pengadaan[0],
-                    'satuan'            => $satuan
+                'perlengkapan.pengadaan.show', [
+                'pengadaan'         => $pengadaan[0]->pengadaan,
+                'laporan_pengadaan' => $pengadaan[0],
+                'satuan'            => $satuan
                 ]
             );
         }
@@ -210,7 +205,7 @@ class pengadaanController extends Controller
                     $id_pengadaan->where('id_laporan', $this->temp);
                 }]
             )
-                ->get();
+            ->get();
 
             // $pengadaan = pengadaan::where('id_laporan', $id)
             //     ->with(['laporan_pengadaan', 'satuan'])
@@ -218,10 +213,9 @@ class pengadaanController extends Controller
 
             // dd($pengadaan);
             return view(
-                'wadek2.pengadaan.show',
-                [
-                    'pengadaan' => $pengadaan[0]->pengadaan,
-                    'laporan' => $pengadaan[0]
+                'wadek2.pengadaan.show', [
+                'pengadaan' => $pengadaan[0]->pengadaan,
+                'laporan' => $pengadaan[0]
                 ]
             );
         }
@@ -253,11 +247,10 @@ class pengadaanController extends Controller
             // dd("COMPEKKKKK");
         }
         return view(
-            'perlengkapan.pengadaan.edit',
-            [
-                "laporan"   => $laporan,
-                "satuan"    => $satuan,
-                "status"    => $status->laporan
+            'perlengkapan.pengadaan.edit', [
+            "laporan"   => $laporan,
+            "satuan"    => $satuan,
+            "status"    => $status->laporan
             ]
         );
     }
@@ -272,150 +265,154 @@ class pengadaanController extends Controller
     public function saveItem($id, Request $request)
     {
         // dd($id, $request->lap, $request->select, $request->value);
-        if ($request->select == 'peruntukan') {
-            try {
-                $this->validate(
-                    $request,
-                    [
+        ($request->select == 'peruntukan') ? $awal = laporan_pengadaan::findOrfail($request->lap) : $awal = laporan_pengadaan::findOrfail($request->id);
+        if ($awal->verif_wadek2 != 2) {
+            if ($request->select == 'peruntukan') {
+                try {
+                    $this->validate(
+                        $request,
+                        [
                         "value"    => "required|string|max:100"
-                    ]
-                );
-                laporan_pengadaan::findOrfail($request->id)->update(
-                    [
+                        ]
+                    );
+                    laporan_pengadaan::findOrfail($request->id)->update(
+                        [
                         "keterangan"    => $request->value,
                         "verif_wadek2"  => 0,
                         "pesan"         => null
-                    ]
-                );
-            } catch (Exception $e) {
-                dd($request);
-                if (!(isset($request->value) && empty($request->value))) {
-                    $request->value = 'Diisi!';
+                        ]
+                    );
+                } catch (Exception $e) {
+                    dd($request);
+                    if (!(isset($request->value) && empty($request->value))) {
+                        $request->value = 'Diisi!';
+                    }
+                    $retun = ["peruntukan" => $request->value, "status" => "Gagal Ubah Peruntukan"];
+                    return $retun;
                 }
-                $retun = ["peruntukan" => $request->value, "status" => "Gagal Ubah Peruntukan"];
-                return $retun;
-            }
-        } elseif ($request->select == 'nama' || $request->select == 'spesifikasi') {
-            try {
-                $this->validate(
-                    $request,
-                    [
-                        "value"    => "required|string|max:50",
-                    ]
-                );
-                if ($request->select == 'nama') {
-                    pengadaan::findOrfail($id)->update(
+            } elseif ($request->select == 'nama' || $request->select == 'spesifikasi') {
+                try {
+                    $this->validate(
+                        $request,
                         [
+                        "value"    => "required|string|max:50",
+                        ]
+                    );
+                    if ($request->select == 'nama') {
+                        pengadaan::findOrfail($id)->update(
+                            [
                             "nama_barang"   => $request->value
-                        ]
-                    );
-                } else {
-                    pengadaan::findOrfail($id)->update(
-                        [
+                            ]
+                        );
+                    } else {
+                        pengadaan::findOrfail($id)->update(
+                            [
                             "spesifikasi"   => $request->value
-                        ]
-                    );
-                }
-                laporan_pengadaan::findOrfail($request->lap)->update(
-                    [
+                            ]
+                        );
+                    }
+                    laporan_pengadaan::findOrfail($request->lap)->update(
+                        [
                         "verif_wadek2"  => 0,
                         "pesan"         => null
-                    ]
-                );
-            } catch (Exception $e) {
-                if (!(isset($request->value) && empty($request->value))) {
-                    $request->value = 'Diisi!';
+                        ]
+                    );
+                } catch (Exception $e) {
+                    if (!(isset($request->value) && empty($request->value))) {
+                        $request->value = 'Diisi!';
+                    }
+                    if ($request->select == 'nama') {
+                        $retun = ["nama" => $request->value, "status" => "Gagal Ubah Nama"];
+                    } else {
+                        $retun = ["spesifikasi" => $request->value, "status" => "Gagal Ubah Spesifikasi"];
+                    }
+                    return $retun;
                 }
-                if ($request->select == 'nama') {
-                    $retun = ["nama" => $request->value, "status" => "Gagal Ubah Nama"];
-                } else {
-                    $retun = ["spesifikasi" => $request->value, "status" => "Gagal Ubah Spesifikasi"];
-                }
-                return $retun;
-            }
-        } elseif ($request->select == 'satuan') {
-            // dd($request);
-            try {
-                $this->validate(
-                    $request,
-                    [
+            } elseif ($request->select == 'satuan') {
+                // dd($request);
+                try {
+                    $this->validate(
+                        $request,
+                        [
                         "value"    => "required|integer|max:4",
-                    ]
-                );
-                pengadaan::findOrfail($id)->update(
-                    [
+                        ]
+                    );
+                    pengadaan::findOrfail($id)->update(
+                        [
                         "id_satuan"   => ($request->value + 1)
-                    ]
-                );
-                laporan_pengadaan::findOrfail($request->lap)->update(
-                    [
+                        ]
+                    );
+                    laporan_pengadaan::findOrfail($request->lap)->update(
+                        [
                         "verif_wadek2"  => 0,
                         "pesan"         => null
-                    ]
-                );
-            } catch (Exception $e) {
-                // dd($e->getMessage());
-                if (!(isset($request->value) && empty($request->value))) {
-                    $request->value = '0';
+                        ]
+                    );
+                } catch (Exception $e) {
+                    // dd($e->getMessage());
+                    if (!(isset($request->value) && empty($request->value))) {
+                        $request->value = '0';
+                    }
+                    $retun = ["satuan" => $request->value, "status" => "Gagal Ubah Satuan"];
+                    return $retun;
                 }
-                $retun = ["satuan" => $request->value, "status" => "Gagal Ubah Satuan"];
-                return $retun;
-            }
-        } elseif ($request->select == 'jumlah' || $request->select == 'harga') {
-            try {
-                $this->validate(
-                    $request,
-                    [
+            } elseif ($request->select == 'jumlah' || $request->select == 'harga') {
+                try {
+                    $this->validate(
+                        $request,
+                        [
                         "value"    => "required|string|max:50",
-                    ]
-                );
-                if ($request->select == 'jumlah') {
-                    pengadaan::findOrfail($id)->update(
-                        [
+                        ]
+                    );
+                    if ($request->select == 'jumlah') {
+                        pengadaan::findOrfail($id)->update(
+                            [
                             "jumlah"   => $request->value
-                        ]
-                    );
-                } else {
-                    pengadaan::findOrfail($id)->update(
-                        [
+                            ]
+                        );
+                    } else {
+                        pengadaan::findOrfail($id)->update(
+                            [
                             "harga"   => $request->value
-                        ]
-                    );
-                }
-                laporan_pengadaan::findOrfail($request->lap)->update(
-                    [
+                            ]
+                        );
+                    }
+                    laporan_pengadaan::findOrfail($request->lap)->update(
+                        [
                         "verif_wadek2"  => 0,
                         "pesan"         => null
-                    ]
-                );
-            } catch (Exception $e) {
-                if (!(isset($request->value) && empty($request->value))) {
-                    $request->value = 'Diisi!';
+                        ]
+                    );
+                } catch (Exception $e) {
+                    if (!(isset($request->value) && empty($request->value))) {
+                        $request->value = 'Diisi!';
+                    }
+                    if ($request->select == 'jumlah') {
+                        $retun = ["jumlah" => $request->value, "status" => "Gagal Ubah Jumlah"];
+                    } else {
+                        $retun = ["harga" => $request->value, "status" => "Gagal Ubah harga"];
+                    }
+                    return $retun;
                 }
-                if ($request->select == 'jumlah') {
-                    $retun = ["jumlah" => $request->value, "status" => "Gagal Ubah Jumlah"];
+            }
+
+            if ($awal->verif_wadek2 == 1) {
+                if ($request->select == 'peruntukan') {
+                    $laporan = laporan_pengadaan::findOrfail($request->id);
                 } else {
-                    $retun = ["harga" => $request->value, "status" => "Gagal Ubah harga"];
+                    $laporan = laporan_pengadaan::findOrfail($request->lap);
                 }
-                return $retun;
+
+                $wadek = User::with('jabatan')
+                    ->whereHas(
+                        'jabatan', function (Builder $query) {
+                            $query->where('jabatan', 'Wakil Dekan 2');
+                        }
+                    )->first();
+
+                $wadek->notify(new verifPengadaan($laporan));
             }
         }
-
-        if ($request->select == 'peruntukan') {
-            $laporan = laporan_pengadaan::findOrfail($request->id);
-        } else {
-            $laporan = laporan_pengadaan::findOrfail($request->lap);
-        }
-
-        $wadek = User::with('jabatan')
-            ->whereHas(
-                'jabatan',
-                function (Builder $query) {
-                    $query->where('jabatan', 'Wakil Dekan 2');
-                }
-            )->first();
-
-        $wadek->notify(new verifPengadaan($laporan));
     }
 
     /**
@@ -441,25 +438,24 @@ class pengadaanController extends Controller
                 if ($request->laporan) {
                     try {
                         $this->validate(
-                            $request,
-                            [
-                                "keterangan"    => "required|string|max:100",
-                                "nama_barang"   => "required|array",
-                                "nama_barang.*" => "required|string|max:50",
-                                "spesifikasi"   => "required|array",
-                                "spesifikasi.*" => "required|string|max:50",
-                                "jumlah"        => "required|array",
-                                "jumlah.*"      => "required|integer",
-                                "satuan"        => "required|array",
-                                "satuan.*"      => "required|integer|max:4",
-                                "harga"         => "required|array",
-                                "harga.*"       => "required|integer"
+                            $request, [
+                            "keterangan"    => "required|string|max:100",
+                            "nama_barang"   => "required|array",
+                            "nama_barang.*" => "required|string|max:50",
+                            "spesifikasi"   => "required|array",
+                            "spesifikasi.*" => "required|string|max:50",
+                            "jumlah"        => "required|array",
+                            "jumlah.*"      => "required|integer",
+                            "satuan"        => "required|array",
+                            "satuan.*"      => "required|integer|max:4",
+                            "harga"         => "required|array",
+                            "harga.*"       => "required|integer"
                             ]
                         );
                     } catch (Exception $e) {
 
                         $gagal = $e->validator->messages();
-                        $compek = [];
+                        $compek =[];
                         $compek = (array) $gagal;
                         $gagal = [];
                         foreach ($compek as $key) {
@@ -485,8 +481,8 @@ class pengadaanController extends Controller
 
                     laporan_pengadaan::findOrfail($id)->update(
                         [
-                            "keterangan"    => $request->keterangan,
-                            "verif_wadek2"  => 0
+                        "keterangan"    => $request->keterangan,
+                        "verif_wadek2"  => 0
                         ]
                     );
                     pengadaan::whereIn('id_laporan', [$id])->delete();
@@ -494,12 +490,12 @@ class pengadaanController extends Controller
                     for ($i = 0; $i < count($request->nama_barang); $i++) {
                         pengadaan::create(
                             [
-                                'nama_barang'   => $request->nama_barang[$i],
-                                'spesifikasi'   => $request->spesifikasi[$i],
-                                'jumlah'        => $request->jumlah[$i],
-                                'id_satuan'     => ($request->satuan[$i] + 1),
-                                'harga'         => $request->harga[$i],
-                                'id_laporan'    => $id
+                            'nama_barang'   => $request->nama_barang[$i],
+                            'spesifikasi'   => $request->spesifikasi[$i],
+                            'jumlah'        => $request->jumlah[$i],
+                            'id_satuan'     => ($request->satuan[$i] + 1),
+                            'harga'         => $request->harga[$i],
+                            'id_laporan'    => $id
                             ]
                         );
                     }
@@ -507,19 +503,18 @@ class pengadaanController extends Controller
                     // dd($request);
                     try {
                         $this->validate(
-                            $request,
-                            [
-                                "nama_barang" => "required|string|max:50",
-                                "spesifikasi" => "required|string|max:50",
-                                "jumlah"      => "required|integer",
-                                "satuan"      => "required|integer|max:4",
-                                "harga"       => "required|integer"
+                            $request, [
+                            "nama_barang" => "required|string|max:50",
+                            "spesifikasi" => "required|string|max:50",
+                            "jumlah"      => "required|integer",
+                            "satuan"      => "required|integer|max:4",
+                            "harga"       => "required|integer"
                             ]
                         );
                     } catch (Exception $e) {
 
                         $gagal = $e->validator->messages();
-                        $compek = [];
+                        $compek =[];
                         $compek = (array) $gagal;
                         $gagal = [];
                         foreach ($compek as $key) {
@@ -546,11 +541,11 @@ class pengadaanController extends Controller
                     laporan_pengadaan::findOrfail($request->id)->update(["verif_wadek2" => 0]);
                     pengadaan::findOrfail($id)->update(
                         [
-                            "nama_barang" => $request->nama_barang,
-                            "spesifikasi" => $request->spesifikasi,
-                            "jumlah"      => $request->jumlah,
-                            "id_satuan"   => ($request->satuan + 1),
-                            "harga"       => $request->harga
+                        "nama_barang" => $request->nama_barang,
+                        "spesifikasi" => $request->spesifikasi,
+                        "jumlah"      => $request->jumlah,
+                        "id_satuan"   => ($request->satuan + 1),
+                        "harga"       => $request->harga
                         ]
                     );
                     $id = $request->id;
@@ -561,8 +556,7 @@ class pengadaanController extends Controller
 
                 $wadek = User::with('jabatan')
                     ->whereHas(
-                        'jabatan',
-                        function (Builder $query) {
+                        'jabatan', function (Builder $query) {
                             $query->where('jabatan', 'Wakil Dekan 2');
                         }
                     )->first();
@@ -576,20 +570,19 @@ class pengadaanController extends Controller
             }
         }
 
-        // // ===== Wadek 2 =====
+                    // // ===== Wadek 2 =====
         else if (Auth::user()->jabatan->jabatan == 'Wakil Dekan 2') {
             $this->validate(
-                $request,
-                [
-                    "verif_wadek2"  => "required|integer|between:1,2",
-                    "pesan_tolak"   => "requiredIf:verif_wadek2,1|string|max:100"
+                $request, [
+                "verif_wadek2"  => "required|integer|between:1,2",
+                "pesan_tolak"   => "requiredIf:verif_wadek2,1|string|max:100"
                 ]
             );
 
             laporan_pengadaan::findOrfail($id)->update(
                 [
-                    "pesan"         => $request->pesan_tolak,
-                    "verif_wadek2"  => $request->verif_wadek2
+                "pesan"         => $request->pesan_tolak,
+                "verif_wadek2"  => $request->verif_wadek2
                 ]
             );
 
@@ -597,8 +590,7 @@ class pengadaanController extends Controller
 
             $perlengkapan = User::with('jabatan')
                 ->whereHas(
-                    'jabatan',
-                    function (Builder $query) {
+                    'jabatan', function (Builder $query) {
                         $query->where('jabatan', 'Pengadministrasi BMN');
                     }
                 )->first();
@@ -628,8 +620,8 @@ class pengadaanController extends Controller
                 pengadaan::findOrfail($id)->delete();
                 laporan_pengadaan::findOrfail($request->lap)->update(
                     [
-                        'verif_wadek2'  => 0,
-                        'pesan'         => null
+                    'verif_wadek2'  => 0,
+                    'pesan'         => null
                     ]
                 );
                 alert()->success("Berhasil Dihapus");
