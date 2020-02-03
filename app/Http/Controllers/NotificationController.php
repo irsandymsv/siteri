@@ -80,6 +80,7 @@ class NotificationController extends Controller
             } elseif (Auth::user()->jabatan->jabatan == 'Pengelola Data Akademik') {
                 return view('notifikasi.akademik');
             } elseif (Auth::user()->jabatan->jabatan == 'Pengadministrasi Layanan Kegiatan Mahasiswa') {
+                // dd(Auth::check());
                 return view('notifikasi.ormawa');
             } elseif (Auth::user()->jabatan->jabatan == 'KTU') {
                 return view('notifikasi.ktu');
