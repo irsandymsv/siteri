@@ -14,8 +14,11 @@
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title">Laporan Peminjaman Ruang</h3>
+                <div style="float: right;">
+                    <a href="{{ route('perlengkapan.peminjaman_ruang.edit', [$laporan->id, 'laporan' => true]) }}"
+                        class="btn btn-warning"><i class="fa fa-edit"></i> Ubah Laporan</a>
+                </div>
             </div>
-
             <div class="box-body">
                 <div class="">
                     <table class="tabel-keterangan">

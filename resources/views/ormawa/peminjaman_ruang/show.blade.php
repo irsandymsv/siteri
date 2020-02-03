@@ -19,8 +19,11 @@
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title">Laporan Peminjaman Ruang</h3>
+                <div style="float: right;">
+                    <a href="{{ route('ormawa.peminjaman_ruang.edit', [$laporan->id, 'laporan' => true]) }}"
+                        class="btn btn-warning"><i class="fa fa-edit"></i> Ubah Laporan</a>
+                </div>
             </div>
-
             <div class="box-body">
                 <div class="">
                     <table class="tabel-keterangan">
@@ -81,20 +84,16 @@
                                 <td>{{$item->data_ruang->kuota}}</td>
                                 <td>
                                     @if($laporan->verif_baper != 1)
-                                    {{-- @dump($item->idpinjam_barang_fk) --}}
-                                    <a href="#" class="btn btn-danger" id="{{ $item->idpinjam_ruang_fk }}" name="hapus_laporan"
-                                title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i
-                                    class="fa fa-trash"></i></a>
-                                @endif
+                                        {{-- @dump($item->idpinjam_barang_fk) --}}
+                                        <a href="#" class="btn btn-danger" id="{{ $item->idpinjam_ruang_fk }}" name="hapus_laporan"
+                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
-                <br><br>
-                <a href="{{ route('ormawa.peminjaman_ruang.edit', [$laporan->id, 'laporan' => true]) }}"
-                    class="btn btn-success" style="float: right" title="Ubah Laporan">Ubah</a>
             </div>
         </div>
     </div>
