@@ -61,6 +61,8 @@ class verifPeminjamanBarang extends Notification
             return [
                 'id'         => $this->laporan->id,
                 'kegiatan'   => $this->laporan->kegiatan,
+                'verif_baper' => $this->laporan->verif_baper,
+                'verif_ktu'  => $this->laporan->verif_ktu,
                 'updated_at' => $this->laporan->updated_at
             ];
         } else
@@ -69,6 +71,7 @@ class verifPeminjamanBarang extends Notification
                 'id'         => $this->laporan->id,
                 'kegiatan'   => $this->laporan->kegiatan,
                 'verif_baper' => $this->laporan->verif_baper,
+                'verif_ktu'  => $this->laporan->verif_ktu,
                 'updated_at' => $this->laporan->updated_at
             ];
         } else
@@ -76,6 +79,7 @@ class verifPeminjamanBarang extends Notification
             return [
                 'id'         => $this->laporan->id,
                 'kegiatan'   => $this->laporan->kegiatan,
+                'verif_baper' => $this->laporan->verif_baper,
                 'verif_ktu'  => $this->laporan->verif_ktu,
                 'updated_at' => $this->laporan->updated_at
             ];

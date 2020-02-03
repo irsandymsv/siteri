@@ -14,6 +14,8 @@ use App\Http\Controllers\Controller;
 use App\detail_pinjam_ruang;
 use App\peminjaman_ruang;
 use App\data_ruang;
+use App\Notifications\verifPeminjamanBarang;
+use App\Notifications\verifPeminjamanRuang;
 
 class peminjamanRuangController extends Controller
 {
@@ -28,24 +30,27 @@ class peminjamanRuangController extends Controller
             $laporan = peminjaman_ruang::all();
 
             return view(
-                'ormawa.peminjaman_ruang.index', [
-                'laporan' => $laporan
+                'ormawa.peminjaman_ruang.index',
+                [
+                    'laporan' => $laporan
                 ]
             );
         } else if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN') {
             $laporan = peminjaman_ruang::all();
 
             return view(
-                'perlengkapan.peminjaman_ruang.index', [
-                'laporan' => $laporan
+                'perlengkapan.peminjaman_ruang.index',
+                [
+                    'laporan' => $laporan
                 ]
             );
         } else if (Auth::user()->jabatan->jabatan == 'KTU') {
             $laporan = peminjaman_ruang::where('verif_baper', '1')->get();
 
             return view(
-                'ktu.peminjaman_ruang.index', [
-                'laporan' => $laporan
+                'ktu.peminjaman_ruang.index',
+                [
+                    'laporan' => $laporan
                 ]
             );
         }
@@ -62,18 +67,20 @@ class peminjamanRuangController extends Controller
             $ruang = data_ruang::where('kuota', '!=', '0')->orderBy('kuota', 'desc')->get();
 
             return view(
-                'ormawa.peminjaman_ruang.create', [
-                // 'nama_ruang' => $nama_ruang,
-                'ruang' => $ruang
+                'ormawa.peminjaman_ruang.create',
+                [
+                    // 'nama_ruang' => $nama_ruang,
+                    'ruang' => $ruang
                 ]
             );
         } else if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN') {
             $ruang = data_ruang::where('kuota', '!=', '0')->orderBy('kuota', 'desc')->get();
 
             return view(
-                'perlengkapan.peminjaman_ruang.create', [
-                // 'nama_ruang' => $nama_ruang,
-                'ruang' => $ruang
+                'perlengkapan.peminjaman_ruang.create',
+                [
+                    // 'nama_ruang' => $nama_ruang,
+                    'ruang' => $ruang
                 ]
             );
         }
@@ -99,12 +106,13 @@ class peminjamanRuangController extends Controller
         if (Auth::user()->jabatan->jabatan == 'Pengadministrasi Layanan Kegiatan Mahasiswa') {
             // dd($request);
             $this->validate(
-                $request, [
-                "tanggal"           => "required",
-                "kegiatan"          => "required|string|max:100",
-                "jumlah_peserta"    => "required|integer",
-                "nama_ruang"        => "required|array",
-                "nama_ruang.*"      => "required|integer"
+                $request,
+                [
+                    "tanggal"           => "required",
+                    "kegiatan"          => "required|string|max:100",
+                    "jumlah_peserta"    => "required|integer",
+                    "nama_ruang"        => "required|array",
+                    "nama_ruang.*"      => "required|integer"
                 ]
             );
 
@@ -118,22 +126,22 @@ class peminjamanRuangController extends Controller
 
             peminjaman_ruang::create(
                 [
-                'tanggal_mulai'     => $tanggal_mulai,
-                'tanggal_berakhir'  => $tanggal_berakhir,
-                'jam_mulai'         => $jam_mulai,
-                'jam_berakhir'      => $jam_berakhir,
-                'kegiatan'          => $request->kegiatan,
-                'jumlah_peserta'    => $request->jumlah_peserta
+                    'tanggal_mulai'     => $tanggal_mulai,
+                    'tanggal_berakhir'  => $tanggal_berakhir,
+                    'jam_mulai'         => $jam_mulai,
+                    'jam_berakhir'      => $jam_berakhir,
+                    'kegiatan'          => $request->kegiatan,
+                    'jumlah_peserta'    => $request->jumlah_peserta
                 ]
             );
 
-            $laporan = peminjaman_ruang::last();
+            $laporan = peminjaman_ruang::all()->last();
 
             for ($i = 0; $i < count($request->nama_ruang); $i++) {
                 detail_pinjam_ruang::create(
                     [
-                    'idpinjam_ruang_fk' => $laporan->id,
-                    'idruang_fk'        => ($request->nama_ruang[$i])
+                        'idpinjam_ruang_fk' => $laporan->id,
+                        'idruang_fk'        => ($request->nama_ruang[$i])
                     ]
                 );
                 // dd($request);
@@ -141,22 +149,24 @@ class peminjamanRuangController extends Controller
 
             $perlengkapan = User::with('jabatan')
                 ->whereHas(
-                    'jabatan', function (Builder $query) {
+                    'jabatan',
+                    function (Builder $query) {
                         $query->where('jabatan', 'Pengadministrasi BMN');
                     }
                 )->first();
 
-            $perlengkapan->notify(new peminjaman_barang($laporan));
+            $perlengkapan->notify(new verifPeminjamanRuang($laporan));
 
-            return redirect()->route('ormawa.peminjaman_ruang.show', $idlaporan);
+            return redirect()->route('ormawa.peminjaman_ruang.show', $laporan->id);
         } else if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN') {
             $this->validate(
-                $request, [
-                "tanggal"           => "required",
-                "kegiatan"          => "required|string|max:100",
-                "jumlah_peserta"    => "required|integer",
-                "nama_ruang"        => "required|array",
-                "nama_ruang.*"      => "required|integer"
+                $request,
+                [
+                    "tanggal"           => "required",
+                    "kegiatan"          => "required|string|max:100",
+                    "jumlah_peserta"    => "required|integer",
+                    "nama_ruang"        => "required|array",
+                    "nama_ruang.*"      => "required|integer"
                 ]
             );
 
@@ -170,14 +180,14 @@ class peminjamanRuangController extends Controller
 
             peminjaman_ruang::create(
                 [
-                'tanggal_mulai'     => $tanggal_mulai,
-                'tanggal_berakhir'  => $tanggal_berakhir,
-                'jam_mulai'         => $jam_mulai,
-                'jam_berakhir'      => $jam_berakhir,
-                'kegiatan'          => $request->kegiatan,
-                'jumlah_peserta'    => $request->jumlah_peserta,
-                'verif_baper'       => '1',
-                'verif_ktu'         => '1'
+                    'tanggal_mulai'     => $tanggal_mulai,
+                    'tanggal_berakhir'  => $tanggal_berakhir,
+                    'jam_mulai'         => $jam_mulai,
+                    'jam_berakhir'      => $jam_berakhir,
+                    'kegiatan'          => $request->kegiatan,
+                    'jumlah_peserta'    => $request->jumlah_peserta,
+                    'verif_baper'       => '1',
+                    'verif_ktu'         => '1'
                 ]
             );
 
@@ -186,8 +196,8 @@ class peminjamanRuangController extends Controller
             for ($i = 0; $i < count($request->nama_ruang); $i++) {
                 detail_pinjam_ruang::create(
                     [
-                    'idpinjam_ruang_fk' => $idlaporan,
-                    'idruang_fk'        => ($request->nama_ruang[$i])
+                        'idpinjam_ruang_fk' => $idlaporan,
+                        'idruang_fk'        => ($request->nama_ruang[$i])
                     ]
                 );
                 // dd($request);
@@ -211,9 +221,10 @@ class peminjamanRuangController extends Controller
                 ->get();
 
             return view(
-                'ormawa.peminjaman_ruang.show', [
-                'laporan' => $laporan,
-                'detail_laporan' => $detail_laporan
+                'ormawa.peminjaman_ruang.show',
+                [
+                    'laporan' => $laporan,
+                    'detail_laporan' => $detail_laporan
                 ]
             );
         } else if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN') {
@@ -223,9 +234,10 @@ class peminjamanRuangController extends Controller
                 ->get();
 
             return view(
-                'perlengkapan.peminjaman_ruang.show', [
-                'laporan' => $laporan,
-                'detail_laporan' => $detail_laporan
+                'perlengkapan.peminjaman_ruang.show',
+                [
+                    'laporan' => $laporan,
+                    'detail_laporan' => $detail_laporan
                 ]
             );
         } else if (Auth::user()->jabatan->jabatan == 'KTU') {
@@ -235,9 +247,10 @@ class peminjamanRuangController extends Controller
                 ->get();
 
             return view(
-                'ktu.peminjaman_ruang.show', [
-                'laporan' => $laporan,
-                'detail_laporan' => $detail_laporan
+                'ktu.peminjaman_ruang.show',
+                [
+                    'laporan' => $laporan,
+                    'detail_laporan' => $detail_laporan
                 ]
             );
         }
@@ -267,11 +280,12 @@ class peminjamanRuangController extends Controller
             $tanggal = implode(" - ", [$tanggal1, $tanggal2]);
 
             return view(
-                'ormawa.peminjaman_ruang.edit', [
-                'ruang'    => $ruang,
-                'nama_ruang'    => $nama_ruang,
-                'laporan'       => $laporan,
-                'tanggal'       => $tanggal
+                'ormawa.peminjaman_ruang.edit',
+                [
+                    'ruang'    => $ruang,
+                    'nama_ruang'    => $nama_ruang,
+                    'laporan'       => $laporan,
+                    'tanggal'       => $tanggal
                 ]
             );
         } else if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN') {
@@ -289,11 +303,12 @@ class peminjamanRuangController extends Controller
             $tanggal = implode(" - ", [$tanggal1, $tanggal2]);
 
             return view(
-                'perlengkapan.peminjaman_ruang.edit', [
-                'ruang'         => $ruang,
-                'nama_ruang'    => $nama_ruang,
-                'laporan'       => $laporan,
-                'tanggal'       => $tanggal
+                'perlengkapan.peminjaman_ruang.edit',
+                [
+                    'ruang'         => $ruang,
+                    'nama_ruang'    => $nama_ruang,
+                    'laporan'       => $laporan,
+                    'tanggal'       => $tanggal
                 ]
             );
         }
@@ -312,12 +327,13 @@ class peminjamanRuangController extends Controller
             // dd($request);
             if ($request->laporan) {
                 $this->validate(
-                    $request, [
-                    "tanggal"           => "required",
-                    "kegiatan"          => "required|string|max:100",
-                    "jumlah_peserta"    => "required|integer",
-                    "nama_ruang"        => "required|array",
-                    "nama_ruang.*"      => "required|integer"
+                    $request,
+                    [
+                        "tanggal"           => "required",
+                        "kegiatan"          => "required|string|max:100",
+                        "jumlah_peserta"    => "required|integer",
+                        "nama_ruang"        => "required|array",
+                        "nama_ruang.*"      => "required|integer"
                     ]
                 );
 
@@ -331,12 +347,12 @@ class peminjamanRuangController extends Controller
 
                 peminjaman_ruang::findOrfail($id)->update(
                     [
-                    "tanggal_mulai"     => $tanggal_mulai,
-                    "tanggal_berakhir"  => $tanggal_berakhir,
-                    "jam_mulai"         => $jam_mulai,
-                    "jam_berakhir"      => $jam_berakhir,
-                    "kegiatan"          => $request->kegiatan,
-                    "jumlah_peserta"    => $request->jumlah_peserta
+                        "tanggal_mulai"     => $tanggal_mulai,
+                        "tanggal_berakhir"  => $tanggal_berakhir,
+                        "jam_mulai"         => $jam_mulai,
+                        "jam_berakhir"      => $jam_berakhir,
+                        "kegiatan"          => $request->kegiatan,
+                        "jumlah_peserta"    => $request->jumlah_peserta
                     ]
                 );
 
@@ -345,22 +361,23 @@ class peminjamanRuangController extends Controller
                 for ($i = 0; $i < count($request->nama_ruang); $i++) {
                     detail_pinjam_ruang::create(
                         [
-                        'idpinjam_ruang_fk' => $id,
-                        'idruang_fk'        => $request->nama_ruang[$i]
+                            'idpinjam_ruang_fk' => $id,
+                            'idruang_fk'        => $request->nama_ruang[$i]
                         ]
                     );
                 }
             } else {
                 // dd($request);
                 $this->validate(
-                    $request, [
-                    "nama_ruang"  => "required|integer"
+                    $request,
+                    [
+                        "nama_ruang"  => "required|integer"
                     ]
                 );
 
                 detail_pinjam_ruang::findOrfail($id)->update(
                     [
-                    'idruang_fk'    => ($request->nama_ruang + 1)
+                        'idruang_fk'    => ($request->nama_ruang + 1)
                     ]
                 );
                 dd("gak error");
@@ -370,12 +387,13 @@ class peminjamanRuangController extends Controller
         } else if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN') {
             if ($request->laporan) {
                 $this->validate(
-                    $request, [
-                    "tanggal"           => "required",
-                    "kegiatan"          => "required|string|max:100",
-                    "jumlah_peserta"    => "required|integer",
-                    "nama_ruang"        => "required|array",
-                    "nama_ruang.*"      => "required|integer"
+                    $request,
+                    [
+                        "tanggal"           => "required",
+                        "kegiatan"          => "required|string|max:100",
+                        "jumlah_peserta"    => "required|integer",
+                        "nama_ruang"        => "required|array",
+                        "nama_ruang.*"      => "required|integer"
                     ]
                 );
 
@@ -389,12 +407,12 @@ class peminjamanRuangController extends Controller
 
                 peminjaman_ruang::findOrfail($id)->update(
                     [
-                    "tanggal_mulai"     => $tanggal_mulai,
-                    "tanggal_berakhir"  => $tanggal_berakhir,
-                    "jam_mulai"         => $jam_mulai,
-                    "jam_berakhir"      => $jam_berakhir,
-                    "kegiatan"          => $request->kegiatan,
-                    "jumlah_peserta"    => $request->jumlah_peserta
+                        "tanggal_mulai"     => $tanggal_mulai,
+                        "tanggal_berakhir"  => $tanggal_berakhir,
+                        "jam_mulai"         => $jam_mulai,
+                        "jam_berakhir"      => $jam_berakhir,
+                        "kegiatan"          => $request->kegiatan,
+                        "jumlah_peserta"    => $request->jumlah_peserta
                     ]
                 );
 
@@ -403,22 +421,23 @@ class peminjamanRuangController extends Controller
                 for ($i = 0; $i < count($request->nama_ruang); $i++) {
                     detail_pinjam_ruang::create(
                         [
-                        'idpinjam_ruang_fk' => $id,
-                        'idruang_fk'        => $request->nama_ruang[$i]
+                            'idpinjam_ruang_fk' => $id,
+                            'idruang_fk'        => $request->nama_ruang[$i]
                         ]
                     );
                 }
             } else {
                 // dd($request);
                 $this->validate(
-                    $request, [
-                    "nama_ruang"  => "required|integer"
+                    $request,
+                    [
+                        "nama_ruang"  => "required|integer"
                     ]
                 );
 
                 detail_pinjam_ruang::findOrfail($id)->update(
                     [
-                    'idruang_fk'    => ($request->nama_ruang + 1)
+                        'idruang_fk'    => ($request->nama_ruang + 1)
                     ]
                 );
                 dd("gak error");
@@ -431,61 +450,75 @@ class peminjamanRuangController extends Controller
     public function verif_baper(Request $request, $id)
     {
         $this->validate(
-            $request, [
-            "verif_baper"  => "required|integer"
+            $request,
+            [
+                "verif_baper"  => "required|integer"
             ]
         );
 
         peminjaman_ruang::findOrfail($id)->update(
             [
-            'verif_baper'    => $request->verif_baper
+                'verif_baper'    => $request->verif_baper
             ]
         );
 
-        $laporan = peminjaman_barang::findOrfail($id);
+        $laporan = peminjaman_ruang::findOrfail($id);
 
         $ktu = User::with('jabatan')
             ->whereHas(
-                'jabatan', function (Builder $query) {
+                'jabatan',
+                function (Builder $query) {
                     $query->where('jabatan', 'KTU');
                 }
             )->first();
 
         $ormawa = User::with('jabatan')
             ->whereHas(
-                'jabatan', function (Builder $query) {
+                'jabatan',
+                function (Builder $query) {
                     $query->where('jabatan', 'Pengadministrasi Layanan Kegiatan Mahasiswa');
                 }
             )->first();
 
-        $ktu->notify(new peminjaman_barang($laporan));
-        $ormawa->notify(new peminjaman_barang($laporan));
+        $ktu->notify(new verifPeminjamanRuang($laporan));
+        $ormawa->notify(new verifPeminjamanRuang($laporan));
+
         return redirect()->route('perlengkapan.peminjaman_ruang.show', $id);
     }
 
     public function verif_ktu(Request $request, $id)
     {
         $this->validate(
-            $request, [
-            "verif_ktu"  => "required|integer"
+            $request,
+            [
+                "verif_ktu"  => "required|integer"
             ]
         );
 
         peminjaman_ruang::findOrfail($id)->update(
             [
-            'verif_ktu'    => $request->verif_ktu
+                'verif_ktu'    => $request->verif_ktu
             ]
         );
 
-        $laporan = peminjaman_barang::findOrfail($id);
+        $laporan = peminjaman_ruang::findOrfail($id);
+        $perlengkapan = User::with('jabatan')
+            ->whereHas(
+                'jabatan',
+                function (Builder $query) {
+                    $query->where('jabatan', 'Pengadministrasi BMN');
+                }
+            )->first();
         $ormawa = User::with('jabatan')
             ->whereHas(
-                'jabatan', function (Builder $query) {
+                'jabatan',
+                function (Builder $query) {
                     $query->where('jabatan', 'Pengadministrasi Layanan Kegiatan Mahasiswa');
                 }
             )->first();
 
-        $ormawa->notify(new peminjaman_barang($laporan));
+        $perlengkapan->notify(new verifPeminjamanRuang($laporan));
+        $ormawa->notify(new verifPeminjamanRuang($laporan));
 
         return redirect()->route('ktu.peminjaman_ruang.show', $id);
     }
