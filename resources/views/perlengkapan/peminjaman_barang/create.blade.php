@@ -10,6 +10,7 @@
 
 @section('css_link')
 <link href="/adminlte/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="/adminlte/dist/css/AdminLTE.min.css">
 <link href="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
 <link href="/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 <link href="/adminlte/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" />
@@ -65,7 +66,7 @@
                         <tbody id="inputan">
                             <tr>
                                 <td>
-                                    <select id="barang" name="barang[]" class="form-control barang">
+                                    <select id="barang" name="barang[]" class="form-control barang select2">
                                         <option value="null">Pilih Barang</option>
                                         @foreach ($barang as $val)
                                         <option value="{{ $val->id }}">{{ $val->nama_barang }}</option>
@@ -74,7 +75,7 @@
                                 </td>
 
                                 <td class="merk">
-                                    <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang"
+                                    <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang select2"
                                         disabled="true">
                                     </select>
                                 </td>
@@ -131,11 +132,18 @@
         tableCount();
         barangAjax();
 
+        $('.select2').select2();
+
         $('.js-example-basic-multiple').select2();
 
         $('#reservation').daterangepicker();
 
-        $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, locale: { format: 'YYYY/MM/DD HH:mm:ss' }})
+        $('#reservationtime').daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 30,
+            minDate: moment().add(1, "days"),
+            locale: { format: 'YYYY/MM/DD HH:mm:ss' }
+        });
 
         $('.datepicker').datepicker({
             autoclose: true,
