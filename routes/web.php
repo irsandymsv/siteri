@@ -54,8 +54,8 @@ Route::middleware(['auth', 'checkRole:Pengelola Data Akademik'])->prefix('akadem
 
         //Route data skripsi
         Route::get('/data-skripsi', 'skripsiController@index')->name('data-skripsi.index');
-        Route::get('/data-skripsi/{id_skripsi}/ubah-judul', 'skripsiController@ubahJudul')->name('data-skripsi.ubah-judul');
-        Route::post('/data-skripsi/{id_skripsi}/ubah-judul/store', 'skripsiController@store_ubahJudul')->name('data-skripsi.ubah-judul.store');
+        // Route::get('/data-skripsi/{id_skripsi}/ubah-judul', 'skripsiController@ubahJudul')->name('data-skripsi.ubah-judul');
+        // Route::post('/data-skripsi/{id_skripsi}/ubah-judul/store', 'skripsiController@store_ubahJudul')->name('data-skripsi.ubah-judul.store');
 
         Route::get('/data-skripsi/{id_skripsi}/ubah-judul-pembimbing', 'skripsiController@ubahJudulPembimbing')->name('data-skripsi.ubah-judul-pembimbing');
         Route::post('/data-skripsi/{id_skripsi}/ubah-judul-pembimbing/store', 'skripsiController@store_ubahJudulPembimbing')->name('data-skripsi.ubah-judul-pembimbing.store');
