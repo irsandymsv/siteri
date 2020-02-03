@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use App\laporan_pengadaan;
 use App\Notifications\verifPengadaan;
+use App\laporan_pengadaan;
 use App\pengadaan;
 use App\satuan;
 use App\User;
@@ -265,7 +265,8 @@ class pengadaanController extends Controller
     public function saveItem($id, Request $request)
     {
         // dd($id, $request->lap, $request->select, $request->value);
-        ($request->select == 'peruntukan') ? $awal = laporan_pengadaan::findOrfail($request->lap) : $awal = laporan_pengadaan::findOrfail($request->id);
+        ($request->select == 'peruntukan') ? $awal = laporan_pengadaan::findOrfail($request->id) : $awal = laporan_pengadaan::findOrfail($request->lap);
+        // dd($awal);
         if ($awal->verif_wadek2 != 2) {
             if ($request->select == 'peruntukan') {
                 try {
