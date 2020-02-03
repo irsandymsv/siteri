@@ -48,7 +48,7 @@
                                 <th>Harga Satuan</th>
                                 <th>Total</th> --}}
                                 <th>Status</th>
-                                <th style="width:100px">Opsi</th>
+                                <th>Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -108,7 +108,7 @@
     <h4><i class="icon fa fa-check"></i> <span></span></h4>
 </div>
 
-<div id="failed_delete" class="pop_up_danger">
+<div id="failed_delete" class="pop_up_info">
     <h4><i class="icon fa fa-times"></i> <span></span></h4>
 </div>
 
@@ -139,47 +139,52 @@
 
 <script>
     $(function(){
-        $('#pengadaan').DataTable();
+        $('#pengadaan').DataTable({
+            "fnDrawCallback": function( oSettings ) {
 
-        $('a.btn.btn-danger').click(function(){
-            $("#success_delete").show();
-            $("#success_delete").find('span').html("Compek");
-            $("#success_delete").fadeOut(1800);
-        });
-
-        $('a.btn.btn-danger').click(function(){
-            event.preventDefault();
-            id = $(this).attr('id');
-
-            url_del = "{{route('perlengkapan.pengadaan.destroy', "id")}}";
-            url_del = url_del.replace('id', id)
-            console.log(url_del);
-
-            $('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
-                $.ajax({
-                    url: url_del,
-                    type: 'POST',
-                    // dataType: '',
-                    data: {_method: 'DELETE', 'laporan':true},
-                })
-                .done(function(hasil) {
-                    console.log("success");
-                    $("tr#lap_"+id).remove();
+                $('a.btn.btn-danger').click(function(){
                     $("#success_delete").show();
-                    $("#success_delete").find('span').html(hasil);
+                    $("#success_delete").find('span').html("Compek");
                     $("#success_delete").fadeOut(1800);
-                })
-                .fail(function() {
-                    console.log("error");
                 });
-            });
+
+                $('a.btn.btn-danger').click(function(){
+                    event.preventDefault();
+                    id = $(this).attr('id');
+
+                    url_del = "{{route('perlengkapan.pengadaan.destroy', "id")}}";
+                    url_del = url_del.replace('id', id)
+                    console.log(url_del);
+
+                    $('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                        $.ajax({
+                            url: url_del,
+                            type: 'POST',
+                            // dataType: '',
+                            data: {_method: 'DELETE', 'laporan':true},
+                        })
+                        .done(function(hasil) {
+                            console.log("success");
+                            $("tr#lap_"+id).remove();
+                            $("#success_delete").show();
+                            $("#success_delete").find('span').html(hasil);
+                            $("#success_delete").fadeOut(1800);
+                        })
+                        .fail(function() {
+                            console.log("error");
+                        });
+                    });
+                });
+
+            }
         });
+
     });
 </script>
 

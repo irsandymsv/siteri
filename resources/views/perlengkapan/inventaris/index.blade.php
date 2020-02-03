@@ -7,7 +7,8 @@
 @section('page_title', 'Laporan Inventaris')
 
 @section('css_link')
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
 @endsection
 
 @section('judul_header', 'Laporan Inventaris')
@@ -95,43 +96,46 @@
 @section('script')
 <script type="text/javascript">
     $(function() {
-        $('#inventaris').DataTable();
+        $('#inventaris').DataTable({
+            "fnDrawCallback": function( oSettings ) {
 
-    });
-</script>
-<script>
-    $(function(){
-        $('a.btn.btn-danger').click(function(){
-            event.preventDefault();
-				var id = $(this).attr('id');
-                console.log(id);
+                $('a.btn.btn-danger').click(function(){
+                    event.preventDefault();
+                    id = $(this).attr('id');
+                    console.log(id);
 
-				var url_del = "{{route('perlengkapan.inventaris.destroy', "id")}}";
-                url_del = url_del.replace('id', id);
-				console.log(url_del);
+                    url_del = "{{route('perlengkapan.inventaris.destroy', "id")}}";
+                    url_del = url_del.replace('id', id)
+                    console.log(url_del);
 
-				$('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
-					$.ajaxSetup({
-					    headers: {
-					        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-					    }
-					});
+                    $('div.modal-footer').off().on('click', '#hapusBtn', function(event) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
 
-					$.ajax({
-						url: url_del,
-						type: 'POST',
-						data: {_method: 'DELETE'},
-					})
-					.done(function(hasil) {
-						console.log("success");
-						$("tr#lap_"+id).remove();
-					})
-					.fail(function() {
-						console.log("error");
-						$("tr#lap_"+id).remove();
-					});
-				});
+                        $.ajax({
+                            url: url_del,
+                            type: 'POST',
+                            // dataType: '',
+                            data: {_method: 'DELETE', 'barang':true},
+                        })
+                        .done(function(hasil) {
+                            console.log("success");
+                            $("tr#lap_"+id).remove();
+                            $("#success_delete").show();
+                            $("#success_delete").find('span').html(hasil);
+                            $("#success_delete").fadeOut(1800);
+                        })
+                        .fail(function() {
+                            console.log("error");
+                        });
+                    });
+                });
+            }
         });
+
     });
 
 </script>

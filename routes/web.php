@@ -12,7 +12,8 @@
 */
 
 Route::get(
-    '/', function () {
+    '/',
+    function () {
         // return view('welcome');
         return redirect()->route('login');
     }
@@ -34,6 +35,7 @@ Route::middleware(['auth'])->prefix('notifikasi')->name('notifikasi.')->group(
     }
 );
 
+// Route::get('/notifikasi/load', 'NotificationController@load')->name('notifikasi.icon');
 Route::get('/notifikasi/load', 'NotificationController@load')->name('notifikasi.load');
 
 Route::middleware(['auth', 'checkRole:Pengelola Data Akademik'])->prefix('template')->name('template.')->group(
@@ -169,46 +171,53 @@ Route::middleware(['auth', 'checkRole:KTU'])->prefix('ktu')->name('ktu.')->group
         Route::put('/honor-skripsi/verif/{id_sk_honor}', 'honorSkripsiController@ktu_verif')->name('honor-skripsi.verif');
 
         //Peminjaman
-		Route::resource(
-			'peminjaman_barang', 'peminjamanBarangController', [
-				'only' => ['index', 'show']
-			]
-		);
-		Route::put('/peminjaman_barang/verif/{verif_ktu}', 'peminjamanBarangController@verif_ktu')->name('peminjaman_barang.verif');
-
-		Route::resource(
-			'peminjaman_ruang', 'peminjamanRuangController', [
-				'only' => ['index', 'show']
-			]
-		);
-		Route::put('/peminjaman_ruang/verif/{verif_ktu}', 'peminjamanRuangController@verif_ktu')->name('peminjaman_ruang.verif');
-
-		//Kepegawaian
-		Route::get('/memu', 'kepegawaianController@ktu_memu')->name('memu.index');
-		Route::get('/memu/{id}/approve', 'kepegawaianController@ktu_approve')->name('memu.approve');
-		Route::get('/surat_tugas', 'kepegawaianController@ktu_surat')->name('surat.index');
-		Route::get('/surat_tugas/{id}/preview', 'kepegawaianController@ktu_preview')->name('surat.preview');
-		Route::get('/surat_tugas/{id}/cetak', 'kepegawaianController@cetakSurat')->name('surat.cetak');
-		Route::get('/surat_tugas/{id}/approve', 'kepegawaianController@ktu_surat_approve')->name('surat.approve');
-		Route::put('/surat_tugas/{id}/reject', 'kepegawaianController@ktu_surat_reject')->name('surat.reject');
-		Route::get('/surat_tugas/{id}/alasan', 'kepegawaianController@reject_view')->name('surat.reject.view');
-		Route::get('/surat_tugas/read', 'kepegawaianController@read_ktu')->name('surat.read');
-		Route::get('/ganti_password', 'manageUserController@ktu_ganti_password')->name('ganti.password');
         Route::resource(
-            'peminjaman_barang', 'peminjamanBarangController', [
-            'only' => ['index', 'show']
+            'peminjaman_barang',
+            'peminjamanBarangController',
+            [
+                'only' => ['index', 'show']
             ]
         );
-           Route::put('/peminjaman_barang/verif/{verif_ktu}', 'peminjamanBarangController@verif_ktu')->name('peminjaman_barang.verif');
+        Route::put('/peminjaman_barang/verif/{verif_ktu}', 'peminjamanBarangController@verif_ktu')->name('peminjaman_barang.verif');
 
         Route::resource(
-            'peminjaman_ruang', 'peminjamanRuangController', [
+            'peminjaman_ruang',
+            'peminjamanRuangController',
+            [
                 'only' => ['index', 'show']
-                ]
+            ]
         );
-           Route::put('/peminjaman_ruang/verif/{verif_ktu}', 'peminjamanRuangController@verif_ktu')->name('peminjaman_ruang.verif');
-    }
+        Route::put('/peminjaman_ruang/verif/{verif_ktu}', 'peminjamanRuangController@verif_ktu')->name('peminjaman_ruang.verif');
 
+        //Kepegawaian
+        Route::get('/memu', 'kepegawaianController@ktu_memu')->name('memu.index');
+        Route::get('/memu/{id}/approve', 'kepegawaianController@ktu_approve')->name('memu.approve');
+        Route::get('/surat_tugas', 'kepegawaianController@ktu_surat')->name('surat.index');
+        Route::get('/surat_tugas/{id}/preview', 'kepegawaianController@ktu_preview')->name('surat.preview');
+        Route::get('/surat_tugas/{id}/cetak', 'kepegawaianController@cetakSurat')->name('surat.cetak');
+        Route::get('/surat_tugas/{id}/approve', 'kepegawaianController@ktu_surat_approve')->name('surat.approve');
+        Route::put('/surat_tugas/{id}/reject', 'kepegawaianController@ktu_surat_reject')->name('surat.reject');
+        Route::get('/surat_tugas/{id}/alasan', 'kepegawaianController@reject_view')->name('surat.reject.view');
+        Route::get('/surat_tugas/read', 'kepegawaianController@read_ktu')->name('surat.read');
+        Route::get('/ganti_password', 'manageUserController@ktu_ganti_password')->name('ganti.password');
+        Route::resource(
+            'peminjaman_barang',
+            'peminjamanBarangController',
+            [
+                'only' => ['index', 'show']
+            ]
+        );
+        Route::put('/peminjaman_barang/verif/{verif_ktu}', 'peminjamanBarangController@verif_ktu')->name('peminjaman_barang.verif');
+
+        Route::resource(
+            'peminjaman_ruang',
+            'peminjamanRuangController',
+            [
+                'only' => ['index', 'show']
+            ]
+        );
+        Route::put('/peminjaman_ruang/verif/{verif_ktu}', 'peminjamanRuangController@verif_ktu')->name('peminjaman_ruang.verif');
+    }
 );
 
 Route::middleware(['auth', 'checkRole:Dekan'])->prefix('dekan')->name('dekan.')->group(
@@ -247,8 +256,8 @@ Route::middleware(['auth', 'checkRole:Dekan'])->prefix('dekan')->name('dekan.')-
         Route::get('/penguji-skripsi', 'dosenController@index_penguji')->name('penguji-skripsi');
         Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
 
-         //Ganti Password
-         Route::get('/ganti_password', 'manageUserController@dekan_ganti_password')->name('ganti.password');
+        //Ganti Password
+        Route::get('/ganti_password', 'manageUserController@dekan_ganti_password')->name('ganti.password');
     }
 );
 
@@ -279,9 +288,9 @@ Route::middleware(['auth', 'checkRole:Penata Dokumen Keuangan'])->prefix('keuang
         // Route::get('/honor-sempro/create/{id_sk_sempro}', 'honorSemproController@create')->name('honor-sempro.create');
         // Route::get('/honor-sempro/{id_sk_honor}/edit', 'honorSemproController@edit')->name('honor-sempro.edit');
         // Route::put('/honor-sempro/{id_sk_honor}/update', 'honorSemproController@update')->name('honor-sempro.update');
-         
+
         //Ganti Password
-         Route::get('/ganti_password', 'manageUserController@keuangan_ganti_password')->name('ganti.password');
+        Route::get('/ganti_password', 'manageUserController@keuangan_ganti_password')->name('ganti.password');
     }
 );
 
@@ -307,21 +316,21 @@ Route::middleware(['auth', 'checkRole:BPP'])->prefix('bpp')->name('bpp.')->group
         //Route Honor Skripsi
         Route::get('/honor-skripsi', 'honorSkripsiController@bpp_index')->name('honor-skripsi.index');
         Route::get('/honor-skripsi/{id_sk_honor}', 'honorSkripsiController@bpp_show')->name('honor-skripsi.show');
-		// Route::put('/honor-skripsi/verif/{id_sk_honor}', 'honorSkripsiController@bpp_verif')->name('honor-skripsi.verif');
-		
-		//Kepegawaian & Keuangan
-		Route::get('/surat_tugas', 'kepegawaianController@bpp_index')->name('surat.index');
-		Route::get('/surat_tugas/{id}/preview', 'kepegawaianController@bpp_preview')->name('surat.preview');
-		Route::get('/surat_tugas/{id}/approve', 'kepegawaianController@bpp_approve')->name('surat.approve');
-		Route::get('/ganti_password', 'manageUserController@bpp_ganti_password')->name('ganti.password');
-		Route::get('/spd', 'kepegawaianController@bpp_spd_index')->name('spd.index');
-		Route::get('/spd/{id}/view', 'kepegawaianController@bpp_spd_preview')->name('spd.view');
-		Route::get('/spd/{id}/download', 'kepegawaianController@download_bukti')->name('spd.download');
+        // Route::put('/honor-skripsi/verif/{id_sk_honor}', 'honorSkripsiController@bpp_verif')->name('honor-skripsi.verif');
+
+        //Kepegawaian & Keuangan
+        Route::get('/surat_tugas', 'kepegawaianController@bpp_index')->name('surat.index');
+        Route::get('/surat_tugas/{id}/preview', 'kepegawaianController@bpp_preview')->name('surat.preview');
+        Route::get('/surat_tugas/{id}/approve', 'kepegawaianController@bpp_approve')->name('surat.approve');
+        Route::get('/ganti_password', 'manageUserController@bpp_ganti_password')->name('ganti.password');
+        Route::get('/spd', 'kepegawaianController@bpp_spd_index')->name('spd.index');
+        Route::get('/spd/{id}/view', 'kepegawaianController@bpp_spd_preview')->name('spd.view');
+        Route::get('/spd/{id}/download', 'kepegawaianController@download_bukti')->name('spd.download');
         Route::get('/spd/{id}/selesai', 'kepegawaianController@bpp_selesai')->name('spd.selesai');
-        
+
         //Ganti Password
         Route::get('/ganti_password', 'manageUserController@bpp_ganti_password')->name('ganti.password');
-	}
+    }
 
 );
 
@@ -360,30 +369,33 @@ Route::middleware(['auth', 'checkRole:Wakil Dekan 2'])->prefix('wadek2')->name('
         Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
 
         //Verif pengadaan
-		Route::resource(
-			'pengadaan', 'pengadaanController', [
-				'only' => ['index', 'show', 'update']
-			]
-		);
-
-		//Kepegawaian
-		Route::get('/memu', 'kepegawaianController@memu')->name('memu.index');
-		Route::get('/memu/create', 'kepegawaianController@createMemu')->name('memu.create');
-		Route::post('/memu/save', 'kepegawaianController@saveMemu')->name('memu.save');
-		Route::delete('memu/{id}/delete', 'kepegawaianController@deleteMemu')->name('memu.delete');
-		Route::get('/memu/{id}/edit', 'kepegawaianController@editMemu')->name('memu.edit');
-		Route::put('/memu/{id}/update', 'kepegawaianController@updateMemu')->name('memu.update');
-		Route::get('/surat_tugas', 'kepegawaianController@wadek2_surat_index')->name('surat.index');
-		Route::get('/surat_tugas/{id}/preview', 'kepegawaianController@wadek2_preview')->name('surat.preview');
-		Route::get('/surat_tugas/{id}/approve', 'kepegawaianController@wadek2_surat_approve')->name('surat.approve');
-		Route::get('/ganti_password', 'manageUserController@wadek2_ganti_password')->name('ganti.password');
         Route::resource(
-            'pengadaan', 'pengadaanController', [
-            'only' => ['index', 'show', 'update']
+            'pengadaan',
+            'pengadaanController',
+            [
+                'only' => ['index', 'show', 'update']
+            ]
+        );
+
+        //Kepegawaian
+        Route::get('/memu', 'kepegawaianController@memu')->name('memu.index');
+        Route::get('/memu/create', 'kepegawaianController@createMemu')->name('memu.create');
+        Route::post('/memu/save', 'kepegawaianController@saveMemu')->name('memu.save');
+        Route::delete('memu/{id}/delete', 'kepegawaianController@deleteMemu')->name('memu.delete');
+        Route::get('/memu/{id}/edit', 'kepegawaianController@editMemu')->name('memu.edit');
+        Route::put('/memu/{id}/update', 'kepegawaianController@updateMemu')->name('memu.update');
+        Route::get('/surat_tugas', 'kepegawaianController@wadek2_surat_index')->name('surat.index');
+        Route::get('/surat_tugas/{id}/preview', 'kepegawaianController@wadek2_preview')->name('surat.preview');
+        Route::get('/surat_tugas/{id}/approve', 'kepegawaianController@wadek2_surat_approve')->name('surat.approve');
+        Route::get('/ganti_password', 'manageUserController@wadek2_ganti_password')->name('ganti.password');
+        Route::resource(
+            'pengadaan',
+            'pengadaanController',
+            [
+                'only' => ['index', 'show', 'update']
             ]
         );
     }
-
 );
 
 Route::middleware(['auth', 'checkRole:Dosen'])->prefix('dosen')->name('dosen.')->group(
@@ -399,22 +411,22 @@ Route::middleware(['auth', 'checkRole:Dosen'])->prefix('dosen')->name('dosen.')-
         Route::get('/pembahas-sempro/{nim}', 'dosenController@show_pembahas')->name('pembahas-sempro.show');
 
         //Mahasiswa Ujian Skripsi
-		Route::get('/penguji-skripsi', 'dosenController@index_penguji')->name('penguji-skripsi');
-		Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
+        Route::get('/penguji-skripsi', 'dosenController@index_penguji')->name('penguji-skripsi');
+        Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
 
-		//Kepegawaian
-		// Route::get('/','kepegawaianController@dosen_index')->name('index');
-		Route::get('/upload','kepegawaianController@dosen_index_upload')->name('dosen_upload_index');
-		Route::get('/upload/{id}/preview','kepegawaianController@dosen_upload_preview')->name('dosen_upload_preview');
-		Route::get('/surat_tugas', 'kepegawaianController@dosen_index')->name('surat.index');
-		Route::get('/surat_tugas/read', 'kepegawaianController@read')->name('surat.read');
-		Route::get('/surat_tugas/{id}/preview', 'kepegawaianController@dosen_preview')->name('surat.preview');
-		Route::get('/surat_tugas/{id}/cetak1', 'kepegawaianController@dosen_cetak1')->name('surat.cetak1');
-		Route::get('/surat_tugas/{id}/cetak2', 'kepegawaianController@dosen_cetak2')->name('surat.cetak2');
-		Route::get('/surat_tugas/{id}/cetak_spd', 'kepegawaianController@dosen_cetak_spd')->name('surat.cetak_spd');
-		Route::get('/ganti_password', 'manageUserController@dosen_ganti_password')->name('ganti.password');
-		Route::post('/upload/{id}', 'kepegawaianController@dosen_store')->name('file.upload');
-		Route::get('/upload/{id}/edit', 'kepegawaianController@dosen_edit_upload')->name('edit.upload');
+        //Kepegawaian
+        // Route::get('/','kepegawaianController@dosen_index')->name('index');
+        Route::get('/upload', 'kepegawaianController@dosen_index_upload')->name('dosen_upload_index');
+        Route::get('/upload/{id}/preview', 'kepegawaianController@dosen_upload_preview')->name('dosen_upload_preview');
+        Route::get('/surat_tugas', 'kepegawaianController@dosen_index')->name('surat.index');
+        Route::get('/surat_tugas/read', 'kepegawaianController@read')->name('surat.read');
+        Route::get('/surat_tugas/{id}/preview', 'kepegawaianController@dosen_preview')->name('surat.preview');
+        Route::get('/surat_tugas/{id}/cetak1', 'kepegawaianController@dosen_cetak1')->name('surat.cetak1');
+        Route::get('/surat_tugas/{id}/cetak2', 'kepegawaianController@dosen_cetak2')->name('surat.cetak2');
+        Route::get('/surat_tugas/{id}/cetak_spd', 'kepegawaianController@dosen_cetak_spd')->name('surat.cetak_spd');
+        Route::get('/ganti_password', 'manageUserController@dosen_ganti_password')->name('ganti.password');
+        Route::post('/upload/{id}', 'kepegawaianController@dosen_store')->name('file.upload');
+        Route::get('/upload/{id}/edit', 'kepegawaianController@dosen_edit_upload')->name('edit.upload');
         Route::get('/penguji-skripsi', 'dosenController@index_penguji')->name('penguji-skripsi');
         Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
     }
@@ -454,7 +466,8 @@ Route::middleware(['auth', 'checkRole:Pengadministrasi Layanan Kegiatan Mahasisw
 Route::middleware(['auth', 'checkRole:Pengadministrasi Kemahasiswaan & Alumni'])->prefix('kemahasiswaan')->name('kemahasiswaan.')->group(
     function () {
         Route::get(
-            '/', function () {
+            '/',
+            function () {
                 return view('kemahasiswaan.dashboard');
             }
         )->name('dashboard');
@@ -493,66 +506,63 @@ Route::middleware(['auth', 'checkRole:Wakil Dekan 1'])->prefix('wadek1')->name('
     }
 );
 
-Route::prefix('admin')->name('admin.')->group(function()
-{
-	Route::get('/pegawai', 'manageUserController@index')->name('pegawai.index');
-	Route::get('/pegawai/create', 'manageUserController@create')->name('pegawai.create');
-	Route::post('/pegawai/store', 'manageUserController@store')->name('pegawai.store');
-	Route::get('/pegawai/edit/{id}', 'manageUserController@edit')->name('pegawai.edit');
-	Route::put('/pegawai/update/{username}', 'manageUserController@update')->name('pegawai.update');
-	Route::delete('/pegawai/delete/{username?}', 'manageUserController@destroy')->name('pegawai.destroy');
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/pegawai', 'manageUserController@index')->name('pegawai.index');
+    Route::get('/pegawai/create', 'manageUserController@create')->name('pegawai.create');
+    Route::post('/pegawai/store', 'manageUserController@store')->name('pegawai.store');
+    Route::get('/pegawai/edit/{id}', 'manageUserController@edit')->name('pegawai.edit');
+    Route::put('/pegawai/update/{username}', 'manageUserController@update')->name('pegawai.update');
+    Route::delete('/pegawai/delete/{username?}', 'manageUserController@destroy')->name('pegawai.destroy');
 });
 
-Route::middleware(['auth', 'checkRole:Sekretaris Pimpinan'])->prefix('staffpim')->name('staffpim.')->group(function()
-{
-	Route::get('/', 'kepegawaianController@sp_index')->name('index');
-	Route::get('/surat', 'kepegawaianController@sp_read')->name('sp.read');
-	Route::get('/surat_tugas/{id}/preview', 'kepegawaianController@sp_preview')->name('sp.preview');
-	Route::get('/surat_tugas/{id}/approve', 'kepegawaianController@sp_surat_approve')->name('surat.approve');
-	Route::put('/surat_tugas/{id}/reject', 'kepegawaianController@sp_surat_reject')->name('surat.reject');
-	Route::get('/surat_tugas/{id}/alasan', 'kepegawaianController@sp_reject_view')->name('surat.reject.view');
+Route::middleware(['auth', 'checkRole:Sekretaris Pimpinan'])->prefix('staffpim')->name('staffpim.')->group(function () {
+    Route::get('/', 'kepegawaianController@sp_index')->name('index');
+    Route::get('/surat', 'kepegawaianController@sp_read')->name('sp.read');
+    Route::get('/surat_tugas/{id}/preview', 'kepegawaianController@sp_preview')->name('sp.preview');
+    Route::get('/surat_tugas/{id}/approve', 'kepegawaianController@sp_surat_approve')->name('surat.approve');
+    Route::put('/surat_tugas/{id}/reject', 'kepegawaianController@sp_surat_reject')->name('surat.reject');
+    Route::get('/surat_tugas/{id}/alasan', 'kepegawaianController@sp_reject_view')->name('surat.reject.view');
     Route::get('/ganti_password', 'manageUserController@staffpim_ganti_password')->name('ganti.password');
-    
 });
 
-Route::middleware(['auth', 'checkRole:Pemroses Mutasi Kepegawaian'])->prefix('kepegawaian')->name('kepegawaian.')->group(function()
-{
-	Route::get('/','kepegawaianController@index')->name('kepegawaian.index');
-	Route::get('/surat_tugas', 'kepegawaianController@surat_index')->name('surat.index');
-	Route::get('/surat_tugas/read', 'kepegawaianController@read')->name('surat.read');
-	Route::get('/surat_tugas/{id}/create', 'kepegawaianController@surat_create')->name('surat.create');
-	Route::put('/surat_tugas/{id}/save', 'kepegawaianController@surat_save')->name('surat.save');
-	Route::get('/surat_tugas/cetak', 'kepegawaianController@kepegawaian_cetak')->name('surat.cetak');
-	Route::get('/surat_tugas/{id}/cetak_pdf1', 'kepegawaianController@cetak_pdf1')->name('surat.cetak1');
-	Route::get('/surat_tugas/{id}/cetak_pdf2', 'kepegawaianController@cetak_pdf2')->name('surat.cetak2');
-	Route::get('/surat_tugas/{id}/cetak_pdf3', 'kepegawaianController@cetak_pdf3')->name('surat.cetak3');
-	Route::get('/surat_tugas/{id}/preview', 'kepegawaianController@kepegawaian_preview')->name('surat.preview');
-	Route::get('/surat_tugas/revisi', 'kepegawaianController@revisi')->name('surat.revisi');
-	Route::get('/surat_tugas/{id}/edit', 'kepegawaianController@edit_sk')->name('surat.edit');
-	Route::put('/surat_tugas/{id}/revisian', 'kepegawaianController@surat_revisian')->name('surat.revisian');
-	// Route::get('/surat_tugas/{id}/spd', 'kepegawaianController@spd_create')->name('spd.create');
-	Route::post('/surat_tugas/{id}/spd_save', 'kepegawaianController@spd_save')->name('spd.save');
-	// Route::get('/surat_tugas/{id}/revisi', 'kepegawaianController@revisi_sk')->name('surat.revisian');
-	Route::get('/ganti_password', 'manageUserController@kepegawaian_ganti_password')->name('ganti.password');
-});	
+Route::middleware(['auth', 'checkRole:Pemroses Mutasi Kepegawaian'])->prefix('kepegawaian')->name('kepegawaian.')->group(function () {
+    Route::get('/', 'kepegawaianController@index')->name('kepegawaian.index');
+    Route::get('/surat_tugas', 'kepegawaianController@surat_index')->name('surat.index');
+    Route::get('/surat_tugas/read', 'kepegawaianController@read')->name('surat.read');
+    Route::get('/surat_tugas/{id}/create', 'kepegawaianController@surat_create')->name('surat.create');
+    Route::put('/surat_tugas/{id}/save', 'kepegawaianController@surat_save')->name('surat.save');
+    Route::get('/surat_tugas/cetak', 'kepegawaianController@kepegawaian_cetak')->name('surat.cetak');
+    Route::get('/surat_tugas/{id}/cetak_pdf1', 'kepegawaianController@cetak_pdf1')->name('surat.cetak1');
+    Route::get('/surat_tugas/{id}/cetak_pdf2', 'kepegawaianController@cetak_pdf2')->name('surat.cetak2');
+    Route::get('/surat_tugas/{id}/cetak_pdf3', 'kepegawaianController@cetak_pdf3')->name('surat.cetak3');
+    Route::get('/surat_tugas/{id}/preview', 'kepegawaianController@kepegawaian_preview')->name('surat.preview');
+    Route::get('/surat_tugas/revisi', 'kepegawaianController@revisi')->name('surat.revisi');
+    Route::get('/surat_tugas/{id}/edit', 'kepegawaianController@edit_sk')->name('surat.edit');
+    Route::put('/surat_tugas/{id}/revisian', 'kepegawaianController@surat_revisian')->name('surat.revisian');
+    // Route::get('/surat_tugas/{id}/spd', 'kepegawaianController@spd_create')->name('spd.create');
+    Route::post('/surat_tugas/{id}/spd_save', 'kepegawaianController@spd_save')->name('spd.save');
+    // Route::get('/surat_tugas/{id}/revisi', 'kepegawaianController@revisi_sk')->name('surat.revisian');
+    Route::get('/ganti_password', 'manageUserController@kepegawaian_ganti_password')->name('ganti.password');
+});
 
 //Dekan & Dosen Route
-Route::middleware(['auth', 'checkRole:Dosen,Dekan'])->prefix('dosen')->name('dosen.')->group(function()
-{
-	Route::get('/upload','kepegawaianController@dosen_index_upload')->name('dosen_upload_index');
-	Route::get('/upload/{id}/preview','kepegawaianController@dosen_upload_preview')->name('dosen_upload_preview');
-	Route::get('/surat_tugas', 'kepegawaianController@dosen_index')->name('surat.index');
-	Route::get('/surat_tugas/read', 'kepegawaianController@read')->name('surat.read');
-	Route::get('/surat_tugas/{id}/preview', 'kepegawaianController@dosen_preview')->name('surat.preview');
-	Route::get('/surat_tugas/{id}/cetak1', 'kepegawaianController@dosen_cetak1')->name('surat.cetak1');
-	Route::get('/surat_tugas/{id}/cetak2', 'kepegawaianController@dosen_cetak2')->name('surat.cetak2');
-	Route::get('/surat_tugas/{id}/cetak_spd', 'kepegawaianController@dosen_cetak_spd')->name('surat.cetak_spd');
-	Route::get('/ganti_password', 'manageUserController@dosen_ganti_password')->name('ganti.password');
-	Route::post('/upload/{id}', 'kepegawaianController@dosen_store')->name('file.upload');
-	Route::get('/upload/{id}/edit', 'kepegawaianController@dosen_edit_upload')->name('edit.upload');
-	Route::get('/penguji-skripsi', 'dosenController@index_penguji')->name('penguji-skripsi');
-	Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
-});
+Route::middleware(['auth', 'checkRole:Dosen,Dekan'])->prefix('dosen')->name('dosen.')->group(
+    function () {
+        Route::get('/upload', 'kepegawaianController@dosen_index_upload')->name('dosen_upload_index');
+        Route::get('/upload/{id}/preview', 'kepegawaianController@dosen_upload_preview')->name('dosen_upload_preview');
+        Route::get('/surat_tugas', 'kepegawaianController@dosen_index')->name('surat.index');
+        Route::get('/surat_tugas/read', 'kepegawaianController@read')->name('surat.read');
+        Route::get('/surat_tugas/{id}/preview', 'kepegawaianController@dosen_preview')->name('surat.preview');
+        Route::get('/surat_tugas/{id}/cetak1', 'kepegawaianController@dosen_cetak1')->name('surat.cetak1');
+        Route::get('/surat_tugas/{id}/cetak2', 'kepegawaianController@dosen_cetak2')->name('surat.cetak2');
+        Route::get('/surat_tugas/{id}/cetak_spd', 'kepegawaianController@dosen_cetak_spd')->name('surat.cetak_spd');
+        Route::get('/ganti_password', 'manageUserController@dosen_ganti_password')->name('ganti.password');
+        Route::post('/upload/{id}', 'kepegawaianController@dosen_store')->name('file.upload');
+        Route::get('/upload/{id}/edit', 'kepegawaianController@dosen_edit_upload')->name('edit.upload');
+        Route::get('/penguji-skripsi', 'dosenController@index_penguji')->name('penguji-skripsi');
+        Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
+    }
+);
 
 //Ubah Password
 Route::put('/ganti_password/{id}', 'manageUserController@simpan_password')->name('simpan.password');

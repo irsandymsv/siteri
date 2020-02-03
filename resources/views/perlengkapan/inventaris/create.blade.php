@@ -41,7 +41,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    {!! Form::text('kode_barang', old('kode_barang'), ['class' => 'form-control']) !!}
+                                    {!! Form::text('kode_barang', old('kode_barang'), ['class' => 'form-control angka']) !!}
                                 </td>
                                 <td>
                                     {!! Form::text('nama_barang', null, ['class' => 'form-control']) !!}

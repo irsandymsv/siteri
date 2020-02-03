@@ -116,6 +116,7 @@ desired effect
                         <!-- Notifications Menu -->
                         <li class="dropdown notifications-menu">
                             <!-- Menu toggle button -->
+                            {{-- <div id="iconNotif"> --}}
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="btn_notif">
                                 <i class="fa fa-bell-o"></i>
                                 @if (count(Auth::user()->unreadNotifications) > 0)
@@ -123,6 +124,7 @@ desired effect
                                     id="jml_notif">{{ count(Auth::user()->unreadNotifications) }}</span>
                                 @endif
                             </a>
+                            {{-- </div> --}}
                             <ul class="dropdown-menu">
                                 @if (count(Auth::user()->unreadNotifications) > 0)
                                 <li class="header">
@@ -135,144 +137,266 @@ desired effect
                                 @else
                                 <li class="header">Tidak Ada Notifikasi Baru</li>
                                 @endif
-
+                                {{-- <div id="isiNotif"> --}}
                                 <li>
                                     <!-- Inner Menu: contains the notifications -->
                                     <ul class="menu" id="list_notif">
                                         <!-- start notification -->
-                                        @if (Auth::user()->jabatan->jabatan == 'Pengelola Data Akademik')
-                                        @foreach (Auth::user()->unreadNotifications as $notif)
-                                        @if ($notif->type == 'App\Notifications\verifSutgasKtu')
-                                        <li>
-                                            <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
-                                                Surat Tugas
-                                                @if ($notif->data['tipe_sutgas'] == "Surat Tugas Pembimbing")
-                                                Pembimbing
-                                                @elseif($notif->data['tipe_sutgas'] == "Surat Tugas Pembahas")
-                                                Pembahas
-                                                @else
-                                                Penguji
-                                                @endif
-                                                {{ $notif->data['no_surat'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }}
-                                                telah diverifikasi.<br>
-                                                <small
-                                                    style="color: grey;">{{ Carbon\Carbon::parse($notif->data['waktu_verif'])->locale('id_ID')->DiffForHumans() }}</small>
-                                            </a>
-                                        </li>
-                                        @elseif($notif->type == 'App\Notifications\verifSKSemproKtu')
-                                        <li>
-                                            <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
-                                                SK Sempro
-                                                {{ $notif->data['no_surat'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }}
-                                                telah diverifikasi.<br>
-                                                <small
-                                                    style="color: grey;">{{ Carbon\Carbon::parse($notif->data['waktu_verif'])->locale('id_ID')->DiffForHumans() }}</small>
-                                            </a>
-                                        </li>
-                                        @elseif($notif->type == 'App\Notifications\verifSKSkripsiKtu')
-                                        <li>
-                                            <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
-                                                SK Pembimbing Skripsi
-                                                {{ $notif->data['no_surat_pembimbing'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }}
-                                                dan SK Penguji Skripsi
-                                                {{ $notif->data['no_surat_penguji'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }}
-                                                telah diverifikasi.<br>
-                                                <small
-                                                    style="color: grey;">{{ Carbon\Carbon::parse($notif->data['waktu_verif'])->locale('id_ID')->DiffForHumans() }}</small>
-                                            </a>
-                                        </li>
+                                        {{-- @if (Auth::user()->jabatan->jabatan == 'Pengelola Data Akademik')
+                                            @foreach (Auth::user()->unreadNotifications as $notif)
+                                            @if ($notif->type == 'App\Notifications\verifSutgasKtu')
+                                            <li>
+                                                <a href="{{ route('notifikasi.read', $notif->id) }}"
+                                        style="white-space:
+                                        initial;">
+                                        Surat Tugas
+                                        @if ($notif->data['tipe_sutgas'] == "Surat Tugas Pembimbing")
+                                        Pembimbing
+                                        @elseif($notif->data['tipe_sutgas'] == "Surat Tugas Pembahas")
+                                        Pembahas
+                                        @else
+                                        Penguji
                                         @endif
-
-                                        @endforeach
-
-                                        @endif
-
-                                        @if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN')
-                                        @foreach (Auth::user()->unreadNotifications as $notif)
-                                        <li>
-                                            <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
-                                                <i
-                                                    class="{{ ($notif->data['pesan']) ? 'fa fa-times-circle' : 'fa fa-check-circle' }} col-xs-2"></i>
-                                                <div class="col-xs-10">
-                                                    Laporan Pengadaan<br>
-                                                    <b>{{ $notif->data['keterangan'] }}</b><br>
-                                                    @if ($notif->data['pesan'])
-                                                    {{ $notif->data['pesan'] }}<br>
-                                                    @endif
-                                                    <small
-                                                        style="color: grey;">{{ Carbon\Carbon::parse($notif->data['updated_at'])->locale('id_ID')->DiffForHumans() }}</small>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        @endforeach
-                                        @endif
-
-                                        @if (Auth::user()->jabatan->jabatan == 'Wakil Dekan 2')
-                                        @foreach (Auth::user()->unreadNotifications as $notif)
-                                        <li>
-                                            <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
-                                                <i class="fa fa-exclamation-circle col-xs-2"></i>
-                                                <div class="col-xs-10">
-                                                    Laporan Pengadaan Baru<br>
-                                                    <b>{{ $notif->data['keterangan'] }}</b><br>
-                                                    <small
-                                                        style="color: grey;">{{ Carbon\Carbon::parse($notif->data['updated_at'])->locale('id_ID')->DiffForHumans() }}</small>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        @endforeach
-                                        @endif
-
-                                        <!-- end notification -->
-                                    </ul>
+                                        {{ $notif->data['no_surat'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }}
+                                        telah diverifikasi.<br>
+                                        <small
+                                            style="color: grey;">{{ Carbon\Carbon::parse($notif->data['waktu_verif'])->locale('id_ID')->DiffForHumans() }}</small>
+                                        </a>
                                 </li>
-
-                                @if (count(Auth::user()->notifications) > 0)
-                                <li class="footer"><a href="{{ route('notifikasi.index') }}">Lihat Semua</a></li>
+                                @elseif($notif->type == 'App\Notifications\verifSKSemproKtu')
+                                <li>
+                                    <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+                                        SK Sempro
+                                        {{ $notif->data['no_surat'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }}
+                                        telah diverifikasi.<br>
+                                        <small
+                                            style="color: grey;">{{ Carbon\Carbon::parse($notif->data['waktu_verif'])->locale('id_ID')->DiffForHumans() }}</small>
+                                    </a>
+                                </li>
+                                @elseif($notif->type == 'App\Notifications\verifSKSkripsiKtu')
+                                <li>
+                                    <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+                                        SK Pembimbing Skripsi
+                                        {{ $notif->data['no_surat_pembimbing'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }}
+                                        dan SK Penguji Skripsi
+                                        {{ $notif->data['no_surat_penguji'] }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($notif->data['created_at'])->year }}
+                                        telah diverifikasi.<br>
+                                        <small
+                                            style="color: grey;">{{ Carbon\Carbon::parse($notif->data['waktu_verif'])->locale('id_ID')->DiffForHumans() }}</small>
+                                    </a>
+                                </li>
                                 @endif
+
+                                @endforeach
+
+                                @endif
+
+                                @if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN')
+                                @foreach (Auth::user()->unreadNotifications as $notif)
+                                @if ($notif->type == 'App\Notifications\verifPengadaan')
+                                <li>
+                                    <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+                                        <i
+                                            class="{{ ($notif->data['pesan']) ? 'fa fa-times-circle' : 'fa fa-check-circle' }} col-xs-2"></i>
+                                        <div class="col-xs-10">
+                                            Laporan Pengadaan<br>
+                                            <b>{{ $notif->data['keterangan'] }}</b><br>
+                                            @if ($notif->data['pesan'])
+                                            {{ $notif->data['pesan'] }}<br>
+                                            @endif
+                                            <small
+                                                style="color: grey;">{{ Carbon\Carbon::parse($notif->data['updated_at'])->locale('id_ID')->DiffForHumans() }}</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                @elseif ($notif->type == 'App\Notifications\verifPeminjamanBarang')
+                                <li>
+                                    <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+                                        <i
+                                            class="{{ ($notif->data['kegiatan']) ? 'fa fa-times-circle' : 'fa fa-check-circle' }} col-xs-2"></i>
+                                        <div class="col-xs-10">
+                                            @if ($notif->data['verif_ktu'])
+                                            Laporan Peminjaman Barang<br>
+                                            <b>{{ $notif->data['kegiatan'] }}</b>telah diverifikasi KTU<br>
+                                            @else
+                                            Laporan Peminjaman Barang Baru<br>
+                                            <b>{{ $notif->data['kegiatan'] }}</b><br>
+                                            @endif
+                                            <small
+                                                style="color: grey;">{{ Carbon\Carbon::parse($notif->data['updated_at'])->locale('id_ID')->DiffForHumans() }}</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                @elseif ($notif->type == 'App\Notifications\verifPeminjamanRuang')
+                                <li>
+                                    <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+                                        <i
+                                            class="{{ ($notif->data['kegiatan']) ? 'fa fa-times-circle' : 'fa fa-check-circle' }} col-xs-2"></i>
+                                        <div class="col-xs-10">
+                                            @if ($notif->data['verif_ktu'])
+                                            Laporan Peminjaman Ruang<br>
+                                            <b>{{ $notif->data['kegiatan'] }}</b>telah diverifikasi KTU<br>
+                                            @else
+                                            Laporan Peminjaman Ruang Baru<br>
+                                            <b>{{ $notif->data['kegiatan'] }}</b><br>
+                                            @endif
+                                            <small
+                                                style="color: grey;">{{ Carbon\Carbon::parse($notif->data['updated_at'])->locale('id_ID')->DiffForHumans() }}</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                @endif
+                                @endforeach
+                                @endif
+
+                                @if (Auth::user()->jabatan->jabatan == 'Wakil Dekan 2')
+                                @foreach (Auth::user()->unreadNotifications as $notif)
+                                <li>
+                                    <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+                                        <i class="fa fa-exclamation-circle col-xs-2"></i>
+                                        <div class="col-xs-10">
+                                            Laporan Pengadaan Baru<br>
+                                            <b>{{ $notif->data['keterangan'] }}</b><br>
+                                            <small
+                                                style="color: grey;">{{ Carbon\Carbon::parse($notif->data['updated_at'])->locale('id_ID')->DiffForHumans() }}</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                @endforeach
+                                @endif
+
+                                @if (Auth::user()->jabatan->jabatan == 'KTU')
+                                @foreach (Auth::user()->unreadNotifications as $notif)
+                                @if ($notif->type == 'App\Notifications\verifPeminjamanBarang')
+                                <li>
+                                    <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+                                        <i
+                                            class="{{ ($notif->data['pesan']) ? 'fa fa-times-circle' : 'fa fa-check-circle' }} col-xs-2"></i>
+                                        <div class="col-xs-10">
+                                            Laporan Peminjaman Barang Baru<br>
+                                            <b>{{ $notif->data['kegiatan'] }}</b><br>
+                                            <small
+                                                style="color: grey;">{{ Carbon\Carbon::parse($notif->data['updated_at'])->locale('id_ID')->DiffForHumans() }}</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                @elseif ($notif->type == 'App\Notifications\verifPeminjamanRuang')
+                                <li>
+                                    <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+                                        <i
+                                            class="{{ ($notif->data['pesan']) ? 'fa fa-times-circle' : 'fa fa-check-circle' }} col-xs-2"></i>
+                                        <div class="col-xs-10">
+                                            Laporan Peminjaman Ruang Baru<br>
+                                            <b>{{ $notif->data['kegiatan'] }}</b><br>
+                                            <small
+                                                style="color: grey;">{{ Carbon\Carbon::parse($notif->data['updated_at'])->locale('id_ID')->DiffForHumans() }}</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                @endif
+                                @endforeach
+                                @endif
+
+                                @if (Auth::user()->jabatan->jabatan == 'Pengadministrasi Layanan Kegiatan
+                                Mahasiswa')
+                                @foreach (Auth::user()->unreadNotifications as $notif)
+                                @if ($notif->type == 'App\Notifications\verifPeminjamanBarang')
+                                <li>
+                                    <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+                                        <i
+                                            class="{{ ($notif->data['pesan']) ? 'fa fa-times-circle' : 'fa fa-check-circle' }} col-xs-2"></i>
+                                        <div class="col-xs-10">
+                                            Laporan Peminjaman Barang<br>
+                                            @if ($notif->data['verif_baper'])
+                                            <b>{{ $notif->data['kegiatan'] }}</b>telah disetujui Bagian
+                                            Perlengkapan<br>
+                                            @elseif ($notif->data['verif_ktu'])
+                                            <b>{{ $notif->data['kegiatan'] }}</b>telah diverifikasi KTU<br>
+                                            @endif
+                                            <small
+                                                style="color: grey;">{{ Carbon\Carbon::parse($notif->data['updated_at'])->locale('id_ID')->DiffForHumans() }}</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                @elseif ($notif->type == 'App\Notifications\verifPeminjamanRuang')
+                                <li>
+                                    <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+                                        <i
+                                            class="{{ ($notif->data['pesan']) ? 'fa fa-times-circle' : 'fa fa-check-circle' }} col-xs-2"></i>
+                                        <div class="col-xs-10">
+                                            Laporan Peminjaman Ruang<br>
+                                            <b>{{ $notif->data['kegiatan'] }}</b><br>
+                                            @if ($notif->data['verif_baper'])
+                                            Telah Disetujui Bagian Perlengkapan<br>
+                                            @elseif ($notif->data['verif_ktu'])
+                                            Telah Disetujui KTU<br>
+                                            @endif
+                                            <small
+                                                style="color: grey;">{{ Carbon\Carbon::parse($notif->data['updated_at'])->locale('id_ID')->DiffForHumans() }}</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                @endif
+                                @endforeach
+                                @endif --}}
+
+
+                                <!-- end notification -->
                             </ul>
                         </li>
+                        @if (count(Auth::user()->notifications) > 0)
+                        <li class="footer"><a href="{{ route('notifikasi.index') }}">Lihat Semua</a></li>
+                        @endif
+                    </ul>
+                    </li>
                         <!-- Tasks Menu (was Here)-->
 
                         <!-- User Account Menu -->
                         <li>
                             @if (Auth::user()->jabatan->jabatan == "Dosen")
                             <a href="{{route('dosen.ganti.password')}}">Ganti Password</a>
-                            @elseif (Auth::user()->jabatan->jabatan == "Dekan") 
+                            @elseif (Auth::user()->jabatan->jabatan == "Dekan")
                             <a href="{{route('dekan.ganti.password')}}">Ganti Password</a>
-                            @elseif (Auth::user()->jabatan->jabatan == "Wakil Dekan 1") 
+                            @elseif (Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
                             <a href="{{route('wadek1.ganti.password')}}">Ganti Password</a>
-                            @elseif (Auth::user()->jabatan->jabatan == "Wakil Dekan 2") 
+                            @elseif (Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
                             <a href="{{route('wadek2.ganti.password')}}">Ganti Password</a>
-                            @elseif (Auth::user()->jabatan->jabatan == "KTU") 
+                            @elseif (Auth::user()->jabatan->jabatan == "KTU")
                             <a href="{{route('ktu.ganti.password')}}">Ganti Password</a>
-                            @elseif (Auth::user()->jabatan->jabatan == "BPP") 
+                            @elseif (Auth::user()->jabatan->jabatan == "BPP")
                             <a href="{{route('bpp.ganti.password')}}">Ganti Password</a>
-                            @elseif (Auth::user()->jabatan->jabatan == "Pengelola Data Akademik") 
+                            @elseif (Auth::user()->jabatan->jabatan == "Pengelola Data Akademik")
                             <a href="{{route('akademik.ganti.password')}}">Ganti Password</a>
-                            @elseif (Auth::user()->jabatan->jabatan == "Penata Dokumen Keuangan") 
+                            @elseif (Auth::user()->jabatan->jabatan == "Penata Dokumen Keuangan")
                             <a href="{{route('keuangan.ganti.password')}}">Ganti Password</a>
-                            @elseif (Auth::user()->jabatan->jabatan == "Pengadministrasi Kemahasiswaan & Alumni") 
+                            @elseif (Auth::user()->jabatan->jabatan == "Pengadministrasi Kemahasiswaan & Alumni")
                             <a href="{{route('kemahasiswaan.ganti.password')}}">Ganti Password</a>
-                            @elseif (Auth::user()->jabatan->jabatan == "Pengadministrasi BMN") 
+                            @elseif (Auth::user()->jabatan->jabatan == "Pengadministrasi BMN")
                             <a href="{{route('perlengkapan.ganti.password')}}">Ganti Password</a>
-                            @elseif (Auth::user()->jabatan->jabatan == "Pengadministrasi Layanan Kegiatan Mahasiswa") 
+                            @elseif (Auth::user()->jabatan->jabatan == "Pengadministrasi Layanan Kegiatan Mahasiswa")
                             <a href="{{route('ormawa.ganti.password')}}">Ganti Password</a>
-                            @elseif (Auth::user()->jabatan->jabatan == "Pemroses Mutasi Kepegawaian") 
+                            @elseif (Auth::user()->jabatan->jabatan == "Pemroses Mutasi Kepegawaian")
                             <a href="{{route('kepegawaian.ganti.password')}}">Ganti Password</a>
-                            @elseif (Auth::user()->jabatan->jabatan == "Sekretaris Pimpinan") 
+                            @elseif (Auth::user()->jabatan->jabatan == "Sekretaris Pimpinan")
                             <a href="{{route('staffpim.ganti.password')}}">Ganti Password</a>
-                            @else   
+                            @else
                             @endif
                         </li>
-                        <li class="user-menu">
-                            <a href="#" id="btn_logout" class="">Sign Out</a>
+                        {{-- <li class="user-menu">
+                            <a href="#" id="btn_logout" class="">Sign Out</a> --}}
+                        {{-- </div> --}}
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                        </li>
-                        <!-- Control Sidebar Toggle Button -->
+
+                    <!-- User Account Menu -->
+
+                    <li class="user-menu">
+                        <a href="#" id="btn_logout" class="">Sign Out</a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </li>
+                    <!-- Control Sidebar Toggle Button -->
                     </ul>
                 </div>
             </nav>
@@ -440,15 +564,16 @@ desired effect
                 posisi = $('#list_notif').scrollTop();
                 $('.dropdown.notifications-menu').load('{{ route("notifikasi.load") }}', function(){
                     $('#list_notif').scrollTop(posisi);
+                    readAllNotif();
                 });
-                
+
             }
 
             loadlink();
             setInterval(function(){
-                readAllNotif();
                 loadlink()
-            }, 5000);
+                // readAllNotif();
+            }, 3000);
         });
 
     </script>

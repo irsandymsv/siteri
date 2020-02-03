@@ -61,7 +61,8 @@ class verifPengadaan extends Notification
             return [
                 'id'         => $this->laporan->id,
                 'keterangan' => $this->laporan->keterangan,
-                'updated_at' => $this->laporan->updated_at
+                'updated_at' => $this->laporan->updated_at,
+                'pesan'      => $this->laporan->pesan
             ];
         } else
         if (Auth::user()->jabatan->jabatan == 'Wakil Dekan 2') {
