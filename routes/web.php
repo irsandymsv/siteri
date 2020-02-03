@@ -34,7 +34,7 @@ Route::middleware(['auth'])->prefix('notifikasi')->name('notifikasi.')->group(
     }
 );
 
-Route::get('/notifikasi/icon', 'NotificationController@icon')->name('notifikasi.icon');
+// Route::get('/notifikasi/load', 'NotificationController@load')->name('notifikasi.icon');
 Route::get('/notifikasi/load', 'NotificationController@load')->name('notifikasi.load');
 
 Route::middleware(['auth', 'checkRole:Pengelola Data Akademik'])->prefix('template')->name('template.')->group(

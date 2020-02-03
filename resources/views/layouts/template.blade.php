@@ -116,7 +116,7 @@ desired effect
                         <!-- Notifications Menu -->
                         <li class="dropdown notifications-menu">
                             <!-- Menu toggle button -->
-                            {{-- <div> --}}
+                            {{-- <div id="iconNotif"> --}}
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="btn_notif">
                                 <i class="fa fa-bell-o"></i>
                                 @if (count(Auth::user()->unreadNotifications) > 0)
@@ -138,7 +138,7 @@ desired effect
                                 <li class="header">Tidak Ada Notifikasi Baru</li>
                                 @endif
                                 {{-- <div id="isiNotif"> --}}
-                                <li id="isiNotif">
+                                <li>
                                     <!-- Inner Menu: contains the notifications -->
                                     <ul class="menu" id="list_notif">
                                         <!-- start notification -->
@@ -344,11 +344,11 @@ desired effect
                                 <!-- end notification -->
                             </ul>
                         </li>
+                        {{-- </div> --}}
 
                         @if (count(Auth::user()->notifications) > 0)
                         <li class="footer"><a href="{{ route('notifikasi.index') }}">Lihat Semua</a></li>
                         @endif
-                        {{-- </div> --}}
                     </ul>
                     </li>
 
@@ -528,11 +528,10 @@ desired effect
 
         $(function(){
             function loadlink(){
-                $('#btn_notif').load('{{ route("notifikasi.icon") }}')
-
                 posisi = $('#list_notif').scrollTop();
-                $('#isiNotif').load('{{ route("notifikasi.load") }}', function(){
+                $('.dropdown.notifications-menu').load('{{ route("notifikasi.load") }}', function(){
                     $('#list_notif').scrollTop(posisi);
+                    readAllNotif();
                 });
 
             }
@@ -540,7 +539,7 @@ desired effect
             loadlink();
             setInterval(function(){
                 loadlink()
-                readAllNotif();
+                // readAllNotif();
             }, 3000);
         });
 

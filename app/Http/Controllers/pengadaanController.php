@@ -403,6 +403,8 @@ class pengadaanController extends Controller
                 } else {
                     $laporan = laporan_pengadaan::findOrfail($request->lap);
                 }
+                $laporan->pesan = "Telah Direvisi";
+                // dd($laporan);
 
                 $wadek = User::with('jabatan')
                     ->whereHas(
