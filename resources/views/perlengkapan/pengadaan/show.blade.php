@@ -31,7 +31,7 @@
                 @if ($laporan_pengadaan->verif_wadek2 != 2)
                 <div style="float: right;">
                     <a href="{{ route('perlengkapan.pengadaan.edit', [$laporan_pengadaan->id, 'laporan' => true]) }}"
-                        class="btn btn-primary"><i class="fa fa-plus"></i> Ubah Laporan</a>
+                        class="btn btn-warning"><i class="fa fa-edit"></i> Ubah Laporan</a>
                 </div>
                 @endif
             </div>
