@@ -156,17 +156,53 @@ class manageUserController extends Controller
         return redirect()->back()->with('success','Berhasil dihapus!');
     }
 
+    public function akademik_ganti_password()
+    {
+        $data = User::all();
+
+        return view('akademik.ganti_password');
+    }
+    public function kemahasiswaan_ganti_password()
+    {
+        $data = User::all();
+
+        return view('kemahasiswaan.ganti_password');
+    }
+    public function keuangan_ganti_password()
+    {
+        $data = User::all();
+
+        return view('keuangan.ganti_password');
+    }
     public function dosen_ganti_password()
     {
         $data = User::all();
 
         return view('dosen.ganti_password');
     }
+    public function ormawa_ganti_password()
+    {
+        $data = User::all();
+
+        return view('ormawa.ganti_password');
+    }
+    public function perlengkapan_ganti_password()
+    {
+        $data = User::all();
+
+        return view('perlengkapan.ganti_password');
+    }
     public function dekan_ganti_password()
     {
         $data = User::all();
 
         return view('dekan.ganti_password');
+    }
+    public function wadek1_ganti_password()
+    {
+        $data = User::all();
+
+        return view('wadek1.ganti_password');
     }
     public function wadek2_ganti_password()
     {
@@ -196,7 +232,7 @@ class manageUserController extends Controller
     {
         $data = User::all();
 
-        return view('staffpim.ganti_password');
+        return view('staff_pimpinan.ganti_password');
     }
 
     public function simpan_password(Request $request, $id)

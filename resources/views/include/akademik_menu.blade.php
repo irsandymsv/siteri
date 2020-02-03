@@ -1,4 +1,4 @@
-<li class="active"><a href="{{route('akademik.dashboard')}}"><i class="fa fa-dashboard"></i> <span>Dashboard Akademik</span></a></li>
+<li><a href="{{route('akademik.dashboard')}}"><i class="fa fa-dashboard"></i> <span>Dashboard Akademik</span></a></li>
 
 <li><a href="{{route('akademik.data-skripsi.index')}}"><i class="fa fa-link"></i> <span>Data Skripsi</span></a></li>
 

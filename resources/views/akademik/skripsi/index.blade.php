@@ -65,9 +65,9 @@
 		            						<div class="btn-group">
 			            						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expand="false">Pilih <i class="fa fa-caret-down"></i></button>
 			            						<ul class="dropdown-menu">
-			            							<li>
+			            							{{-- <li>
 			            								<a href="{{ route('akademik.data-skripsi.ubah-judul', $item->id) }}">Ubah Judul</a>
-			            							</li>
+			            							</li> --}}
 			            							<li>
 			            								<a href="{{ route('akademik.data-skripsi.ubah-judul-pembimbing', $item->id) }}">Ubah Judul & Pembimbing</a>
 			            							</li>

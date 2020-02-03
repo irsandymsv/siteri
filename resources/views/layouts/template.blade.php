@@ -93,7 +93,7 @@ desired effect
         <header class="main-header">
 
             <!-- Logo -->
-            <a href="index2.html" class="logo">
+            <a href="{{ route('home') }}" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini"><b>SI</b>T</span>
                 <!-- logo for regular state and mobile devices -->
@@ -344,24 +344,58 @@ desired effect
                                 <!-- end notification -->
                             </ul>
                         </li>
-                        {{-- </div> --}}
-
                         @if (count(Auth::user()->notifications) > 0)
                         <li class="footer"><a href="{{ route('notifikasi.index') }}">Lihat Semua</a></li>
                         @endif
                     </ul>
                     </li>
+                        <!-- Tasks Menu (was Here)-->
+                    <li class="dropdown">
+                        <!-- User Account Menu -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            {{-- <i class="fa fa-user"></i> --}}
+                            {{ Auth::user()->nama }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                @if (Auth::user()->jabatan->jabatan == "Dosen")
+                                <a href="{{route('dosen.ganti.password')}}">Ganti Password</a>
+                                @elseif (Auth::user()->jabatan->jabatan == "Dekan")
+                                <a href="{{route('dekan.ganti.password')}}">Ganti Password</a>
+                                @elseif (Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+                                <a href="{{route('wadek1.ganti.password')}}">Ganti Password</a>
+                                @elseif (Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
+                                <a href="{{route('wadek2.ganti.password')}}">Ganti Password</a>
+                                @elseif (Auth::user()->jabatan->jabatan == "KTU")
+                                <a href="{{route('ktu.ganti.password')}}">Ganti Password</a>
+                                @elseif (Auth::user()->jabatan->jabatan == "BPP")
+                                <a href="{{route('bpp.ganti.password')}}">Ganti Password</a>
+                                @elseif (Auth::user()->jabatan->jabatan == "Pengelola Data Akademik")
+                                <a href="{{route('akademik.ganti.password')}}">Ganti Password</a>
+                                @elseif (Auth::user()->jabatan->jabatan == "Penata Dokumen Keuangan")
+                                <a href="{{route('keuangan.ganti.password')}}">Ganti Password</a>
+                                @elseif (Auth::user()->jabatan->jabatan == "Pengadministrasi Kemahasiswaan & Alumni")
+                                <a href="{{route('kemahasiswaan.ganti.password')}}">Ganti Password</a>
+                                @elseif (Auth::user()->jabatan->jabatan == "Pengadministrasi BMN")
+                                <a href="{{route('perlengkapan.ganti.password')}}">Ganti Password</a>
+                                @elseif (Auth::user()->jabatan->jabatan == "Pengadministrasi Layanan Kegiatan Mahasiswa")
+                                <a href="{{route('ormawa.ganti.password')}}">Ganti Password</a>
+                                @elseif (Auth::user()->jabatan->jabatan == "Pemroses Mutasi Kepegawaian")
+                                <a href="{{route('kepegawaian.ganti.password')}}">Ganti Password</a>
+                                @elseif (Auth::user()->jabatan->jabatan == "Sekretaris Pimpinan")
+                                <a href="{{route('staffpim.ganti.password')}}">Ganti Password</a>
+                                @else
+                                @endif
+                            </li>
 
-                    <!-- Tasks Menu (was Here)-->
+                            <li class="user-menu">
+                                <a href="#" id="btn_logout" class="">Sign Out</a>
 
-                    <!-- User Account Menu -->
-
-                    <li class="user-menu">
-                        <a href="#" id="btn_logout" class="">Sign Out</a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
                     </li>
                     <!-- Control Sidebar Toggle Button -->
                     </ul>
@@ -382,7 +416,7 @@ desired effect
                     <div class="pull-left info" style="left: 0; width: 100%; white-space: initial; padding-left: 5px;">
                         <p style="text-align: center;">{{ Auth::user()->nama }}</p>
                         <!-- Status -->
-                        {{-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> --}}
+                        {{-- <a style="margin-left: 20px; padding-bottom: 10px;" href="#"> Online</a> --}}
                     </div>
                 </div>
 

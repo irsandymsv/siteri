@@ -187,7 +187,16 @@
                               <p>{{ $item->skripsi->mahasiswa->nama }}</p>
                               <p>NIM: {{ $item->skripsi->nim }}</p>
                            </td>
-                           <td class="to_center">{{ $item->surat_tugas[0]->dosen1->golongan->golongan }}</td>
+                           <td class="to_center">
+                              @if (is_null($item->surat_tugas[0]->dosen1->golongan))
+                                 -
+                              @else
+                              @php
+                                 $gol = $item->surat_tugas[0]->dosen1->golongan->golongan;
+                              @endphp
+                                 {{ substr($gol,0,(strlen($gol)-2 )) }}
+                              @endif
+                           </td>
                            <td id="penguji_{{$no}}" class="pengujiHonor">Rp
                               {{ number_format($sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor, 0, ",", ".") }}
                            </td>
@@ -221,7 +230,16 @@
                            <td class="first_td">{{ $no }}</td>
                            <td class="nama_dosen">{{ $item->surat_tugas[0]->dosen2->nama }}</td>
                            <td class="to_center">{{ $item->surat_tugas[0]->dosen2->npwp }}</td>
-                           <td class="to_center">{{ $item->surat_tugas[0]->dosen2->golongan->golongan }}</td>
+                           <td class="to_center">
+                              @if (is_null($item->surat_tugas[0]->dosen2->golongan))
+                                 -
+                              @else
+                              @php
+                                 $gol = $item->surat_tugas[0]->dosen2->golongan->golongan;
+                              @endphp
+                                 {{ substr($gol,0,(strlen($gol)-2 )) }}
+                              @endif
+                           </td>
                            <td id="penguji_{{$no}}" class="pengujiHonor">Rp
                               {{ number_format($sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor, 0, ",", ".") }}
                            </td>

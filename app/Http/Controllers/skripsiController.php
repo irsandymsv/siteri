@@ -22,31 +22,33 @@ class skripsiController extends suratTugasController
     	return view('akademik.skripsi.index', ['data_skripsi' => $data_skripsi]);
     }
 
-    public function ubahJudul($id)
-    {
-    	$skripsi = skripsi::where('id', $id)
-        ->with(['status_skripsi', 'mahasiswa'])
-        ->first();
-    	return view('akademik.skripsi.ubahJudul', ['skripsi' => $skripsi]);
+    //Tdk jadi digunakan
+    // public function ubahJudul($id)
+    // {
+    // 	$skripsi = skripsi::where('id', $id)
+    //     ->with(['status_skripsi', 'mahasiswa'])
+    //     ->first();
+    // 	return view('akademik.skripsi.ubahJudul', ['skripsi' => $skripsi]);
 
-    }
+    // }
 
-    public function store_ubahJudul(Request $request, $id)
-    {
-        $this->validate($request, [
-            'judul' => 'required',
-            'judul_inggris' => 'required',
-        ]);
-        $detail_skripsi = detail_skripsi::where('id_skripsi', $id)->orderBy('created_at', 'desc')->first();
-        try{
-            $detail_skripsi->judul = $request->input('judul');
-            $detail_skripsi->judul_inggris = $request->input('judul_inggris');
-            $detail_skripsi->save();
-            return redirect()->route('akademik.data-skripsi.ubah-judul', $id)->with('success', 'Data Berhasil Dirubah');
-        } catch (Exception $e) {
-            return redirect()->route('akademik.data-skripsi.ubah-judul', $id)->with('error', $e->getMessage());
-        }
-    }
+    //Tdk jadi digunakan
+    // public function store_ubahJudul(Request $request, $id)
+    // {
+    //     $this->validate($request, [
+    //         'judul' => 'required',
+    //         'judul_inggris' => 'required',
+    //     ]);
+    //     $detail_skripsi = detail_skripsi::where('id_skripsi', $id)->orderBy('created_at', 'desc')->first();
+    //     try{
+    //         $detail_skripsi->judul = $request->input('judul');
+    //         $detail_skripsi->judul_inggris = $request->input('judul_inggris');
+    //         $detail_skripsi->save();
+    //         return redirect()->route('akademik.data-skripsi.ubah-judul', $id)->with('success', 'Data Berhasil Dirubah');
+    //     } catch (Exception $e) {
+    //         return redirect()->route('akademik.data-skripsi.ubah-judul', $id)->with('error', $e->getMessage());
+    //     }
+    // }
 
     public function ubahJudulPembimbing($id)
     {

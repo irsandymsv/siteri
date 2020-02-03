@@ -486,9 +486,10 @@ class SkSkripsiController extends Controller
         ])->setPaper('a4', 'landscape')->setWarnings(false);
         $m->addRaw($pdf->output());
 
-      file_put_contents('storage/skripsi/SK Skripsi-'. $sk->no_surat . ".pdf", $m->merge());
+      $tgl = Carbon::parse($sk->created_at)->format('d-m-Y');
+      file_put_contents('storage/skripsi/SK Skripsi-'. $tgl . ".pdf", $m->merge());
       return response()->download(
-          storage_path('app\public\skripsi\SK Skripsi-' . $sk->no_surat . ".pdf")
+          storage_path('app\public\skripsi\SK Skripsi-' . $tgl . ".pdf")
       )->deleteFileAfterSend(true);
 	}
 

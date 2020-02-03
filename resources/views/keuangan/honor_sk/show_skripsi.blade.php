@@ -243,7 +243,16 @@
                                  <p>{{$item->skripsi->mahasiswa->nama}}</p>
                                  <p>NIM: {{$item->skripsi->nim}}</p>
                               </td>
-                              <td>{{$item->sutgas_pembimbing_terbaru->dosen1->golongan->golongan}}</td>
+                              <td>
+                                 @if (is_null($item->sutgas_pembimbing_terbaru->dosen1->golongan))
+                                    -
+                                 @else
+                                 @php
+                                    $gol = $item->sutgas_pembimbing_terbaru->dosen1->golongan->golongan;
+                                 @endphp
+                                    {{ substr($gol,0,(strlen($gol)-2 )) }}
+                                 @endif
+                              </td>
                               <td>Rp 
                                  {{ number_format($honorarium, 0, ",", ".") }}
                               </td>
@@ -318,7 +327,16 @@
                                  @endphp
                                  <td>{{$item->sutgas_pembimbing_terbaru->dosen2->nama}}</td>
                                  <td>{{$item->sutgas_pembimbing_terbaru->dosen2->npwp}}</td>
-                                 <td>{{$item->sutgas_pembimbing_terbaru->dosen2->golongan->golongan}}</td>
+                                 <td>
+                                    @if (is_null($item->sutgas_pembimbing_terbaru->dosen2->golongan))
+                                       -
+                                    @else
+                                    @php
+                                       $gol =$item->sutgas_pembimbing_terbaru->dosen2->golongan->golongan;
+                                    @endphp
+                                       {{ substr($gol,0,(strlen($gol)-2)) }}
+                                    @endif
+                                 </td>
                                  <td>Rp  
                                     {{ number_format($honorarium, 0, ",", ".") }}
                                  </td>
@@ -480,7 +498,16 @@
                                  <p>{{$item->skripsi->mahasiswa->nama}}</p>
                                  <p>NIM: {{$item->skripsi->nim}}</p>
                               </td>
-                              <td>{{$item->sutgas_penguji_terbaru->dosen1->golongan->golongan}}</td>
+                              <td>
+                                 @if (is_null($item->sutgas_penguji_terbaru->dosen1->golongan))
+                                    -
+                                 @else
+                                 @php
+                                    $gol = $item->sutgas_penguji_terbaru->dosen1->golongan->golongan;
+                                 @endphp
+                                    {{ substr($gol,0,(strlen($gol)-2 )) }}
+                                 @endif
+                              </td>
                               <td>Rp 
                                  {{ number_format($honorarium, 0, ",", ".") }}
                               </td>
@@ -542,7 +569,16 @@
                               @endphp
                               <td>{{$item->sutgas_penguji_terbaru->dosen2->nama}}</td>
                               <td>{{$item->sutgas_penguji_terbaru->dosen2->npwp}}</td>
-                              <td>{{$item->sutgas_penguji_terbaru->dosen2->golongan->golongan}}</td>
+                              <td>
+                                 @if (is_null($item->sutgas_penguji_terbaru->dosen2->golongan))
+                                    -
+                                 @else
+                                 @php
+                                    $gol = $item->sutgas_penguji_terbaru->dosen2->golongan->golongan;
+                                 @endphp
+                                    {{ substr($gol,0,(strlen($gol)-2)) }}
+                                 @endif
+                              </td>
                               <td>Rp  
                                  {{ number_format($honorarium, 0, ",", ".") }}
                               </td>

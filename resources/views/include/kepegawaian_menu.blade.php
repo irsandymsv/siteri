@@ -1,4 +1,4 @@
-<li class="active"><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard Kepegawaian</span></a></li>
+<li><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard Kepegawaian</span></a></li>
 	<li class="treeview">
 	    <a href="#"><i class="fa fa-link"></i> <span>Surat Tugas</span>
 	      <span class="pull-right-container">
@@ -6,7 +6,7 @@
 	        </span>
 	    </a>
 	    <ul class="treeview-menu">
-	 
+
 	      <li><a href="{{route('kepegawaian.surat.index')}}">Surat Tugas Belum Dibuat</a></li>
 		  <li><a href="{{route('kepegawaian.surat.read')}}">Menunggu Verifikasi</a></li>
 		  <li><a href="{{route('kepegawaian.surat.revisi')}}">Surat Tugas Perlu Revisi</a></li>

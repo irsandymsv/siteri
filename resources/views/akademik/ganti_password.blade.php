@@ -1,8 +1,9 @@
 @extends('layouts.template')
 
 @section('side_menu')
-   @include('include.dekan_menu')
+   @include('include.akademik_menu')
 @endsection
+
 @section('page_title','Ganti Password')
 @section('content')
 <!-- Main content -->
@@ -41,6 +42,7 @@
             <div class="alert alert-success">
               {{ session('success') }}
             </div> 
+            
             @endif
             <div class="box-body">
       <div class="row">
@@ -62,7 +64,7 @@
               </div>
         </div>
       </div>
-      </div>
+               </div>
    		</div>
    	</div>
 	</div>
