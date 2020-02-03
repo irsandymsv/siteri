@@ -265,150 +265,154 @@ class pengadaanController extends Controller
     public function saveItem($id, Request $request)
     {
         // dd($id, $request->lap, $request->select, $request->value);
-        if ($request->select == 'peruntukan') {
-            try {
-                $this->validate(
-                    $request,
-                    [
-                    "value"    => "required|string|max:100"
-                    ]
-                );
-                laporan_pengadaan::findOrfail($request->id)->update(
-                    [
-                    "keterangan"    => $request->value,
-                    "verif_wadek2"  => 0,
-                    "pesan"         => null
-                    ]
-                );
-            } catch (Exception $e) {
-                dd($request);
-                if (!(isset($request->value) && empty($request->value))) {
-                    $request->value = 'Diisi!';
+        ($request->select == 'peruntukan') ? $awal = laporan_pengadaan::findOrfail($request->lap) : $awal = laporan_pengadaan::findOrfail($request->id);
+        if ($awal->verif_wadek2 != 2) {
+            if ($request->select == 'peruntukan') {
+                try {
+                    $this->validate(
+                        $request,
+                        [
+                        "value"    => "required|string|max:100"
+                        ]
+                    );
+                    laporan_pengadaan::findOrfail($request->id)->update(
+                        [
+                        "keterangan"    => $request->value,
+                        "verif_wadek2"  => 0,
+                        "pesan"         => null
+                        ]
+                    );
+                } catch (Exception $e) {
+                    dd($request);
+                    if (!(isset($request->value) && empty($request->value))) {
+                        $request->value = 'Diisi!';
+                    }
+                    $retun = ["peruntukan" => $request->value, "status" => "Gagal Ubah Peruntukan"];
+                    return $retun;
                 }
-                $retun = ["peruntukan" => $request->value, "status" => "Gagal Ubah Peruntukan"];
-                return $retun;
+            } elseif ($request->select == 'nama' || $request->select == 'spesifikasi') {
+                try {
+                    $this->validate(
+                        $request,
+                        [
+                        "value"    => "required|string|max:50",
+                        ]
+                    );
+                    if ($request->select == 'nama') {
+                        pengadaan::findOrfail($id)->update(
+                            [
+                            "nama_barang"   => $request->value
+                            ]
+                        );
+                    } else {
+                        pengadaan::findOrfail($id)->update(
+                            [
+                            "spesifikasi"   => $request->value
+                            ]
+                        );
+                    }
+                    laporan_pengadaan::findOrfail($request->lap)->update(
+                        [
+                        "verif_wadek2"  => 0,
+                        "pesan"         => null
+                        ]
+                    );
+                } catch (Exception $e) {
+                    if (!(isset($request->value) && empty($request->value))) {
+                        $request->value = 'Diisi!';
+                    }
+                    if ($request->select == 'nama') {
+                        $retun = ["nama" => $request->value, "status" => "Gagal Ubah Nama"];
+                    } else {
+                        $retun = ["spesifikasi" => $request->value, "status" => "Gagal Ubah Spesifikasi"];
+                    }
+                    return $retun;
+                }
+            } elseif ($request->select == 'satuan') {
+                // dd($request);
+                try {
+                    $this->validate(
+                        $request,
+                        [
+                        "value"    => "required|integer|max:4",
+                        ]
+                    );
+                    pengadaan::findOrfail($id)->update(
+                        [
+                        "id_satuan"   => ($request->value + 1)
+                        ]
+                    );
+                    laporan_pengadaan::findOrfail($request->lap)->update(
+                        [
+                        "verif_wadek2"  => 0,
+                        "pesan"         => null
+                        ]
+                    );
+                } catch (Exception $e) {
+                    // dd($e->getMessage());
+                    if (!(isset($request->value) && empty($request->value))) {
+                        $request->value = '0';
+                    }
+                    $retun = ["satuan" => $request->value, "status" => "Gagal Ubah Satuan"];
+                    return $retun;
+                }
+            } elseif ($request->select == 'jumlah' || $request->select == 'harga') {
+                try {
+                    $this->validate(
+                        $request,
+                        [
+                        "value"    => "required|string|max:50",
+                        ]
+                    );
+                    if ($request->select == 'jumlah') {
+                        pengadaan::findOrfail($id)->update(
+                            [
+                            "jumlah"   => $request->value
+                            ]
+                        );
+                    } else {
+                        pengadaan::findOrfail($id)->update(
+                            [
+                            "harga"   => $request->value
+                            ]
+                        );
+                    }
+                    laporan_pengadaan::findOrfail($request->lap)->update(
+                        [
+                        "verif_wadek2"  => 0,
+                        "pesan"         => null
+                        ]
+                    );
+                } catch (Exception $e) {
+                    if (!(isset($request->value) && empty($request->value))) {
+                        $request->value = 'Diisi!';
+                    }
+                    if ($request->select == 'jumlah') {
+                        $retun = ["jumlah" => $request->value, "status" => "Gagal Ubah Jumlah"];
+                    } else {
+                        $retun = ["harga" => $request->value, "status" => "Gagal Ubah harga"];
+                    }
+                    return $retun;
+                }
             }
-        } elseif ($request->select == 'nama' || $request->select == 'spesifikasi') {
-            try {
-                $this->validate(
-                    $request,
-                    [
-                    "value"    => "required|string|max:50",
-                    ]
-                );
-                if ($request->select == 'nama') {
-                    pengadaan::findOrfail($id)->update(
-                        [
-                        "nama_barang"   => $request->value
-                        ]
-                    );
+
+            if ($awal->verif_wadek2 == 1) {
+                if ($request->select == 'peruntukan') {
+                    $laporan = laporan_pengadaan::findOrfail($request->id);
                 } else {
-                    pengadaan::findOrfail($id)->update(
-                        [
-                        "spesifikasi"   => $request->value
-                        ]
-                    );
+                    $laporan = laporan_pengadaan::findOrfail($request->lap);
                 }
-                laporan_pengadaan::findOrfail($request->lap)->update(
-                    [
-                    "verif_wadek2"  => 0,
-                    "pesan"         => null
-                    ]
-                );
-            } catch (Exception $e) {
-                if (!(isset($request->value) && empty($request->value))) {
-                    $request->value = 'Diisi!';
-                }
-                if ($request->select == 'nama') {
-                    $retun = ["nama" => $request->value, "status" => "Gagal Ubah Nama"];
-                } else {
-                    $retun = ["spesifikasi" => $request->value, "status" => "Gagal Ubah Spesifikasi"];
-                }
-                return $retun;
-            }
-        } elseif ($request->select == 'satuan') {
-            // dd($request);
-            try {
-                $this->validate(
-                    $request,
-                    [
-                    "value"    => "required|integer|max:4",
-                    ]
-                );
-                pengadaan::findOrfail($id)->update(
-                    [
-                    "id_satuan"   => ($request->value + 1)
-                    ]
-                );
-                laporan_pengadaan::findOrfail($request->lap)->update(
-                    [
-                    "verif_wadek2"  => 0,
-                    "pesan"         => null
-                    ]
-                );
-            } catch (Exception $e) {
-                // dd($e->getMessage());
-                if (!(isset($request->value) && empty($request->value))) {
-                    $request->value = '0';
-                }
-                $retun = ["satuan" => $request->value, "status" => "Gagal Ubah Satuan"];
-                return $retun;
-            }
-        } elseif ($request->select == 'jumlah' || $request->select == 'harga') {
-            try {
-                $this->validate(
-                    $request,
-                    [
-                    "value"    => "required|string|max:50",
-                    ]
-                );
-                if ($request->select == 'jumlah') {
-                    pengadaan::findOrfail($id)->update(
-                        [
-                        "jumlah"   => $request->value
-                        ]
-                    );
-                } else {
-                    pengadaan::findOrfail($id)->update(
-                        [
-                        "harga"   => $request->value
-                        ]
-                    );
-                }
-                laporan_pengadaan::findOrfail($request->lap)->update(
-                    [
-                    "verif_wadek2"  => 0,
-                    "pesan"         => null
-                    ]
-                );
-            } catch (Exception $e) {
-                if (!(isset($request->value) && empty($request->value))) {
-                    $request->value = 'Diisi!';
-                }
-                if ($request->select == 'jumlah') {
-                    $retun = ["jumlah" => $request->value, "status" => "Gagal Ubah Jumlah"];
-                } else {
-                    $retun = ["harga" => $request->value, "status" => "Gagal Ubah harga"];
-                }
-                return $retun;
+
+                $wadek = User::with('jabatan')
+                    ->whereHas(
+                        'jabatan', function (Builder $query) {
+                            $query->where('jabatan', 'Wakil Dekan 2');
+                        }
+                    )->first();
+
+                $wadek->notify(new verifPengadaan($laporan));
             }
         }
-
-        if ($request->select == 'peruntukan') {
-            $laporan = laporan_pengadaan::findOrfail($request->id);
-        } else {
-            $laporan = laporan_pengadaan::findOrfail($request->lap);
-        }
-
-        $wadek = User::with('jabatan')
-            ->whereHas(
-                'jabatan', function (Builder $query) {
-                    $query->where('jabatan', 'Wakil Dekan 2');
-                }
-            )->first();
-
-        $wadek->notify(new verifPengadaan($laporan));
-
     }
 
     /**

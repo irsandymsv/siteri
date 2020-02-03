@@ -157,7 +157,7 @@ class peminjamanBarangController extends Controller
 
             $perlengkapan->notify(new peminjaman_barang($laporan));
 
-            return redirect()->route('ormawa.peminjaman_barang.show', $idlaporan);
+            return redirect()->route('ormawa.peminjaman_barang.show', $laporan);
         } else if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN') {
             $this->validate(
                 $request, [

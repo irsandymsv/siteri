@@ -204,14 +204,17 @@
         @if ($laporan_pengadaan->verif_wadek2 != 2)
         edit = false;
         target = null;
+        before = null;
         ori = null;
         select = null;
         value = null;
 
         $('#peruntukan, .nama, .spesifikasi, .jumlah, .satuan, .harga').dblclick(function(event){
             // if (edit) {
-            //     if ($(e.target).parent()[0] != target) {
-                    if (target) {
+                if ($(event.target).parent()[0] != target) {
+                    if (target && target != before) {
+                        before = target;
+                        console.log(before == target);
                         unedit();
                         save();
                     }
@@ -287,7 +290,7 @@
                         }
                     } else {
                     }
-            //     }
+                }
             // }
         });
 
