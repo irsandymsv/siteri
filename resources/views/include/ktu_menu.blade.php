@@ -1,4 +1,4 @@
-<li class="active"><a href="{{ route('ktu.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard KTU</span></a>
+<li><a href="{{ route('ktu.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard KTU</span></a>
 </li>
 
 <li class="treeview">

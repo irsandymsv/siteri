@@ -1,4 +1,4 @@
-<li class="active"><a href="{{ route('bpp.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard BPP</span></a></li>
+<li><a href="{{ route('bpp.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard BPP</span></a></li>
 
 <li><a href="{{ route('bpp.honor-sempro.index') }}"><i class="fa fa-link"></i> <span>Honor SK Sempro</span></a></li>
 

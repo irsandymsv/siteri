@@ -1,4 +1,4 @@
-<li class="active"><a href="{{ route('keuangan.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard Keuangan</span></a></li>
+<li><a href="{{ route('keuangan.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard Keuangan</span></a></li>
 
 <li><a href="{{ route('keuangan.honor-sempro.index') }}"><i class="fa fa-link"></i> <span>Honor SK Sempro</span></a></li>
 

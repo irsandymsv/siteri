@@ -1,4 +1,4 @@
-<li class="active"><a href="{{ route('ormawa.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard
+<li><a href="{{ route('ormawa.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard
             Ormawa</span></a></li>
 
 <li class="treeview">

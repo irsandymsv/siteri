@@ -1,4 +1,4 @@
-<li class="active"><a href="{{ route('kemahasiswaan.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard Kemahasiswaan</span></a></li>
+<li><a href="{{ route('kemahasiswaan.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard Kemahasiswaan</span></a></li>
 
 <li class="treeview">
     <a href="#"><i class="fa fa-link"></i> <span>Data Mahasiswa</span>

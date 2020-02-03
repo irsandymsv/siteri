@@ -1,4 +1,4 @@
-<li class="active"><a href="{{ route('dosen.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard Dosen</span></a></li>
+<li><a href="{{ route('dosen.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard Dosen</span></a></li>
 
 <li class="treeview">
     <a href="#"><i class="fa fa-link"></i> <span>Skripsi Mahasiswa</span>

@@ -1,4 +1,4 @@
-<li class="active"><a href="{{ route('perlengkapan.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard
+<li><a href="{{ route('perlengkapan.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard
             Perlengkapan</span></a></li>
 
 {{-- <li>

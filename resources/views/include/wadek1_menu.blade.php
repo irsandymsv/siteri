@@ -1,4 +1,4 @@
-<li class="active"><a href="{{ route('wadek1.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard Wadek 1</span></a></li>
+<li><a href="{{ route('wadek1.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard Wadek 1</span></a></li>
 
 <li class="treeview">
     <a href="#"><i class="fa fa-link"></i> <span>Skripsi Mahasiswa</span>

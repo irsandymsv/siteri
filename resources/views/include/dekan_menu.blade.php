@@ -1,4 +1,4 @@
-<li class="active"><a href="{{ route('dekan.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard Dekan</span></a></li>
+<li><a href="{{ route('dekan.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard Dekan</span></a></li>
 
 <li class="treeview">
     <a href="#"><i class="fa fa-link"></i> <span>SK Akademik</span>
