@@ -185,7 +185,7 @@
                         <p>NIM: {{ $item->skripsi->nim }}</p>
                      </td>
                      <td class="to_center golongan">{{ $gol }}</td>
-                     <td class="width-narrow">Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
+                     <td>Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
                      <td class="width-narrow">Rp
                         <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
                      </td>
@@ -234,7 +234,7 @@
                      <td class="nama_dosen">{{ $item->sutgas_pembimbing_terbaru->dosen2->nama }}</td>
                      <td class="to_center">{{ $item->sutgas_pembimbing_terbaru->dosen2->npwp }}</td>
                      <td class="to_center golongan">{{ $gol }}</td>
-                     <td class="width-narrow">Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
+                     <td>Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
                      <td class="width-narrow">Rp
                         <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
                      </td>
@@ -403,7 +403,7 @@
                         <p>NIM: {{ $item->skripsi->nim }}</p>
                      </td>
                      <td class="to_center golongan">{{ $gol }}</td>
-                     <td class="width-narrow">Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
+                     <td>Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
                      <td class="width-narrow">Rp
                         <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
                      </td>
@@ -446,7 +446,7 @@
                      <td class="nama_dosen">{{ $item->sutgas_penguji_terbaru->dosen2->nama }}</td>
                      <td class="to_center">{{ $item->sutgas_penguji_terbaru->dosen2->npwp }}</td>
                      <td class="to_center golongan">{{ $gol }}</td>
-                     <td class="width-narrow">Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
+                     <td>Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
                      <td class="width-narrow">Rp
                         <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
                      </td>

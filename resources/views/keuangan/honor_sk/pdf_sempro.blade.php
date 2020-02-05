@@ -152,7 +152,7 @@
                         $gol = $item->surat_tugas[0]->dosen1->golongan->golongan;
                         $gol = substr($gol,0,(strlen($gol)-2 ));
                      }
-                     $pph = ($item->surat_tugas[0]->dosen1->pph->pph * $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor)/100;
+                     $pph = ($item->surat_tugas[0]->dosen1->pph * $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor)/100;
                      $penerimaan = $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor - $pph;
                   @endphp
                   @if ($no+1 == 4*$a-1)
@@ -169,7 +169,7 @@
                         <p>NIM: {{ $item->skripsi->nim }}</p>
                      </td>
                      <td class="to_center golongan">{{ $gol }}</td>
-                     <td id="penguji_{{$no}}" class="width-narrow">Rp
+                     <td id="penguji_{{$no}}">Rp
                         {{ number_format($sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor, 0, ",", ".") }}
                      </td>
                      <td class="width-narrow">Rp
@@ -197,7 +197,7 @@
                         $gol = $item->surat_tugas[0]->dosen2->golongan->golongan;
                         $gol = substr($gol,0,(strlen($gol)-2 ));
                      }
-                     $pph = ($item->surat_tugas[0]->dosen2->pph->pph * $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor)/100;
+                     $pph = ($item->surat_tugas[0]->dosen2->pph * $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor)/100;
                      $penerimaan = $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor - $pph;
                   @endphp
                   @if ($no+1 == 4*$b)
@@ -210,7 +210,7 @@
                      <td class="nama_dosen">{{ $item->surat_tugas[0]->dosen2->nama }}</td>
                      <td class="to_center">{{ $item->surat_tugas[0]->dosen2->npwp }}</td>
                      <td class="to_center golongan">{{ $gol }}</td>
-                     <td id="penguji_{{$no}}" class="width-narrow">Rp
+                     <td id="penguji_{{$no}}">Rp
                         {{ number_format($sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor, 0, ",", ".") }}
                      </td>
                      <td class="width-narrow">Rp

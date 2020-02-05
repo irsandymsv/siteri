@@ -37,4 +37,35 @@ class Controller extends BaseController
         return $tahun_akademik;
 
     }
+
+    protected function set_pph($user)
+    {
+        $gol = null;
+        if (!is_null($user->golongan)) {
+            $gol = $user->golongan->golongan;
+        }
+        $fungsional = $user->fungsional->jab_fungsional;
+
+        if ($user->is_dosen == 1) {
+            if (strpos($gol, "III") !== false || is_null($gol)) {
+                $user->pph = 5;
+            }
+            elseif (strpos($gol, "IV") !== false || $fungsional == "Guru Besar") {
+                $user->pph = 15;
+            }
+        }
+        elseif ($user->is_dosen == 0) {
+            if (strpos($gol, "III") !== false || is_null($gol)) {
+                $user->pph = 5;
+            }
+            elseif (strpos($gol, "IV") !== false) {
+                $user->pph = 15;
+            }
+            elseif ($gol == "II A" || $gol == "II B" || $gol == "II C" || $gol == "II D") {
+                $user->pph = 0;
+            }
+        }
+
+        return $user;
+    }
 }

@@ -99,12 +99,12 @@ class honorSkripsiController extends Controller
                 'sutgas_pembimbing_terbaru.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
                 'sutgas_pembimbing_terbaru.dosen1.golongan',
                 'sutgas_pembimbing_terbaru.dosen1.fungsional',
-                'sutgas_pembimbing_terbaru.dosen1.pph',
+                // 'sutgas_pembimbing_terbaru.dosen1.pph',
 
                 'sutgas_pembimbing_terbaru.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
                 'sutgas_pembimbing_terbaru.dosen2.golongan',
                 'sutgas_pembimbing_terbaru.dosen2.fungsional',
-                'sutgas_pembimbing_terbaru.dosen2.pph',                
+                // 'sutgas_pembimbing_terbaru.dosen2.pph',                
 
                 'sutgas_penguji_terbaru',
                 'sutgas_penguji_terbaru.tipe_surat_tugas',
@@ -112,12 +112,12 @@ class honorSkripsiController extends Controller
                 'sutgas_penguji_terbaru.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
                 'sutgas_penguji_terbaru.dosen1.golongan',
                 'sutgas_penguji_terbaru.dosen1.fungsional',
-                'sutgas_penguji_terbaru.dosen1.pph',
+                // 'sutgas_penguji_terbaru.dosen1.pph',
 
                 'sutgas_penguji_terbaru.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
                 'sutgas_penguji_terbaru.dosen2.golongan',
                 'sutgas_penguji_terbaru.dosen2.fungsional',
-                'sutgas_penguji_terbaru.dosen2.pph',
+                // 'sutgas_penguji_terbaru.dosen2.pph',
 
                 // 'surat_tugas' => function ($query) {
                 //     $query->where('id_tipe_surat_tugas', 1)
@@ -140,24 +140,30 @@ class honorSkripsiController extends Controller
             // dd($detail_skripsi);
 
         foreach($detail_skripsi as $dk){
+            //set PPH
+            $dk->sutgas_penguji_terbaru->dosen1 = $this->set_pph($dk->sutgas_penguji_terbaru->dosen1);
+            $dk->sutgas_penguji_terbaru->dosen2 = $this->set_pph($dk->sutgas_penguji_terbaru->dosen2);
+            $dk->sutgas_pembimbing_terbaru->dosen1 = $this->set_pph($dk->sutgas_pembimbing_terbaru->dosen1);
+            $dk->sutgas_pembimbing_terbaru->dosen2 = $this->set_pph($dk->sutgas_pembimbing_terbaru->dosen2);
+
             $dk->sutgas_penguji_terbaru->dosen1->honorarium_pus = $pus;
-            $dk->sutgas_penguji_terbaru->dosen1->pph_pus = $this->hitung_pph($pus, $dk->sutgas_penguji_terbaru->dosen1->pph->pph);
+            $dk->sutgas_penguji_terbaru->dosen1->pph_pus = $this->hitung_pph($pus, $dk->sutgas_penguji_terbaru->dosen1->pph);
             $dk->sutgas_penguji_terbaru->dosen2->honorarium_pps = $pps;
-            $dk->sutgas_penguji_terbaru->dosen2->pph_pps = $this->hitung_pph($pps, $dk->sutgas_penguji_terbaru->dosen2->pph->pph);
+            $dk->sutgas_penguji_terbaru->dosen2->pph_pps = $this->hitung_pph($pps, $dk->sutgas_penguji_terbaru->dosen2->pph);
         
             if ($dk->sutgas_pembimbing_terbaru->dosen1->fungsional->jab_fungsional == "Tenaga Pengajar"){
                 $dk->sutgas_pembimbing_terbaru->dosen1->honorarium_putj = $putj;
-                $dk->sutgas_pembimbing_terbaru->dosen1->pph_putj = $this->hitung_pph($putj, $dk->sutgas_pembimbing_terbaru->dosen1->pph->pph);
+                $dk->sutgas_pembimbing_terbaru->dosen1->pph_putj = $this->hitung_pph($putj, $dk->sutgas_pembimbing_terbaru->dosen1->pph);
             }else{
                 $dk->sutgas_pembimbing_terbaru->dosen1->honorarium_pudj = $pudj;
-                $dk->sutgas_pembimbing_terbaru->dosen1->pph_pudj = $this->hitung_pph($pudj, $dk->sutgas_pembimbing_terbaru->dosen1->pph->pph);
+                $dk->sutgas_pembimbing_terbaru->dosen1->pph_pudj = $this->hitung_pph($pudj, $dk->sutgas_pembimbing_terbaru->dosen1->pph);
             }
             if ($dk->sutgas_pembimbing_terbaru->dosen2->fungsional->jab_fungsional == "Tenaga Pengajar") {
                 $dk->sutgas_pembimbing_terbaru->dosen2->honorarium_pptj = $pptj;
-                $dk->sutgas_pembimbing_terbaru->dosen2->pph_pptj = $this->hitung_pph($pptj, $dk->sutgas_pembimbing_terbaru->dosen2->pph->pph);
+                $dk->sutgas_pembimbing_terbaru->dosen2->pph_pptj = $this->hitung_pph($pptj, $dk->sutgas_pembimbing_terbaru->dosen2->pph);
             } else {
                 $dk->sutgas_pembimbing_terbaru->dosen2->honorarium_ppdj = $ppdj;
-                $dk->sutgas_pembimbing_terbaru->dosen2->pph_ppdj = $this->hitung_pph($ppdj, $dk->sutgas_pembimbing_terbaru->dosen2->pph->pph);
+                $dk->sutgas_pembimbing_terbaru->dosen2->pph_ppdj = $this->hitung_pph($ppdj, $dk->sutgas_pembimbing_terbaru->dosen2->pph);
             }
 
         }

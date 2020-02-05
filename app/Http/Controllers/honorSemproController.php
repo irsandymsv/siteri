@@ -112,12 +112,21 @@ class honorSemproController extends Controller
             },
             'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
             'surat_tugas.dosen1.golongan',
-            'surat_tugas.dosen1.pph',
+            'surat_tugas.dosen1.fungsional',
+            // 'surat_tugas.dosen1.pph',
             'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
             'surat_tugas.dosen2.golongan',
-            'surat_tugas.dosen2.pph',
+            'surat_tugas.dosen2.fungsional',
+            // 'surat_tugas.dosen2.pph',
 
         ])->get();
+
+        foreach ($detail_skripsi as $item) {
+            $item->surat_tugas[0]->dosen1 = $this->set_pph($item->surat_tugas[0]->dosen1);
+            $item->surat_tugas[0]->dosen2 = $this->set_pph($item->surat_tugas[0]->dosen2);
+        }
+
+        // dd($detail_skripsi);
 
         // $honor_pembahas_sempro = $sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor;
 
@@ -234,13 +243,20 @@ class honorSemproController extends Controller
                     ['id_status_surat_tugas', 3]
                 ])->orderBy('created_at', 'desc');
             },
-            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_pph',
+            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
             'surat_tugas.dosen1.golongan',
-            'surat_tugas.dosen1.pph',
-            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_pph',
+            'surat_tugas.dosen1.fungsional',
+            // 'surat_tugas.dosen1.pph',
+            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
             'surat_tugas.dosen2.golongan',
-            'surat_tugas.dosen2.pph'
+            'surat_tugas.dosen2.fungsional',
+            // 'surat_tugas.dosen2.pph'
         ])->get();
+
+        foreach ($detail_skripsi as $item) {
+            $item->surat_tugas[0]->dosen1 = $this->set_pph($item->surat_tugas[0]->dosen1);
+            $item->surat_tugas[0]->dosen2 = $this->set_pph($item->surat_tugas[0]->dosen2);
+        }
 
         $tahun_akademik = $this->get_tahun_akademik($sk_honor->sk_sempro->created_at);
 
@@ -319,12 +335,19 @@ class honorSemproController extends Controller
             },
             'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
             'surat_tugas.dosen1.golongan',
-            'surat_tugas.dosen1.pph',
+            'surat_tugas.dosen1.fungsional',
+            // 'surat_tugas.dosen1.pph',
             'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
             'surat_tugas.dosen2.golongan',
-            'surat_tugas.dosen2.pph',
+            'surat_tugas.dosen2.fungsional',
+            // 'surat_tugas.dosen2.pph',
 
         ])->get();
+
+        foreach ($detail_skripsi as $item) {
+            $item->surat_tugas[0]->dosen1 = $this->set_pph($item->surat_tugas[0]->dosen1);
+            $item->surat_tugas[0]->dosen2 = $this->set_pph($item->surat_tugas[0]->dosen2);
+        }
 
         $tahun_akademik = $this->get_tahun_akademik($sk_honor->sk_sempro->created_at);
         
@@ -419,12 +442,19 @@ class honorSemproController extends Controller
             },
             'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
             'surat_tugas.dosen1.golongan',
-            'surat_tugas.dosen1.pph',
+            'surat_tugas.dosen1.fungsional',
+            // 'surat_tugas.dosen1.pph',
             'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
             'surat_tugas.dosen2.golongan',
-            'surat_tugas.dosen2.pph',
+            'surat_tugas.dosen2.fungsional',
+            // 'surat_tugas.dosen2.pph',
 
         ])->get();
+
+        foreach ($detail_skripsi as $item) {
+            $item->surat_tugas[0]->dosen1 = $this->set_pph($item->surat_tugas[0]->dosen1);
+            $item->surat_tugas[0]->dosen2 = $this->set_pph($item->surat_tugas[0]->dosen2);
+        }
 
         $tahun_akademik = $this->get_tahun_akademik($sk_honor->sk_sempro->created_at);
         
@@ -526,12 +556,19 @@ class honorSemproController extends Controller
          },
          'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
          'surat_tugas.dosen1.golongan',
-         'surat_tugas.dosen1.pph',
+         'surat_tugas.dosen1.fungsional',
+         // 'surat_tugas.dosen1.pph',
          'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
          'surat_tugas.dosen2.golongan',
+         'surat_tugas.dosen2.fungsional',
          'surat_tugas.dosen2.pph',
 
       ])->get();
+
+      foreach ($detail_skripsi as $item) {
+          $item->surat_tugas[0]->dosen1 = $this->set_pph($item->surat_tugas[0]->dosen1);
+          $item->surat_tugas[0]->dosen2 = $this->set_pph($item->surat_tugas[0]->dosen2);
+      }
 
       $tahun_akademik = $this->get_tahun_akademik($sk_honor->sk_sempro->created_at);
         
@@ -626,12 +663,19 @@ class honorSemproController extends Controller
          },
          'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
          'surat_tugas.dosen1.golongan',
-         'surat_tugas.dosen1.pph',
+         'surat_tugas.dosen1.fungsional',
+         // 'surat_tugas.dosen1.pph',
          'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
          'surat_tugas.dosen2.golongan',
-         'surat_tugas.dosen2.pph',
+         'surat_tugas.dosen2.fungsional',
+         // 'surat_tugas.dosen2.pph',
 
       ])->get();
+
+      foreach ($detail_skripsi as $item) {
+          $item->surat_tugas[0]->dosen1 = $this->set_pph($item->surat_tugas[0]->dosen1);
+          $item->surat_tugas[0]->dosen2 = $this->set_pph($item->surat_tugas[0]->dosen2);
+      }
 
       $tahun_akademik = $this->get_tahun_akademik($sk_honor->sk_sempro->created_at);
         
