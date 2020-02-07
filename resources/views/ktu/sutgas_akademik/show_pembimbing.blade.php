@@ -122,7 +122,7 @@
                   </div>
 
                   <div id="keterangan_kop">
-                     <span class="header_18">KEMENTERIAN RISET, TEKNOLOGI, DAN PENDIDIKAN TINGGI</span><br>
+                     <span class="header_18">KEMENTERIAN PENDIDIKAN DAN KEBUDAYAAN</span><br>
                      <span class="header_18">UNIVERSITAS JEMBER</span><br>
                      <span class="header_18">FAKULTAS ILMU KOMPUTER</span>
 

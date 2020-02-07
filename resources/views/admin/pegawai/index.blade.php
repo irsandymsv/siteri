@@ -7,7 +7,6 @@
     </h1>
 </section>
 <!-- Main content -->
-@include('layouts.flashmsg')
 <section class="content">
     <div class="box">
         <div class="box-header">

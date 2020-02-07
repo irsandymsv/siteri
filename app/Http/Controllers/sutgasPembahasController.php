@@ -67,11 +67,14 @@ class sutgasPembahasController extends suratTugasController
 
     public function store(Request $request)
     {
+        // dd($request);
+        
         $this->validate($request, [
             'nim' => 'required',
             'no_surat' => 'required|unique:surat_tugas,no_surat|unique:sk_skripsi,no_surat_pembimbing|unique:sk_skripsi,no_surat_penguji|unique:sk_sempro,no_surat|',
             'judul_inggris' => 'required',
             'tanggal' => 'required',
+            'jam' => 'required',
             'tempat' => 'required',
             'id_pembahas1' => ['required', new id_dosen_tidak_boleh_sama($request->input("id_pembahas2"))],
             'id_pembahas2' => 'required',
@@ -153,9 +156,13 @@ class sutgasPembahasController extends suratTugasController
 
         $pembimbing = $this->getPembimbing($surat_tugas->detail_skripsi->skripsi->nim);
 
-        $t = carbon::parse($surat_tugas->tanggal)->toDateString();
-        $j = carbon::parse($surat_tugas->tanggal)->format('h:i');
-        $tanggal = $t.'T'.$j;
+        // $t = carbon::parse($surat_tugas->tanggal)->toDateString();
+        // $j = carbon::parse($surat_tugas->tanggal)->format('h:i');
+        // $tanggal = $t.'T'.$j;
+
+        $tanggal = carbon::parse($surat_tugas->tanggal)->format('d-m-Y');
+        $jam = carbon::parse($surat_tugas->tanggal)->format('H:i');
+
         $mahasiswa = mahasiswa::with(['skripsi', 'skripsi.status_skripsi'])
         ->whereDoesntHave('skripsi.detail_skripsi.surat_tugas', function(Builder $query)
         {
@@ -187,6 +194,7 @@ class sutgasPembahasController extends suratTugasController
             'dosen1' => $dosen1,
             'dosen2' => $dosen2,
             'tanggal' => $tanggal,
+            'jam' => $jam,
             'pembimbing' => $pembimbing,
             'ruangan' => $ruangan
         ]);
@@ -216,6 +224,7 @@ class sutgasPembahasController extends suratTugasController
             'judul_inggris' => 'required',
             'tanggal' => 'required',
             'tempat' => 'required',
+            'jam' => 'required',
             'id_pembahas1' => ['required', new id_dosen_tidak_boleh_sama($request->input("id_pembahas2"))],
             'id_pembahas2' => 'required',
             'nim' => 'required'

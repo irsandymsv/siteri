@@ -302,8 +302,6 @@ class SkSemproController extends Controller
         }
       }
 
-
-
       try {
          $sk = sk_sempro::find($id);
          $verif_ktu = $sk->verif_ktu;

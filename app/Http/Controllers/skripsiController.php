@@ -105,7 +105,7 @@ class skripsiController extends suratTugasController
     {
         $this->validate($request,[
             'judul' => 'required',
-            'judul_inggris' => 'required'
+            // 'judul_inggris' => 'required'
         ]);
 
         try{

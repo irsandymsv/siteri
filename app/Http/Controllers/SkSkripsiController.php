@@ -137,7 +137,7 @@ class SkSkripsiController extends Controller
                     "no_surat_pembimbing" => $request->input("no_surat_pembimbing"),
                     "no_surat_penguji" => $request->input("no_surat_penguji"),
                     "tgl_sk_pembimbing" => carbon::parse($request->input("tgl_sk_pembimbing")),
-                    "tgl_sk_penguji" => carbon::parse($request->input("tgl_sk_pembimbing")),
+                    "tgl_sk_penguji" => carbon::parse($request->input("tgl_sk_penguji")),
                     "id_status_sk" => $request->input("status"),
                     "id_template_penguji" => $template_penguji->id,
                     "id_template_pembimbing" => $template_pembimbing->id
@@ -404,7 +404,7 @@ class SkSkripsiController extends Controller
                 "no_surat_pembimbing" => $request->input("no_surat_pembimbing"),
                 "no_surat_penguji" => $request->input("no_surat_penguji"),
                 "tgl_sk_pembimbing" => carbon::parse($request->input("tgl_sk_pembimbing")),
-                "tgl_sk_penguji" => carbon::parse($request->input("tgl_sk_pembimbing")),
+                "tgl_sk_penguji" => carbon::parse($request->input("tgl_sk_penguji")),
                 "id_status_sk" => $request->input("status"),
 			]);
 

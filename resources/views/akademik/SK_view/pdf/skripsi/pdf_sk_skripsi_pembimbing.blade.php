@@ -152,7 +152,7 @@
          </div>
 
          <div id="keterangan_kop">
-            <span class="header_18">KEMENTERIAN RISET, TEKNOLOGI, DAN PENDIDIKAN TINGGI</span><br>
+            <span class="header_18">KEMENTERIAN PENDIDIKAN DAN KEBUDAYAAN</span><br>
             <span class="header_18">UNIVERSITAS JEMBER</span><br>
             <span class="header_18">FAKULTAS ILMU KOMPUTER</span>
 
@@ -202,7 +202,7 @@
 
          <p style="clear: both; margin-bottom: 0; padding-bottom: 0;">Tembusan: </p>
          <ol class="tembusan">
-            <li>Penjabat Wakil Dekan I, II;</li>
+            <li>Wakil Dekan I, II;</li>
             <li>Kasubag. Tata Usaha;</li>
          </ol>
          <span>Fakultas Ilmu Komputer Universitas Jember.</span>
