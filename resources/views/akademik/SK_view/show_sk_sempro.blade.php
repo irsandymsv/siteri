@@ -164,7 +164,7 @@
 			            	<tbody>
 			            		@php $no = 0; @endphp
 			            		@foreach($detail_skripsi as $item)
-		            			<tr>
+		            			<tr title="Tgl Sempro: {{ Carbon\Carbon::parse($item->surat_tugas[0]->tanggal)->format('d/m/Y') }}">
 		            				<th>{{ $no+=1 }}</th>
 		            				<td>{{$item->skripsi->nim}}</td>
 		            				<td>{{$item->skripsi->mahasiswa->nama}}</td>

@@ -40,7 +40,7 @@
 
 @section('content')
    <button id="back_top" class="btn bg-black" title="Kembali ke Atas"><i class="fa fa-arrow-up"></i></button>
-   <form action="{{ route('akademik.sempro.store') }}" method="post">
+   <form action="{{ route('akademik.sempro.store') }}" method="post" autocomplete="off">
       @csrf
    	<div class="row">
       	<div class="col-xs-12">
@@ -144,12 +144,12 @@
                            @if (!empty($old_data))
                               @foreach ($mahasiswa as $item)
                                  @if (!in_array($item->nim, $old_data["nim"]))
-                                 <option value="{{ $item->nim }}">{{ $item->nim }}</option>
+                                 <option value="{{ $item->nim }}">{{ $item->nim }} (Tgl Sempro: {{ Carbon\Carbon::parse($item->skripsi->detail_skripsi[0]->surat_tugas[0]->tanggal)->format('d/m/Y') }})</option>
                                  @endif
                               @endforeach
                            @else
                               @foreach ($mahasiswa as $item)
-                                 <option value="{{ $item->nim }}">{{ $item->nim }}</option>
+                                 <option value="{{ $item->nim }}">{{ $item->nim }} (Tgl Sempro: {{ Carbon\Carbon::parse($item->skripsi->detail_skripsi[0]->surat_tugas[0]->tanggal)->format('d/m/Y') }})</option>
                               @endforeach
                            @endif
                         </select>
@@ -171,7 +171,7 @@
                         <tbody>
                         @if ($old_mahasiswa != "")
                            @foreach($old_mahasiswa as $index => $val)
-                              <tr id="{{ $index }}">
+                              <tr id="{{ $index }}" title="Tgl Sempro: {{ Carbon\Carbon::parse($val->skripsi->detail_skripsi[0]->surat_tugas[0]->tanggal)->format('d/m/Y') }}">
                                  <td style="width: 60px;">
                                     {{ $val->nim }}
                                     <input type="hidden" name="nim[]" value="{{ $val->nim }}">
@@ -258,9 +258,11 @@
          var nim = $(this).val();
          $.each(mahasiswa, function(index, val) {
              if(nim == val.nim){
+               var tgl = new Date(val.skripsi.detail_skripsi[0].surat_tugas[0].tanggal);
+               var tgl_Sempro = tgl.toLocaleString('id-ID', {year: 'numeric', month:'2-digit', day: '2-digit'});
                no+=1;
                $("tbody").append(`
-                  <tr id="`+no+`">
+                  <tr id="`+no+`" title="Tgl Sempro: `+tgl_Sempro+`">
                      <td style="width: 60px;">
                         `+val.nim+`
                         <input type="hidden" name="nim[]" value="`+val.nim+`">
@@ -288,9 +290,11 @@
       hapus_baris();
       function hapus_baris() {
          $('button[name="delete_data"]').off("click").click(function(event) {
-            console.log("hapus ya");
+            // console.log("hapus ya");
+            var tgl_Sempro = $(this).parents("tr").attr('title');
             var nim = $(this).parents("tr").find('input[type="hidden"]').val();
-            var newOption = new Option(nim, nim, false, false);
+            var text = nim+" ("+tgl_Sempro+")";
+            var newOption = new Option(text, nim, false, false);
             $('#pilih_nim').append(newOption).trigger('change');
 
             var tr_class = $(this).parents("tr").remove();

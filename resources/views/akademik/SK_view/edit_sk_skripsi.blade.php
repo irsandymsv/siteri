@@ -52,7 +52,7 @@
 
 @section('content')
    <button id="back_top" class="btn bg-black" title="Kembali ke Atas"><i class="fa fa-arrow-up"></i></button>
-   <form action="{{ route('akademik.skripsi.update', $sk->id) }}" method="post">
+   <form action="{{ route('akademik.skripsi.update', $sk->id) }}" method="post" autocomplete="off">
       @csrf
       @method("PUT")
       {{-- @php

@@ -44,7 +44,7 @@
 
 @section('content')
    <button id="back_top" class="btn bg-black" title="Kembali ke Atas"><i class="fa fa-arrow-up"></i></button>
-   <form action="{{ route('akademik.skripsi.store') }}" method="post">
+   <form action="{{ route('akademik.skripsi.store') }}" method="post" autocomplete="off">
       @csrf
    	<div class="row">
       	<div class="col-xs-12">
