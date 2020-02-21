@@ -8,7 +8,7 @@
     <title>SITERI - LOGIN</title>
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
+    <link href="{{asset('/css/app.css')}}" rel="stylesheet">
      <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous" -->
     <!-- Scripts -->
     <meta charset="UTF-8">
@@ -38,10 +38,10 @@
   <div class="container-login100" style="background-color:#0064AB;">
     <div class="wrap-login100">
       <div class="" style="position:absolute; margin-top:-160px; margin-left:-80px;">
-        <img src="/assets/images/img-02.png" alt="IMG" width="80px" height="80px">
+        <img src="{{asset('/assets/images/img-02.png')}}" alt="IMG" width="80px" height="80px">
       </div>
       <div class="login100-pic js-tilt" data-tilt>
-        <img src="/assets/images/img-01.png" alt="IMG">
+        <img src="{{asset('/assets/images/img-01.png')}}" alt="IMG">
       </div>
 
     <form class="login100-form validate-form" method="POST" action="{{route('login')}}">
