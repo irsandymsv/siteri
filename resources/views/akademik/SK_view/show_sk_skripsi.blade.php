@@ -9,7 +9,7 @@
 @endsection
 
 @section('css_link')
-	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+	<link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
 	<style type="text/css">
 		.tbl_row{
 			display: table;
@@ -230,7 +230,7 @@
 @endsection
 
 @section('script')
-<script src="/js/btn_backTop.js"></script>
+<script src="{{asset('/js/btn_backTop.js')}}"></script>
 <script type="text/javascript">
 	var status = @json($sk->id_status_sk);
 	for (var i = status; i > 0; i--) {

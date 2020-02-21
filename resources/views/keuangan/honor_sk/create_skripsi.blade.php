@@ -9,7 +9,7 @@
 @endsection
 
 @section('css_link')
-   <link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+   <link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
    <style type="text/css">
       #btn_honor_pembimbing, #btn_honor_penguji{
          margin-left: 8px;
@@ -257,7 +257,7 @@
 @endsection
 
 @section('script')
-   <script src="/js/btn_backTop.js"></script>
+   <script src="{{asset('/js/btn_backTop.js')}}"></script>
    <script type="text/javascript">
 
       $("button[name='simpan_draf']").click(function(event) {

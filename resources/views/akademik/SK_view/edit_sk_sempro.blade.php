@@ -10,10 +10,10 @@
 
 @section('css_link')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
-	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+	<link rel="stylesheet" href="{{asset('/adminlte/bower_components/select2/dist/css/select2.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
    <!-- bootstrap datepicker -->
-   <link rel="stylesheet" href="/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+   <link rel="stylesheet" href="{{asset('/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
 
 	<style type="text/css">
       table tbody tr td:first-child{
@@ -261,11 +261,11 @@
 @endsection
 
 @section('script')
-   <script src="/js/btn_backTop.js"></script>
-	<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
+   <script src="{{asset('/js/btn_backTop.js')}}"></script>
+	<script src="{{asset('/adminlte/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 	<!-- bootstrap datepicker -->
-   <script src="/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-   <script src="/adminlte/bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.id.js"></script>
+   <script src="{{asset('/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+   <script src="{{asset('/adminlte/bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.id.js')}}"></script>
 
    <script type="text/javascript">
 		$('.select2').select2();
