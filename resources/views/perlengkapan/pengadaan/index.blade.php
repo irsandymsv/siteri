@@ -29,7 +29,7 @@
 
                 <div style="float: right;">
                     <a href="{{ route('perlengkapan.pengadaan.create') }}" class="btn btn-primary"><i
-                            class="fa fa-plus"></i> Buat Laporan</a>
+                            class="fa fa-plus"></i> Ajukan Laporan Baru</a>
                 </div>
             </div>
 

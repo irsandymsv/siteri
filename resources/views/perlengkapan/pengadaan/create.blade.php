@@ -4,9 +4,9 @@
 @include('include.perlengkapan_menu')
 @endsection
 
-@section('page_title', 'Buat Pengadaan')
+@section('page_title', 'Pengajuan Pengadaan')
 
-@section('judul_header', 'Buat Pengadaan')
+@section('judul_header', 'Pengajuan Pengadaan')
 
 @section('css_link')
 <style type="text/css">
@@ -22,7 +22,7 @@
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Buat Laporan Pengadaan</h3>
+                <h3 class="box-title">Pengajuan Laporan Pengadaan</h3>
             </div>
 
             <div class="box-body">
