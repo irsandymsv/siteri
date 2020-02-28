@@ -497,11 +497,11 @@ desired effect
     <!-- Bootstrap 3.3.7 -->
     <script src="{{asset('/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- Moment JS -->
-    <script src="{{asset('/AdminLTE/bower_components/moment/moment.js')}}"></script>
+    <script src="{{asset('/adminlte/bower_components/moment/moment.js')}}"></script>
     <!-- DataTables -->
     <script src="{{asset('/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
-    <script src="{{asset('/AdminLTE/bower_components/datatables.net/datetime-moment.js')}}"></script>
+    <script src="{{asset('/adminlte/bower_components/datatables.net/datetime-moment.js')}}"></script>
     <!--- mindmup-Editabletables -->
     <script src="{{asset('/js/mindmup-editabletable.js')}}"></script>
     <!-- AdminLTE App -->

@@ -4,7 +4,7 @@
 @section('judul_header','Buat Surat Tugas')
 
 @section('css_link')
-<link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
+<link rel="stylesheet" href="{{asset('/adminlte/bower_components/select2/dist/css/select2.min.css')}}">
 <style type="text/css">
 	th {
 		text-align: center;
