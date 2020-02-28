@@ -521,7 +521,7 @@ desired effect
         function readAllNotif() {
         $('a#readAll').click(function(event) {
             event.preventDefault();
-            console.log('baca semua');
+            // console.log('baca semua');
 
             $.ajax({
               url: '{{ route('notifikasi.readAll') }}',
@@ -531,7 +531,7 @@ desired effect
             })
             .done(function(result) {
               console.log("success");
-              console.log('hasil= '+result);
+              // console.log('hasil= '+result);
 
               $('#jml_notif').hide();
               $('a#readAll').hide();
