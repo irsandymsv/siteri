@@ -74,8 +74,8 @@
             </div>
 
             <form action="{{ route('akademik.sutgas-pembimbing.store') }}" method="post">
+            	@csrf
                <div class="box-body">
-            		@csrf
 
             		<div class="form-group">
             			<label for="no_surat">No Surat</label><br>

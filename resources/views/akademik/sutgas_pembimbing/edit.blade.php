@@ -74,9 +74,9 @@
                 @endif
             </div>
             <form action="{{route('akademik.sutgas-pembimbing.update',$surat_tugas->id)}}" method="post">
+               @csrf
+               @method('PUT')
                <div class="box-body">
-                  @csrf
-                  @method('PUT')
                   <input type="hidden" name="id_detail_skripsi" value="{{$surat_tugas->detail_skripsi->id}}">
                   <input type="hidden" name="id_skripsi" value="{{$surat_tugas->detail_skripsi->id_skripsi}}">
                   <input type="hidden" name="original_nim" value="{{$surat_tugas->detail_skripsi->skripsi->nim}}">
