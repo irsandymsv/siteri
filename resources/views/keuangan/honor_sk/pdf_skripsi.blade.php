@@ -186,7 +186,7 @@
                      </td>
                      <td class="to_center golongan">{{ $gol }}</td>
                      <td>Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
-                     <td class="width-narrow">Rp
+                     <td>Rp
                         <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
                      </td>
                      <td class="width-narrow">Rp
@@ -235,7 +235,7 @@
                      <td class="to_center">{{ $item->sutgas_pembimbing_terbaru->dosen2->npwp }}</td>
                      <td class="to_center golongan">{{ $gol }}</td>
                      <td>Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
-                     <td class="width-narrow">Rp
+                     <td>Rp
                         <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
                      </td>
                      <td class="width-narrow">Rp
@@ -404,7 +404,7 @@
                      </td>
                      <td class="to_center golongan">{{ $gol }}</td>
                      <td>Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
-                     <td class="width-narrow">Rp
+                     <td>Rp
                         <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
                      </td>
                      <td class="width-narrow">Rp
@@ -447,7 +447,7 @@
                      <td class="to_center">{{ $item->sutgas_penguji_terbaru->dosen2->npwp }}</td>
                      <td class="to_center golongan">{{ $gol }}</td>
                      <td>Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
-                     <td class="width-narrow">Rp
+                     <td>Rp
                         <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
                      </td>
                      <td class="width-narrow">Rp

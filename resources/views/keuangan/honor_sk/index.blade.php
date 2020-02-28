@@ -55,10 +55,10 @@
                            <tr id="sk_{{ $item->id }}">
                               <td>{{ $loop->index + 1 }}</td>
                               @if($tipe == "SK Skripsi")
-                                 <td>{{ $item->no_surat_pembimbing }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
-                                 <td>{{ $item->no_surat_penguji }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
+                                 <td>{{ $item->no_surat_pembimbing }}/UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
+                                 <td>{{ $item->no_surat_penguji }}/UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
                               @else
-                                 <td>{{ $item->no_surat }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
+                                 <td>{{ $item->no_surat }}/UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
                               @endif
                               <td>
                                  {{ Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }}
