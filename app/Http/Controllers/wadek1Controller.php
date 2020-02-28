@@ -24,7 +24,7 @@ class wadek1Controller extends Controller
     		'detail_skripsi',
     		'detail_skripsi.skripsi',
     		'detail_skripsi.skripsi.mahasiswa',
-    		'detail_skripsi.skripsi.mahasiswa.bagian'
+    		'detail_skripsi.skripsi.mahasiswa.prodi'
     	])
     	->whereHas('tipe_surat_tugas', function (Builder $query)
     	{
@@ -42,7 +42,7 @@ class wadek1Controller extends Controller
     		'detail_skripsi',
     		'detail_skripsi.skripsi',
     		'detail_skripsi.skripsi.mahasiswa',
-    		'detail_skripsi.skripsi.mahasiswa.bagian'
+    		'detail_skripsi.skripsi.mahasiswa.prodi'
     	])
     	->whereHas('tipe_surat_tugas', function (Builder $query)
     	{
@@ -61,7 +61,7 @@ class wadek1Controller extends Controller
     		'detail_skripsi',
     		'detail_skripsi.skripsi',
     		'detail_skripsi.skripsi.mahasiswa',
-    		'detail_skripsi.skripsi.mahasiswa.bagian'
+    		'detail_skripsi.skripsi.mahasiswa.prodi'
     	])
     	->whereHas('tipe_surat_tugas', function (Builder $query)
     	{
@@ -80,7 +80,7 @@ class wadek1Controller extends Controller
     		'detail_skripsi',
     		'detail_skripsi.skripsi',
     		'detail_skripsi.skripsi.mahasiswa',
-    		'detail_skripsi.skripsi.mahasiswa.bagian'
+    		'detail_skripsi.skripsi.mahasiswa.prodi'
     	])
     	->whereHas('tipe_surat_tugas', function (Builder $query)
     	{
@@ -99,7 +99,7 @@ class wadek1Controller extends Controller
     		'detail_skripsi',
     		'detail_skripsi.skripsi',
     		'detail_skripsi.skripsi.mahasiswa',
-    		'detail_skripsi.skripsi.mahasiswa.bagian'
+    		'detail_skripsi.skripsi.mahasiswa.prodi'
     	])
     	->whereHas('tipe_surat_tugas', function (Builder $query)
     	{
@@ -118,7 +118,7 @@ class wadek1Controller extends Controller
     		'detail_skripsi',
     		'detail_skripsi.skripsi',
     		'detail_skripsi.skripsi.mahasiswa',
-    		'detail_skripsi.skripsi.mahasiswa.bagian'
+    		'detail_skripsi.skripsi.mahasiswa.prodi'
     	])
     	->whereHas('tipe_surat_tugas', function (Builder $query)
     	{

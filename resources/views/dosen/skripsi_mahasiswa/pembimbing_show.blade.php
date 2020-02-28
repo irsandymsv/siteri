@@ -126,7 +126,8 @@
 			      					$status_honor = $mahasiswa->skripsi->detail_skripsi[0]->sk_skripsi->sk_honor->status_sk_honor->status;
 			      				@endphp
 			      				@if ($status_honor != "Telah Dibayarkan")
-			      					Belum Dibayarkan <i class="fa fa-check-circle" style="color: #ddd; float: right; font-size: 24px;"></i>
+			      					Belum Dibayarkan 
+			      					{{-- <i class="fa fa-check-circle" style="color: #ddd; float: right; font-size: 24px;"></i> --}}
 			      				@else
 			      					{{ $status_honor }} <i class="fa fa-check-circle" style="color: green; float: right; font-size: 24px;"></i>
 			      				@endif
