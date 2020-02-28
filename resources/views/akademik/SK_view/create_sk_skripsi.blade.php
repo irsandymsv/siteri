@@ -367,7 +367,7 @@
       hapus_baris();
       function hapus_baris() {
          $('button[name="delete_data"]').off("click").click(function(event) {
-            console.log("hapus ya");
+            // console.log("hapus ya");
             var nim = $(this).parents("tr").find('input[type="hidden"]').val();
             var newOption = new Option(nim, nim, false, false);
             $('#pilih_nim').append(newOption).trigger('change');

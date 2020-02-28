@@ -394,10 +394,8 @@ class SkSkripsiController extends Controller
 		try {
 			$sk = sk_skripsi::find($id);
 			$verif_ktu = $sk->verif_ktu;
-			$verif_dekan = $sk->verif_dekan;
 			if($request->status == 2){
 				$verif_ktu = 0;
-				$verif_dekan = 0;
 			}
 
 			$sk_skripsi = sk_skripsi::where('id', $id)->update([
@@ -406,6 +404,7 @@ class SkSkripsiController extends Controller
                 "tgl_sk_pembimbing" => carbon::parse($request->input("tgl_sk_pembimbing")),
                 "tgl_sk_penguji" => carbon::parse($request->input("tgl_sk_penguji")),
                 "id_status_sk" => $request->input("status"),
+                "verif_ktu" => $verif_ktu
 			]);
 
             for ($i = 0; $i < count($request->nim); $i++) {
