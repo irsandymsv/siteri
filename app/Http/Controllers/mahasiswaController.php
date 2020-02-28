@@ -61,7 +61,7 @@ class mahasiswaController extends Controller
 
    public function edit($nim)
    {
-   	$prodi = prodi::where('is_jurusan', 1)->get();
+   	$prodi = prodi::all();
    	$mahasiswa = mahasiswa::where('nim', $nim)->with('prodi')->first();
 
    	return view('kemahasiswaan.mahasiswa.edit', [
