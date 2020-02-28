@@ -388,7 +388,7 @@ class SkSemproController extends Controller
 
       file_put_contents('storage/sempro/SK Sempro-' . $sk->no_surat . ".pdf", $m->merge());
       return response()->download(
-          storage_path('app\public\sempro\SK Sempro-' . $sk->no_surat . ".pdf")
+          storage_path('app/public/sempro/SK Sempro-' . $sk->no_surat . ".pdf")
       )->deleteFileAfterSend(true);
    }
 
