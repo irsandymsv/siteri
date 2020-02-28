@@ -11,7 +11,7 @@
 @endsection
 
 @section('css_link')
-	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+	<link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
 	<style type="text/css">
 
 	</style>
@@ -81,6 +81,5 @@
 @endsection
 
 @section('script')
-   <script src="/ckeditor/ckeditor.js"></script>
-   <script src="/js/btn_backTop.js"></script>
+   <script src="{{asset('/js/btn_backTop.js')}}"></script>
 @endsection

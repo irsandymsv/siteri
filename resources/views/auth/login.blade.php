@@ -51,16 +51,11 @@
         </span>
 
         <div class="form-group wrap-input100 validate-input">
-          <input class="input100" type="text" class="form-control @error('username') is-invalid @enderror" name="username" required placeholder="Username">
-                    <span class="focus-input100"></span>
+          <input class="input100" type="text" class="form-control @error('username') is-invalid @enderror" name="username" required placeholder="Username" value="{{old('username')}}">
+          <span class="focus-input100"></span>
           <span class="symbol-input100">
             <i class="fa fa-envelope" aria-hidden="true"></i>
           </span>
-          @error('username')
-          <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-        </span>
-          @enderror
         </div>
 
         <div class="form-group wrap-input100 validate-input" data-validate = "Password is required">
@@ -76,6 +71,12 @@
                 <input type="checkbox" name="remember" > Remember Me
             </label>
         </div>
+
+        @error('username')
+          <span class="invalid-feedback" style="display: block;" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+        @enderror
 
         <div class="container-login100-form-btn">
           <button class="login100-form-btn" type="submit">
