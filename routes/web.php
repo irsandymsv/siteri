@@ -106,7 +106,7 @@ Route::middleware(['auth', 'checkRole:Pengelola Data Akademik'])->prefix('akadem
         Route::get('/sk-sempro/{id_sk}/edit', 'SkSemproController@edit')->name('sempro.edit');
         Route::put('/sk-sempro/{id_sk}/update', 'SkSemproController@update')->name('sempro.update');
         Route::delete('/sk-sempro/delete/{id_sk?}', 'SkSemproController@destroy')->name('sempro.destroy');
-        Route::get('/sempro/{id_sk}/cetak', 'SKSemproController@cetak_pdf')->name("sempro.cetak");
+        Route::get('/sempro/{id_sk}/cetak', 'SkSemproController@cetak_pdf')->name("sempro.cetak");
 
         //Route SK Skripsi
         Route::get('/sk-skripsi', 'SkSkripsiController@index')->name('skripsi.index');

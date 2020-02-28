@@ -156,7 +156,7 @@
                      </div>
 
                      <h5>Total Data = <span class="data_count"></span></h5>
-                     <table id="tbl-data" class="table table-bordered table-hovered">
+                     <table id="tbl-data" class="table table-bordered table-hover">
                         <thead>
                            <tr>
                               <th>NIM</th>
