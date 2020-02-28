@@ -495,7 +495,7 @@ class SkSemproController extends Controller
       })
       ->orderBy('updated_at', 'desc')->get();
 
-      return view('Wadek2.SK_view.sk_index', [
+      return view('wadek2.SK_view.sk_index', [
          'sk' => $sk,
          'tipe' => "SK Sempro"
       ]);
