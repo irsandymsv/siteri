@@ -97,7 +97,7 @@
          }
 
          .width-narrow {
-            width: 5%;
+            width: 10%;
          }
 
          .nama_mhs{
@@ -179,7 +179,7 @@
                         $penerimaan = $honorarium - $pph;
                      @endphp
                      <td class="nama_dosen">{{ $item->sutgas_pembimbing_terbaru->dosen1->nama }}</td>
-                     <td class="to_center">{{ $item->sutgas_pembimbing_terbaru->dosen1->npwp }}</td>
+                     <td class="to_center width-narrow">{{ $item->sutgas_pembimbing_terbaru->dosen1->npwp }}</td>
                      <td rowspan="2" class="nama_mhs">
                         <p>{{ $item->skripsi->mahasiswa->nama }}</p>
                         <p>NIM: {{ $item->skripsi->nim }}</p>
@@ -189,7 +189,7 @@
                      <td>Rp
                         <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
                      </td>
-                     <td class="width-narrow">Rp
+                     <td>Rp
                         <span class="span_uang">{{ number_format($penerimaan, 0, ",", ".") }}</span>
                      </td>
                      <td>{{ $no }}.</td>
@@ -232,13 +232,13 @@
                         $penerimaan = $honorarium - $pph;
                      @endphp
                      <td class="nama_dosen">{{ $item->sutgas_pembimbing_terbaru->dosen2->nama }}</td>
-                     <td class="to_center">{{ $item->sutgas_pembimbing_terbaru->dosen2->npwp }}</td>
+                     <td class="to_center width-narrow">{{ $item->sutgas_pembimbing_terbaru->dosen2->npwp }}</td>
                      <td class="to_center golongan">{{ $gol }}</td>
                      <td>Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
                      <td>Rp
                         <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
                      </td>
-                     <td class="width-narrow">Rp
+                     <td>Rp
                         <span class="span_uang">{{ number_format($penerimaan, 0, ",", ".") }}</span>
                      </td>
                      <td>{{ $no }}.</td>
@@ -397,7 +397,7 @@
                         $penerimaan = $honorarium - $pph;
                      @endphp
                      <td class="nama_dosen">{{ $item->sutgas_penguji_terbaru->dosen1->nama }}</td>
-                     <td class="to_center">{{ $item->sutgas_penguji_terbaru->dosen1->npwp }}</td>
+                     <td class="to_center width-narrow">{{ $item->sutgas_penguji_terbaru->dosen1->npwp }}</td>
                      <td rowspan="2" class="nama_mhs">
                         <p>{{ $item->skripsi->mahasiswa->nama }}</p>
                         <p>NIM: {{ $item->skripsi->nim }}</p>
@@ -407,7 +407,7 @@
                      <td>Rp
                         <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
                      </td>
-                     <td class="width-narrow">Rp
+                     <td>Rp
                         <span class="span_uang">{{ number_format($penerimaan, 0, ",", ".") }}</span>
                      </td>
                      <td>{{ $no }}.</td>
@@ -444,13 +444,13 @@
                         $penerimaan = $honorarium - $pph;
                      @endphp
                      <td class="nama_dosen">{{ $item->sutgas_penguji_terbaru->dosen2->nama }}</td>
-                     <td class="to_center">{{ $item->sutgas_penguji_terbaru->dosen2->npwp }}</td>
+                     <td class="to_center width-narrow">{{ $item->sutgas_penguji_terbaru->dosen2->npwp }}</td>
                      <td class="to_center golongan">{{ $gol }}</td>
                      <td>Rp {{ number_format($honorarium, 0, ",", ".") }}</td>
                      <td>Rp
                         <span class="span_uang">{{ number_format($pph, 0, ",", ".") }}</span>
                      </td>
-                     <td class="width-narrow">Rp
+                     <td>Rp
                         <span class="span_uang">{{ number_format($penerimaan, 0, ",", ".") }}</span>
                      </td>
                      <td>{{ $no }}.</td>

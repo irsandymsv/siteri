@@ -488,7 +488,7 @@ class SkSkripsiController extends Controller
       $tgl = Carbon::parse($sk->created_at)->format('d-m-Y');
       file_put_contents('storage/skripsi/SK Skripsi-'. $tgl . ".pdf", $m->merge());
       return response()->download(
-          storage_path('app\public\skripsi\SK Skripsi-' . $tgl . ".pdf")
+          storage_path('app/public/skripsi/SK Skripsi-' . $tgl . ".pdf")
       )->deleteFileAfterSend(true);
 	}
 
