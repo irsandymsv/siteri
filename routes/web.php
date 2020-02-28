@@ -465,12 +465,7 @@ Route::middleware(['auth', 'checkRole:Pengadministrasi Layanan Kegiatan Mahasisw
 
 Route::middleware(['auth', 'checkRole:Pengadministrasi Kemahasiswaan & Alumni'])->prefix('kemahasiswaan')->name('kemahasiswaan.')->group(
     function () {
-        Route::get(
-            '/',
-            function () {
-                return view('kemahasiswaan.dashboard');
-            }
-        )->name('dashboard');
+        Route::get('/','mahasiswaController@kemahasiswaan_dashboard')->name('dashboard');
 
         //Data Mahasiswa
         Route::get('/mahasiswa', 'mahasiswaController@index')->name('mahasiswa.index');

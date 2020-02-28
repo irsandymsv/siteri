@@ -12,6 +12,13 @@ use Exception;
 
 class mahasiswaController extends Controller
 {
+   public function kemahasiswaan_dashboard($value='')
+   {
+   	$jml_mhs = mahasiswa::count();
+   	// dd($jml_mhs);
+      return view('kemahasiswaan.dashboard', ['jml_mhs' => $jml_mhs]);
+   }
+
    public function index()
    {
    	$mahasiswa = mahasiswa::with('prodi')->get();
