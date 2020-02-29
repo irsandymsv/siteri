@@ -210,7 +210,7 @@
             	<table id="tabel_keterangan">
             		<tr>
             			<td>Nomor	</td>
-            			<td>: {{ $sk->no_surat }}//UN25.1.15/SP/{{ Carbon\Carbon::parse($sk->created_at)->year }}</td>
+            			<td>: {{ $sk->no_surat }}/UN25.1.15/SP/{{ Carbon\Carbon::parse($sk->created_at)->year }}</td>
             		</tr>
             		<tr>
             			<td>Tanggal	</td>

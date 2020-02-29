@@ -122,7 +122,7 @@ class skripsiController extends suratTugasController
 
     public function editStatus($id_skripsi)
     {
-        $status_skripsi = status_skripsi::all();
+        $status_skripsi = status_skripsi::where('status', 'Sudah Sempro')->orWhere('status', 'Sudah Punya Penguji')->get();
         $skripsi = skripsi::where('id', $id_skripsi)->with('mahasiswa')->first();
         return view('akademik.skripsi.editStatus', [
             'skripsi' => $skripsi,
