@@ -10,9 +10,12 @@
 
 @section('css_link')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
-	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
-	<style type="text/css">
+	<link rel="stylesheet" href="{{asset('/adminlte/bower_components/select2/dist/css/select2.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
+	<!-- bootstrap datepicker -->
+   <link rel="stylesheet" href="{{asset('/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+
+   <style type="text/css">
       table tbody tr td:first-child{
          /*width: 10%;*/
       }
@@ -41,7 +44,7 @@
 
 @section('content')
    <button id="back_top" class="btn bg-black" title="Kembali ke Atas"><i class="fa fa-arrow-up"></i></button>
-   <form action="{{ route('akademik.skripsi.store') }}" method="post">
+   <form action="{{ route('akademik.skripsi.store') }}" method="post" autocomplete="off">
       @csrf
    	<div class="row">
       	<div class="col-xs-12">
@@ -104,7 +107,7 @@
 
                         <div class="form-group col-md-3">
                            <label for="tgl_sk_pembimbing">Tanggal SK Pembimbing</label>
-                           <input type="date" name="tgl_sk_pembimbing" id="tgl_sk_pembimbing" class="form-control" value="{{ old('tgl_sk_pembimbing') }}">
+                           <input type="text" name="tgl_sk_pembimbing" id="tgl_sk_pembimbing" class="form-control datepicker" style="font-size: 16px;" value="{{ old('tgl_sk_pembimbing') }}">
 
                            @error('tgl_sk_pembimbing')
                               <span class="invalid-feedback" role="alert" style="color: red;">
@@ -115,7 +118,7 @@
 
                         <div class="form-group col-md-3">
                            <label for="tgl_sk_penguji">Tanggal SK Penguji</label>
-                           <input type="date" name="tgl_sk_penguji" id="tgl_sk_penguji" class="form-control" value="{{ old('tgl_sk_penguji') }}">
+                           <input type="text" name="tgl_sk_penguji" id="tgl_sk_penguji" class="form-control datepicker" style="font-size: 16px;" value="{{ old('tgl_sk_penguji') }}">
 
                            @error('tgl_sk_penguji')
                               <span class="invalid-feedback" role="alert" style="color: red;">
@@ -262,8 +265,12 @@
 @endsection
 
 @section('script')
-   <script src="/js/btn_backTop.js"></script>
-	<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
+   <script src="{{asset('/js/btn_backTop.js')}}"></script>
+	<script src="{{asset('/adminlte/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+   <!-- bootstrap datepicker -->
+   <script src="{{asset('/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+   <script src="{{asset('/adminlte/bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.id.js')}}"></script>
+
 	<script type="text/javascript">
 		$('.select2').select2();
 		var mahasiswa = @json($mahasiswa);
@@ -280,6 +287,13 @@
          $("input[name='status']").val(2);
          $('form').trigger('submit');
       });
+
+      //Date picker
+      $('.datepicker').datepicker({
+        autoclose: true,
+        format: 'dd-mm-yyyy',
+        language: 'id'
+      })
 
       var no = 0;
       if ($("#tbl-data tbody tr").length) {
@@ -353,7 +367,7 @@
       hapus_baris();
       function hapus_baris() {
          $('button[name="delete_data"]').off("click").click(function(event) {
-            console.log("hapus ya");
+            // console.log("hapus ya");
             var nim = $(this).parents("tr").find('input[type="hidden"]').val();
             var newOption = new Option(nim, nim, false, false);
             $('#pilih_nim').append(newOption).trigger('change');

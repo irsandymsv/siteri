@@ -10,8 +10,12 @@
 
 @section('css_link')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
-	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+	<link rel="stylesheet" href="{{asset('/adminlte/bower_components/select2/dist/css/select2.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
+   <!-- bootstrap datepicker -->
+   <link rel="stylesheet" href="{{asset('/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+   <!-- Bootstrap time Picker -->
+   <link rel="stylesheet" href="{{asset('/adminlte/plugins/timepicker/bootstrap-timepicker.min.css')}}">
 	<style type="text/css">
 		form{
 			width: 90%;
@@ -74,9 +78,9 @@
                 @endif
             </div>
             <form action="{{route('akademik.sutgas-pembahas.update',$surat_tugas->id)}}" method="post">
+               @csrf
+               @method('PUT')
                <div class="box-body">
-                  @csrf
-                  @method('PUT')
                   <input type="hidden" name="id_detail_skripsi" value="{{$surat_tugas->detail_skripsi->id}}">
                   <input type="hidden" name="id_skripsi" value="{{$surat_tugas->detail_skripsi->id_skripsi}}">
                   <input type="hidden" name="original_nim" value="{{$surat_tugas->detail_skripsi->skripsi->nim}}">
@@ -130,16 +134,30 @@
                      @enderror
                   </div>
 
-                  <div class="form-group" style="width: 40%;">
-                     <label for="tanggal">Tanggal-Jam Pelaksanaan</label><br>
-                     <input type="datetime-local" name="tanggal" id="tanggal" class="form-control" value="{{ $tanggal }}">
+                  <div class="form-inline">
+                     <div class="form-group">
+                        <label for="tanggal">Tanggal Pelaksanaan</label><br>
+                        <input type="text" name="tanggal" id="datepicker" autocomplete="off" class="form-control" style="font-size: 16px;" value="{{ $tanggal }}">
 
-                     @error('tanggal')
-                        <span class="invalid-feedback" role="alert" style="color: red;">
-                           <strong>{{ $message }}</strong>
-                        </span>
-                     @enderror
+                        @error('tanggal')
+                           <span class="invalid-feedback" role="alert" style="color: red;">
+                              <strong>{{ $message }}</strong>
+                           </span>
+                        @enderror
+                     </div>
+
+                     <div class="form-group">
+                        <label for="jam">Jam Pelaksanaan</label><br>
+                        <input type="text" name="jam" id="jam" class="form-control timepicker" style="font-size: 16px; width: 60%;" value="{{ $jam }}"> <b style="font-size: 15px;">WIB</b>
+
+                        @error('jam')
+                           <span class="invalid-feedback" role="alert" style="color: red;">
+                              <strong>{{ $message }}</strong>
+                           </span>
+                        @enderror
+                     </div>
                   </div>
+                  <br>
 
                   <div class="form-group">
                      <label for="tempat">Tempat Pelaksanaan</label><br>
@@ -229,7 +247,13 @@
 @endsection
 
 @section('script')
-	<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
+	<script src="{{asset('/adminlte/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+   <!-- bootstrap datepicker -->
+   <script src="{{asset('/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+   <script src="{{asset('/adminlte/bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.id.js')}}"></script>
+   <!-- bootstrap time picker -->
+   <script src="{{asset('/adminlte/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
+
 	<script type="text/javascript">
 		$('.select2').select2();
 
@@ -244,6 +268,20 @@
          $("input[name='status']").val(2);
          $('form').trigger('submit');
       });
+
+      //Time picker
+      $('.timepicker').timepicker({
+        showInputs: true,
+        showMeridian: false,
+        minuteStep: 5,
+      })
+
+      //Date picker
+      $('#datepicker').datepicker({
+        autoclose: true,
+        format: 'dd-mm-yyyy',
+        language: 'id'
+      })
 
 		var mahasiswa = @json($mahasiswa);
       var dosen1 = @json($dosen1); //list daftar pilihan dosen1

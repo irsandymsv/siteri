@@ -14,7 +14,7 @@
 
 @section('css_link')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+	<link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
 @endsection
 
 @section('judul_header')
@@ -66,10 +66,10 @@
 		            			<tr id="{{ ($tipe == "SK Skripsi"? 'sk_'.$item->id:'sk_'.$item->no_surat) }}">
 		            				<td>{{$loop->index + 1}}</td>
 		            				@if($tipe == "SK Skripsi")
-			            				<td>{{ $item->no_surat_pembimbing }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
-			            				<td>{{ $item->no_surat_penguji }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
+			            				<td>{{ $item->no_surat_pembimbing }}/UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
+			            				<td>{{ $item->no_surat_penguji }}/UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
 		            				@else
-		            					<td>{{ $item->no_surat }}//UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
+		            					<td>{{ $item->no_surat }}/UN 25.1.15/SP/{{Carbon\Carbon::parse($item->created_at)->year}}</td>
 		            				@endif
 		            				<td>
 		            					{{Carbon\Carbon::parse($item->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}

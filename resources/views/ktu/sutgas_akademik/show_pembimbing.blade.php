@@ -10,7 +10,7 @@
 
 @section('css_link')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+	<link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
 	<style type="text/css">
       .box-body{
          width: 70%;
@@ -122,7 +122,7 @@
                   </div>
 
                   <div id="keterangan_kop">
-                     <span class="header_18">KEMENTERIAN RISET, TEKNOLOGI, DAN PENDIDIKAN TINGGI</span><br>
+                     <span class="header_18">KEMENTERIAN PENDIDIKAN DAN KEBUDAYAAN</span><br>
                      <span class="header_18">UNIVERSITAS JEMBER</span><br>
                      <span class="header_18">FAKULTAS ILMU KOMPUTER</span>
 

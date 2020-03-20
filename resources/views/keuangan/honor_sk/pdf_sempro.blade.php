@@ -132,7 +132,7 @@
                   <th>Nama Mahasiswa/NIM</th>
                   <th>Gol</th>
                   <th>Honorarium</th>
-                  <th class="width-narrow">PPH psl 21 5%-15%</th>
+                  <th>PPH psl 21 5%-15%</th>
                   <th class="width-narrow">Penerimaan</th>
                   <th>Tanda Tangan</th>
                </tr>
@@ -172,7 +172,7 @@
                      <td id="penguji_{{$no}}">Rp
                         {{ number_format($sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor, 0, ",", ".") }}
                      </td>
-                     <td class="width-narrow">Rp
+                     <td>Rp
                         {{ number_format($pph, 0, ",", ".") }}
                      </td>
                      <td class="width-narrow">Rp
@@ -213,7 +213,7 @@
                      <td id="penguji_{{$no}}">Rp
                         {{ number_format($sk_honor->detail_honor[0]->histori_besaran_honor->jumlah_honor, 0, ",", ".") }}
                      </td>
-                     <td class="width-narrow">Rp
+                     <td>Rp
                         {{ number_format($pph, 0, ",", ".") }}
                      </td>
                      <td class="width-narrow">Rp

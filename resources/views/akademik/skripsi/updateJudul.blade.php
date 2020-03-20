@@ -9,7 +9,7 @@
 @endsection
 
 @section('css_link')
-	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+	<link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
 	<style type="text/css">
 		form{
 			width: 90%;
@@ -46,7 +46,7 @@
    			<div class="box-header">
                <h3 class="box-title">Update Judul Skripsi</h3>
                <br><br>
-               @if (session('success'))
+               @if (session()->has('success'))
                <div class="alert alert-success alert-dismissible">
                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                    <h4><i class="icon fa fa-check"></i> Sukses</h4>
@@ -55,9 +55,9 @@
                @php
                Session::forget('success');
                @endphp
-
                @endif
-               @if (session('error'))
+
+               @if (session()->has('error'))
                <div class="alert alert-danger alert-dismissible">
                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                    <h4><i class="icon fa fa-ban"></i>Error</h4>

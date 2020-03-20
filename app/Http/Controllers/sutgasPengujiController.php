@@ -72,6 +72,7 @@ class sutgasPengujiController extends suratTugasController
             'id_penguji1' => ['required', new id_dosen_tidak_boleh_sama($request->input("id_penguji2"))],
             'id_penguji2' => 'required',
             'tanggal' => 'required',
+            'jam' => 'required',
             'tempat' => 'required',
             'status' => 'required'
         ]);
@@ -143,9 +144,12 @@ class sutgasPengujiController extends suratTugasController
 
         $pembimbing = $this->getPembimbing($surat_tugas->detail_skripsi->skripsi->nim);
 
-        $t = carbon::parse($surat_tugas->tanggal)->toDateString();
-        $j = carbon::parse($surat_tugas->tanggal)->format('h:i');
-        $tanggal = $t.'T'.$j;
+        // $t = carbon::parse($surat_tugas->tanggal)->toDateString();
+        // $j = carbon::parse($surat_tugas->tanggal)->format('h:i');
+        // $tanggal = $t.'T'.$j;
+        $tanggal = carbon::parse($surat_tugas->tanggal)->format('d-m-Y');
+        $jam = carbon::parse($surat_tugas->tanggal)->format('H:i');
+
         $mahasiswa = mahasiswa::with(['skripsi', 'skripsi.status_skripsi'])
         ->whereDoesntHave('skripsi.detail_skripsi.surat_tugas', function(Builder $query)
         {
@@ -176,6 +180,7 @@ class sutgasPengujiController extends suratTugasController
             'dosen1' => $dosen1,
             'dosen2' => $dosen2,
             'tanggal' => $tanggal,
+            'jam' => $jam,
             'pembimbing' => $pembimbing,
             'ruangan' => $ruangan
         ]);
@@ -202,6 +207,7 @@ class sutgasPengujiController extends suratTugasController
 
             ],
             'tanggal' => 'required',
+            'jam' => 'required',
             'tempat' => 'required',
             'id_penguji1' => ['required', new id_dosen_tidak_boleh_sama($request->input("id_penguji2"))],
             'id_penguji2' => 'required',

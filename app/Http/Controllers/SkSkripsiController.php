@@ -137,7 +137,7 @@ class SkSkripsiController extends Controller
                     "no_surat_pembimbing" => $request->input("no_surat_pembimbing"),
                     "no_surat_penguji" => $request->input("no_surat_penguji"),
                     "tgl_sk_pembimbing" => carbon::parse($request->input("tgl_sk_pembimbing")),
-                    "tgl_sk_penguji" => carbon::parse($request->input("tgl_sk_pembimbing")),
+                    "tgl_sk_penguji" => carbon::parse($request->input("tgl_sk_penguji")),
                     "id_status_sk" => $request->input("status"),
                     "id_template_penguji" => $template_penguji->id,
                     "id_template_pembimbing" => $template_pembimbing->id
@@ -394,18 +394,17 @@ class SkSkripsiController extends Controller
 		try {
 			$sk = sk_skripsi::find($id);
 			$verif_ktu = $sk->verif_ktu;
-			$verif_dekan = $sk->verif_dekan;
 			if($request->status == 2){
 				$verif_ktu = 0;
-				$verif_dekan = 0;
 			}
 
 			$sk_skripsi = sk_skripsi::where('id', $id)->update([
                 "no_surat_pembimbing" => $request->input("no_surat_pembimbing"),
                 "no_surat_penguji" => $request->input("no_surat_penguji"),
                 "tgl_sk_pembimbing" => carbon::parse($request->input("tgl_sk_pembimbing")),
-                "tgl_sk_penguji" => carbon::parse($request->input("tgl_sk_pembimbing")),
+                "tgl_sk_penguji" => carbon::parse($request->input("tgl_sk_penguji")),
                 "id_status_sk" => $request->input("status"),
+                "verif_ktu" => $verif_ktu
 			]);
 
             for ($i = 0; $i < count($request->nim); $i++) {
@@ -489,7 +488,7 @@ class SkSkripsiController extends Controller
       $tgl = Carbon::parse($sk->created_at)->format('d-m-Y');
       file_put_contents('storage/skripsi/SK Skripsi-'. $tgl . ".pdf", $m->merge());
       return response()->download(
-          storage_path('app\public\skripsi\SK Skripsi-' . $tgl . ".pdf")
+          storage_path('app/public/skripsi/SK Skripsi-' . $tgl . ".pdf")
       )->deleteFileAfterSend(true);
 	}
 

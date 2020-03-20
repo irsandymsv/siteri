@@ -10,7 +10,7 @@
 
 @section('css_link')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+	<link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
 @endsection
 
 @section('judul_header')
@@ -31,7 +31,7 @@
 
             <div class="box-body">
             	<div class="table-responsive">
-            		<table id="table_data1" class="table table-bordered table-hovered">
+            		<table id="table_data1" class="table table-bordered">
 	            		<thead>
 		            		<tr>
 		            			<th>No</th>
@@ -43,13 +43,13 @@
 		            	<tbody>
                         @foreach ($nama_template as $item)
                            <tr>
-                               @if($item->template_terbaru!=null)
-                              <td>1</td>
-                              <td>{{$item->nama}}</td>
-                              <td>{{Carbon\Carbon::parse($item->template_terbaru->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</td>
-                              <td>
-                                 <a href="{{ route('akademik.template-sk.edit', $item->template_terbaru->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                              </td>
+                              @if($item->template_terbaru!=null)
+	                              <td>{{ $loop->index+1 }}</td>
+	                              <td>{{$item->nama}}</td>
+	                              <td>{{Carbon\Carbon::parse($item->template_terbaru->created_at)->locale('id_ID')->isoFormat('D MMMM Y')}}</td>
+	                              <td>
+	                                 <a href="{{ route('akademik.template-sk.edit', $item->template_terbaru->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+	                              </td>
                               @else
                               @endif
                            </tr>
@@ -108,10 +108,4 @@
       </div>
       <!-- /.modal-dialog -->
     </div>
-@endsection
-
-@section('script')
-	<script type="text/javascript">
-
-	</script>
 @endsection

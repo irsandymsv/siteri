@@ -9,7 +9,7 @@
 @endsection
 
 @section('css_link')
-	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+	<link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
 	<style type="text/css">
 		.tbl_row{
 			display: table;
@@ -164,7 +164,7 @@
 			            	<tbody>
 			            		@php $no = 0; @endphp
 			            		@foreach($detail_skripsi as $item)
-		            			<tr>
+		            			<tr title="Tgl Sempro: {{ Carbon\Carbon::parse($item->surat_tugas[0]->tanggal)->format('d/m/Y') }}">
 		            				<th>{{ $no+=1 }}</th>
 		            				<td>{{$item->skripsi->nim}}</td>
 		            				<td>{{$item->skripsi->mahasiswa->nama}}</td>
@@ -198,7 +198,7 @@
 @endsection
 
 @section('script')
-<script src="/js/btn_backTop.js"></script>
+<script src="{{asset('/js/btn_backTop.js')}}"></script>
 <script type="text/javascript">
 	var status = @json($sk->id_status_sk);
 	for (var i = status; i > 0; i--) {

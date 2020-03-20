@@ -9,7 +9,7 @@
 @endsection
 
 @section('css_link')
-   <link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+   <link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
 	<style type="text/css">
 		.tbl_row{
 			display: table;
@@ -161,7 +161,7 @@
             	   </div>
 
             	   <div id="keterangan_kop">
-            	      <span class="header_18">KEMENTERIAN RISET, TEKNOLOGI, DAN PENDIDIKAN TINGGI</span><br>
+            	      <span class="header_18">KEMENTERIAN PENDIDIKAN DAN KEBUDAYAAN</span><br>
             	      <span class="header_18">UNIVERSITAS JEMBER</span><br>
             	      <span class="header_18">FAKULTAS ILMU KOMPUTER</span>
 
@@ -199,7 +199,7 @@
 
             	   <p style="clear: both;">Tembusan: </p>
             	   <ol>
-            	      <li>Penjabat Wakil Dekan I, II;</li>
+            	      <li>Wakil Dekan I, II;</li>
             	      <li>Kasubag. Tata Usaha;</li>
             	   </ol>
             	   <span>Lingkungan Fakultas Ilmu Komputer Universitas Jember.</span>
@@ -207,7 +207,7 @@
             </div>
 
             <div class="box-body landscape">
-            	<p>Lampiran Dekan Fakultas Ilmu Komputer Universitas Jember</p>
+            	<p>Lampiran SK Dekan Fakultas Ilmu Komputer Universitas Jember</p>
             	<table id="tabel_keterangan">
             		<tr>
             			<td>Nomor	</td>
@@ -288,7 +288,7 @@
                   </div>
 
                   <div id="keterangan_kop">
-                     <span class="header_18">KEMENTERIAN RISET, TEKNOLOGI, DAN PENDIDIKAN TINGGI</span><br>
+                     <span class="header_18">KEMENTERIAN PENDIDIKAN DAN KEBUDAYAAN</span><br>
                      <span class="header_18">UNIVERSITAS JEMBER</span><br>
                      <span class="header_18">FAKULTAS ILMU KOMPUTER</span>
 
@@ -326,7 +326,7 @@
 
                   <p style="clear: both;">Tembusan: </p>
                   <ol>
-                     <li>Penjabat Wakil Dekan I, II;</li>
+                     <li>Wakil Dekan I, II;</li>
                      <li>Kasubag. Tata Usaha;</li>
                   </ol>
                   <span>Lingkungan Fakultas Ilmu Komputer Universitas Jember.</span>
@@ -334,7 +334,7 @@
             </div>
 
             <div class="box-body landscape">
-               <p>Lampiran Dekan Fakultas Ilmu Komputer Universitas Jember</p>
+               <p>Lampiran SK Dekan Fakultas Ilmu Komputer Universitas Jember</p>
                <table id="tabel_keterangan">
                   <tr>
                      <td>Nomor   </td>
@@ -453,7 +453,7 @@
 @endsection
 
 @section('script')
-<script src="/js/btn_backTop.js"></script>
+<script src="{{asset('/js/btn_backTop.js')}}"></script>
 <script type="text/javascript">
 	@error('pesan_revisi')
 		$("#modal-tarik-sk").modal("show");

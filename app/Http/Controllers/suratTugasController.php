@@ -15,15 +15,20 @@ class suratTugasController extends Controller
     protected function store_sutgas(Request $request, int $id_tipe_surat_tugas, int $id_status_surat_tugas,int $id_detail_skripsi, string $tipe_id_dosen1, string $tipe_id_dosen2)
     {
         if($id_tipe_surat_tugas!=1){
+            $tgl = $request->input('tanggal');
+            $jam = $request->input('jam');
+            $tgl_jam = $tgl." ".$jam;
+
             $surat_tugas =  surat_tugas::create([
                 'no_surat' => $request->input('no_surat'),
                 'id_tipe_surat_tugas' => $id_tipe_surat_tugas,
                 'id_detail_skripsi' => $id_detail_skripsi,
                 'id_status_surat_tugas' => $id_status_surat_tugas,
-                'tanggal' =>carbon::parse($request->input('tanggal')),
+                'tanggal' =>Carbon::createFromFormat("d-m-Y H:i", $tgl_jam),
                 'id_ruang'=>$request->input('tempat'),
                 'id_dosen1' => $request->input($tipe_id_dosen1),
                 'id_dosen2' => $request->input($tipe_id_dosen2)
+                // 'tanggal' =>carbon::parse($request->input('tanggal')),
             ]);
         }else{
             $surat_tugas =  surat_tugas::create([
@@ -41,11 +46,15 @@ class suratTugasController extends Controller
     protected function update_sutgas(Request $request, int $id_tipe_surat_tugas, int $id_status_surat_tugas, int $id, string $nama_id_dosen1, string $nama_id_dosen2)
     {
         if ($id_tipe_surat_tugas != 1) {
+            $tgl = $request->input('tanggal');
+            $jam = $request->input('jam');
+            $tgl_jam = $tgl." ".$jam;
+
             surat_tugas::where('id', $id)->update([
                 'no_surat' => $request->input('no_surat'),
                 'id_tipe_surat_tugas' => $id_tipe_surat_tugas,
                 'id_status_surat_tugas' => $id_status_surat_tugas,
-                'tanggal' => carbon::parse($request->input('tanggal')),
+                'tanggal' =>Carbon::createFromFormat("d-m-Y H:i", $tgl_jam),
                 'id_ruang' => $request->input('tempat'),
                 'verif_ktu' => $this->cek_verif_ktu($id_status_surat_tugas, $id),
                 'id_dosen1' => $request->input($nama_id_dosen1),
@@ -66,12 +75,15 @@ class suratTugasController extends Controller
 
     protected function update_sutgas_beda_nim(Request $request, int $id_tipe_surat_tugas, int $id_status_surat_tugas, int $id, int $id_detail_skripsi, string $nama_id_dosen1, string $nama_id_dosen2)
     {
+        $tgl = $request->input('tanggal');
+        $jam = $request->input('jam');
+        $tgl_jam = $tgl." ".$jam;
 
         surat_tugas::where('id', $id)->update([
             'no_surat' => $request->input('no_surat'),
             'id_tipe_surat_tugas' => $id_tipe_surat_tugas,
             'id_status_surat_tugas' => $id_status_surat_tugas,
-            'tanggal' => carbon::parse($request->input('tanggal')),
+            'tanggal' =>Carbon::createFromFormat("d-m-Y H:i", $tgl_jam),
             'id_ruang' => $request->input('tempat'),
             'verif_ktu' => $this->cek_verif_ktu($id_status_surat_tugas,$id),
             'id_detail_skripsi' => $id_detail_skripsi,

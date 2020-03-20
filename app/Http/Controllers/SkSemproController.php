@@ -302,8 +302,6 @@ class SkSemproController extends Controller
         }
       }
 
-
-
       try {
          $sk = sk_sempro::find($id);
          $verif_ktu = $sk->verif_ktu;
@@ -390,7 +388,7 @@ class SkSemproController extends Controller
 
       file_put_contents('storage/sempro/SK Sempro-' . $sk->no_surat . ".pdf", $m->merge());
       return response()->download(
-          storage_path('app\public\sempro\SK Sempro-' . $sk->no_surat . ".pdf")
+          storage_path('app/public/sempro/SK Sempro-' . $sk->no_surat . ".pdf")
       )->deleteFileAfterSend(true);
    }
 
@@ -497,7 +495,7 @@ class SkSemproController extends Controller
       })
       ->orderBy('updated_at', 'desc')->get();
 
-      return view('Wadek2.SK_view.sk_index', [
+      return view('wadek2.SK_view.sk_index', [
          'sk' => $sk,
          'tipe' => "SK Sempro"
       ]);

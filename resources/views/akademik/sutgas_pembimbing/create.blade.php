@@ -10,8 +10,8 @@
 
 @section('css_link')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
-	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+	<link rel="stylesheet" href="{{asset('/adminlte/bower_components/select2/dist/css/select2.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
 	<style type="text/css">
 		form{
 			width: 90%;
@@ -74,8 +74,8 @@
             </div>
 
             <form action="{{ route('akademik.sutgas-pembimbing.store') }}" method="post">
+            	@csrf
                <div class="box-body">
-            		@csrf
 
             		<div class="form-group">
             			<label for="no_surat">No Surat</label><br>
@@ -201,7 +201,7 @@
 @endsection
 
 @section('script')
-	<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
+	<script src="{{asset('/adminlte/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 	<script type="text/javascript">
 		$('.select2').select2();
 

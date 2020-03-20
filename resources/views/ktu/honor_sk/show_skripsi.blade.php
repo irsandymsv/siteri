@@ -9,7 +9,7 @@
 @endsection
 
 @section('css_link')
-   <link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+   <link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
    <style type="text/css">
       .box-body{
          font-size: 15px;
@@ -600,7 +600,7 @@
 @endsection
 
 @section('script')
-   <script src="/js/btn_backTop.js"></script>
+   <script src="{{asset('/js/btn_backTop.js')}}"></script>
    <script type="text/javascript">
     @error('pesan_revisi')
       $("#modal-tarik-sk").modal("show");

@@ -9,7 +9,7 @@
 @endsection
 
 @section('css_link')
-	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+	<link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
 	<style type="text/css">
 		form{
 			width: 90%;

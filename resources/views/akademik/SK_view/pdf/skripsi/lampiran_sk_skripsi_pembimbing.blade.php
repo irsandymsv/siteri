@@ -154,7 +154,7 @@
 
 <body>
    <div class="box-body">
-      <p style="margin-bottom: 0;">Lampiran Dekan Fakultas Ilmu Komputer Universitas Jember</p>
+      <p style="margin-bottom: 0;">Lampiran SK Dekan Fakultas Ilmu Komputer Universitas Jember</p>
       <table id="tabel_keterangan">
          <tr>
             <td>Nomor   </td>

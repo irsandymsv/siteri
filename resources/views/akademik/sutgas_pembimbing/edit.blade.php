@@ -10,8 +10,8 @@
 
 @section('css_link')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
-	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+	<link rel="stylesheet" href="{{asset('/adminlte/bower_components/select2/dist/css/select2.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
 	<style type="text/css">
 		form{
 			width: 90%;
@@ -74,9 +74,9 @@
                 @endif
             </div>
             <form action="{{route('akademik.sutgas-pembimbing.update',$surat_tugas->id)}}" method="post">
+               @csrf
+               @method('PUT')
                <div class="box-body">
-                  @csrf
-                  @method('PUT')
                   <input type="hidden" name="id_detail_skripsi" value="{{$surat_tugas->detail_skripsi->id}}">
                   <input type="hidden" name="id_skripsi" value="{{$surat_tugas->detail_skripsi->id_skripsi}}">
                   <input type="hidden" name="original_nim" value="{{$surat_tugas->detail_skripsi->skripsi->nim}}">
@@ -202,7 +202,7 @@
 @endsection
 
 @section('script')
-	<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
+	<script src="{{asset('/adminlte/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 	<script type="text/javascript">
 		$('.select2').select2();
 

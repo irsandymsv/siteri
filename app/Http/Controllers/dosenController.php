@@ -43,6 +43,19 @@ class dosenController extends Controller
    	})
    	->orderBy('created_at', 'desc')->take(3)->get();
 
+      //cek apakah ada detail skripsi lain dg id_skripsi yg sama dan lebih baru. Jika ya, hilangkan current element dr collection ini karena mhs tsb sudah ganti judul n pembimbing (meski ada kemungkinan pembimbingnya tetap)
+      foreach ($sutgas_pembimbing_1 as $key => $value) {
+         $id_skripsi = $value->detail_skripsi->id_skripsi;
+         $detail_skripsi_lain = detail_skripsi::where([
+            ['id_skripsi', $id_skripsi],
+            ['created_at', '>', $value->detail_skripsi->created_at]
+         ])->first();
+
+         if (!is_null($detail_skripsi_lain)) {
+            $sutgas_pembimbing_1->forget($key); //remove current element from collection
+         }
+      }
+
    	$sutgas_pembimbing_2 = surat_tugas::where('id_dosen2', $user->no_pegawai)
    	->with([
    		'status_surat_tugas',
@@ -60,6 +73,18 @@ class dosenController extends Controller
    		$query->where('status', 'Disetujui KTU');
    	})
    	->orderBy('created_at', 'desc')->take(3)->get();
+
+      foreach ($sutgas_pembimbing_2 as $key => $value) {
+         $id_skripsi = $value->detail_skripsi->id_skripsi;
+         $detail_skripsi_lain = detail_skripsi::where([
+            ['id_skripsi', $id_skripsi],
+            ['created_at', '>', $value->detail_skripsi->created_at]
+         ])->first();
+
+         if (!is_null($detail_skripsi_lain)) {
+            $sutgas_pembimbing_2->forget($key); //remove current element from collection
+         }
+      }
 
    	$sutgas_pembahas_1 = surat_tugas::where('id_dosen1', $user->no_pegawai)
    	->whereDate('tanggal', '>=', Carbon::now()->toDateTimeString())
@@ -118,6 +143,20 @@ class dosenController extends Controller
    	})
    	->orderBy('created_at', 'desc')->take(3)->get();
 
+      //cek apakah ada sutgas lain dg id_tipe dan id_detail_skripsi yg sama dan lebih baru. Jika ya, hilangkan current elemnt dr collection ini karena ada sutgas yg lebih baru. Agar tidak ada nama mhs yg muncul 2x 
+      foreach ($sutgas_penguji_1 as $key => $value) {
+         // $id_skripsi = $value->detail_skripsi->id_skripsi;
+         $sutgas_penguji1_lain = surat_tugas::where([
+            ['id_tipe_surat_tugas', $value->id_tipe_surat_tugas],
+            ['id_detail_skripsi', $value->id_detail_skripsi],
+            ['created_at', '>', $value->created_at]
+         ])->first();
+
+         if (!is_null($sutgas_penguji1_lain)) {
+            $sutgas_penguji_1->forget($key); //remove current element from collection
+         }
+      }
+
    	$sutgas_penguji_2 = surat_tugas::where('id_dosen2', $user->no_pegawai)
    	->whereDate('tanggal', '>=', Carbon::now()->toDateTimeString())
    	->with([
@@ -136,6 +175,19 @@ class dosenController extends Controller
    		$query->where('status', 'Disetujui KTU');
    	})
    	->orderBy('created_at', 'desc')->take(3)->get();
+
+      foreach ($sutgas_penguji_2 as $key => $value) {
+         // $id_skripsi = $value->detail_skripsi->id_skripsi;
+         $sutgas_penguji2_lain = surat_tugas::where([
+            ['id_tipe_surat_tugas', $value->id_tipe_surat_tugas],
+            ['id_detail_skripsi', $value->id_detail_skripsi],
+            ['created_at', '>', $value->created_at]
+         ])->first();
+
+         if (!is_null($sutgas_penguji2_lain)) {
+            $sutgas_penguji_2->forget($key); //remove current element from collection
+         }
+      }
 
    	// dd($sutgas_pembimbing_1);
    	return view('dosen.dashboard', [
@@ -170,6 +222,19 @@ class dosenController extends Controller
    	})
    	->orderBy('created_at', 'desc')->get();
 
+      //cek apakah ada detail skripsi lain dg id_skripsi yg sama dan lebih baru. Jika ya, hilangkan current element dr collection ini karena mhs tsb sudah ganti judul n pembimbing (meski ada kemungkinan pembimbingnya tetap)
+      foreach ($sutgas_pembimbing_1 as $key => $value) {
+         $id_skripsi = $value->detail_skripsi->id_skripsi;
+         $detail_skripsi_lain = detail_skripsi::where([
+            ['id_skripsi', $id_skripsi],
+            ['created_at', '>', $value->detail_skripsi->created_at]
+         ])->first();
+
+         if (!is_null($detail_skripsi_lain)) {
+            $sutgas_pembimbing_1->forget($key); //remove current element from collection
+         }
+      }
+
    	$sutgas_pembimbing_2 = surat_tugas::where('id_dosen2', Auth::user()->no_pegawai)
    	->with([
    		'status_surat_tugas',
@@ -188,6 +253,18 @@ class dosenController extends Controller
    		$query->where('status', 'Disetujui KTU');
    	})
    	->orderBy('created_at', 'desc')->get();
+
+      foreach ($sutgas_pembimbing_2 as $key => $value) {
+         $id_skripsi = $value->detail_skripsi->id_skripsi;
+         $detail_skripsi_lain = detail_skripsi::where([
+            ['id_skripsi', $id_skripsi],
+            ['created_at', '>', $value->detail_skripsi->created_at]
+         ])->first();
+
+         if (!is_null($detail_skripsi_lain)) {
+            $sutgas_pembimbing_2->forget($key); //remove current element from collection
+         }
+      }
 
    	return view('dosen.skripsi_mahasiswa.pembimbing_index', [
    		'sutgas_pembimbing_1' => $sutgas_pembimbing_1,
@@ -347,6 +424,19 @@ class dosenController extends Controller
    		$query->where('status', 'Disetujui KTU');
    	})
    	->orderBy('created_at', 'desc')->get();
+
+      foreach ($sutgas_penguji_1 as $key => $value) {
+         // $id_skripsi = $value->detail_skripsi->id_skripsi;
+         $sutgas_penguji1_lain = surat_tugas::where([
+            ['id_tipe_surat_tugas', $value->id_tipe_surat_tugas],
+            ['id_detail_skripsi', $value->id_detail_skripsi],
+            ['created_at', '>', $value->created_at]
+         ])->first();
+
+         if (!is_null($sutgas_penguji1_lain)) {
+            $sutgas_penguji_1->forget($key); //remove current element from collection
+         }
+      }
 
    	$sutgas_penguji_2 = surat_tugas::where('id_dosen2', Auth::user()->no_pegawai)
    	->with([
