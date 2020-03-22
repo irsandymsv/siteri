@@ -97,9 +97,9 @@
 			padding: 0;
 		}
 
-    #detail_table td:nth-child(5){
-      width: 300px;
-    }
+    	#detail_table td:nth-child(5){
+      	width: 280px;
+    	}
 
 		#isi_template_surat{
 			width: 100%;

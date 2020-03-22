@@ -98,7 +98,7 @@
 		}
 
       #detail_table td:nth-child(5){
-         width: 300px;
+         width: 280px;
       }
 
 		#isi_template_surat{
@@ -111,11 +111,11 @@
 
 		.ttd-right{
          float: right;
-    }
+      }
 
-    .right-margin{
-    	margin-right: 60px;
-    }
+      .right-margin{
+         margin-right: 60px;
+      }
 	</style>
 @endsection
 

@@ -98,7 +98,7 @@
 		}
 
       #detail_table td:nth-child(5){
-         width: 300px;
+         width: 280px;
       }
 
 		#isi_template_surat{
