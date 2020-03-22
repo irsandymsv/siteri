@@ -31,12 +31,12 @@
             <ul class="nav nav-tabs">
               	<li class="active">
                   <a href="#tab_1" data-toggle="tab">
-                     Pembahas 1 &ensp;<span class="label bg-green">{{ count($sutgas_pembahas_1) }}</span>
+                     Pembahas 1 &ensp;<span class="label bg-black">{{ count($sutgas_pembahas_1) }}</span>
                   </a>
                </li>
               	<li>
                   <a href="#tab_2" data-toggle="tab">
-                     Pembahas 2 &ensp;<span class="label bg-green">{{ count($sutgas_pembahas_2) }}</span>
+                     Pembahas 2 &ensp;<span class="label bg-black">{{ count($sutgas_pembahas_2) }}</span>
                   </a>
                </li>
               	

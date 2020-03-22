@@ -27,12 +27,12 @@
             <ul class="nav nav-tabs">
               	<li class="active">
                   <a href="#tab_1" data-toggle="tab">
-                     Penguji Utama &ensp;<span class="label bg-green">{{ count($sutgas_penguji_1) }}</span>
+                     Penguji Utama &ensp;<span class="label bg-black">{{ count($sutgas_penguji_1) }}</span>
                   </a>
                </li>
               	<li>
                   <a href="#tab_2" data-toggle="tab">
-                  Penguji Pendamping &ensp;<span class="label bg-green">{{ count($sutgas_penguji_2) }}</span>
+                  Penguji Pendamping &ensp;<span class="label bg-black">{{ count($sutgas_penguji_2) }}</span>
                </a>
             </li>
               	
@@ -48,7 +48,7 @@
 	               			<th>NIM</th>
 	               			<th>Nama</th>
 	               			<th>Prodi</th>
-	               			<th>Tanggal Skripsi</th>
+	               			<th>Tanggal Sidang</th>
                            <th>Pelaksanan</th>
 	               			<th>Opsi</th>
 	               		</tr>
@@ -86,6 +86,7 @@
                		</tbody>
                	</table> 
               	</div>
+
               	<!-- /.tab-pane -->
               	<div class="tab-pane" id="tab_2">
               		<p>Daftar Mahasiswa yang Anda Uji Sidang Skripsi Sebagai Penguji Pendamping</p>
@@ -96,7 +97,7 @@
 	               			<th>NIM</th>
 	               			<th>Nama</th>
 	               			<th>Prodi</th>
-	               			<th>Tanggal Sempro</th>
+	               			<th>Tanggal Sidang</th>
                            <th>Pelaksanan</th>
 	               			<th>Opsi</th>
 	               		</tr>
