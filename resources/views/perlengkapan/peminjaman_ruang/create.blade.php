@@ -48,7 +48,8 @@
                         <tbody id="inputan">
                             <tr>
                                 <td style="min-width:300px">
-                                    {!! Form::text('tanggal', null, ['class' => 'form-control not-rounded-border', 'id' => 'reservationtime']) !!}
+                                    {!! Form::text('tanggal', null, ['class' => 'form-control not-rounded-border', 'id'
+                                    => 'reservationtime']) !!}
                                 </td>
 
                                 <td style="min-width:300px">
@@ -100,7 +101,8 @@
 
         $('#reservationtime').daterangepicker({
             timePicker: true,
-            timePickerIncrement: 30,
+            timePicker24Hour: true,
+            timePickerIncrement: 15,
             minDate: moment().add(1, "days"),
             locale: { format: 'YYYY/MM/DD HH:mm:ss' }
         });

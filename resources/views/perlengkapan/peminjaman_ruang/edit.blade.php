@@ -50,7 +50,8 @@
                             {!! Form::hidden('laporan', true) !!}
                             <tr>
                                 <td style="min-width:300px">
-                                    {!! Form::text('tanggal', $tanggal, ['class' => 'form-control not-rounded-border', 'id' => 'reservationtime']) !!}
+                                    {!! Form::text('tanggal', $tanggal, ['class' => 'form-control not-rounded-border',
+                                    'id' => 'reservationtime']) !!}
                                 </td>
 
                                 <td style="min-width:300px">
@@ -58,7 +59,8 @@
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah_peserta', $laporan->jumlah_peserta, ['class' => 'form-control jumlah
+                                    {!! Form::text('jumlah_peserta', $laporan->jumlah_peserta, ['class' => 'form-control
+                                    jumlah
                                     angka']) !!}
                                 </td>
                                 <td class="ruang">
@@ -66,7 +68,9 @@
                                         class="form-control not-rounded-border js-example-basic-multiple"
                                         multiple="multiple">
                                         @foreach ($ruang as $val)
-                                        <option value="{{ $val->id }}" {{ (in_array($val->id, $nama_ruang) ? 'selected' : '') }} >({{$val->kuota}}) {{$val->nama_ruang}}</option>
+                                        <option value="{{ $val->id }}"
+                                            {{ (in_array($val->id, $nama_ruang) ? 'selected' : '') }}>({{$val->kuota}})
+                                            {{$val->nama_ruang}}</option>
                                         @endforeach
                                     </select>
                                     <br>
@@ -101,7 +105,8 @@
 
         $('#reservationtime').daterangepicker({
             timePicker: true,
-            timePickerIncrement: 30,
+            timePicker24Hour: true,
+            timePickerIncrement: 15,
             minDate: moment().add(1, "days"),
             locale: { format: 'YYYY/MM/DD HH:mm:ss' }
         });
