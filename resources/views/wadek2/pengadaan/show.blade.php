@@ -4,9 +4,9 @@
 @include('include.wadek2_menu')
 @endsection
 
-@section('page_title', 'Laporan Pengadaan')
+@section('page_title', 'Pengadaan')
 
-@section('judul_header', 'Laporan Pengadaan')
+@section('judul_header', 'Permohonan Pengadaan')
 
 @section('content')
 
@@ -17,7 +17,7 @@
         <div
             class="{{ ($laporan->verif_wadek2 == 0) ? "box box-primary" : (($laporan->verif_wadek2 == 1) ? "box box-danger" : "box box-success") }}">
             <div class="box-header">
-                <h3 class="box-title">Data Pengadaan</h3>
+                <h3 class="box-title">Detail Permohonan Pengadaan</h3>
             </div>
 
             <div class="box-body">
@@ -92,7 +92,7 @@
                     Setujui</button>
                 &ensp;
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-tolak"><i
-                        class="fa fa-close"></i> Tolak Laporan</button>
+                        class="fa fa-close"></i> Tolak Permohonan</button>
                 </form>
 
                 {{-- <a href="{{ route('wadek2.pengadaan.index') }}" class="btn btn-default
@@ -104,7 +104,7 @@
                             <div class="modal-header bg-red">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Pesan Penolakan Laporan Pengadaan</h4>
+                                <h4 class="modal-title">Pesan Penolakan Permohonan Pengadaan</h4>
                             </div>
                             {!! Form::open(['route' => ['wadek2.pengadaan.update', $laporan->id], 'method'
                             =>

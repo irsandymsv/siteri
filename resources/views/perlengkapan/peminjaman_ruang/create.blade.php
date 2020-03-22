@@ -4,9 +4,9 @@
 @include('include.perlengkapan_menu')
 @endsection
 
-@section('page_title', 'Peminjaman Ruang')
+@section('page_title', 'Buat Laporan Peminjaman Ruang')
 
-@section('judul_header', 'Buat Laporan Peminjaman Ruang')
+@section('judul_header', 'Peminjaman Ruang')
 
 @section('css_link')
 <link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
@@ -28,7 +28,7 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
-            <div class="box-header">
+            <div class="box-header with-border">
                 <h3 class="box-title">Buat Laporan Peminjaman Ruang</h3>
             </div>
 

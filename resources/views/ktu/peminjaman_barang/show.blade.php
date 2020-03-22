@@ -23,7 +23,7 @@
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Laporan Peminjaman Barang</h3>
+                <h3 class="box-title">Detail Peminjaman Barang</h3>
             </div>
 
             <div class="box-body">
@@ -52,12 +52,12 @@
                         <tr>
                             <td><b>Status</b></td>
                             <td>: @if($laporan->verif_baper == 0)
-                                    Belum Disetujui
-                                    @elseif($laporan->verif_ktu == 0)
-                                    Belum Diverifikasi
-                                    @else
-                                    <label class="label bg-green">Sudah Diverifikasi</label>
-                                    @endif
+                                Belum Disetujui
+                                @elseif($laporan->verif_ktu == 0)
+                                Belum Diverifikasi
+                                @else
+                                <label class="label bg-green">Sudah Diverifikasi</label>
+                                @endif
                             </td>
                         </tr>
                     </table>

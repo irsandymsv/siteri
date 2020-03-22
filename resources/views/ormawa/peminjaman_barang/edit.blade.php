@@ -4,9 +4,9 @@
 @include('include.ormawa_menu')
 @endsection
 
-@section('page_title', 'Peminjaman Barang')
+@section('page_title', 'Ubah Laporan Peminjaman Barang')
 
-@section('judul_header', 'Ubah Laporan Peminjaman Barang')
+@section('judul_header', 'Peminjaman Barang')
 
 @section('css_link')
 <link href="/adminlte/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
@@ -28,7 +28,7 @@ $status = $status[0];
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
-            <div class="box-header">
+            <div class="box-header with-border">
                 <h3 class="box-title">Ubah Laporan Peminjaman Barang</h3>
             </div>
 
@@ -48,7 +48,8 @@ $status = $status[0];
                         <tbody>
                             <tr>
                                 <td>
-                                    {!! Form::text('tanggal', $tanggal, ['class' => 'form-control not-rounded-border', 'id' => 'reservationtime']) !!}
+                                    {!! Form::text('tanggal', $tanggal, ['class' => 'form-control not-rounded-border',
+                                    'id' => 'reservationtime']) !!}
                                 </td>
                                 <td>
                                     {!! Form::text('kegiatan', $laporan->kegiatan, ['class' => 'form-control']) !!}
@@ -74,7 +75,8 @@ $status = $status[0];
                             {{-- @dump($item) --}}
                             <tr>
                                 <td>
-                                    <select id="barang1" name="barang[]" class="form-control barang select2" style="width: 100%">
+                                    <select id="barang1" name="barang[]" class="form-control barang select2"
+                                        style="width: 100%">
                                         <option value="">Pilih Barang</option>
                                         @foreach ($barang as $val)
                                         <option value="{{ $val->id }}"
@@ -85,7 +87,8 @@ $status = $status[0];
                                 </td>
 
                                 <td class="merk">
-                                    <select id="merk_barang1" name="merk_barang[]" class="form-control merk_barang select2" style="width: 100%">
+                                    <select id="merk_barang1" name="merk_barang[]"
+                                        class="form-control merk_barang select2" style="width: 100%">
                                         @foreach ($merk[$i] as $val)
                                         <option value="{{ $val->id }}"
                                             {{ ($val->id == $item->iddetail_data_barang_fk) ? 'selected' : '' }}>
@@ -136,90 +139,91 @@ $status = $status[0];
                             <tr>
                                 <td><b>Tanggal Mulai</b></td>
                                 <td>: {{$laporan->peminjaman_barang->tanggal_mulai}}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Tanggal Berakhir</b></td>
-                                <td>: {{$laporan->peminjaman_barang->tanggal_berakhir}}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Jam Mulai</b></td>
-                                <td>: {{$laporan->peminjaman_barang->jam_mulai}}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Jam Berakhir</b></td>
-                                <td>: {{$laporan->peminjaman_barang->jam_berakhir}}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Kegiatan</b></td>
-                                <td>: {{$laporan->peminjaman_barang->kegiatan}}</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <br>
-                    <div class="table-responsive">
-                        <table id="inventaris" class="table table-bordered table-hovered">
-                            <thead>
-                                <tr>
-                                    <th>Nama Barang</th>
-                                    <th>Merk Barang</th>
-                                    <th>Jumlah</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php $i = 0 @endphp
-                                <tr id="lap_{{ $laporan->id }}">
-                                    {!! Form::hidden("id", $laporan->idpinjam_barang_fk) !!}
-                                    {!! Form::hidden("idmerk", $laporan->iddetail_data_barang_fk) !!}
-                                    <td>
-                                        <select id="barang" name="barang[]" class="form-control barang">
-                                            <option value="">Pilih Barang</option>
-                                            @foreach ($barang as $val)
-                                            <option value="{{ $val->id }}"
-                                                {{ ($val->id == $laporan->detail_data_barang->idbarang_fk) ? 'selected' : '' }}>
-                                                {{ $val->nama_barang }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-
-                                    <td class="merk">
-                                        <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang">
-                                            @foreach ($merk[$i] as $val)
-                                            <option value="{{ $val->id }}"
-                                                {{ ($val->id == $laporan->iddetail_data_barang_fk) ? 'selected' : '' }}>
-                                                {{ $val->merk_barang }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-
-                                    <td>
-                                        {!! Form::text('jumlah[]', $laporan->jumlah, ['class' => 'form-control angka', 'id' =>
-                                        'jumlah'])
-                                        !!}
-                                    </td>
-
-                                    <td>
-                                        {!! Form::select('satuan[]', $satuan, $laporan->idsatuan_fk-1, ['class' =>
-                                        'form-control', 'id' =>
-                                        'satuan'])!!}
-                                    </td>
-
-                                    <td>
-                                        {!! Form::button(null , [ 'class'=>'fa fa-trash btn btn-danger']) !!}
-                                    </td>
-                                </tr>
-                                @php $i++ @endphp
-                            </tbody>
-                        </table>
-                    </div>
-                    @endif --}}
-                    <div class="form-group" style="float: right;">
-                        {!! Form::submit('Simpan dan Kirim', [ 'class'=>'btn btn-success', 'id' => 'submit']) !!}
-                    </div>
+                    </tr>
+                    <tr>
+                        <td><b>Tanggal Berakhir</b></td>
+                        <td>: {{$laporan->peminjaman_barang->tanggal_berakhir}}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Jam Mulai</b></td>
+                        <td>: {{$laporan->peminjaman_barang->jam_mulai}}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Jam Berakhir</b></td>
+                        <td>: {{$laporan->peminjaman_barang->jam_berakhir}}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Kegiatan</b></td>
+                        <td>: {{$laporan->peminjaman_barang->kegiatan}}</td>
+                    </tr>
+                    </table>
                 </div>
-                {!! Form::close() !!}
+                <br>
+                <div class="table-responsive">
+                    <table id="inventaris" class="table table-bordered table-hovered">
+                        <thead>
+                            <tr>
+                                <th>Nama Barang</th>
+                                <th>Merk Barang</th>
+                                <th>Jumlah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php $i = 0 @endphp
+                            <tr id="lap_{{ $laporan->id }}">
+                                {!! Form::hidden("id", $laporan->idpinjam_barang_fk) !!}
+                                {!! Form::hidden("idmerk", $laporan->iddetail_data_barang_fk) !!}
+                                <td>
+                                    <select id="barang" name="barang[]" class="form-control barang">
+                                        <option value="">Pilih Barang</option>
+                                        @foreach ($barang as $val)
+                                        <option value="{{ $val->id }}"
+                                            {{ ($val->id == $laporan->detail_data_barang->idbarang_fk) ? 'selected' : '' }}>
+                                            {{ $val->nama_barang }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+
+                                <td class="merk">
+                                    <select id="merk_barang" name="merk_barang[]" class="form-control merk_barang">
+                                        @foreach ($merk[$i] as $val)
+                                        <option value="{{ $val->id }}"
+                                            {{ ($val->id == $laporan->iddetail_data_barang_fk) ? 'selected' : '' }}>
+                                            {{ $val->merk_barang }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+
+                                <td>
+                                    {!! Form::text('jumlah[]', $laporan->jumlah, ['class' => 'form-control angka', 'id'
+                                    =>
+                                    'jumlah'])
+                                    !!}
+                                </td>
+
+                                <td>
+                                    {!! Form::select('satuan[]', $satuan, $laporan->idsatuan_fk-1, ['class' =>
+                                    'form-control', 'id' =>
+                                    'satuan'])!!}
+                                </td>
+
+                                <td>
+                                    {!! Form::button(null , [ 'class'=>'fa fa-trash btn btn-danger']) !!}
+                                </td>
+                            </tr>
+                            @php $i++ @endphp
+                        </tbody>
+                    </table>
+                </div>
+                @endif --}}
+                <div class="form-group" style="float: right;">
+                    {!! Form::submit('Simpan dan Kirim', [ 'class'=>'btn btn-success', 'id' => 'submit']) !!}
+                </div>
             </div>
+            {!! Form::close() !!}
         </div>
     </div>
+</div>
 </div>
 @endsection
 
@@ -245,7 +249,8 @@ $status = $status[0];
 
         $('#reservationtime').daterangepicker({
             timePicker: true,
-            timePickerIncrement: 30,
+            timePicker24Hour: true,
+            timePickerIncrement: 15,
             minDate: moment().add(1, "days"),
             locale: { format: 'YYYY/MM/DD HH:mm:ss' }
         });

@@ -18,7 +18,7 @@
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Laporan Peminjaman Ruang</h3>
+                <h3 class="box-title">Detail Peminjaman Ruang</h3>
                 <div style="float: right;">
                     @if($laporan->verif_baper == 0)
                     <a href="{{ route('ormawa.peminjaman_ruang.edit', [$laporan->id, 'laporan' => true]) }}"
@@ -86,8 +86,9 @@
                                 <td>{{$item->data_ruang->kuota}}</td>
                                 <td>
                                     @if($laporan->verif_baper == 0)
-                                        <a href="#" class="btn btn-danger" id="{{ $item->idpinjam_ruang_fk }}" name="hapus_laporan"
-                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-trash"></i></a>
+                                    <a href="#" class="btn btn-danger" id="{{ $item->idpinjam_ruang_fk }}"
+                                        name="hapus_laporan" title="Hapus Laporan" data-toggle="modal"
+                                        data-target="#modal-delete"><i class="fa fa-trash"></i></a>
                                     @endif
                                 </td>
                             </tr>

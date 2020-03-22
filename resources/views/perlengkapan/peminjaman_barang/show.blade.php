@@ -24,7 +24,7 @@
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Laporan Peminjaman Barang</h3>
+                <h3 class="box-title">Detail Peminjaman Barang</h3>
                 <div style="float: right;">
                     <a href="{{ route('perlengkapan.peminjaman_barang.edit', [$laporan->id, 'laporan' => true]) }}"
                         class="btn btn-warning"><i class="fa fa-edit"></i> Ubah Laporan</a>
@@ -90,7 +90,8 @@
                                 <td>{{$item->jumlah }} {{$item->satuan->satuan }}</td>
                                 <td>
                                     {{-- @if($item->verif_baper != 1)
-                                    <a href="{{ route('perlengkapan.peminjaman_barang.edit', $item->id) }}" class="btn btn-warning"
+                                    <a href="{{ route('perlengkapan.peminjaman_barang.edit', $item->id) }}" class="btn
+                                    btn-warning"
                                     title="Ubah Laporan"><i class="fa fa-edit"></i></a>
                                     @endif --}}
                                     <a href="#" class="btn btn-danger" id="{{ $item->idpinjam_barang_fk }}"

@@ -4,7 +4,7 @@
 @include('include.perlengkapan_menu')
 @endsection
 
-@section('page_title', 'Laporan Inventaris')
+@section('page_title', 'Inventaris')
 
 @section('css_link')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -17,7 +17,7 @@
 </style>
 @endsection
 
-@section('judul_header', 'Laporan Inventaris')
+@section('judul_header', 'Data Inventaris')
 
 @section('content')
 
@@ -26,10 +26,10 @@
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Data Inventaris</h3>
+                <h3 class="box-title">Detail Data Inventaris</h3>
                 <div style="float: right;">
                     <a href="{{ route('perlengkapan.inventaris.edit', [$barang->id, 'laporan' => true]) }}"
-                        class="btn btn-warning"><i class="fa fa-edit"></i> Ubah Laporan</a>
+                        class="btn btn-warning"><i class="fa fa-edit"></i> Ubah Data Inventaris</a>
                 </div>
             </div>
 
