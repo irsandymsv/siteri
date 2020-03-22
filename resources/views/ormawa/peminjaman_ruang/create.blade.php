@@ -4,9 +4,9 @@
 @include('include.ormawa_menu')
 @endsection
 
-@section('page_title', 'Peminjaman Ruang')
+@section('page_title', 'Buat Laporan Peminjaman Ruang')
 
-@section('judul_header', 'Buat Laporan Peminjaman Ruang')
+@section('judul_header', 'Peminjaman Ruang')
 
 @section('css_link')
 <link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
@@ -28,7 +28,7 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
-            <div class="box-header">
+            <div class="box-header with-border">
                 <h3 class="box-title">Buat Laporan Peminjaman Ruang</h3>
             </div>
 
@@ -48,7 +48,8 @@
                         <tbody id="inputan">
                             <tr>
                                 <td style="min-width:300px">
-                                    {!! Form::text('tanggal', null, ['class' => 'form-control not-rounded-border', 'id' => 'reservationtime']) !!}
+                                    {!! Form::text('tanggal', null, ['class' => 'form-control not-rounded-border', 'id'
+                                    => 'reservationtime']) !!}
                                 </td>
 
                                 <td style="min-width:300px">
@@ -100,7 +101,8 @@
 
         $('#reservationtime').daterangepicker({
             timePicker: true,
-            timePickerIncrement: 30,
+            timePicker24Hour: true,
+            timePickerIncrement: 15,
             minDate: moment().add(1, "days"),
             locale: { format: 'YYYY/MM/DD HH:mm:ss' }
         });

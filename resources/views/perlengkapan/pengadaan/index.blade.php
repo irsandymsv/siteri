@@ -4,7 +4,7 @@
 @include('include.perlengkapan_menu')
 @endsection
 
-@section('page_title', 'Laporan Pengadaan')
+@section('page_title', 'Pengadaan')
 
 @section('css_link')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -17,7 +17,7 @@
 </style>
 @endsection
 
-@section('judul_header', 'Laporan Pengadaan')
+@section('judul_header', 'Permohonan Pengadaan')
 
 @section('content')
 
@@ -25,11 +25,11 @@
     <div class="col-xs-12">
         <div class="box box-success">
             <div class="box-header">
-                <h3 class="box-title">Laporan Pengadaan</h3>
+                <h3 class="box-title">Permohonan Pengadaan</h3>
 
                 <div style="float: right;">
                     <a href="{{ route('perlengkapan.pengadaan.create') }}" class="btn btn-primary"><i
-                            class="fa fa-plus"></i> Buat Laporan</a>
+                            class="fa fa-plus"></i> Ajukan Permohonan Baru</a>
                 </div>
             </div>
 
@@ -82,14 +82,14 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('perlengkapan.pengadaan.show', $item->id) }}"
-                                        class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
+                                        class="btn btn-primary" title="Lihat Permohonan"><i class="fa fa-eye"></i></a>
                                     @if($item->verif_wadek2 != 2)
                                     <a href="{{ route('perlengkapan.pengadaan.edit', [$item->id, 'laporan' => true]) }}"
-                                        class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
+                                        class="btn btn-warning" title="Ubah Permohonan"><i class="fa fa-edit"></i></a>
                                     @endif
                                     @if($item->verif_wadek2 != 2)
                                     <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan"
-                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i
+                                        title="Hapus Permohonan" data-toggle="modal" data-target="#modal-delete"><i
                                             class="fa fa-trash"></i></a>
                                     @endif
 

@@ -4,14 +4,14 @@
 @include('include.perlengkapan_menu')
 @endsection
 
-@section('page_title', 'Laporan Inventaris')
+@section('page_title', 'Inventaris')
 
 @section('css_link')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" type="text/css" href="/css/custom_style.css">
 @endsection
 
-@section('judul_header', 'Laporan Inventaris')
+@section('judul_header', 'Inventaris')
 
 @section('content')
 
@@ -19,11 +19,11 @@
     <div class="col-xs-12">
         <div class="box box-success">
             <div class="box-header">
-                <h3 class="box-title">Laporan Inventaris</h3>
+                <h3 class="box-title">Data Inventaris</h3>
 
                 <div style="float: right;">
                     <a href="{{ route('perlengkapan.inventaris.create') }}" class="btn btn-primary"><i
-                            class="fa fa-plus"></i> Buat Laporan</a>
+                            class="fa fa-plus"></i> Buat Data Baru</a>
                 </div>
             </div>
 
@@ -49,11 +49,13 @@
                                 {{-- <td>{{ $item->status }}</td> --}}
                                 <td>
                                     <a href="{{ route('perlengkapan.inventaris.show', $item->id) }}"
-                                        class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
+                                        class="btn btn-primary" title="Lihat Data Inventaris"><i
+                                            class="fa fa-eye"></i></a>
                                     <a href="{{ route('perlengkapan.inventaris.edit', [$item->id, 'laporan' => true]) }}"
-                                        class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
+                                        class="btn btn-warning" title="Ubah Data Inventaris"><i
+                                            class="fa fa-edit"></i></a>
                                     <a href="#" class="btn btn-danger" id="{{ $item->id }}" name="hapus_laporan"
-                                        title="Hapus Laporan" data-toggle="modal" data-target="#modal-delete"><i
+                                        title="Hapus Data Inventaris" data-toggle="modal" data-target="#modal-delete"><i
                                             class="fa fa-trash"></i></a>
                                 </td>
                             </tr>

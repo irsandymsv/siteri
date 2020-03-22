@@ -4,9 +4,9 @@
 @include('include.perlengkapan_menu')
 @endsection
 
-@section('page_title', 'Peminjaman Barang')
+@section('page_title', 'Buat Laporan Peminjaman Barang')
 
-@section('judul_header', 'Buat Laporan Peminjaman Barang')
+@section('judul_header', 'Peminjaman Barang')
 
 @section('css_link')
 <link href="/adminlte/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
@@ -25,7 +25,7 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
-            <div class="box-header">
+            <div class="box-header with-border">
                 <h3 class="box-title">Buat Laporan Peminjaman Barang</h3>
             </div>
 
@@ -43,7 +43,8 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    {!! Form::text('tanggal', null, ['class' => 'form-control not-rounded-border', 'id' => 'reservationtime']) !!}
+                                    {!! Form::text('tanggal', null, ['class' => 'form-control not-rounded-border', 'id'
+                                    => 'reservationtime']) !!}
                                 </td>
 
                                 <td>
@@ -66,7 +67,8 @@
                         <tbody id="inputan">
                             <tr>
                                 <td>
-                                    <select id="barang1" name="barang[]" class="form-control barang select2" style="width: 100%">
+                                    <select id="barang1" name="barang[]" class="form-control barang select2"
+                                        style="width: 100%">
                                         <option value="null">Pilih Barang</option>
                                         @foreach ($barang as $val)
                                         <option value="{{ $val->id }}">{{ $val->nama_barang }}</option>
@@ -75,8 +77,8 @@
                                 </td>
 
                                 <td class="merk">
-                                    <select id="merk_barang1" name="merk_barang[]" class="form-control merk_barang select2" style="width: 100%"
-                                        disabled="true">
+                                    <select id="merk_barang1" name="merk_barang[]"
+                                        class="form-control merk_barang select2" style="width: 100%" disabled="true">
                                     </select>
                                 </td>
 
@@ -140,7 +142,8 @@
 
         $('#reservationtime').daterangepicker({
             timePicker: true,
-            timePickerIncrement: 30,
+            timePicker24Hour: true,
+            timePickerIncrement: 15,
             minDate: moment().add(1, "days"),
             locale: { format: 'YYYY/MM/DD HH:mm:ss' }
         });

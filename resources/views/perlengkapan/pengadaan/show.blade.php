@@ -17,7 +17,7 @@
 </style>
 @endsection
 
-@section('judul_header', 'Pengadaan')
+@section('judul_header', 'Permohonan Pengadaan')
 
 @section('content')
 
@@ -27,11 +27,11 @@
         <div id="box"
             class="{{ ($laporan_pengadaan->verif_wadek2 == 0) ? "box box-primary" : (($laporan_pengadaan->verif_wadek2 == 1) ? "box box-danger" : "box box-success") }}">
             <div class="box-header">
-                <h3 class="box-title">Data Pengadaan</h3>
+                <h3 class="box-title">Detail Permohonan Pengadaan</h3>
                 @if ($laporan_pengadaan->verif_wadek2 != 2)
                 <div style="float: right;">
                     <a href="{{ route('perlengkapan.pengadaan.edit', [$laporan_pengadaan->id, 'laporan' => true]) }}"
-                        class="btn btn-warning"><i class="fa fa-edit"></i> Ubah Laporan</a>
+                        class="btn btn-warning"><i class="fa fa-edit"></i> Ubah Permohonan</a>
                 </div>
                 @endif
             </div>

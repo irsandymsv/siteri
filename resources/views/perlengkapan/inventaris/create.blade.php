@@ -4,9 +4,9 @@
 @include('include.perlengkapan_menu')
 @endsection
 
-@section('page_title', 'Inventaris')
+@section('page_title', 'Buat Data Inventaris')
 
-@section('judul_header', 'Buat Inventaris')
+@section('judul_header', 'Inventaris')
 
 @section('css_link')
 <style type="text/css">
@@ -21,7 +21,7 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
-            <div class="box-header">
+            <div class="box-header with-border">
                 <h3 class="box-title">Buat Data Inventaris</h3>
             </div>
 
@@ -41,7 +41,8 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    {!! Form::text('kode_barang', old('kode_barang'), ['class' => 'form-control angka']) !!}
+                                    {!! Form::text('kode_barang', old('kode_barang'), ['class' => 'form-control angka'])
+                                    !!}
                                 </td>
                                 <td>
                                     {!! Form::text('nama_barang', null, ['class' => 'form-control']) !!}

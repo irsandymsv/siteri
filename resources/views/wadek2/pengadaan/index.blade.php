@@ -4,9 +4,9 @@
 @include('include.wadek2_menu')
 @endsection
 
-@section('page_title', 'Laporan Pengadaan')
+@section('page_title', 'Pengadaan')
 
-@section('judul_header', 'Laporan Pengadaan')
+@section('judul_header', 'Permohonan Pengadaan')
 
 @section('content')
 
@@ -14,7 +14,7 @@
     <div class="col-xs-12">
         <div class="box box-success">
             <div class="box-header">
-                <h3 class="box-title">Laporan Pengadaan</h3>
+                <h3 class="box-title">Permohonan Pengadaan</h3>
 
             </div>
 

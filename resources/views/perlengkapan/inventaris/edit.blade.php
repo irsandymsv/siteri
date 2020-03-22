@@ -6,7 +6,7 @@
 
 @section('page_title', 'Ubah Data Inventaris')
 
-@section('judul_header', 'Ubah Data Inventaris')
+@section('judul_header', 'Inventaris')
 
 @section('content')
 @php
@@ -18,7 +18,7 @@ $laporan = $laporan[0];
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
-            <div class="box-header">
+            <div class="box-header with-border">
                 <h3 class="box-title">Ubah Data Inventaris</h3>
             </div>
 
@@ -42,7 +42,8 @@ $laporan = $laporan[0];
                         <tbody>
                             <tr>
                                 <td>
-                                    {!! Form::text('kode_barang', $barang->kode_barang, ['class' => 'form-control angka']) !!}
+                                    {!! Form::text('kode_barang', $barang->kode_barang, ['class' => 'form-control
+                                    angka']) !!}
                                 </td>
                                 <td>
                                     {!! Form::text('nama_barang', $barang->nama_barang, ['class' => 'form-control']) !!}
