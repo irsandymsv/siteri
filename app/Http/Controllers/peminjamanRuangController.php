@@ -64,7 +64,8 @@ class peminjamanRuangController extends Controller
     public function create(Request $jumlah_peserta)
     {
         if (Auth::user()->jabatan->jabatan == 'Pengadministrasi Layanan Kegiatan Mahasiswa') {
-            $ruang = data_ruang::where('kuota', '!=', '0')->orderBy('kuota', 'desc')->get();
+            $ruang = data_ruang::with("detail_pinjam_ruang")->where('kuota', '!=', '0')->orderBy('kuota', 'desc')->get();
+            // dd($ruang);
 
             return view(
                 'ormawa.peminjaman_ruang.create',
@@ -74,7 +75,8 @@ class peminjamanRuangController extends Controller
                 ]
             );
         } else if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN') {
-            $ruang = data_ruang::where('kuota', '!=', '0')->orderBy('kuota', 'desc')->get();
+            $ruang = data_ruang::with("detail_pinjam_ruang", "detail_pinjam_ruang.peminjaman_ruang")->where('kuota', '!=', '0')->orderBy('kuota', 'desc')->get();
+            // dd($ruang);
 
             return view(
                 'perlengkapan.peminjaman_ruang.create',
@@ -86,14 +88,44 @@ class peminjamanRuangController extends Controller
         }
     }
 
-    // public function ruangAjax($jumlah)
-    // {
+    public function ruangAjax(Request $reserve)
+    {
+        $GLOBALS['reserve'] = $reserve;
+        // dd($GLOBALS['reserve']);
+        $nama_ruang = data_ruang::with("detail_pinjam_ruang", "detail_pinjam_ruang.peminjaman_ruang")
+            ->where('kuota', '>', '0')
+            ->orderBy('kuota', 'desc')
+            ->get()->filter(
+                function ($item) {
+                    // dump($item->detail_pinjam_ruang->isEmpty());
+                    if ($item->detail_pinjam_ruang->isEmpty()) {
+                        // dump($item->nama_ruang);
+                        return $item;
+                    } else {
+                        $status = true;
+                        foreach ($item->detail_pinjam_ruang as $key) {
+                            // dump(Carbon::parse($key->peminjaman_ruang->tanggal_mulai . " " . $key->peminjaman_ruang->jam_mulai)->between($GLOBALS['reserve']->from, $GLOBALS['reserve']->to));
+                            $from = Carbon::parse($key->peminjaman_ruang->tanggal_mulai . " " . $key->peminjaman_ruang->jam_mulai);
+                            $to = Carbon::parse($key->peminjaman_ruang->tanggal_berakhir . " " . $key->peminjaman_ruang->jam_berakhir);
+                            $start = Carbon::parse($GLOBALS['reserve']->from);
+                            $end = Carbon::parse($GLOBALS['reserve']->to);
 
-    //     $nama_ruang = data_ruang::where('kuota', '>=', $jumlah, 'and', '!=', '0')
-    //         ->get();
-
-    //     return json_encode($nama_ruang);
-    // }
+                            if (( ($from->between($start, $end) || $to->between($start, $end)) && $start->between($from, $to) || $end->between($from, $to) )) {
+                                // dump($from, $to, $start, $end);
+                                $status = false;
+                            }
+                        }
+                        if ($status) {
+                            return $item;
+                        }
+                    }
+                    // else if (!(Carbon::parse($item->detail_pinjam_ruang->peminjaman_ruang->tanggal_mulai . " " . $item->detail_pinjam_ruang->peminjaman_ruang->jam_mulai)->between($GLOBALS['reserve']->from, $GLOBALS['reserve']->to) || Carbon::parse($item->detail_pinjam_ruang->peminjaman_ruang->tanggal_berakhir . " " . $item->detail_pinjam_ruang->peminjaman_ruang->jam_berakhir)->between($GLOBALS['reserve']->from, $GLOBALS['reserve']->to))) {
+                        // return $item;
+                    // }
+                }
+            );
+        return json_encode($nama_ruang);
+    }
 
     /**
      * Store a newly created resource in storage.

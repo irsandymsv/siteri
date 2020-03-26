@@ -117,7 +117,7 @@
         });
 
         $('#nama_ruang, .jumlah').on('change', function(){
-            ruang = $("#nama_ruang").val();
+            ruang = $("#nama_ruang").select2().val();
             jumlah = $('.jumlah').val();
             console.log(jumlah);
             total = 0;
@@ -134,7 +134,7 @@
                 total += nama_ruang-0;
             });
             console.log(total);
-                    console.log(data.length);
+                console.log(data.length);
 
             if(total >= jumlah-0){
                 $("#nama_ruang").select2({
@@ -155,30 +155,40 @@
             $('.jumlah_kuota').text(total);
         });
 
-        // $('.jumlah').on('change', function(){
-        //         jumlah = $(this).val();
-        //     console.log(jumlah);
-        //         ruang = $(this).parents('tr').children('.ruang').children('#nama_ruang');
+        $('#reservationtime').on('change', function(){
+            // date = $(this).val().split(' ')[0];
+            // time = $(this).val().split(' ')[1];
+            // from = {date, time};
+            // date = $(this).val().split(' ')[3];
+            // time = $(this).val().split(' ')[4];
+            // to = {date, time};
+            from = $(this).val().split(' - ')[0];
+            to = $(this).val().split(' - ')[1];
+            reserve = {from, to};
+            console.log(reserve);
+            ruang = $(this).parents('tr').children('.ruang').children('#nama_ruang');
 
-        //         if(jumlah) {
-        //             $.ajax({
-        //                 url: "/perlengkapan/peminjaman_ruang/ruang/" + jumlah,
-        //                 type: "GET",
-        //                 dataType: "json",
-        //                 success:function(data) {
-        //                     dataAjax = data;
-        //                     $(ruang).empty();
-        //                     $(ruang).prop('disabled', false);
-        //                     $.each(data, function(key, value) {
-        //                         $(ruang).append('<option value="'+ value.id +'">' + value.nama_ruang + '</option>');
-        //                     });
-        //                 }
-        //             });
-        //         } else {
-        //             $(ruang).prop('disabled', true);
-        //             $(this).parents('tr').children('.ruang').empty();
-        //         }
-        //     });
+            if(reserve) {
+                $.ajax({
+                    url: "/perlengkapan/peminjaman_ruang/ruang/" + reserve,
+                    type: "GET",
+                    data: reserve,
+                    dataType: "json",
+                    success:function(data) {
+                        dataAjax = data;
+                        console.log(data);
+                        $(ruang).empty();
+                        $(ruang).prop('disabled', false);
+                        $.each(data, function(key, value) {
+                            $(ruang).append('<option value="'+ value.id +'">(' + value.kuota + ') ' + value.nama_ruang +'</option>');
+                        });
+                    }
+                });
+            } else {
+                $(ruang).prop('disabled', true);
+                $(this).parents('tr').children('.ruang').empty();
+            }
+        });
 
     });
 
