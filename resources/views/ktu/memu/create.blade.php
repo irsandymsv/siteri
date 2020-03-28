@@ -42,7 +42,7 @@
 
 							<tbody>
 								<td>
-									<select name="jenisSurat" class="form-control">
+									<select name="jenisSurat" class="form-control" required>
 										<option>- Pilih Jenis -</option>
 										@foreach ($jenis as $jenis)
 										<option value="{{$jenis->id}}">{{$jenis->jenis}}</option>
@@ -52,7 +52,7 @@
 
 								<td>
 									<textarea class="form-control" rows="3" name="keterangan"
-										placeholder="Keterangan Surat"></textarea>
+										placeholder="Keterangan Surat" required></textarea>
 								</td>
 							</tbody>
 
@@ -64,7 +64,7 @@
 
 							<tbody>
 								<td>
-									<select class="js-example-basic-multiple" name="dosen[]" multiple="multiple">
+									<select class="js-example-basic-multiple" name="dosen[]" multiple="multiple" required>
 										@foreach ($user as $dosen)
 										<option value="{{$dosen->no_pegawai}}">{{$dosen->nama}}</option>
 										@endforeach
@@ -89,7 +89,7 @@
 											<div class="input-group-addon">
 												<i class="fa fa-calendar"></i>
 											</div>
-											<input type="text" class="form-control pull-right" name="started_at" id="datepicker">
+											<input type="text" class="form-control pull-right" name="started_at" id="datepicker" required>
 										</div>
 										<!-- /.input group -->
 									</div>
@@ -103,7 +103,7 @@
 											<div class="input-group-addon">
 												<i class="fa fa-calendar"></i>
 											</div>
-											<input type="text" class="form-control pull-right" name="end_at" id="datepicker2">
+											<input type="text" class="form-control pull-right" name="end_at" id="datepicker2" required>
 										</div>
 										<!-- /.input group -->
 									</div>

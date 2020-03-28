@@ -122,9 +122,9 @@
 							<tbody>
 								<td>
                                     <label>Kota Asal</label>
-                                   <input type="text" class="form-control" name="asal" placeholder="Masukan Kota Asal"><br/>
+                                   <input type="text" class="form-control" name="asal" value="Jember" placeholder="Masukan Kota Asal"><br/>
                                    <label>Kota Tujuan</label>
-                                   <input type="text" class="form-control" name="tujuan" placeholder="Masukan Kota Tujuan">
+								   <input type="text" class="form-control" name="tujuan" value="{{$surat->lokasi}}" placeholder="Masukan Kota Tujuan">
                                 </td>
                                 <td>
                                     <label>Lama Perjalanan</label>
@@ -134,8 +134,8 @@
                                         $lama = $to->diffInDays($from);
                                     @endphp
                                     <input type="text" class="form-control" name="asal" value="{{$lama+1}}" disabled><br/>
-                                    <label>Biaya per hari</label>
-                                    <input type="number" min="1000" step="1000" max="1000000000" class="form-control" name="uang_harian" placeholder="Jumlah">
+                                    <label>Uang Harian</label>
+                                    <input type="number" min="1000" step="1000" max="1000000000" class="form-control" name="uang_harian" placeholder="Jumlah" required>
                                 </td>
                             </tbody>
                             
@@ -156,7 +156,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="number" class="form-control" id="biaya_penginapan" name="biaya_penginapan" placeholder="Jumlah">
+                                    <input type="number" class="form-control" id="biaya_penginapan" name="biaya_penginapan" placeholder="Jumlah" required>
                                 </td>
                             </tbody>
                             

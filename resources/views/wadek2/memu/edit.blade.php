@@ -1,7 +1,7 @@
 @extends('wadek2.wadek2_view')
 
-@section('page_title', 'Buat Memu')
-@section('judul_header','Buat Memu')
+@section('page_title', 'Edit Memo')
+@section('judul_header','Edit Memo')
 
 @section('css_link')
 <link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
@@ -49,8 +49,8 @@
 						<table id="tbl-data" class="table table-bordered table-hover">
 							<thead>
 								<tr>
-									<th>Surat Keluar / Masuk</th>
-									<th>Perjalanan Dinas</th>
+									<th>Yang Bertugas</th>
+									<th>Tujuan</th>
 								</tr>
 							</thead>
 
@@ -76,7 +76,7 @@
 							<thead>
 								<tr>
 									<th>Jenis Surat Tugas</th>
-									<th>Keterangan</th>
+									<th>Acara</th>
 								</tr>
 							</thead>
 
@@ -92,7 +92,7 @@
 
 								<td>
 									<textarea class="form-control" rows="3" name="keterangan"
-                                placeholder="Keterangan Surat">{{$surat->keterangan}}</textarea>
+                                placeholder="Nama Acara">{{$surat->keterangan}}</textarea>
 								</td>
 							</tbody>
 
@@ -152,6 +152,23 @@
 
 							<thead>
 								<tr>
+									<th>Lokasi</th>
+									<th></th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<td>
+										<input class="form-control" style="width: 80%" type="text" name="lokasi" placeholder="Lokasi tujuan" value="{{$surat->lokasi}}">	
+										<!-- /.input group -->	
+									</div>
+								</td>
+								<td>
+								</td>
+							</tbody>
+
+							<thead>
+								<tr>
 									<th>Tanggal Mulai</th>
 									<th>Tanggal Selesai</th>
 								</tr>
@@ -187,7 +204,7 @@
 									</div>
 								</td>
 							</tbody>
-
+							
 						</table>
 					</div>
 
@@ -234,8 +251,7 @@
 	let i = @php if (count($dosen_sk) > 1) {
 		count($dosen_sk)+1;
 	} else if (count($pemateri) != null) {
-		echo count($pemateri)+1;
-		
+		echo count($pemateri)+1;	
 	} @endphp;
 	document.getElementById('tambahPemateri').onclick = function () {
 		let template = `

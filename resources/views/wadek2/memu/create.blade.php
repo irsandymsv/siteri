@@ -1,7 +1,7 @@
 @extends('wadek2.wadek2_view')
 
-@section('page_title', 'Buat Surat Tugas')
-@section('judul_header','Buat Surat Tugas')
+@section('page_title', 'Buat Memo')
+@section('judul_header','Buat Memo')
 
 @section('css_link')
 <link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
@@ -33,8 +33,8 @@
 						<table id="tbl-data" class="table table-bordered table-hover">
 							<thead>
 								<tr>
-									<th>Surat Keluar / Masuk</th>
-									<th>Perjalanan Dinas</th>
+									<th>Yang Bertugas</th>
+									<th>Tujuan</th>
 								</tr>
 							</thead>
 
@@ -59,7 +59,7 @@
 							<thead>
 								<tr>
 									<th>Jenis Surat Tugas</th>
-									<th>Keterangan</th>
+									<th>Acara</th>
 								</tr>
 							</thead>
 
@@ -75,7 +75,7 @@
 
 								<td>
 									<textarea id="keterangan" class="form-control" rows="3" name="keterangan"
-										placeholder="Keterangan Surat"></textarea>
+										placeholder="Nama Acara"></textarea>
 								</td>
 							</tbody>
 
@@ -106,14 +106,19 @@
 
 							<thead>
 								<tr>
-									<th></th>
+									<th>Lokasi</th>
 									<th>Instansi</th>
-								
 								</tr>
 							</thead>
 
 							<tbody>
-								<td></td>
+								<td>
+									<div id="people-container">
+										<p>
+											<input id="lokasi" class="form-control" name="lokasi" placeholder="Lokasi">
+										</p>	
+									</div>
+								</td>
 								<td>
 									<div id="people-container">
 										<p>
@@ -212,7 +217,6 @@
     $("#surat_in_out").change(function(){
 		$("#formInput :input").prop("disabled", false);
         if ( $("#surat_in_out").val() == 1 ) {
-			console.log(true)
             $('#perjalanan').removeAttr("disabled");
             $('#perjalanan').on("change",function() {
                 $('#perjalanan').val($(this).val());
@@ -234,8 +238,15 @@
 
 $(function(){
     $("#perjalanan").change(function(){
-        if ($("#perjalanan").val() != null ) {
+        if ($("#perjalanan").val() == 1 ) {
 			$('#jenisSurat, #keterangan, #dosen, #datepicker, #datepicker2, #submit').removeAttr("disabled");
+            $('#jenisSurat').on("change",function() {
+                $('#jenisSurat').val($(this).val());
+            });
+        }
+        else if ($("#perjalanan").val() == 2 ) {
+			$('#jenisSurat, #keterangan, #dosen, #datepicker, #datepicker2, #submit').removeAttr("disabled");
+			$('#lokasi').prop("disabled", true);
             $('#jenisSurat').on("change",function() {
                 $('#jenisSurat').val($(this).val());
             });

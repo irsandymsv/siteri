@@ -31,10 +31,12 @@ class manageUserController extends Controller
      */
     public function create()
     {
-        $pangkat = pangkat::all();
-        $golongan = golongan::all();
+        $pangkat = pangkat::where('id', '!=', '12')->get();;
+        $golongan = golongan::where('id', '!=', '5')->get();
         $jabatan = jabatan::where('id', '!=', '1')->get();
         $fungsional = fungsional::all();
+
+      //  dd($pangkat);
 
         return view('admin.pegawai.create', compact('pangkat', 'golongan', 'jabatan', 'fungsional'));
     }
@@ -50,52 +52,67 @@ class manageUserController extends Controller
         $valid = $request->validate([
             'nama' => 'required|string|min:4|max:40',
             'username' => 'required|string|min:4|max:20|unique:users',
-            'password' => 'required|string|min:8',
             'no_pegawai' => 'required|digits_between:1,25|max:25|unique:users',
             'jabatan' => 'required',
-            'pangkat' => 'required',
-            'golongan' => 'required',
             'fungsional' => 'required',
+
         ]);
 
+            $jabfung = $request->fungsional;
+        if($jabfung == 6){
+            $insert = ([
+                'username' => $request->username,
+                'password' => bcrypt("default"),
+                'nama' => $request->nama,
+                'no_pegawai' => $request->no_pegawai,
+                'id_jabatan' => $request->jabatan,
+                'id_pangkat' => 12,
+                'id_golongan' => 5,
+                'id_fungsional' => $request->fungsional,
+                'is_dosen' => $request->dosen,
+            ]);
+        }
+        else{
         $insert = ([
             'username' => $request->username,
-            'password' => bcrypt($request['password']),
+            'password' => bcrypt("default"),
             'nama' => $request->nama,
             'no_pegawai' => $request->no_pegawai,
             'id_jabatan' => $request->jabatan,
             'id_pangkat' => $request->pangkat,
             'id_golongan' => $request->golongan,
             'id_fungsional' => $request->fungsional,
+            'is_dosen' => $request->dosen,
         ]);
-       
+        }
         User::create($insert);
-        return redirect('/admin/pegawai')->with('success','Item created successfully!');
+        return redirect('/admin')->with('success', 'Item created successfully!');
         // $data = User::where('username', '!=', 'admin')->paginate(10);
         // return view('admin.pegawai.index', compact('data'));
 
     }
 
-    
-    public function search(Request $request) {
-
+    /* Search Function */
+    public function search(Request $request)
+    {
         $constraints = [
             'pangkat' => $request['pangkat'],
             'jabatan' => $request['jabatan'],
             'nama' => $request['nama']
-            ];
+        ];
 
-       $pegawai = $this->doSearchingQuery($constraints);
-       return view('admin/data-pegawai/index', ['pegawai' => $pegawai, 'searchingVals' => $constraints]);
+        $data = $this->doSearchingQuery($constraints);
+        return view('admin/pegawai/index', ['data' => $data, 'searchingVals' => $constraints]);
     }
 
-    private function doSearchingQuery($constraints) {
-        $query = Pegawai::query();
+    private function doSearchingQuery($constraints)
+    {
+        $query = User::query();
         $fields = array_keys($constraints);
         $index = 0;
         foreach ($constraints as $constraint) {
             if ($constraint != null) {
-                $query = $query->where( $fields[$index], 'like', '%'.$constraint.'%');
+                $query = $query->where($fields[$index], 'like', '%' . $constraint . '%');
             }
             $index++;
         }
@@ -117,7 +134,6 @@ class manageUserController extends Controller
         // $pangkat = pangkat::get();
         $user = User::where('username', $id)->with(["fungsionalnya", "golongannya", "pangkatnya", "jabatannya"])->first();
         return view('admin/pegawai/edit', ['users' => $user, 'fungsional' => $fungsional, 'golongan' => $golongan, 'jabatan' => $jabatan, 'pangkat' => $pangkat]);
-
     }
 
     /**
@@ -129,18 +145,29 @@ class manageUserController extends Controller
      */
     public function update(Request $request, $username)
     {
+        $jabfung = $request->fungsional;
+        if($jabfung == 6){
+            $users = DB::table('users')->where('username', $username)->update([
+                'nama' => $request->nama,
+                'is_dosen' => $request->dosen,
+                'id_fungsional' => $request->fungsional,
+                'id_pangkat' => 12,
+                'id_golongan' => 5,
+                'id_jabatan' => $request->jabatan,
+            ]);
+        }
+        else{
+            $users = DB::table('users')->where('username', $username)->update([
+                'nama' => $request->nama,
+                'is_dosen' => $request->dosen,
+                'id_fungsional' => $request->fungsional,
+                'id_pangkat' => $request->pangkat,
+                'id_golongan' => $request->golongan,
+                'id_jabatan' => $request->jabatan,
+            ]);
+        }
 
-        $users = DB::table('users')->where('username', $username)->update([
-            'nama' => $request->nama,
-            'id_fungsional' => $request->fungsional,
-            'id_golongan' => $request->golongan,
-            'id_pangkat' => $request->pangkat,
-            'id_jabatan' => $request->jabatan,
-        ]);
-
-        // $data = User::get()->where('username', '!=', 'admin');
-        // return view('admin.pegawai.index', compact('data'));
-        return redirect('/admin/pegawai')->with('success','Berhasil diedit!');
+        return redirect('/admin')->with('success', 'Berhasil diedit!');
     }
 
     /**
@@ -151,9 +178,16 @@ class manageUserController extends Controller
      */
     public function destroy($id)
     {
-        $data = User::where('username',$id);
+        $data = User::where('username', $id);
         $data->delete();
-        return redirect()->back()->with('success','Berhasil dihapus!');
+        return redirect()->back()->with('success', 'Berhasil dihapus!');
+    }
+    public function reset($id)
+    {
+        $users = DB::table('users')->where('username', $id)->update([
+            'password' => bcrypt("default"),
+        ]);
+        return redirect()->back()->with('success', 'Berhasil direset!');
     }
 
     public function akademik_ganti_password()

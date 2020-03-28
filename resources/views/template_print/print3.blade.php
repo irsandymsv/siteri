@@ -106,7 +106,7 @@ td, th {
    <div class="box-body">
 		<div id="kop_surat">
          <div id="logo">
-            <img src={{ public_path("image/logo-unej.png") }}>
+            <img src={{ asset("image/logo-unej.png") }}>
          </div>
 
          <div id="keterangan_kop">

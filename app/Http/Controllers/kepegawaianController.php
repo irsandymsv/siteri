@@ -220,8 +220,31 @@ class kepegawaianController extends Controller
         $end_date = Carbon::parse($end);
         $end_date->format('d-m-Y');
         $inout = $request->surat_in_out;
+        $jalan = $request->perjalanan;
+        if ($inout == 1 && $jalan == 2) {
+            $insert = ([
+                'nomor_surat' => null,  
+                'jenis_surat' => $request->jenisSurat,
+                'keterangan' => $request->keterangan,
+                'started_at' => $start_date,
+                'end_at' => $end_date,
+                'status' => 1,
+                'surat_in_out' => 1,
+                'perjalanan' => 2,
+                'lokasi' => $request->lokasi,
+            ]);
+            $data = surat_kepegawaian::create($insert);
+    
+            $dosen = $request->dosen;
 
-        if ($inout == 1) {
+            for ($i = 0; $i < count($dosen); $i++) {
+                $dosen_sk = dosen_tugas::create([
+                    'id_sk' => $data->id,
+                    'id_dosen' => $request->dosen[$i],
+                ]);
+        } 
+    }
+        else if ($inout == 1 && $jalan == 1) {
             $insert = ([
                 'nomor_surat' => null,  
                 'jenis_surat' => $request->jenisSurat,
@@ -231,6 +254,7 @@ class kepegawaianController extends Controller
                 'status' => 1,
                 'surat_in_out' => 1,
                 'perjalanan' => 1,
+                'lokasi' => $request->lokasi,
             ]);
             $data = surat_kepegawaian::create($insert);
     
@@ -253,6 +277,7 @@ class kepegawaianController extends Controller
                 'status' => 1,
                 'surat_in_out' => 2,
                 'perjalanan' => 2,
+                'lokasi' => $request->lokasi,
             ]);
             $pemateri = $request->pemateri;
             $data = surat_kepegawaian::create($insert);
@@ -481,13 +506,20 @@ class kepegawaianController extends Controller
     public function ktu_preview($id)
     {
         $surat_tugas = surat_kepegawaian::where('id', $id)->first();
+        $spd = spd::where('id_sk', $id)->first();
         $dosen_tugas = dosen_tugas::where('id_sk', $surat_tugas->id)->get();
         $pemateri= pemateri::all();
+        $pematerinya= pemateri::where('id_sk', $id)->get();
+        $jumlah = count($pematerinya);
+        
      
       return view('ktu.surat_tugas.preview_print', [
         'surat_tugas' => $surat_tugas,
         'dosen_tugas' =>$dosen_tugas,
         'pemateri' => $pemateri,
+        'pematerinya' => $pematerinya,
+        'spd' => $spd,
+        'jumlah' => $jumlah,
       ]);
     }
 

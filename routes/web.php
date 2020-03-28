@@ -502,12 +502,15 @@ Route::middleware(['auth', 'checkRole:Wakil Dekan 1'])->prefix('wadek1')->name('
 );
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/pegawai', 'manageUserController@index')->name('pegawai.index');
+    Route::get('/', 'manageUserController@index')->name('pegawai.index');
     Route::get('/pegawai/create', 'manageUserController@create')->name('pegawai.create');
     Route::post('/pegawai/store', 'manageUserController@store')->name('pegawai.store');
     Route::get('/pegawai/edit/{id}', 'manageUserController@edit')->name('pegawai.edit');
     Route::put('/pegawai/update/{username}', 'manageUserController@update')->name('pegawai.update');
     Route::delete('/pegawai/delete/{username?}', 'manageUserController@destroy')->name('pegawai.destroy');
+    Route::delete('/pegawai/reset/{username?}', 'manageUserController@reset')->name('pegawai.reset');
+    Route::resource('admin/pegawai', 'manageUserController');
+    Route::post('/pegawai/search', 'manageUserController@search')->name('search');
 });
 
 Route::middleware(['auth', 'checkRole:Sekretaris Pimpinan'])->prefix('staffpim')->name('staffpim.')->group(function () {

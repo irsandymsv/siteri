@@ -45,11 +45,55 @@
                                 @endif
                             </div>
                         </div>
+
+                        <div class="form-group @error('dosen') is-invalid @enderror">
+                                <label for="middlename" class="col-md-4 control-label">Dosen</label>
+                                <div class="col-md-6">
+                                    <select name="dosen" class="form-control" required>
+                                        @if ($users->is_dosen == 0)
+                                        <option value="0">Tidak</option>
+                                        @else
+                                        <option value="1">Iya</option>
+                                        @endif
+                                        <option value="1">Iya</option>
+                                        <option value="0">Tidak</option>
+                                    </select>
+                                    @error('jabatan')
+                                    <div style="color:red;"><span>{{ $message }}</span></div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    <label for="address" class="col-md-4 control-label">Jabatan Fungsional</label>
+
+                                    <div class="col-md-6">
+                                        <select id="fungsional" name="fungsional" class="form-control" required>
+                                        <option value="{{$users->id_fungsional}}">{{$users->fungsionalnya['jab_fungsional']}}</option>
+                                            @foreach($fungsional as $fungsional)
+                                        <option value="{{$fungsional->id}}">{{ $fungsional->jab_fungsional }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                        <label for="address" class="col-md-4 control-label">Jabatan</label>
+
+                                        <div class="col-md-6">
+                                            <select name="jabatan" class="form-control" required>
+                                            <option value="{{$users->id_jabatan}}">{{$users->jabatannya['jabatan']}}</option>
+                                                @foreach($jabatan as $jabatan)
+                                            <option value="{{$jabatan->id}}">{{ $jabatan->jabatan }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
                         <div class="form-group{{ $errors->has('pangkat') ? ' has-error' : '' }}">
                             <label for="middlename" class="col-md-4 control-label">Pangkat</label>
 
                             <div class="col-md-6">
-                                <select name="pangkat" class="livesearch" required>
+                                <select id="pangkat" name="pangkat" class="form-control" required>
                                 <option value="{{$users->id_pangkat}}">{{$users->pangkatnya['pangkat']}}</option>
                                     @foreach($pangkat as $p)
                                 <option value="{{$p->id}}">{{$p->pangkat}}</option>
@@ -60,9 +104,9 @@
 
                         <div class="form-group{{ $errors->has('pangkat') ? ' has-error' : '' }}">
                                 <label for="golongan" class="col-md-4 control-label">Golongan</label>
-    
+
                                 <div class="col-md-6">
-                                    <select name="golongan" class="livesearch" required>
+                                    <select id="golongan" name="golongan" class="form-control" required>
                                     <option value="{{$users->id_golongan}}">{{$users->golongannya['golongan']}}</option>
                                         @foreach($golongan as $gol)
                                     <option value="{{$gol->id}}">{{$gol->golongan}}</option>
@@ -71,31 +115,9 @@
                                 </div>
                             </div>
 
-                        <div class="form-group">
-                            <label for="address" class="col-md-4 control-label">Jabatan Fungsional</label>
 
-                            <div class="col-md-6">
-                                <select name="fungsional" class="livesearch" required>
-                                <option value="{{$users->id_fungsional}}">{{$users->fungsionalnya['jab_fungsional']}}</option>
-                                    @foreach($fungsional as $fungsional)
-                                <option value="{{$fungsional->id}}">{{ $fungsional->jab_fungsional }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="address" class="col-md-4 control-label">Jabatan</label>
 
-                            <div class="col-md-6">
-                                <select name="jabatan" class="livesearch" required>
-                                <option value="{{$users->id_jabatan}}">{{$users->jabatannya['jabatan']}}</option>
-                                    @foreach($jabatan as $jabatan)
-                                <option value="{{$jabatan->id}}">{{ $jabatan->jabatan }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+
 
                         <div class="form-group">
                             <div class="form-group">
@@ -117,4 +139,36 @@
     </div>
 </div>
 <!-- /.content -->
+@endsection
+@section('script')
+<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+
+<script>
+$(document).ready(function(){
+// $("#formInput :input").prop("disabled", true);
+// $("#fungsional").removeAttr("disabled");
+if ( $("#fungsional").val() == 6 ) {
+$("#pangkat").prop("disabled", true);
+$("#golongan").prop("disabled", true);
+}
+});
+
+$(function(){
+$("#fungsional").change(function(){
+if ( $("#fungsional").val() == 6 ) {
+$("#pangkat").prop("disabled", true);
+$("#golongan").prop("disabled", true);
+
+}
+else{
+    $("#pangkat").prop("disabled", false);
+$("#golongan").prop("disabled", false);
+
+}
+
+
+});
+});
+</script>
 @endsection

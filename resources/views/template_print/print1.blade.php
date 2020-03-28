@@ -152,7 +152,7 @@ td, th {
 	</tbody>
 </table>
 <div class="deskripsi">
-Sebagai Panitia Kegiatan Workshop {{$surat_tugas->keterangan}} yang akan dilaksanakan pada tanggal {{ Carbon\Carbon::parse($surat_tugas->started_at)->locale('id_ID')->isoFormat('D MMMM Y') }} - {{ Carbon\Carbon::parse($surat_tugas->end_at)->locale('id_ID')->isoFormat('D MMMM Y') }}
+Sebagai {{$surat_tugas->jenis_sk['jenis']}} untuk Kegiatan {{$surat_tugas->keterangan}} yang akan dilaksanakan pada tanggal {{ Carbon\Carbon::parse($surat_tugas->started_at)->locale('id_ID')->isoFormat('D MMMM Y') }} - {{ Carbon\Carbon::parse($surat_tugas->end_at)->locale('id_ID')->isoFormat('D MMMM Y') }}
 </div>
 <div style="margin-top: 30px;">
     Demikian surat tugas ini dikeluarkan untuk dilaksanakan dengan penuh rasa tanggung jawab.

@@ -14,8 +14,104 @@
       }
 
       table tr td:first-child{
-         width: 25%;
+         width: 10%;
          font-weight: bold;: 
+      }
+
+      /*Surat PDF Preview*/
+      
+		.box-body.surat{
+		   margin: auto;
+		   font-family: 'Times New Roman';
+		   font-size: 11pt;
+		   margin-top: 0;
+         margin-bottom: 1cm;
+         margin-left: 4cm;
+         margin-right: 4cm;
+         padding: 2cm;    
+		}
+
+		#kop_surat{
+		   border-bottom: 3px solid black;
+		   /*padding: 5px;*/
+		   /*overflow: hidden;*/
+		}
+
+		#logo{
+		   float: left;
+		   width: 11%;
+		}
+
+		#logo img{
+		   width: 100%;
+		   height: auto;
+         margin-top: 10pt;
+		}
+
+		#keterangan_kop{
+		   text-align: center;
+         margin-left: 70px;
+         padding-bottom: 5pt;
+		   /*width: 90%;*/
+		   /* float: left; */
+		}
+
+		#body_surat{
+         margin-left: 1cm;
+         margin-right: 1cm; 
+		   text-align: justify;
+		}
+
+		.top-title{
+		   margin-top: 10px;
+		   text-align: center;
+		}
+
+		.judul_surat{
+		   font-size: 13pt;
+		   text-decoration: underline;
+		   font-weight: bold;
+         letter-spacing: 1.5pt;
+		}
+
+      /* 
+Generic Styling, for Desktops/Laptops 
+*/
+table { 
+ margin-top: 20px;
+margin-bottom: 20px;
+  width: 90%; 
+  border-collapse: collapse; 
+}
+/* Zebra striping */
+tr:nth-of-type(odd) { 
+}
+th { 
+   text-align: center;
+  color: #000000; 
+  font-weight: bold;
+}
+td, th { 
+
+  padding: 6px; 
+  border: 1px solid #ccc;  
+}
+		.header_14{
+		   font-size: 14pt;
+		}
+
+		.underline{
+		   text-decoration: underline;
+		}
+
+		.ttd-right{
+		   float: right;
+           margin-top: 100px;
+		}
+
+      .space_row{
+         padding-top: 2pt;
+         padding-bottom: 2pt;
       }
 	</style>	
 @endsection
@@ -42,7 +138,7 @@
 
                      <tr>
                         <td>No Surat</td>
-                        <td>{{ $surat_tugas->nomor_surat}}</td>
+                        <td>{{$surat_tugas->nomor_surat}}</td>
                      </tr>
 
                      <tr>
@@ -75,6 +171,14 @@
                   </table>    
                </div>
             </div>
+            <!-- Jenis Surat -->
+            @if ($surat_tugas->jenis_surat == 1)
+            @include('ktu.surat_tugas.jenis.peserta')
+            @elseif ($surat_tugas->jenis_surat == 2)
+            @include('ktu.surat_tugas.jenis.panitia')
+            @else
+            @include('ktu.surat_tugas.jenis.pemateri')
+            @endif
 
             <div  class="box-footer">
                <a href="{{ route('ktu.surat.index') }}" class="btn btn-default">Kembali</a>
