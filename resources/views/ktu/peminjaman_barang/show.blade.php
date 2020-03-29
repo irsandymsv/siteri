@@ -9,7 +9,7 @@
 @section('judul_header', 'Peminjaman Barang')
 
 @section('css_link')
-<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('/css/custom_style.css') }}">
 <style type="text/css">
     .tabel-keterangan td {
         padding-right: 10px;

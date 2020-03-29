@@ -9,11 +9,12 @@
 @section('judul_header', 'Peminjaman Barang')
 
 @section('css_link')
-<link href="/adminlte/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="/adminlte/dist/css/AdminLTE.min.css">
-<link href="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
-<link href="/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
-<link href="/adminlte/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" />
+<link href="{{ asset('/adminlte/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
+<link rel="stylesheet" href="{{ asset('/adminlte/dist/css/AdminLTE.min.css') }}">
+<link href="{{ asset('/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
+<link href="{{ asset('/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}"
+    rel="stylesheet" />
+<link href="{{ asset('/adminlte/plugins/timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet" />
 <style type="text/css">
     .hidden {
         display: none important !;
@@ -229,10 +230,11 @@ $status = $status[0];
 
 {{-- @if ($status) --}}
 @section('script')
-<script src="/adminlte/bower_components/select2/dist/js/select2.min.js"></script>
-<script src="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script src="/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script src="/adminlte/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<script src="{{ asset('/adminlte/bower_components/select2/dist/js/select2.min.js') }}"></script>
+<script src="{{ asset('/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset('/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}">
+</script>
+<script src="{{ asset('/adminlte/plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
 <script>
     var dataAjax = null;
     $(function(){

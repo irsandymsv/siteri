@@ -10,7 +10,7 @@
 
 @section('css_link')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('/css/custom_style.css') }}">
 @endsection
 
 @section('content')
@@ -65,7 +65,7 @@
                                         class="btn btn-primary" title="Lihat Laporan"><i class="fa fa-eye"></i></a>
                                     @if($item->verif_baper != 1)
                                     {{-- <a href="{{ route('ormawa.peminjaman_barang.edit', [$item->id, 'status' => true]) }}"
-                                        class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a> --}}
+                                    class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a> --}}
                                     <a href="{{ route('ormawa.peminjaman_barang.edit', $item->id) }}"
                                         class="btn btn-warning" title="Ubah Laporan"><i class="fa fa-edit"></i></a>
                                     @endif
