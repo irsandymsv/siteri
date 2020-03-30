@@ -242,6 +242,7 @@ $status = $status[0];
         opsiButton();
         tableCount();
         barangAjax();
+        maxJumlah();
 
         count = {{ $i }}
         for (let index = 0; index < count; index++) {
@@ -317,11 +318,13 @@ $status = $status[0];
             opsiButton();
             tableCount();
             barangAjax();
+            maxJumlah();
         });
 
         function barangAjax(){
             $('.barang').on('change', function(){
                 var id = $(this).val();
+                jumlah = $('.jumlah').val();
 
                 // console.log($(this).parents('tr'));
                 // console.log($(this).parents('tr')["0"].children[1]);
@@ -331,22 +334,45 @@ $status = $status[0];
 
                 if(id) {
                     $.ajax({
-                    url: "/perlengkapan/peminjaman_barang/barang/" + id,
-                    type: "GET",
-                    dataType: "json",
-                    success:function(data) {
+                        url: "/perlengkapan/peminjaman_barang/barang/" + id,
+                        type: "GET",
+                        dataType: "json",
+                        success:function(data) {
                         dataAjax = data;
                         $(merk).empty();
                         $(merk).prop('disabled', false);
+                        // console.log(data);
+                        i = -1;
+                        $(merk).append('<option> Pilih Merk Barang </option>');
                         $.each(data, function(key, value) {
-                            $(merk).append('<option value="'+ value.id +'">' + value.merk_barang + '</option>');
+                            i++;
+                            // console.log(value, key);
+                            $(merk).append('<option value="'+ value.id +'">(' + data.jumlah[i] + ') ' + value.merk_barang + '</option>');
                         });
+                        $(merk).children().last().remove();
                         // console.log(merk);
-                    }
-                });
+                        }
+                    });
                 } else {
                     $(merk).prop('disabled', true);
                     $(this).parents('tr').children('.merk_barang').empty();
+                }
+
+            });
+        }
+
+        function maxJumlah(){
+            $('.jumlah').on('input', function(){
+                max = $($(this).parents('tr').children()[1]).children('.merk_barang').select2('data')[0].text;
+                if ($($(this).parents('tr').children()[1]).children('.merk_barang').select2('data')[0].text){
+                    max = max.split(" ");
+                    max = max[0];
+                    max = max.split("(")[1];
+                    max = max.split(")")[0];
+
+                    if($(this).val()-0 >= max) {
+                        $(this).val(max);
+                    }
                 }
             });
         }

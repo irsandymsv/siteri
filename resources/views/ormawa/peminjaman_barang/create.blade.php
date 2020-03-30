@@ -221,7 +221,7 @@
 
                 if(id) {
                     $.ajax({
-                        url: "/perlengkapan/peminjaman_barang/barang/" + id,
+                        url: "/ormawa/peminjaman_barang/barang/" + id,
                         type: "GET",
                         dataType: "json",
                         success:function(data) {
