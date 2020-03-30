@@ -9,7 +9,7 @@
 @section('judul_header', 'Peminjaman Ruang')
 
 @section('css_link')
-<link href="{{ asset('/adminlte/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
+<link rel="stylesheet" href="{{ asset('/adminlte/bower_components/select2/dist/css/select2.min.css') }}">
 <link href="{{ asset('/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
 <link href="{{ asset('/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}"
     rel="stylesheet" />
@@ -52,18 +52,19 @@
                             <tr>
                                 <td style="min-width:300px">
                                     {!! Form::text('tanggal', $tanggal, ['class' => 'form-control not-rounded-border',
-                                    'id' => 'reservationtime']) !!}
+                                    'id' => 'reservationtime', 'required']) !!}
                                 </td>
 
                                 <td style="min-width:300px">
-                                    {!! Form::text('kegiatan', $laporan->kegiatan, ['class' => 'form-control']) !!}
+                                    {!! Form::text('kegiatan', $laporan->kegiatan, ['class' => 'form-control',
+                                    'required']) !!}
                                 </td>
 
                                 <td>
                                     {!! Form::text('jumlah_peserta', $laporan->jumlah_peserta, ['class' => 'form-control
-                                    jumlah
-                                    angka']) !!}
+                                    jumlah angka', 'required']) !!}
                                 </td>
+
                                 <td class="ruang">
                                     <select id="nama_ruang" name="nama_ruang[]"
                                         class="form-control not-rounded-border js-example-basic-multiple"
@@ -93,8 +94,8 @@
 @endsection
 
 @section('script')
-<script src="{{ asset('/adminlte/bower_components/select2/dist/js/select2.min.') }}"></script>
-<script src="{{ asset('/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.') }}"></script>
+<script src="{{ asset('/adminlte/bower_components/select2/dist/js/select2.min.js') }}"></script>
+<script src="{{ asset('/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <script src="{{ asset('/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}">
 </script>
 <script src="{{ asset('/adminlte/plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>

@@ -52,20 +52,20 @@
                             <tr>
                                 <td style="min-width:300px">
                                     {!! Form::text('tanggal', $tanggal, ['class' => 'form-control not-rounded-border',
-                                    'id' => 'reservationtime']) !!}
+                                    'id' => 'reservationtime', 'required']) !!}
                                 </td>
 
                                 <td style="min-width:300px">
-                                    {!! Form::text('kegiatan', $laporan->kegiatan, ['class' => 'form-control']) !!}
+                                    {!! Form::text('kegiatan', $laporan->kegiatan, ['class' => 'form-control',
+                                    'required']) !!}
                                 </td>
 
                                 <td>
                                     {!! Form::text('jumlah_peserta', $laporan->jumlah_peserta, ['class' => 'form-control
-                                    jumlah
-                                    angka']) !!}
+                                    jumlah angka', 'required']) !!}
                                 </td>
                                 <td class="ruang">
-                                    <select id="nama_ruang" name="nama_ruang[]"
+                                    <select id="nama_ruang" name="nama_ruang[]" required
                                         class="form-control not-rounded-border js-example-basic-multiple"
                                         multiple="multiple">
                                         @foreach ($ruang as $val)

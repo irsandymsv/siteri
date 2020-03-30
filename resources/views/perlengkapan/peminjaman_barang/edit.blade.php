@@ -50,10 +50,11 @@ $status = $status[0];
                             <tr>
                                 <td>
                                     {!! Form::text('tanggal', $tanggal, ['class' => 'form-control not-rounded-border',
-                                    'id' => 'reservationtime']) !!}
+                                    'id' => 'reservationtime', 'required']) !!}
                                 </td>
                                 <td>
-                                    {!! Form::text('kegiatan', $laporan->kegiatan, ['class' => 'form-control']) !!}
+                                    {!! Form::text('kegiatan', $laporan->kegiatan, ['class' => 'form-control',
+                                    'required']) !!}
                                 </td>
                             </tr>
                         </tbody>
@@ -77,7 +78,7 @@ $status = $status[0];
                             <tr>
                                 <td>
                                     <select id="barang{{$i}}" name="barang[]" class="form-control barang select2"
-                                        style="width: 100%">
+                                        required style="width: 100%">
                                         <option value="">Pilih Barang</option>
                                         @foreach ($barang as $val)
                                         <option value="{{ $val->id }}"
@@ -88,7 +89,7 @@ $status = $status[0];
                                 </td>
 
                                 <td class="merk">
-                                    <select id="merk_barang{{$i}}" name="merk_barang[]"
+                                    <select id="merk_barang{{$i}}" name="merk_barang[]" required
                                         class="form-control merk_barang select2" style="width: 100%">
                                         @foreach ($merk[$i] as $val)
                                         <option value="{{ $val->id }}"
@@ -100,14 +101,12 @@ $status = $status[0];
 
                                 <td>
                                     {!! Form::text('jumlah[]', $item->jumlah, ['class' => 'form-control angka', 'id' =>
-                                    'jumlah'])
-                                    !!}
+                                    'jumlah', 'required'])!!}
                                 </td>
 
                                 <td>
                                     {!! Form::select('satuan[]', $satuan, $item->idsatuan_fk-1, ['class' =>
-                                    'form-control', 'id' =>
-                                    'satuan'])!!}
+                                    'form-control', 'id' => 'satuan', 'required'])!!}
                                 </td>
 
                                 <td>
@@ -280,7 +279,7 @@ $status = $status[0];
             $('#inputan').append(`
                 <tr>
                     <td>
-                        <select id="barang`+count+`" name="barang[]" class="form-control barang select2" style="width: 100%">
+                        <select id="barang`+count+`" name="barang[]" class="form-control barang select2" required style="width: 100%">
                             <option value="">Pilih Barang</option>
                             @foreach ($barang as $val)
                             <option value="{{ $val->id }}">{{$val->nama_barang}}</option>
@@ -289,18 +288,18 @@ $status = $status[0];
                     </td>
 
                     <td class="merk">
-                        <select id="merk_barang`+count+`" name="merk_barang[]" class="form-control merk_barang select2" style="width: 100%" disabled="true">
+                        <select id="merk_barang`+count+`" name="merk_barang[]" class="form-control merk_barang select2" required style="width: 100%" disabled="true">
                         </select>
                     </td>
 
                     <td>
-                        {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah angka'])
+                        {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah angka', 'required'])
                         !!}
                     </td>
 
                     <td>
                         {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control', 'id' =>
-                        'satuan'])!!}
+                        'satuan', 'required'])!!}
                     </td>
 
                     <td>
@@ -343,7 +342,7 @@ $status = $status[0];
                         $(merk).prop('disabled', false);
                         // console.log(data);
                         i = -1;
-                        $(merk).append('<option> Pilih Merk Barang </option>');
+                        $(merk).append('<option value=""> Pilih Merk Barang </option>');
                         $.each(data, function(key, value) {
                             i++;
                             // console.log(value, key);

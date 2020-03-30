@@ -9,11 +9,11 @@
 @section('judul_header', 'Peminjaman Ruang')
 
 @section('css_link')
-<link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css') }}">
-<link href="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
-<link href="/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}"
+<link rel="stylesheet" href="{{ asset('/adminlte/bower_components/select2/dist/css/select2.min.css') }}">
+<link href="{{ asset('/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
+<link href="{{ asset('/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}"
     rel="stylesheet" />
-<link href="/adminlte/plugins/timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('/adminlte/plugins/timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet" />
 <style type="text/css">
     .hidden {
         display: none important !;
@@ -50,19 +50,20 @@
                             <tr>
                                 <td style="min-width:300px">
                                     {!! Form::text('tanggal', null, ['class' => 'form-control not-rounded-border', 'id'
-                                    => 'reservationtime']) !!}
+                                    => 'reservationtime', 'required']) !!}
                                 </td>
 
                                 <td style="min-width:300px">
-                                    {!! Form::text('kegiatan', null, ['class' => 'form-control']) !!}
+                                    {!! Form::text('kegiatan', null, ['class' => 'form-control', 'required']) !!}
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah_peserta', null, ['class' => 'form-control jumlah angka']) !!}
+                                    {!! Form::text('jumlah_peserta', null, ['class' => 'form-control jumlah angka',
+                                    'required']) !!}
                                 </td>
 
                                 <td class="ruang">
-                                    <select id="nama_ruang" name="nama_ruang[]"
+                                    <select id="nama_ruang" name="nama_ruang[]" required
                                         class="form-control not-rounded-border js-example-basic-multiple"
                                         multiple="multiple">
                                         @foreach ($ruang as $val)
