@@ -173,7 +173,7 @@
 
             if(reserve) {
                 $.ajax({
-                    url: "/perlengkapan/peminjaman_ruang/ruang/" + reserve,
+                    url: "/ormawa/peminjaman_ruang/ruang/" + reserve,
                     type: "GET",
                     data: reserve,
                     dataType: "json",
