@@ -9,11 +9,12 @@
 @section('judul_header', 'Peminjaman Barang')
 
 @section('css_link')
-<link href="/adminlte/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="/adminlte/dist/css/AdminLTE.min.css">
-<link href="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
-<link href="/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
-<link href="/adminlte/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" />
+<link href="{{ asset('/adminlte/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
+<link rel="stylesheet" href="{{ asset('/adminlte/dist/css/AdminLTE.min.css') }}">
+<link href="{{ asset('/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
+<link href="{{ asset('/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}"
+    rel="stylesheet" />
+<link href="{{ asset('/adminlte/plugins/timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet" />
 <style type="text/css">
     .hidden {
         display: none important !;
@@ -49,10 +50,11 @@ $status = $status[0];
                             <tr>
                                 <td>
                                     {!! Form::text('tanggal', $tanggal, ['class' => 'form-control not-rounded-border',
-                                    'id' => 'reservationtime']) !!}
+                                    'id' => 'reservationtime', 'required']) !!}
                                 </td>
                                 <td>
-                                    {!! Form::text('kegiatan', $laporan->kegiatan, ['class' => 'form-control']) !!}
+                                    {!! Form::text('kegiatan', $laporan->kegiatan, ['class' => 'form-control',
+                                    'required']) !!}
                                 </td>
                             </tr>
                         </tbody>
@@ -75,8 +77,8 @@ $status = $status[0];
                             {{-- @dump($item) --}}
                             <tr>
                                 <td>
-                                    <select id="barang1" name="barang[]" class="form-control barang select2"
-                                        style="width: 100%">
+                                    <select id="barang{{$i}}" name="barang[]" class="form-control barang select2"
+                                        required style="width: 100%">
                                         <option value="">Pilih Barang</option>
                                         @foreach ($barang as $val)
                                         <option value="{{ $val->id }}"
@@ -87,7 +89,7 @@ $status = $status[0];
                                 </td>
 
                                 <td class="merk">
-                                    <select id="merk_barang1" name="merk_barang[]"
+                                    <select id="merk_barang{{$i}}" name="merk_barang[]" required
                                         class="form-control merk_barang select2" style="width: 100%">
                                         @foreach ($merk[$i] as $val)
                                         <option value="{{ $val->id }}"
@@ -99,14 +101,12 @@ $status = $status[0];
 
                                 <td>
                                     {!! Form::text('jumlah[]', $item->jumlah, ['class' => 'form-control angka', 'id' =>
-                                    'jumlah'])
-                                    !!}
+                                    'jumlah', 'required'])!!}
                                 </td>
 
                                 <td>
                                     {!! Form::select('satuan[]', $satuan, $item->idsatuan_fk-1, ['class' =>
-                                    'form-control', 'id' =>
-                                    'satuan'])!!}
+                                    'form-control', 'id' => 'satuan', 'required'])!!}
                                 </td>
 
                                 <td>
@@ -229,10 +229,11 @@ $status = $status[0];
 
 {{-- @if ($status) --}}
 @section('script')
-<script src="/adminlte/bower_components/select2/dist/js/select2.min.js"></script>
-<script src="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script src="/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script src="/adminlte/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<script src="{{ asset('/adminlte/bower_components/select2/dist/js/select2.min.js') }}"></script>
+<script src="{{ asset('/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset('/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}">
+</script>
+<script src="{{ asset('/adminlte/plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
 <script>
     var dataAjax = null;
     $(function(){
@@ -240,8 +241,15 @@ $status = $status[0];
         opsiButton();
         tableCount();
         barangAjax();
+        maxJumlah();
 
-        $('#barang1, #merk_barang1').select2();
+        count = {{ $i }}
+        for (let index = 0; index < count; index++) {
+            $('#barang'+index+', #merk_barang'+index).select2();
+        }
+
+        // $('#barang1, #merk_barang1').select2();
+        // $('.barang, .merk_barang').select2();
 
         $('.js-example-basic-multiple').select2();
 
@@ -264,14 +272,14 @@ $status = $status[0];
             showInputs: false
         });
 
-        count = 1;
+        count--;
         $('#tambah').click(function(event) {
             count++;
 
             $('#inputan').append(`
                 <tr>
                     <td>
-                        <select id="barang`+count+`" name="barang[]" class="form-control barang select2" style="width: 100%">
+                        <select id="barang`+count+`" name="barang[]" class="form-control barang select2" required style="width: 100%">
                             <option value="">Pilih Barang</option>
                             @foreach ($barang as $val)
                             <option value="{{ $val->id }}">{{$val->nama_barang}}</option>
@@ -280,18 +288,18 @@ $status = $status[0];
                     </td>
 
                     <td class="merk">
-                        <select id="merk_barang`+count+`" name="merk_barang[]" class="form-control merk_barang select2" style="width: 100%" disabled="true">
+                        <select id="merk_barang`+count+`" name="merk_barang[]" class="form-control merk_barang select2" required style="width: 100%" disabled="true">
                         </select>
                     </td>
 
                     <td>
-                        {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah angka'])
+                        {!! Form::text('jumlah[]', null, ['class' => 'form-control jumlah angka', 'required'])
                         !!}
                     </td>
 
                     <td>
                         {!! Form::select('satuan[]', $satuan, null, ['class' => 'form-control', 'id' =>
-                        'satuan'])!!}
+                        'satuan', 'required'])!!}
                     </td>
 
                     <td>
@@ -309,11 +317,13 @@ $status = $status[0];
             opsiButton();
             tableCount();
             barangAjax();
+            maxJumlah();
         });
 
         function barangAjax(){
             $('.barang').on('change', function(){
                 var id = $(this).val();
+                jumlah = $('.jumlah').val();
 
                 // console.log($(this).parents('tr'));
                 // console.log($(this).parents('tr')["0"].children[1]);
@@ -323,22 +333,45 @@ $status = $status[0];
 
                 if(id) {
                     $.ajax({
-                    url: "/perlengkapan/peminjaman_barang/barang/" + id,
-                    type: "GET",
-                    dataType: "json",
-                    success:function(data) {
+                        url: "/perlengkapan/peminjaman_barang/barang/" + id,
+                        type: "GET",
+                        dataType: "json",
+                        success:function(data) {
                         dataAjax = data;
                         $(merk).empty();
                         $(merk).prop('disabled', false);
+                        // console.log(data);
+                        i = -1;
+                        $(merk).append('<option value=""> Pilih Merk Barang </option>');
                         $.each(data, function(key, value) {
-                            $(merk).append('<option value="'+ value.id +'">' + value.merk_barang + '</option>');
+                            i++;
+                            // console.log(value, key);
+                            $(merk).append('<option value="'+ value.id +'">(' + data.jumlah[i] + ') ' + value.merk_barang + '</option>');
                         });
+                        $(merk).children().last().remove();
                         // console.log(merk);
-                    }
-                });
+                        }
+                    });
                 } else {
                     $(merk).prop('disabled', true);
                     $(this).parents('tr').children('.merk_barang').empty();
+                }
+
+            });
+        }
+
+        function maxJumlah(){
+            $('.jumlah').on('input', function(){
+                max = $($(this).parents('tr').children()[1]).children('.merk_barang').select2('data')[0].text;
+                if ($($(this).parents('tr').children()[1]).children('.merk_barang').select2('data')[0].text){
+                    max = max.split(" ");
+                    max = max[0];
+                    max = max.split("(")[1];
+                    max = max.split(")")[0];
+
+                    if($(this).val()-0 >= max) {
+                        $(this).val(max);
+                    }
                 }
             });
         }

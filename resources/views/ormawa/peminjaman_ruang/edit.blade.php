@@ -9,10 +9,11 @@
 @section('judul_header', 'Peminjaman Ruang')
 
 @section('css_link')
-<link href="/adminlte/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
-<link href="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
-<link href="/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
-<link href="/adminlte/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" />
+<link href="{{ asset('/adminlte/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
+<link href="{{ asset('/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}"
+    rel="stylesheet" />
+<link href="{{ asset('/adminlte/plugins/timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet" />
 <style type="text/css">
     .hidden {
         display: none important !;
@@ -51,20 +52,20 @@
                             <tr>
                                 <td style="min-width:300px">
                                     {!! Form::text('tanggal', $tanggal, ['class' => 'form-control not-rounded-border',
-                                    'id' => 'reservationtime']) !!}
+                                    'id' => 'reservationtime', 'required']) !!}
                                 </td>
 
                                 <td style="min-width:300px">
-                                    {!! Form::text('kegiatan', $laporan->kegiatan, ['class' => 'form-control']) !!}
+                                    {!! Form::text('kegiatan', $laporan->kegiatan, ['class' => 'form-control',
+                                    'required']) !!}
                                 </td>
 
                                 <td>
                                     {!! Form::text('jumlah_peserta', $laporan->jumlah_peserta, ['class' => 'form-control
-                                    jumlah
-                                    angka']) !!}
+                                    jumlah angka', 'required']) !!}
                                 </td>
                                 <td class="ruang">
-                                    <select id="nama_ruang" name="nama_ruang[]"
+                                    <select id="nama_ruang" name="nama_ruang[]" required
                                         class="form-control not-rounded-border js-example-basic-multiple"
                                         multiple="multiple">
                                         @foreach ($ruang as $val)
@@ -92,10 +93,11 @@
 @endsection
 
 @section('script')
-<script src="/adminlte/bower_components/select2/dist/js/select2.min.js"></script>
-<script src="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script src="/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script src="/adminlte/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<script src="{{ asset('/adminlte/bower_components/select2/dist/js/select2.min.js') }}"></script>
+<script src="{{ asset('/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset('/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}">
+</script>
+<script src="{{ asset('/adminlte/plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
 <script>
     $(function(){
 
@@ -157,6 +159,41 @@
             }
 
             $('.jumlah_kuota').text(total);
+        });
+
+        $('#reservationtime').on('change', function(){
+            // date = $(this).val().split(' ')[0];
+            // time = $(this).val().split(' ')[1];
+            // from = {date, time};
+            // date = $(this).val().split(' ')[3];
+            // time = $(this).val().split(' ')[4];
+            // to = {date, time};
+            from = $(this).val().split(' - ')[0];
+            to = $(this).val().split(' - ')[1];
+            reserve = {from, to};
+            console.log(reserve);
+            ruang = $(this).parents('tr').children('.ruang').children('#nama_ruang');
+
+            if(reserve) {
+                $.ajax({
+                    url: "/ormawa/peminjaman_ruang/ruang/" + reserve,
+                    type: "GET",
+                    data: reserve,
+                    dataType: "json",
+                    success:function(data) {
+                        dataAjax = data;
+                        console.log(data);
+                        $(ruang).empty();
+                        $(ruang).prop('disabled', false);
+                        $.each(data, function(key, value) {
+                            $(ruang).append('<option value="'+ value.id +'">(' + value.kuota + ') ' + value.nama_ruang +'</option>');
+                        });
+                    }
+                });
+            } else {
+                $(ruang).prop('disabled', true);
+                $(this).parents('tr').children('.ruang').empty();
+            }
         });
 
     });

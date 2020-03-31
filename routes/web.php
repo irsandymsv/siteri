@@ -331,7 +331,6 @@ Route::middleware(['auth', 'checkRole:BPP'])->prefix('bpp')->name('bpp.')->group
         //Ganti Password
         Route::get('/ganti_password', 'manageUserController@bpp_ganti_password')->name('ganti.password');
     }
-
 );
 
 Route::middleware(['auth', 'checkRole:Wakil Dekan 2'])->prefix('wadek2')->name('wadek2.')->group(
@@ -440,7 +439,7 @@ Route::middleware(['auth', 'checkRole:Pengadministrasi BMN'])->prefix('perlengka
         Route::resource('peminjaman_barang', 'peminjamanBarangController');
         Route::get('/peminjaman_barang/barang/{id}', array('as' => 'barang.ajax', 'uses' => 'peminjamanBarangController@barangAjax'));
         Route::resource('peminjaman_ruang', 'peminjamanRuangController');
-        Route::get('/peminjaman_ruang/ruang/{jumlah}', array('as' => 'ruang.ajax', 'uses' => 'peminjamanRuangController@ruangAjax'));
+        Route::get('/peminjaman_ruang/ruang/{reserve}', array('as' => 'ruang.ajax', 'uses' => 'peminjamanRuangController@ruangAjax'));
         Route::put('/peminjaman_barang/verif/{verif_baper}', 'peminjamanBarangController@verif_baper')->name('peminjaman_barang.verif');
         Route::put('/peminjaman_ruang/verif/{verif_baper}', 'peminjamanRuangController@verif_baper')->name('peminjaman_ruang.verif');
         Route::get('/pengadaan/{id}/getForm', 'pengadaanController@getForm')->name('pengadaan.getForm');
@@ -457,6 +456,7 @@ Route::middleware(['auth', 'checkRole:Pengadministrasi Layanan Kegiatan Mahasisw
         Route::resource('peminjaman_barang', 'peminjamanBarangController');
         Route::get('/peminjaman_barang/barang/{id}', array('as' => 'barang.ajax', 'uses' => 'peminjamanBarangController@barangAjax'));
         Route::resource('peminjaman_ruang', 'peminjamanRuangController');
+        Route::get('/peminjaman_ruang/ruang/{reserve}', array('as' => 'ruang.ajax', 'uses' => 'peminjamanRuangController@ruangAjax'));
 
         //Ganti Password
         Route::get('/ganti_password', 'manageUserController@ormawa_ganti_password')->name('ganti.password');
@@ -465,7 +465,7 @@ Route::middleware(['auth', 'checkRole:Pengadministrasi Layanan Kegiatan Mahasisw
 
 Route::middleware(['auth', 'checkRole:Pengadministrasi Kemahasiswaan & Alumni'])->prefix('kemahasiswaan')->name('kemahasiswaan.')->group(
     function () {
-        Route::get('/','mahasiswaController@kemahasiswaan_dashboard')->name('dashboard');
+        Route::get('/', 'mahasiswaController@kemahasiswaan_dashboard')->name('dashboard');
 
         //Data Mahasiswa
         Route::get('/mahasiswa', 'mahasiswaController@index')->name('mahasiswa.index');

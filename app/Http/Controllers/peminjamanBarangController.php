@@ -92,9 +92,29 @@ class peminjamanBarangController extends Controller
 
     public function barangAjax($id)
     {
-        $merk_barang = detail_data_barang::where('idbarang_fk', $id)
-            ->get();
+        $GLOBALS['nama'] = '';
+        $GLOBALS['jumlah'] = [];
+        $GLOBALS['jmlh'] = 0;
 
+        $merk_barang = detail_data_barang::where('idbarang_fk', $id)
+            ->with(['detail_pinjam_barang', 'detail_pinjam_barang.peminjaman_barang'])
+            ->get()->filter(
+                function ($item) {
+                    // dd($item);
+                    if ($GLOBALS['nama'] != $item->merk_barang) {
+                        if ($GLOBALS['nama'] != '') {
+                            array_push($GLOBALS['jumlah'], $GLOBALS['jmlh']);
+                        }
+                        $GLOBALS['nama'] = $item->merk_barang;
+                        $GLOBALS['jmlh'] = 1;
+                        return $item;
+                    } else {
+                        $GLOBALS['jmlh']++;
+                    }
+                }
+            );
+        array_push($GLOBALS['jumlah'], $GLOBALS['jmlh']);
+        $merk_barang['jumlah'] = $GLOBALS['jumlah'];
         return json_encode($merk_barang);
     }
 
