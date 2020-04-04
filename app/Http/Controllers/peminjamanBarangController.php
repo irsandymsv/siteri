@@ -300,36 +300,50 @@ class peminjamanBarangController extends Controller
     public function edit($id, Request $status)
     {
         if (Auth::user()->jabatan->jabatan == 'Pengadministrasi Layanan Kegiatan Mahasiswa') {
-            // dd($id);
-            // if ($status->status) {
-            // dd($status);
+            $GLOBALS['nama'] = '';
+            $GLOBALS['jumlah'] = [];
+            $GLOBALS['jmlh'] = 0;
+
             $barang = data_barang::where('idstatus_fk', '2')->get();
             $satuan = satuan::all()->pluck('satuan');
-            $laporan = peminjaman_barang::with(['detail_pinjam_barang', 'detail_pinjam_barang.detail_data_barang', 'detail_pinjam_barang.detail_data_barang.data_barang', 'detail_pinjam_barang.satuan'])
+            $laporan = peminjaman_barang::with([
+                'detail_pinjam_barang', 'detail_pinjam_barang.detail_data_barang',
+                'detail_pinjam_barang.detail_data_barang.data_barang', 'detail_pinjam_barang.satuan'
+            ])
                 ->where('id', $id)
                 ->first();
             $merk = [];
             foreach ($laporan->detail_pinjam_barang as $item) {
-                $merk_barang = detail_data_barang::where('idbarang_fk', $item->detail_data_barang->idbarang_fk)->get();
+                $merk_barang = detail_data_barang::where('idbarang_fk', $item->detail_data_barang->idbarang_fk)
+                    ->get()->filter(
+                        function ($item) {
+                            // dd($item);
+                            if ($GLOBALS['nama'] != $item->merk_barang) {
+                                if ($GLOBALS['nama'] != '') {
+                                    array_push($GLOBALS['jumlah'], $GLOBALS['jmlh']);
+                                }
+                                $GLOBALS['nama'] = $item->merk_barang;
+                                $GLOBALS['jmlh'] = 1;
+                                return $item;
+                            } else {
+                                $GLOBALS['jmlh']++;
+                            }
+                        }
+                    );
+
+                $lastElement = end($merk);
                 array_push($merk, $merk_barang);
+                array_push($GLOBALS['jumlah'], $GLOBALS['jmlh']);
+                // $merk[-1]['jumlah'] = $GLOBALS['jumlah'];
+                end($merk)['jumlah'] = $GLOBALS['jumlah'];
             }
+            // dd($lastElement);
+            // dd($merk);
+            // dd(end($merk)['jumlah']);
 
             $tanggal1 = implode(" ", [$laporan->tanggal_mulai, $laporan->jam_mulai]);
             $tanggal2 = implode(" ", [$laporan->tanggal_berakhir, $laporan->jam_berakhir]);
             $tanggal = implode(" - ", [$tanggal1, $tanggal2]);
-            // } else {
-            //     $barang = data_barang::where('idstatus_fk', '2')->get();
-            //     $satuan = satuan::all()->pluck('satuan');
-            //     $laporan = detail_pinjam_barang::with(['peminjaman_barang', 'detail_data_barang', 'detail_data_barang.data_barang', 'satuan'])
-            //         ->where('idpinjam_barang_fk', $id)
-            //         ->where('iddetail_data_barang_fk', $request->idmerk)
-            //         ->first();
-            //     $merk = [];
-            //     foreach ($laporan as $item) {
-            //         $merk_barang = detail_data_barang::where('idbarang_fk', $item->idbarang_fk)->get();
-            //         array_push($merk, $merk_barang);
-            //     }
-            // }
 
             return view(
                 'ormawa.peminjaman_barang.edit',
@@ -338,8 +352,7 @@ class peminjamanBarangController extends Controller
                     'satuan'    => $satuan,
                     'laporan'   => $laporan,
                     'merk'      => $merk,
-                    'tanggal'   => $tanggal,
-                    // 'status'    => $status->status,
+                    'tanggal'   => $tanggal
                 ]
             );
         } else if (Auth::user()->jabatan->jabatan == 'Pengadministrasi BMN') {
