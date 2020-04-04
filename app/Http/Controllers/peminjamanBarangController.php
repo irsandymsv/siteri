@@ -324,6 +324,7 @@ class peminjamanBarangController extends Controller
                                 }
                                 $GLOBALS['nama'] = $item->merk_barang;
                                 $GLOBALS['jmlh'] = 1;
+                                $GLOBALS['jumlah'] = [];
                                 return $item;
                             } else {
                                 $GLOBALS['jmlh']++;
