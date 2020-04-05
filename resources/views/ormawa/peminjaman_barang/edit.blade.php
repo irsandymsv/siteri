@@ -77,7 +77,7 @@ $status = $status[0];
                             {{-- @dump($item) --}}
                             <tr>
                                 <td>
-                                    <select id="barang1" name="barang[]" class="form-control barang select2" required
+                                    <select id="barang{{$i}}" name="barang[]" class="form-control barang select2" required
                                         style="width: 100%">
                                         <option value="">Pilih Barang</option>
                                         @foreach ($barang as $val)
@@ -90,13 +90,13 @@ $status = $status[0];
 
                                 {{-- {{ dd($merk) }} --}}
                                 <td class="merk">
-                                    <select id="merk_barang1" name="merk_barang[]" required
+                                    <select id="merk_barang{{$i}}" name="merk_barang[]" required
                                         class="form-control merk_barang select2" style="width: 100%">
                                         <option value="">Pilih Merk Barang</option>
                                         @php $j = -1 @endphp
                                         @foreach ($merk[$i] as $key => $val)
-                                        @php $j++ @endphp
                                         @if ($key !== "jumlah")
+                                        @php $j++ @endphp
                                         {{-- @dump($merk[$i]["jumlah"][$j]) --}}
                                         {{-- {{ dd($merk[$i]->jumlah[$j]) }} --}}
                                         <option value="{{ $val->id }}"
@@ -108,7 +108,7 @@ $status = $status[0];
                                 </td>
 
                                 <td>
-                                    {!! Form::text('jumlah[]', $item->jumlah, ['class' => 'form-control angka', 'id' =>
+                                    {!! Form::text('jumlah[]', $item->jumlah, ['class' => 'jumlah form-control angka', 'id' =>
                                     'jumlah', 'required'])!!}
                                 </td>
 
@@ -251,9 +251,14 @@ $status = $status[0];
         barangAjax();
         maxJumlah();
 
-        $('#barang1, #merk_barang1').select2();
+        count = {{ $i }}
+        for (let index = 0; index < count; index++) {
+            $('#barang'+index+', #merk_barang'+index).select2();
+        }
 
-        $('.js-example-basic-multiple').select2();
+        // $('#barang1, #merk_barang1').select2();
+
+        // $('.js-example-basic-multiple').select2();
 
         $('#reservation').daterangepicker();
 
@@ -366,10 +371,11 @@ $status = $status[0];
             $('.jumlah').on('input', function(){
                 max = $($(this).parents('tr').children()[1]).children('.merk_barang').select2('data')[0].text;
                 if ($($(this).parents('tr').children()[1]).children('.merk_barang').select2('data')[0].text){
-                    max = max.split(" ");
-                    max = max[0];
                     max = max.split("(")[1];
                     max = max.split(")")[0];
+                    max = max.split(" ");
+                    console.log(max)
+                    max = max[0];
 
                     if($(this).val()-0 >= max) {
                         $(this).val(max);

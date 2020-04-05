@@ -300,9 +300,6 @@ class peminjamanBarangController extends Controller
     public function edit($id, Request $status)
     {
         if (Auth::user()->jabatan->jabatan == 'Pengadministrasi Layanan Kegiatan Mahasiswa') {
-            $GLOBALS['nama'] = '';
-            $GLOBALS['jumlah'] = [];
-            $GLOBALS['jmlh'] = 0;
 
             $barang = data_barang::where('idstatus_fk', '2')->get();
             $satuan = satuan::all()->pluck('satuan');
@@ -314,6 +311,10 @@ class peminjamanBarangController extends Controller
                 ->first();
             $merk = [];
             foreach ($laporan->detail_pinjam_barang as $item) {
+                $GLOBALS['nama'] = '';
+                $GLOBALS['jumlah'] = [];
+                $GLOBALS['jmlh'] = 0;
+
                 $merk_barang = detail_data_barang::where('idbarang_fk', $item->detail_data_barang->idbarang_fk)
                     ->get()->filter(
                         function ($item) {
@@ -324,15 +325,14 @@ class peminjamanBarangController extends Controller
                                 }
                                 $GLOBALS['nama'] = $item->merk_barang;
                                 $GLOBALS['jmlh'] = 1;
-                                $GLOBALS['jumlah'] = [];
                                 return $item;
                             } else {
                                 $GLOBALS['jmlh']++;
                             }
                         }
                     );
-
-                $lastElement = end($merk);
+                    
+                // $lastElement = end($merk);
                 array_push($merk, $merk_barang);
                 array_push($GLOBALS['jumlah'], $GLOBALS['jmlh']);
                 // $merk[-1]['jumlah'] = $GLOBALS['jumlah'];
