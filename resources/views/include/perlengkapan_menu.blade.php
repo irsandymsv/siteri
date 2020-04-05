@@ -15,7 +15,19 @@
     </a>
     <ul class="treeview-menu">
         <li><a href="{{ route('perlengkapan.inventaris.create', [ 'laporan' => true]) }}">Buat Baru</a></li>
-        <li><a href="{{ route('perlengkapan.inventaris.index') }}">Lihat Laporan</a></li>
+        <li><a href="{{ route('perlengkapan.inventaris.index') }}">Lihat Data Inventaris</a></li>
+    </ul>
+</li>
+
+<li class="treeview">
+    <a href="#"><i class="fa fa-link"></i> <span>Ruang</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        <li><a href="{{ route('perlengkapan.ruang.create') }}">Buat Baru</a></li>
+        <li><a href="{{ route('perlengkapan.ruang.index') }}">Lihat Data Ruang</a></li>
     </ul>
 </li>
 
@@ -33,7 +45,7 @@
     </a>
     <ul class="treeview-menu">
         <li><a href="{{ route('perlengkapan.pengadaan.create') }}">Buat Baru</a></li>
-        <li><a href="{{ route('perlengkapan.pengadaan.index') }}">Lihat Laporan</a></li>
+        <li><a href="{{ route('perlengkapan.pengadaan.index') }}">Lihat Permohonan</a></li>
     </ul>
 </li>
 

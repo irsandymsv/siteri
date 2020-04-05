@@ -435,6 +435,7 @@ Route::middleware(['auth', 'checkRole:Pengadministrasi BMN'])->prefix('perlengka
     function () {
         Route::get('/', 'PerlengkapanController@dashboard')->name('dashboard');
         Route::resource('inventaris', 'inventarisController');
+        Route::resource('ruang', 'ruangController');
         Route::resource('pengadaan', 'pengadaanController');
         Route::resource('peminjaman_barang', 'peminjamanBarangController');
         Route::get('/peminjaman_barang/barang/{id}', array('as' => 'barang.ajax', 'uses' => 'peminjamanBarangController@barangAjax'));
