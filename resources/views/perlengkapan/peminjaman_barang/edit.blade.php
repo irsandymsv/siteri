@@ -91,10 +91,17 @@ $status = $status[0];
                                 <td class="merk">
                                     <select id="merk_barang{{$i}}" name="merk_barang[]" required
                                         class="form-control merk_barang select2" style="width: 100%">
-                                        @foreach ($merk[$i] as $val)
+                                        <option value="">Pilih Merk Barang</option>
+                                        @php $j = -1 @endphp
+                                        @foreach ($merk[$i] as $key => $val)
+                                        @if ($key !== "jumlah")
+                                        @php $j++ @endphp
+                                        {{-- @dump($merk[$i]["jumlah"][$j]) --}}
+                                        {{-- {{ dd($merk[$i]->jumlah[$j]) }} --}}
                                         <option value="{{ $val->id }}"
                                             {{ ($val->id == $item->iddetail_data_barang_fk) ? 'selected' : '' }}>
-                                            {{ $val->merk_barang }}</option>
+                                            ({{ $merk[$i]["jumlah"][$j] }}) {{ $val->merk_barang }}</option>
+                                        @endif
                                         @endforeach
                                     </select>
                                 </td>

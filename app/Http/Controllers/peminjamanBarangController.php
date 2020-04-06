@@ -366,8 +366,32 @@ class peminjamanBarangController extends Controller
                 ->first();
             $merk = [];
             foreach ($laporan->detail_pinjam_barang as $item) {
-                $merk_barang = detail_data_barang::where('idbarang_fk', $item->detail_data_barang->idbarang_fk)->get();
+                $GLOBALS['nama'] = '';
+                $GLOBALS['jumlah'] = [];
+                $GLOBALS['jmlh'] = 0;
+
+                $merk_barang = detail_data_barang::where('idbarang_fk', $item->detail_data_barang->idbarang_fk)
+                    ->get()->filter(
+                        function ($item) {
+                            // dd($item);
+                            if ($GLOBALS['nama'] != $item->merk_barang) {
+                                if ($GLOBALS['nama'] != '') {
+                                    array_push($GLOBALS['jumlah'], $GLOBALS['jmlh']);
+                                }
+                                $GLOBALS['nama'] = $item->merk_barang;
+                                $GLOBALS['jmlh'] = 1;
+                                return $item;
+                            } else {
+                                $GLOBALS['jmlh']++;
+                            }
+                        }
+                    );
+                    
+                // $lastElement = end($merk);
                 array_push($merk, $merk_barang);
+                array_push($GLOBALS['jumlah'], $GLOBALS['jmlh']);
+                // $merk[-1]['jumlah'] = $GLOBALS['jumlah'];
+                end($merk)['jumlah'] = $GLOBALS['jumlah'];
             }
 
             $tanggal1 = implode(" ", [$laporan->tanggal_mulai, $laporan->jam_mulai]);
