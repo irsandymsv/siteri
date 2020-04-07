@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Feb 2020 pada 01.45
+-- Waktu pembuatan: 02 Apr 2020 pada 07.44
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 7.3.2
 
@@ -96,82 +96,82 @@ CREATE TABLE `data_barang` (
 --
 
 INSERT INTO `data_barang` (`id`, `kode_barang`, `nama_barang`, `idstatus_fk`) VALUES
-(1, '3030205014', 'Crimping Tools', NULL),
-(2, '3040104003', 'Rak-Rak Penyimpan', NULL),
-(3, '3050101003', 'Mesin Ketik Manual Langewangon', NULL),
-(4, '3050101004', 'Mesin Ketik Listrik', NULL),
-(5, '3050102007', 'Mesin Penghitung Uang', NULL),
-(6, '3050104001', 'Lemari Besi/Metal', NULL),
-(7, '3050104005', 'Filing Cabinet Besi', NULL),
-(8, '3050104007', 'Brangkas', NULL),
-(9, '3050104015', 'Locker', NULL),
-(10, '3050104020', 'Lemari Display', NULL),
-(11, '3050105007', 'CCTV', NULL),
-(12, '3050105010', 'White Board', NULL),
-(13, '3050105015', 'Alat Penghancur Kertas', NULL),
-(14, '3050105017', 'Mesin Absensi', NULL),
-(15, '3050105038', 'Laser Pointer', NULL),
+(1, '3030205014', 'Crimping Tools', 1),
+(2, '3040104003', 'Rak-Rak Penyimpan', 1),
+(3, '3050101003', 'Mesin Ketik Manual Langewangon', 1),
+(4, '3050101004', 'Mesin Ketik Listrik', 1),
+(5, '3050102007', 'Mesin Penghitung Uang', 1),
+(6, '3050104001', 'Lemari Besi/Metal', 1),
+(7, '3050104005', 'Filing Cabinet Besi', 1),
+(8, '3050104007', 'Brangkas', 1),
+(9, '3050104015', 'Locker', 1),
+(10, '3050104020', 'Lemari Display', 1),
+(11, '3050105007', 'CCTV', 1),
+(12, '3050105010', 'White Board', 1),
+(13, '3050105015', 'Alat Penghancur Kertas', 1),
+(14, '3050105017', 'Mesin Absensi', 1),
+(15, '3050105038', 'Laser Pointer', 1),
 (16, '3050105048', 'LCD Projector/Infocus', 2),
 (17, '3050105058', 'Focussing Screen', 2),
-(18, '3050105081', 'Papan Pengumuman', NULL),
+(18, '3050105081', 'Papan Pengumuman', 1),
 (19, '3050201002', 'Meja Kerja Kayu', 2),
 (20, '3050201003', 'Kursi Besi/Metal', 2),
-(21, '3050201005', 'Sice', NULL),
-(22, '3050201008', 'Meja Rapat', NULL),
+(21, '3050201005', 'Sice', 1),
+(22, '3050201008', 'Meja Rapat', 1),
 (23, '3050201009', 'Meja Komputer', 2),
-(24, '3050204001', 'Lemari Es', NULL),
-(25, '3050204002', 'A.C. Sentral', NULL),
-(26, '3050204004', 'A.C. Split', NULL),
-(27, '3050205015', 'Tandon Air', NULL),
-(28, '3050206002', 'Televisi', NULL),
+(24, '3050204001', 'Lemari Es', 1),
+(25, '3050204002', 'A.C. Sentral', 1),
+(26, '3050204004', 'A.C. Split', 1),
+(27, '3050205015', 'Tandon Air', 1),
+(28, '3050206002', 'Televisi', 1),
 (29, '3050206005', 'Amplifier', 2),
 (30, '3050206007', 'Loudspeaker', 2),
 (31, '3050206008', 'Sound System', 2),
-(32, '3050206012', 'Wireless', NULL),
-(33, '3050206034', 'Tangga Alumunium', NULL),
-(34, '3050206036', 'Dispenser', NULL),
+(32, '3050206012', 'Wireless', 1),
+(33, '3050206034', 'Tangga Alumunium', 1),
+(34, '3050206036', 'Dispenser', 1),
 (35, '3050206037', 'Mimbar/Podium', 2),
 (36, '3050206071', 'Kabel', 2),
 (37, '3060101036', 'Microphone/Wireless Mic', 2),
-(38, '3060101048', 'Uninterruptible Power Supply  (UPS)', NULL),
-(39, '3060101083', 'Video Presenter', NULL),
-(40, '3060102132', 'Video Conference', NULL),
-(41, '3060105037', 'Teropong', NULL),
-(42, '3060201001', 'Telephone(PABX)', NULL),
-(43, '3060201010', 'Facsimile', NULL),
-(44, '3060201999', 'Alat Komunikasi telephone Lainnya', NULL),
-(45, '3060207005', 'Finger Printer time and Attandence  Access Control System ', NULL),
-(46, '3060336999', 'Peralatan Antena Pemancar dan Penerima LF lainnya', NULL),
-(47, '3080141194', 'Personal Computer', NULL),
-(48, '3080402013', 'Elektronic Robot', NULL),
-(49, '3090402031', 'Kamera Digital', NULL),
-(50, '3090403004', 'GPS', NULL),
-(51, '3090403079', 'Omni Single strand (Cooper) Duplex 20gauge Firing Wire', NULL),
-(52, '3090409098', 'Stavol', NULL),
-(53, '3100101002', 'Mini Komputer', NULL),
-(54, '3100101007', 'PC Workstation', NULL),
-(55, '3100102001', 'P.C Unit', NULL),
-(56, '3100102002', 'Laptop', NULL),
-(57, '3100102003', 'Notebook', NULL),
+(38, '3060101048', 'Uninterruptible Power Supply  (UPS)', 1),
+(39, '3060101083', 'Video Presenter', 1),
+(40, '3060102132', 'Video Conference', 1),
+(41, '3060105037', 'Teropong', 1),
+(42, '3060201001', 'Telephone(PABX)', 1),
+(43, '3060201010', 'Facsimile', 1),
+(44, '3060201999', 'Alat Komunikasi Telephone Lainnya', 1),
+(45, '3060207005', 'Finger Printer Time and Attandence  Access Control System ', 1),
+(46, '3060336999', 'Peralatan Antena Pemancar dan Penerima LF lainnya', 1),
+(47, '3080141194', 'Personal Computer', 1),
+(48, '3080402013', 'Elektronic Robot', 1),
+(49, '3090402031', 'Kamera Digital', 1),
+(50, '3090403004', 'GPS', 1),
+(51, '3090403079', 'Omni Single Strand (Cooper) Duplex 20gauge Firing Wire', 1),
+(52, '3090409098', 'Stavol', 1),
+(53, '3100101002', 'Mini Komputer', 1),
+(54, '3100101007', 'PC Workstation', 1),
+(55, '3100102001', 'P.C Unit', 1),
+(56, '3100102002', 'Laptop', 1),
+(57, '3100102003', 'Notebook', 1),
 (58, '3100103002', 'Monitor', 2),
-(59, '3100103003', 'Printer (Peralatan Personal Komputer)', NULL),
-(60, '3100103004', 'Scanner (Peralatan Personal Komputer)', NULL),
-(61, '3100103017', 'External/Portable Hardisk', NULL),
-(62, '3100104001', 'Server', NULL),
-(63, '3100104002', 'Router', NULL),
-(64, '3100104003', 'Hub', NULL),
-(65, '3100104014', 'Rak Server', NULL),
-(66, '3100104016', 'Switch Rak', NULL),
-(67, '3100104021', 'Kabel UTP', NULL),
-(68, '3100104024', 'Switch', NULL),
-(69, '3100104026', 'Access Point', NULL),
-(70, '3110201005', 'Converter', NULL),
-(71, '3170119004', 'Jet Pump', NULL),
-(72, '3170120007', 'Storage Pile', NULL),
+(59, '3100103003', 'Printer (Peralatan Personal Komputer)', 1),
+(60, '3100103004', 'Scanner (Peralatan Personal Komputer)', 1),
+(61, '3100103017', 'External/Portable Hardisk', 1),
+(62, '3100104001', 'Server', 1),
+(63, '3100104002', 'Router', 1),
+(64, '3100104003', 'Hub', 1),
+(65, '3100104014', 'Rak Server', 1),
+(66, '3100104016', 'Switch Rak', 1),
+(67, '3100104021', 'Kabel UTP', 1),
+(68, '3100104024', 'Switch', 1),
+(69, '3100104026', 'Access Point', 1),
+(70, '3110201005', 'Converter', 1),
+(71, '3170119004', 'Jet Pump', 1),
+(72, '3170120007', 'Storage Pile', 1),
 (73, '3190102001', 'Alat Tenis Meja', 2),
 (74, '6020101002', 'Alat Musik Modern/Band', 2),
-(75, '8010101001', 'Software Komputer', NULL),
-(76, '3050204006', 'Kipas Angin', NULL);
+(75, '8010101001', 'Software Komputer', 1),
+(76, '3050204006', 'Kipas Angin', 1);
 
 -- --------------------------------------------------------
 
@@ -218,19 +218,6 @@ INSERT INTO `data_ruang` (`id`, `kode_ruang`, `nama_ruang`, `kuota`) VALUES
 (25, '024A1012', 'SERVER', 0),
 (26, '024A2002', 'KULIAH 2', 40),
 (27, '024A1004', 'RUANG RAPAT/SIDANG', 20);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `detail_barang`
---
-
-CREATE TABLE `detail_barang` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `id_categori` int(10) UNSIGNED NOT NULL,
-  `spesifikasi_barang` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `harga_satuan` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2035,6 +2022,15 @@ CREATE TABLE `detail_pinjam_barang` (
   `idsatuan_fk` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data untuk tabel `detail_pinjam_barang`
+--
+
+INSERT INTO `detail_pinjam_barang` (`idpinjam_barang_fk`, `iddetail_data_barang_fk`, `jumlah`, `idsatuan_fk`) VALUES
+(1, 99, 2, 1),
+(1, 169, 10, 1),
+(1, 198, 30, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -3151,7 +3147,7 @@ INSERT INTO `mahasiswa` (`nim`, `id_prodi`, `nama`) VALUES
 ('162410101066', 1, 'DEVI PUTRI ALANNURRY'),
 ('162410101067', 1, 'SHOHIHUL MAKSUD'),
 ('162410101068', 1, 'NANDA NUR ARISKA'),
-('162410101069', 1, 'zainul arifin'),
+('162410101069', 1, 'ZAINUL ARIFIN'),
 ('162410101070', 1, 'FATIMATUZ ZAHIRO'),
 ('162410101071', 1, 'HUTOMO BAYU CARAKA'),
 ('162410101072', 1, 'RESTU ROHMATIKA'),
@@ -3159,7 +3155,7 @@ INSERT INTO `mahasiswa` (`nim`, `id_prodi`, `nama`) VALUES
 ('162410101074', 1, 'NURUL ISTIQOMAH'),
 ('162410101075', 1, 'FAHMI CHAIRUDDIN'),
 ('162410101076', 1, 'MUHAMMAD DHAIS FIRMANSYAH'),
-('162410101077', 1, 'LAMAROI RAIS IMAN SYAH'),
+('162410101077', 1, 'LAMARONI RAIS IMAN SYAH'),
 ('162410101078', 1, 'CAHYO NOVALIANTO'),
 ('162410101079', 1, 'RIZALDI AHSANI TAQWIM'),
 ('162410101080', 1, 'RADITYA MULYA NUGROHO'),
@@ -3179,7 +3175,7 @@ INSERT INTO `mahasiswa` (`nim`, `id_prodi`, `nama`) VALUES
 ('162410101094', 1, 'IRSANDY MAULANA SATYA V'),
 ('162410101095', 1, 'SHABILLA QORIBADHA F.S'),
 ('162410101096', 1, 'RAFDIANSYAH MARTHANTIO H'),
-('162410101097', 1, 'HAIKAL FIQRI FADLO'),
+('162410101097', 1, 'HAIKAL FIQRI FADLO\'IL'),
 ('162410101098', 1, 'MUHAMMAD LAZUARDI IMANI'),
 ('162410101099', 1, 'INTAN WAHYU INDRABUDIARTI'),
 ('162410101100', 1, 'ROBI WAHYU LEKSONO'),
@@ -3202,7 +3198,7 @@ INSERT INTO `mahasiswa` (`nim`, `id_prodi`, `nama`) VALUES
 ('162410101117', 1, 'VERINA ALIFIA RACHMATIKA'),
 ('162410101118', 1, 'AVELIA PUTRI ELKA PRAMANA'),
 ('162410101119', 1, 'AHMAD FAUZAL ADIFIA'),
-('162410101120', 1, 'mustika rahmasuci'),
+('162410101120', 1, 'MUSTIKA RAHMASUCI'),
 ('162410101121', 1, 'MOHAMMAD RISKI DARMAWAN'),
 ('162410101122', 1, 'ROSYIDAH AMATULLAH WIDODO'),
 ('162410101123', 1, 'ARISQI SETYAWAN'),
@@ -4328,6 +4324,13 @@ CREATE TABLE `notifications` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data untuk tabel `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
+('790bc564-19a6-49b6-b200-37764c848faf', 'App\\Notifications\\verifPeminjamanBarang', 'App\\User', 760011443, '{\"id\":1,\"kegiatan\":\"PelaTihan Ala ala\",\"verif_baper\":0,\"verif_ktu\":0,\"updated_at\":\"2020-04-02T05:19:14.000000Z\"}', NULL, '2020-04-02 05:19:16', '2020-04-02 05:19:16');
+
 -- --------------------------------------------------------
 
 --
@@ -4484,6 +4487,13 @@ CREATE TABLE `pinjam_barang` (
   `created_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `pinjam_barang`
+--
+
+INSERT INTO `pinjam_barang` (`id`, `tanggal_mulai`, `tanggal_berakhir`, `jam_mulai`, `jam_berakhir`, `kegiatan`, `verif_baper`, `verif_ktu`, `created_at`, `updated_at`) VALUES
+(1, '2020-04-04', '2020-04-05', '12:30:00', '12:30:00', 'PelaTihan Ala ala', 0, 0, '2020-04-02 05:19:14', '2020-04-02 05:19:14');
 
 -- --------------------------------------------------------
 
@@ -5023,12 +5033,6 @@ ALTER TABLE `data_ruang`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `detail_barang`
---
-ALTER TABLE `detail_barang`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indeks untuk tabel `detail_data_barang`
 --
 ALTER TABLE `detail_data_barang`
@@ -5407,12 +5411,6 @@ ALTER TABLE `data_ruang`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
--- AUTO_INCREMENT untuk tabel `detail_barang`
---
-ALTER TABLE `detail_barang`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT untuk tabel `detail_data_barang`
 --
 ALTER TABLE `detail_data_barang`
@@ -5548,7 +5546,7 @@ ALTER TABLE `pengadaan`
 -- AUTO_INCREMENT untuk tabel `pinjam_barang`
 --
 ALTER TABLE `pinjam_barang`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `pinjam_ruang`
