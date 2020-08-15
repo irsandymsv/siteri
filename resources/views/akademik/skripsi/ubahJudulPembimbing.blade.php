@@ -136,7 +136,7 @@
             			<label for="pembimbing_utama">Pembimbing Utama</label><br>
             			<select name="id_pembimbing_utama" id="id_pembimbing_utama" class="form-control select2">
             				<option value="">--Pilih Pembimbing Utama--</option>
-            				@foreach ($dosen as $item)
+            				@foreach ($dosen1 as $item)
             					<option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == old('id_pembimbing_utama')? 'selected' : '') }}>
                               {{ $item->nama }}
                            </option>
@@ -154,7 +154,7 @@
             			<label for="pembimbing_pendamping">Pembimbing Pendamping</label><br>
             			<select name="id_pembimbing_pendamping" id="id_pembimbing_pendamping" class="form-control select2">
             				<option value="">--Pilih Pembimbing Pendamping--</option>
-            				@foreach ($dosen as $item)
+            				@foreach ($dosen2 as $item)
             					<option value="{{ $item->no_pegawai }}" {{ ($item->no_pegawai == old('id_pembimbing_pendamping')? 'selected' : '') }}>
                               {{ $item->nama }}
                            </option>
@@ -201,6 +201,32 @@
          event.preventDefault();
          $("input[name='status']").val(2);
          $('form').trigger('submit');
+      });
+
+      var pembimbing_utama_old = @json(old('id_pembimbing_utama'));
+      var pembimbing_pendamping_old = @json(old('id_pembimbing_pendamping'));
+
+      //Set disable pilihan dosen di select dosen 2 yg sdh dipilih di select dosen 1
+      if (pembimbing_utama_old != null) {
+         $("select#id_pembimbing_pendamping option[value='"+pembimbing_utama_old+"']").attr('disabled', 'disabled');
+      }
+      //Set disable pilihan dosen di select dosen 1 yg sdh dipilih di select dosen 2
+      if (pembimbing_pendamping_old != null) {
+         $("select#id_pembimbing_utama option[value='"+pembimbing_pendamping_old+"']").attr('disabled', 'disabled');
+      }
+
+      // Set dosen yg sama di select dosen 2 jadi disabled ketika select dosen 1 berubah
+      $("select#id_pembimbing_utama").change(function(event) {
+         $("select#id_pembimbing_pendamping option[disabled='disabled']").removeAttr('disabled');
+         var no_pegawai = $(this).val();
+         $("select#id_pembimbing_pendamping option[value='"+no_pegawai+"']").attr('disabled', 'disabled');
+      });
+
+      //Set dosen yg sama di select dosen 1 jadi disabled ketika select dosen 2 berubah   
+      $("select#id_pembimbing_pendamping").change(function(event) {
+         $("select#id_pembimbing_utama option[disabled='disabled']").removeAttr('disabled');
+         var no_pegawai = $(this).val();
+         $("select#id_pembimbing_utama option[value='"+no_pegawai+"']").attr('disabled', 'disabled');
       });
 	</script>
 @endsection

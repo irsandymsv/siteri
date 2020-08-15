@@ -56,9 +56,18 @@ class skripsiController extends suratTugasController
         ->with(['status_skripsi', 'mahasiswa'])
         ->first();
 
-        $dosen = user::where('is_dosen', 1)->get();
+        $dosen1 = user::where('is_dosen', 1)
+        ->whereHas('fungsional', function(Builder $query)
+        {
+            $query->whereIn('jab_fungsional', [
+                'Guru Besar',
+                'Lektor Kepala',
+                'Lektor'
+            ]);
+        })->get();
+        $dosen2 = user::where('is_dosen', 1)->get();
         $keris = keris::all();
-        return view('akademik.skripsi.ubahJudulPembimbing', ['skripsi' => $skripsi, 'dosen' => $dosen, 'keris' => $keris]);
+        return view('akademik.skripsi.ubahJudulPembimbing', ['skripsi' => $skripsi, 'dosen1' => $dosen1, 'dosen2' => $dosen2, 'keris' => $keris]);
     }
 
     public function store_ubahJudulPembimbing(Request $request, $id)
@@ -87,7 +96,7 @@ class skripsiController extends suratTugasController
                 'id_pembimbing_utama',
                 'id_pembimbing_pendamping'
             );
-            return redirect()->route('akademik.data-skripsi.ubah-judul-pembimbing', $id)->with('success','Surat Tugas Pembimbing Baru Berhasil Di Buat');
+            return redirect()->route('akademik.sutgas-pembimbing.show', $id_baru)->with('success','Surat Tugas Pembimbing Baru Berhasil Di Buat');
         }catch(Exception $e){
             return redirect()->route('akademik.data-skripsi.ubah-judul-pembimbing', $id)->with('error', $e->getMessage());
         }
