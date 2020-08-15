@@ -41,7 +41,8 @@ class sutgasPembahasController extends suratTugasController
         // })
         ->whereHas('skripsi.status_skripsi', function(Builder $query)
         {
-            $query->where('status', 'Sudah punya pembimbing');
+            $query->where('status', 'Sudah punya pembimbing')
+            ->orWhere('status', 'Sudah punya pembahas');
         })
         ->get();
 
