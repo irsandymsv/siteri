@@ -152,13 +152,14 @@ class sutgasPengujiController extends suratTugasController
         $jam = carbon::parse($surat_tugas->tanggal)->format('H:i');
 
         $mahasiswa = mahasiswa::with(['skripsi', 'skripsi.status_skripsi'])
-        ->whereDoesntHave('skripsi.detail_skripsi.surat_tugas', function(Builder $query)
-        {
-            $query->where('id_tipe_surat_tugas', 3);
-        })
+        // ->whereDoesntHave('skripsi.detail_skripsi.surat_tugas', function(Builder $query)
+        // {
+        //     $query->where('id_tipe_surat_tugas', 3);
+        // })
         ->whereHas('skripsi.status_skripsi', function(Builder $query)
         {
-            $query->where('status', 'Sudah Sempro');
+            $query->where('status', 'Sudah Sempro')
+            ->orWhere('status', 'Sudah Punya Penguji');
         })
         ->orWhere("nim", $surat_tugas->detail_skripsi->skripsi->nim)->get();
 
