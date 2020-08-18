@@ -74,11 +74,11 @@
 			            							<li>
 			            								<a href="{{ route('akademik.data-skripsi.update-judul', $item->id) }}">Update Judul</a>
 			            							</li>
-			            							@if ($item->status_skripsi->status == "Sudah Punya Penguji")
+			            							{{-- @if ($item->status_skripsi->status == "Sudah Punya Penguji")
 			            								<li>
 			            									<a href="{{ route('akademik.data-skripsi.edit-status', $item->id) }}">Edit Status</a>
 			            								</li>
-			            							@endif
+			            							@endif --}}
 			            						</ul>
 			            					</div>
 		            					@endif
