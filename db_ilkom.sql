@@ -2254,7 +2254,7 @@ INSERT INTO `jabatan` (`id`, `jabatan`) VALUES
 (20, 'Pengemudi'),
 (21, 'Teknisi Sarana dan Prasarana Kantor'),
 (22, 'Caraka dan Pramu Kantor'),
-(23, 'Admin\r\n');
+(23, 'Admin');
 
 -- --------------------------------------------------------
 
@@ -4933,7 +4933,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`username`, `password`, `no_pegawai`, `nama`, `npwp`, `bpjs`, `is_dosen`, `id_jabatan`, `id_bagian`, `id_pangkat`, `id_golongan`, `id_fungsional`, `remember_token`, `jurusan`) VALUES
-('admin', '$2y$10$B.X35UGEeknipuZmlbMNKezfxThCgZWdg3V3cDawRxTxeCvnZrc0i', '1', 'Administrator', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 3),
+('admin', '$2y$10$B.X35UGEeknipuZmlbMNKezfxThCgZWdg3V3cDawRxTxeCvnZrc0i', '1', 'Administrator', NULL, NULL, 0, 23, NULL, NULL, NULL, NULL, NULL, 3),
 ('Slamin', '$2y$12$gbJGcX0VlcMc6QOy8FLja.UZjmlKmbiHoHckv3g8dHmUqp1OD8oom', '196704201992011000', 'Prof. Drs. Slamin, M.Comp.Sc., Ph.D', NULL, NULL, 1, 4, NULL, 4, 16, 1, NULL, 3),
 ('Saiful', '$2y$12$gbJGcX0VlcMc6QOy8FLja.UZjmlKmbiHoHckv3g8dHmUqp1OD8oom', '196811131994121000', 'Prof. Dr. Saiful Bukhori, ST., M.Kom', NULL, NULL, 1, 1, NULL, 1, 14, 1, NULL, 2),
 ('Anang', '$2y$12$gbJGcX0VlcMc6QOy8FLja.UZjmlKmbiHoHckv3g8dHmUqp1OD8oom', '196906151997021000', 'Anang Andrianto, S.T., M.T', NULL, NULL, 1, 4, NULL, 3, 11, 3, NULL, 2),
