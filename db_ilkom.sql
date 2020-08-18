@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 18, 2020 at 04:00 AM
+-- Generation Time: Aug 18, 2020 at 06:20 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -5732,8 +5732,8 @@ ALTER TABLE `sk_skripsi`
 --
 ALTER TABLE `surat_tugas`
   ADD CONSTRAINT `surat_tugas_id_detail_skripsi_foreign` FOREIGN KEY (`id_detail_skripsi`) REFERENCES `detail_skripsi` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `surat_tugas_id_dosen1_foreign` FOREIGN KEY (`id_dosen1`) REFERENCES `users` (`no_pegawai`) ON DELETE SET NULL,
-  ADD CONSTRAINT `surat_tugas_id_dosen2_foreign` FOREIGN KEY (`id_dosen2`) REFERENCES `users` (`no_pegawai`) ON DELETE SET NULL,
+  ADD CONSTRAINT `surat_tugas_id_dosen1_foreign` FOREIGN KEY (`id_dosen1`) REFERENCES `users` (`no_pegawai`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `surat_tugas_id_dosen2_foreign` FOREIGN KEY (`id_dosen2`) REFERENCES `users` (`no_pegawai`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `surat_tugas_id_ruang_foreign` FOREIGN KEY (`id_ruang`) REFERENCES `data_ruang` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `surat_tugas_id_status_surat_tugas_foreign` FOREIGN KEY (`id_status_surat_tugas`) REFERENCES `status_surat_tugas` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `surat_tugas_id_tipe_surat_tugas_foreign` FOREIGN KEY (`id_tipe_surat_tugas`) REFERENCES `tipe_surat_tugas` (`id`) ON DELETE SET NULL;
