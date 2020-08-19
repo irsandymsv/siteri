@@ -77,6 +77,7 @@
                     <center>Aksi</center>
                   </th>
                 </tr>
+                
                 @foreach ($surat_tugas as $index =>$sk)
 
                 <tr role="row">
