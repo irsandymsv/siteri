@@ -510,8 +510,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/pegawai/update/{username}', 'manageUserController@update')->name('pegawai.update');
     Route::delete('/pegawai/delete/{username?}', 'manageUserController@destroy')->name('pegawai.destroy');
     Route::delete('/pegawai/reset/{username?}', 'manageUserController@reset')->name('pegawai.reset');
-    Route::resource('admin/pegawai', 'manageUserController');
     Route::post('/pegawai/search', 'manageUserController@search')->name('search');
+    Route::get('/ganti_password', 'manageUserController@admin_ganti_password')->name('ganti.password');
+    // Route::resource('/pegawai', 'manageUserController');
 });
 
 Route::middleware(['auth', 'checkRole:Sekretaris Pimpinan'])->prefix('staffpim')->name('staffpim.')->group(function () {

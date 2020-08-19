@@ -384,6 +384,8 @@ desired effect
                                 <a href="{{route('kepegawaian.ganti.password')}}">Ganti Password</a>
                                 @elseif (Auth::user()->jabatan->jabatan == "Sekretaris Pimpinan")
                                 <a href="{{route('staffpim.ganti.password')}}">Ganti Password</a>
+                                @elseif (Auth::user()->jabatan->jabatan == "Admin")
+                                <a href="{{route('admin.ganti.password')}}">Ganti Password</a>
                                 @else
                                 @endif
                             </li>

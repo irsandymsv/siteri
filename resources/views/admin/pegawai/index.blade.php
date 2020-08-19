@@ -3,7 +3,7 @@
 @section('content')
 <section class="content-header">
     <h1>
-        <b>DATA PEGAWAI</b>
+        Data Pegawai
     </h1>
 </section>
 <!-- Main content -->
@@ -21,12 +21,7 @@
                 </div>
             </div>
         </div>
-        @if (session()->has('success'))
-            <div class="alert alert-success alert-block">
-                <button type="button" class="close" data-dismiss="alert">x</button>
-                {{ session()->get('success')}}
-            </div>
-        @endif
+        
         <!-- /.box-header -->
         <div class="box-body">
             <div class="row">
@@ -36,16 +31,26 @@
 
             <form method="POST" action="{{ route('admin.search') }}">
                 {{ csrf_field() }}
-               @component('layouts.admin.search', ['title' => 'Pencarian'])
-                 @component('layouts.admin.two-cols-search-row', ['items' => ['Nama', 'Jabatan'],
-                 'oldVals' => [isset($searchingVals) ? $searchingVals['nama'] : '', isset($searchingVals) ? $searchingVals['pangkat'] : '']])
-                 @endcomponent
-               @endcomponent
-             </form>
+                @component('layouts.admin.search', ['title' => 'Pencarian'])
+                    <div class="form-group">
+                        <input value="{{ isset($searchingVals) ? $searchingVals['nama'] : '' }}" type="text" class="form-control" name="nama" id="nama" placeholder="Nama Pegawai">
+                    </div>
+
+                    {{-- @component('layouts.admin.two-cols-search-row', ['items' => ['Nama', 'Jabatan'],
+                 'oldVals' => [isset($searchingVals) ? $searchingVals['nama'] : '', isset($searchingVals) ? $searchingVals['jabatan'] : '']])
+                    @endcomponent --}}
+                @endcomponent
+            </form>
 
             <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
+                        @if (session()->has('success'))
+                            <div class="alert alert-success alert-block">
+                                <button type="button" class="close" data-dismiss="alert">x</button>
+                                {{ session()->get('success')}}
+                            </div>
+                        @endif
                         <table id="example2" class="table table-bordered table-hover dataTable" role="grid"
                             aria-describedby="example2_info">
                             <thead>
@@ -111,7 +116,7 @@
                                                 style="margin-left: 5px;">
                                                 Hapus
                                             </button>
-                                        <a id="resetsubmit{{$no}}" class="btn btn-warning btn-margin btn-sm"
+                                        <a id="resetsubmit{{$no}}" class="btn btn-info btn-margin btn-sm"
                                                 style="margin-left: 10px;">
                                                 Reset
                                             </a>
