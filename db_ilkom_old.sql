@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 19, 2020 at 08:37 PM
--- Server version: 10.4.13-MariaDB
--- PHP Version: 7.2.32
+-- Generation Time: Aug 18, 2020 at 06:20 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `master_db`
+-- Database: `db_ilkom`
 --
 
 -- --------------------------------------------------------
@@ -75,8 +76,7 @@ INSERT INTO `bukti_perjalanan` (`id`, `id_spd`, `nama`, `uploaded_at`, `id_user`
 (13, 1, '2hu5lp.jpg', '2020-01-29', '196906151997021002'),
 (14, 5, 'Tokped.pdf', '2020-01-30', '196811131994121001'),
 (15, 13, 'Cetak Slip Alamat.pdf', '2020-01-30', '760015717'),
-(16, 14, 'logojpnncom.png', '2020-02-01', '197004221995121000'),
-(17, 17, 'icons8-checked-user-female-64.png', '2020-08-19', '198511282015041000');
+(16, 14, 'logojpnncom.png', '2020-02-01', '197004221995121000');
 
 -- --------------------------------------------------------
 
@@ -2118,16 +2118,7 @@ INSERT INTO `dosen_tugas` (`id`, `id_sk`, `id_dosen`, `jabatan`) VALUES
 (80, 68, 760015717, 'Adaaa'),
 (82, 72, 197004221995121000, NULL),
 (83, 73, 196906151997021000, NULL),
-(84, 71, 197004221995121000, 'Ketua'),
-(85, 77, 196906151997021000, NULL),
-(86, 77, 197803302003121000, NULL),
-(87, 78, 760018029, NULL),
-(88, 80, 196909281993021000, NULL),
-(89, 81, 760018027, NULL),
-(90, 82, 196906151997021000, NULL),
-(91, 83, 198410242009122000, NULL),
-(92, 83, 198511282015041000, NULL),
-(93, 84, 198511282015041000, NULL);
+(84, 71, 197004221995121000, 'Ketua');
 
 -- --------------------------------------------------------
 
@@ -4423,9 +4414,7 @@ INSERT INTO `pemateri` (`id`, `id_sk`, `nama`, `instansi`, `biaya`) VALUES
 (48, 59, 'Erika', 'Dot', NULL),
 (49, 53, 'Jeriko', 'Dot', NULL),
 (50, 75, 'Samsul Ma\'rifat', 'Dot Indonesia', NULL),
-(51, 76, 'Ruri Masihan', 'Dot Indonesia', NULL),
-(52, 79, 'Rohman', 'Dot Indonesia', 500000),
-(53, 79, 'Bambang', 'Dot Indonesia', 500000);
+(51, 76, 'Ruri Masihan', 'Dot Indonesia', NULL);
 
 -- --------------------------------------------------------
 
@@ -4461,25 +4450,6 @@ CREATE TABLE `pengadaan` (
   `harga` int(11) NOT NULL,
   `id_laporan` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `penginapan`
---
-
-CREATE TABLE `penginapan` (
-  `id` int(11) NOT NULL,
-  `penginapan` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `penginapan`
---
-
-INSERT INTO `penginapan` (`id`, `penginapan`) VALUES
-(1, 'ya'),
-(2, 'tidak');
 
 -- --------------------------------------------------------
 
@@ -4690,10 +4660,7 @@ INSERT INTO `spd` (`id_spd`, `id_sk`, `id_jenis_kendaraan`, `asal`, `tujuan`, `u
 (11, 66, 2, 'Ajur', 'Ora', 100000, 1, NULL, 1, 10000),
 (12, 67, 2, 'Hahaha', 'Hehehe', 190000, 1, NULL, 1, 1000000),
 (13, 68, 2, 'Werrrr', 'Weeeer', 1300000, 1, 90000, 1, 90000),
-(14, 71, 2, 'Jember', 'Solo', 100000, 1, 50000, 1, 50000),
-(15, 80, 2, 'Jember', 'Bandung', 500000, 1, 100000, 1, 100000),
-(16, 82, 1, 'Jember', 'Bandung', 500000, 2, NULL, 2, NULL),
-(17, 83, 3, 'Jember', 'Bandung', 5000000, 1, 100000, 2, NULL);
+(14, 71, 2, 'Jember', 'Solo', 100000, 1, 50000, 1, 50000);
 
 -- --------------------------------------------------------
 
@@ -4859,28 +4826,19 @@ CREATE TABLE `surat_kepegawaian` (
   `status` tinyint(1) NOT NULL,
   `revisi` varchar(100) DEFAULT NULL,
   `surat_in_out` int(11) DEFAULT NULL,
-  `perjalanan` int(11) DEFAULT NULL,
-  `lokasi` varchar(100) DEFAULT NULL
+  `perjalanan` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `surat_kepegawaian`
 --
 
-INSERT INTO `surat_kepegawaian` (`id`, `nomor_surat`, `jenis_surat`, `keterangan`, `started_at`, `end_at`, `status`, `revisi`, `surat_in_out`, `perjalanan`, `lokasi`) VALUES
-(71, '121313', '2', 'Panitia Fasilkom Goes to Campus', '2020-01-30', '2020-01-31', 11, NULL, 1, 1, ''),
-(72, NULL, '2', 'Panitia 17 Agustus', '2020-01-30', '2020-01-31', 2, NULL, 1, 1, ''),
-(73, NULL, '2', 'Hahaha', '2020-01-31', '2020-01-31', 2, NULL, 1, 1, ''),
-(75, NULL, '3', 'Pelatihan Linux Fasilkom', '2020-01-30', '2020-01-31', 2, NULL, 2, 2, ''),
-(76, NULL, '3', 'Pelatihan Memancing', '2020-01-31', '2020-01-31', 2, NULL, 2, 2, ''),
-(77, '21312', '1', 'Lomba Memancing', '2020-08-22', '2020-08-24', 9, NULL, 1, 2, 'Bandung'),
-(78, NULL, '3', 'Memberi Makan Ikan', '2020-08-29', '2020-08-29', 2, NULL, 1, 2, 'Bandung'),
-(79, '24231', '3', 'Membangun Jembatan', '2020-08-21', '2020-08-22', 9, NULL, 2, 2, NULL),
-(80, '76534231', '1', 'Gerak Jalan', '2020-08-21', '2020-08-29', 9, NULL, 1, 1, 'Bandung'),
-(81, '21212', '1', 'Menangisi Mantan', '2020-08-28', '2020-08-29', 9, NULL, 1, 2, NULL),
-(82, '212121', '1', 'Makan Bandeng', '2020-08-20', '2020-08-22', 9, NULL, 1, 1, 'Bandung'),
-(83, '543', '1', 'Telkom Conference', '2020-08-29', '2020-08-29', 11, NULL, 1, 1, 'Bandung'),
-(84, '156543', '1', 'Jember', '2020-08-22', '2020-08-29', 9, NULL, 1, 2, NULL);
+INSERT INTO `surat_kepegawaian` (`id`, `nomor_surat`, `jenis_surat`, `keterangan`, `started_at`, `end_at`, `status`, `revisi`, `surat_in_out`, `perjalanan`) VALUES
+(71, '121313', '2', 'Panitia Fasilkom Goes to Campus', '2020-01-30', '2020-01-31', 11, NULL, 1, 1),
+(72, NULL, '2', 'Panitia 17 Agustus', '2020-01-30', '2020-01-31', 2, NULL, 1, 1),
+(73, NULL, '2', 'Hahaha', '2020-01-31', '2020-01-31', 2, NULL, 1, 1),
+(75, NULL, '3', 'Pelatihan Linux Fasilkom', '2020-01-30', '2020-01-31', 2, NULL, 2, 2),
+(76, NULL, '3', 'Pelatihan Memancing', '2020-01-31', '2020-01-31', 1, NULL, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -5242,12 +5200,6 @@ ALTER TABLE `pengadaan`
   ADD KEY `pengadaan_id_laporan_foreign` (`id_laporan`);
 
 --
--- Indexes for table `penginapan`
---
-ALTER TABLE `penginapan`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `perjalanan`
 --
 ALTER TABLE `perjalanan`
@@ -5417,7 +5369,7 @@ ALTER TABLE `bagian`
 -- AUTO_INCREMENT for table `bukti_perjalanan`
 --
 ALTER TABLE `bukti_perjalanan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `data_barang`
@@ -5453,7 +5405,7 @@ ALTER TABLE `detail_skripsi`
 -- AUTO_INCREMENT for table `dosen_tugas`
 --
 ALTER TABLE `dosen_tugas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `file_laporan`
@@ -5555,19 +5507,13 @@ ALTER TABLE `pangkat`
 -- AUTO_INCREMENT for table `pemateri`
 --
 ALTER TABLE `pemateri`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `pengadaan`
 --
 ALTER TABLE `pengadaan`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `penginapan`
---
-ALTER TABLE `penginapan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pinjam_barang`
@@ -5609,7 +5555,7 @@ ALTER TABLE `sk_skripsi`
 -- AUTO_INCREMENT for table `spd`
 --
 ALTER TABLE `spd`
-  MODIFY `id_spd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_spd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `status_barang`
@@ -5651,7 +5597,7 @@ ALTER TABLE `status_surat_tugas`
 -- AUTO_INCREMENT for table `surat_kepegawaian`
 --
 ALTER TABLE `surat_kepegawaian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `surat_tugas`

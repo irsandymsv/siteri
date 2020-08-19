@@ -67,10 +67,10 @@
                      </tr>
                   </table>    
                </div>
-               <div class="table-responsive">
+               <div class="table-responsive">@if ($spd != null)
                   <h3><b>Rincian Biaya</b></h3>
                   <table class="table table-striped table-bordered">
-               @if ($spd != null)
+               
              
                     <tr>
                         <td>Lama Perjalanan</td>
@@ -88,7 +88,7 @@
                         }
                         $harian = $lama * $spd->uang_harian;
                         $menginap = $lama * $spd->biaya_penginapan;
-                        $pendaftaran = $spd->biaya_pendaftaran;
+                        $pendaftaran = $spd->biaya_pendaftaran_acara;
                         $total = ($harian + $menginap + $pendaftaran);
                     @endphp   
                         <td>{{ $lama }} Hari</td>

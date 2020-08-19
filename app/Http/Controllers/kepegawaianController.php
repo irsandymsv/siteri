@@ -707,13 +707,21 @@ class kepegawaianController extends Controller
     public function dosen_index()
     {
         $user = Auth::user()->no_pegawai;
-        $surat_tugas = DB::table('spd')->join('surat_kepegawaian', 'spd.id_sk' , '=', 'surat_kepegawaian.id')->join('dosen_tugas','dosen_tugas.id_sk','=','surat_kepegawaian.id')
+        $dengan_spd = DB::table('spd')->join('surat_kepegawaian', 'spd.id_sk' , '=', 'surat_kepegawaian.id')->join('dosen_tugas','dosen_tugas.id_sk','=','surat_kepegawaian.id')
         ->where('surat_kepegawaian.status', 9)->where('dosen_tugas.id_dosen', $user)->get();
+        $tanpa_spd = DB::table('dosen_tugas')->join('surat_kepegawaian', 'dosen_tugas.id_sk' , '=', 'surat_kepegawaian.id')
+        ->where('surat_kepegawaian.status', 9)->where('dosen_tugas.id_dosen', $user)->get();
+        if (count($dengan_spd) > 0) {
+            $surat_tugas = $dengan_spd;
+        } else {
+            $surat_tugas = $tanpa_spd;
+        }
         $jenis = jenis_sk::all();
         $dosen_sk = dosen_tugas::all();
         $dosen = User::all();
         $pemateri = pemateri::all();
-
+        
+        // dd($surat_tugas);
         return view('dosen.surat_tugas.index', [
         'surat_tugas' => $surat_tugas,
         'dosen_sk' => $dosen_sk,
@@ -735,8 +743,6 @@ class kepegawaianController extends Controller
         $pemateri = pemateri::all();
         // $id = DB::table('spd')->join('surat_tugas', 'spd.id_sk' , '=', 'surat_tugas.id')->join('dosen_tugas','dosen_tugas.id_sk','=','surat_tugas.id')
         // ->where('surat_tugas.status', 9)->where('dosen_tugas.id_dosen', $user)->select('spd.id')->get();
-        
-
       
         return view('dosen.surat_tugas.upload', [
         'surat_tugas' => $surat_tugas,
