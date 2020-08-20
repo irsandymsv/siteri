@@ -31,175 +31,167 @@
 	<div class="row">
    	<div class="col-xs-12">
    		<div class="box box-primary">
+
    			<div class="box-header">
-               <h3 class="box-title">Detail Surat Tugas</h3>
-            </div>
+          <h3 class="box-title">Detail Surat Tugas</h3>
+        </div>
 
-            <div class="box-body">
-         		<div class="table-responsive">
-                  <table class="table table-striped table-bordered">
+        <div class="box-body">
+       		<div class="table-responsive">
+            <table class="table table-striped table-bordered">
 
-                     <tr>
-                        <td>No Surat</td>
-                        <td>{{ $spd->surat_tugas->nomor_surat}}</td>
-                     </tr>
-
-                     <tr>
-                        <td>Yang Bertugas</td>
-                        <td>
-                            @foreach ($dosen_tugas as $bertugas)
-                           <p>{{ $bertugas->user['nama'] }} - {{ $bertugas->user['no_pegawai'] }}</p>
-                           @endforeach
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>Tanggal Bertugas</td>
-                        <td>{{ Carbon\Carbon::parse($spd->surat_tugas->started_at)->locale('id_ID')->isoFormat('D MMMM Y') }} - {{ Carbon\Carbon::parse($spd->surat_tugas->end_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
-                     </tr>
-                     <tr>
-                        <td>Keterangan</td>
-                        <td>{{$spd->surat_tugas->keterangan}}</td>
-                     </tr>
-                     <tr>
-                        <td>Status</td>
-                        <td>{{$spd->surat_tugas->status_sk->status}}</td>
-                     </tr>
-                  </table>    
-               </div>
- <div class="col-md-8">
-   <div class="container lst">
-      @if (count($errors) > 0)
-      
-      <div class="alert alert-danger">
-      
-          <strong>Sorry!</strong> There were more problems with your HTML input.<br><br>
-      
-          <ul>
-      
-            @foreach ($errors->all() as $error)
-      
-                <li>{{ $error }}</li>
-      
-            @endforeach
-      
-          </ul>
-      
-      </div>
-      
-      @endif
-      
-      
-      @if(session('success'))
-      
-      <div class="alert alert-success">
-      
-        {{ session('success') }}
-      
-      </div> 
-      
-      @endif
-      @if ($spd->surat_tugas->status_sk->id != 10)
-      <h4>Upload Bukti Transportasi</h4>
-      <form method="post" action="{{route('dosen.file.upload', $spd->id_spd)}}" enctype="multipart/form-data">
-        {{csrf_field()}}
-          <div class="input-group siteri increment" >
-      
-            <input type="file" name="filenames[]" class="myfrm form-control">
-      
-            <div class="input-group-btn"> 
-      
-              <button class="btn btn-success" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Add</button>
-      
-            </div>
-      
+              <tr>
+                <td>No Surat</td>
+                <td>{{ $spd->surat_tugas->nomor_surat}}</td>
+              </tr>
+              <tr>
+                <td>Yang Bertugas</td>
+                <td>
+                    @foreach ($dosen_tugas as $bertugas)
+                   <p>{{ $bertugas->user['nama'] }} - {{ $bertugas->user['no_pegawai'] }}</p>
+                   @endforeach
+                </td>
+              </tr>
+              <tr>
+                <td>Tanggal Bertugas</td>
+                <td>{{ Carbon\Carbon::parse($spd->surat_tugas->started_at)->locale('id_ID')->isoFormat('D MMMM Y') }} - {{ Carbon\Carbon::parse($spd->surat_tugas->end_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
+              </tr>
+              <tr>
+                <td>Keterangan</td>
+                <td>{{$spd->surat_tugas->keterangan}}</td>
+              </tr>
+              <tr>
+                <td>Status</td>
+                <td>{{$spd->surat_tugas->status_sk->status}}</td>
+              </tr>
+            </table>
           </div>
-      
-          <div class="clone hide">
-      
-            <div class="siteri input-group" style="margin-top:10px">
-      
-              <input type="file" name="filenames[]" class="myfrm form-control">
-      
-              <div class="input-group-btn"> 
-      
-                <button class="btn btn-danger delete" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remove</button>
+        </div>
+
+        <div class="box-body" style="width: 90%; margin: auto;">
+          @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <strong>Sorry!</strong> There were more problems with your HTML input.<br><br>
+                <ul>
+            
+                  @foreach ($errors->all() as $error)
+            
+                      <li>{{ $error }}</li>
+            
+                  @endforeach
+            
+                </ul>
+            </div>
+          @endif
+          
+          @if(session('success'))
+            <div class="alert alert-success">
+              {{ session('success') }}
+            </div> 
+          @endif
+
+          @if ($spd->surat_tugas->status_sk->id != 10)
+            <h4>Upload Bukti Transportasi</h4>
+            <form method="post" action="{{route('dosen.file.upload', $spd->id_spd)}}" enctype="multipart/form-data">
+              {{csrf_field()}}
+              <div class="form-group">
+                <div class="input-group siteri increment">
+            
+                  <input type="file" name="transportasi[]" class="myfrm form-control">
+            
+                  <div class="input-group-btn"> 
+            
+                    <button class="btn btn-success"  id="transportasi" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Add</button>
+            
+                  </div>
+            
+                </div>
+            
+                <div class="clone hide" clone_name="transportasi">
+            
+                  <div class="siteri input-group" style="margin-top:10px">
+            
+                    <input type="file" name="transportasi[]" class="myfrm form-control">
+            
+                    <div class="input-group-btn"> 
+            
+                      <button class="btn btn-danger delete" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remove</button>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-primary" style="margin-top:10px">Submit</button>
-      </form>  
 
-      @if ($spd->biaya_penginapan != null)
-        <h4>Upload Bukti Penginapan</h4>
-      <form method="post" action="{{route('dosen.file.upload', $spd->id_spd)}}" enctype="multipart/form-data">
-        {{csrf_field()}}
-          <div class="input-group siteri increment" >
-      
-            <input type="file" name="filenames[]" class="myfrm form-control">
-      
-            <div class="input-group-btn"> 
-      
-              <button class="btn btn-success" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Add</button>
-      
-            </div>
-      
-          </div>
-      
-          <div class="clone hide">
-      
-            <div class="siteri input-group" style="margin-top:10px">
-      
-              <input type="file" name="filenames[]" class="myfrm form-control">
-      
-              <div class="input-group-btn"> 
-      
-                <button class="btn btn-danger delete" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remove</button>
+              <br>
+              @if ($spd->biaya_penginapan != null)
+              <div class="form-group">
+                <h4>Upload Bukti Penginapan</h4>
+                <div class="input-group siteri increment" >
+            
+                  <input type="file" name="penginapan[]" class="myfrm form-control">
+            
+                  <div class="input-group-btn"> 
+            
+                    <button class="btn btn-success" id="penginapan" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Add</button>
+            
+                  </div>
+            
+                </div>
+            
+                <div class="clone hide" clone_name="penginapan">
+            
+                  <div class="siteri input-group" style="margin-top:10px">
+            
+                    <input type="file" name="penginapan[]" class="myfrm form-control">
+            
+                    <div class="input-group-btn"> 
+            
+                      <button class="btn btn-danger delete" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remove</button>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-primary" style="margin-top:10px">Submit</button>
-      </form> 
-@elseif ($spd->biaya_pendaftaran != null)
-        <h4>Upload Bukti Pendaftaran</h4>
-      <form method="post" action="{{route('dosen.file.upload', $spd->id_spd)}}" enctype="multipart/form-data">
-        {{csrf_field()}}
-          <div class="input-group siteri increment" >
-      
-            <input type="file" name="filenames[]" class="myfrm form-control">
-      
-            <div class="input-group-btn"> 
-      
-              <button class="btn btn-success" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Add</button>
-      
-            </div>
-      
-          </div>
-      
-          <div class="clone hide">
-      
-            <div class="siteri input-group" style="margin-top:10px">
-      
-              <input type="file" name="filenames[]" class="myfrm form-control">
-      
-              <div class="input-group-btn"> 
-      
-                <button class="btn btn-danger delete" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remove</button>
+              @endif
+
+              <br>
+              @if ($spd->biaya_pendaftaran_acara != null)
+              <div class="form-group">  
+                <h4>Upload Bukti Pendaftaran</h4>
+                <div class="input-group siteri increment" >
+            
+                  <input type="file" name="pendaftaran[]" class="myfrm form-control">
+            
+                  <div class="input-group-btn"> 
+            
+                    <button class="btn btn-success" id="pendaftaran" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Add</button>
+            
+                  </div>
+            
+                </div>
+            
+                <div class="clone hide" clone_name="pendaftaran">
+            
+                  <div class="siteri input-group" style="margin-top:10px">
+            
+                    <input type="file" name="pendaftaran[]" class="myfrm form-control">
+            
+                    <div class="input-group-btn"> 
+            
+                      <button class="btn btn-danger delete" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remove</button>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary" style="margin-top:10px">Submit</button>
               </div>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-primary" style="margin-top:10px">Submit</button>
-      </form>        
-@endif  
-      @endif   
-      </div>
-               </div>
-</div>              
+              @endif
 
+            </form>
+          @endif   
+        </div>
 
-            <div  class="box-footer">
-               <a href="{{route('dosen.dosen_upload_index') }}" class="btn btn-default pull-right">Kembali</a>
-         
-            </div>
+        <div  class="box-footer">
+           <a href="{{route('dosen.dosen_upload_index') }}" class="btn btn-default pull-right">Kembali</a>
+        </div>
             
    		</div>
    	</div>
@@ -211,8 +203,10 @@
    <script type="text/javascript">
       $(document).ready(function() {
         $(".btn-success").click(function(){ 
-            var lsthmtl = $(".clone").html();
-            $(".increment").after(lsthmtl);
+          id = $(this).attr('id');
+          // console.log(id);
+          var lsthmtl = $("div[clone_name=" + id + "]").html();
+          $(this).parents(".increment").after(lsthmtl);
         });
   
         $("body").on("click",".delete",function(){ 

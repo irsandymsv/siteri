@@ -6,6 +6,9 @@
 @section('css_link')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+   //css preview surat tugas
+  <link rel="stylesheet" type="text/css" href="{{ asset('/css/surat_tugas_kepegawaian.css') }}">
+  
 	<style type="text/css">
 		.table-responsive{
          width: 90%;
@@ -70,6 +73,15 @@
                   </table>    
                </div>
             </div>
+
+            <!-- Jenis Surat -->
+            @if ($surat_tugas->jenis_surat == 1)
+            @include('kepegawaian.surat_tugas.jenis.peserta')
+            @elseif ($surat_tugas->jenis_surat == 2)
+            @include('kepegawaian.surat_tugas.jenis.panitia')
+            @else
+            @include('kepegawaian.surat_tugas.jenis.pemateri')
+            @endif
 
             <div  class="box-footer">
                <a href="{{ route('staffpim.index') }}" class="btn btn-default">Kembali</a>

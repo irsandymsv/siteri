@@ -428,11 +428,15 @@ class kepegawaianController extends Controller
         $surat_tugas = surat_kepegawaian::where('id', $id)->first();
         $dosen_tugas = dosen_tugas::where('id_sk', $surat_tugas->id)->get();
         $pemateri = pemateri::all();
+        $pematerinya= pemateri::where('id_sk', $id)->get();
+        $jumlah = count($pematerinya);
      
       return view('staff_pimpinan.surat_tugas.preview_print', [
         'surat_tugas' => $surat_tugas,
         'dosen_tugas' =>$dosen_tugas,
         'pemateri' => $pemateri,
+        'pematerinya' => $pematerinya,
+        'jumlah' => $jumlah
       ]);
     }
 
@@ -481,10 +485,15 @@ class kepegawaianController extends Controller
         $surat_tugas = surat_kepegawaian::where('id', $id)->first();
         $dosen_tugas = dosen_tugas::where('id_sk', $surat_tugas->id)->get();
         $pemateri = pemateri::all();
-      return view('akademik.preview.wadek2_view', [
+        $pematerinya= pemateri::where('id_sk', $id)->get();
+        $jumlah = count($pematerinya);
+
+      return view('wadek2.surat_tugas.preview_print', [
         'surat_tugas' => $surat_tugas,
         'dosen_tugas' =>$dosen_tugas,
         'pemateri' => $pemateri,
+        'pematerinya' => $pematerinya,
+        'jumlah' => $jumlah
       ]);
     }
 
@@ -649,13 +658,16 @@ class kepegawaianController extends Controller
         $dosen_tugas = dosen_tugas::where('id_sk', $id)->get();
         $pemateri = pemateri::where('id_sk', $id)->get();
         $spd = spd::where('id_sk', $id)->first();
-        
+        $pematerinya= pemateri::where('id_sk', $id)->get();
+        $jumlah = count($pematerinya);
 
       return view('bpp.surat_tugas.preview_surat', [
         'surat_tugas' => $surat_tugas,
         'dosen_tugas' =>$dosen_tugas,
         'pemateri' => $pemateri,
         'spd' => $spd,
+        'pematerinya' => $pematerinya,
+        'jumlah' => $jumlah
       ]);
     }
 

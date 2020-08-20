@@ -5,7 +5,7 @@
        </div>
 
        <div id="keterangan_kop">
-          <span class="header_14">KEMENTERIAN RISET, TEKNOLOGI, DAN PENDIDIKAN TINGGI</span><br>
+          <span class="header_14">KEMENTERIAN PENDIDIKAN DAN KEBUDAYAAN</span><br>
           <span class="header_14">UNIVERSITAS JEMBER</span><br>
           <span class="header_14">FAKULTAS ILMU KOMPUTER</span>
           <br>
@@ -38,7 +38,7 @@
       <tr>
           <td style="text-align: center; width: 10%">{{$key+1}}</td>
           <td><span>{{$dosen->user['nama']}}</span><br/><span>{{$dosen->user['no_pegawai']}}</span></td>
-          <td >{{$dosen->jabatan}}</td>
+          <td >{{$dosen->user->jabatannya['jabatan']}}</td>
       </tr>
       @endforeach
 

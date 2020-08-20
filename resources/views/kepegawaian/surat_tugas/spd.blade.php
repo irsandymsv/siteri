@@ -188,7 +188,7 @@
 
 					<input type="hidden" name="status" value="">
 					<div class="form-group" style="float: left;">
-						<button type="submit" name="simpan_kirim" class="btn btn-success">Buat Memu</button>
+						<button type="submit" name="simpan_kirim" class="btn btn-success">Buat SPD</button>
 					</div>
 				</div>
 			</form>
