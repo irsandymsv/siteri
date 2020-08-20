@@ -39,13 +39,13 @@
 </li>
 
 <li class="treeview">
-    <a href="#"><i class="fa fa-link"></i> <span>Memu</span>
+    <a href="#"><i class="fa fa-link"></i> <span>Memo</span>
       <span class="pull-right-container">
           <i class="fa fa-angle-left pull-right"></i>
         </span>
     </a>
     <ul class="treeview-menu">
-      <li><a href="{{ route('ktu.memu.index') }}">Lihat Memu</a></li>
+      <li><a href="{{ route('ktu.memu.index') }}">Lihat Memo</a></li>
     </ul>
 </li>
 <li class="treeview">

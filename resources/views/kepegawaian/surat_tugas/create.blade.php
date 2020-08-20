@@ -68,9 +68,9 @@
 								<td>
 									<select id="jenisSurat" name="jenisSurat" class="form-control">
                                     <option value="{{$surat->jenis_surat}}"> {{$surat->jenis_sk['jenis']}} </option>
-										@foreach ($jenis as $jenis)
+										{{-- @foreach ($jenis as $jenis)
 										<option value="{{$jenis->id}}">{{$jenis->jenis}}</option>
-										@endforeach
+										@endforeach --}}
 									</select>
 								</td>
 

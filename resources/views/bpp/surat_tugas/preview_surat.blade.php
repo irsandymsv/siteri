@@ -67,9 +67,10 @@
                      </tr>
                   </table>    
                </div>
-               <div class="table-responsive">@if ($spd != null)
-                  <h3><b>Rincian Biaya</b></h3>
+               <div class="table-responsive">
+                <h3><b>Rincian Biaya</b></h3>
                   <table class="table table-striped table-bordered">
+                @if ($spd != null)
                
              
                     <tr>
@@ -128,13 +129,15 @@
                       <td>Total Biaya per Orang</td>
                       <td>Rp. {{ $total}}</td>
                    </tr>
-                   @else
+                   
+                   @elseif($surat_tugas->surat_in_out == 2)
                    <!-- Pemateri -->
+                  
                    @foreach ($pemateri as $key => $pematerii)
                        
                    <tr>
-                    <td>Nama Pemateri {{$key}}</td>
-                   <td>{{$pematerii->nama}} - {{$pematerii->instansi}}</td>
+                    <td>Nama Pemateri {{$key+1}}</td>
+                   <td>{{ $pematerii->nama}} - {{ $pematerii->instansi}}</td>
                  </tr>
                
                  <tr>
@@ -146,7 +149,7 @@
                   @endforeach
 
                     @endif
-                   
+                   </div>
                 </table>    
              </div>
             </div>

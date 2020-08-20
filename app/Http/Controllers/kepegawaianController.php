@@ -270,7 +270,7 @@ class kepegawaianController extends Controller
         else if ($inout == 2){
             $insert = ([
                 'nomor_surat' => null,  
-                'jenis_surat' => $request->jenisSurat,
+                'jenis_surat' => 3,
                 'keterangan' => $request->keterangan,
                 'started_at' => $start_date,
                 'end_at' => $end_date,
@@ -471,7 +471,9 @@ class kepegawaianController extends Controller
         $surat = surat_kepegawaian::where('status', 7)->get();
         $dosen_sk = dosen_tugas::all();
         $pemateri = pemateri::all();
-        return view('wadek2.surat_tugas.index', compact('surat', 'dosen_sk', 'pemateri'));
+
+        $surat2 = surat_kepegawaian::where('status', 8)->get();
+        return view('wadek2.surat_tugas.index', compact('surat', 'surat2', 'dosen_sk', 'pemateri'));
     }
 
     public function wadek2_preview($id)

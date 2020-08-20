@@ -15,7 +15,7 @@
 
       table tr td:first-child{
          width: 25%;
-         font-weight: bold;: 
+         font-weight: bold; 
       }
       .siteri {
          width: 100%;
@@ -99,7 +99,68 @@
       
       @endif
       @if ($spd->surat_tugas->status_sk->id != 10)
-      <h4>Upload Bukti Perjalanan</h4>
+      <h4>Upload Bukti Transportasi</h4>
+      <form method="post" action="{{route('dosen.file.upload', $spd->id_spd)}}" enctype="multipart/form-data">
+        {{csrf_field()}}
+          <div class="input-group siteri increment" >
+      
+            <input type="file" name="filenames[]" class="myfrm form-control">
+      
+            <div class="input-group-btn"> 
+      
+              <button class="btn btn-success" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Add</button>
+      
+            </div>
+      
+          </div>
+      
+          <div class="clone hide">
+      
+            <div class="siteri input-group" style="margin-top:10px">
+      
+              <input type="file" name="filenames[]" class="myfrm form-control">
+      
+              <div class="input-group-btn"> 
+      
+                <button class="btn btn-danger delete" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remove</button>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="margin-top:10px">Submit</button>
+      </form>  
+
+      @if ($spd->biaya_penginapan != null)
+        <h4>Upload Bukti Penginapan</h4>
+      <form method="post" action="{{route('dosen.file.upload', $spd->id_spd)}}" enctype="multipart/form-data">
+        {{csrf_field()}}
+          <div class="input-group siteri increment" >
+      
+            <input type="file" name="filenames[]" class="myfrm form-control">
+      
+            <div class="input-group-btn"> 
+      
+              <button class="btn btn-success" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Add</button>
+      
+            </div>
+      
+          </div>
+      
+          <div class="clone hide">
+      
+            <div class="siteri input-group" style="margin-top:10px">
+      
+              <input type="file" name="filenames[]" class="myfrm form-control">
+      
+              <div class="input-group-btn"> 
+      
+                <button class="btn btn-danger delete" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remove</button>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="margin-top:10px">Submit</button>
+      </form> 
+@elseif ($spd->biaya_pendaftaran != null)
+        <h4>Upload Bukti Pendaftaran</h4>
       <form method="post" action="{{route('dosen.file.upload', $spd->id_spd)}}" enctype="multipart/form-data">
         {{csrf_field()}}
           <div class="input-group siteri increment" >
@@ -128,6 +189,7 @@
           </div>
           <button type="submit" class="btn btn-primary" style="margin-top:10px">Submit</button>
       </form>        
+@endif  
       @endif   
       </div>
                </div>

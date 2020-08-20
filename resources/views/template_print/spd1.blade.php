@@ -223,7 +223,7 @@ td, th {
             @php
                 $to = \Carbon\Carbon::createFromFormat('Y-m-d', $surat_tugas->started_at);
                 $from = \Carbon\Carbon::createFromFormat('Y-m-d', $surat_tugas->end_at);
-                $lama = $to->diffInDays($from);
+                $lama = $to->diffInDays($from)+1;
             @endphp
             <li> {{ $lama }} Hari</li>
             <li>{{ Carbon\Carbon::parse($surat_tugas->started_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</li>
@@ -288,10 +288,10 @@ td, th {
             <span ><b>Prof. Dr. Saiful Bukhori, ST., M.Kom</b></span><br>
             <span>NIP. 196811131994121001</span>
          </div>
-         <p style="clear: both;">Tembusan: </p>
+         <p style="clear: both; font-size: 9pt">Tembusan: </p>
          <ol>
-            <li>Kepala Bagian Keuangan Univ. Jember;</li>
-            <li>Pegawai yang Bersangkutan</li>
+            <li style="font-size: 9pt">Kepala Bagian Keuangan Univ. Jember;</li>
+            <li style="font-size: 9pt">Pegawai yang Bersangkutan</li>
          </ol>
       </div>
    </div>

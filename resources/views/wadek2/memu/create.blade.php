@@ -34,7 +34,7 @@
 							<thead>
 								<tr>
 									<th>Yang Bertugas</th>
-									<th>Tujuan</th>
+									<th>Melakukan Dinas Perjalanan</th>
 								</tr>
 							</thead>
 
@@ -172,7 +172,7 @@
 
 					<input type="hidden" name="status" value="">
 					<div class="form-group" style="float: left;">
-						<button id="submit" type="submit" name="simpan_kirim" class="btn btn-success">Buat Memu</button>
+						<button id="submit" type="submit" name="simpan_kirim" class="btn btn-success">Buat Memo</button>
 					</div>
 				</div>
 			</form>
@@ -229,6 +229,8 @@
 		if ($("#surat_in_out").val() == 2 ) {
 			$('#perjalanan').val("2").change();
 			$("#perjalanan").prop("disabled", true);
+			$('#jenisSurat').val("3").change();
+			$("#jenisSurat").prop("disabled", true);
 			$("#dosen").prop("disabled", true);
 			$('#keterangan, #datepicker, #pemateri, #datepicker2, #submit, #instansi').removeAttr("disabled");
 			$('#jenisSurat').val("3").change();
