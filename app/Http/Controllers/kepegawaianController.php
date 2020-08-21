@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
+use App\Rules\OrUploadBukti;
 
 class kepegawaianController extends Controller
 {
@@ -960,12 +961,14 @@ class kepegawaianController extends Controller
     {
 
         $error = [
-            'required_with'=> 'Bukti :attribute Harus Diisi'
+             'transportasi' => 'Salah Satu Bukti Harus Diisi.',
+             'penginapan' => 'Salah Satu Bukti Harus Diisi.',
+             'pendaftaran' => 'Salah Satu Bukti Harus Diisi.'
         ];
         $this->validate($request, [
-                'transportasi' => 'required_with:transport',
-                'penginapan' => 'required_with:nginap',
-                'pendaftaran' => 'required_with:daftar',
+                'transportasi' => 'required_without_all:penginapan,pendaftaran',
+                'penginapan' => 'required_without_all:transportasi,pendaftaran',
+                'pendaftaran' => 'required_without_all:penginapan,transportasi',
                 'transportasi.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,webp,xls,xlsx',
                 'penginapan.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,webp,xls,xlsx',
                 'pendaftaran.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,webp,xls,xlsx'
