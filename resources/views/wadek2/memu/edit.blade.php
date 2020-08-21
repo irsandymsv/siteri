@@ -50,26 +50,28 @@
 							<thead>
 								<tr>
 									<th>Yang Bertugas</th>
-									<th>Tujuan</th>
+									<th>Melakukan Dinas Perjalanan</th>
 								</tr>
 							</thead>
 
 							<tbody>
 								<td>
-									<select id="perjalanan" name="perjalanan" class="form-control" disabled>
+									<select id="surat_in_out" name="surat_in_out" class="form-control" disabled>
 									<option value="{{$surat->surat_in_out}}" required>{{$surat->surat_in_outs['nama']}}</option>
 										@foreach ($inout as $inout)
 										<option value="{{$inout->id}}">{{$inout->nama}}</option>
 										@endforeach
 									</select>
+									<input type="hidden" name="surat_in_out" value="{{ $surat->surat_in_out }}">
 								</td>
 								<td>
-									<select id="surat_in_out" name="surat_in_out" class="form-control" disabled>
+									<select id="perjalanan" name="perjalanan" class="form-control" disabled>
 									<option value="{{$surat->perjalanan}}" required>{{$surat->perjalanans['nama']}}</option>
 										@foreach ($perjalanan as $perjalanan)
 										<option value="{{$perjalanan->id}}">{{$perjalanan->nama}}</option>
 										@endforeach
 									</select>
+									<input type="hidden" name="perjalanan" value="{{ $surat->perjalanan }}">
 								</td>
 								
 							</tbody>
@@ -82,39 +84,52 @@
 
 							<tbody>
 								<td>
-									<select name="jenisSurat" class="form-control">
-                                    <option value="{{$surat->jenis_surat}}"> {{$surat->jenis_sk['jenis']}} </option>
+									<select name="jenisSurat" class="form-control" {{ ($surat->surat_in_out == 2)? 'disabled':'' }}>
+                    {{-- <option value="{{$surat->jenis_surat}}"> {{$surat->jenis_sk['jenis']}} </option> --}}
+                    <option value="">- Pilih Jenis -</option>
 										@foreach ($jenis as $jenis)
-										<option value="{{$jenis->id}}">{{$jenis->jenis}}</option>
+										<option value="{{$jenis->id}}" {{ ($jenis->id == $surat->jenis_surat)? 'selected':'' }}>{{$jenis->jenis}}</option>
 										@endforeach
 									</select>
+
+									@if ($surat->surat_in_out == 2)
+										<input type="hidden" name="jenisSurat" value="{{$surat->jenis_surat}}">
+									@endif
+
+									@error('jenisSurat')
+									  <p class="invalid-feedback" role="alert" style="color: red;">
+									    <strong>{{ $message }}</strong>
+									  </p>
+									@enderror
 								</td>
 
 								<td>
-									<textarea class="form-control" rows="3" name="keterangan"
-                                placeholder="Nama Acara">{{$surat->keterangan}}</textarea>
+									<textarea class="form-control" rows="3" name="keterangan" placeholder="Nama Acara">{{$surat->keterangan}}</textarea>
+
+									@error('keterangan')
+									  <p class="invalid-feedback" role="alert" style="color: red;">
+									    <strong>{{ $message }}</strong>
+									  </p>
+									@enderror
 								</td>
 							</tbody>
 
 							<thead>
 								<tr>
-                                <th>
-									@if (count($pemateri) == null)
-									Nama Dosen
-									@else
-									Pemateri
-									@endif
+                  <th>
+										@if (count($pemateri) == null)
+										Ubah Dosen
+										@else
+										Pemateri
+										@endif
 									</th>
-                                <th>
-									@if (count($dosen_sk) > 1)
-									Dosen yang bertugas
-									@else
-									
-									@endif	
-								</th>
-                              
-                                </tr>
-                                      
+                  <th>
+										@if (count($dosen_sk) > 0)
+										Dosen yang bertugas
+										@else
+										@endif	
+									</th>
+                </tr>
 							</thead>
 
 							<tbody>
@@ -129,41 +144,71 @@
 									<p>
 										<div id="people-container">
 											@foreach ($pemateri as $undangan)
-										<p id="{{$undangan->id}}">
-												<input style="margin-bottom: 10px;" id="pemateri" class="form-control" name="pemateri[]" value="{{$undangan->nama}}">
-												<a href="#" onclick="hapusPemateri({{$undangan->id}})"><i class="fa fa-close delicon"></i></a>
-											{{-- <span id="id_pemateri" type="hidden">{{$undangan->id}}</span> --}}
+											<p id="{{$undangan->id}}">
+													<input style="margin-bottom: 10px;" id="pemateri" class="form-control" name="pemateri[]" value="{{$undangan->nama}}">
+													<a href="#" onclick="hapusPemateri({{$undangan->id}})"><i class="fa fa-close delicon"></i></a>
+												{{-- <span id="id_pemateri" type="hidden">{{$undangan->id}}</span> --}}
 											</p>
 											@endforeach	
 										</div>								
 										
 										<a href="javascript:;" id="tambahPemateri" class="tambahPemateri"><i class="fa fa-plus"></i> Tambah</a>	
 									</p>
+									@error('pemateri')
+									  <p class="invalid-feedback" role="alert" style="color: red;">
+									    <strong>{{ $message }}</strong>
+									  </p>
+									@enderror
+									@error('pemateri.*')
+									  <p class="invalid-feedback" role="alert" style="color: red;">
+									    <strong>{{ $message }}</strong>
+									  </p>
+									@enderror
 									@endif
                                         
-                                </td>
-                                <td>
-                                    @foreach ($dosen_sk as $dosen)
-                                <p style="margin-top: 2px; margin-left: 5px;">{{$dosen->user['nama']}}</p>
+                </td>
+                <td>
+                  @foreach ($dosen_sk as $dosen)
+                	<p style="margin-top: 2px; margin-left: 5px;">{{$dosen->user['nama']}}</p>
 									@endforeach
-									
-                                    </td>
+                </td>
 							</tbody>
 
 							<thead>
 								<tr>
 									<th>Lokasi</th>
-									<th></th>
+									<th>{{ ($surat->surat_in_out == 2)? 'Instansi':'' }}</th>
 								</tr>
 							</thead>
 
 							<tbody>
 								<td>
-										<input class="form-control" style="width: 80%" type="text" name="lokasi" placeholder="Lokasi tujuan" value="{{$surat->lokasi}}">	
+									<div class="form-group">
+										<input class="form-control" style="width: 80%" type="text" name="lokasi" placeholder="Lokasi tujuan" value="{{$surat->lokasi}}" {{ ($surat->perjalanan == 2)? 'disabled':'' }}>	
 										<!-- /.input group -->	
 									</div>
+
+									@error('lokasi')
+									  <p class="invalid-feedback" role="alert" style="color: red;">
+									    <strong>{{ $message }}</strong>
+									  </p>
+									@enderror
 								</td>
+
 								<td>
+									@if ($surat->surat_in_out == 2)
+									<div id="people-container">
+										<p>
+											<input id="instansi" class="form-control" name="instansi" placeholder="Nama Instansi" value="{{ $pemateri[0]->instansi }}" {{ ($surat->surat_in_out == 1)? 'disabled':'' }}>
+										</p>
+
+										@error('instansi')
+										  <p class="invalid-feedback" role="alert" style="color: red;">
+										    <strong>{{ $message }}</strong>
+										  </p>
+										@enderror
+									</div>
+									@endif
 								</td>
 							</tbody>
 
@@ -184,9 +229,15 @@
 											<div class="input-group-addon">
 												<i class="fa fa-calendar"></i>
 											</div>
-                                        <input type="text" value="{{\Carbon\Carbon::parse($surat->started_at)->format('Y/m/d')}}" class="form-control pull-right datepicker" name="started_at" id="datepicker">
+                      <input type="text"  value="{{\Carbon\Carbon::parse($surat->started_at)->format('m/d/Y')}}" class="form-control pull-right datepicker" name="started_at" id="datepicker" autocomplete="off">
 										</div>
 										<!-- /.input group -->	
+
+										@error('started_at')
+										  <p class="invalid-feedback" role="alert" style="color: red;">
+										    <strong>{{ $message }}</strong>
+										  </p>
+										@enderror
 									</div>
 								</td>
 								<td>
@@ -198,9 +249,15 @@
 											<div class="input-group-addon">
 												<i class="fa fa-calendar"></i>
 											</div>
-											<input type="text" value="{{\Carbon\Carbon::parse($surat->end_at)->format('Y/m/d')}}" class="form-control pull-right datepicker" name="end_at" id="datepicker2">
+											<input type="text" value="{{\Carbon\Carbon::parse($surat->end_at)->format('m/d/Y')}}" class="form-control pull-right datepicker" name="end_at" id="datepicker2" autocomplete="off">
 										</div>
 										<!-- /.input group -->
+
+										@error('end_at')
+										  <p class="invalid-feedback" role="alert" style="color: red;">
+										    <strong>{{ $message }}</strong>
+										  </p>
+										@enderror
 									</div>
 								</td>
 							</tbody>
@@ -221,29 +278,29 @@
 
 	@section('script')
 	<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
-
-<script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script> 
+	<script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script> 
 	<script type="text/javascript">
 		$(document).ready(function() {
-    $('.js-example-basic-multiple').select2();
-});
+    	$('.js-example-basic-multiple').select2();
+		});
 	</script>
 
 <script type="text/javascript">
 	$('#datepicker').datepicker({
-	minDate: 0,
-	autoclose: true,
-	onClose: function( selectedDate ) {
-	$( "#datepicker2" ).datepicker( "option", "minDate", selectedDate );
-  }
-	})
+		minDate: 0,
+		autoclose: true,
+		onClose: function( selectedDate ) {
+			$( "#datepicker2" ).datepicker( "option", "minDate", selectedDate );
+	  }
+	});
+
 	$('#datepicker2').datepicker({
-	minDate: 0,
-	autoclose: true,
-	onClose: function( selectedDate ) {
-	$( "#datepicker" ).datepicker( "option", "maxDate", selectedDate );
-  }
-	})
+		minDate: 0,
+		autoclose: true,
+		onClose: function( selectedDate ) {
+			$( "#datepicker" ).datepicker( "option", "maxDate", selectedDate );
+		  }
+	});
 	</script>
 	
 <script>

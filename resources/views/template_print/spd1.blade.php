@@ -133,7 +133,7 @@ td, th {
 		<div id="kop_surat">
 
          <div style="margin-bottom: 10px;" id="keterangan_kop">
-            <span class="header_14">KEMENTERIAN : RISET TEKNOLOGI</span> <br>
+            <span class="header_14">KEMENTERIAN : PENDIDIKAN DAN KEBUDAYAAN</span> <br>
             <span class="header_14">DIREKTORAT JENDERAL : PENDIDIKAN TINGGI</span><br>
             <span class="header_14">FAKULTAS ILMU KOMPUTER</span>
          </div>
@@ -285,8 +285,8 @@ td, th {
             Fakultas Ilmu Komputer <br>
             Dekan,
             <br><br><br><br><br>
-            <span ><b>Prof. Dr. Saiful Bukhori, ST., M.Kom</b></span><br>
-            <span>NIP. 196811131994121001</span>
+            <span ><b>{{ $dekan->nama }}</b></span><br>
+            <span>NIP. {{ $dekan->no_pegawai }}</span>
          </div>
          <p style="clear: both; font-size: 9pt">Tembusan: </p>
          <ol>
@@ -319,8 +319,8 @@ td, th {
             <span class="">Universitas Jember</span><br>
             <span class="">Fakultas Ilmu Komputer</span><br>
             <span class="">Dekan,</span><br><br><br><br>
-            <span class="">(Prof. Dr. Saiful Bukhori, ST., M.Kom)</span><br>
-            <span class="">NIP. 196811131994121001</span>
+            <span class="">({{ $dekan->nama }})</span><br>
+            <span class="">NIP. {{ $dekan->no_pegawai }}</span>
          </p>
          <table id="tabel">
 	<tbody>
@@ -379,15 +379,15 @@ td, th {
             <span class="">Universitas Jember</span><br>
             <span class="">Fakultas Ilmu Komputer</span><br>
             <span class="">Dekan,</span><br><br><br><br><br>
-            <span class="">(Prof. Dr. Saiful Bukhori, ST., M.Kom)</span><br>
-            <span class="">NIP. 196811131994121001</span>
+            <span class="">({{ $dekan->nama }})</span><br>
+            <span class="">NIP. {{ $dekan->no_pegawai }}</span>
          </td>
          <td colspan=2><span>Telah diperiksa dengan keterangan bahwa perjalanan tersebut atas perintahnya dan semata-mata untuk kepentingan jabatan dalam waktu yang sesingkat-singkatnya</span><br><br>
             <span>Universitas Jember</span><br>
             <span>Fakultas Ilmu Komputer</span><br>
             <span>Dekan,</span><br><br><br><br><br>
-            <span>(Prof. Dr. Saiful Bukhori, ST., M.Kom)</span><br>
-            <span>NIP. 196811131994121001</span>
+            <span>({{ $dekan->nama }})</span><br>
+            <span>NIP. {{ $dekan->no_pegawai }}</span>
       </tr>
       <tr>
          <td>V</td>

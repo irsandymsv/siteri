@@ -19,6 +19,14 @@
 	.js-example-basic-multiple {
 		width: 50%;
 	}
+
+	.delicon {
+    float: right;
+    margin-right: 6px;
+    margin-top: -33px;
+    position: relative;
+    z-index: 2;
+	}
 </style>
 @endsection
 
@@ -43,17 +51,33 @@
 									<select id="surat_in_out" name="surat_in_out" class="form-control">
 										<option required>- Pilih Jenis -</option>
 										@foreach ($surat as $inout)
-										<option value="{{$inout->id}}">{{$inout->nama}}</option>
+										<option value="{{$inout->id}}" {{ (old('surat_in_out') == $inout->id)? 'selected':'' }}>
+											{{$inout->nama}}
+										</option>
 										@endforeach
 									</select>
+
+									@error('surat_in_out')
+									  <span class="invalid-feedback" role="alert" style="color: red;">
+									    <strong>{{ $message }}</strong>
+									  </span>
+									@enderror
 								</td>
 								<td>
 									<select id="perjalanan" name="perjalanan" class="form-control">
 										<option required>- Pilih Jenis -</option>
 										@foreach ($perjalanan as $perjalanan)
-										<option value="{{$perjalanan->id}}">{{$perjalanan->nama}}</option>
+										<option value="{{$perjalanan->id}}" {{ (old('perjalanan') == $perjalanan->id)? 'selected':'' }}>
+											{{$perjalanan->nama}}
+										</option>
 										@endforeach
 									</select>
+
+									@error('perjalanan')
+									  <span class="invalid-feedback" role="alert" style="color: red;">
+									    <strong>{{ $message }}</strong>
+									  </span>
+									@enderror
 								</td>
 							</tbody>
 							<thead>
@@ -68,14 +92,26 @@
 									<select id="jenisSurat" name="jenisSurat" class="form-control">
 										<option>- Pilih Jenis -</option>
 										@foreach ($jenis as $jenis)
-										<option value="{{$jenis->id}}">{{$jenis->jenis}}</option>
+										<option value="{{$jenis->id}}" {{ (old('jenisSurat') == $jenis->id)? 'selected':'' }}>
+											{{$jenis->jenis}}
+										</option>
 										@endforeach
 									</select>
+
+									@error('jenisSurat')
+									  <span class="invalid-feedback" role="alert" style="color: red;">
+									    <strong>{{ $message }}</strong>
+									  </span>
+									@enderror
 								</td>
 
 								<td>
-									<textarea id="keterangan" class="form-control" rows="3" name="keterangan"
-										placeholder="Nama Acara"></textarea>
+									<textarea id="keterangan" class="form-control" rows="3" name="keterangan" placeholder="Nama Acara">{{ old('keterangan') }}</textarea>
+									@error('keterangan')
+									  <span class="invalid-feedback" role="alert" style="color: red;">
+									    <strong>{{ $message }}</strong>
+									  </span>
+									@enderror
 								</td>
 							</tbody>
 
@@ -93,6 +129,13 @@
 										<option value="{{$dosen->no_pegawai}}">{{$dosen->nama}}</option>
 										@endforeach
 									</select>
+
+									@error('dosen')
+										<br>
+									  <span class="invalid-feedback" role="alert" style="color: red;">
+									    <strong>{{ $message }}</strong>
+									  </span>
+									@enderror
 								</td>
 								<td>
 									<div id="people-container">
@@ -101,6 +144,12 @@
 										</p>	
 									</div>
 									<a href="javascript:;" id="tambahPemateri" class="tambahPemateri"><i class="fa fa-plus"></i> Tambah</a>
+
+									@error('pemateri.*')
+									  <p class="invalid-feedback" role="alert" style="color: red;">
+									    <strong>{{ $message }}</strong>
+									  </p>
+									@enderror
 								</td>
 							</tbody>
 
@@ -115,17 +164,27 @@
 								<td>
 									<div id="people-container">
 										<p>
-											<input id="lokasi" class="form-control" name="lokasi" placeholder="Lokasi">
+											<input id="lokasi" class="form-control" name="lokasi" placeholder="Lokasi" value="{{ (old('lokasi')) }}">
 										</p>	
 									</div>
+									@error('lokasi')
+									  <span class="invalid-feedback" role="alert" style="color: red;">
+									    <strong>{{ $message }}</strong>
+									  </span>
+									@enderror
 								</td>
 								<td>
 									<div id="people-container">
 										<p>
-											<input id="instansi" class="form-control" name="instansi" placeholder="Nama Instansi">
-										</p>	
+											<input id="instansi" class="form-control" name="instansi" placeholder="Nama Instansi" value="{{ (old('instansi')) }}">
+										</p>
+
+										@error('instansi')
+										  <p class="invalid-feedback" role="alert" style="color: red;">
+										    <strong>{{ $message }}</strong>
+										  </p>
+										@enderror
 									</div>
-									
 								</td>
 							</tbody>
 
@@ -146,9 +205,15 @@
 											<div class="input-group-addon">
 												<i class="fa fa-calendar"></i>
 											</div>
-											<input type="text" class="form-control pull-right" name="started_at" id="datepicker">
+											<input type="text" class="form-control pull-right" name="started_at" id="datepicker" autocomplete="off" value="{{ old('started_at') }}">
 										</div>
 										<!-- /.input group -->
+
+										@error('started_at')
+										  <span class="invalid-feedback" role="alert" style="color: red;">
+										    <strong>{{ $message }}</strong>
+										  </span>
+										@enderror
 									</div>
 								</td>
 								<td>
@@ -160,9 +225,15 @@
 											<div class="input-group-addon">
 												<i class="fa fa-calendar"></i>
 											</div>
-											<input type="text" class="form-control pull-right" name="end_at" id="datepicker2">
+											<input type="text" class="form-control pull-right" name="end_at" id="datepicker2" autocomplete="off" value="{{ old('end_at') }}">
 										</div>
 										<!-- /.input group -->
+
+										@error('end_at')
+										  <span class="invalid-feedback" role="alert" style="color: red;">
+										    <strong>{{ $message }}</strong>
+										  </span>
+										@enderror
 									</div>
 								</td>
 							</tbody>
@@ -186,25 +257,26 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-    $('.js-example-basic-multiple').select2();
-});
+    	$('.js-example-basic-multiple').select2();
+		});
 	</script>
 	
 	<script type="text/javascript">
 		$('#datepicker').datepicker({
-		minDate: 0,
-		autoclose: true,
-		onClose: function( selectedDate ) {
+			minDate: 0,
+			autoclose: true,
+			onClose: function( selectedDate ) {
         $( "#datepicker2" ).datepicker( "option", "minDate", selectedDate );
       }
-		})
+		});
+
 		$('#datepicker2').datepicker({
-		minDate: 0,
-		autoclose: true,
-		onClose: function( selectedDate ) {
+			minDate: 0,
+			autoclose: true,
+			onClose: function( selectedDate ) {
         $( "#datepicker" ).datepicker( "option", "maxDate", selectedDate );
       }
-		})
+		});
 		</script>
 
 <script>
@@ -215,46 +287,94 @@
 
 	$(function(){
     $("#surat_in_out").change(function(){
-		$("#formInput :input").prop("disabled", false);
-        if ( $("#surat_in_out").val() == 1 ) {
-            $('#perjalanan').removeAttr("disabled");
-            $('#perjalanan').on("change",function() {
-                $('#perjalanan').val($(this).val());
+			$("#formInput :input").prop("disabled", false);
+      if ( $("#surat_in_out").val() == 1 ) {
+        $('#perjalanan').removeAttr("disabled");
+        $('#perjalanan').on("change",function() {
+            $('#perjalanan').val($(this).val());
+				});
+				$("#pemateri").prop("disabled", true);
+				$("#dosen").prop("disabled", false);
+				$("#instansi").prop("disabled", true);
+
+				if ($("#perjalanan").val() == 1) {
+					$('#lokasi').prop("disabled", false);
+				} else {
+					$('#lokasi').prop("disabled", true);
+				}
+      }
+
+			if ($("#surat_in_out").val() == 2 ) {
+				$('#perjalanan').val("2").change();
+				$("#perjalanan").prop("disabled", true);
+				$('#jenisSurat').val("3").change();
+				$("#jenisSurat").prop("disabled", true);
+				$("#dosen").prop("disabled", true);
+				$('#keterangan, #datepicker, #pemateri, #datepicker2, #submit, #instansi').removeAttr("disabled");
+				// $('#jenisSurat').val("3").change();
+	    }
+    });
+	
+	  $("#perjalanan").change(function(){
+	    if ($("#perjalanan").val() == 1 ) {
+				$('#jenisSurat, #keterangan, #dosen, #datepicker, #datepicker2, #submit').removeAttr("disabled");
+				$('#lokasi').prop("disabled", false);
+	      $('#jenisSurat').on("change",function() {
+	        $('#jenisSurat').val($(this).val());
+	      });
+	    }
+	    else if ($("#perjalanan").val() == 2 ) {
+				$('#jenisSurat, #keterangan, #dosen, #datepicker, #datepicker2, #submit').removeAttr("disabled");
+				$('#lokasi').prop("disabled", true);
+	      $('#jenisSurat').on("change",function() {
+	          $('#jenisSurat').val($(this).val());
+	      });
+	    }
+	  });
+
+	  //Ketika tidak lolos validasi di server
+	  inout_old = @json(old('surat_in_out'));
+	  perjalanan_old = @json(old('perjalanan'));
+    if ( inout_old == 1 ) {
+      $('#perjalanan').removeAttr("disabled");
+      $('#perjalanan').on("change",function() {
+          $('#perjalanan').val($(this).val());
 			});
 			$("#pemateri").prop("disabled", true);
 			$("#dosen").prop("disabled", false);
 			$("#instansi").prop("disabled", true);
-        }
 
-		if ($("#surat_in_out").val() == 2 ) {
+			if ($("#perjalanan").val() == 1) {
+				$('#lokasi').prop("disabled", false);
+			} else {
+				$('#lokasi').prop("disabled", true);
+			}
+    }
+		else if (inout_old == 2 ) {
 			$('#perjalanan').val("2").change();
 			$("#perjalanan").prop("disabled", true);
 			$('#jenisSurat').val("3").change();
 			$("#jenisSurat").prop("disabled", true);
 			$("#dosen").prop("disabled", true);
 			$('#keterangan, #datepicker, #pemateri, #datepicker2, #submit, #instansi').removeAttr("disabled");
-			$('#jenisSurat').val("3").change();
-        }
-    });
-});
+			// $('#jenisSurat').val("3").change();
+    }
 
-$(function(){
-    $("#perjalanan").change(function(){
-        if ($("#perjalanan").val() == 1 ) {
+    if (perjalanan_old == 1 ) {
 			$('#jenisSurat, #keterangan, #dosen, #datepicker, #datepicker2, #submit').removeAttr("disabled");
-            $('#jenisSurat').on("change",function() {
-                $('#jenisSurat').val($(this).val());
-            });
-        }
-        else if ($("#perjalanan").val() == 2 ) {
+			$('#lokasi').prop("disabled", false);
+      $('#jenisSurat').on("change",function() {
+        $('#jenisSurat').val($(this).val());
+      });
+    }
+    else if (perjalanan_old == 2 ) {
 			$('#jenisSurat, #keterangan, #dosen, #datepicker, #datepicker2, #submit').removeAttr("disabled");
 			$('#lokasi').prop("disabled", true);
-            $('#jenisSurat').on("change",function() {
-                $('#jenisSurat').val($(this).val());
-            });
-        }
-    });
-});
+      $('#jenisSurat').on("change",function() {
+          $('#jenisSurat').val($(this).val());
+      });
+    }
+	});
 </script>
 
 <script>
@@ -262,8 +382,9 @@ $(function(){
 let i = 2;
 document.getElementById('tambahPemateri').onclick = function () {
     let template = `
-        <p>
+        <p id="${i}">
             <input id="pemateri" class="form-control" name="pemateri[]" placeholder="Nama Pemateri ${i}" >
+            <a href="#" onclick="hapusPemateri(${i})"><i class="fa fa-close delicon"></i></a>
         </p>`;
 
     let container = document.getElementById('people-container');
@@ -272,6 +393,12 @@ document.getElementById('tambahPemateri').onclick = function () {
     container.appendChild(div);
 
     i++;
+}
+
+function hapusPemateri(id)
+{
+	$('#'+id).remove();
+	i--;
 }
 </script>
 

@@ -23,6 +23,10 @@ use DB;
 use Carbon\Carbon;
 use PDF;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
+
 class kepegawaianController extends Controller
 {
     public function index()
@@ -43,7 +47,8 @@ class kepegawaianController extends Controller
 
     public function memu()
     {
-        $memu = surat_kepegawaian::where('status', 1)->get();
+        // $memu = surat_kepegawaian::where('status', 1)->get();
+        $memu = surat_kepegawaian::orderBy('id', 'desc')->get();
         $dosen_sk = dosen_tugas::all();
         $pemateri = pemateri::all();
 
@@ -212,7 +217,38 @@ class kepegawaianController extends Controller
 
     public function saveMemu(Request $request)
     {
-       
+        // dd($request->all());
+        $validator = validator::make($request->all(), [
+            'surat_in_out' => 'required',
+            'keterangan' => 'required',
+            'started_at' => 'required',
+            'end_at' => 'required'
+        ]);
+
+        $validator->sometimes('jenisSurat', 'required', function($request){
+            return $request->surat_in_out == 1;
+        });
+
+        $validator->sometimes(['dosen', 'dosen.*'], 'required', function($request){
+            return $request->surat_in_out == 1;
+        });
+
+        $validator->sometimes(['pemateri', 'pemateri.*'], 'required', function($request){
+            return $request->surat_in_out == 2;
+        });
+
+        $validator->sometimes('lokasi', 'required', function($request){
+            return $request->perjalanan == 1;
+        });
+
+        $validator->sometimes('instansi', 'required', function($request){
+            return $request->surat_in_out == 2;
+        });
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $start = $request->started_at;
         $end = $request->end_at;
 
@@ -224,7 +260,7 @@ class kepegawaianController extends Controller
         $jalan = $request->perjalanan;
         if ($inout == 1 && $jalan == 2) {
             $insert = ([
-                'nomor_surat' => null,  
+                'nomor_surat' => null,
                 'jenis_surat' => $request->jenisSurat,
                 'keterangan' => $request->keterangan,
                 'started_at' => $start_date,
@@ -243,8 +279,8 @@ class kepegawaianController extends Controller
                     'id_sk' => $data->id,
                     'id_dosen' => $request->dosen[$i],
                 ]);
-        } 
-    }
+            } 
+        }
         else if ($inout == 1 && $jalan == 1) {
             $insert = ([
                 'nomor_surat' => null,  
@@ -266,9 +302,10 @@ class kepegawaianController extends Controller
                     'id_sk' => $data->id,
                     'id_dosen' => $request->dosen[$i],
                 ]);
-        } 
-    }
+            } 
+        }
         else if ($inout == 2){
+            // dd($request->all());
             $insert = ([
                 'nomor_surat' => null,  
                 'jenis_surat' => 3,
@@ -283,22 +320,50 @@ class kepegawaianController extends Controller
             $pemateri = $request->pemateri;
             $data = surat_kepegawaian::create($insert);
 
-                    for ($i=0; $i < count($pemateri) ; $i++) { 
-                        $pemateri_sk = pemateri::create([
-                            'id_sk' => $data->id,
-                            'nama' => $request->pemateri[$i],
-                            'instansi' =>$request->instansi,
-                        ]);
-        
+            for ($i=0; $i < count($pemateri) ; $i++) { 
+                $pemateri_sk = pemateri::create([
+                    'id_sk' => $data->id,
+                    'nama' => $request->pemateri[$i],
+                    'instansi' => $request->instansi,
+                ]);
+            }
         }
-
-        }
-
         return redirect()->route('wadek2.memu.index');
     }
 
     public function updateMemu(Request $request, $id)
     {
+        // dd($request->all());
+        $validator = validator::make($request->all(), [
+            'keterangan' => 'required',
+            'started_at' => 'required',
+            'end_at' => 'required'
+        ]);
+
+        $validator->sometimes('jenisSurat', 'required', function($request){
+            return $request->surat_in_out == 1;
+        });
+
+        // $validator->sometimes(['dosen', 'dosen.*'], 'required', function($request){
+        //     return $request->surat_in_out == 1;
+        // });
+
+        $validator->sometimes(['pemateri','pemateri.*'], 'required', function($request){
+            return $request->surat_in_out == 2;
+        });
+
+        $validator->sometimes('lokasi', 'required', function($request){
+            return $request->perjalanan == 1;
+        });
+
+        $validator->sometimes('instansi', 'required', function($request){
+            return $request->surat_in_out == 2;
+        });
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $start = $request->started_at;
         $end = $request->end_at;
 
@@ -311,6 +376,7 @@ class kepegawaianController extends Controller
             'nomor_surat' => null,
             'jenis_surat' => $request->jenisSurat,
             'keterangan' => $request->keterangan,
+            'lokasi' => $request->lokasi,
             'started_at' => $start_date,
             'end_at' => $end_date,
             'status' => 1,
@@ -321,15 +387,18 @@ class kepegawaianController extends Controller
         dd($dosen);
         $pemateri = $request->pemateri;
         if ($dosen == null) {
-            $hitung = count($pemateri); 
-            $pemateri = pemateri::where('id_sk', $id);
-            $pemateri->delete();
+            if (!is_null($pemateri)) {
+                $hitung = count($pemateri); 
+                $pemateri = pemateri::where('id_sk', $id);
+                $pemateri->delete();
 
-            for ($i=0; $i < $hitung ; $i++) { 
-                $pemateri_sk = pemateri::create([
-                    'id_sk' => $id,
-                    'nama' => $request->pemateri[$i],
-                ]);
+                for ($i=0; $i < $hitung ; $i++) { 
+                    $pemateri_sk = pemateri::create([
+                        'id_sk' => $id,
+                        'nama' => $request->pemateri[$i],
+                        'instansi' => $request->instansi
+                    ]);
+                }
             }
         } else {
             $hitung = count($dosen);
@@ -540,8 +609,12 @@ class kepegawaianController extends Controller
     {
     	$surat_tugas = surat_kepegawaian::where('id', $id)->first();
         $dosen_tugas = dosen_tugas::where('id_sk', $surat_tugas->id)->get();
+        $wadek2 = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "Wakil Dekan 2");
+        })->first();
 
-        $pdf = PDF::loadview('template_print.print1', ['surat_tugas' => $surat_tugas, 'dosen_tugas' => $dosen_tugas])->setPaper('a4', 'portrait')->setWarnings(false);
+        $pdf = PDF::loadview('template_print.print1', ['surat_tugas' => $surat_tugas, 'dosen_tugas' => $dosen_tugas, 'wadek2' => $wadek2])->setPaper('a4', 'portrait')->setWarnings(false);
     	return $pdf->download("Surat_Tugas_Peserta_Acara-" . $surat_tugas->nomor_surat . ".pdf");
     }
     public function cetak_pdf2($id)
@@ -549,16 +622,24 @@ class kepegawaianController extends Controller
     	$surat_tugas = surat_kepegawaian::where('id', $id)->first();
         $dosen_tugas = dosen_tugas::where('id_sk', $surat_tugas->id)->get();
         $spd = spd::where('id_sk',$id)->first();
+        $wadek2 = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "Wakil Dekan 2");
+        })->first();
 
-        $pdf = PDF::loadview('template_print.print2', ['surat_tugas' => $surat_tugas, 'dosen_tugas' => $dosen_tugas, 'spd' => $spd])->setPaper('a4', 'portrait')->setWarnings(false);
+        $pdf = PDF::loadview('template_print.print2', ['surat_tugas' => $surat_tugas, 'dosen_tugas' => $dosen_tugas, 'spd' => $spd, 'wadek2' => $wadek2])->setPaper('a4', 'portrait')->setWarnings(false);
     	return $pdf->download("Surat_Tugas_Panitia_Kegiatan-" . $surat_tugas->no_surat . ".pdf");
     }
     public function cetak_pdf3($id)
     {
     	$surat_tugas = surat_kepegawaian::where('id', $id)->first();
         $pemateri = pemateri::where('id_sk', $id)->get();
+        $wadek2 = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "Wakil Dekan 2");
+        })->first();
 
-        $pdf = PDF::loadview('template_print.print3', ['surat_tugas' => $surat_tugas, 'pemateri' => $pemateri])->setPaper('a4', 'portrait')->setWarnings(false);
+        $pdf = PDF::loadview('template_print.print3', ['surat_tugas' => $surat_tugas, 'pemateri' => $pemateri, 'wadek2' => $wadek2])->setPaper('a4', 'portrait')->setWarnings(false);
     	return $pdf->download("Surat_Tugas_Pemateri-" . $surat_tugas->no_surat . ".pdf");
     }
   
@@ -822,8 +903,12 @@ class kepegawaianController extends Controller
     {
     	$surat_tugas = surat_kepegawaian::where('id', $id)->first();
         $dosen_tugas = dosen_tugas::where('id_sk', $surat_tugas->id)->get();
+        $wadek2 = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "Wakil Dekan 2");
+        })->first();
 
-        $pdf = PDF::loadview('template_print.print1', ['surat_tugas' => $surat_tugas, 'dosen_tugas' => $dosen_tugas])->setPaper('a4', 'portrait')->setWarnings(false);
+        $pdf = PDF::loadview('template_print.print1', ['surat_tugas' => $surat_tugas, 'dosen_tugas' => $dosen_tugas, 'wadek2' => $wadek2])->setPaper('a4', 'portrait')->setWarnings(false);
     	return $pdf->download("Surat_Tugas_Peserta_Acara-" . $surat_tugas->nomor_surat . ".pdf");
     }
 
@@ -832,8 +917,12 @@ class kepegawaianController extends Controller
     	$surat_tugas = surat_kepegawaian::where('id', $id)->first();
         $dosen_tugas = dosen_tugas::where('id_sk', $surat_tugas->id)->get();
         $spd = spd::where('id_sk', $id)->first();
+        $wadek2 = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "Wakil Dekan 2");
+        })->first();
 
-        $pdf = PDF::loadview('template_print.print2', ['surat_tugas' => $surat_tugas, 'dosen_tugas' => $dosen_tugas, 'spd' => $spd])->setPaper('a4', 'portrait')->setWarnings(false);
+        $pdf = PDF::loadview('template_print.print2', ['surat_tugas' => $surat_tugas, 'dosen_tugas' => $dosen_tugas, 'spd' => $spd, 'wadek2' => $wadek2])->setPaper('a4', 'portrait')->setWarnings(false);
     	return $pdf->download("Surat_Tugas_Panitia_Kegiatan-" . $surat_tugas->no_surat . ".pdf");
     }
 
@@ -843,8 +932,12 @@ class kepegawaianController extends Controller
         $dosen_tugas = dosen_tugas::where('id_sk', $surat_tugas->id)->get();
         $spd = spd::where('id_sk', $id)->first();
         $terbit = Carbon::now()->locale('id_ID');
+        $dekan = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "Dekan");
+        })->first();
 
-        $pdf = PDF::loadview('template_print.spd1', ['surat_tugas' => $surat_tugas, 'dosen_tugas' => $dosen_tugas, 'spd' => $spd, 'terbit' => $terbit])->setPaper('legal', 'portrait')->setWarnings(false);
+        $pdf = PDF::loadview('template_print.spd1', ['surat_tugas' => $surat_tugas, 'dosen_tugas' => $dosen_tugas, 'spd' => $spd, 'terbit' => $terbit, 'dekan' => $dekan])->setPaper('legal', 'portrait')->setWarnings(false);
     	return $pdf->download("Surat_Tugas_Panitia_Kegiatan-" . $surat_tugas->no_surat . ".pdf");
     }
 
