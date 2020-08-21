@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 21, 2020 at 05:56 AM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.2
+-- Generation Time: Aug 21, 2020 at 02:16 PM
+-- Server version: 10.1.30-MariaDB
+-- PHP Version: 7.2.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_ilkom`
+-- Database: `siteri`
 --
 
 -- --------------------------------------------------------
@@ -54,9 +54,9 @@ INSERT INTO `bagian` (`id`, `bagian`) VALUES
 CREATE TABLE `bukti_perjalanan` (
   `id` int(11) NOT NULL,
   `id_spd` int(11) NOT NULL,
-  `transportasi` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `penginapan` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `pendaftaran` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `transportasi` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `penginapan` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `pendaftaran` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
   `uploaded_at` date NOT NULL,
   `id_user` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -2033,8 +2033,8 @@ CREATE TABLE `detail_pinjam_ruang` (
 
 CREATE TABLE `detail_skripsi` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `judul` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `judul_inggris` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `judul` text COLLATE utf8mb4_unicode_ci,
+  `judul_inggris` text COLLATE utf8mb4_unicode_ci,
   `id_sk_sempro` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_sk_skripsi` bigint(20) UNSIGNED DEFAULT NULL,
   `id_keris` int(10) UNSIGNED DEFAULT NULL,
@@ -2358,7 +2358,7 @@ CREATE TABLE `laporan` (
 CREATE TABLE `laporan_pengadaan` (
   `id` int(10) UNSIGNED NOT NULL,
   `keterangan` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `verif_wadek2` tinyint(1) NOT NULL DEFAULT 0,
+  `verif_wadek2` tinyint(1) NOT NULL DEFAULT '0',
   `pesan` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -4503,9 +4503,9 @@ CREATE TABLE `pinjam_barang` (
   `jam_mulai` time NOT NULL,
   `jam_berakhir` time NOT NULL,
   `kegiatan` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `verif_baper` tinyint(1) NOT NULL DEFAULT 0,
-  `verif_ktu` tinyint(1) NOT NULL DEFAULT 0,
-  `created_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  `verif_baper` tinyint(1) NOT NULL DEFAULT '0',
+  `verif_ktu` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -4530,8 +4530,8 @@ CREATE TABLE `pinjam_ruang` (
   `jam_berakhir` time NOT NULL,
   `kegiatan` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `jumlah_peserta` int(11) NOT NULL,
-  `verif_baper` tinyint(1) NOT NULL DEFAULT 0,
-  `verif_ktu` tinyint(1) NOT NULL DEFAULT 0,
+  `verif_baper` tinyint(1) NOT NULL DEFAULT '0',
+  `verif_ktu` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -4587,7 +4587,7 @@ INSERT INTO `satuan` (`id`, `satuan`) VALUES
 CREATE TABLE `skripsi` (
   `id` int(10) UNSIGNED NOT NULL,
   `nim` varchar(14) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `id_status_skripsi` int(10) UNSIGNED DEFAULT 1
+  `id_status_skripsi` int(10) UNSIGNED DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -4598,7 +4598,7 @@ CREATE TABLE `skripsi` (
 
 CREATE TABLE `sk_honor` (
   `id` int(10) UNSIGNED NOT NULL,
-  `id_status_sk_honor` smallint(5) UNSIGNED DEFAULT 1,
+  `id_status_sk_honor` smallint(5) UNSIGNED DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -4615,7 +4615,7 @@ CREATE TABLE `sk_sempro` (
   `tgl_sempro1` date DEFAULT NULL,
   `tgl_sempro2` date DEFAULT NULL,
   `verif_ktu` tinyint(4) DEFAULT NULL,
-  `pesan_revisi` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pesan_revisi` text COLLATE utf8mb4_unicode_ci,
   `id_template` int(10) UNSIGNED DEFAULT NULL,
   `id_sk_honor` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -4636,7 +4636,7 @@ CREATE TABLE `sk_skripsi` (
   `tgl_sk_pembimbing` date DEFAULT NULL,
   `tgl_sk_penguji` date DEFAULT NULL,
   `verif_ktu` tinyint(4) DEFAULT NULL,
-  `pesan_revisi` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pesan_revisi` text COLLATE utf8mb4_unicode_ci,
   `id_template_penguji` int(10) UNSIGNED DEFAULT NULL,
   `id_template_pembimbing` int(10) UNSIGNED DEFAULT NULL,
   `id_sk_honor` int(10) UNSIGNED DEFAULT NULL,
@@ -4855,33 +4855,36 @@ CREATE TABLE `surat_kepegawaian` (
   `revisi` varchar(100) DEFAULT NULL,
   `surat_in_out` int(11) DEFAULT NULL,
   `perjalanan` int(11) DEFAULT NULL,
-  `lokasi` varchar(100) DEFAULT NULL
+  `lokasi` varchar(100) DEFAULT NULL,
+  `memo_created_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `surat_kepegawaian`
 --
 
-INSERT INTO `surat_kepegawaian` (`id`, `nomor_surat`, `jenis_surat`, `keterangan`, `started_at`, `end_at`, `status`, `revisi`, `surat_in_out`, `perjalanan`, `lokasi`) VALUES
-(71, '121313', '2', 'Panitia Fasilkom Goes to Campus', '2020-01-30', '2020-01-31', 11, NULL, 1, 1, ''),
-(72, NULL, '2', 'Panitia 17 Agustus', '2020-01-30', '2020-01-31', 2, NULL, 1, 1, ''),
-(73, NULL, '2', 'Hahaha', '2020-01-31', '2020-01-31', 2, NULL, 1, 1, ''),
-(75, NULL, '3', 'Pelatihan Linux Fasilkom', '2020-01-30', '2020-01-31', 2, NULL, 2, 2, ''),
-(76, NULL, '3', 'Pelatihan Memancing', '2020-01-31', '2020-01-31', 2, NULL, 2, 2, ''),
-(77, '21312', '1', 'Lomba Memancing', '2020-08-22', '2020-08-24', 9, NULL, 1, 2, 'Bandung'),
-(78, NULL, '3', 'Memberi Makan Ikan', '2020-08-29', '2020-08-29', 2, NULL, 1, 2, 'Bandung'),
-(79, '24231', '3', 'Membangun Jembatan', '2020-08-21', '2020-08-22', 9, NULL, 2, 2, NULL),
-(80, '76534231', '1', 'Gerak Jalan', '2020-08-21', '2020-08-29', 9, NULL, 1, 1, 'Bandung'),
-(81, '21212', '1', 'Menangisi Mantan', '2020-08-28', '2020-08-29', 9, NULL, 1, 2, NULL),
-(82, '212121', '1', 'Makan Bandeng', '2020-08-20', '2020-08-22', 9, NULL, 1, 1, 'Bandung'),
-(83, '543', '1', 'Telkom Conference', '2020-08-29', '2020-08-29', 11, NULL, 1, 1, 'Bandung'),
-(84, '156543', '1', 'Jember', '2020-08-22', '2020-08-29', 9, NULL, 1, 2, NULL),
-(85, 'SKL-221', '1', 'Godev Jakarta', '2020-08-25', '2020-08-27', 10, NULL, 1, 1, 'Jakarta'),
-(86, 'SM-03', '3', 'Sertifikasi web', '2020-08-25', '2020-08-30', 9, NULL, 2, 2, NULL),
-(87, 'SM-04', '1', 'ITCG', '2020-08-25', '2020-08-27', 10, NULL, 1, 1, 'Bandung'),
-(89, 'asdsd', '1', 'Acara', '2020-08-26', '2020-08-31', 9, NULL, 1, 1, NULL),
-(90, 'asdsd', '2', 'ikmikmikmikm', '2020-08-26', '2020-08-31', 9, NULL, 1, 1, NULL),
-(91, '324234234', '1', 'adasdasdasddadsad', '2020-08-25', '2020-08-27', 9, NULL, 1, 1, 'asdasddsfsdf');
+INSERT INTO `surat_kepegawaian` (`id`, `nomor_surat`, `jenis_surat`, `keterangan`, `started_at`, `end_at`, `status`, `revisi`, `surat_in_out`, `perjalanan`, `lokasi`, `memo_created_at`, `created_at`, `updated_at`) VALUES
+(71, '121313', '2', 'Panitia Fasilkom Goes to Campus', '2020-01-30', '2020-01-31', 11, NULL, 1, 1, '', NULL, NULL, NULL),
+(72, NULL, '2', 'Panitia 17 Agustus', '2020-01-30', '2020-01-31', 2, NULL, 1, 1, '', NULL, NULL, NULL),
+(73, NULL, '2', 'Hahaha', '2020-01-31', '2020-01-31', 2, NULL, 1, 1, '', NULL, NULL, NULL),
+(75, NULL, '3', 'Pelatihan Linux Fasilkom', '2020-01-30', '2020-01-31', 2, NULL, 2, 2, '', NULL, NULL, NULL),
+(76, NULL, '3', 'Pelatihan Memancing', '2020-01-31', '2020-01-31', 2, NULL, 2, 2, '', NULL, NULL, NULL),
+(77, '21312', '1', 'Lomba Memancing', '2020-08-22', '2020-08-24', 9, NULL, 1, 2, 'Bandung', NULL, NULL, NULL),
+(78, NULL, '3', 'Memberi Makan Ikan', '2020-08-29', '2020-08-29', 2, NULL, 1, 2, 'Bandung', NULL, NULL, NULL),
+(79, '24231', '3', 'Membangun Jembatan', '2020-08-21', '2020-08-22', 9, NULL, 2, 2, NULL, NULL, NULL, NULL),
+(80, '76534231', '1', 'Gerak Jalan', '2020-08-21', '2020-08-29', 9, NULL, 1, 1, 'Bandung', NULL, NULL, NULL),
+(81, '21212', '1', 'Menangisi Mantan', '2020-08-28', '2020-08-29', 9, NULL, 1, 2, NULL, NULL, NULL, NULL),
+(82, '212121', '1', 'Makan Bandeng', '2020-08-20', '2020-08-22', 9, NULL, 1, 1, 'Bandung', NULL, NULL, NULL),
+(83, '543', '1', 'Telkom Conference', '2020-08-29', '2020-08-29', 11, NULL, 1, 1, 'Bandung', NULL, NULL, NULL),
+(84, '156543', '1', 'Jember', '2020-08-22', '2020-08-29', 9, NULL, 1, 2, NULL, NULL, NULL, NULL),
+(85, 'SKL-221', '1', 'Godev Jakarta', '2020-08-25', '2020-08-27', 10, NULL, 1, 1, 'Jakarta', NULL, NULL, NULL),
+(86, 'SM-03', '3', 'Sertifikasi web', '2020-08-25', '2020-08-30', 9, NULL, 2, 2, NULL, NULL, NULL, NULL),
+(87, 'SM-04', '1', 'ITCG', '2020-08-25', '2020-08-27', 10, NULL, 1, 1, 'Bandung', NULL, NULL, NULL),
+(89, 'asdsd', '1', 'Acara', '2020-08-26', '2020-08-31', 9, NULL, 1, 1, NULL, NULL, NULL, NULL),
+(90, 'asdsd', '2', 'ikmikmikmikm', '2020-08-26', '2020-08-31', 9, NULL, 1, 1, NULL, NULL, NULL, NULL),
+(91, '324234234', '1', 'adasdasdasddadsad', '2020-08-25', '2020-08-27', 9, NULL, 1, 1, 'asdasddsfsdf', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -4894,13 +4897,13 @@ CREATE TABLE `surat_tugas` (
   `id_tipe_surat_tugas` int(10) UNSIGNED DEFAULT NULL,
   `id_status_surat_tugas` int(10) UNSIGNED DEFAULT NULL,
   `no_surat` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `verif_ktu` tinyint(4) NOT NULL DEFAULT 0,
+  `verif_ktu` tinyint(4) NOT NULL DEFAULT '0',
   `id_dosen1` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_dosen2` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_detail_skripsi` bigint(20) UNSIGNED DEFAULT NULL,
   `tanggal` datetime DEFAULT NULL,
   `id_ruang` int(10) UNSIGNED DEFAULT NULL,
-  `pesan_revisi` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pesan_revisi` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

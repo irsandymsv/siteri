@@ -78,13 +78,14 @@ class kepegawaianController extends Controller
             'nomor_surat' => $request->nomor_surat,
             'status' => 3,
             'jenis_surat' => $request->jenisSurat,
+            'created_at' => Carbon::now()
             
         ]);
         $data = surat_kepegawaian::where('id', $id)->update($memu);
 
-            $perjalanan = $request->perjalanan;
-            $jenis = $request->jenisSurat;  
-            $inout = surat_kepegawaian::where('id',$id)->first();
+        $perjalanan = $request->perjalanan;
+        $jenis = $request->jenisSurat;  
+        $inout = surat_kepegawaian::where('id',$id)->first();
   
        if ($jenis==2) {
 
@@ -215,7 +216,7 @@ class kepegawaianController extends Controller
 
     public function saveMemu(Request $request)
     {
-        // dd($request->all());
+        // dd(Carbon::now()->format('Y-m-d H:i:s'));
         $validator = validator::make($request->all(), [
             'surat_in_out' => 'required',
             'keterangan' => 'required',
@@ -267,6 +268,7 @@ class kepegawaianController extends Controller
                 'surat_in_out' => 1,
                 'perjalanan' => 2,
                 'lokasi' => $request->lokasi,
+                'memo_created_at' => Carbon::now(),
             ]);
             $data = surat_kepegawaian::create($insert);
     
@@ -290,6 +292,7 @@ class kepegawaianController extends Controller
                 'surat_in_out' => 1,
                 'perjalanan' => 1,
                 'lokasi' => $request->lokasi,
+                'memo_created_at' => Carbon::now(),
             ]);
             $data = surat_kepegawaian::create($insert);
     
@@ -314,6 +317,7 @@ class kepegawaianController extends Controller
                 'surat_in_out' => 2,
                 'perjalanan' => 2,
                 'lokasi' => $request->lokasi,
+                'memo_created_at' => Carbon::now(),
             ]);
             $pemateri = $request->pemateri;
             $data = surat_kepegawaian::create($insert);
