@@ -318,6 +318,7 @@ class kepegawaianController extends Controller
 
         $data = surat_kepegawaian::where('id', $id)->update($memu);
         $dosen = $request->dosen;
+        dd($dosen);
         $pemateri = $request->pemateri;
         if ($dosen == null) {
             $hitung = count($pemateri); 
@@ -892,7 +893,7 @@ class kepegawaianController extends Controller
         }
 
         $time = Carbon::now();
-        $user = Auth::user()->no_pegawai;
+        $user = Auth::user()->no_pegawai; 
         $data = bukti_perjalanan::create([
             'id_spd' => $id,
             'transportasi' => $transportasi,
