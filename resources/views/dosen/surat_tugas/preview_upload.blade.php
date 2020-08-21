@@ -98,6 +98,7 @@
                 <div class="input-group siteri increment">
             
                   <input type="file" name="transportasi[]" class="myfrm form-control">
+                  <input type="hidden" name="transport" value="1">
             
                   <div class="input-group-btn"> 
             
@@ -128,6 +129,7 @@
                 <div class="input-group siteri increment" >
             
                   <input type="file" name="penginapan[]" class="myfrm form-control">
+                  <input type="hidden" name="nginap" value="1">
             
                   <div class="input-group-btn"> 
             
@@ -159,6 +161,7 @@
                 <div class="input-group siteri increment" >
             
                   <input type="file" name="pendaftaran[]" class="myfrm form-control">
+                  <input type="hidden" name="daftar" value="1">
             
                   <div class="input-group-btn"> 
             
@@ -180,11 +183,10 @@
                     </div>
                   </div>
                 </div>
-                <br>
-                <button type="submit" class="btn btn-primary" style="margin-top:10px">Submit</button>
-              </div>
+                <br> 
               @endif
-
+              <button type="submit" class="btn btn-primary" style="margin-top:10px">Submit</button>
+              </div>
             </form>
           @endif   
         </div>

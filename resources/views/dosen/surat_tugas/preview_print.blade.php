@@ -15,7 +15,7 @@
 
       table tr td:first-child{
          width: 25%;
-         font-weight: bold;: 
+         font-weight: bold;
       }
 	</style>	
 @endsection

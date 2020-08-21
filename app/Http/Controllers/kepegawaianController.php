@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 use App\dosen_tugas;
 use App\jenis_sk;
@@ -861,41 +862,69 @@ class kepegawaianController extends Controller
 
     public function dosen_store(Request $request, $id)
     {
+
+        $error = [
+            'required_with'=> 'Bukti :attribute Harus Diisi'
+        ];
         $this->validate($request, [
-                'filenames' => 'required',
-                'filenames.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,xls,xlsx'
+                'transportasi' => 'required_with:transport',
+                'penginapan' => 'required_with:nginap',
+                'pendaftaran' => 'required_with:daftar',
+                'transportasi.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,webp,xls,xlsx',
+                'penginapan.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,webp,xls,xlsx',
+                'pendaftaran.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,webp,xls,xlsx'
+        ],$error);
+
+        $transportasi = null;
+        $penginapan = null;
+        $pendaftaran = null;
+        if($request->transport !=null)
+        {
+            $transportasi = $this->upload_bukti($request->file('transportasi'));
+        }
+        if($request->nginap !=null)
+        {
+            $penginapan = $this->upload_bukti($request->file('penginapan'));
+        }
+        if($request->daftar !=null)
+        {
+            $pendaftaran = $this->upload_bukti($request->file('pendaftaran'));
+        }
+
+        $time = Carbon::now();
+        $user = Auth::user()->no_pegawai;
+        $data = bukti_perjalanan::create([
+            'id_spd' => $id,
+            'transportasi' => $transportasi,
+            'penginapan' => $penginapan,
+            'pendaftaran' => $pendaftaran,
+            'uploaded_at' => $time,
+            'id_user' => $user
+        ]);
+    
+        $surat = ([
+            'status' => 10,
         ]);
 
-        if($request->hasfile('filenames'))
-         {
-            foreach($request->file('filenames') as $file)
-            {
-                $name=$file->getClientOriginalName();
-                $file->move(public_path().'/files/', $name);  
-                $time = Carbon::now();
-                $user = Auth::user()->no_pegawai;
-
-                $insert = ([
-                    'id_spd' => $id,
-                    'nama' => $name,
-                    'uploaded_at' => $time,
-                    'id_user' => $user,
-                ]);
-                $data = bukti_perjalanan::create($insert);
-            }
-
-    
-            $surat = ([
-                'status' => 10,
-            ]);
-
-            $id_surat = spd::where('id_spd',$id)->first();
+        $id_surat = spd::where('id_spd',$id)->first();
         
     
-            $data = surat_kepegawaian::where('id', $id_surat->id_sk)->update($surat);
-         }
+        $data = surat_kepegawaian::where('id', $id_surat->id_sk)->update($surat);
+         
  
         return back()->with('success', 'Data berhasil diupload!');
 
     }
+
+    protected function upload_bukti($file){
+        $bukti = array();
+        foreach($file as $f)
+            {
+                $name=$f->getClientOriginalName();
+                array_push($bukti,$name);
+                $f->move(public_path().'/files/', $name);  
+            }
+        return $bukti;
+    }
+
 }
