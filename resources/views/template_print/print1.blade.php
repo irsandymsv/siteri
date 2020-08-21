@@ -161,8 +161,8 @@ Sebagai {{$surat_tugas->jenis_sk['jenis']}} untuk Kegiatan {{$surat_tugas->keter
             Jember, {{ Carbon\Carbon::parse($surat_tugas->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }} <br>
             Wakil Dekan II,
             <br><br><br>
-            <span><b>Windi Eka Yulia Retnani, S. Kom., MT</b></span><br>
-            <span>NIP. 198403052010122002</span>
+            <span><b>{{ $wadek2->nama }}</b></span><br>
+            <span>NIP. {{ $wadek2->no_pegawai }}</span>
          </div>
 
          
