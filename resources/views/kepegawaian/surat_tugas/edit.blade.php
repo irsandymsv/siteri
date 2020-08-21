@@ -146,7 +146,8 @@
                                 </td>
                                 <td>
                                     @foreach ($dosen_sk as $dosen)
-                                <p style="margin-top: 2px; margin-left: 5px;">{{$dosen->user['nama']}}</p>
+								<p style="margin-top: 2px; margin-left: 5px;">{{$dosen->user['nama']}}</p>
+								<input type="hidden" name="id_dosen_lama[]" value="{{$dosen->no_pegawai}}">
 									@endforeach
 									
                                     </td>

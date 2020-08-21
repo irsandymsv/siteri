@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+// use Illuminate\Validation\Rule;
 
 use App\dosen_tugas;
 use App\jenis_sk;
@@ -384,9 +384,8 @@ class kepegawaianController extends Controller
 
         $data = surat_kepegawaian::where('id', $id)->update($memu);
         $dosen = $request->dosen;
-        dd($dosen);
         $pemateri = $request->pemateri;
-        if ($dosen == null) {
+        if ($request->surat_in_out == 2) {
             if (!is_null($pemateri)) {
                 $hitung = count($pemateri); 
                 $pemateri = pemateri::where('id_sk', $id);
@@ -401,16 +400,19 @@ class kepegawaianController extends Controller
                 }
             }
         } else {
-            $hitung = count($dosen);
-            $dosen = dosen_tugas::where('id_sk', $id);
-            $dosen->delete();
+            if(!is_null($dosen)){
+                $hitung = count($dosen);
+                $dosen = dosen_tugas::where('id_sk', $id);
+                $dosen->delete();
 
-            for ($i = 0; $i < $hitung; $i++) {
-                $dosen_sk = dosen_tugas::create([
-                    'id_sk' => $id,
-                    'id_dosen' => $request->dosen[$i],
-                ]);
+                for ($i = 0; $i < $hitung; $i++) {
+                    $dosen_sk = dosen_tugas::create([
+                        'id_sk' => $id,
+                        'id_dosen' => $request->dosen[$i],
+                    ]);
+                }
             }
+            
 
         }   
         return redirect()->route('wadek2.memu.index');

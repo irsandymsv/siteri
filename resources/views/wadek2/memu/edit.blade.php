@@ -36,13 +36,16 @@
 
 @section('content')
 <div class="row">
+
 	<div class="col-xs-12">
 		<div class="box box-primary">
 		<form action="{{route('wadek2.memu.update', $surat->id)}}" method="POST">
+			
 				<div class="box-body">
                     @csrf
-                    @method('PUT')
+					@method('PUT')
 					<div class="table-responsive">
+						
 						{{-- @if(session()->has('error'))
 		            			<p style="color: red;">{{session('error')}}</p>
 						@endif --}}
@@ -139,6 +142,7 @@
 										@foreach ($dosen as $dosen)
 										<option value="{{$dosen->no_pegawai}}">{{$dosen->nama}}</option>
 										@endforeach
+										
 									</select>
 									@else
 									<p>
@@ -168,9 +172,12 @@
                                         
                 </td>
                 <td>
+					
                   @foreach ($dosen_sk as $dosen)
-                	<p style="margin-top: 2px; margin-left: 5px;">{{$dosen->user['nama']}}</p>
-									@endforeach
+					<p style="margin-top: 2px; margin-left: 5px;">{{$dosen->user['nama']}}</p>
+					<input type="hidden" name="id_dosen_lama[]" value="{{$dosen->id_dosen}}">
+	
+				  @endforeach
                 </td>
 							</tbody>
 
