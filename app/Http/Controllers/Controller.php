@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 use carbon\Carbon;
 
 class Controller extends BaseController
@@ -67,5 +68,23 @@ class Controller extends BaseController
         }
 
         return $user;
+    }
+    
+
+    public function cek_jabatan()
+    {   
+        $user = Auth::user()->jabatan->jabatan;
+        if($user == "Dekan"){
+            return "dekan";
+        }
+        elseif ($user == "Wakil Dekan 1") {
+            return "wadek1";
+        }
+        elseif ($user == "Wakil Dekan 2") {
+            return "wadek2";
+        }
+        elseif($user == "Dosen") {
+            return "dosen";
+        }
     }
 }

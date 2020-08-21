@@ -386,6 +386,17 @@ Route::middleware(['auth', 'checkRole:Wakil Dekan 2'])->prefix('wadek2')->name('
         Route::get('/surat_tugas', 'kepegawaianController@wadek2_surat_index')->name('surat.index');
         Route::get('/surat_tugas/{id}/preview', 'kepegawaianController@wadek2_preview')->name('surat.preview');
         Route::get('/surat_tugas/{id}/approve', 'kepegawaianController@wadek2_surat_approve')->name('surat.approve');
+
+        //Surat Tugas Kepegawaian
+        Route::get('/upload', 'kepegawaianController@dosen_index_upload')->name('dosen_upload_index');
+        Route::get('/upload/{id}/preview', 'kepegawaianController@dosen_upload_preview')->name('dosen_upload_preview');
+        Route::get('/surat_tugas/read', 'kepegawaianController@read')->name('surat.read');
+        Route::get('/surat_tugas/{id}/cetak1', 'kepegawaianController@dosen_cetak1')->name('surat.cetak1');
+        Route::get('/surat_tugas/{id}/cetak2', 'kepegawaianController@dosen_cetak2')->name('surat.cetak2');
+        Route::get('/surat_tugas/{id}/cetak_spd', 'kepegawaianController@dosen_cetak_spd')->name('surat.cetak_spd');
+        Route::post('/upload/{id}', 'kepegawaianController@dosen_store')->name('file.upload');
+        Route::get('/upload/{id}/edit', 'kepegawaianController@dosen_edit_upload')->name('edit.upload');
+
         Route::get('/ganti_password', 'manageUserController@wadek2_ganti_password')->name('ganti.password');
         Route::resource(
             'pengadaan',
@@ -415,6 +426,7 @@ Route::middleware(['auth', 'checkRole:Dosen'])->prefix('dosen')->name('dosen.')-
 
         //Kepegawaian
         // Route::get('/','kepegawaianController@dosen_index')->name('index');
+
         Route::get('/upload', 'kepegawaianController@dosen_index_upload')->name('dosen_upload_index');
         Route::get('/upload/{id}/preview', 'kepegawaianController@dosen_upload_preview')->name('dosen_upload_preview');
         Route::get('/surat_tugas', 'kepegawaianController@dosen_index')->name('surat.index');
@@ -423,11 +435,11 @@ Route::middleware(['auth', 'checkRole:Dosen'])->prefix('dosen')->name('dosen.')-
         Route::get('/surat_tugas/{id}/cetak1', 'kepegawaianController@dosen_cetak1')->name('surat.cetak1');
         Route::get('/surat_tugas/{id}/cetak2', 'kepegawaianController@dosen_cetak2')->name('surat.cetak2');
         Route::get('/surat_tugas/{id}/cetak_spd', 'kepegawaianController@dosen_cetak_spd')->name('surat.cetak_spd');
-        Route::get('/ganti_password', 'manageUserController@dosen_ganti_password')->name('ganti.password');
         Route::post('/upload/{id}', 'kepegawaianController@dosen_store')->name('file.upload');
         Route::get('/upload/{id}/edit', 'kepegawaianController@dosen_edit_upload')->name('edit.upload');
-        Route::get('/penguji-skripsi', 'dosenController@index_penguji')->name('penguji-skripsi');
-        Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
+
+        Route::get('/ganti_password', 'manageUserController@dosen_ganti_password')->name('ganti.password');
+        
     }
 );
 
@@ -497,6 +509,18 @@ Route::middleware(['auth', 'checkRole:Wakil Dekan 1'])->prefix('wadek1')->name('
         Route::get('/penguji-skripsi', 'dosenController@index_penguji')->name('penguji-skripsi');
         Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
 
+        //Surat Tugas Kepegawaian
+        Route::get('/upload', 'kepegawaianController@dosen_index_upload')->name('dosen_upload_index');
+        Route::get('/upload/{id}/preview', 'kepegawaianController@dosen_upload_preview')->name('dosen_upload_preview');
+        Route::get('/surat_tugas', 'kepegawaianController@dosen_index')->name('surat.index');
+        Route::get('/surat_tugas/read', 'kepegawaianController@read')->name('surat.read');
+        Route::get('/surat_tugas/{id}/preview', 'kepegawaianController@dosen_preview')->name('surat.preview');
+        Route::get('/surat_tugas/{id}/cetak1', 'kepegawaianController@dosen_cetak1')->name('surat.cetak1');
+        Route::get('/surat_tugas/{id}/cetak2', 'kepegawaianController@dosen_cetak2')->name('surat.cetak2');
+        Route::get('/surat_tugas/{id}/cetak_spd', 'kepegawaianController@dosen_cetak_spd')->name('surat.cetak_spd');
+        Route::post('/upload/{id}', 'kepegawaianController@dosen_store')->name('file.upload');
+        Route::get('/upload/{id}/edit', 'kepegawaianController@dosen_edit_upload')->name('edit.upload');
+
         //Ganti Password
         Route::get('/ganti_password', 'manageUserController@wadek1_ganti_password')->name('ganti.password');
     }
@@ -545,7 +569,7 @@ Route::middleware(['auth', 'checkRole:Pemroses Mutasi Kepegawaian'])->prefix('ke
     Route::get('/ganti_password', 'manageUserController@kepegawaian_ganti_password')->name('ganti.password');
 });
 
-//Dekan & Dosen Route
+//Dekan, Dosen Route
 Route::middleware(['auth', 'checkRole:Dosen,Dekan'])->prefix('dosen')->name('dosen.')->group(
     function () {
         Route::get('/upload', 'kepegawaianController@dosen_index_upload')->name('dosen_upload_index');
@@ -559,8 +583,6 @@ Route::middleware(['auth', 'checkRole:Dosen,Dekan'])->prefix('dosen')->name('dos
         Route::get('/ganti_password', 'manageUserController@dosen_ganti_password')->name('ganti.password');
         Route::post('/upload/{id}', 'kepegawaianController@dosen_store')->name('file.upload');
         Route::get('/upload/{id}/edit', 'kepegawaianController@dosen_edit_upload')->name('edit.upload');
-        Route::get('/penguji-skripsi', 'dosenController@index_penguji')->name('penguji-skripsi');
-        Route::get('/penguji-skripsi/{nim}', 'dosenController@show_penguji')->name('penguji-skripsi.show');
     }
 );
 

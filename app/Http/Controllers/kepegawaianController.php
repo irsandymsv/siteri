@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 // use Illuminate\Validation\Rule;
-
 use App\dosen_tugas;
 use App\jenis_sk;
 use App\surat_kepegawaian;
@@ -24,7 +23,6 @@ use Carbon\Carbon;
 use PDF;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
 class kepegawaianController extends Controller
@@ -432,7 +430,9 @@ class kepegawaianController extends Controller
     {
         $surat_tugas = surat_kepegawaian::where('status', 3)->get();
         $dosen_sk = dosen_tugas::all();
-        return view('kepegawaian.surat_tugas.read', compact('surat_tugas', 'dosen_sk'));
+
+        $jabatan_user = $this->cek_jabatan();
+        return view('kepegawaian.surat_tugas.read', compact('surat_tugas', 'dosen_sk', 'jabatan_user'));
     }
 
     //KTU Surat Tugas
@@ -545,7 +545,8 @@ class kepegawaianController extends Controller
 
     public function wadek2_surat_index()
     {
-        $surat = surat_kepegawaian::where('status', 7)->get();
+        // $surat = surat_kepegawaian::where('status', 7)->get();
+        $surat = surat_kepegawaian::with('status_sk')->orderBy('id', 'desc')->get();
         $dosen_sk = dosen_tugas::all();
         $pemateri = pemateri::all();
 
@@ -561,12 +562,25 @@ class kepegawaianController extends Controller
         $pematerinya= pemateri::where('id_sk', $id)->get();
         $jumlah = count($pematerinya);
 
+        // dd($dosen_tugas);
+        $self_check = false;
+        $no_pegawai = Auth::user()->no_pegawai;
+        foreach($dosen_tugas as $dt){
+            if ($no_pegawai == $dt->id_dosen) {
+                $self_check = true;
+                break;
+            }
+        }
+        $jabatan_user = $this->cek_jabatan();
+
       return view('wadek2.surat_tugas.preview_print', [
         'surat_tugas' => $surat_tugas,
         'dosen_tugas' =>$dosen_tugas,
         'pemateri' => $pemateri,
         'pematerinya' => $pematerinya,
-        'jumlah' => $jumlah
+        'jumlah' => $jumlah,
+        'self_check' => $self_check,
+        'jabatan_user' => $jabatan_user
       ]);
     }
 
@@ -819,6 +833,8 @@ class kepegawaianController extends Controller
         $dosen_sk = dosen_tugas::all();
         $dosen = User::all();
         $pemateri = pemateri::all();
+
+        $jabatan_user = $this->cek_jabatan();
         
         // dd($surat_tugas);
         return view('dosen.surat_tugas.index', [
@@ -826,6 +842,7 @@ class kepegawaianController extends Controller
         'dosen_sk' => $dosen_sk,
         'pemateri' => $pemateri,
         'jenis' => $jenis,
+        'jabatan_user' => $jabatan_user
         ]);
     }
 
@@ -842,6 +859,8 @@ class kepegawaianController extends Controller
         $pemateri = pemateri::all();
         // $id = DB::table('spd')->join('surat_tugas', 'spd.id_sk' , '=', 'surat_tugas.id')->join('dosen_tugas','dosen_tugas.id_sk','=','surat_tugas.id')
         // ->where('surat_tugas.status', 9)->where('dosen_tugas.id_dosen', $user)->select('spd.id')->get();
+
+        $jabatan_user = $this->cek_jabatan();
       
         return view('dosen.surat_tugas.upload', [
         'surat_tugas' => $surat_tugas,
@@ -849,7 +868,7 @@ class kepegawaianController extends Controller
         'pemateri' => $pemateri,
         'jenis' => $jenis,
         'surat_tugas2' => $surat_tugas2,
-      
+        'jabatan_user' => $jabatan_user
         ]);
     }
 
@@ -862,9 +881,12 @@ class kepegawaianController extends Controller
         $id_sk = $espede->id_sk;
         // dd($id_sk = $espede->id);
 
+        $jabatan_user = $this->jabatan_user();
+
         return view('dosen.surat_tugas.edit_upload', [
         'spd' => $spd,
         'dosen_tugas' => $dosen_tugas,
+        'jabatan_user' => $jabatan_user
       ]);
      
        
@@ -882,11 +904,14 @@ class kepegawaianController extends Controller
         $surat_tugas = surat_kepegawaian::where('id', $id)->first();
         $dosen_tugas = dosen_tugas::where('id_sk', $id)->get();
         $spd = spd::where('id_sk', $id)->first();
+
+        $jabatan_user = $this->cek_jabatan();
     
       return view('dosen.surat_tugas.preview_print', [
         'surat_tugas' => $surat_tugas,
         'dosen_tugas' => $dosen_tugas,
         'spd' => $spd,
+        'jabatan_user' => $jabatan_user
       ]);
     }
 
@@ -895,9 +920,12 @@ class kepegawaianController extends Controller
         $spd = spd::where('id_spd', $id)->first();
         $dosen_tugas = dosen_tugas::where('id_sk', $spd->id_sk)->get();
 
+        $jabatan_user = $this->cek_jabatan();
+
       return view('dosen.surat_tugas.preview_upload', [
         'spd' => $spd,
         'dosen_tugas' => $dosen_tugas,
+        'jabatan_user' => $jabatan_user
       ]);
     }
     

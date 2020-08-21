@@ -6,7 +6,6 @@
 @section('css_link')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
-   //css preview surat tugas
   <link rel="stylesheet" type="text/css" href="{{ asset('/css/surat_tugas_kepegawaian.css') }}">
   
 	<style type="text/css">

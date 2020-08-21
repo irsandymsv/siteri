@@ -1,4 +1,19 @@
-@extends('dosen.dosen_view')
+@extends('layouts.template')
+
+@section('side_menu')
+  {{-- @if (Auth::user()->jabatan->jabatan == "Dekan")
+    @include('include.dekan_menu')
+  @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+    @include('include.wadek1_menu')
+  @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
+    @include('include.wadek2_menu')
+  @elseif(Auth::user()->jabatan->jabatan == "Dosen")
+    @include('include.dosen_menu')
+  @endif --}}
+
+  @include('include.'.$jabatan_user.'_menu')
+@endsection
+
 @section('page_title')
 	Preview Surat Tugas
 @endsection
@@ -100,7 +115,7 @@
       @endif
       
       <h4>Upload Bukti Perjalanan</h4>
-      <form method="post" action="{{route('dosen.file.upload', $spd->id_spd)}}" enctype="multipart/form-data">
+      <form method="post" action="{{route($jabatan_user'.file.upload', $spd->id_spd)}}" enctype="multipart/form-data">
         {{csrf_field()}}
           <div class="input-group siteri increment" >
       
@@ -135,7 +150,7 @@
 
 
             <div  class="box-footer">
-               <a href="{{route('dosen.surat.index') }}" class="btn btn-default pull-right">Kembali</a>
+               <a href="{{route($jabatan_user'.surat.index') }}" class="btn btn-default pull-right">Kembali</a>
          
             </div>
             
