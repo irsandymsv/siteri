@@ -1,4 +1,19 @@
-@extends('dosen.dosen_view')
+@extends('layouts.template')
+
+@section('side_menu')
+  {{-- @if (Auth::user()->jabatan->jabatan == "Dekan")
+    @include('include.dekan_menu')
+  @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+    @include('include.wadek1_menu')
+  @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
+    @include('include.wadek2_menu')
+  @elseif(Auth::user()->jabatan->jabatan == "Dosen")
+    @include('include.dosen_menu')
+  @endif --}}
+
+  @include('include.'.$jabatan_user.'_menu')
+@endsection
+
 @section('page_title','Surat Tugas')
 @section('content')
 <!-- Main content -->
@@ -95,7 +110,7 @@
                     {{ \Carbon\Carbon::parse($sk->end_at)->format('d/m/Y')}}</td>
                   <td>{{$sk->keterangan}}</td>
                   <td>
-                    <a href="{{route('dosen.surat.preview', $sk->id_sk)}}" class="btn btn-primary btn-sm" style="margin-left: 17px;">Lihat</a>
+                    <a href="{{route($jabatan_user.'.surat.preview', $sk->id_sk)}}" class="btn btn-primary btn-sm" style="margin-left: 17px;">Lihat</a>
 
                   </td>
                 </tr>

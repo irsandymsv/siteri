@@ -57,7 +57,7 @@
     </a>
     <ul class="treeview-menu">
       <li><a href="{{route('wadek2.surat.index')}}">Lihat Semua</a></li>
-      <li><a href="#">Surat Tugas Saya</a></li>
+      <li><a href="{{ route('wadek2.dosen_upload_index') }}">Upload Bukti</a></li>
     </ul>
 </li>
 

@@ -1,11 +1,26 @@
-@extends('dosen.dosen_view')
+@extends('layouts.template')
+
+@section('side_menu')
+  {{-- @if (Auth::user()->jabatan->jabatan == "Dekan")
+    @include('include.dekan_menu')
+  @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+    @include('include.wadek1_menu')
+  @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
+    @include('include.wadek2_menu')
+  @elseif(Auth::user()->jabatan->jabatan == "Dosen")
+    @include('include.dosen_menu')
+  @endif --}}
+
+  @include('include.'.$jabatan_user.'_menu')
+@endsection
+
 @section('page_title')
 	Preview Surat Tugas
 @endsection
 
 @section('css_link')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+	<link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
 	<style type="text/css">
 		.table-responsive{
          width: 90%;
@@ -92,7 +107,7 @@
 
           @if ($spd->surat_tugas->status_sk->id != 10)
             <h4>Upload Bukti Transportasi</h4>
-            <form method="post" action="{{route('dosen.file.upload', $spd->id_spd)}}" enctype="multipart/form-data">
+            <form method="post" action="{{route($jabatan_user.'.file.upload', $spd->id_spd)}}" enctype="multipart/form-data">
               {{csrf_field()}}
               <div class="form-group">
                 <div class="input-group siteri increment">
@@ -192,7 +207,7 @@
         </div>
 
         <div  class="box-footer">
-           <a href="{{route('dosen.dosen_upload_index') }}" class="btn btn-default pull-right">Kembali</a>
+          <a href="{{route($jabatan_user.'.dosen_upload_index') }}" class="btn btn-default pull-right">Kembali</a>
         </div>
             
    		</div>

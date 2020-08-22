@@ -1,4 +1,19 @@
-@extends('dosen.dosen_view')
+@extends('layouts.template')
+
+@section('side_menu')
+  {{-- @if (Auth::user()->jabatan->jabatan == "Dekan")
+    @include('include.dekan_menu')
+  @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+    @include('include.wadek1_menu')
+  @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
+    @include('include.wadek2_menu')
+  @elseif(Auth::user()->jabatan->jabatan == "Dosen")
+    @include('include.dosen_menu')
+  @endif --}}
+
+  @include('include.'.$jabatan_user.'_menu')
+@endsection
+
 @section('page_title')
 	Preview Surat Tugas
 @endsection
@@ -67,18 +82,18 @@
             </div>
 
             <div  class="box-footer">
-               <a href="{{route('dosen.surat.index') }}" class="btn btn-default">Kembali</a>
+               <a href="{{route($jabatan_user.'.surat.index') }}" class="btn btn-default">Kembali</a>
                @if ($surat_tugas->surat_in_out == 1)
-               @if ($surat_tugas->jenis_surat == 1)
-               <a href="{{route('dosen.surat.cetak1', $surat_tugas->id)}}" class="btn btn-warning btn-sm" ><i class="fa fa-print"></i> Surat Tugas</a>
-               @elseif($surat_tugas->jenis_surat == 2)
-               <a href="{{route('dosen.surat.cetak2', $surat_tugas->id)}}" class="btn btn-warning btn-sm" ><i class="fa fa-print"></i> Surat Tugas</a>
-               @elseif($surat_tugas->jenis_surat == 3)
-               <a href="{{route('dosen.surat.cetak1', $surat_tugas->id)}}" class="btn btn-warning btn-sm" ><i class="fa fa-print"></i> Surat Tugas</a>
-               @endif
+                 @if ($surat_tugas->jenis_surat == 1)
+                 <a href="{{route($jabatan_user.'.surat.cetak1', $surat_tugas->id)}}" class="btn btn-warning btn-sm" ><i class="fa fa-print"></i> Surat Tugas</a>
+                 @elseif($surat_tugas->jenis_surat == 2)
+                 <a href="{{route($jabatan_user.'.surat.cetak2', $surat_tugas->id)}}" class="btn btn-warning btn-sm" ><i class="fa fa-print"></i> Surat Tugas</a>
+                 @elseif($surat_tugas->jenis_surat == 3)
+                 <a href="{{route($jabatan_user.'.surat.cetak1', $surat_tugas->id)}}" class="btn btn-warning btn-sm" ><i class="fa fa-print"></i> Surat Tugas</a>
+                 @endif
                @endif
                @if ($surat_tugas->perjalanan == 1)
-               <a href="{{route('dosen.surat.cetak_spd', $surat_tugas->id)}}" class="btn btn-success btn-sm" ><i class="fa fa-print"></i> SPD</a>
+               <a href="{{route($jabatan_user.'.surat.cetak_spd', $surat_tugas->id)}}" class="btn btn-success btn-sm" ><i class="fa fa-print"></i> SPD</a>
                @endif
             </div>
             

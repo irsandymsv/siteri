@@ -1,4 +1,17 @@
-@extends('dosen.dosen_view')
+@extends('layouts.template')
+
+@section('side_menu')
+  @if (Auth::user()->jabatan->jabatan == "Dekan")
+    @include('include.dekan_menu')
+  @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
+    @include('include.wadek1_menu')
+  @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
+    @include('include.wadek2_menu')
+  @elseif(Auth::user()->jabatan->jabatan == "Dosen")
+    @include('include.dosen_menu')
+  @endif
+@endsection
+
 @section('page_title','Surat Tugas')
 @section('content')
 <!-- Main content -->
@@ -94,9 +107,7 @@
                     {{ \Carbon\Carbon::parse($sk->end_at)->format('d/m/Y')}}</td>
                   <td>{{$sk->keterangan}}</td>
                   <td>
-                  
-                    <a href="{{route('dosen.dosen_upload_preview', $sk->id_spd)}}" class="btn btn-primary btn-sm" style="margin-left: 17px;">Upload</a>
-                   
+                    <a href="{{route($jabatan_user.'.dosen_upload_preview', $sk->id_spd)}}" class="btn btn-primary btn-sm" style="margin-left: 17px;">Upload</a>
                   </td>
                 </tr>
 
@@ -219,8 +230,7 @@
                     {{ \Carbon\Carbon::parse($sk2->end_at)->format('d/m/Y')}}</td>
                   <td>{{$sk2->keterangan}}</td>
                   <td>
-
-                    <a href="{{route('dosen.edit.upload', $sk2->id_spd)}}" class="btn btn-primary btn-sm" style="margin-left: 17px;">Edit</a>
+                    <a href="{{route($jabatan_user.'.edit.upload', $sk2->id_spd)}}" class="btn btn-primary btn-sm" style="margin-left: 17px;">Upload</a>
                   </td>
                 </tr>
 
