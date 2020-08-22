@@ -39,9 +39,10 @@
             @if (session()->has('success'))
               <div class="alert alert-success alert-block">
                 <button type="button" class="close" data-dismiss="alert">x</button>
-                  {{ session()->get('success')}}
+                {{ session()->get('success')}}
               </div>
             @endif
+            
             <table class="table table-striped table-bordered">
               <tr>
                 <td>Tanggal Dibuat</td>   
@@ -97,7 +98,8 @@
         <div  class="box-footer">
           <a href="{{ route('ktu.surat.index') }}" class="btn btn-default">Kembali</a>
           @if ($surat_tugas->status == 3)
-            <a href="{{ route('ktu.surat.approve', $surat_tugas->id) }}" class="btn btn-primary">Setujui</a>
+            <a href="{{ route('ktu.surat.approve', $surat_tugas->id) }}" class="btn btn-primary pill-right">Setujui</a>
+            <a href="{{ route('ktu.surat.reject.view', $surat_tugas->id) }}" class="btn btn-danger pull-right" style="margin-right: 5px;">Tolak</a>
           @endif
            {{-- @if ($surat_tugas->jenis_surat == 1)
            <a href="{{route('kepegawaian.surat.cetak1', $surat_tugas->id)}}" class="btn btn-warning btn-sm" ><i class="fa fa-print"></i> Cetak</a>

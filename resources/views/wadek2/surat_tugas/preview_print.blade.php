@@ -35,6 +35,13 @@
 
         <div class="box-body">
        		<div class="table-responsive">
+            @if (session()->has('success'))
+              <div class="alert alert-success alert-block">
+                <button type="button" class="close" data-dismiss="alert">x</button>
+                {{ session()->get('success')}}
+              </div>
+            @endif
+
             <table class="table table-striped table-bordered">
                <tr>
                   <td>Tanggal Dibuat</td>   
@@ -72,13 +79,13 @@
                   <td>{{$surat_tugas->status_sk->status}}</td>
                </tr>
             </table>
-          </div>
 
-          <br>
-          <a href="{{ route('wadek2.surat.index') }}" class="btn btn-default">Kembali</a>
-          @if ($surat_tugas->status == 7)
-          	<a style="margin-left: 3px;" href="{{ route('wadek2.surat.approve', $surat_tugas->id) }}" class="btn btn-primary pull-right"> Setujui </a>
-          @endif
+            <br>
+            <a href="{{ route('wadek2.surat.index') }}" class="btn btn-default">Kembali</a>
+            @if ($surat_tugas->status == 7)
+              <a style="margin-left: 3px;" href="{{ route('wadek2.surat.approve', $surat_tugas->id) }}" class="btn btn-primary"> Setujui </a>
+            @endif
+          </div>
 
           @if ($self_check && $surat_tugas->status >= 9)
           	@if ($surat_tugas->surat_in_out == 1)

@@ -540,7 +540,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 Route::middleware(['auth', 'checkRole:Sekretaris Pimpinan'])->prefix('staffpim')->name('staffpim.')->group(function () {
-    Route::get('/', 'kepegawaianController@sp_index')->name('index');
+    Route::get('/', 'staffPimpinanController@dashboard')->name('dashboard');
+    
     Route::get('/surat', 'kepegawaianController@sp_read')->name('sp.read');
     Route::get('/surat_tugas/{id}/preview', 'kepegawaianController@sp_preview')->name('sp.preview');
     Route::get('/surat_tugas/{id}/approve', 'kepegawaianController@sp_surat_approve')->name('surat.approve');

@@ -5,6 +5,7 @@
 @endsection
 
 @section('page_title','Surat Tugas')
+
 @section('content')
 <!-- Main content -->
 <section class="content">
@@ -14,7 +15,7 @@
     </div>
     <div class="box-body">
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-12 table-responsive">
           <table id="data_table" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
             <thead>
               <tr>
@@ -64,11 +65,11 @@
                 <td>{{$sk->status_sk->status}}</td>
                 <td>
                   @if ($sk->status == 2)
-                    <a href="{{route('kepegawaian.surat.create', $sk->id)}}" class="btn btn-primary btn-sm" style="margin-left: 17px;" title="Buat Surat Tugas dari Memo Ini">Buat</a>
+                    <a href="{{route('kepegawaian.surat.create', $sk->id)}}" class="btn btn-primary btn-sm" title="Buat Surat Tugas dari Memo Ini">Buat</a>
                   @elseif($sk->status > 2)
-                    <a href="{{route('kepegawaian.surat.preview', $sk->id)}}" class="btn btn-success btn-sm" style="margin-left: 17px;" title="Lihat Detail Surat Tugas">Lihat</a>
+                    <a href="{{route('kepegawaian.surat.preview', $sk->id)}}" class="btn btn-success btn-sm" title="Lihat Detail Surat Tugas">Lihat</a>
                     @if($sk->status == 4 || $sk->status == 6)
-                      <a href="{{route('kepegawaian.surat.edit', $sk->id)}}" class="btn btn-warning btn-sm" style="margin-left: 17px;" title="Ubah Surat Tugas">Perbaiki</a>
+                      <a href="{{route('kepegawaian.surat.edit', $sk->id)}}" style="margin-top: 5px;" class="btn bg-purple btn-sm" title="Ubah Surat Tugas">Perbaiki</a>
                     @endif
                   @endif
 

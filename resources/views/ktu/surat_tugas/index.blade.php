@@ -16,6 +16,13 @@
     <div class="box-body">
       <div class="row">
         <div class="col-sm-12">
+        	@if (session()->has('success'))
+        	  <div class="alert alert-success alert-block">
+        	    <button type="button" class="close" data-dismiss="alert">x</button>
+        	      {{ session()->get('success')}}
+        	  </div>
+        	@endif
+        	
         	<table id="data_table" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
         	  <thead>
         	    <tr>

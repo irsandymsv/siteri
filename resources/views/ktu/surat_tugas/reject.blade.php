@@ -1,7 +1,7 @@
 @extends('ktu.ktu_view')
 
-@section('page_title', 'Buat Surat Tugas')
-@section('judul_header','Buat Surat Tugas')
+@section('page_title', 'Tolak Surat Tugas')
+@section('judul_header','Tolak Surat Tugas')
 
 @section('css_link')
 <link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
@@ -25,10 +25,10 @@
 <div class="row">
 	<div class="col-xs-12">
 		<div class="box box-primary">
-		<form action="{{route('ktu.surat.reject', $surat->id)}}" method="POST">
+			<form action="{{route('ktu.surat.reject', $surat->id)}}" method="POST">
+        @csrf
+        @method('PUT')
 				<div class="box-body">
-                    @csrf
-                    @method('PUT')
 					<div class="table-responsive">
 						{{-- @if(session()->has('error'))
 		            			<p style="color: red;">{{session('error')}}</p>
@@ -44,11 +44,11 @@
 
 							<tbody>
 								<td>
-									<input class="form-control" type="text" value="{{$surat->nomor_surat}}" name="nomor_surat" readonly>
+									<input class="form-control" type="text" value="{{$surat->nomor_surat}}/UN25.1.15/KP/{{ \Carbon\Carbon::parse($surat->created_at)->year }}" name="nomor_surat" readonly>
 								</td>
 								<td>
 									<select name="jenisSurat" class="form-control" disabled>
-                                    <option value="{{$surat->jenis_surat}}"> {{$surat->jenis_sk['jenis']}} </option>
+                    <option value="{{$surat->jenis_surat}}"> {{$surat->jenis_sk['jenis']}} </option>
 										@foreach ($jenis as $jenis)
 										<option value="{{$jenis->id}}">{{$jenis->jenis}}</option>
 										@endforeach
@@ -56,25 +56,35 @@
 								</td>
 
 								<td>
-									<textarea class="form-control" rows="3" name="keterangan"
-                                placeholder="Keterangan Surat" readonly>{{$surat->keterangan}}</textarea>
+									<textarea class="form-control" rows="3" name="keterangan" placeholder="Keterangan Surat" readonly>{{$surat->keterangan}}</textarea>
 								</td>
 							</tbody>
 
 							<thead>
 								<tr>
-                                <th>Dosen yang Bertugas</th>
-								<th>Tanggal Mulai</th>
-								<th>Tanggal Selesai</th>
-                                </tr>
-                                      
+									<th>
+									@if ($surat->surat_in_out == 1)
+                  	Dosen yang Bertugas
+									@else
+										Pemateri
+									@endif
+                  </th>
+									<th>Tanggal Mulai</th>
+									<th>Tanggal Selesai</th>
+                </tr>
 							</thead>
 
 							<tbody>
-                                <td>
-                                    @foreach ($dosen_sk as $dosen)
-                                <p style="margin-top: 2px; margin-left: 5px;">{{$dosen->user['nama']}}</p>
-                                    @endforeach
+                <td>
+                	@if ($surat->surat_in_out == 1)
+	                  @foreach ($dosen_sk as $dosen)
+	                	<p style="margin-top: 2px; margin-left: 5px;">{{$dosen->user['nama']}}</p>
+	                  @endforeach
+	                @else
+	                	@foreach ($pemateri as $item)
+	                	<p style="margin-top: 2px; margin-left: 5px;">{{$item->nama}}</p>
+	                  @endforeach
+	                 @endif
 								</td>
 								<td>
 									<!-- Date -->
@@ -85,7 +95,7 @@
 											<div class="input-group-addon">
 												<i class="fa fa-calendar"></i>
 											</div>
-                                        <input type="text" value="{{$surat->started_at}}" class="form-control pull-right" name="started_at" id="datepicker" readonly>
+                      <input type="text" value="{{$surat->started_at}}" class="form-control pull-right" name="started_at" id="datepicker" readonly>
 										</div>
 										<!-- /.input group -->
 									</div>
@@ -104,8 +114,9 @@
 										<!-- /.input group -->
 									</div>
 								</td>
-                            </tbody>
-                            <thead>
+               </tbody>
+
+              <thead>
 								<tr>
 									<th>Pesan Revisi</th>
 								</tr>
@@ -114,6 +125,12 @@
 							<tbody>
 								<td>
 									<textarea class="form-control" type="text" placeholder="Masukan pesan revisi" name="pesan_revisi" required></textarea>
+
+									@error('pesan_revisi')
+										<p class="invalid-feedback" role="alert" style="color: red;">
+											<strong>{{ $message }}</strong>
+										</p>
+									@enderror
 								</td>
 							</tbody>
 						</table>
@@ -121,8 +138,8 @@
 
 					<input type="hidden" name="status" value="">
 					<div class="form-group" style="float: left;">
-						<button type="submit" name="simpan_kirim" class="btn btn-success">Kirim</button>
-						<a class="btn btn-default" href="{{route('ktu.surat.index')}}">Batal</a>
+						<button type="submit" name="simpan_kirim" class="btn btn-danger">Tolak</button>
+						<a class="btn btn-default" href="{{route('ktu.surat.preview', $surat->id)}}">Batal</a>
 					</div>
 				</div>
 			</form>
@@ -130,7 +147,7 @@
 	</div>
 	@endsection
 
-	@section('script')
+@section('script')
 	<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -138,12 +155,12 @@
 });
 	</script>
 	<script type="text/javascript">
-	$('#datepicker').datepicker({
-	autoclose: true
+		$('#datepicker').datepicker({
+		autoclose: true
 	})
-	$('#datepicker2').datepicker({
-	autoclose: true
+		$('#datepicker2').datepicker({
+		autoclose: true
 	})
 	</script>
 
-	@endsection
+@endsection
