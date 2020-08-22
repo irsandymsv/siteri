@@ -230,7 +230,7 @@
                     {{ \Carbon\Carbon::parse($sk2->end_at)->format('d/m/Y')}}</td>
                   <td>{{$sk2->keterangan}}</td>
                   <td>
-                    <a href="{{route($jabatan_user.'.edit.upload', $sk->id_spd)}}" class="btn btn-primary btn-sm" style="margin-left: 17px;">Upload</a>
+                    <a href="{{route($jabatan_user.'.edit.upload', $sk2->id_spd)}}" class="btn btn-primary btn-sm" style="margin-left: 17px;">Upload</a>
                   </td>
                 </tr>
 

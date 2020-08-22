@@ -115,7 +115,7 @@
       @endif
       
       <h4>Upload Bukti Perjalanan</h4>
-      <form method="post" action="{{route($jabatan_user'.file.upload', $spd->id_spd)}}" enctype="multipart/form-data">
+      <form method="post" action="{{route($jabatan_user.'.file.upload', $spd->id_spd)}}" enctype="multipart/form-data">
         {{csrf_field()}}
           <div class="input-group siteri increment" >
       
@@ -150,7 +150,7 @@
 
 
             <div  class="box-footer">
-               <a href="{{route($jabatan_user'.surat.index') }}" class="btn btn-default pull-right">Kembali</a>
+               <a href="{{route($jabatan_user.'.dosen_upload_index') }}" class="btn btn-default pull-right">Kembali</a>
          
             </div>
             

@@ -74,10 +74,29 @@ class kepegawaianController extends Controller
 
     public function surat_save(Request $request, $id)
     {
+        // dd($request->all());
+        $validator = validator::make($request->all(), [
+            'nomor_surat' => 'required|unique:surat_kepegawaian',
+            'keterangan' => 'required'
+        ]);
+
+        $validator->sometimes('biaya_pemateri', 'required', function($request){
+            return $request->surat_in_out == 2;
+        });
+
+        $validator->sometimes(['jabatan_panitia', 'jabatan_panitia.*'], 'required', function($request){
+            return $request->jenisSurat == 2;
+        });
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $memu = ([
             'nomor_surat' => $request->nomor_surat,
             'status' => 3,
             'jenis_surat' => $request->jenisSurat,
+            'keterangan' => $request->keterangan,
             'created_at' => Carbon::now()
             
         ]);
@@ -87,24 +106,20 @@ class kepegawaianController extends Controller
         $jenis = $request->jenisSurat;  
         $inout = surat_kepegawaian::where('id',$id)->first();
   
-       if ($jenis==2) {
+        if ($jenis==2) {
+            $dosen_tugas = dosen_tugas::where('id_sk', $id)->get();
+            $hitung = count($dosen_tugas);
+            $dosen = dosen_tugas::where('id_sk', $id);
+            $dosen->delete();
 
-         $dosen_tugas = dosen_tugas::where('id_sk', $id)->get();
-         $hitung = count($dosen_tugas);
-         $dosen = dosen_tugas::where('id_sk', $id);
-         $dosen->delete();
-
-
-         for ($i = 0; $i < $hitung; $i++) {
-        
-             $dosen_sk = dosen_tugas::create([
-                 'id_sk' => $id,
-                 'id_dosen' => $request->dosen[$i],
-                 'jabatan'=> $request->jabatan_panitia[$i],
-             ]);
-         }
-        
-       }
+            for ($i = 0; $i < $hitung; $i++) {
+                $dosen_sk = dosen_tugas::create([
+                    'id_sk' => $id,
+                    'id_dosen' => $request->dosen[$i],
+                    'jabatan'=> $request->jabatan_panitia[$i],
+                ]);
+            }
+        }
 
         if ($perjalanan == 1) {
          
@@ -129,7 +144,6 @@ class kepegawaianController extends Controller
             }
             else
             return redirect(route('kepegawaian.surat.index'));
-
         } 
         
     }
@@ -137,6 +151,27 @@ class kepegawaianController extends Controller
 
     public function spd_save(Request $request, $id)
     {
+        // $validator = validator::make($request->all(), [
+        //     'id_jenis_kendaraan' => 'required',
+        //     'asal' => 'required',
+        //     'tujuan' => 'required',
+        //     'uang_harian' => 'required',
+        //     'penginapan' => 'required',
+        //     'pendaftaran_acara' => 'required'
+        // ]);
+
+        // $validator->sometimes('biaya_penginapan', 'required', function($request){
+        //     return $request->penginapan == 1;
+        // });
+
+        // $validator->sometimes('biaya_pendaftaran', 'required', function($request){
+        //     return $request->pendaftaran_acara == 1;
+        // });
+
+        // if ($validator->fails()) {
+        //     return redirect()->back()->withErrors($validator)->withInput();
+        // }
+
         $dosen = dosen_tugas::where('id_sk', $id)->get();
         $spd = ([
             'id_sk' => $id,
@@ -156,8 +191,8 @@ class kepegawaianController extends Controller
 
     public function ktu_memu()
     {
-        $memu = surat_kepegawaian::where('status', 1)->orderBy('id', 'asc')->get();
-        $memus = surat_kepegawaian::where('status', 2)->orderBy('id', 'asc')->get();
+        $memu = surat_kepegawaian::where('status', 1)->orderBy('memo_created_at', 'desc')->get();
+        $memus = surat_kepegawaian::where('status', '>=', 2)->orderBy('memo_created_at', 'desc')->get();
         $dosen_sk = dosen_tugas::all();
         $pemateri = pemateri::all();
         $perjalanan = perjalanan::all();
@@ -885,7 +920,7 @@ class kepegawaianController extends Controller
         $id_sk = $espede->id_sk;
         // dd($id_sk = $espede->id);
 
-        $jabatan_user = $this->jabatan_user();
+        $jabatan_user = $this->cek_jabatan();
 
         return view('dosen.surat_tugas.edit_upload', [
         'spd' => $spd,
@@ -965,7 +1000,8 @@ class kepegawaianController extends Controller
     	$surat_tugas = surat_kepegawaian::where('id', $id)->first();
         $dosen_tugas = dosen_tugas::where('id_sk', $surat_tugas->id)->get();
         $spd = spd::where('id_sk', $id)->first();
-        $terbit = Carbon::now()->locale('id_ID');
+        // $terbit = Carbon::now()->locale('id_ID');
+        $terbit = $spd->created_at;
         $dekan = User::with("jabatan")
         ->wherehas("jabatan", function (Builder $query){
             $query->where("jabatan", "Dekan");

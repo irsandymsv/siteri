@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class spd extends Model
 {
     protected $table = 'spd';
-    public $timestamps = false;
+    public $timestamps = true;
     protected $fillable = [
         'id_sk', 'id_jenis_kendaraan', 'asal', 'tujuan', 'uang_harian', 'id_penginapan', 'id_pendaftaran', 'biaya_penginapan', 'biaya_pendaftaran_acara',
     ];
