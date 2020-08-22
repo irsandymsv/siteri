@@ -766,7 +766,7 @@ class kepegawaianController extends Controller
         $jenis = jenis_sk::all();
         $status = status_surat::all();
         $bukti = bukti_perjalanan::where('id_spd', $id)->get();
-    
+        dd($bukti);
       return view('bpp.surat_tugas.preview_spd', [
         'surat_tugas' => $surat_tugas,
         'dosen_tugas' =>$dosen_tugas,

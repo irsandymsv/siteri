@@ -78,7 +78,25 @@
                 <h3><b>Bukti Perjalanan</b></h3>
                 <table class="table table-striped table-bordered">
                      <tr>
-                        <td>Lampiran Upload</td>
+                        <td>Lampiran Bukti Perjalanan</td>
+                        <td>
+                           @foreach ($bukti as $item)
+                               <a href="{{route('bpp.spd.download', $item->id)}}"><i class="fa fa-file"></i> {{$item->nama}}</a><br>
+                           @endforeach
+                          
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>Lampiran Bukti Pendaftaran</td>
+                        <td>
+                           @foreach ($bukti as $item)
+                               <a href="{{route('bpp.spd.download', $item->id)}}"><i class="fa fa-file"></i> {{$item->nama}}</a><br>
+                           @endforeach
+                          
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>Lampiran Bukti Penginapan</td>
                         <td>
                            @foreach ($bukti as $item)
                                <a href="{{route('bpp.spd.download', $item->id)}}"><i class="fa fa-file"></i> {{$item->nama}}</a><br>
