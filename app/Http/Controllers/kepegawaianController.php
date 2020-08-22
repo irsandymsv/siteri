@@ -1000,7 +1000,8 @@ class kepegawaianController extends Controller
     	$surat_tugas = surat_kepegawaian::where('id', $id)->first();
         $dosen_tugas = dosen_tugas::where('id_sk', $surat_tugas->id)->get();
         $spd = spd::where('id_sk', $id)->first();
-        $terbit = Carbon::now()->locale('id_ID');
+        // $terbit = Carbon::now()->locale('id_ID');
+        $terbit = $spd->created_at;
         $dekan = User::with("jabatan")
         ->wherehas("jabatan", function (Builder $query){
             $query->where("jabatan", "Dekan");

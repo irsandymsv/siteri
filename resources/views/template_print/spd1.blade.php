@@ -280,7 +280,7 @@ td, th {
 <br/>
          <div class="ttd-right">
             <span>Dikeluarkan di Jember</span><br/>
-            Pada Tanggal : {{ $terbit->format('d F Y') }} <br><br><br>
+            Pada Tanggal : {{ Carbon\Carbon::parse($terbit)->locale('id_ID')->isoFormat('D MMMM Y') }} <br><br><br>
             Universitas Jember <br>
             Fakultas Ilmu Komputer <br>
             Dekan,
