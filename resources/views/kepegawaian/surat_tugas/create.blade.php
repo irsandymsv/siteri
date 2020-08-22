@@ -19,6 +19,16 @@
 	.js-example-basic-multiple {
 		width: 50%;
 	}
+
+	.no_surat{
+		width: 25%;
+		height: 30px;
+		font-size: 14px;
+	}
+
+	#no_belakang{
+		font-size: 15px;
+	}
 </style>
 @endsection
 
@@ -65,7 +75,8 @@
 
 							<tbody>
 								<td>
-									<input class="form-control" type="text" name="nomor_surat" placeholder="Masukan nomor surat" required>
+									<input class="no_surat" type="text" name="nomor_surat" placeholder="Masukan nomor" required> 
+									<span id="no_belakang"> /UN25.1.15/KP/{{ \Carbon\Carbon::today()->year }}</span>
 
 									@error('nomor_surat')
 									  <p class="invalid-feedback" role="alert" style="color: red;">

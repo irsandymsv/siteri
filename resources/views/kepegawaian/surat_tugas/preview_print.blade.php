@@ -39,7 +39,7 @@
 
                      <tr>
                         <td>No Surat</td>
-                        <td>{{ $surat_tugas->nomor_surat}}</td>
+                        <td>{{ $surat_tugas->nomor_surat}}/UN25.1.15/KP/{{ \Carbon\Carbon::parse($surat_tugas->created_at)->year }}</td>
                      </tr>
 
                      <tr>
@@ -72,13 +72,13 @@
             <div  class="box-footer">
                <a href="{{route('kepegawaian.surat.index') }}" class="btn btn-default">Kembali</a>
                @if ($surat_tugas->surat_in_out == 1)
-               @if ($surat_tugas->jenis_surat == 1)
-               <a href="{{route('kepegawaian.surat.cetak1', $surat_tugas->id)}}" class="btn btn-warning btn-sm" ><i class="fa fa-print"></i> Cetak</a>
-               @elseif($surat_tugas->jenis_surat == 2)
-               <a href="{{route('kepegawaian.surat.cetak2', $surat_tugas->id)}}" class="btn btn-warning btn-sm" ><i class="fa fa-print"></i> Cetak</a>
-               @elseif($surat_tugas->jenis_surat == 3)
-               <a href="{{route('kepegawaian.surat.cetak1', $surat_tugas->id)}}" class="btn btn-warning btn-sm" ><i class="fa fa-print"></i> Cetak</a>
-               @endif
+                  @if ($surat_tugas->jenis_surat == 1)
+                  <a href="{{route('kepegawaian.surat.cetak1', $surat_tugas->id)}}" class="btn btn-warning btn-sm" ><i class="fa fa-print"></i> Cetak</a>
+                  @elseif($surat_tugas->jenis_surat == 2)
+                  <a href="{{route('kepegawaian.surat.cetak2', $surat_tugas->id)}}" class="btn btn-warning btn-sm" ><i class="fa fa-print"></i> Cetak</a>
+                  @elseif($surat_tugas->jenis_surat == 3)
+                  <a href="{{route('kepegawaian.surat.cetak1', $surat_tugas->id)}}" class="btn btn-warning btn-sm" ><i class="fa fa-print"></i> Cetak</a>
+                  @endif
                @endif
                @if ($surat_tugas->surat_in_out == 2)
                <a href="{{route('kepegawaian.surat.cetak3', $surat_tugas->id)}}" class="btn btn-warning btn-sm" ><i class="fa fa-print"></i> Cetak</a>

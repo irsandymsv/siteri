@@ -55,7 +55,7 @@ class kepegawaianController extends Controller
 
     public function surat_index()
     {
-        $memu = surat_kepegawaian::where('status', 2)->get();
+        $memu = surat_kepegawaian::where('status', '>=', 2)->with('status_sk')->orderBy('memo_created_at', 'desc')->get();
         $dosen_sk = dosen_tugas::all();
         $pemateri = pemateri::all();
         return view('kepegawaian.surat_tugas.index', compact('memu', 'dosen_sk', 'pemateri'));
@@ -140,10 +140,10 @@ class kepegawaianController extends Controller
                 ]);
         
                 $data = pemateri::where('id_sk', $id)->update($surat);
-                return redirect(route('kepegawaian.surat.index')); 
+                return redirect(route('kepegawaian.surat.preview', $id)); 
             }
             else
-            return redirect(route('kepegawaian.surat.index'));
+            return redirect(route('kepegawaian.surat.preview', $id));
         } 
         
     }
@@ -186,7 +186,7 @@ class kepegawaianController extends Controller
         ]);
 
         $data = spd::create($spd);
-        return redirect()->route('kepegawaian.surat.index');
+        return redirect()->route('kepegawaian.surat.preview', $id);
     }
 
     public function ktu_memu()
@@ -485,7 +485,7 @@ class kepegawaianController extends Controller
 
     public function ktu_surat()
     {
-        $surat = surat_kepegawaian::where('status', 3)->get();
+        $surat = surat_kepegawaian::where('status', '>=', 3)->with('status_sk')->orderBy('created_at' ,'desc')->get();
         $dosen_sk = dosen_tugas::all();
         $pemateri= pemateri::all();
         return view('ktu.surat_tugas.index', compact('surat', 'dosen_sk','pemateri'));
@@ -498,7 +498,7 @@ class kepegawaianController extends Controller
         ]);
 
         $data = surat_kepegawaian::where('id', $id)->update($memu);
-        return redirect(route('ktu.surat.index'));
+        return redirect()->back()->with('success', 'Surat tugas berhasil diverifikasi');
     }
 
     public function ktu_surat_reject(Request $request, $id)
