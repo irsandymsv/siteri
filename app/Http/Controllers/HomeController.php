@@ -66,7 +66,7 @@ class HomeController extends Controller
             return redirect()->route('kepegawaian.surat.index');
         }
         elseif ($user->jabatan->jabatan == "Sekretaris Pimpinan") {
-            return redirect()->route('staffpim.index');
+            return redirect()->route('staffpim.dashboard');
         }
         elseif ($user->jabatan->jabatan == "Admin") {
             return redirect()->route('admin.pegawai.index');

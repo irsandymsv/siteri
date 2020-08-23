@@ -58,7 +58,7 @@ Preview Surat Tugas
 
                         <tr>
                             <td>No Surat</td>
-                            <td>{{ $spd->surat_tugas->nomor_surat}}</td>
+                            <td>{{ $spd->surat_tugas->nomor_surat}}/UN25.1.15/KP/{{ \Carbon\Carbon::parse($spd->surat_tugas->created_at)->year}}</td>
                         </tr>
                         <tr>
                             <td>Yang Bertugas</td>

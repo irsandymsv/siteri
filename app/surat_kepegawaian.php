@@ -18,7 +18,7 @@ class surat_kepegawaian extends Model
     }
     public function spd()
     {
-        return $this->hasMany('App\spd', 'id');
+        return $this->hasMany('App\spd', 'id_spd');
     }
 
     public function jenis_sk()

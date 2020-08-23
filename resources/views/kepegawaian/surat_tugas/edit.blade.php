@@ -391,8 +391,21 @@
 			jenis = $(this).val();
 			if (jenis == 2) {
 				$('input.panitia').show();
+				@if($surat->jenis_surat != 2)
+				input_jabatan = `
+					<input name="jabatan_panitia[]" class="form-control panitia" type="text" placeholder="Jabatan Panitia" style="margin-top: 5px; width: 30%">
+				`;
+				$(".daftar_dosen").each(function(index, el) {
+					$(el).append(input_jabatan);
+				});
+				@endif
 			} else {
 				$('input.panitia').hide();
+				@if($surat->jenis_surat != 2)
+				$(".panitia").each(function(index, el) {
+					$(el).remove();
+				});
+				@endif
 			}
 		});
 
@@ -419,11 +432,6 @@
 					container.appendChild(div);
 				
 					i++;
-				}
-
-				function hapusPemateri(id)
-				{
-					$('#'+id).remove();
 				}
 
 			@else( count($dosen_sk) > 0)
@@ -471,8 +479,12 @@
 					});
 				}
 			@endif
-			
 		});
+
+		function hapusPemateri(id)
+		{
+			$('#'+id).remove();
+		}
 		
 		
 	</script>

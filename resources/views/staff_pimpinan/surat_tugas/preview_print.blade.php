@@ -91,8 +91,8 @@
         <div  class="box-footer">
           <a href="{{ route('staffpim.sp.read') }}" class="btn btn-default">Kembali</a>
           @if ($surat_tugas->status == 5)
-	          <a  href="{{ route('staffpim.surat.approve', $surat_tugas->id ) }}" class="btn btn-primary pull-right">Setujui</a>
-	          <a style="margin-right: 5px;" href="{{ route('staffpim.surat.reject.view', $surat_tugas->id ) }}" class="btn btn-danger pull-right">Tolak</a>
+	          <a  href="{{ route('staffpim.surat.approve', $surat_tugas->id ) }}" class="btn btn-primary">Setujui</a>
+	          <a href="{{ route('staffpim.surat.reject.view', $surat_tugas->id ) }}" class="btn btn-danger pull-right">Tolak</a>
           @endif
         </div>
             

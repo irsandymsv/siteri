@@ -55,7 +55,7 @@
                   <p>{{ $bertugas->user['nama'] }} - {{ $bertugas->user['no_pegawai'] }}</p>
                   @endforeach
 
-                  @foreach ($pemateri as $pematerii)
+                  @foreach ($pematerinya as $pematerii)
                   <p>{{ $pematerii->nama}}</p>
                   @endforeach
                 </td>

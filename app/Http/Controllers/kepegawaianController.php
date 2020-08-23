@@ -530,26 +530,34 @@ class kepegawaianController extends Controller
     public function kepegawaian_preview($id)
     {
         $surat_tugas = surat_kepegawaian::where('id', $id)->first();
+        $spd = spd::where('id_sk', $id)->first();
         $dosen_tugas = dosen_tugas::where('id_sk', $surat_tugas->id)->get();
-        $pemateri = pemateri::where('id_sk', $id)->get();
+        $pemateri = pemateri::all();
+        $pematerinya = pemateri::where('id_sk', $id)->get();
+        $jumlah = count($pematerinya);
      
       return view('kepegawaian.surat_tugas.preview_print', [
         'surat_tugas' => $surat_tugas,
+        'spd' => $spd,
         'dosen_tugas' => $dosen_tugas,
-        'pemateri' => $pemateri,
+        'pematerinya' => $pematerinya,
+        'pemateri' => $pematerinya,
+        'jumlah' => $jumlah
       ]);
     }
 
     public function sp_preview($id)
     {
         $surat_tugas = surat_kepegawaian::where('id', $id)->first();
+        $spd = spd::where('id_sk', $id)->first();
         $dosen_tugas = dosen_tugas::where('id_sk', $surat_tugas->id)->get();
         $pemateri = pemateri::all();
-        $pematerinya= pemateri::where('id_sk', $id)->get();
+        $pematerinya = pemateri::where('id_sk', $id)->get();
         $jumlah = count($pematerinya);
      
       return view('staff_pimpinan.surat_tugas.preview_print', [
         'surat_tugas' => $surat_tugas,
+        'spd' => $spd,
         'dosen_tugas' =>$dosen_tugas,
         'pemateri' => $pemateri,
         'pematerinya' => $pematerinya,
@@ -605,6 +613,7 @@ class kepegawaianController extends Controller
     public function wadek2_preview($id)
     {
         $surat_tugas = surat_kepegawaian::where('id', $id)->first();
+        $spd = spd::where('id_sk', $id)->first();
         $dosen_tugas = dosen_tugas::where('id_sk', $surat_tugas->id)->get();
         $pemateri = pemateri::all();
         $pematerinya= pemateri::where('id_sk', $id)->get();
@@ -623,6 +632,7 @@ class kepegawaianController extends Controller
 
       return view('wadek2.surat_tugas.preview_print', [
         'surat_tugas' => $surat_tugas,
+        'spd' => $spd,
         'dosen_tugas' =>$dosen_tugas,
         'pemateri' => $pemateri,
         'pematerinya' => $pematerinya,
@@ -654,10 +664,9 @@ class kepegawaianController extends Controller
         $surat_tugas = surat_kepegawaian::where('id', $id)->first();
         $spd = spd::where('id_sk', $id)->first();
         $dosen_tugas = dosen_tugas::where('id_sk', $surat_tugas->id)->get();
-        $pemateri= pemateri::all();
-        $pematerinya= pemateri::where('id_sk', $id)->get();
+        $pemateri = pemateri::all();
+        $pematerinya = pemateri::where('id_sk', $id)->get();
         $jumlah = count($pematerinya);
-        
      
       return view('ktu.surat_tugas.preview_print', [
         'surat_tugas' => $surat_tugas,
@@ -791,21 +800,21 @@ class kepegawaianController extends Controller
         $data = surat_kepegawaian::where('id', $id)->update($surat);
         $dosen = $request->dosen;
         $pemateri = $request->pemateri;
-        if ($dosen == null) {
-            if ($pemateri != null) {
-                $hitung = count($pemateri); 
-                $pemateri = pemateri::where('id_sk', $id);
-                $pemateri->delete();
+        if ($request->surat_in_out == 2) {
+            // if ($hitung > 0) {
+        			$hitung = count($pemateri); 
+               $pemateri = pemateri::where('id_sk', $id);
+               $pemateri->delete();
     
-                for ($i=0; $i < $hitung ; $i++) { 
+               for ($i=0; $i < $hitung ; $i++) { 
                     $pemateri_sk = pemateri::create([
                         'id_sk' => $id,
                         'nama' => $request->pemateri[$i],
                         'instansi' => $request->instansi,
                         'biaya' => $request->biaya_pemateri
                     ]);
-                }
-            }
+               }
+            // }
         } else {
             $hitung = count($dosen);
             $dosen = dosen_tugas::where('id_sk', $id);
@@ -837,10 +846,16 @@ class kepegawaianController extends Controller
     {
         $dosen_sk = dosen_tugas::all();
         $pemateri = pemateri::all();
-        $surat = DB::table('spd')->join('surat_kepegawaian', 'surat_kepegawaian.id' , '=', 'spd.id_sk')->join('status_surat', 'status_surat.id' , '=', 'surat_kepegawaian.status')
-        ->where('surat_kepegawaian.status', '>=', 10)->get();
+        // $surat = DB::table('spd')->join('surat_kepegawaian', 'surat_kepegawaian.id' , '=', 'spd.id_sk')->join('status_surat', 'status_surat.id' , '=', 'surat_kepegawaian.status')
+        // ->where('surat_kepegawaian.status', '>=', 10)->get();
         $jenis = jenis_sk::all();
-        // dd($surat);
+
+        $surat = spd::with('surat_tugas.status_sk')
+        ->whereHas('surat_tugas', function(Builder $query){
+        	$query->where('status', '>=', 10);
+        })->orderBy('created_at', 'desc')->get();
+        
+        // dd($surat_kepeg);
         return view('bpp.surat_tugas.spd', compact('surat', 'dosen_sk', 'pemateri', 'jenis'));
     }
 
@@ -925,34 +940,41 @@ class kepegawaianController extends Controller
         ]);
 
         $data = surat_kepegawaian::where('id', $id)->update($surat);
-        return redirect()->route('bpp.surat.index');
+        return redirect()->route('bpp.surat.preview', $id)->with('success', 'Surat Tugas Berhasil Disetujui');
     }
 
     //Dosen
     public function dosen_index()
     {
         $user = Auth::user()->no_pegawai;
-        $dengan_spd = DB::table('spd')->join('surat_kepegawaian', 'spd.id_sk' , '=', 'surat_kepegawaian.id')->join('dosen_tugas','dosen_tugas.id_sk','=','surat_kepegawaian.id')
-        ->where('surat_kepegawaian.status', 9)->where('dosen_tugas.id_dosen', $user)->get();
-        $tanpa_spd = DB::table('dosen_tugas')->join('surat_kepegawaian', 'dosen_tugas.id_sk' , '=', 'surat_kepegawaian.id')
-        ->where('surat_kepegawaian.status', 9)->where('dosen_tugas.id_dosen', $user)->get();
-        if (count($dengan_spd) > 0) {
-            $surat_tugas = $dengan_spd;
-        } else {
-            $surat_tugas = $tanpa_spd;
-        }
+        // $dengan_spd = DB::table('spd')->join('surat_kepegawaian', 'spd.id_sk' , '=', 'surat_kepegawaian.id')->join('dosen_tugas','dosen_tugas.id_sk','=','surat_kepegawaian.id')
+        // ->where('surat_kepegawaian.status', 9)->where('dosen_tugas.id_dosen', $user)->get();
+        // $tanpa_spd = DB::table('dosen_tugas')->join('surat_kepegawaian', 'dosen_tugas.id_sk' , '=', 'surat_kepegawaian.id')
+        // ->where('surat_kepegawaian.status', 9)->where('dosen_tugas.id_dosen', $user)->get();
+        // if (count($dengan_spd) > 0) {
+        //     $surat_tugas = $dengan_spd;
+        // } else {
+        //     $surat_tugas = $tanpa_spd;
+        // }
+
+        $tugas_dosen = dosen_tugas::where('id_dosen', $user)->with([
+            'surat_tugas',
+            'surat_tugas.status_sk'
+        ])->whereHas('surat_tugas', function(Builder $query){
+            $query->where('status', '>=', 9);
+        })->get();
+        // dd($tugas_dosen);
+
         $jenis = jenis_sk::all();
         $dosen_sk = dosen_tugas::all();
-        $dosen = User::all();
-        $pemateri = pemateri::all();
+        // $dosen = User::all();
 
         $jabatan_user = $this->cek_jabatan();
         
         // dd($surat_tugas);
         return view('dosen.surat_tugas.index', [
-        'surat_tugas' => $surat_tugas,
+        'tugas_dosen' => $tugas_dosen,
         'dosen_sk' => $dosen_sk,
-        'pemateri' => $pemateri,
         'jenis' => $jenis,
         'jabatan_user' => $jabatan_user
         ]);

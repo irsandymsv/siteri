@@ -9,7 +9,7 @@ class pemateri extends Model
     protected $table = 'pemateri';
 
     protected $fillable = [
-        'id_sk','nama', 'instansi',
+        'id_sk','nama', 'instansi', 'biaya'
     ];
 
     public $timestamps = false;

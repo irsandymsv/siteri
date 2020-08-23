@@ -44,13 +44,13 @@
             </thead>
 
             <tbody>
-              @foreach ($surat as $index => $sk)
+              @foreach ($surat as $index => $spd)
 
               <tr role="row">
                 <td>{{$index+1}}</td>
                 <td>
                 @foreach ($jenis as $jeniss)
-                    @if ($jeniss->id == $sk->jenis_surat)
+                    @if ($jeniss->id == $spd->surat_tugas->jenis_surat)
                     {{$jeniss->jenis}}
                     @endif
                 @endforeach
@@ -58,22 +58,23 @@
               </td>
                 <td>
                   @foreach ($dosen_sk as $dosen)
-                  @if ($dosen->id_sk == $sk->id)
-                  <p>{{$dosen->user['nama']}}</p>
-                  @endif
+                    @if ($dosen->id_sk == $spd->surat_tugas->id)
+                    <p>{{$dosen->user['nama']}}</p>
+                    @endif
                   @endforeach
+
                   @foreach ($pemateri as $pematerii)
-                      @if ($pematerii['id_sk'] == $sk->id)
+                    @if ($pematerii['id_sk'] == $spd->surat_tugas->id)
                       <p>{{$pematerii['nama']}}</p>   
-                      @endif
+                    @endif
                   @endforeach
                 </td>
-                <td>{{ \Carbon\Carbon::parse($sk->started_at)->format('d/m/Y')}} -
-                  {{ \Carbon\Carbon::parse($sk->end_at)->format('d/m/Y')}}</td>
-                <td>{{$sk->keterangan}}</td>
-                <td>{{$sk->status}}</td>
+                <td>{{ \Carbon\Carbon::parse($spd->surat_tugas->started_at)->format('d/m/Y')}} -
+                  {{ \Carbon\Carbon::parse($spd->surat_tugas->end_at)->format('d/m/Y')}}</td>
+                <td>{{$spd->surat_tugas->keterangan}}</td>
+                <td>{{$spd->surat_tugas->status_sk->status}}</td>
                 <td>
-                  <a href="{{route('bpp.spd.view', $sk->id_spd)}}" class="btn btn-primary" style="margin-left: 17px;"><i class="fa fa-eye"></i> </a>
+                  <a href="{{route('bpp.spd.view', $spd->id_spd)}}" class="btn btn-primary" style="margin-left: 17px;"><i class="fa fa-eye"></i> </a>
                 </td>
               </tr>
 

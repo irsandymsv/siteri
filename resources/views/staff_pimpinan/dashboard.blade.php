@@ -22,7 +22,7 @@
 
      	<div class="box-body">
      		<div class="table-responsive">
-     			<table id="table_data1" class="table table-bordered table-hover dataTable">
+     			<table id="data_table" class="table table-bordered table-hover dataTable">
      			  <thead>
      			    <tr>
      			      <th>
@@ -78,4 +78,43 @@
     </div>
   </div>
 </div>
+@endsection
+
+@section('script')
+<script type="text/javascript">
+	$(`<tr>
+	   <th></th>
+	   <th></th>
+	   <th></th>
+	   <th></th>
+	   <th></th>
+	   <th></th>
+	   <th></th>
+	</tr>`).clone(true).appendTo( '#data_table thead' );
+
+	$('#data_table').DataTable({
+	  order: [],
+	  orderCellsTop: true,
+	  initComplete: function () {
+	    this.api().columns([1,5]).every( function () {
+	      var column = this;
+	      var select = $('<select><option value="">- Semua -</option></select>')
+	        .appendTo( $("#data_table thead tr:eq(1) th").eq(column.index()).empty() )
+	        .on( 'change', function () {
+	          var val = $.fn.dataTable.util.escapeRegex(
+	            $(this).val()
+	          );
+
+	          column
+	            .search( val ? '^'+val+'$' : '', true, false )
+	            .draw();
+	        });
+
+	      column.data().unique().sort().each( function ( d, j ) {
+	        select.append( '<option value="'+d+'">'+d+'</option>' )
+	      });
+	    });
+	  }
+	});
+</script>
 @endsection

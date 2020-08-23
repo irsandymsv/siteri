@@ -35,6 +35,13 @@
 
         <div class="box-body">
        		<div class="table-responsive">
+            @if (session()->has('success'))
+              <div class="alert alert-success alert-block">
+                <button type="button" class="close" data-dismiss="alert">x</button>
+                {{ session()->get('success')}}
+              </div>
+            @endif
+            
             <table class="table table-striped table-bordered">
               <tr>
                 <td>No Surat</td>
