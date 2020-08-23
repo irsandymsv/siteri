@@ -110,11 +110,11 @@ class honorSemproController extends Controller
                     ['id_status_surat_tugas', 3]
                 ])->orderBy('created_at', 'desc');
             },
-            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
+            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional',
             'surat_tugas.dosen1.golongan',
             'surat_tugas.dosen1.fungsional',
             // 'surat_tugas.dosen1.pph',
-            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
+            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional',
             'surat_tugas.dosen2.golongan',
             'surat_tugas.dosen2.fungsional',
             // 'surat_tugas.dosen2.pph',
@@ -243,11 +243,11 @@ class honorSemproController extends Controller
                     ['id_status_surat_tugas', 3]
                 ])->orderBy('created_at', 'desc');
             },
-            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
+            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional',
             'surat_tugas.dosen1.golongan',
             'surat_tugas.dosen1.fungsional',
             // 'surat_tugas.dosen1.pph',
-            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
+            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional',
             'surat_tugas.dosen2.golongan',
             'surat_tugas.dosen2.fungsional',
             // 'surat_tugas.dosen2.pph'
@@ -333,11 +333,11 @@ class honorSemproController extends Controller
                     ['id_status_surat_tugas', 3]
                 ])->orderBy('created_at', 'desc');
             },
-            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
+            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional',
             'surat_tugas.dosen1.golongan',
             'surat_tugas.dosen1.fungsional',
             // 'surat_tugas.dosen1.pph',
-            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
+            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional',
             'surat_tugas.dosen2.golongan',
             'surat_tugas.dosen2.fungsional',
             // 'surat_tugas.dosen2.pph',
@@ -440,11 +440,11 @@ class honorSemproController extends Controller
                     ['id_status_surat_tugas', 3]
                 ])->orderBy('created_at', 'desc');
             },
-            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
+            'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional',
             'surat_tugas.dosen1.golongan',
             'surat_tugas.dosen1.fungsional',
             // 'surat_tugas.dosen1.pph',
-            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
+            'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional',
             'surat_tugas.dosen2.golongan',
             'surat_tugas.dosen2.fungsional',
             // 'surat_tugas.dosen2.pph',
@@ -554,11 +554,11 @@ class honorSemproController extends Controller
                ['id_status_surat_tugas', 3]
             ])->orderBy('created_at', 'desc');
          },
-         'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
+         'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional',
          'surat_tugas.dosen1.golongan',
          'surat_tugas.dosen1.fungsional',
          // 'surat_tugas.dosen1.pph',
-         'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
+         'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional',
          'surat_tugas.dosen2.golongan',
          'surat_tugas.dosen2.fungsional',
          'surat_tugas.dosen2.pph',
@@ -661,11 +661,11 @@ class honorSemproController extends Controller
                ['id_status_surat_tugas', 3]
             ])->orderBy('created_at', 'desc');
          },
-         'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
+         'surat_tugas.dosen1:no_pegawai,nama,npwp,id_golongan,id_fungsional',
          'surat_tugas.dosen1.golongan',
          'surat_tugas.dosen1.fungsional',
          // 'surat_tugas.dosen1.pph',
-         'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional,id_pph',
+         'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional',
          'surat_tugas.dosen2.golongan',
          'surat_tugas.dosen2.fungsional',
          // 'surat_tugas.dosen2.pph',
