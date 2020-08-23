@@ -21,7 +21,7 @@
 @endsection
 
 @section('judul_header')
-	Preview Surat Tugas 
+	Surat Tugas 
 @endsection
 
 @section('content')
@@ -43,7 +43,7 @@
 
                      <tr>
                         <td>No Surat</td>
-                        <td>{{ $surat_tugas->nomor_surat}}</td>
+                        <td>{{ $surat_tugas->nomor_surat}}/UN25.1.15/KP/{{ \Carbon\Carbon::parse($surat_tugas->created_at)->year }}</td>
                      </tr>
 
                      <tr>

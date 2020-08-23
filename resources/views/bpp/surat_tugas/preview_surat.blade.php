@@ -5,7 +5,7 @@
 
 @section('css_link')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+	<link rel="stylesheet" type="text/css" href="{{asset("/css/custom_style.css")}}">
   <link rel="stylesheet" type="text/css" href="{{ asset('/css/surat_tugas_kepegawaian.css') }}">
   <style type="text/css">
 		.table-responsive{
@@ -38,7 +38,7 @@
             <table class="table table-striped table-bordered">
               <tr>
                 <td>No Surat</td>
-                <td>{{ $surat_tugas->nomor_surat}}</td>
+                <td>{{ $surat_tugas->nomor_surat}}/UN25.1.15/KP/{{ \Carbon\Carbon::parse($surat_tugas->created_at)->year }}</td>
               </tr>
 
               <tr>
@@ -163,7 +163,9 @@
 
         <div  class="box-footer">
           <a href="{{route('bpp.surat.index')}}" class="btn btn-default">Kembali</a>
-          <a href="{{route('bpp.surat.approve', $surat_tugas->id)}}" class="btn btn-primary">Setujui</a>
+          @if ($surat_tugas->status == 8)
+            <a href="{{route('bpp.surat.approve', $surat_tugas->id)}}" class="btn btn-primary">Setujui</a>
+          @endif
         </div>
             
    		</div>

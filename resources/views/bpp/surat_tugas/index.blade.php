@@ -1,131 +1,128 @@
-@extends('bpp.bpp_view')
-@section('page_title','Surat Tugas')
+@extends('layouts.template')
+
+@section('side_menu')
+   @include('include.bpp_menu')
+@endsection
+
+@section('page_title','Surat Tugas Kepegawaian')
+@section('judul_header','Surat Tugas Kepegawaian')
+
 @section('content')
 <!-- Main content -->
 <section class="content">
   <div class="box">
     <div class="box-header">
+      <h3 class="box-title">Daftar Surat Tugas</h3>
     </div>
     <div class="box-body">
       <div class="row">
-        <div class="col-sm-12"></div>
-      </div>
-
-      <form method="POST" action="">
-        @csrf
-        <div class="box box-default">
-          <div class="box-header with-border">
-            <h3 class="box-title">Search</h3>
-
-            <div class="box-tools pull-right">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        <div class="col-sm-12">
+          @if (session()->has('success'))
+            <div class="alert alert-success alert-block">
+              <button type="button" class="close" data-dismiss="alert">x</button>
+                {{ session()->get('success')}}
             </div>
-          </div>
-          <!-- /.box-header -->
-          <div class="box-body">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="inputmaksud" class="col-sm-3 control-label">Surat Tugas</label>
-                  <div class="col-sm-9">
-                    <input value="" type="text" class="form-control" name="maksud" id="inputmaksud"
-                      placeholder="Cari Surat Tugas">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.box-body -->
-          <div class="box-footer">
-            <button type="submit" class="btn btn-primary">
-              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-              Cari
-            </button>
-          </div>
-        </div>
-      </form>
+          @endif
 
-      <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-        <div class="row">
-          <div class="col-sm-12">
-            <table id="example2" class="table table-bordered table-hover dataTable" role="grid"
-              aria-describedby="example2_info">
-              <thead>
-                <tr role="row">
-                  <th width="5" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
-                    aria-label="Name: activate to sort column ascending">
-                    <center>No</center>
-                  </th>
-                  <th width="15%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
-                    aria-label="Name: activate to sort column ascending">
-                    <center>Jenis Surat</center>
-                  </th>
-                  <th width="25%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
-                    aria-label="Name: activate to sort column ascending">
-                    <center>Nama yang Bertugas</center>
-                  </th>
-                  <th width="15%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
-                    aria-label="Name: activate to sort column ascending">
-                    <center>Tanggal</center>
-                  </th>
-                  <th width="30%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
-                    aria-label="Name: activate to sort column ascending">
-                    <center>Keterangan</center>
-                  </th>
-                  <th width="10%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
-                    aria-label="Name: activate to sort column ascending">
-                    <center>Aksi</center>
-                  </th>
-                </tr>
-                @foreach ($surat as $index => $sk)
+          <table id="data_table" class="table table-bordered table-hover dataTable" >
+            <thead>
+              <tr>
+                <th>
+                  <center>No</center>
+                </th>
+                <th>
+                  <center>Jenis Surat</center>
+                </th>
+                <th>
+                  <center>Nama yang Bertugas</center>
+                </th>
+                <th>
+                  <center>Tanggal</center>
+                </th>
+                <th>
+                  <center>Keterangan</center>
+                </th>
+                <th>
+                  <center>Status</center>
+                </th>
+                <th>
+                  <center>Aksi</center>
+                </th>
+              </tr>
+            </thead>
 
-                <tr role="row">
-                  <td>{{$index+1}}</td>
-                  <td>{{$sk->jenis_sk->jenis}}</td>
-                  <td>
-                    @foreach ($dosen_sk as $dosen)
-                    @if ($dosen->id_sk == $sk->id)
-                    <p>{{$dosen->user['nama']}}</p>
-                    @endif
-                    @endforeach
-                    @foreach ($pemateri as $pematerii)
-                        @if ($pematerii['id_sk'] == $sk->id)
-                        <p>{{$pematerii['nama']}}</p>   
-                        @endif
-                    @endforeach
-                  </td>
-                  <td>{{ \Carbon\Carbon::parse($sk->started_at)->format('d/m/Y')}} -
-                    {{ \Carbon\Carbon::parse($sk->end_at)->format('d/m/Y')}}</td>
-                  <td>{{$sk->keterangan}}</td>
-                  <td>
-                    <a href="{{route('bpp.surat.preview', $sk->id)}}" class="btn btn-primary" style="margin-left: 17px;"><i class="fa fa-eye"></i> </a>
-                  </td>
-                </tr>
-
-                @endforeach
-              </thead>
-              <tbody>
+            <tbody>
+              @foreach ($surat as $index => $sk)
+              <tr role="row">
+                <td>{{$index+1}}</td>
+                <td>{{$sk->jenis_sk->jenis}}</td>
+                <td>
+                  @foreach ($dosen_sk as $dosen)
+                  @if ($dosen->id_sk == $sk->id)
+                  <p>{{$dosen->user['nama']}}</p>
+                  @endif
+                  @endforeach
+                  @foreach ($pemateri as $pematerii)
+                      @if ($pematerii['id_sk'] == $sk->id)
+                      <p>{{$pematerii['nama']}}</p>   
+                      @endif
+                  @endforeach
                 </td>
-                </tr>
+                <td>{{ \Carbon\Carbon::parse($sk->started_at)->format('d/m/Y')}} -
+                  {{ \Carbon\Carbon::parse($sk->end_at)->format('d/m/Y')}}</td>
+                <td>{{$sk->keterangan}}</td>
+                <td>{{$sk->status_sk->status}}</td>
+                <td>
+                  <a href="{{route('bpp.surat.preview', $sk->id)}}" class="btn btn-primary" style="margin-left: 17px;"><i class="fa fa-eye"></i> </a>
                 </td>
-                </tr>
-                </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+              </tr>
+
+              @endforeach
+            </tbody>
+          </table>
         </div>
-
-        <div class="row">
-
-          <div class="col-sm-7">
-            <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-
-            </div>
-          </div>
-        </div>
-
-      </div>
+      </div>  
+    </div>
+  </div>
 </section>
 <!-- /.content -->
+@endsection
+
+@section('script')
+<script type="text/javascript">
+  $(`<tr>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+  </tr>`).clone(true).appendTo( '#data_table thead' );
+
+  $('#data_table').DataTable({
+    order: [],
+    orderCellsTop: true,
+    initComplete: function () {
+      this.api().columns([1,5]).every( function () {
+        var column = this;
+        var select = $('<select><option value="">- Semua -</option></select>')
+          .appendTo( $("#data_table thead tr:eq(1) th").eq(column.index()).empty() )
+          .on( 'change', function () {
+            var val = $.fn.dataTable.util.escapeRegex(
+              $(this).val()
+            );
+
+            column
+              .search( val ? '^'+val+'$' : '', true, false )
+              .draw();
+          });
+
+        column.data().unique().sort().each( function ( d, j ) {
+          select.append( '<option value="'+d+'">'+d+'</option>' )
+        });
+      });
+    }
+  });
+</script>
 @endsection

@@ -5,7 +5,8 @@
 
 @section('css_link')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<link rel="stylesheet" type="text/css" href="/css/custom_style.css">
+	<link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('/css/surat_tugas_kepegawaian.css') }}">
 	<style type="text/css">
 		.table-responsive{
          width: 90%;
@@ -79,28 +80,37 @@
               	<td>{{ $surat_tugas->revisi }}</td>
               </tr>
               @endif
-            </table>    
+            </table>
+
+            <a href="{{route('kepegawaian.surat.index') }}" class="btn btn-default">Kembali</a>
+            @if ($surat_tugas->surat_in_out == 1)
+              @if ($surat_tugas->jenis_surat == 1)
+              <a href="{{route('kepegawaian.surat.cetak1', $surat_tugas->id)}}" class="btn btn-warning" ><i class="fa fa-print"></i> Cetak</a>
+              @elseif($surat_tugas->jenis_surat == 2)
+              <a href="{{route('kepegawaian.surat.cetak2', $surat_tugas->id)}}" class="btn btn-warning" ><i class="fa fa-print"></i> Cetak</a>
+              @elseif($surat_tugas->jenis_surat == 3)
+              <a href="{{route('kepegawaian.surat.cetak1', $surat_tugas->id)}}" class="btn btn-warning" ><i class="fa fa-print"></i> Cetak</a>
+              @endif
+            @endif
+
+            @if ($surat_tugas->surat_in_out == 2)
+            <a href="{{route('kepegawaian.surat.cetak3', $surat_tugas->id)}}" class="btn btn-warning" ><i class="fa fa-print"></i> Cetak</a>
+            @endif
+
+            @if ($surat_tugas->status < 9)
+              <a href="{{route('kepegawaian.surat.edit', $surat_tugas->id)}}" class="btn bg-purple float-right"><i class="fa fa-edit"></i> Ubah</a>
+            @endif    
          	</div>
         </div>
 
+        <br>
         <div  class="box-footer">
-          <a href="{{route('kepegawaian.surat.index') }}" class="btn btn-default">Kembali</a>
-          @if ($surat_tugas->surat_in_out == 1)
-            @if ($surat_tugas->jenis_surat == 1)
-            <a href="{{route('kepegawaian.surat.cetak1', $surat_tugas->id)}}" class="btn btn-warning" ><i class="fa fa-print"></i> Cetak</a>
-            @elseif($surat_tugas->jenis_surat == 2)
-            <a href="{{route('kepegawaian.surat.cetak2', $surat_tugas->id)}}" class="btn btn-warning" ><i class="fa fa-print"></i> Cetak</a>
-            @elseif($surat_tugas->jenis_surat == 3)
-            <a href="{{route('kepegawaian.surat.cetak1', $surat_tugas->id)}}" class="btn btn-warning" ><i class="fa fa-print"></i> Cetak</a>
-            @endif
-          @endif
-
-          @if ($surat_tugas->surat_in_out == 2)
-          <a href="{{route('kepegawaian.surat.cetak3', $surat_tugas->id)}}" class="btn btn-warning" ><i class="fa fa-print"></i> Cetak</a>
-          @endif
-
-          @if ($surat_tugas->status < 9)
-          	<a href="{{route('kepegawaian.surat.edit', $surat_tugas->id)}}" class="btn bg-purple float-right"><i class="fa fa-edit"></i> Ubah</a>
+          @if ($surat_tugas->jenis_surat == 1)
+          @include('kepegawaian.surat_tugas.jenis.peserta')
+          @elseif ($surat_tugas->jenis_surat == 2)
+          @include('kepegawaian.surat_tugas.jenis.panitia')
+          @else
+          @include('kepegawaian.surat_tugas.jenis.pemateri')
           @endif
         </div>
    		</div>

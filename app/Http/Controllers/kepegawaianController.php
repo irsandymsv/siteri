@@ -719,12 +719,17 @@ class kepegawaianController extends Controller
     {
         $surat = surat_kepegawaian::find($id);
         $jenis = jenis_sk::all();
-        $dosen_sk = dosen_tugas::where('id_sk', $id)->get();
+        $dosen_sk = dosen_tugas::where('id_sk', $id)->with('user')->get();
         $dosen = User::where('is_dosen', '=', '1')->get();
         $inout = surat_in_out::all();
         $perjalanan = perjalanan::all();
         $pemateri = pemateri::where('id_sk', $id)->get();
-        return view('kepegawaian.surat_tugas.edit', compact('surat', 'dosen_sk', 'jenis', 'dosen', 'pemateri', 'perjalanan', 'inout'));
+        $id_dosen_tugas = array();
+        foreach ($dosen_sk as $key) {
+            $id_dosen_tugas[] = $key->id_dosen;
+        }
+        // dd($id_dosen_tugas);
+        return view('kepegawaian.surat_tugas.edit', ['surat' => $surat, 'dosen_sk' => $dosen_sk, 'jenis' => $jenis, 'dosen' => $dosen, 'pemateri' => $pemateri, 'perjalanan' => $perjalanan, 'inout' => $inout, 'id_dosen_tugas' => $id_dosen_tugas]);
     }
 
     public function surat_revisian(Request $request, $id)
@@ -737,8 +742,16 @@ class kepegawaianController extends Controller
             'end_date' => 'end_at'
         ]);
 
+        $validator->sometimes(['dosen','dosen.*'], 'required', function($request){
+            return $request->surat_in_out == 1;
+        });
+
         $validator->sometimes(['pemateri','pemateri.*'], 'required', function($request){
             return $request->surat_in_out == 2;
+        });
+
+        $validator->sometimes(['jabatan_panitia','jabatan_panitia.*'], 'required', function($request){
+            return $request->jenisSurat == 2;
         });
 
         $validator->sometimes('biaya_pemateri', 'required', function($request){
@@ -802,6 +815,7 @@ class kepegawaianController extends Controller
                 $dosen_sk = dosen_tugas::create([
                     'id_sk' => $id,
                     'id_dosen' => $request->dosen[$i],
+                    'jabatan' => $request->jabatan_panitia[$i]
                 ]);
             }
 
@@ -812,7 +826,7 @@ class kepegawaianController extends Controller
     //BPP
     public function bpp_index()
     {
-        $surat = surat_kepegawaian::where('status', 8)->get();
+        $surat = surat_kepegawaian::whereIn ('status', [8,9])->with('status_sk')->orderBy('created_at', 'desc')->get();
         $dosen_sk = dosen_tugas::all();
         $pemateri = pemateri::all();
 
@@ -823,10 +837,10 @@ class kepegawaianController extends Controller
     {
         $dosen_sk = dosen_tugas::all();
         $pemateri = pemateri::all();
-        $surat = DB::table('spd')->join('surat_kepegawaian', 'surat_kepegawaian.id' , '=', 'spd.id_sk')
-        ->where('surat_kepegawaian.status', 10)->get();
+        $surat = DB::table('spd')->join('surat_kepegawaian', 'surat_kepegawaian.id' , '=', 'spd.id_sk')->join('status_surat', 'status_surat.id' , '=', 'surat_kepegawaian.status')
+        ->where('surat_kepegawaian.status', '>=', 10)->get();
         $jenis = jenis_sk::all();
-
+        // dd($surat);
         return view('bpp.surat_tugas.spd', compact('surat', 'dosen_sk', 'pemateri', 'jenis'));
     }
 
@@ -858,6 +872,7 @@ class kepegawaianController extends Controller
         $jenis = jenis_sk::all();
         $status = status_surat::all();
         $bukti = bukti_perjalanan::where('id_spd', $id)->get();
+        // dd($surat_tugas);
         return view('bpp.surat_tugas.preview_spd', [
         'surat_tugas' => $surat_tugas,
         'dosen_tugas' =>$dosen_tugas,
@@ -1175,7 +1190,7 @@ class kepegawaianController extends Controller
             'transportasi.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,webp,xls,xlsx',
             'penginapan.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,webp,xls,xlsx',
             'pendaftaran.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,webp,xls,xlsx'
-        ],);
+        ]);
 
         $bukti = bukti_perjalanan::where('id', $id)->first();
 

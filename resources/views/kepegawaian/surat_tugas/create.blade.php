@@ -185,7 +185,7 @@
 											<div class="input-group-addon">
 												<i class="fa fa-calendar"></i>
 											</div>
-	                    <input readonly type="text" value="{{\Carbon\Carbon::parse($surat->started_at)->format('d/m/Y')}}" class="form-control pull-right" name="started_at" id="datepicker">
+	                    <input disabled type="text" value="{{\Carbon\Carbon::parse($surat->started_at)->format('d/m/Y')}}" class="form-control pull-right" name="started_at" id="datepicker">
 										</div>
 										<!-- /.input group -->
 									</div>
@@ -199,7 +199,7 @@
 											<div class="input-group-addon">
 												<i class="fa fa-calendar"></i>
 											</div>
-											<input readonly type="text" value="{{\Carbon\Carbon::parse($surat->end_at)->format('d/m/Y')}}" class="form-control pull-right" name="end_at" id="datepicker2">
+											<input disabled type="text" value="{{\Carbon\Carbon::parse($surat->end_at)->format('d/m/Y')}}" class="form-control pull-right" name="end_at" id="datepicker2">
 										</div>
 										<!-- /.input group -->
 									</div>
@@ -222,7 +222,7 @@
 @endsection
 
 	@section('script')
-	<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
+	<script src="{{asset('/adminlte/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 	<script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script> 
 	<script type="text/javascript">
 		$(document).ready(function() {
