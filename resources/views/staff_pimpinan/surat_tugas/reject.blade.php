@@ -1,7 +1,7 @@
 @extends('staff_pimpinan.sp_view')
 
-@section('page_title', 'Buat Surat Tugas')
-@section('judul_header','Buat Surat Tugas')
+@section('page_title', 'Tolak Surat Tugas')
+@section('judul_header','Tolak Surat Tugas')
 
 @section('css_link')
 <link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
@@ -26,109 +26,128 @@
 	<div class="col-xs-12">
 		<div class="box box-primary">
 		<form action="{{route('staffpim.surat.reject', $surat->id)}}" method="POST">
-				<div class="box-body">
-                    @csrf
-                    @method('PUT')
-					<div class="table-responsive">
-						{{-- @if(session()->has('error'))
-		            			<p style="color: red;">{{session('error')}}</p>
-						@endif --}}
-						<table id="tbl-data" class="table table-bordered table-hover">
-							<thead>
-								<tr>
-									<th>Nomor Surat</th>
-									<th>Jenis Surat Tugas</th>
-									<th>Keterangan</th>
-								</tr>
-							</thead>
+      @csrf
+      @method('PUT')
+			<div class="box-body">
+				<div class="table-responsive">
+					{{-- @if(session()->has('error'))
+	            			<p style="color: red;">{{session('error')}}</p>
+					@endif --}}
+					<table id="tbl-data" class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>Nomor Surat</th>
+								<th>Jenis Surat Tugas</th>
+								<th>Keterangan</th>
+							</tr>
+						</thead>
 
-							<tbody>
-								<td>
-									<input class="form-control" type="text" value="{{$surat->nomor_surat}}" name="nomor_surat" readonly>
-								</td>
-								<td>
-									<select name="jenisSurat" class="form-control" disabled>
-                                    <option value="{{$surat->jenis_surat}}"> {{$surat->jenis_sk['jenis']}} </option>
-										@foreach ($jenis as $jenis)
-										<option value="{{$jenis->id}}">{{$jenis->jenis}}</option>
-										@endforeach
-									</select>
-								</td>
+						<tbody>
+							<td>
+								<input class="form-control" type="text" value="{{$surat->nomor_surat}}/UN25.1.15/KP/{{ \Carbon\Carbon::parse($surat->created_at)->year }}" name="nomor_surat" readonly>
+							</td>
+							<td>
+								<select name="jenisSurat" class="form-control" disabled>
+                  <option value="{{$surat->jenis_surat}}"> {{$surat->jenis_sk['jenis']}} </option>
+									@foreach ($jenis as $jenis)
+									<option value="{{$jenis->id}}">{{$jenis->jenis}}</option>
+									@endforeach
+								</select>
+							</td>
 
-								<td>
-									<textarea class="form-control" rows="3" name="keterangan"
-                                placeholder="Keterangan Surat" readonly>{{$surat->keterangan}}</textarea>
-								</td>
-							</tbody>
+							<td>
+								<textarea class="form-control" rows="3" name="keterangan" placeholder="Keterangan Surat" readonly>{{$surat->keterangan}}</textarea>
+							</td>
+						</tbody>
 
-							<thead>
-								<tr>
-                                <th>Dosen yang Bertugas</th>
+						<thead>
+							<tr>
+                <th>
+                	@if ($surat->surat_in_out == 1)
+                  	Dosen yang Bertugas
+									@else
+										Pemateri
+									@endif
+                </th>
 								<th>Tanggal Mulai</th>
 								<th>Tanggal Selesai</th>
-                                </tr>
-                                      
-							</thead>
+              </tr>
+						</thead>
 
-							<tbody>
-                                <td>
-                                    @foreach ($dosen_sk as $dosen)
-                                <p style="margin-top: 2px; margin-left: 5px;">{{$dosen->user['nama']}}</p>
-                                    @endforeach
-								</td>
-								<td>
-									<!-- Date -->
-									<div class="form-group">
-										<label>Date:</label>
+						<tbody>
+              <td>
+                @if ($surat->surat_in_out == 1)
+	                @foreach ($dosen_sk as $dosen)
+	              	<p style="margin-top: 2px; margin-left: 5px;">{{$dosen->user['nama']}}</p>
+	                @endforeach
+	              @else
+	              	@foreach ($pemateri as $item)
+	              	<p style="margin-top: 2px; margin-left: 5px;">{{$item->nama}}</p>
+	                @endforeach
+	              @endif
+							</td>
 
-										<div class="input-group date">
-											<div class="input-group-addon">
-												<i class="fa fa-calendar"></i>
-											</div>
-                                        <input type="text" value="{{$surat->started_at}}" class="form-control pull-right" name="started_at" id="datepicker" readonly>
+							<td>
+								<!-- Date -->
+								<div class="form-group">
+									<label>Date:</label>
+
+									<div class="input-group date">
+										<div class="input-group-addon">
+											<i class="fa fa-calendar"></i>
 										</div>
-										<!-- /.input group -->
+                  	<input type="text" value="{{$surat->started_at}}" class="form-control pull-right" name="started_at" id="datepicker" readonly>
 									</div>
-								</td>
-								<td>
-									<!-- Date -->
-									<div class="form-group">
-										<label>Date:</label>
+									<!-- /.input group -->
+								</div>
+							</td>
 
-										<div class="input-group date">
-											<div class="input-group-addon">
-												<i class="fa fa-calendar"></i>
-											</div>
-											<input type="text" value="{{$surat->end_at}}" class="form-control pull-right" name="end_at" id="datepicker2" readonly>
+							<td>
+								<!-- Date -->
+								<div class="form-group">
+									<label>Date:</label>
+
+									<div class="input-group date">
+										<div class="input-group-addon">
+											<i class="fa fa-calendar"></i>
 										</div>
-										<!-- /.input group -->
+										<input type="text" value="{{$surat->end_at}}" class="form-control pull-right" name="end_at" id="datepicker2" readonly>
 									</div>
-								</td>
-                            </tbody>
-                            <thead>
-								<tr>
-									<th>Pesan Revisi</th>
-								</tr>
-							</thead>
+									<!-- /.input group -->
+								</div>
+							</td>
+            </tbody>
 
-							<tbody>
-								<td>
-									<textarea class="form-control" type="text" placeholder="Masukan pesan revisi" name="pesan_revisi" required></textarea>
-								</td>
-							</tbody>
-						</table>
-					</div>
+            <thead>
+							<tr>
+								<th>Pesan Revisi</th>
+							</tr>
+						</thead>
 
-					<input type="hidden" name="status" value="">
-					<div class="form-group" style="float: left;">
-						<button type="submit" name="simpan_kirim" class="btn btn-success">Kirim</button>
-						<a class="btn btn-default" href="{{route('staffpim.index')}}">Batal</a>
-					</div>
+						<tbody>
+							<td>
+								<textarea class="form-control" type="text" placeholder="Masukan pesan revisi" name="pesan_revisi" required></textarea>
+
+								@error('pesan_revisi')
+									<p class="invalid-feedback" role="alert" style="color: red;">
+										<strong>{{ $message }}</strong>
+									</p>
+								@enderror
+							</td>
+						</tbody>
+					</table>
 				</div>
-			</form>
-		</div>
+
+				<input type="hidden" name="status" value="">
+				<div class="form-group" style="float: left;">
+					<button type="submit" name="simpan_kirim" class="btn btn-danger">Tolak</button>
+					<a class="btn btn-default" href="{{route('staffpim.sp.preview', $surat->id)}}">Batal</a>
+				</div>
+			</div>
+		</form>
 	</div>
-	@endsection
+</div>
+@endsection
 
 	@section('script')
 	<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>

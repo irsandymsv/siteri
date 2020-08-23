@@ -174,10 +174,10 @@
                 <td>
 					
                   @foreach ($dosen_sk as $dosen)
-					<p style="margin-top: 2px; margin-left: 5px;">{{$dosen->user['nama']}}</p>
-					<input type="hidden" name="id_dosen_lama[]" value="{{$dosen->id_dosen}}">
-	
-				  @endforeach
+									<p style="margin-top: 2px; margin-left: 5px;">{{$dosen->user['nama']}}</p>
+									<input type="hidden" name="id_dosen_lama[]" value="{{$dosen->id_dosen}}">
+					
+								  @endforeach
                 </td>
 							</tbody>
 

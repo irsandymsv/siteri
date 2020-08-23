@@ -20,10 +20,10 @@ class PerlengkapanController extends Controller
         $pengadaan = laporan_pengadaan::where('verif_wadek2', 1)->orderBy('updated_at', 'desc')->get();
 
         //Penimjaman Barang
-        $pinjam_barang = peminjaman_barang::where('verif_baper', 1)->where('verif_ktu', 0)->limit(10)->get();
+        $pinjam_barang = peminjaman_barang::where('verif_baper', 0)->where('verif_ktu', 0)->limit(10)->get();
 
         //Penimjaman Ruang
-        $pinjam_ruang = peminjaman_ruang::where('verif_baper', 1)->where('verif_ktu', 0)->limit(10)->get();
+        $pinjam_ruang = peminjaman_ruang::where('verif_baper', 0)->where('verif_ktu', 0)->limit(10)->get();
 
 
         return view(

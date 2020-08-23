@@ -12,6 +12,13 @@
     <div class="box-body">
       <div class="row">
         <div class="col-sm-12">
+          @if (session()->has('success'))
+            <div class="alert alert-success alert-block">
+              <button type="button" class="close" data-dismiss="alert">x</button>
+                {{ session()->get('success')}}
+            </div>
+          @endif
+          
           <table id="table_data1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
             <thead>
               <tr>
@@ -72,8 +79,9 @@
       </div>
     </div>
   </div>
-
 </section>
+
+
 <section class="content">
   <div class="box">
     <div class="box-header">
@@ -141,40 +149,6 @@
     </div>
   </div>
 
-      {{-- <form method="POST" action="">
-        @csrf
-        <div class="box box-default">
-          <div class="box-header with-border">
-            <h3 class="box-title">Memo Sudah Disetujui</h3>
-
-            <div class="box-tools pull-right">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            </div>
-          </div>
-          <!-- /.box-header -->
-          <div class="box-body">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="inputmaksud" class="col-sm-3 control-label">Surat Tugas</label>
-                  <div class="col-sm-9">
-                    <input value="" type="text" class="form-control" name="maksud" id="inputmaksud"
-                      placeholder="Cari Memu">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.box-body -->
-          <div class="box-footer">
-            <button type="submit" class="btn btn-primary">
-              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-              Cari
-            </button>
-
-          </div>
-        </div>
-      </form> --}}
 </section>
 <!-- /.content -->
 @endsection

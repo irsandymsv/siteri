@@ -38,7 +38,11 @@
     </ul>
 </li>
 
-<li class="treeview">
+<li>
+    <a href="{{ route('ktu.memu.index') }}"><i class="fa fa-link"></i> <span>Lihat Memo</span></a>
+</li>
+
+{{-- <li class="treeview">
     <a href="#"><i class="fa fa-link"></i> <span>Memo</span>
       <span class="pull-right-container">
           <i class="fa fa-angle-left pull-right"></i>
@@ -47,8 +51,13 @@
     <ul class="treeview-menu">
       <li><a href="{{ route('ktu.memu.index') }}">Lihat Memo</a></li>
     </ul>
+</li> --}}
+
+<li>
+    <a href="{{ route('ktu.surat.index') }}"><i class="fa fa-link"></i> <span>Surat Tugas Kepegawaian</span></a>
 </li>
-<li class="treeview">
+
+{{-- <li class="treeview">
     <a href="#"><i class="fa fa-link"></i> <span>Surat Tugas</span>
       <span class="pull-right-container">
           <i class="fa fa-angle-left pull-right"></i>
@@ -58,7 +67,7 @@
       <li><a href="{{ route('ktu.surat.index') }}">Menunggu Verifikasi</a></li>
       <li><a href="{{ route('ktu.surat.read') }}">Lihat Semua</a></li>
     </ul>
-</li>
+</li> --}}
 
 <li>
     <a href="{{ route('ktu.peminjaman_barang.index') }}"><i class="fa fa-link"></i> <span>Peminjaman Barang</span></a>

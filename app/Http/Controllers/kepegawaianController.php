@@ -56,7 +56,7 @@ class kepegawaianController extends Controller
 
     public function surat_index()
     {
-        $memu = surat_kepegawaian::where('status', 2)->get();
+        $memu = surat_kepegawaian::where('status', '>=', 2)->with('status_sk')->orderBy('memo_created_at', 'desc')->get();
         $dosen_sk = dosen_tugas::all();
         $pemateri = pemateri::all();
         return view('kepegawaian.surat_tugas.index', compact('memu', 'dosen_sk', 'pemateri'));
@@ -141,10 +141,10 @@ class kepegawaianController extends Controller
                 ]);
         
                 $data = pemateri::where('id_sk', $id)->update($surat);
-                return redirect(route('kepegawaian.surat.index')); 
+                return redirect(route('kepegawaian.surat.preview', $id)); 
             }
             else
-            return redirect(route('kepegawaian.surat.index'));
+            return redirect(route('kepegawaian.surat.preview', $id));
         } 
         
     }
@@ -187,7 +187,7 @@ class kepegawaianController extends Controller
         ]);
 
         $data = spd::create($spd);
-        return redirect()->route('kepegawaian.surat.index');
+        return redirect()->route('kepegawaian.surat.preview', $id);
     }
 
     public function ktu_memu()
@@ -209,12 +209,12 @@ class kepegawaianController extends Controller
         ]);
 
         $data = surat_kepegawaian::where('id', $id)->update($memu);
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Memo Berhasil Disetujui');
     }
 
     public function sp_index()
     {
-        $surat = surat_kepegawaian::where('status', 5)->get();
+        $surat = surat_kepegawaian::where('status', 5)->orderBy('created_at', 'desc')->get();
         $dosen_sk = dosen_tugas::all();
         $pemateri = pemateri::all();
         return view('staff_pimpinan.surat_tugas.index', compact('surat', 'dosen_sk','pemateri'));
@@ -222,7 +222,7 @@ class kepegawaianController extends Controller
 
     public function sp_read()
     {
-        $surat_tugas = surat_kepegawaian::all();
+        $surat_tugas = surat_kepegawaian::where('status', '>=', 5)->orderBy('created_at', 'desc')->get();
         $dosen_sk = dosen_tugas::all();
         $pemateri = pemateri::all();
         return view('staff_pimpinan.surat_tugas.read', compact('surat_tugas', 'dosen_sk','pemateri'));
@@ -366,7 +366,7 @@ class kepegawaianController extends Controller
                 ]);
             }
         }
-        return redirect()->route('wadek2.memu.index');
+        return redirect()->route('wadek2.memu.index')->with('success', 'Memo Berhasil Dibuat');
     }
 
     public function updateMemu(Request $request, $id)
@@ -486,7 +486,7 @@ class kepegawaianController extends Controller
 
     public function ktu_surat()
     {
-        $surat = surat_kepegawaian::where('status', 3)->get();
+        $surat = surat_kepegawaian::where('status', '>=', 3)->with('status_sk')->orderBy('created_at' ,'desc')->get();
         $dosen_sk = dosen_tugas::all();
         $pemateri= pemateri::all();
         return view('ktu.surat_tugas.index', compact('surat', 'dosen_sk','pemateri'));
@@ -499,18 +499,21 @@ class kepegawaianController extends Controller
         ]);
 
         $data = surat_kepegawaian::where('id', $id)->update($memu);
-        return redirect(route('ktu.surat.index'));
+        return redirect()->back()->with('success', 'Surat tugas berhasil diverifikasi');
     }
 
     public function ktu_surat_reject(Request $request, $id)
     {
+        $this->validate($request, [
+            'pesan_revisi' => 'required'
+        ]);
         $sk = ([
             'status' => 4,
             'revisi' => $request->pesan_revisi,
         ]);
 
         $data = surat_kepegawaian::where('id', $id)->update($sk);
-        return redirect(route('ktu.surat.index'));
+        return redirect()->route('ktu.surat.index')->with('success', 'Status Surat Tugas Berhasil Diubah');
     }
 
     public function reject_view($id)
@@ -518,8 +521,9 @@ class kepegawaianController extends Controller
         $surat = surat_kepegawaian::find($id);
         $jenis = jenis_sk::all();
         $dosen_sk = dosen_tugas::where('id_sk', $id)->get();
+        $pemateri = pemateri::where('id_sk', $id)->get();
 
-        return view('ktu.surat_tugas.reject', compact('surat', 'dosen_sk', 'jenis'));
+        return view('ktu.surat_tugas.reject', compact('surat', 'dosen_sk', 'jenis', 'pemateri'));
     }
 
     //PDF
@@ -560,18 +564,21 @@ class kepegawaianController extends Controller
         ]);
 
         $data = surat_kepegawaian::where('id', $id)->update($memu);
-        return redirect(route('staffpim.index'));
+        return redirect()->route('staffpim.sp.preview', $id)->with('success', 'Surat Tugas Berhasil Diverifikasi');
     }
 
     public function sp_surat_reject(Request $request, $id)
     {
+        $this->validate($request, [
+            'pesan_revisi' => 'required'
+        ]);
         $sk = ([
             'status' => 6,
             'revisi' => $request->pesan_revisi,
         ]);
 
         $data = surat_kepegawaian::where('id', $id)->update($sk);
-        return redirect(route('staffpim.index'));
+        return redirect()->route('staffpim.sp.read')->with('success', 'Status Surat Tugas Berhasil Diubah');
     }
 
     public function sp_reject_view($id)
@@ -579,14 +586,15 @@ class kepegawaianController extends Controller
         $surat = surat_kepegawaian::find($id);
         $jenis = jenis_sk::all();
         $dosen_sk = dosen_tugas::where('id_sk', $id)->get();
+        $pemateri = pemateri::where('id_sk', $id)->get();
 
-        return view('staff_pimpinan.surat_tugas.reject', compact('surat', 'dosen_sk', 'jenis'));
+        return view('staff_pimpinan.surat_tugas.reject', compact('surat', 'dosen_sk', 'jenis', 'pemateri'));
     }
 
     public function wadek2_surat_index()
     {
         // $surat = surat_kepegawaian::where('status', 7)->get();
-        $surat = surat_kepegawaian::with('status_sk')->orderBy('id', 'desc')->get();
+        $surat = surat_kepegawaian::where('status', '>=', 7)->with('status_sk')->orderBy('created_at', 'desc')->get();
         $dosen_sk = dosen_tugas::all();
         $pemateri = pemateri::all();
 
@@ -631,7 +639,7 @@ class kepegawaianController extends Controller
         ]);
 
         $data = surat_kepegawaian::where('id', $id)->update($surat);
-        return redirect(route('wadek2.surat.index'));
+        return redirect()->route('wadek2.surat.preview', $id)->with('success', 'Surat Tugas Berhasil Diverifikasi');
     }
 
     public function kepegawaian_cetak()
@@ -721,6 +729,34 @@ class kepegawaianController extends Controller
 
     public function surat_revisian(Request $request, $id)
     {
+        // dd($request->all());
+        $validator = validator::make($request->all(), [
+            'jenisSurat' => 'required',
+            'keterangan' => 'required',
+            'start_date' => 'started_at',
+            'end_date' => 'end_at'
+        ]);
+
+        $validator->sometimes(['pemateri','pemateri.*'], 'required', function($request){
+            return $request->surat_in_out == 2;
+        });
+
+        $validator->sometimes('biaya_pemateri', 'required', function($request){
+            return $request->surat_in_out == 2;
+        });
+
+        $validator->sometimes('lokasi', 'required', function($request){
+            return $request->perjalanan == 1;
+        });
+
+        $validator->sometimes('instansi', 'required', function($request){
+            return $request->surat_in_out == 2;
+        });
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $start = $request->started_at;
         $end = $request->end_at;
 
@@ -730,9 +766,10 @@ class kepegawaianController extends Controller
         $end_date->format('d-m-Y');
 
         $surat = ([
-            'nomor_surat' => null,
+            // 'nomor_surat' => null,
             'jenis_surat' => $request->jenisSurat,
             'keterangan' => $request->keterangan,
+            'lokasi' => $request->lokasi,
             'started_at' => $start_date,
             'end_at' => $end_date,
             'status' => 3,
@@ -751,8 +788,10 @@ class kepegawaianController extends Controller
                     $pemateri_sk = pemateri::create([
                         'id_sk' => $id,
                         'nama' => $request->pemateri[$i],
+                        'instansi' => $request->instansi,
+                        'biaya' => $request->biaya_pemateri
                     ]);
-            }
+                }
             }
         } else {
             $hitung = count($dosen);
@@ -767,7 +806,7 @@ class kepegawaianController extends Controller
             }
 
         }   
-        return redirect()->route('kepegawaian.surat.revisi');
+        return redirect()->route('kepegawaian.surat.preview', $id)->with('success', 'Surat Tugas Berhasil Diubah');
     }
 
     //BPP

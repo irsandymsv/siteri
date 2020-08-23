@@ -16,7 +16,7 @@
     }
 
     table tr td:first-child{
-       width: 10%;
+       width: 20%;
        font-weight: bold;: 
     }
 	</style>	
@@ -36,6 +36,13 @@
 
         <div class="box-body">
          	<div class="table-responsive">
+            @if (session()->has('success'))
+              <div class="alert alert-success alert-block">
+                <button type="button" class="close" data-dismiss="alert">x</button>
+                {{ session()->get('success')}}
+              </div>
+            @endif
+            
             <table class="table table-striped table-bordered">
               <tr>
                 <td>Tanggal Dibuat</td>   
@@ -44,7 +51,7 @@
 
               <tr>
                 <td>No Surat</td>
-                <td>{{$surat_tugas->nomor_surat}}</td>
+                <td>{{$surat_tugas->nomor_surat}}/UN25.1.15/KP/{{ \Carbon\Carbon::parse($surat_tugas->created_at)->year }}</td>
              </tr>
 
               <tr>
@@ -89,8 +96,11 @@
         @endif
 
         <div  class="box-footer">
-           <a href="{{ route('ktu.surat.index') }}" class="btn btn-default">Kembali</a>
-           <a href="{{ route('ktu.surat.approve', $surat_tugas->id) }}" class="btn btn-primary">Setujui</a>
+          <a href="{{ route('ktu.surat.index') }}" class="btn btn-default">Kembali</a>
+          @if ($surat_tugas->status == 3)
+            <a href="{{ route('ktu.surat.approve', $surat_tugas->id) }}" class="btn btn-primary pill-right">Setujui</a>
+            <a href="{{ route('ktu.surat.reject.view', $surat_tugas->id) }}" class="btn btn-danger pull-right" style="margin-right: 5px;">Tolak</a>
+          @endif
            {{-- @if ($surat_tugas->jenis_surat == 1)
            <a href="{{route('kepegawaian.surat.cetak1', $surat_tugas->id)}}" class="btn btn-warning btn-sm" ><i class="fa fa-print"></i> Cetak</a>
            @elseif($surat_tugas->jenis_surat == 2)
