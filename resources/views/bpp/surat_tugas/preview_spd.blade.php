@@ -15,7 +15,7 @@
 
       table tr td:first-child{
          width: 25%;
-         font-weight: bold;: 
+         font-weight: bold;
       }
 	</style>	
 @endsection
@@ -80,27 +80,27 @@
                      <tr>
                         <td>Lampiran Bukti Perjalanan</td>
                         <td>
-                           @foreach ($bukti as $item)
-                               <a href="{{route('bpp.spd.download', $item->id)}}"><i class="fa fa-file"></i> {{$item->nama}}</a><br>
-                           @endforeach
+                           @for ( $i=0;$i< count($bukti[0]->transportasi);$i++)
+                               <a href="{{route('bpp.spd.download',[ 'id' => $bukti[0]->id, 'index' => $i, 'jenis_bukti' => 1 ])}}"><i class="fa fa-file"></i>   {{$bukti[0]->transportasi[$i][0]}}</a><br>
+                           @endfor
                           
                         </td>
                      </tr>
                      <tr>
                         <td>Lampiran Bukti Pendaftaran</td>
                         <td>
-                           @foreach ($bukti as $item)
-                               <a href="{{route('bpp.spd.download', $item->id)}}"><i class="fa fa-file"></i> {{$item->nama}}</a><br>
-                           @endforeach
+                           @for ( $i=0;$i< count($bukti[0]->pendaftaran);$i++)
+                               <a href="{{route('bpp.spd.download',[ 'id' => $bukti[0]->id, 'index' => $i, 'jenis_bukti' => 2 ])}}"><i class="fa fa-file"></i>   {{$bukti[0]->pendaftaran[$i][0]}}</a><br>
+                           @endfor
                           
                         </td>
                      </tr>
                      <tr>
                         <td>Lampiran Bukti Penginapan</td>
                         <td>
-                           @foreach ($bukti as $item)
-                               <a href="{{route('bpp.spd.download', $item->id)}}"><i class="fa fa-file"></i> {{$item->nama}}</a><br>
-                           @endforeach
+                           @for ( $i=0;$i< count($bukti[0]->penginapan);$i++)
+                               <a href="{{route('bpp.spd.download',[ 'id' => $bukti[0]->id, 'index' => $i, 'jenis_bukti' => 3 ])}}"><i class="fa fa-file"></i>   {{$bukti[0]->penginapan[$i][0]}}</a><br>
+                           @endfor
                           
                         </td>
                      </tr>

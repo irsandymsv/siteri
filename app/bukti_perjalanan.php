@@ -8,9 +8,9 @@ class bukti_perjalanan extends Model
 {
     protected $table = 'bukti_perjalanan';
     protected $fillable = [
-        'id_spd','transportasi','penginapan','pendaftaran', 'uploaded_at', 'id_user',
+        'id_spd','transportasi','penginapan','pendaftaran','pake_transportasi','pake_pendaftaran','pake_penginapan','uploaded_at', 'id_user',
     ];
-    protected $cast = [
+    protected $casts = [
         'transportasi' => 'array',
         'penginapan' => 'array',
         'pendaftaran' => 'array'

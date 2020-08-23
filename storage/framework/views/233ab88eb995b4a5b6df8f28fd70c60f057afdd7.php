@@ -1,26 +1,16 @@
-@extends('layouts.template')
+<?php $__env->startSection('side_menu'); ?>
 
-@section('side_menu')
-{{-- @if (Auth::user()->jabatan->jabatan == "Dekan")
-    @include('include.dekan_menu')
-  @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 1")
-    @include('include.wadek1_menu')
-  @elseif(Auth::user()->jabatan->jabatan == "Wakil Dekan 2")
-    @include('include.wadek2_menu')
-  @elseif(Auth::user()->jabatan->jabatan == "Dosen")
-    @include('include.dosen_menu')
-  @endif --}}
 
-@include('include.'.$jabatan_user.'_menu')
-@endsection
+<?php echo $__env->make('include.'.$jabatan_user.'_menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php $__env->stopSection(); ?>
 
-@section('page_title')
+<?php $__env->startSection('page_title'); ?>
 Preview Surat Tugas
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('css_link')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-<link rel="stylesheet" type="text/css" href="{{asset('/css/custom_style.css')}}">
+<?php $__env->startSection('css_link'); ?>
+<meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo e(asset('/css/custom_style.css')); ?>">
 <style type="text/css">
     .table-responsive {
         width: 90%;
@@ -37,13 +27,13 @@ Preview Surat Tugas
         width: 100%;
     }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('judul_header')
+<?php $__env->startSection('judul_header'); ?>
 Preview Surat Tugas
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
@@ -58,57 +48,59 @@ Preview Surat Tugas
 
                         <tr>
                             <td>No Surat</td>
-                            <td>{{ $spd->surat_tugas->nomor_surat}}</td>
+                            <td><?php echo e($spd->surat_tugas->nomor_surat); ?></td>
                         </tr>
                         <tr>
                             <td>Yang Bertugas</td>
                             <td>
-                                @foreach ($dosen_tugas as $bertugas)
-                                <p>{{ $bertugas->user['nama'] }} - {{ $bertugas->user['no_pegawai'] }}</p>
-                                @endforeach
+                                <?php $__currentLoopData = $dosen_tugas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bertugas): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <p><?php echo e($bertugas->user['nama']); ?> - <?php echo e($bertugas->user['no_pegawai']); ?></p>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </td>
                         </tr>
                         <tr>
                             <td>Tanggal Bertugas</td>
-                            <td>{{ Carbon\Carbon::parse($spd->surat_tugas->started_at)->locale('id_ID')->isoFormat('D MMMM Y') }} - {{ Carbon\Carbon::parse($spd->surat_tugas->end_at)->locale('id_ID')->isoFormat('D MMMM Y') }}</td>
+                            <td><?php echo e(Carbon\Carbon::parse($spd->surat_tugas->started_at)->locale('id_ID')->isoFormat('D MMMM Y')); ?> - <?php echo e(Carbon\Carbon::parse($spd->surat_tugas->end_at)->locale('id_ID')->isoFormat('D MMMM Y')); ?></td>
                         </tr>
                         <tr>
                             <td>Keterangan</td>
-                            <td>{{$spd->surat_tugas->keterangan}}</td>
+                            <td><?php echo e($spd->surat_tugas->keterangan); ?></td>
                         </tr>
                         <tr>
                             <td>Status</td>
-                            <td>{{$spd->surat_tugas->status_sk->status}}</td>
+                            <td><?php echo e($spd->surat_tugas->status_sk->status); ?></td>
                         </tr>
                     </table>
                 </div>
             </div>
 
             <div class="box-body" style="width: 90%; margin: auto;">
-                @if (count($errors) > 0)
+                <?php if(count($errors) > 0): ?>
                 <div class="alert alert-danger">
                     <strong>Sorry!</strong> There were more problems with your HTML input.<br><br>
                     <ul>
 
-                        @foreach ($errors->all() as $error)
+                        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                        <li>{{ $error }}</li>
+                        <li><?php echo e($error); ?></li>
 
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                     </ul>
                 </div>
-                @endif
+                <?php endif; ?>
 
-                @if(session('success'))
+                <?php if(session('success')): ?>
                 <div class="alert alert-success">
-                    {{ session('success') }}
+                    <?php echo e(session('success')); ?>
+
                 </div>
-                @endif
+                <?php endif; ?>
                 <h4>Upload Bukti Transportasi</h4>
-                <form method="post" action="{{route($jabatan_user.'.update.upload', $bukti->id)}}" enctype="multipart/form-data">
-                    {{csrf_field()}}
-                    @method('PUT')
+                <form method="post" action="<?php echo e(route($jabatan_user.'.update.upload', $bukti->id)); ?>" enctype="multipart/form-data">
+                    <?php echo e(csrf_field()); ?>
+
+                    <?php echo method_field('PUT'); ?>
                     <div class="form-group">
 
                         <div class="input-group siteri increment">
@@ -124,15 +116,15 @@ Preview Surat Tugas
 
                         </div>
 
-                        @for ( $i=0;$i< count($bukti->transportasi);$i++)
+                        <?php for( $i=0;$i< count($bukti->transportasi);$i++): ?>
                             <div class="clone" name="transportasi" id='kolom_transportasi'>
 
                                 <div class="siteri input-group" style="margin-top:10px">
                                     <div class="myfrm form-control">
-                                    @php 
+                                    <?php 
                                     $route = $jabatan_user.".spd.download";
-                                    @endphp
-                                    <a href="{{route($route, ['id' => $bukti->id, 'index' => $i, 'jenis_bukti' => 1 ])}}"><i class="fa fa-file"></i> {{$bukti->transportasi[$i][0]}}</a><br>
+                                    ?>
+                                    <a href="<?php echo e(route($route, ['id' => $bukti->id, 'index' => $i, 'jenis_bukti' => 1 ])); ?>"><i class="fa fa-file"></i> <?php echo e($bukti->transportasi[$i][0]); ?></a><br>
                                     <input type="hidden" name="deleteTransportasi[]" id="hapus" value="0">
                                     </div>
                                     <div class="input-group-btn">
@@ -141,7 +133,7 @@ Preview Surat Tugas
                                     </div>
                                 </div>
                             </div>
-                            @endfor
+                            <?php endfor; ?>
 
                             <div class="clone hide" clone_name="transportasi">
 
@@ -160,7 +152,7 @@ Preview Surat Tugas
                     </div>
 
                     <br>
-                    @if ($spd->biaya_penginapan != null)
+                    <?php if($spd->biaya_penginapan != null): ?>
                     <div class="form-group">
                         <h4>Upload Bukti Penginapan</h4>
                         <div class="input-group siteri increment">
@@ -188,15 +180,15 @@ Preview Surat Tugas
                                 </div>
                             </div>
                         </div>
-                        @for ( $i=0;$i< count($bukti->penginapan);$i++)
+                        <?php for( $i=0;$i< count($bukti->penginapan);$i++): ?>
                             <div class="clone" name="penginapan" id='kolom_penginapan'>
 
                                 <div class="siteri input-group" style="margin-top:10px">
                                     <div class="myfrm form-control">
-                                    @php 
+                                    <?php 
                                     $route = $jabatan_user.".spd.download";
-                                    @endphp
-                                    <a href="{{route($route, ['id' => $bukti->id, 'index' => $i, 'jenis_bukti' => 3 ])}}"><i class="fa fa-file"></i> {{$bukti->penginapan[$i][0]}}</a><br>
+                                    ?>
+                                    <a href="<?php echo e(route($route, ['id' => $bukti->id, 'index' => $i, 'jenis_bukti' => 3 ])); ?>"><i class="fa fa-file"></i> <?php echo e($bukti->penginapan[$i][0]); ?></a><br>
                                     <input type="hidden" name="deletePenginapan[]" id="hapus" value="0">
                                     </div>
                                     <div class="input-group-btn">
@@ -205,14 +197,14 @@ Preview Surat Tugas
                                     </div>
                                 </div>
                             </div>
-                            @endfor
+                            <?php endfor; ?>
                     </div>
 
                     
-                    @endif
+                    <?php endif; ?>
 
                     <br>
-                    @if ($spd->biaya_pendaftaran_acara != null)
+                    <?php if($spd->biaya_pendaftaran_acara != null): ?>
                     <div class="form-group">
                         <h4>Upload Bukti Pendaftaran</h4>
                         <div class="input-group siteri increment">
@@ -240,15 +232,15 @@ Preview Surat Tugas
                                 </div>
                             </div>
                         </div>
-                        @for ( $i=0;$i< count($bukti->pendaftaran);$i++)
+                        <?php for( $i=0;$i< count($bukti->pendaftaran);$i++): ?>
                             <div class="clone" name="pendaftaran" id='kolom_pendaftaran'>
 
                                 <div class="siteri input-group" style="margin-top:10px">
                                     <div class="myfrm form-control">
-                                    @php 
+                                    <?php 
                                     $route = $jabatan_user.".spd.download";
-                                    @endphp
-                                    <a href="{{route($route, ['id' => $bukti->id, 'index' => $i, 'jenis_bukti' => 2 ])}}"><i class="fa fa-file"></i> {{$bukti->pendaftaran[$i][0]}}</a><br>
+                                    ?>
+                                    <a href="<?php echo e(route($route, ['id' => $bukti->id, 'index' => $i, 'jenis_bukti' => 2 ])); ?>"><i class="fa fa-file"></i> <?php echo e($bukti->pendaftaran[$i][0]); ?></a><br>
                                     <input type="hidden" name="deletePendaftaran[]" id="hapus" value="0">
                                     </div>
                                     <div class="input-group-btn">
@@ -257,23 +249,23 @@ Preview Surat Tugas
                                     </div>
                                 </div>
                             </div>
-                            @endfor
-                        @endif
+                            <?php endfor; ?>
+                        <?php endif; ?>
                         <button type="submit" class="btn btn-primary" style="margin-top:10px">Submit</button>
                     </div>
                 </form>
             </div>
 
             <div class="box-footer">
-                <a href="{{route($jabatan_user.'.dosen_upload_index') }}" class="btn btn-default pull-right">Kembali</a>
+                <a href="<?php echo e(route($jabatan_user.'.dosen_upload_index')); ?>" class="btn btn-default pull-right">Kembali</a>
             </div>
 
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
+<?php $__env->startSection('script'); ?>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -301,4 +293,5 @@ Preview Surat Tugas
 
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\siteri\resources\views/dosen/surat_tugas/edit_upload.blade.php ENDPATH**/ ?>

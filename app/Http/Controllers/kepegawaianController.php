@@ -819,8 +819,7 @@ class kepegawaianController extends Controller
         $jenis = jenis_sk::all();
         $status = status_surat::all();
         $bukti = bukti_perjalanan::where('id_spd', $id)->get();
-        dd($bukti);
-      return view('bpp.surat_tugas.preview_spd', [
+        return view('bpp.surat_tugas.preview_spd', [
         'surat_tugas' => $surat_tugas,
         'dosen_tugas' =>$dosen_tugas,
         'jenis' => $jenis,
@@ -829,11 +828,30 @@ class kepegawaianController extends Controller
       ]);
     }
 
-    public function download_bukti($id)
+    public function download_bukti($id,$index,$jenis_bukti)
     {
-        $pdf = bukti_perjalanan::where('id', $id)->first();
-        $pathToFile = public_path('files/' . $pdf->nama);
-        return response()->download($pathToFile);
+        $pathToFile;
+        $type;
+        $ext;
+        $bukti = bukti_perjalanan::where('id', $id)->first();
+        switch ($jenis_bukti) {
+            case 1:
+              $pathToFile = $bukti->transportasi[$index][1];
+              $ext = $bukti->transportasi[$index][2];
+              $type='transportasi';
+              break;
+            case 2:
+              $pathToFile = $bukti->pendaftaran[$index][1];
+              $ext = $bukti->pendaftaran[$index][2];
+              $type='pendaftaran';
+              break;
+            case 3:
+              $pathToFile = $bukti->penginapan[$index][1];
+              $ext = $bukti->penginapan[$index][2];
+              $type='penginapan';
+              break;
+          }
+        return Storage::download($pathToFile, 'bukti'.$type.'$index'.'.'.$ext);
     }
     
     public function bpp_selesai($id)
@@ -919,14 +937,17 @@ class kepegawaianController extends Controller
         $spd = spd::where('id_spd', $id)->first();
         $dosen_tugas = dosen_tugas::where('id_sk', $spd->id_sk)->get();
         $id_sk = $espede->id_sk;
-        // dd($id_sk = $espede->id);
+        $bukti = bukti_perjalanan::where('id_spd',$id)->first();
 
         $jabatan_user = $this->cek_jabatan();
+        
 
         return view('dosen.surat_tugas.edit_upload', [
         'spd' => $spd,
         'dosen_tugas' => $dosen_tugas,
-        'jabatan_user' => $jabatan_user
+        'jabatan_user' => $jabatan_user,
+        'bukti'=> $bukti
+       
       ]);
      
        
@@ -1045,51 +1066,187 @@ class kepegawaianController extends Controller
         $transportasi = null;
         $penginapan = null;
         $pendaftaran = null;
+        $t=0;       
+        $g=0;
+        $d=0;
         if($request->transport !=null)
         {
-            $transportasi = $this->upload_bukti($request->file('transportasi'));
+            try{
+                $transportasi = $this->upload_bukti($request->file('transportasi'));
+                $t=1;
+            }catch(Exception $e){
+                return redirect()->route($jabatan.'.file.upload')->with('error', $e->getMessage());
+            }
         }
         if($request->nginap !=null)
         {
-            $penginapan = $this->upload_bukti($request->file('penginapan'));
+            try{
+                $penginapan = $this->upload_bukti($request->file('penginapan'));
+                $g=1;
+            }catch(Exception $e){
+                return redirect()->route($jabatan.'.file.upload')->with('error', $e->getMessage());
+            }
+            
         }
         if($request->daftar !=null)
         {
-            $pendaftaran = $this->upload_bukti($request->file('pendaftaran'));
+            try{
+                $pendaftaran = $this->upload_bukti($request->file('pendaftaran'));
+                $d=1;
+            }catch(Exception $e){
+                return redirect()->route($jabatan.'.file.upload')->with('error', $e->getMessage());
+            }
+            
         }
 
         $time = Carbon::now();
         $user = Auth::user()->no_pegawai; 
-        $data = bukti_perjalanan::create([
-            'id_spd' => $id,
-            'transportasi' => $transportasi,
-            'penginapan' => $penginapan,
-            'pendaftaran' => $pendaftaran,
-            'uploaded_at' => $time,
-            'id_user' => $user
-        ]);
-    
-        $surat = ([
-            'status' => 10,
-        ]);
-
-        $id_surat = spd::where('id_spd',$id)->first();
+        try{
+            $data = bukti_perjalanan::create([
+                'id_spd' => $id,
+                'transportasi' => $transportasi,
+                'penginapan' => $penginapan,
+                'pendaftaran' => $pendaftaran,
+                'pake_transportasi' => $t,
+                'pake_pendaftaran' => $d,
+                'pake_penginapan' => $g,
+                'uploaded_at' => $time,
+                'id_user' => $user
+            ]);
         
-    
-        $data = surat_kepegawaian::where('id', $id_surat->id_sk)->update($surat);
-         
+            $surat = ([
+                'status' => 10,
+            ]);
+
+            $id_surat = spd::where('id_spd',$id)->first();
+            
+        
+            $data = surat_kepegawaian::where('id', $id_surat->id_sk)->update($surat);
+        }catch(Exception $e){
+            return redirect()->route($jabatan.'.edit.upload')->with('error', $e->getMessage());
+        }
  
         return back()->with('success', 'Data berhasil diupload!');
 
+    }
+
+    protected function dosen_update_upload(Request $request, $id){
+        $jabatan_user = $this->cek_jabatan();
+        $this->validate($request, [
+            'transportasi.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,webp,xls,xlsx',
+            'penginapan.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,webp,xls,xlsx',
+            'pendaftaran.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,webp,xls,xlsx'
+        ],);
+
+        $bukti = bukti_perjalanan::where('id', $id)->first();
+
+        $transportasi = array();
+        $penginapan = array();
+        $pendaftaran = array();
+
+        if($bukti->pake_transportasi == 1)
+        {
+            
+            if($request->transportasi !=null){
+                $transportasiLama = $this->update_bukti_lama($bukti,$request->deleteTransportasi,1);
+                $transportasi = $this->update_bukti($transportasiLama,$request->file('transportasi'));
+            }else {
+                $transportasi = $this->update_bukti_lama($bukti,$request->deleteTransportasi,1);
+            }
+                
+        }
+        if($bukti->pake_penginapan == 1)
+        {
+            if($request->penginapan !=null){
+                $penginapanLama = $this->update_bukti_lama($bukti,$request->deletePenginapan,3);
+                $penginapan = $this->update_bukti($penginapanLama,$request->file('penginapan'));
+            }else{
+                $penginapan = $this->update_bukti_lama($bukti,$request->deletePenginapan,3);
+            }
+        }
+        if($bukti->pake_pendaftaran == 1)
+        {
+            
+            if($request->pendaftaran !=null){
+                $pendaftaranLama = $this->update_bukti_lama($bukti,$request->deletePendaftaran,2);
+                $pendaftaran = $this->update_bukti($pendaftaranLama,$request->file('pendaftaran'));
+            }else{
+                $pendaftaran = $this->update_bukti_lama($bukti,$request->deletePendaftaran,2);
+            }
+        }
+        
+        try{
+            bukti_perjalanan::find($id)->update([
+                'transportasi' => $transportasi,
+                'penginapan' => $penginapan,
+                'pendaftaran' => $pendaftaran
+            ]);
+        }catch(Exception $e){
+            return redirect()->route($jabatan.'.edit.upload')->with('error', $e->getMessage());
+        }
+
+        return back()->with('success', 'Data berhasil diubah');
+    }
+
+    protected function update_bukti_lama($buktiDB, $isDeleted, $jenis_bukti){
+        $notDeleted = array();
+        if($isDeleted != null){
+            $panjangData = count($isDeleted);
+            for($i=0;$i<$panjangData;$i++){
+                if($isDeleted[$i] == 0 ){
+                    switch ($jenis_bukti) {
+                        case 1:
+                        $temp = $buktiDB->transportasi[$i];
+                        break;
+                        case 2:
+                        $temp = $buktiDB->pendaftaran[$i];
+                        break;
+                        case 3:
+                        $temp = $buktiDB->penginapan[$i];
+                        break;
+                    }
+                    
+                    try{
+                        Storage::delete($temp[1]);
+                    }catch(Exception $e){
+                        return redirect()->route($jabatan.'.edit.upload')->with('error', $e->getMessage());
+                    }
+                    array_push($notDeleted,$temp);
+                }
+            }
+        }
+
+        return $notDeleted;
+    }
+
+    protected function update_bukti($bukti, $file){
+        foreach($file as $f)
+            {
+                $name = array();
+                $ext= $f->getClientOriginalExtension();
+                array_push($name,$f->getClientOriginalName());
+                $path =Storage::putFile('Bukti', $f);
+                array_push($name,$path);
+                array_push($name,$ext);
+                array_push($bukti,$name);
+            }
+        return $bukti;
     }
 
     protected function upload_bukti($file){
         $bukti = array();
         foreach($file as $f)
             {
-                $name=$f->getClientOriginalName();
+                $name = array();
+                $ext= $f->getClientOriginalExtension();
+                array_push($name,$f->getClientOriginalName());
+                
+                // array_push($bukti,$name);
+                // $f->move(public_path().'/files/', $name);
+                $path =Storage::putFile('Bukti', $f);
+                array_push($name,$path);
+                array_push($name,$ext);
                 array_push($bukti,$name);
-                $f->move(public_path().'/files/', $name);  
             }
         return $bukti;
     }

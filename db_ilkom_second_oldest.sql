@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 20, 2020 at 07:06 AM
+-- Generation Time: Aug 22, 2020 at 07:52 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -54,31 +54,12 @@ INSERT INTO `bagian` (`id`, `bagian`) VALUES
 CREATE TABLE `bukti_perjalanan` (
   `id` int(11) NOT NULL,
   `id_spd` int(11) NOT NULL,
-  `nama` varchar(200) NOT NULL,
+  `transportasi` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `penginapan` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `pendaftaran` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
   `uploaded_at` date NOT NULL,
   `id_user` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `bukti_perjalanan`
---
-
-INSERT INTO `bukti_perjalanan` (`id`, `id_spd`, `nama`, `uploaded_at`, `id_user`) VALUES
-(2, 4, '2011-5508-1-PB.pdf', '2020-01-28', '196909281993021001'),
-(5, 4, 'Invoice-34431.pdf', '2020-01-29', '196906151997021002'),
-(6, 4, 'Invoice-34431.pdf', '2020-01-29', '196906151997021002'),
-(7, 4, 'Cetak Slip Alamat.pdf', '2020-01-29', '196906151997021002'),
-(8, 4, '2hu5lp.jpg', '2020-01-29', '196906151997021002'),
-(9, 4, '2hu5lp.jpg', '2020-01-29', '196906151997021002'),
-(10, 4, '2hu5lp.jpg', '2020-01-29', '196906151997021002'),
-(11, 4, '2hu5lp.jpg', '2020-01-29', '196906151997021002'),
-(12, 4, '2hu5lp.jpg', '2020-01-29', '196906151997021002'),
-(13, 1, '2hu5lp.jpg', '2020-01-29', '196906151997021002'),
-(14, 5, 'Tokped.pdf', '2020-01-30', '196811131994121001'),
-(15, 13, 'Cetak Slip Alamat.pdf', '2020-01-30', '760015717'),
-(16, 14, 'logojpnncom.png', '2020-02-01', '197004221995121000'),
-(17, 17, 'icons8-checked-user-female-64.png', '2020-08-19', '198511282015041000'),
-(18, 19, 'Ameagari - 03-2.jpg', '2020-08-20', '196906151997021000');
 
 -- --------------------------------------------------------
 
@@ -2118,7 +2099,6 @@ INSERT INTO `dosen_tugas` (`id`, `id_sk`, `id_dosen`, `jabatan`) VALUES
 (78, 66, 760015717, 'Waduuu'),
 (79, 67, 760015717, 'Hahaha'),
 (80, 68, 760015717, 'Adaaa'),
-(82, 72, 197004221995121000, NULL),
 (83, 73, 196906151997021000, NULL),
 (84, 71, 197004221995121000, 'Ketua'),
 (85, 77, 196906151997021000, NULL),
@@ -2132,7 +2112,11 @@ INSERT INTO `dosen_tugas` (`id`, `id_sk`, `id_dosen`, `jabatan`) VALUES
 (93, 84, 198511282015041000, NULL),
 (94, 85, 196704201992011000, NULL),
 (95, 85, 196811131994121000, NULL),
-(96, 87, 196906151997021000, NULL);
+(96, 87, 196906151997021000, NULL),
+(101, 89, 196811131994121000, NULL),
+(103, 90, 196909281993021000, 'dasasdsadasd'),
+(104, 91, 198403052010122000, NULL),
+(105, 72, 197004221995121000, 'Anggota');
 
 -- --------------------------------------------------------
 
@@ -4676,32 +4660,38 @@ CREATE TABLE `spd` (
   `id_penginapan` int(11) NOT NULL,
   `biaya_penginapan` int(11) DEFAULT NULL,
   `id_pendaftaran` int(11) NOT NULL,
-  `biaya_pendaftaran_acara` int(11) DEFAULT NULL
+  `biaya_pendaftaran_acara` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `spd`
 --
 
-INSERT INTO `spd` (`id_spd`, `id_sk`, `id_jenis_kendaraan`, `asal`, `tujuan`, `uang_harian`, `id_penginapan`, `biaya_penginapan`, `id_pendaftaran`, `biaya_pendaftaran_acara`) VALUES
-(1, 4, 1, 'Jember', 'Jakarta', 300000, 1, 300000, 2, NULL),
-(3, 3, 1, 'Jember', 'Wuhan China', 250000, 1, 200000, 2, NULL),
-(4, 42, 2, 'Jember', 'Wuhan China', 150000, 2, NULL, 2, NULL),
-(5, 60, 1, 'Jember', 'Bandung', 200000, 1, NULL, 1, 100000),
-(6, 61, 2, 'Jember', 'Surabaya', 100000, 1, NULL, 2, NULL),
-(7, 62, 2, 'Jember', 'Lumajang', 70000, 1, NULL, 2, NULL),
-(8, 63, 1, 'Jember', 'Malang', 200000, 1, NULL, 2, NULL),
-(9, 64, 2, 'Jember', 'Anjay', 10000, 1, NULL, 2, NULL),
-(10, 65, 2, 'Wwww', 'Wwww', 100000, 1, NULL, 2, NULL),
-(11, 66, 2, 'Ajur', 'Ora', 100000, 1, NULL, 1, 10000),
-(12, 67, 2, 'Hahaha', 'Hehehe', 190000, 1, NULL, 1, 1000000),
-(13, 68, 2, 'Werrrr', 'Weeeer', 1300000, 1, 90000, 1, 90000),
-(14, 71, 2, 'Jember', 'Solo', 100000, 1, 50000, 1, 50000),
-(15, 80, 2, 'Jember', 'Bandung', 500000, 1, 100000, 1, 100000),
-(16, 82, 1, 'Jember', 'Bandung', 500000, 2, NULL, 2, NULL),
-(17, 83, 3, 'Jember', 'Bandung', 5000000, 1, 100000, 2, NULL),
-(18, 85, 1, 'Jember', 'Jakarta', 200000, 1, 250000, 1, 200000),
-(19, 87, 1, 'Jember', 'Bandung', 120000, 2, NULL, 2, NULL);
+INSERT INTO `spd` (`id_spd`, `id_sk`, `id_jenis_kendaraan`, `asal`, `tujuan`, `uang_harian`, `id_penginapan`, `biaya_penginapan`, `id_pendaftaran`, `biaya_pendaftaran_acara`, `created_at`, `updated_at`) VALUES
+(1, 4, 1, 'Jember', 'Jakarta', 300000, 1, 300000, 2, NULL, NULL, NULL),
+(3, 3, 1, 'Jember', 'Wuhan China', 250000, 1, 200000, 2, NULL, NULL, NULL),
+(4, 42, 2, 'Jember', 'Wuhan China', 150000, 2, NULL, 2, NULL, NULL, NULL),
+(5, 60, 1, 'Jember', 'Bandung', 200000, 1, NULL, 1, 100000, NULL, NULL),
+(6, 61, 2, 'Jember', 'Surabaya', 100000, 1, NULL, 2, NULL, NULL, NULL),
+(7, 62, 2, 'Jember', 'Lumajang', 70000, 1, NULL, 2, NULL, NULL, NULL),
+(8, 63, 1, 'Jember', 'Malang', 200000, 1, NULL, 2, NULL, NULL, NULL),
+(9, 64, 2, 'Jember', 'Anjay', 10000, 1, NULL, 2, NULL, NULL, NULL),
+(10, 65, 2, 'Wwww', 'Wwww', 100000, 1, NULL, 2, NULL, NULL, NULL),
+(11, 66, 2, 'Ajur', 'Ora', 100000, 1, NULL, 1, 10000, NULL, NULL),
+(12, 67, 2, 'Hahaha', 'Hehehe', 190000, 1, NULL, 1, 1000000, NULL, NULL),
+(13, 68, 2, 'Werrrr', 'Weeeer', 1300000, 1, 90000, 1, 90000, NULL, NULL),
+(14, 71, 2, 'Jember', 'Solo', 100000, 1, 50000, 1, 50000, NULL, NULL),
+(15, 80, 2, 'Jember', 'Bandung', 500000, 1, 100000, 1, 100000, NULL, NULL),
+(16, 82, 1, 'Jember', 'Bandung', 500000, 2, NULL, 2, NULL, NULL, NULL),
+(17, 83, 3, 'Jember', 'Bandung', 5000000, 1, 100000, 2, NULL, NULL, NULL),
+(18, 85, 1, 'Jember', 'Jakarta', 200000, 1, 250000, 1, 200000, NULL, NULL),
+(19, 87, 1, 'Jember', 'Bandung', 120000, 2, NULL, 2, NULL, NULL, NULL),
+(20, 89, 2, 'Jember', 'Surabaya', 10000000, 2, NULL, 1, NULL, NULL, NULL),
+(21, 90, 2, 'Jember', 'Surabaya', 124000, 1, 4000000, 1, 2000000, NULL, NULL),
+(22, 91, 2, 'Jember', 'asdasddsfsdf', 4000000, 1, 100000, 1, 100000, NULL, NULL),
+(23, 72, 1, 'Jember', 'Semarang', 150000, 1, 150000, 1, 25000, '2020-08-22 05:41:39', '2020-08-22 05:41:39');
 
 -- --------------------------------------------------------
 
@@ -4868,30 +4858,36 @@ CREATE TABLE `surat_kepegawaian` (
   `revisi` varchar(100) DEFAULT NULL,
   `surat_in_out` int(11) DEFAULT NULL,
   `perjalanan` int(11) DEFAULT NULL,
-  `lokasi` varchar(100) DEFAULT NULL
+  `lokasi` varchar(100) DEFAULT NULL,
+  `memo_created_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `surat_kepegawaian`
 --
 
-INSERT INTO `surat_kepegawaian` (`id`, `nomor_surat`, `jenis_surat`, `keterangan`, `started_at`, `end_at`, `status`, `revisi`, `surat_in_out`, `perjalanan`, `lokasi`) VALUES
-(71, '121313', '2', 'Panitia Fasilkom Goes to Campus', '2020-01-30', '2020-01-31', 11, NULL, 1, 1, ''),
-(72, NULL, '2', 'Panitia 17 Agustus', '2020-01-30', '2020-01-31', 2, NULL, 1, 1, ''),
-(73, NULL, '2', 'Hahaha', '2020-01-31', '2020-01-31', 2, NULL, 1, 1, ''),
-(75, NULL, '3', 'Pelatihan Linux Fasilkom', '2020-01-30', '2020-01-31', 2, NULL, 2, 2, ''),
-(76, NULL, '3', 'Pelatihan Memancing', '2020-01-31', '2020-01-31', 2, NULL, 2, 2, ''),
-(77, '21312', '1', 'Lomba Memancing', '2020-08-22', '2020-08-24', 9, NULL, 1, 2, 'Bandung'),
-(78, NULL, '3', 'Memberi Makan Ikan', '2020-08-29', '2020-08-29', 2, NULL, 1, 2, 'Bandung'),
-(79, '24231', '3', 'Membangun Jembatan', '2020-08-21', '2020-08-22', 9, NULL, 2, 2, NULL),
-(80, '76534231', '1', 'Gerak Jalan', '2020-08-21', '2020-08-29', 9, NULL, 1, 1, 'Bandung'),
-(81, '21212', '1', 'Menangisi Mantan', '2020-08-28', '2020-08-29', 9, NULL, 1, 2, NULL),
-(82, '212121', '1', 'Makan Bandeng', '2020-08-20', '2020-08-22', 9, NULL, 1, 1, 'Bandung'),
-(83, '543', '1', 'Telkom Conference', '2020-08-29', '2020-08-29', 11, NULL, 1, 1, 'Bandung'),
-(84, '156543', '1', 'Jember', '2020-08-22', '2020-08-29', 9, NULL, 1, 2, NULL),
-(85, 'SKL-221', '1', 'Godev Jakarta', '2020-08-25', '2020-08-27', 9, NULL, 1, 1, 'Jakarta'),
-(86, 'SM-03', '3', 'Sertifikasi web', '2020-08-25', '2020-08-30', 9, NULL, 2, 2, NULL),
-(87, 'SM-04', '1', 'ITCG', '2020-08-25', '2020-08-27', 10, NULL, 1, 1, 'Bandung');
+INSERT INTO `surat_kepegawaian` (`id`, `nomor_surat`, `jenis_surat`, `keterangan`, `started_at`, `end_at`, `status`, `revisi`, `surat_in_out`, `perjalanan`, `lokasi`, `memo_created_at`, `created_at`, `updated_at`) VALUES
+(71, '121313', '2', 'Panitia Fasilkom Goes to Campus', '2020-01-30', '2020-01-31', 11, NULL, 1, 1, '', NULL, NULL, NULL),
+(72, '243', '2', 'Panitia 17 Agustus', '2020-01-30', '2020-01-31', 3, NULL, 1, 1, '', NULL, '2020-08-22 05:40:41', '2020-08-22 05:40:41'),
+(73, NULL, '2', 'Hahaha', '2020-01-31', '2020-01-31', 2, NULL, 1, 1, '', NULL, NULL, NULL),
+(75, NULL, '3', 'Pelatihan Linux Fasilkom', '2020-01-30', '2020-01-31', 2, NULL, 2, 2, '', NULL, NULL, NULL),
+(76, NULL, '3', 'Pelatihan Memancing', '2020-01-31', '2020-01-31', 2, NULL, 2, 2, '', NULL, NULL, NULL),
+(77, '21312', '1', 'Lomba Memancing', '2020-08-22', '2020-08-24', 9, NULL, 1, 2, 'Bandung', NULL, NULL, NULL),
+(78, NULL, '3', 'Memberi Makan Ikan', '2020-08-29', '2020-08-29', 2, NULL, 1, 2, 'Bandung', NULL, NULL, NULL),
+(79, '24231', '3', 'Membangun Jembatan', '2020-08-21', '2020-08-22', 9, NULL, 2, 2, NULL, NULL, NULL, NULL),
+(80, '76534231', '1', 'Gerak Jalan', '2020-08-21', '2020-08-29', 9, NULL, 1, 1, 'Bandung', NULL, NULL, NULL),
+(81, '21212', '1', 'Menangisi Mantan', '2020-08-28', '2020-08-29', 9, NULL, 1, 2, NULL, NULL, NULL, NULL),
+(82, '212121', '1', 'Makan Bandeng', '2020-08-20', '2020-08-22', 9, NULL, 1, 1, 'Bandung', NULL, NULL, NULL),
+(83, '543', '1', 'Telkom Conference', '2020-08-29', '2020-08-29', 11, NULL, 1, 1, 'Bandung', NULL, NULL, NULL),
+(84, '156543', '1', 'Jember', '2020-08-22', '2020-08-29', 9, NULL, 1, 2, NULL, NULL, NULL, NULL),
+(85, 'SKL-221', '1', 'Godev Jakarta', '2020-08-25', '2020-08-27', 10, NULL, 1, 1, 'Jakarta', NULL, NULL, NULL),
+(86, 'SM-03', '3', 'Sertifikasi web', '2020-08-25', '2020-08-30', 9, NULL, 2, 2, NULL, NULL, NULL, NULL),
+(87, 'SM-04', '1', 'ITCG', '2020-08-25', '2020-08-27', 10, NULL, 1, 1, 'Bandung', NULL, NULL, NULL),
+(89, 'asdsd', '1', 'Acara', '2020-08-26', '2020-08-31', 9, NULL, 1, 1, NULL, NULL, NULL, NULL),
+(90, 'asdsd', '2', 'ikmikmikmikm', '2020-08-26', '2020-08-31', 9, NULL, 1, 1, NULL, NULL, NULL, NULL),
+(91, '324234234', '1', 'adasdasdasddadsad', '2020-08-25', '2020-08-27', 9, NULL, 1, 1, 'asdasddsfsdf', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -5428,7 +5424,7 @@ ALTER TABLE `bagian`
 -- AUTO_INCREMENT for table `bukti_perjalanan`
 --
 ALTER TABLE `bukti_perjalanan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `data_barang`
@@ -5464,7 +5460,7 @@ ALTER TABLE `detail_skripsi`
 -- AUTO_INCREMENT for table `dosen_tugas`
 --
 ALTER TABLE `dosen_tugas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT for table `file_laporan`
@@ -5620,7 +5616,7 @@ ALTER TABLE `sk_skripsi`
 -- AUTO_INCREMENT for table `spd`
 --
 ALTER TABLE `spd`
-  MODIFY `id_spd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_spd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `status_barang`
@@ -5662,7 +5658,7 @@ ALTER TABLE `status_surat_tugas`
 -- AUTO_INCREMENT for table `surat_kepegawaian`
 --
 ALTER TABLE `surat_kepegawaian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT for table `surat_tugas`
