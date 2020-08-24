@@ -1131,9 +1131,9 @@ class kepegawaianController extends Controller
              'pendaftaran' => 'Salah Satu Bukti Harus Diisi.'
         ];
         $this->validate($request, [
-                'transportasi' => 'required_without_all:penginapan,pendaftaran',
-                'penginapan' => 'required_without_all:transportasi,pendaftaran',
-                'pendaftaran' => 'required_without_all:penginapan,transportasi',
+                'transportasi' => 'required_without_all:penginapan,pendaftaran|max:1024',
+                'penginapan' => 'required_without_all:transportasi,pendaftaran|max:1024',
+                'pendaftaran' => 'required_without_all:penginapan,transportasi|max:1024',
                 'transportasi.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,webp,xls,xlsx',
                 'penginapan.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,webp,xls,xlsx',
                 'pendaftaran.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,webp,xls,xlsx'
