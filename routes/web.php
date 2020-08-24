@@ -266,6 +266,7 @@ Route::middleware(['auth', 'checkRole:Dekan'])->prefix('dekan')->name('dekan.')-
         Route::get('/upload', 'kepegawaianController@dosen_index_upload')->name('dosen_upload_index');
         Route::put('/upload/{id}/update','kepegawaianController@dosen_update_upload')->name('update.upload');
         Route::get('/spd/{id}/download/{index}/{jenis_bukti}', 'kepegawaianController@download_bukti')->name('spd.download');
+        Route::get('/surat_tugas', 'kepegawaianController@dosen_index')->name('surat.index');
     }
 );
 
