@@ -86,5 +86,11 @@ class Controller extends BaseController
         elseif($user == "Dosen") {
             return "dosen";
         }
+        elseif($user == "Pemroses Mutasi Kepegawaian") {
+            return "kepegawaian";
+        }
+        elseif($user == "Admin") {
+            return "admin";
+        }
     }
 }

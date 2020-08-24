@@ -7,10 +7,10 @@
 </a>
 <ul class="dropdown-menu">
     <li class="header">
-        @if (count(Auth::user()->unreadNotifications) > 0)
+    @if (count(Auth::user()->unreadNotifications) > 0)
     <li class="header">
         <span id="header_notif">{{ count(Auth::user()->unreadNotifications) }} Notif
-            baru</span>
+            Baru</span>
 
         <span style="float: right;"><a href="#" id="readAll">Tandai Telah Dibaca
                 Semua</a></span>
@@ -31,6 +31,7 @@
         </ul>
     </li>
     @if (count(Auth::user()->notifications) > 0)
-    <li class="footer"><a href="{{ route('notifikasi.index') }}">Lihat Semua</a></li>
+    <li class="footer"><p style="height: 4px;"></p></li>
+    {{-- <li class="footer"><a href="{{ route('notifikasi.index') }}">Lihat Semua</a></li> --}}
     @endif
 </ul>

@@ -117,7 +117,7 @@
 								</td>
 								<td>
 	                @foreach ($dosen_sk as $dosen)
-									<label style="margin-top: 2px; margin-left: 5px;">{{$dosen->user['nama']}}</label><br/>
+									<p style="margin-left: 5px;">{{$dosen->user['nama']}}</p>
 									<input name="jabatan_panitia[]" class="form-control panitia" type="text" placeholder="Jabatan Panitia"><br/>
 									<input name="dosen[]" class="form-control dosen" type="hidden" value="{{$dosen->id_dosen}}">
 									@endforeach

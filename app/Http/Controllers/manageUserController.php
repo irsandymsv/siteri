@@ -24,8 +24,9 @@ class manageUserController extends Controller
      */
     public function index()
     {
-        $data = User::where('username', '!=', 'admin')->paginate(10);
-        return view('admin.pegawai.index', compact('data'));
+        $data = User::where('username', '!=', 'admin')->get();
+        $jabatan_user = $this->cek_jabatan();
+        return view('admin.pegawai.index', compact('data', 'jabatan_user'));
     }
 
     /**
@@ -44,8 +45,9 @@ class manageUserController extends Controller
         $fungsional = fungsional::all();
         $prodi = prodi::all();
         $bagian = bagian::all();
+        $jabatan_user = $this->cek_jabatan();
 
-        return view('admin.pegawai.create', compact('pangkat', 'golongan', 'jabatan', 'fungsional', 'prodi', 'bagian'));
+        return view('admin.pegawai.create', compact('pangkat', 'golongan', 'jabatan', 'fungsional', 'prodi', 'bagian', 'jabatan_user'));
     }
 
     /**
@@ -153,9 +155,10 @@ class manageUserController extends Controller
         $pangkat = DB::table('pangkat')->get();
         $prodi = prodi::all();
         $bagian = bagian::all();
+        $jabatan_user = $this->cek_jabatan();
 
         $user = User::where('username', $id)->with(["fungsionalnya", "golongannya", "pangkatnya", "jabatannya"])->first();
-        return view('admin/pegawai/edit', ['user' => $user, 'fungsional' => $fungsional, 'golongan' => $golongan, 'jabatan' => $jabatan, 'pangkat' => $pangkat, 'prodi' => $prodi, 'bagian' => $bagian]);
+        return view('admin/pegawai/edit', ['user' => $user, 'fungsional' => $fungsional, 'golongan' => $golongan, 'jabatan' => $jabatan, 'pangkat' => $pangkat, 'prodi' => $prodi, 'bagian' => $bagian, 'jabatan_user' => $jabatan_user]);
     }
 
     /**

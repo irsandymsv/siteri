@@ -127,7 +127,7 @@
 							<tbody>
 								<td>
                  	<label>Kota Asal</label>
-                 	<input type="text" class="form-control" name="asal" value="Jember" placeholder="Masukan Kota Asal"><br/>
+                 	<input type="text" class="form-control" name="asal" value="Jember" placeholder="Masukan Kota Asal" required><br/>
 
                  	@error('asal')
 									  <p class="invalid-feedback" role="alert" style="color: red;">
@@ -136,7 +136,7 @@
 									@enderror
 
                  	<label>Kota Tujuan</label>
-								  <input type="text" class="form-control" name="tujuan" value="{{$surat->lokasi}}" placeholder="Masukan Kota Tujuan">
+								  <input type="text" class="form-control" name="tujuan" value="{{$surat->lokasi}}" placeholder="Masukan Kota Tujuan" required>
                 
 								  @error('tujuan')
 								    <p class="invalid-feedback" role="alert" style="color: red;">
@@ -205,6 +205,12 @@
                     <option value="{{$pendaftaran->id}}" required>{{$pendaftaran->acara}}</option>
                     @endforeach
                   </select>
+
+                  @error('pendaftaran_acara')
+                    <p class="invalid-feedback" role="alert" style="color: red;">
+                      <strong>{{ $message }}</strong>
+                    </p>
+                  @enderror
 	              </td>
 	              <td>
 	                <input type="number" min="1000" step="1000" max="9000000000" class="form-control" id="biaya_pendaftaran" name="biaya_pendaftaran" placeholder="Jumlah" required>

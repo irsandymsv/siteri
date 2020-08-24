@@ -25,12 +25,18 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\OrUploadBukti;
+use App\Notifications\suratTugasKepegawaian;
 
 class kepegawaianController extends Controller
 {
     public function index()
-    {
-        return view('kepegawaian.dashboard');
+    {   
+        //Dashboard
+        $memu = surat_kepegawaian::where('status', 1)->with('status_sk')->orderBy('memo_created_at', 'desc')->get();
+        $dosen_sk = dosen_tugas::all();
+        $pemateri = pemateri::all();
+
+        return view('kepegawaian.dashboard', compact('memu', 'dosen_sk', 'pemateri'));
     }
 
     public function create()
@@ -99,9 +105,18 @@ class kepegawaianController extends Controller
             'jenis_surat' => $request->jenisSurat,
             'keterangan' => $request->keterangan,
             'created_at' => Carbon::now()
-            
         ]);
-        $data = surat_kepegawaian::where('id', $id)->update($memu);
+
+        $data = surat_kepegawaian::where('id', $id)->first();
+        $data->update($memu);
+
+        //buat notifikasi
+        $user_notif = User::with('jabatan')
+        ->whereHas('jabatan', function(Builder $query)
+        {
+            $query->where('jabatan', 'KTU');
+        })->first();
+        $user_notif->notify(new suratTugasKepegawaian($data, 'butuh_verif'));
 
         $perjalanan = $request->perjalanan;
         $jenis = $request->jenisSurat;  
@@ -124,15 +139,16 @@ class kepegawaianController extends Controller
 
         if ($perjalanan == 1) {
          
-            $surat = surat_kepegawaian::find($id);
+            // $surat = surat_kepegawaian::find($id);
 
-            $jenis_kendaraan = jenis_kendaraan::all();
-            $pendaftaran_acara = pendaftaran_acara::all();
-            $penginapan = penginapan::all();
-            $dosen_tugas = dosen_tugas::where('id_sk', $id)->get();
+            // $jenis_kendaraan = jenis_kendaraan::all();
+            // $pendaftaran_acara = pendaftaran_acara::all();
+            // $penginapan = penginapan::all();
+            // $dosen_tugas = dosen_tugas::where('id_sk', $id)->get();
 
     
-            return view('kepegawaian.surat_tugas.spd', compact('surat', 'jenis_kendaraan', 'pendaftaran_acara', 'penginapan', 'dosen_tugas'));
+            // return view('kepegawaian.surat_tugas.spd', compact('surat', 'jenis_kendaraan', 'pendaftaran_acara', 'penginapan', 'dosen_tugas'));
+            return redirect()->route('kepegawaian.spd.create', $id);
         }
         else if($perjalanan == 2){
             if ($inout->surat_in_out == 2) {
@@ -143,35 +159,44 @@ class kepegawaianController extends Controller
                 $data = pemateri::where('id_sk', $id)->update($surat);
                 return redirect(route('kepegawaian.surat.preview', $id)); 
             }
-            else
             return redirect(route('kepegawaian.surat.preview', $id));
         } 
+    }
+
+    public function spd_create($id)
+    {
+        $surat = surat_kepegawaian::find($id);
+        $jenis_kendaraan = jenis_kendaraan::all();
+        $pendaftaran_acara = pendaftaran_acara::all();
+        $penginapan = penginapan::all();
+        $dosen_tugas = dosen_tugas::where('id_sk', $id)->get();
         
+        return view('kepegawaian.surat_tugas.spd', compact('surat', 'jenis_kendaraan', 'pendaftaran_acara', 'penginapan', 'dosen_tugas'));
     }
 
 
     public function spd_save(Request $request, $id)
     {
-        // $validator = validator::make($request->all(), [
-        //     'id_jenis_kendaraan' => 'required',
-        //     'asal' => 'required',
-        //     'tujuan' => 'required',
-        //     'uang_harian' => 'required',
-        //     'penginapan' => 'required',
-        //     'pendaftaran_acara' => 'required'
-        // ]);
+        $validator = validator::make($request->all(), [
+            'jenis_kendaraan' => 'required',
+            'asal' => 'required',
+            'tujuan' => 'required',
+            'uang_harian' => 'required',
+            'penginapan' => 'required',
+            'pendaftaran_acara' => 'required'
+        ]);
 
-        // $validator->sometimes('biaya_penginapan', 'required', function($request){
-        //     return $request->penginapan == 1;
-        // });
+        $validator->sometimes('biaya_penginapan', 'required', function($request){
+            return $request->penginapan == 1;
+        });
 
-        // $validator->sometimes('biaya_pendaftaran', 'required', function($request){
-        //     return $request->pendaftaran_acara == 1;
-        // });
+        $validator->sometimes('biaya_pendaftaran', 'required', function($request){
+            return $request->pendaftaran_acara == 1;
+        });
 
-        // if ($validator->fails()) {
-        //     return redirect()->back()->withErrors($validator)->withInput();
-        // }
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         $dosen = dosen_tugas::where('id_sk', $id)->get();
         $spd = ([
@@ -200,6 +225,12 @@ class kepegawaianController extends Controller
         $inout = surat_in_out::all();
         // dd($memus);
         return view('ktu.memu.index', compact('memu', 'memus', 'dosen_sk', 'pemateri', 'perjalanan', 'inout'));
+    }
+
+    public function cekMemoBaru()
+    {
+        $jumlah_memo = surat_kepegawaian::where('status', 1)->count();
+        echo $jumlah_memo;
     }
 
     public function ktu_approve($id)
@@ -303,7 +334,7 @@ class kepegawaianController extends Controller
                 'status' => 1,
                 'surat_in_out' => 1,
                 'perjalanan' => 2,
-                'lokasi' => $request->lokasi,
+                'lokasi' => 'Universitas Jember',
                 'memo_created_at' => Carbon::now(),
             ]);
             $data = surat_kepegawaian::create($insert);
@@ -352,7 +383,7 @@ class kepegawaianController extends Controller
                 'status' => 1,
                 'surat_in_out' => 2,
                 'perjalanan' => 2,
-                'lokasi' => $request->lokasi,
+                'lokasi' => 'Universitas Jember',
                 'memo_created_at' => Carbon::now(),
             ]);
             $pemateri = $request->pemateri;
@@ -498,7 +529,16 @@ class kepegawaianController extends Controller
             'status' => 5,
         ]);
 
-        $data = surat_kepegawaian::where('id', $id)->update($memu);
+        $data = surat_kepegawaian::where('id', $id)->first();
+        $data->update($memu);
+
+        $user_notif = User::with('jabatan')
+        ->whereHas('jabatan', function(Builder $query)
+        {
+            $query->where('jabatan', 'Sekretaris Pimpinan');
+        })->first();
+        $user_notif->notify(new suratTugasKepegawaian($data, 'butuh_verif'));
+
         return redirect()->back()->with('success', 'Surat tugas berhasil diverifikasi');
     }
 
@@ -507,12 +547,24 @@ class kepegawaianController extends Controller
         $this->validate($request, [
             'pesan_revisi' => 'required'
         ]);
+
         $sk = ([
             'status' => 4,
             'revisi' => $request->pesan_revisi,
         ]);
 
-        $data = surat_kepegawaian::where('id', $id)->update($sk);
+        $data = surat_kepegawaian::where('id', $id)->first();
+        // $data->status = 4;
+        // $data->revisi = $request->pesan_revisi;
+        $data->update($sk);
+
+        $user_notif = User::with('jabatan')
+        ->whereHas('jabatan', function(Builder $query)
+        {
+            $query->where('jabatan', 'Pemroses Mutasi Kepegawaian');
+        })->first();
+        $user_notif->notify(new suratTugasKepegawaian($data, 'butuh_revisi_ktu'));
+
         return redirect()->route('ktu.surat.index')->with('success', 'Status Surat Tugas Berhasil Diubah');
     }
 
@@ -571,7 +623,16 @@ class kepegawaianController extends Controller
             'status' => 7,
         ]);
 
-        $data = surat_kepegawaian::where('id', $id)->update($memu);
+        $data = surat_kepegawaian::where('id', $id)->first();
+        $data->update($memu);
+
+        $user_notif = User::with('jabatan')
+        ->whereHas('jabatan', function(Builder $query)
+        {
+            $query->where('jabatan', 'Wakil Dekan 2');
+        })->first();
+        $user_notif->notify(new suratTugasKepegawaian($data, 'butuh_verif'));
+
         return redirect()->route('staffpim.sp.preview', $id)->with('success', 'Surat Tugas Berhasil Diverifikasi');
     }
 
@@ -585,7 +646,16 @@ class kepegawaianController extends Controller
             'revisi' => $request->pesan_revisi,
         ]);
 
-        $data = surat_kepegawaian::where('id', $id)->update($sk);
+        $data = surat_kepegawaian::where('id', $id)->first();
+        $data->update($sk);
+
+        $user_notif = User::with('jabatan')
+        ->whereHas('jabatan', function(Builder $query)
+        {
+            $query->where('jabatan', 'Pemroses Mutasi Kepegawaian');
+        })->first();
+        $user_notif->notify(new suratTugasKepegawaian($data, 'butuh_revisi_staffpim'));
+
         return redirect()->route('staffpim.sp.read')->with('success', 'Status Surat Tugas Berhasil Diubah');
     }
 
@@ -648,7 +718,16 @@ class kepegawaianController extends Controller
             'status' => 8,
         ]);
 
-        $data = surat_kepegawaian::where('id', $id)->update($surat);
+        $data = surat_kepegawaian::where('id', $id)->first();
+        $data->update($surat);
+
+        $user_notif = User::with('jabatan')
+        ->whereHas('jabatan', function(Builder $query)
+        {
+            $query->where('jabatan', 'BPP');
+        })->first();
+        $user_notif->notify(new suratTugasKepegawaian($data, 'butuh_verif'));
+
         return redirect()->route('wadek2.surat.preview', $id)->with('success', 'Surat Tugas Berhasil Diverifikasi');
     }
 
@@ -797,7 +876,16 @@ class kepegawaianController extends Controller
             'status' => 3,
         ]);
 
-        $data = surat_kepegawaian::where('id', $id)->update($surat);
+        $data = surat_kepegawaian::where('id', $id)->first();
+        $data->update($surat);
+
+        $user_notif = User::with('jabatan')
+        ->whereHas('jabatan', function(Builder $query)
+        {
+            $query->where('jabatan', 'KTU');
+        })->first();
+        $user_notif->notify(new suratTugasKepegawaian($data, 'butuh_verif'));
+
         $dosen = $request->dosen;
         $pemateri = $request->pemateri;
         if ($request->surat_in_out == 2) {
@@ -887,7 +975,7 @@ class kepegawaianController extends Controller
         $jenis = jenis_sk::all();
         $status = status_surat::all();
         $bukti = bukti_perjalanan::where('id_spd', $id)->get();
-        // dd($surat_tugas);
+        // dd($bukti);
         return view('bpp.surat_tugas.preview_spd', [
         'surat_tugas' => $surat_tugas,
         'dosen_tugas' =>$dosen_tugas,
@@ -939,7 +1027,16 @@ class kepegawaianController extends Controller
             'status' => 9,
         ]);
 
-        $data = surat_kepegawaian::where('id', $id)->update($surat);
+        $data = surat_kepegawaian::where('id', $id)->first();
+        $data->update($surat);
+
+        if ($data->surat_in_out == 1) {
+            $dosen_tugas = dosen_tugas::where('id_sk', $id)->with('user')->get();
+            foreach ($dosen_tugas as $item) {
+                $item->user->notify(new suratTugasKepegawaian($data, 'sudah_siap'));
+            }
+        }
+
         return redirect()->route('bpp.surat.preview', $id)->with('success', 'Surat Tugas Berhasil Disetujui');
     }
 
@@ -1196,8 +1293,16 @@ class kepegawaianController extends Controller
 
             $id_surat = spd::where('id_spd',$id)->first();
             
-        
-            $data = surat_kepegawaian::where('id', $id_surat->id_sk)->update($surat);
+            $data = surat_kepegawaian::where('id', $id_surat->id_sk)->first();
+            $data->update($surat);
+
+            $user_notif = User::with('jabatan')
+            ->whereHas('jabatan', function(Builder $query)
+            {
+                $query->where('jabatan', 'BPP');
+            })->first();
+            $user_notif->notify(new suratTugasKepegawaian($data, 'sudah_upload_bukti'));
+
         }catch(Exception $e){
             return redirect()->route($jabatan.'.edit.upload')->with('error', $e->getMessage());
         }
@@ -1207,6 +1312,7 @@ class kepegawaianController extends Controller
     }
 
     protected function dosen_update_upload(Request $request, $id){
+        
         $jabatan_user = $this->cek_jabatan();
         $this->validate($request, [
             'transportasi' => 'max:1024',
@@ -1260,6 +1366,16 @@ class kepegawaianController extends Controller
                 'penginapan' => $penginapan,
                 'pendaftaran' => $pendaftaran
             ]);
+
+            $spd = spd::where('id_spd', $bukti->id_spd)->with('surat_tugas')->first();
+            
+            $user_notif = User::with('jabatan')
+            ->whereHas('jabatan', function(Builder $query)
+            {
+                $query->where('jabatan', 'BPP');
+            })->first();
+            $user_notif->notify(new suratTugasKepegawaian($spd->surat_tugas, 'sudah_upload_bukti'));
+
         }catch(Exception $e){
             return redirect()->route($jabatan.'.edit.upload')->with('error', $e->getMessage());
         }

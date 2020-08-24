@@ -39,7 +39,12 @@
 </li>
 
 <li>
-    <a href="{{ route('ktu.memu.index') }}"><i class="fa fa-link"></i> <span>Lihat Memo</span></a>
+    <a href="{{ route('ktu.memu.index') }}">
+        <i class="fa fa-link"></i> <span>Lihat Memo</span>
+        <span class="pull-right-container">
+            <small class="label pull-right bg-green" id="jumlah_memo"></small>
+        </span>
+    </a>
 </li>
 
 {{-- <li class="treeview">

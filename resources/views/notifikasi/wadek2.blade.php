@@ -2,17 +2,34 @@
 @section('content')
 
 @foreach (Auth::user()->unreadNotifications as $notif)
-<li>
-    <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
-        <i class="fa fa-exclamation-circle col-xs-2"></i>
-        <div class="col-xs-10">
-            Laporan Pengadaan {{ ($notif->data['pesan']) ? $notif->data['pesan'] : 'Baru' }}<br>
-            <b>{{ $notif->data['keterangan'] }}</b><br>
-            <small
-                style="color: grey;">{{ Carbon\Carbon::parse($notif->data['updated_at'])->locale('id_ID')->DiffForHumans() }}</small>
-        </div>
-    </a>
-</li>
+	@if ($notif->type == 'App\Notifications\verifPengadaan')
+		<li>
+		    <a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+		        <i class="fa fa-exclamation-circle col-xs-2"></i>
+		        <div class="col-xs-10">
+		            Laporan Pengadaan {{ ($notif->data['pesan']) ? $notif->data['pesan'] : 'Baru' }}<br>
+		            <b>{{ $notif->data['keterangan'] }}</b><br>
+		            <small
+		                style="color: grey;">{{ Carbon\Carbon::parse($notif->data['updated_at'])->locale('id_ID')->DiffForHumans() }}</small>
+		        </div>
+		    </a>
+		</li>
+	@elseif($notif->type == 'App\Notifications\suratTugasKepegawaian')
+		<li>
+			<a href="{{ route('notifikasi.read', $notif->id) }}" style="white-space: initial;">
+				<i class="fa fa-exclamation-circle col-xs-2"></i>
+				<div class="col-xs-10">
+					Surat Tugas Kepegawaian 
+				{{ $notif->data['nomor_surat'] }}/UN25.1.15/KP/{{ \Carbon\Carbon::parse($notif->data['created_at'])->year }} 
+				Butuh Verifikasi.
+				
+				<br>
+				<small style="color: grey;">{{ Carbon\Carbon::parse($notif->created_at)->locale('id_ID')->DiffForHumans() }}</small>
+				</div>
+			</a>
+		</li>
+	@endif
+
 @endforeach
 
 @endsection

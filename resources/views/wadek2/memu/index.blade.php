@@ -1,11 +1,12 @@
 @extends('wadek2.wadek2_view')
-@section('page_title','Daftar Memo')
-@section('judul_header','Daftar Memo')
+@section('page_title','Memo')
+@section('judul_header','Memo')
 @section('content')
 <!-- Main content -->
 <section class="content">
   <div class="box">
     <div class="box-header">
+      <h3 class="box-title">Daftar Memo</h3>
       <a href="{{route('wadek2.memu.create')}}" class="btn btn-info pull-right"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Buat Memo</a>
     </div>
 

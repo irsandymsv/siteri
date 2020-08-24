@@ -1,4 +1,9 @@
-@extends('admin.admin_view')
+@extends('layouts.template')
+
+@section('side_menu')
+    @include('include.admin_menu')
+@endsection
+
 @section('css_link')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.min.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
@@ -24,7 +29,7 @@
          <div class="panel panel-default">
             <div class="panel-heading">Tambah Data Pegawai</div>
             <div class="panel-body">
-               <form class="form-horizontal" role="form" method="POST" action="{{route('admin.pegawai.store')}}"
+               <form class="form-horizontal" role="form" method="POST" action="{{route($jabatan_user.'.pegawai.store')}}"
                   enctype="multipart/form-data">
                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -204,7 +209,7 @@
                         <button type="submit" class="btn btn-primary">
                                Buat
                         </button>
-                        <a href="{{route('admin.pegawai.index')}}" class="btn btn-default">Batal</a>
+                        <a href="{{route($jabatan_user.'.pegawai.index')}}" class="btn btn-default">Batal</a>
                      </div>
                   </div>
 

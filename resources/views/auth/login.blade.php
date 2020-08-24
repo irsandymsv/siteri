@@ -66,11 +66,11 @@
           </span>
         </div>
 
-        <div class="checkbox">
+        {{-- <div class="checkbox">
             <label class="txt2">
                 <input type="checkbox" name="remember" > Remember Me
             </label>
-        </div>
+        </div> --}}
 
         @error('username')
           <span class="invalid-feedback" style="display: block;" role="alert">

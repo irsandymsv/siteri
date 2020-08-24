@@ -9,7 +9,7 @@ class surat_kepegawaian extends Model
     protected $table = 'surat_kepegawaian';
     public $timestamps = false;
     protected $fillable = [
-        'nomor_surat', 'jenis_surat', 'keterangan', 'started_at', 'end_at', 'status', 'surat_in_out', 'perjalanan','lokasi', 'memo_created_at', 'created_at'
+        'nomor_surat', 'jenis_surat', 'keterangan', 'started_at', 'end_at', 'status', 'revisi', 'surat_in_out', 'perjalanan','lokasi', 'memo_created_at', 'created_at'
     ];
 
     public function dosen_tugas()
@@ -18,7 +18,7 @@ class surat_kepegawaian extends Model
     }
     public function spd()
     {
-        return $this->hasMany('App\spd', 'id_spd');
+        return $this->hasOne('App\spd', 'id_sk');
     }
 
     public function jenis_sk()
