@@ -406,6 +406,12 @@ Route::middleware(['auth', 'checkRole:Wakil Dekan 2'])->prefix('wadek2')->name('
         Route::post('/upload/{id}', 'kepegawaianController@dosen_store')->name('file.upload');
         Route::get('/upload/{id}/edit', 'kepegawaianController@dosen_edit_upload')->name('edit.upload');
         Route::get('/spd/{id}/download/{index}/{jenis_bukti}', 'kepegawaianController@download_bukti')->name('spd.download');
+        Route::get('/upload/{id}/preview', 'kepegawaianController@dosen_upload_preview')->name('dosen_upload_preview');
+        Route::post('/upload/{id}', 'kepegawaianController@dosen_store')->name('file.upload');
+        Route::get('/upload/{id}/edit', 'kepegawaianController@dosen_edit_upload')->name('edit.upload');
+        Route::get('/upload', 'kepegawaianController@dosen_index_upload')->name('dosen_upload_index');
+        Route::put('/upload/{id}/update','kepegawaianController@dosen_update_upload')->name('update.upload');
+
 
         Route::get('/ganti_password', 'manageUserController@wadek2_ganti_password')->name('ganti.password');
         Route::resource(
