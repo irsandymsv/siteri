@@ -1209,6 +1209,9 @@ class kepegawaianController extends Controller
     protected function dosen_update_upload(Request $request, $id){
         $jabatan_user = $this->cek_jabatan();
         $this->validate($request, [
+            'transportasi' => 'max:1024',
+            'penginapan' => 'max:1024',
+            'pendaftaran' => 'max:1024',
             'transportasi.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,webp,xls,xlsx',
             'penginapan.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,webp,xls,xlsx',
             'pendaftaran.*' => 'mimes:doc,pdf,docx,zip,docx,rar,png,jpg,jpeg,webp,xls,xlsx'
