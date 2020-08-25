@@ -392,7 +392,7 @@ desired effect
             setInterval(function(){
                 loadlink()
                 // readAllNotif();
-            }, 30000);
+            }, 300000);
         });
     </script>
 
