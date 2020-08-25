@@ -1242,7 +1242,7 @@ class kepegawaianController extends Controller
         $t=0;       
         $g=0;
         $d=0;
-        if($request->transport !=null)
+        if($request->transportasi !=null)
         {
             try{
                 $transportasi = $this->upload_bukti($request->file('transportasi'));
@@ -1251,7 +1251,7 @@ class kepegawaianController extends Controller
                 return redirect()->route($jabatan.'.file.upload')->with('error', $e->getMessage());
             }
         }
-        if($request->nginap !=null)
+        if($request->penginapan !=null)
         {
             try{
                 $penginapan = $this->upload_bukti($request->file('penginapan'));
@@ -1261,7 +1261,7 @@ class kepegawaianController extends Controller
             }
             
         }
-        if($request->daftar !=null)
+        if($request->pendaftaran !=null)
         {
             try{
                 $pendaftaran = $this->upload_bukti($request->file('pendaftaran'));
