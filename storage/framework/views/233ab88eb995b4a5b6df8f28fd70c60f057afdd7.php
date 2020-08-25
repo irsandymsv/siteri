@@ -115,7 +115,7 @@ Preview Surat Tugas
                             </div>
 
                         </div>
-
+                        <?php if($bukti->pake_transportasi == 1): ?>
                         <?php for( $i=0;$i< count($bukti->transportasi);$i++): ?>
                             <div class="clone" name="transportasi" id='kolom_transportasi'>
 
@@ -134,6 +134,7 @@ Preview Surat Tugas
                                 </div>
                             </div>
                             <?php endfor; ?>
+                            <?php endif; ?>
 
                             <div class="clone hide" clone_name="transportasi">
 
@@ -180,6 +181,7 @@ Preview Surat Tugas
                                 </div>
                             </div>
                         </div>
+                        <?php if($bukti->pake_penginapan== 1): ?>
                         <?php for( $i=0;$i< count($bukti->penginapan);$i++): ?>
                             <div class="clone" name="penginapan" id='kolom_penginapan'>
 
@@ -198,6 +200,7 @@ Preview Surat Tugas
                                 </div>
                             </div>
                             <?php endfor; ?>
+                            <?php endif; ?>
                     </div>
 
                     
@@ -232,6 +235,7 @@ Preview Surat Tugas
                                 </div>
                             </div>
                         </div>
+                        <?php if($bukti->pake_pendaftaran == 1): ?>
                         <?php for( $i=0;$i< count($bukti->pendaftaran);$i++): ?>
                             <div class="clone" name="pendaftaran" id='kolom_pendaftaran'>
 
@@ -250,6 +254,7 @@ Preview Surat Tugas
                                 </div>
                             </div>
                             <?php endfor; ?>
+                            <?php endif; ?>
                         <?php endif; ?>
                         <button type="submit" class="btn btn-primary" style="margin-top:10px">Submit</button>
                     </div>
