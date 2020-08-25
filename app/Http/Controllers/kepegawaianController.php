@@ -281,7 +281,7 @@ class kepegawaianController extends Controller
 
     public function saveMemu(Request $request)
     {
-        // dd(Carbon::now()->format('Y-m-d H:i:s'));
+        // dd($request->all());
         $validator = validator::make($request->all(), [
             'surat_in_out' => 'required',
             'keterangan' => 'required',
