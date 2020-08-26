@@ -144,7 +144,7 @@
 											<input id="pemateri" class="form-control" name="pemateri[]" placeholder="Nama Pemateri 1">
 										</p>	
 									</div>
-									<a href="javascript:;" id="tambahPemateri" class="tambahPemateri"><i class="fa fa-plus"></i> Tambah</a>
+									<a href="javascript:;" id="tambahPemateri" class="tambahPemateri" hidden><i class="fa fa-plus"></i> Tambah</a>
 
 									@error('pemateri.*')
 									  <p class="invalid-feedback" role="alert" style="color: red;">
@@ -291,12 +291,14 @@
 	$(function(){
     $("#surat_in_out").change(function(){
 			$("#formInput :input").prop("disabled", false);
+
       if ( $("#surat_in_out").val() == 1 ) {
         $('#perjalanan').removeAttr("disabled");
         $('#perjalanan').on("change",function() {
             $('#perjalanan').val($(this).val());
 				});
 				$("#pemateri").prop("disabled", true);
+				$("#tambahPemateri").hide();
 				$("#dosen").prop("disabled", false);
 				$("#instansi").prop("disabled", true);
 
@@ -314,6 +316,7 @@
 				$("#jenisSurat").prop("disabled", true);
 				$("#dosen").prop("disabled", true);
 				$('#keterangan, #datepicker, #pemateri, #datepicker2, #submit, #instansi').removeAttr("disabled");
+				$("#tambahPemateri").show();
 				// $('#jenisSurat').val("3").change();
 	    }
     });
@@ -344,6 +347,7 @@
           $('#perjalanan').val($(this).val());
 			});
 			$("#pemateri").prop("disabled", true);
+			$("#tambahPemateri").hide();
 			$("#dosen").prop("disabled", false);
 			$("#instansi").prop("disabled", true);
 
@@ -360,6 +364,7 @@
 			$("#jenisSurat").prop("disabled", true);
 			$("#dosen").prop("disabled", true);
 			$('#keterangan, #datepicker, #pemateri, #datepicker2, #submit, #instansi').removeAttr("disabled");
+			$("#tambahPemateri").show();
 			// $('#jenisSurat').val("3").change();
     }
 
