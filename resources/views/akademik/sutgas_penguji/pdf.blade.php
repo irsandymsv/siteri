@@ -115,7 +115,7 @@
          </p>
 
          <p style="margin-bottom: 0pt;">
-            Berdasarkan usulan Komisi Bimbingan Tugas Akhir, maka Dekan Fakultas Ilmu Komputer Universitas Jember dengan ini menugaskan kepada nama Dosen yang tersebut di bawah ini sebagai Penguji pada Ujian Tugas Akhir Mahasiswa :
+            Berdasarkan usulan Komisi Bimbingan Tugas Akhir, maka Wakil Dekan 1 Fakultas Ilmu Komputer Universitas Jember dengan ini menugaskan kepada nama Dosen yang tersebut di bawah ini sebagai Penguji pada Ujian Tugas Akhir Mahasiswa :
          </p>
 
          <table id="detail_table">
@@ -239,10 +239,10 @@
 
          <div class="ttd-right">
             Jember, {{ Carbon\Carbon::parse($surat_tugas->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }} <br>
-            Dekan,
+            Wakil Dekan 1,
             <br><br><br><br>
-            <span><b>{{ $dekan->nama }}</b></span><br>
-            <span>NIP. {{ $dekan->no_pegawai }}</span>
+            <span><b>{{ $wadek1->nama }}</b></span><br>
+            <span>NIP. {{ $wadek1->no_pegawai }}</span>
          </div>
 
          <p style="clear: both;">Tembusan: </p>

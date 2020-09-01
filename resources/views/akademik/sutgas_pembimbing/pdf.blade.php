@@ -110,7 +110,7 @@
          </p>
 
          <p style="margin-bottom: 0pt;">
-            Berdasarkan Hasil Evaluasi Komisi Bimbingan Program Studi Sistem Informasi, maka dengan ini Dekan Fakultas Ilmu Komputer menugaskan kepada nama dosen yang tersebut di bawah ini:
+            Berdasarkan Hasil Evaluasi Komisi Bimbingan Program Studi Sistem Informasi, maka dengan ini Wakil Dekan 1 Fakultas Ilmu Komputer menugaskan kepada nama dosen yang tersebut di bawah ini:
          </p>
 
          <table id="detail_table">
@@ -175,10 +175,10 @@
 
          <div class="ttd-right">
             Jember, {{ Carbon\Carbon::parse($surat_tugas->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }} <br>
-            Dekan,
+            Wakil Dekan 1,
             <br><br><br><br>
-            <span>{{ $dekan->nama }}</span><br>
-            <span>NIP. {{ $dekan->no_pegawai }}</span>
+            <span>{{ $wadek1->nama }}</span><br>
+            <span>NIP. {{ $wadek1->no_pegawai }}</span>
          </div>
 
          <p style="clear: both;">Tembusan: </p>

@@ -145,7 +145,7 @@
                   </p>
 
                   <p>
-                     Berdasarkan Hasil Evaluasi Komisi Bimbingan Tugas Akhir Mahasiswa Fakultas Ilmu Komputer, maka dengan ini Dekan menugaskan kepada nama dosen yang tersebut di bawah ini sebagai Penguji pada Ujian <b>Seminar Proposal</b>:
+                     Berdasarkan Hasil Evaluasi Komisi Bimbingan Tugas Akhir Mahasiswa Fakultas Ilmu Komputer, maka dengan ini Wakil Dekan 1 menugaskan kepada nama dosen yang tersebut di bawah ini sebagai Penguji pada Ujian <b>Seminar Proposal</b>:
                   </p>
 
                   <table id="detail_table">
@@ -265,10 +265,10 @@
 
                   <div class="ttd-right">
                      Jember, {{ Carbon\Carbon::parse($surat_tugas->created_at)->locale('id_ID')->isoFormat('D MMMM Y') }} <br>
-                     Dekan,
+                     Wakil Dekan 1,
                      <br><br><br><br>
-                     <span><b>{{ $dekan->nama }}</b></span><br>
-                     <span>NIP. {{ $dekan->no_pegawai }}</span>
+                     <span><b>{{ $wadek1->nama }}</b></span><br>
+                     <span>NIP. {{ $wadek1->no_pegawai }}</span>
                   </div>
 
                   <p style="clear: both;">Tembusan: </p>
