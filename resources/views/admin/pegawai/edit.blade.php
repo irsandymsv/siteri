@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('side_menu')
-    @include('include.admin_menu')
+    @include('include.'.$jabatan_user.'_menu')
 @endsection
 
 @section('css_link')
