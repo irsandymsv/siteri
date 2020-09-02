@@ -237,7 +237,7 @@
             			<tr>
                         <td>{{ $loop->index + 1 }}</td>
             				<td>{{$item->skripsi->nim}}</td>
-            				<td>{{$item->skripsi->mahasiswa->nama}}</td>
+            				<td>{{ ucwords(strtolower($item->skripsi->mahasiswa->nama)) }}</td>
             				<td>{{$item->skripsi->mahasiswa->prodi->nama}}</td>
             				<td>{{$item->judul}}</td>
             				<td>

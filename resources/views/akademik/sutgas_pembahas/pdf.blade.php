@@ -121,7 +121,7 @@
          <table id="detail_table">
             <tr>
                <td>Nama</td>
-               <td>: {{ $surat_tugas->detail_skripsi->skripsi->mahasiswa->nama }}</td>
+               <td>: {{ ucwords(strtolower($surat_tugas->detail_skripsi->skripsi->mahasiswa->nama)) }}</td>
             </tr>
             <tr>
                <td>NIM</td>

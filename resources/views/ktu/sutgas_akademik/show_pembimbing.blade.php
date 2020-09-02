@@ -185,7 +185,7 @@
                      <tr><td colspan="2">untuk membimbing skripsi mahasiswa:</td></tr>
                      <tr>
                         <td>Nama</td>
-                        <td>: {{ $surat_tugas->detail_skripsi->skripsi->mahasiswa->nama }}</td>
+                        <td>: {{ ucwords(strtolower($surat_tugas->detail_skripsi->skripsi->mahasiswa->nama)) }}</td>
                      </tr>
                      <tr>
                         <td>NIM</td>

@@ -10,7 +10,7 @@
     <ul class="treeview-menu">
         <li><a href="{{ route('ktu.sutgas-pembimbing.index') }}">Pembimbing Skripsi</a></li>
         <li><a href="{{ route('ktu.sutgas-pembahas.index') }}">Pembahas Sempro</a></li>
-        <li><a href="{{ route('ktu.sutgas-penguji.index') }}">penguji Skripsi</a></li>
+        <li><a href="{{ route('ktu.sutgas-penguji.index') }}">Penguji Skripsi</a></li>
     </ul>
 </li>
 
