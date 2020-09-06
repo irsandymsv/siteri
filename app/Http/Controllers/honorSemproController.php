@@ -561,7 +561,7 @@ class honorSemproController extends Controller
          'surat_tugas.dosen2:no_pegawai,nama,npwp,id_golongan,id_fungsional',
          'surat_tugas.dosen2.golongan',
          'surat_tugas.dosen2.fungsional',
-         'surat_tugas.dosen2.pph',
+        //  'surat_tugas.dosen2.pph',
 
       ])->get();
 
