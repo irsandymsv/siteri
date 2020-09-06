@@ -185,7 +185,7 @@
             <tr>
                <td class="to_center nomor" rowspan="2">{{ $loop->index + 1 }}</td>
                <td class="nim" rowspan="2">{{$item->skripsi->nim}}</td>
-               <td rowspan="2">{{$item->skripsi->mahasiswa->nama}}</td>
+               <td rowspan="2">{{ ucwords(strtolower($item->skripsi->mahasiswa->nama)) }}</td>
                <td class="prodi" rowspan="2">{{$item->skripsi->mahasiswa->prodi->nama}}</td>
                <td rowspan="2">{{$item->judul}}</td>
                @if ($item->surat_tugas[0]->tipe_surat_tugas->tipe_surat == "Surat Tugas Penguji")

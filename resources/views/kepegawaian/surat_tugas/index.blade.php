@@ -5,6 +5,7 @@
 @endsection
 
 @section('page_title','Surat Tugas')
+@section('judul_header','Surat Tugas')
 
 @section('content')
 <!-- Main content -->

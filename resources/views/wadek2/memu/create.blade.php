@@ -4,7 +4,8 @@
 @section('judul_header','Buat Memo')
 
 @section('css_link')
-<link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
+{{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+<link rel="stylesheet" href="{{asset('/adminlte/bower_components/select2/dist/css/select2.min.css')}}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
 <style type="text/css">
 	th {
@@ -34,9 +35,9 @@
 <div class="row">
 	<div class="col-xs-12">
 		<div class="box box-primary">
-		<form id="formInput" action="{{route('wadek2.memu.save')}}" method="POST">
-			@csrf	
-			<div class="box-body">
+			<form id="formInput" action="{{route('wadek2.memu.save')}}" method="POST">
+				<div class="box-body">
+					@csrf
 					<div class="table-responsive">
 						<table id="tbl-data" class="table table-bordered table-hover">
 							<thead>
@@ -143,7 +144,7 @@
 											<input id="pemateri" class="form-control" name="pemateri[]" placeholder="Nama Pemateri 1">
 										</p>	
 									</div>
-									<a href="javascript:;" id="tambahPemateri" class="tambahPemateri"><i class="fa fa-plus"></i> Tambah</a>
+									<a href="javascript:;" id="tambahPemateri" class="tambahPemateri" hidden><i class="fa fa-plus"></i> Tambah</a>
 
 									@error('pemateri.*')
 									  <p class="invalid-feedback" role="alert" style="color: red;">
@@ -241,7 +242,7 @@
 						</table>
 					</div>
 
-					<input type="hidden" name="status" value="">
+					{{-- <input type="hidden" name="status" value=""> --}}
 					<div class="form-group" style="float: left;">
 						<button id="submit" type="submit" name="simpan_kirim" class="btn btn-success">Buat Memo</button>
 					</div>
@@ -249,10 +250,11 @@
 			</form>
 		</div>
 	</div>
-	@endsection
+</div>
+@endsection
 
-	@section('script')
-	<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
+@section('script')
+	<script src="{{asset('/adminlte/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
 
 	<script type="text/javascript">
@@ -283,17 +285,20 @@
 	$(document).ready(function(){
 		$("#formInput :input").prop("disabled", true);
 		$("#surat_in_out").removeAttr("disabled");
+		$("input[name='_token']").removeAttr("disabled");
 	});
 
 	$(function(){
     $("#surat_in_out").change(function(){
 			$("#formInput :input").prop("disabled", false);
+
       if ( $("#surat_in_out").val() == 1 ) {
         $('#perjalanan').removeAttr("disabled");
         $('#perjalanan').on("change",function() {
             $('#perjalanan').val($(this).val());
 				});
 				$("#pemateri").prop("disabled", true);
+				$("#tambahPemateri").hide();
 				$("#dosen").prop("disabled", false);
 				$("#instansi").prop("disabled", true);
 
@@ -311,6 +316,7 @@
 				$("#jenisSurat").prop("disabled", true);
 				$("#dosen").prop("disabled", true);
 				$('#keterangan, #datepicker, #pemateri, #datepicker2, #submit, #instansi').removeAttr("disabled");
+				$("#tambahPemateri").show();
 				// $('#jenisSurat').val("3").change();
 	    }
     });
@@ -341,6 +347,7 @@
           $('#perjalanan').val($(this).val());
 			});
 			$("#pemateri").prop("disabled", true);
+			$("#tambahPemateri").hide();
 			$("#dosen").prop("disabled", false);
 			$("#instansi").prop("disabled", true);
 
@@ -357,6 +364,7 @@
 			$("#jenisSurat").prop("disabled", true);
 			$("#dosen").prop("disabled", true);
 			$('#keterangan, #datepicker, #pemateri, #datepicker2, #submit, #instansi').removeAttr("disabled");
+			$("#tambahPemateri").show();
 			// $('#jenisSurat').val("3").change();
     }
 

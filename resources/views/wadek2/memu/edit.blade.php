@@ -4,7 +4,7 @@
 @section('judul_header','Edit Memo')
 
 @section('css_link')
-<link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
+<link rel="stylesheet" href="{{asset('/adminlte/bower_components/select2/dist/css/select2.min.css')}}">
 <link href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" rel="stylesheet" />
 <style type="text/css">
 	th {
@@ -284,7 +284,7 @@
 	@endsection
 
 	@section('script')
-	<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
+	<script src="{{asset('/adminlte/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 	<script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script> 
 	<script type="text/javascript">
 		$(document).ready(function() {

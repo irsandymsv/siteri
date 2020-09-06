@@ -305,15 +305,20 @@ class sutgasPembahasController extends suratTugasController
         })
         ->orderBy('created_at','desc')->first();
 
-        $dekan = User::with("jabatan")
+        $wadek1 = User::with("jabatan")
         ->wherehas("jabatan", function (Builder $query){
-            $query->where("jabatan", "Dekan");
+            $query->where("jabatan", "Wakil Dekan 1");
         })->first();
+
+        // $dekan = User::with("jabatan")
+        // ->wherehas("jabatan", function (Builder $query){
+        //     $query->where("jabatan", "Dekan");
+        // })->first();
 
         $pdf = PDF::loadview('akademik.sutgas_pembahas.pdf', [
             'surat_tugas' => $surat_tugas,
             'sutgas_pembimbing' => $sutgas_pembimbing,
-            'dekan' => $dekan
+            'wadek1' => $wadek1
         ])->setPaper('folio', 'portrait')->setWarnings(false);
         return $pdf->download("Surat Tugas Pembahas-" . $surat_tugas->no_surat.".pdf");
     }
@@ -370,16 +375,21 @@ class sutgasPembahasController extends suratTugasController
         })
         ->orderBy('created_at','desc')->first();
 
-        $dekan = User::with("jabatan")
+        $wadek1 = User::with("jabatan")
         ->wherehas("jabatan", function (Builder $query){
-            $query->where("jabatan", "Dekan");
+            $query->where("jabatan", "Wakil Dekan 1");
         })->first();
+
+        // $dekan = User::with("jabatan")
+        // ->wherehas("jabatan", function (Builder $query){
+        //     $query->where("jabatan", "Dekan");
+        // })->first();
 
         // dd($sutgas_pembimbing);
       return view('ktu.sutgas_akademik.show_pembahas', [
         'surat_tugas' => $surat_tugas,
         'sutgas_pembimbing' => $sutgas_pembimbing,
-        'dekan' => $dekan,
+        'wadek1' => $wadek1,
         'tipe' => 'surat tugas pembahas'
       ]);
     }

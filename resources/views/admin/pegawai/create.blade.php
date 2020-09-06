@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('side_menu')
-    @include('include.admin_menu')
+    @include('include.'.$jabatan_user.'_menu')
 @endsection
 
 @section('css_link')
@@ -222,7 +222,7 @@
 <!-- /.content -->
 @endsection
 @section('script')
-<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
+<script src="{{asset('/adminlte/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
 
 <script>

@@ -336,7 +336,7 @@ desired effect
             type: 'GET',
           })
           .done(function(result) {
-          		console.log('jml: '+ result);
+          		// console.log('jml: '+ result);
             	if (parseInt(result) > 0) {
 	               $("#jumlah_memo").show();
 	               $("#jumlah_memo").text(result);
@@ -392,7 +392,7 @@ desired effect
             setInterval(function(){
                 loadlink()
                 // readAllNotif();
-            }, 30000);
+            }, 300000);
         });
     </script>
 

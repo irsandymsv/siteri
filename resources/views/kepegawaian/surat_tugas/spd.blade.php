@@ -4,7 +4,7 @@
 @section('judul_header','Buat Surat SPD')
 
 @section('css_link')
-<link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
+<link rel="stylesheet" href="{{asset('/adminlte/bower_components/select2/dist/css/select2.min.css')}}">
 <style type="text/css">
 	th {
 		text-align: center;
@@ -236,7 +236,7 @@
 	@endsection
 
 	@section('script')
-	<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
+	<script src="{{asset('/adminlte/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 	
 
 <script>

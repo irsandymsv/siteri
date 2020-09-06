@@ -220,14 +220,20 @@ class sutgasPembimbingController extends suratTugasController
     		"dosen2:no_pegawai,nama,id_fungsional",
     		"dosen2.fungsional"
     	])->first();
-    	$dekan = User::with("jabatan")
-    	->wherehas("jabatan", function (Builder $query){
-    		$query->where("jabatan", "Dekan");
-    	})->first();
+
+        $wadek1 = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "Wakil Dekan 1");
+        })->first();
+
+    	// $dekan = User::with("jabatan")
+    	// ->wherehas("jabatan", function (Builder $query){
+    	// 	$query->where("jabatan", "Dekan");
+    	// })->first();
 
     	// return view('akademik.sutgas_pembimbing.pdf', ['surat_tugas' => $surat_tugas, 'dekan' => $dekan]);
 
-        $pdf = PDF::loadview('akademik.sutgas_pembimbing.pdf', ['surat_tugas' => $surat_tugas, 'dekan' => $dekan])->setPaper('a4', 'portrait')->setWarnings(false);
+        $pdf = PDF::loadview('akademik.sutgas_pembimbing.pdf', ['surat_tugas' => $surat_tugas, 'wadek1' => $wadek1])->setPaper('a4', 'portrait')->setWarnings(false);
     	return $pdf->download("Surat Tugas Pembimbing-" . $surat_tugas->no_surat . ".pdf");
     }
 
@@ -263,15 +269,21 @@ class sutgasPembimbingController extends suratTugasController
 			"dosen2:no_pegawai,nama,id_fungsional",
 			"dosen2.fungsional"
 		])->first();
-		$dekan = User::with("jabatan")
-		->wherehas("jabatan", function (Builder $query){
-			$query->where("jabatan", "Dekan");
-		})->first();
+
+        $wadek1 = User::with("jabatan")
+        ->wherehas("jabatan", function (Builder $query){
+            $query->where("jabatan", "Wakil Dekan 1");
+        })->first();
+
+		// $dekan = User::with("jabatan")
+		// ->wherehas("jabatan", function (Builder $query){
+		// 	$query->where("jabatan", "Dekan");
+		// })->first();
 		// dd($surat_tugas);
       return view('ktu.sutgas_akademik.show_pembimbing', [
       	'surat_tugas' => $surat_tugas,
-      	'dekan' => $dekan,
-			'tipe' => 'surat tugas pembimbing'
+      	'wadek1' => $wadek1,
+		'tipe' => 'surat tugas pembimbing'
       ]);
 	}
 

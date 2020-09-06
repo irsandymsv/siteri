@@ -184,7 +184,7 @@
                            <td class="nama_dosen">{{ $item->surat_tugas[0]->dosen1->nama }}</td>
                            <td class="to_center">{{ $item->surat_tugas[0]->dosen1->npwp }}</td>
                            <td rowspan="2">
-                              <p>{{ $item->skripsi->mahasiswa->nama }}</p>
+                              <p>{{ ucwords(strtolower($item->skripsi->mahasiswa->nama)) }}</p>
                               <p>NIM: {{ $item->skripsi->nim }}</p>
                            </td>
                            <td class="to_center">
